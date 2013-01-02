@@ -24,7 +24,7 @@ from skin import app_theme
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.new_treeview import TreeView, TreeItem
-from dtk.ui.iconview import IconView 
+from dtk.ui.iconview import IconView, IconItem
 from dtk.ui.utils import get_parent_dir, container_remove_all, is_in_rect
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
 from events import global_event
@@ -126,7 +126,7 @@ class AlbumSummaryView(gtk.VBox):
         
 gobject.type_register(AlbumSummaryView)
 
-class AlbumSummaryItem(gobject.GObject):
+class AlbumSummaryItem(IconItem):
     '''
     Icon item.
     '''
@@ -141,10 +141,6 @@ class AlbumSummaryItem(gobject.GObject):
     SUMMARY_PADDING_Y = 5
     SUMMARY_SIZE = 10
 	
-    __gsignals__ = {
-        "redraw-request" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
-    }
-    
     def __init__(self, (album_id, album_name, album_summary)):
         '''
         Initialize ItemIcon class.
@@ -158,14 +154,6 @@ class AlbumSummaryItem(gobject.GObject):
         self.pixbuf = None
         self.hover_flag = False
         self.highlight_flag = False
-        
-    def emit_redraw_request(self):
-        '''
-        Emit `redraw-request` signal.
-        
-        This is IconView interface, you should implement it.
-        '''
-        self.emit("redraw-request")
         
     def get_width(self):
         '''
@@ -223,46 +211,6 @@ class AlbumSummaryItem(gobject.GObject):
                   wrap_width=text_width
                   )
         
-    def icon_item_motion_notify(self, x, y):
-        '''
-        Handle `motion-notify-event` signal.
-        
-        This is IconView interface, you should implement it.
-        '''
-        self.hover_flag = True
-        
-        self.emit_redraw_request()
-        
-    def icon_item_lost_focus(self):
-        '''
-        Lost focus.
-        
-        This is IconView interface, you should implement it.
-        '''
-        self.hover_flag = False
-        
-        self.emit_redraw_request()
-        
-    def icon_item_highlight(self):
-        '''
-        Highlight item.
-        
-        This is IconView interface, you should implement it.
-        '''
-        self.highlight_flag = True
-
-        self.emit_redraw_request()
-        
-    def icon_item_normal(self):
-        '''
-        Set item with normal status.
-        
-        This is IconView interface, you should implement it.
-        '''
-        self.highlight_flag = False
-        
-        self.emit_redraw_request()
-    
     def icon_item_button_press(self, x, y):
         '''
         Handle button-press event.
@@ -270,30 +218,6 @@ class AlbumSummaryItem(gobject.GObject):
         This is IconView interface, you should implement it.
         '''
         global_event.emit("switch-to-album-detail-view", self.album_id)
-    
-    def icon_item_button_release(self, x, y):
-        '''
-        Handle button-release event.
-        
-        This is IconView interface, you should implement it.
-        '''
-        pass
-    
-    def icon_item_single_click(self, x, y):
-        '''
-        Handle single click event.
-        
-        This is IconView interface, you should implement it.
-        '''
-        pass
-
-    def icon_item_double_click(self, x, y):
-        '''
-        Handle double click event.
-        
-        This is IconView interface, you should implement it.
-        '''
-        pass
     
     def icon_item_release_resource(self):
         '''

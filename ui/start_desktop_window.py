@@ -28,7 +28,7 @@ from item_render import get_icon_pixbuf_path
 from dtk.ui.draw import draw_pixbuf, draw_text
 from dtk.ui.constant import DEFAULT_FONT_SIZE
 from dtk.ui.popup_grab_window import PopupGrabWindow, wrap_grab_window
-from dtk.ui.iconview import IconView
+from dtk.ui.iconview import IconView, IconItem
 from dtk.ui.scrolled_window import ScrolledWindow
 from events import global_event
 from dtk.ui.window import Window
@@ -138,15 +138,11 @@ class StartDesktopWindow(Window):
         
 gobject.type_register(StartDesktopWindow)
 
-class StartDesktopItem(gobject.GObject):
+class StartDesktopItem(IconItem):
     '''
     Icon item.
     '''
 	
-    __gsignals__ = {
-        "redraw-request" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
-    }
-    
     DESKTOP_ICON_PADDING_Y = 5
     DESKTOP_TEXT_PADDING_X = 10
     DESKTOP_TEXT_PADDING_Y = 60
@@ -157,7 +153,7 @@ class StartDesktopItem(gobject.GObject):
         
         @param pixbuf: Icon pixbuf.
         '''
-        gobject.GObject.__init__(self)
+        IconItem.__init__(self)
         self.pkg_name = pkg_name
         (self.desktop_path, self.desktop_icon_name, self.desktop_display_name) = desktop_info
         self.icon_pixbuf = None
@@ -165,14 +161,6 @@ class StartDesktopItem(gobject.GObject):
         self.highlight_flag = False
         
         self.icon_size = 32
-        
-    def emit_redraw_request(self):
-        '''
-        Emit `redraw-request` signal.
-        
-        This is IconView interface, you should implement it.
-        '''
-        self.emit("redraw-request")
         
     def get_width(self):
         '''
@@ -216,46 +204,6 @@ class StartDesktopItem(gobject.GObject):
             alignment=pango.ALIGN_CENTER,
             wrap_width=text_width)
         
-    def icon_item_motion_notify(self, x, y):
-        '''
-        Handle `motion-notify-event` signal.
-        
-        This is IconView interface, you should implement it.
-        '''
-        self.hover_flag = True
-        
-        self.emit_redraw_request()
-        
-    def icon_item_lost_focus(self):
-        '''
-        Lost focus.
-        
-        This is IconView interface, you should implement it.
-        '''
-        self.hover_flag = False
-        
-        self.emit_redraw_request()
-        
-    def icon_item_highlight(self):
-        '''
-        Highlight item.
-        
-        This is IconView interface, you should implement it.
-        '''
-        self.highlight_flag = True
-
-        self.emit_redraw_request()
-        
-    def icon_item_normal(self):
-        '''
-        Set item with normal status.
-        
-        This is IconView interface, you should implement it.
-        '''
-        self.highlight_flag = False
-        
-        self.emit_redraw_request()
-    
     def icon_item_button_press(self, x, y):
         '''
         Handle button-press event.
@@ -263,30 +211,6 @@ class StartDesktopItem(gobject.GObject):
         This is IconView interface, you should implement it.
         '''
         global_event.emit("start-desktop", self.pkg_name, self.desktop_path)
-    
-    def icon_item_button_release(self, x, y):
-        '''
-        Handle button-release event.
-        
-        This is IconView interface, you should implement it.
-        '''
-        pass
-    
-    def icon_item_single_click(self, x, y):
-        '''
-        Handle single click event.
-        
-        This is IconView interface, you should implement it.
-        '''
-        pass
-
-    def icon_item_double_click(self, x, y):
-        '''
-        Handle double click event.
-        
-        This is IconView interface, you should implement it.
-        '''
-        pass
     
     def icon_item_release_resource(self):
         '''

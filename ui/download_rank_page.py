@@ -29,7 +29,7 @@ from dtk.ui.constant import DEFAULT_FONT_SIZE
 from dtk.ui.star_view import StarBuffer
 from item_render import get_icon_pixbuf_path, render_star, STAR_SIZE, get_star_level
 from dtk.ui.scrolled_window import ScrolledWindow
-from dtk.ui.iconview import IconView
+from dtk.ui.iconview import IconView, IconItem
 import gtk
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from events import global_event
@@ -195,7 +195,7 @@ class RankTab(gtk.Button):
         
 gobject.type_register(RankTab)
 
-class PkgIconItem(gobject.GObject):
+class PkgIconItem(IconItem):
     '''
     Icon item.
     '''
@@ -206,17 +206,13 @@ class PkgIconItem(gobject.GObject):
     BUTTON_PADDING_X = 44
     BUTTON_PADDING_BOTTOM = 18
     
-    __gsignals__ = {
-        "redraw-request" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
-    }
-    
     def __init__(self, (pkg_name, alias_name, star, desktop_info, is_installed)):
         '''
         Initialize ItemIcon class.
         
         @param pixbuf: Icon pixbuf.
         '''
-        gobject.GObject.__init__(self)
+        IconItem.__init__(self)
         self.pkg_name = pkg_name
         self.alias_name = alias_name
         self.desktop_info = desktop_info
@@ -237,14 +233,6 @@ class PkgIconItem(gobject.GObject):
         self.highlight_flag = False
         
         self.button_status = BUTTON_NORMAL
-        
-    def emit_redraw_request(self):
-        '''
-        Emit `redraw-request` signal.
-        
-        This is IconView interface, you should implement it.
-        '''
-        self.emit("redraw-request")
         
     def get_width(self):
         '''
@@ -364,36 +352,6 @@ class PkgIconItem(gobject.GObject):
                 self.button_status = BUTTON_NORMAL
                 self.emit_redraw_request()
                 
-    def icon_item_lost_focus(self):
-        '''
-        Lost focus.
-        
-        This is IconView interface, you should implement it.
-        '''
-        self.hover_flag = False
-        
-        self.emit_redraw_request()
-        
-    def icon_item_highlight(self):
-        '''
-        Highlight item.
-        
-        This is IconView interface, you should implement it.
-        '''
-        self.highlight_flag = True
-
-        self.emit_redraw_request()
-        
-    def icon_item_normal(self):
-        '''
-        Set item with normal status.
-        
-        This is IconView interface, you should implement it.
-        '''
-        self.highlight_flag = False
-        
-        self.emit_redraw_request()
-    
     def get_offset_with_button(self, offset_x, offset_y):
         pixbuf = app_theme.get_pixbuf("button/start_small_normal.png").get_pixbuf()
         popup_x = self.BUTTON_PADDING_X + pixbuf.get_width() / 2
@@ -418,30 +376,6 @@ class PkgIconItem(gobject.GObject):
             self.emit_redraw_request()
         else:
             global_event.emit("switch-to-detail-page", self.pkg_name)
-    
-    def icon_item_button_release(self, x, y):
-        '''
-        Handle button-release event.
-        
-        This is IconView interface, you should implement it.
-        '''
-        pass
-    
-    def icon_item_single_click(self, x, y):
-        '''
-        Handle single click event.
-        
-        This is IconView interface, you should implement it.
-        '''
-        pass
-
-    def icon_item_double_click(self, x, y):
-        '''
-        Handle double click event.
-        
-        This is IconView interface, you should implement it.
-        '''
-        pass
     
     def icon_item_release_resource(self):
         '''

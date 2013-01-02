@@ -26,36 +26,25 @@ import gtk
 import os
 from dtk.ui.utils import get_parent_dir
 from dtk.ui.draw import draw_pixbuf
+from dtk.ui.iconview import IconItem
 from events import global_event
 
 PKG_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update_data", "recommend_picture", "zh_CN")
 
-class RecommendIconItem(gobject.GObject):
+class RecommendIconItem(IconItem):
     '''
     class docs
     '''
-    
-    __gsignals__ = {
-        "redraw-request" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
-    }
     
     def __init__(self, pkg_name):
         '''
         init docs
         '''
-        gobject.GObject.__init__(self)
+        IconItem.__init__(self)
         self.pkg_name = pkg_name
         self.pkg_picture_pixbuf = None
         self.hover_flag = False
         
-    def emit_redraw_request(self):
-        '''
-        Emit `redraw-request` signal.
-        
-        This is IconView interface, you should implement it.
-        '''
-        self.emit("redraw-request")
-
     def get_width(self):
         '''
         Get item width.
@@ -98,70 +87,6 @@ class RecommendIconItem(gobject.GObject):
                    pi * 2)
             cr.fill()
         
-    def icon_item_motion_notify(self, x, y):
-        '''
-        Handle `motion-notify-event` signal.
-        
-        This is IconView interface, you should implement it.
-        '''
-        self.hover_flag = True
-        
-        self.emit_redraw_request()
-        
-    def icon_item_lost_focus(self):
-        '''
-        Lost focus.
-        
-        This is IconView interface, you should implement it.
-        '''
-        self.hover_flag = False
-        
-        self.emit_redraw_request()
-        
-    def icon_item_highlight(self):
-        '''
-        Highlight item.
-        
-        This is IconView interface, you should implement it.
-        '''
-        self.highlight_flag = True
-
-        self.emit_redraw_request()
-        
-    def icon_item_normal(self):
-        '''
-        Set item with normal status.
-        
-        This is IconView interface, you should implement it.
-        '''
-        self.highlight_flag = False
-        
-        self.emit_redraw_request()
-    
-    def icon_item_button_press(self, x, y):
-        '''
-        Handle button-press event.
-        
-        This is IconView interface, you should implement it.
-        '''
-        pass
-    
-    def icon_item_button_release(self, x, y):
-        '''
-        Handle button-release event.
-        
-        This is IconView interface, you should implement it.
-        '''
-        pass
-    
-    def icon_item_single_click(self, x, y):
-        '''
-        Handle single click event.
-        
-        This is IconView interface, you should implement it.
-        '''
-        pass
-
     def icon_item_double_click(self, x, y):
         '''
         Handle double click event.
