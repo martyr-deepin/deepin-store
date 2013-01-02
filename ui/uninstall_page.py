@@ -425,4 +425,28 @@ class UninstallItem(TreeItem):
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
     
+    def release_resource(self):
+        '''
+        Release item resource.
+
+        If you have pixbuf in item, you should release memory resource like below code:
+
+        >>> if self.pixbuf:
+        >>>     del self.pixbuf
+        >>>     self.pixbuf = None
+        >>>
+        >>> return True
+
+        This is TreeView interface, you should implement it.
+        
+        @return: Return True if do release work, otherwise return False.
+        
+        When this function return True, TreeView will call function gc.collect() to release object to release memory.
+        '''
+        if self.icon_pixbuf:
+            del self.icon_pixbuf
+            self.icon_pixbuf = None
+
+        return True    
+    
 gobject.type_register(UninstallItem)        

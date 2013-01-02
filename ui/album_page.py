@@ -457,4 +457,28 @@ class AlbumDetailItem(TreeItem):
     def double_click(self, column, offset_x, offset_y):
         pass        
     
+    def release_resource(self):
+        '''
+        Release item resource.
+
+        If you have pixbuf in item, you should release memory resource like below code:
+
+        >>> if self.pixbuf:
+        >>>     del self.pixbuf
+        >>>     self.pixbuf = None
+        >>>
+        >>> return True
+
+        This is TreeView interface, you should implement it.
+        
+        @return: Return True if do release work, otherwise return False.
+        
+        When this function return True, TreeView will call function gc.collect() to release object to release memory.
+        '''
+        if self.pixbuf:
+            del self.pixbuf
+            self.pixbuf = None
+
+        return True    
+    
 gobject.type_register(AlbumDetailItem)        
