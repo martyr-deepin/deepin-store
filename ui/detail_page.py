@@ -42,6 +42,8 @@ from deepin_storm.download import FetchServiceThread, join_glib_loop, FetchFiles
 from events import global_event
 import urllib2
 
+join_glib_loop()
+
 PKG_SCREENSHOT_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update_data", "pkg_screenshot", "zh_CN")
 
 class DetailPage(gtk.HBox):

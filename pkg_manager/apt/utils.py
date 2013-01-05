@@ -21,6 +21,7 @@
 
 import dbus
 import os
+from hashlib import md5
 
 LOG_PATH = "/tmp/dsc.log"
 
@@ -75,3 +76,88 @@ def get_parent_dir(filepath, level=1):
     
     return parent_dir
 
+def get_current_dir(filepath):
+    return os.path.dirname(os.path.realpath(filepath))
+
+def read_file(filepath, check_exists=False):
+    '''
+    Read file content.
+    
+    @param filepath: Target filepath.
+    @param check_exists: Whether check file is exist, default is False.
+    
+    @return: Return \"\" if check_exists is True and filepath not exist.
+    
+    Otherwise return file's content.
+    '''
+    if check_exists and not os.path.exists(filepath):
+        return ""
+    else:
+        r_file = open(filepath, "r")
+        content = r_file.read()
+        r_file.close()
+        
+        return content
+
+def create_directory(directory, remove_first=False):
+    '''
+    Create directory.
+    
+    @param directory: Target directory to create.
+    @param remove_first: If you want remove directory when directory has exist, set it as True.
+    '''
+    if remove_first and os.path.exists(directory):
+        remove_directory(directory)
+    
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+        
+def remove_directory(path):
+    """
+    Remove directory recursively, equivalent to command `rm -rf path`.
+
+    @param path: Target directory to remove.
+    """
+    if os.path.exists(path):
+        for i in os.listdir(path):
+            full_path = os.path.join(path, i)
+            if os.path.isdir(full_path):
+                remove_directory(full_path)
+            else:
+                os.remove(full_path)
+        os.rmdir(path)        
+
+def md5_data(data):
+    m = md5()   
+    m.update(data)   
+    
+    return m.hexdigest() 
+
+def md5_file(name):
+    m = md5()
+    a_file = open(name, 'rb')
+    m.update(a_file.read())
+    a_file.close()
+    
+    return m.hexdigest()
+
+def write_file(filepath, content, mkdir=False):
+    '''
+    Write file with given content.
+
+    @param filepath: Target filepath to write.
+    @param content: File content to write.
+    '''
+    if mkdir:
+        touch_file_dir(filepath)
+    
+    f = open(filepath, "w")
+    f.write(content)
+    f.close()
+
+def touch_file_dir(filepath):
+    # Create directory first.
+    dir = os.path.dirname(filepath)
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+        

@@ -32,3 +32,5 @@ ACTION_UPGRADE = 3
 
 DOWNLOAD_STATUS_NOTNEED = 1
 DOWNLOAD_STATUS_ERROR = 2
+
+UPDATE_DATA_URL = "http://dsc-update-data.b0.upaiyun.com"

@@ -1,5 +1,6 @@
 data/update_data/
 data/patch/
+data/update_temp/
 *.pyc
 nohup.out
 .#*

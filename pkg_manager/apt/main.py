@@ -25,6 +25,7 @@ from utils import get_parent_dir
 sys.path.append(os.path.join(get_parent_dir(__file__, 3), "download_manager", "deepin_storm"))
 
 import subprocess
+import tarfile
 import signal
 from download_manager import DownloadManager
 import apt_pkg
@@ -238,8 +239,9 @@ class PackageManager(dbus.service.Object):
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="b")
     def try_extract_data(self):
         if not os.path.exists(os.path.join(DATA_DIR, "update_data")):
-            subprocess.Popen("7z x %s -o%s" % (os.path.join(DATA_DIR, "update_data.7z"), DATA_DIR), shell=True).wait()
-        
+            with tarfile.open(os.path.join(DATA_DIR, "update_data.tar.gz"), "r:gz") as tar:
+                tar.extractall(os.path.join(DATA_DIR, "update_data"))
+                
         return True
         
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="")    
