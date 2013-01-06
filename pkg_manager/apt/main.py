@@ -21,10 +21,9 @@
 
 import sys
 import os
-from utils import get_parent_dir
+from deepin_utils.path import get_parent_dir
 sys.path.append(os.path.join(get_parent_dir(__file__, 3), "download_manager", "deepin_storm"))
 
-import subprocess
 import tarfile
 import signal
 from download_manager import DownloadManager
@@ -41,7 +40,8 @@ from constant import DSC_SERVICE_NAME, DSC_SERVICE_PATH, ACTION_INSTALL, ACTION_
 from apt_cache import AptCache
 from action import AptActionPool
 from events import global_event
-from utils import log, auth_with_policykit, LOG_PATH
+from deepin_utils.ipc import auth_with_policykit
+from utils import log, LOG_PATH
 from update_list import UpdateList
 import threading as td
 from Queue import Queue
@@ -378,7 +378,11 @@ if __name__ == "__main__":
     signal.signal(signal.SIGINT, lambda : mainloop.quit()) # capture "Ctrl + c" signal
     
     # Auth with root permission.
-    if not auth_with_policykit("com.linuxdeepin.softwarecenter.action"):
+    if not auth_with_policykit("com.linuxdeepin.softwarecenter.action",
+                               "org.freedesktop.PolicyKit1", 
+                               "/org/freedesktop/PolicyKit1/Authority", 
+                               "org.freedesktop.PolicyKit1.Authority",
+                               ):
         log("Auth failed")
         
     # Remove log file.

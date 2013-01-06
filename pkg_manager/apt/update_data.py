@@ -28,7 +28,9 @@ import traceback
 from dtk.ui.threads import Thread
 from events import global_event
 from constant import UPDATE_DATA_URL
-from utils import read_file, get_current_dir, get_parent_dir, create_directory, md5_file, write_file, remove_directory
+from deepin_utils.path import get_parent_dir, get_current_dir, create_directory, remove_directory
+from deepin_utils.file import read_file, write_file
+from deepin_utils.hash import md5_file
 from deepin_storm.download import FetchServiceThread, join_glib_loop, FetchFiles
 from gevent.queue import Queue
 import urllib2
