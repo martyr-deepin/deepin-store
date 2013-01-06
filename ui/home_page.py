@@ -32,7 +32,8 @@ from search_page import SearchPage
 from dtk.ui.new_treeview import TreeView, TreeItem
 from dtk.ui.cycle_strip import CycleStrip
 from dtk.ui.draw import draw_text, draw_round_rectangle, draw_pixbuf, draw_vlinear
-from dtk.ui.utils import color_hex_to_cairo, container_remove_all, get_parent_dir, is_in_rect
+from deepin_utils.file import get_parent_dir
+from dtk.ui.utils import color_hex_to_cairo, container_remove_all, is_in_rect
 from dtk.ui.star_view import StarBuffer
 from dtk.ui.iconview import IconView
 from dtk.ui.scrolled_window import ScrolledWindow

@@ -25,7 +25,8 @@ from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.new_treeview import TreeView, TreeItem
 from dtk.ui.iconview import IconView, IconItem
-from dtk.ui.utils import get_parent_dir, container_remove_all, is_in_rect
+from deepin_utils.file import get_parent_dir
+from dtk.ui.utils import container_remove_all, is_in_rect
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
 from events import global_event
 import gtk

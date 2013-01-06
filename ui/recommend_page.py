@@ -24,7 +24,7 @@ from math import pi
 import gobject
 import gtk
 import os
-from dtk.ui.utils import get_parent_dir
+from deepin_utils.file import get_parent_dir
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.iconview import IconItem
 from events import global_event

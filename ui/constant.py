@@ -21,7 +21,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-from dtk.ui.utils import get_parent_dir
+from deepin_utils.file import get_parent_dir
 
 DSC_SERVICE_NAME = "com.linuxdeepin.softwarecenter"
 DSC_SERVICE_PATH = "/com/linuxdeepin/softwarecenter"

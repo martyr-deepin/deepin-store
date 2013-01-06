@@ -24,7 +24,7 @@
 # from skin import ui_theme, app_theme
 from dtk.ui.skin_config import skin_config
 from dtk.ui.theme import Theme, ui_theme
-from dtk.ui.utils import get_parent_dir
+from deepin_utils.file import get_parent_dir
 import os
 
 # Init skin config.

@@ -24,7 +24,9 @@ from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.constant import ALIGN_MIDDLE
 import traceback
 import sys
-from dtk.ui.utils import color_hex_to_cairo, container_remove_all, get_parent_dir, get_resize_pixbuf_with_height, format_file_size, run_command, read_file, write_file, remove_file
+from deepin_utils.file import get_parent_dir, read_file, write_file, remove_file, format_file_size
+from deepin_utils.process import run_command
+from dtk.ui.utils import color_hex_to_cairo, container_remove_all, get_resize_pixbuf_with_height
 import zipfile
 from dtk.ui.label import Label
 from dtk.ui.draw import draw_pixbuf, draw_text

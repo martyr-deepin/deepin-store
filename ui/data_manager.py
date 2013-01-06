@@ -20,7 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.utils import get_parent_dir
+from deepin_utils.file import get_parent_dir
 import os
 import sqlite3
 from collections import OrderedDict
@@ -68,7 +68,7 @@ class DataManager(object):
         
         self.build_category_dict()
         
-    from dtk.ui.utils import print_exec_time
+    from deepin_utils.time import print_exec_time
     @print_exec_time    
     def get_pkgs_match_input(self, input_string):
         # Select package name match input string.
