@@ -122,9 +122,16 @@ class DetailPage(gtk.HBox):
         self.left_label_align.set(0.5, 0.5, 0, 0)
         self.left_label_align.set_padding(0, 0, 6, 0)
         
-        self.left_category_label = Label()
+        self.left_category_name_label = Label()
+        self.left_category_label = Label(hover_color=app_theme.get_color("homepage_hover"))
+        self.left_category_label.set_clickable()
+        self.left_category_label_align = gtk.Alignment()
+        self.left_category_label_align.set(0.0, 0.5, 0, 0)
+        self.left_category_label_align.add(self.left_category_label)
+        self.left_category_label_box = gtk.HBox()
+        self.left_category_label_box.pack_start(self.left_category_name_label, False, False)
+        self.left_category_label_box.pack_start(self.left_category_label_align, True, True)
         self.left_category_box = gtk.VBox()
-        self.left_category_box.add(self.left_category_label)
         self.left_version_label = Label()
         self.left_size_label = Label()
         self.left_download_label = Label()
@@ -186,9 +193,14 @@ class DetailPage(gtk.HBox):
         self.right_top_box.connect("expose-event", self.expose_right_top_box)
         self.right_title_box.connect("expose-event", self.expose_right_title_box)
         
+        self.left_category_label.connect("button-press-event", lambda w, e: self.jump_to_category())
+        
         self.download_screenshot = DownloadScreenshot()
 
         global_event.register_event("download-screenshot-finish", self.download_screenshot_finish)
+        
+    def jump_to_category(self):
+        global_event.emit("jump-to-category", self.category[0], self.category[1])
         
     def expose_left_view(self, widget, event):
         # Init.
@@ -327,8 +339,9 @@ class DetailPage(gtk.HBox):
         
         container_remove_all(self.left_category_box)
         if self.category != None:
-            self.left_category_label.set_text("类别：%s" % self.category[1])
-            self.left_category_box.add(self.left_category_label)
+            self.left_category_name_label.set_text("类别：")
+            self.left_category_label.set_text(self.category[1])
+            self.left_category_box.add(self.left_category_label_box)
         self.left_version_label.set_text("版本：%s" % self.version)
         self.left_size_label.set_text("大小：%s" % format_file_size(self.size))
         self.left_download_label.set_text("下载：%s" % self.download)

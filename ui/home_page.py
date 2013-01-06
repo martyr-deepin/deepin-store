@@ -130,6 +130,25 @@ class HomePage(gtk.HBox):
         
         global_event.register_event("show-pkg-view", self.show_pkg_view)
         
+    def jump_to_category(self, first_category_name, second_category_name):
+        print (first_category_name, second_category_name)
+        
+        for item in self.category_view.visible_items:
+            if isinstance(item, CategoryItem) and item.is_expand:
+                item.unexpand()
+        
+        for item in self.category_view.visible_items:
+            if isinstance(item, CategoryItem) and item.first_category_name == first_category_name:
+                item.expand()
+                break
+
+        for item in self.category_view.visible_items:
+            if isinstance(item, SecondCategoryItem) and item.second_category_name == second_category_name:
+                self.category_view.select_items([item])
+                self.category_view.visible_item(item)
+                item.button_press(0, 0, 0)
+                break
+        
     def draw_mask(self, cr, x, y, w, h):
         '''
         Draw mask interface.

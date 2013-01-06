@@ -52,6 +52,10 @@ from dtk.ui.label import Label
 from dtk.ui.gio_utils import start_desktop_file
 from start_desktop_window import StartDesktopWindow
 
+def jump_to_category(page_switcher, page_box, home_page, detail_page, first_category_name, second_category_name):
+    switch_page(page_switcher, page_box, home_page, detail_page)
+    home_page.jump_to_category(first_category_name, second_category_name)
+
 def start_pkg(pkg_name, desktop_infos, (offset_x, offset_y, popup_x, popup_y), window):
     desktop_infos = filter(lambda desktop_info: os.path.exists(desktop_info[0]) != None, desktop_infos)
     desktop_infos_num = len(desktop_infos)
@@ -512,6 +516,9 @@ class DeepinSoftwareCenter(object):
         global_event.register_event("request-clear-action-pages", request_clear_action_pages)
         global_event.register_event("request-stop-install-actions", request_stop_install_actions)
         global_event.register_event("request-clear-failed-action", request_clear_failed_action)
+        global_event.register_event("jump-to-category", 
+                                    lambda first_category_name, second_category_name: 
+                                    jump_to_category(page_switcher, page_box, home_page, detail_page, first_category_name, second_category_name))
         global_event.register_event("grade-pkg", lambda pkg_name, star: grade_pkg(self.application.window, pkg_name, star))
         global_event.register_event("set-cursor", lambda cursor: set_cursor(self.application.window, cursor))
         global_event.register_event("show-message", lambda message: show_message(statusbar, message_box, message))
