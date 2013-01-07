@@ -139,15 +139,17 @@ class DetailPage(gtk.HBox):
         
         self.right_title_box = gtk.VBox()
         
-        self.return_align = gtk.Alignment()
-        self.return_align.set(0.5, 0.5, 1, 1)
-        self.return_align.set_padding(self.ALIAS_NAME_PADDING_Y, 0, 0, self.RIGHT_INFO_PADDING_X)
         self.return_button = ImageButton(
             app_theme.get_pixbuf("detail/normal.png"),
             app_theme.get_pixbuf("detail/hover.png"),
             app_theme.get_pixbuf("detail/press.png"),
             )
+        self.return_align = gtk.Alignment()
+        self.return_align.set(0.5, 0.5, 1, 1)
+        self.return_align.set_padding(self.ALIAS_NAME_PADDING_Y, 0, 0, self.RIGHT_INFO_PADDING_X)
         self.return_align.add(self.return_button)
+        
+        self.return_button.connect("clicked", lambda w: global_event.emit("switch-from-detail-page"))
         
         self.right_top_box.pack_start(self.right_title_box, True, True)
         self.right_top_box.pack_start(self.return_align, False, False)

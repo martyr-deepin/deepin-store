@@ -136,6 +136,9 @@ def show_tooltip(window, message):
     Tooltip.show_now()
     Tooltip.disable(window, True)
     
+def switch_from_detail_page(page_switcher, detail_page, page_box):
+    page_switcher.slide_to_page(page_box, "left")
+    
 def switch_to_detail_page(page_switcher, detail_page, pkg_name):
     detail_page.update_pkg_info(pkg_name)
     page_switcher.slide_to_page(detail_page, "right")
@@ -503,6 +506,7 @@ class DeepinSoftwareCenter(object):
         global_event.register_event("uninstall-pkg", self.bus_interface.uninstall_pkg)
         global_event.register_event("stop-download-pkg", self.bus_interface.stop_download_pkg)
         global_event.register_event("switch-to-detail-page", lambda pkg_name : switch_to_detail_page(page_switcher, detail_page, pkg_name))
+        global_event.register_event("switch-from-detail-page", lambda : switch_from_detail_page(page_switcher, detail_page, page_box))
         global_event.register_event("remove-wait-action", self.bus_interface.remove_wait_missions)
         global_event.register_event("remove-wait-download", self.bus_interface.remove_wait_downloads)
         global_event.register_event("request-clear-action-pages", request_clear_action_pages)
