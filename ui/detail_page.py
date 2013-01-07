@@ -59,7 +59,7 @@ class DetailPage(gtk.HBox):
     ICON_SIZE = 64
     ICON_PADDING_X = 50
     
-    STAR_PADDING_X = 30
+    STAR_PADDING_X = 36
     STAR_PADDING_Y = 12
     STAR_SIZE = 13
 
@@ -107,7 +107,13 @@ class DetailPage(gtk.HBox):
         self.left_view_box.set_size_request(self.LEFT_INFO_WIDTH, - 1)
         
         self.left_logo_box = gtk.VBox()
-        self.left_logo_box.set_size_request(-1, 150)
+        self.left_logo_box.set_size_request(-1, 120)
+        
+        self.left_action_box = gtk.HBox()
+        self.left_action_align = gtk.Alignment()
+        self.left_action_align.set(0.5, 0.5, 0, 0)
+        self.left_action_align.set_padding(0, 30, 0, 0)
+        self.left_action_align.add(self.left_action_box)
         
         self.left_label_table = gtk.Table(4, 1)
         self.left_label_table.set_row_spacings(4)
@@ -124,6 +130,9 @@ class DetailPage(gtk.HBox):
         self.left_download_label = Label()
         
         self.left_homepage_box = gtk.HBox()
+        self.left_homepage_box_align = gtk.Alignment()
+        self.left_homepage_box_align.set(0.0, 0.5, 0, 0)
+        self.left_homepage_box_align.add(self.left_homepage_box)
         
         self.right_info_box = gtk.VBox()
         self.scrolled_window = ScrolledWindow()
@@ -159,11 +168,12 @@ class DetailPage(gtk.HBox):
         self.scrolled_window.add_child(self.right_view_box)
         
         self.left_view_box.pack_start(self.left_logo_box, False, False)
+        self.left_view_box.pack_start(self.left_action_align, False, False)
         self.left_label_table.attach(self.left_category_box, 0, 1, 0, 1)
         self.left_label_table.attach(self.left_version_label, 0, 1, 1, 2)
         self.left_label_table.attach(self.left_size_label, 0, 1, 2, 3)
         self.left_label_table.attach(self.left_download_label, 0, 1, 3, 4)
-        self.left_label_table.attach(self.left_homepage_box, 0, 1, 4, 5)
+        self.left_label_table.attach(self.left_homepage_box_align, 0, 1, 4, 5)
         self.left_label_align.add(self.left_label_table)
         self.left_view_box.pack_start(self.left_label_align, False, False)
         self.right_info_box.pack_start(self.scrolled_window, True, True)
@@ -275,6 +285,14 @@ class DetailPage(gtk.HBox):
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
             
+    def button_press_start_button(self, widget, event):
+        pixbuf = app_theme.get_pixbuf("button/start_normal.png").get_pixbuf()
+        desktop_info = self.data_manager.get_pkg_desktop_info(self.pkg_name)
+        global_event.emit("start-pkg", 
+                          self.alias_name, 
+                          desktop_info, 
+                          (int(event.x), int(event.y), pixbuf.get_width() / 2, 0))
+            
     def update_pkg_info(self, pkg_name):
         self.pkg_name = pkg_name
         (self.category, self.long_desc, 
@@ -284,8 +302,30 @@ class DetailPage(gtk.HBox):
          self.have_screenshot) = self.data_manager.get_pkg_detail_info(self.pkg_name)
         self.star_buffer = StarBuffer(self.star)
         
-        container_remove_all(self.left_category_box)
+        container_remove_all(self.left_action_box)
+        install_status = self.data_manager.get_pkgs_install_status([self.pkg_name])
+        if install_status[0]:
+            if self.category == None:
+                status_label = Label("已安装")
+                self.left_action_box.pack_start(status_label)
+            else:
+                action_button = ImageButton(
+                    app_theme.get_pixbuf("button/start_normal.png"),
+                    app_theme.get_pixbuf("button/start_hover.png"),
+                    app_theme.get_pixbuf("button/start_press.png"),
+                    )
+                action_button.connect("button-press-event", self.button_press_start_button)
+                self.left_action_box.pack_start(action_button)
+        else:
+            action_button = ImageButton(
+                app_theme.get_pixbuf("button/install_normal.png"),
+                app_theme.get_pixbuf("button/install_hover.png"),
+                app_theme.get_pixbuf("button/install_press.png"),
+                )
+            action_button.connect("clicked", lambda w: global_event.emit("install-pkg", [self.pkg_name]))
+            self.left_action_box.pack_start(action_button)
         
+        container_remove_all(self.left_category_box)
         if self.category != None:
             self.left_category_label.set_text("类别：%s" % self.category[1])
             self.left_category_box.add(self.left_category_label)

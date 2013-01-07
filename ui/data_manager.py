@@ -96,6 +96,9 @@ class DataManager(object):
         else:
             return 1
         
+    def get_pkgs_install_status(self, pkg_names):
+        return self.bus_interface.request_pkgs_install_status(pkg_names)
+        
     def get_pkgs_info_match_keyword(self, keywords):
         pkg_names = self.search_query(keywords)
         
@@ -109,6 +112,11 @@ class DataManager(object):
             pkg_infos.append((pkg_name, desktop_infos, install_status[index]))
         
         return pkg_infos
+    
+    def get_pkg_desktop_info(self, pkg_name):
+        self.desktop_db_cursor.execute(
+            "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
+        return self.desktop_db_cursor.fetchall()
         
     def get_pkg_detail_info(self, pkg_name):
         self.desktop_db_cursor.execute(
