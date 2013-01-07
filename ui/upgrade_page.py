@@ -569,7 +569,7 @@ class UpgradeItem(TreeItem):
                 ITEM_NO_NOTIFY_WIDTH,
                 ITEM_NO_NOTIFY_HEIGHT,
                 text_color=text_color,
-                underline=self.notify_button_hover)
+                )
         
     def render_pkg_status(self, cr, rect):
         if self.row_index % 2 == 1:
@@ -1066,7 +1066,7 @@ class NoNotifyItem(TreeItem):
             ITEM_NOTIFY_AGAIN_WIDTH,
             ITEM_NOTIFY_AGAIN_HEIGHT,
             text_color=text_color,
-            underline=self.notify_button_hover)
+            )
         
     def render_pkg_status(self, cr, rect):
         if self.row_index % 2 == 1:

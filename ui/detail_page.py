@@ -335,8 +335,10 @@ class DetailPage(gtk.HBox):
         
         container_remove_all(self.left_homepage_box)
         if self.homepage != "":
-            homepage_label = Label("访问首页", text_color=app_theme.get_color("homepage"))
-            set_clickable_cursor(homepage_label)
+            homepage_label = Label("访问首页", 
+                                   text_color=app_theme.get_color("homepage"),
+                                   hover_color=app_theme.get_color("homepage_hover"))
+            homepage_label.set_clickable()
             homepage_label.connect("button-press-event", lambda w, e: run_command("xdg-open %s" % self.homepage))
             self.left_homepage_box.pack_start(homepage_label)
         
