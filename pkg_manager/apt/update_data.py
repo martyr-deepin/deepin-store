@@ -91,6 +91,7 @@ class UpdateData(Thread):
                     download_service_thread.fetch_service.add_fetch(fetch_files)
                     
                     origin_update_file = os.path.join(DATA_DIR, "update_data.tar.gz")
+                    patch_update_file = os.path.join(DATA_DIR, "patch_data.tar.gz")
                     temp_file = ""
                     signal = self.signal.get()
                     if signal == "download-finish":
@@ -103,7 +104,10 @@ class UpdateData(Thread):
                                 
                             if temp_file == "":    
                                 temp_file = os.path.join(UPDATE_TEMP_DIR, "update_data_%s.tar.gz" % patch_name)
-                                subprocess.Popen("xdelta3 -ds %s %s %s" % (origin_update_file, patch_path, temp_file), shell=True).wait()    
+                                if os.path.exists(patch_update_file):
+                                    subprocess.Popen("xdelta3 -ds %s %s %s" % (patch_update_file, patch_path, temp_file), shell=True).wait()    
+                                else:
+                                    subprocess.Popen("xdelta3 -ds %s %s %s" % (origin_update_file, patch_path, temp_file), shell=True).wait()    
                                 
                                 os.remove(patch_path)
                             else:
@@ -121,12 +125,13 @@ class UpdateData(Thread):
                             
                             print "Apply patch: %s sucess" % patch_name
                             
-                        os.remove(origin_update_file)
-                        os.renames(temp_file, origin_update_file)
+                        if os.path.exists(patch_update_file):
+                            os.remove(patch_update_file)
+                        os.renames(temp_file, patch_update_file)
                         
                         print "Update data file."
                         
-                        with tarfile.open(origin_update_file, "r:gz") as tar:
+                        with tarfile.open(patch_update_file, "r:gz") as tar:
                             tar.extractall(UPDATE_TEMP_DIR)
                         print "Extra file to: %s" % (UPDATE_TEMP_DIR)
                         

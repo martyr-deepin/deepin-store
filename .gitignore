@@ -1,7 +1,7 @@
 data/update_data/
 data/patch/
 data/update_temp/
-data/update_data.tar.gz
+data/patch_data.tar.gz
 *.pyc
 nohup.out
 .#*
