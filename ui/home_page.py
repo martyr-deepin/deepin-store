@@ -31,7 +31,7 @@ from item_render import STAR_SIZE, get_star_level, get_icon_pixbuf_path, NAME_SI
 from search_page import SearchPage
 from dtk.ui.new_treeview import TreeView, TreeItem
 from dtk.ui.cycle_strip import CycleStrip
-from dtk.ui.draw import draw_text, draw_round_rectangle, draw_pixbuf, draw_vlinear
+from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from deepin_utils.file import get_parent_dir
 from dtk.ui.utils import color_hex_to_cairo, container_remove_all, is_in_rect
 from dtk.ui.star_view import StarBuffer
@@ -221,6 +221,8 @@ CATEGORY_ITEM_HEIGHT = 37
 CATEGORY_ITEM_NAME_SIZE = 11
 SECOND_CATEGORY_ITEM_NAME_SIZE = 10
 
+CATEGORY_ITEM_EXPAND_PADDING_X = 30
+
 class CategoryItem(TreeItem):
     '''
     class docs
@@ -266,6 +268,18 @@ class CategoryItem(TreeItem):
                   text_color=text_color,
                   )
         
+        if self.is_hover:
+            if self.is_expand:
+                pixbuf = app_theme.get_pixbuf("sidebar/close.png").get_pixbuf()
+            else:
+                pixbuf = app_theme.get_pixbuf("sidebar/open.png").get_pixbuf()
+                
+            draw_pixbuf(
+                cr,
+                pixbuf,
+                rect.x + rect.width - CATEGORY_ITEM_EXPAND_PADDING_X,
+                rect.y + (rect.height - pixbuf.get_height()) / 2)
+        
     def get_height(self):
         return CATEGORY_ITEM_HEIGHT
     
@@ -295,6 +309,28 @@ class CategoryItem(TreeItem):
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
     
+    def is_in_expand_button_area(self, column, offset_x, offset_y):
+        pixbuf = app_theme.get_pixbuf("sidebar/close.png").get_pixbuf()
+        
+        return is_in_rect((offset_x, offset_y),
+                          (CATEGORY_VIEW_WIDTH - CATEGORY_ITEM_EXPAND_PADDING_X,
+                           (self.get_height() - pixbuf.get_height()) / 2,
+                           pixbuf.get_width(),
+                           pixbuf.get_height()))
+    
+    def motion_notify(self, column, offset_x, offset_y):
+        if self.is_in_expand_button_area(column, offset_x, offset_y):
+            global_event.emit("set-cursor", gtk.gdk.HAND2)    
+        else:
+            global_event.emit("set-cursor", None)    
+            
+    def button_press(self, column, offset_x, offset_y):
+        if self.is_in_expand_button_area(column, offset_x, offset_y):
+            if self.is_expand:
+                self.unexpand()
+            else:
+                self.expand()
+            
     def single_click(self, column, offset_x, offset_y):
         items = []
         pkg_names = []
