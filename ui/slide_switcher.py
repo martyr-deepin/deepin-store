@@ -26,7 +26,7 @@ from dtk.ui.timeline import Timeline, CURVE_SINE
 from dtk.ui.utils import remove_timeout_id, is_in_rect
 from dtk.ui.utils import set_cursor
 from dtk.ui.constant import ALIGN_START, ALIGN_MIDDLE
-from math import pi
+from skin import app_theme
 import gobject
 import gtk
 
@@ -39,7 +39,6 @@ class SlideSwitcher(EventBox):
                  images,
                  pointer_offset_x=-105,
                  pointer_offset_y=-20,
-                 pointer_radious=5,
                  pointer_padding=20,
                  hover_animation_time=500,
                  auto_animation_time=2000,
@@ -49,6 +48,8 @@ class SlideSwitcher(EventBox):
                  height_offset=0,
                  hover_switch=True,
                  auto_switch=True,
+                 active_dpixbuf=app_theme.get_pixbuf("slide_switcher/active.png"),
+                 inactive_dpixbuf=app_theme.get_pixbuf("slide_switcher/inactive.png"),
                  ):
         '''
         init docs
@@ -71,11 +72,13 @@ class SlideSwitcher(EventBox):
         self.vertical_align = vertical_align
         self.hover_switch = hover_switch
         self.auto_switch = auto_switch
+        self.active_dpixbuf = active_dpixbuf
+        self.inactive_dpixbuf = inactive_dpixbuf
         size_pixbuf = self.slide_images[0]
         
         self.pointer_offset_x = pointer_offset_x
         self.pointer_offset_y = pointer_offset_y
-        self.pointer_radious = pointer_radious
+        self.pointer_radious = self.active_dpixbuf.get_pixbuf().get_width() / 2
         self.pointer_padding = pointer_padding
         self.set_size_request(-1, size_pixbuf.get_height() + height_offset)
         
@@ -140,21 +143,20 @@ class SlideSwitcher(EventBox):
             for index in range(0, self.image_number):
                 if self.target_index == None:
                     if self.active_index == index:
-                        cr.set_source_rgba(1, 1, 0, 0.9)
+                        pixbuf = self.active_dpixbuf.get_pixbuf()
                     else:
-                        cr.set_source_rgba(0, 1, 1, 0.9)
+                        pixbuf = self.inactive_dpixbuf.get_pixbuf()
                 else:
                     if self.target_index == index:
-                        cr.set_source_rgba(1, 1, 0, 0.9)
+                        pixbuf = self.active_dpixbuf.get_pixbuf()
                     else:
-                        cr.set_source_rgba(0, 1, 1, 0.9)
-            
-                cr.arc(rect.x + rect.width + self.pointer_offset_x + index * self.pointer_padding,
-                       rect.y + rect.height + self.pointer_offset_y,
-                       self.pointer_radious,
-                       0, 
-                       2 * pi)
-                cr.fill()
+                        pixbuf = self.inactive_dpixbuf.get_pixbuf()
+                        
+                draw_pixbuf(cr,
+                            pixbuf,
+                            rect.x + rect.width + self.pointer_offset_x + index * self.pointer_padding,
+                            rect.y + rect.height + self.pointer_offset_y
+                            )        
         
         return True
     

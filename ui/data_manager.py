@@ -68,7 +68,7 @@ class DataManager(object):
         
         self.build_category_dict()
         
-    from deepin_utils.time import print_exec_time
+    from deepin_utils.date_time import print_exec_time
     @print_exec_time    
     def get_pkgs_match_input(self, input_string):
         # Select package name match input string.
