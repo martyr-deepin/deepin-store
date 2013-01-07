@@ -118,6 +118,8 @@ class DetailPage(gtk.HBox):
         self.left_label_align.set_padding(0, 0, 6, 0)
         
         self.left_category_label = Label()
+        self.left_category_box = gtk.VBox()
+        self.left_category_box.add(self.left_category_label)
         self.left_version_label = Label()
         self.left_size_label = Label()
         self.left_download_label = Label()
@@ -161,7 +163,7 @@ class DetailPage(gtk.HBox):
         self.scrolled_window.add_child(self.right_view_box)
         
         self.left_view_box.pack_start(self.left_logo_box, False, False)
-        self.left_label_table.attach(self.left_category_label, 0, 1, 0, 1)
+        self.left_label_table.attach(self.left_category_box, 0, 1, 0, 1)
         self.left_label_table.attach(self.left_version_label, 0, 1, 1, 2)
         self.left_label_table.attach(self.left_size_label, 0, 1, 2, 3)
         self.left_label_table.attach(self.left_download_label, 0, 1, 3, 4)
@@ -287,9 +289,11 @@ class DetailPage(gtk.HBox):
          self.have_screenshot) = self.data_manager.get_pkg_detail_info(self.pkg_name)
         self.star_buffer = StarBuffer(self.star)
         
-        if self.category == None:
-            self.category = ("", "")
-        self.left_category_label.set_text("类别：%s %s" % self.category)
+        container_remove_all(self.left_category_box)
+        
+        if self.category != None:
+            self.left_category_label.set_text("类别：%s" % self.category)
+            self.left_category_box.add(self.left_category_label)
         self.left_version_label.set_text("版本：%s" % self.version)
         self.left_size_label.set_text("大小：%s" % format_file_size(self.size))
         self.left_download_label.set_text("下载：%s" % self.download)

@@ -30,7 +30,8 @@ from dtk.ui.threads import post_gui, AnonymityThread
 from dtk.ui.button import CheckButtonBuffer
 from dtk.ui.star_view import StarBuffer
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
-from dtk.ui.utils import is_in_rect, format_file_size, container_remove_all, read_file, write_file, split_with
+from deepin_utils.core import split_with
+from dtk.ui.utils import is_in_rect, format_file_size, container_remove_all, read_file, write_file
 from dtk.ui.label import Label
 from dtk.ui.button import Button
 from item_render import (render_pkg_info, STAR_SIZE, get_star_level,
