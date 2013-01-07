@@ -239,13 +239,15 @@ class CategoryItem(TreeItem):
     def render_name(self, cr, rect):
         text_color = "#000000"
         if self.is_select:
-            cr.set_source_rgb(*color_hex_to_cairo("#5080D8"))
+            cr.set_source_rgba(*color_hex_to_cairo(app_theme.get_color("sidebar_select").get_color()))
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
             
             text_color = "#FFFFFF"
         elif self.is_hover:
-            text_color = "#5080D8"
+            cr.set_source_rgba(*color_hex_to_cairo(app_theme.get_color("sidebar_hover").get_color()))
+            cr.rectangle(rect.x, rect.y, rect.width, rect.height)
+            cr.fill()
         
         pixbuf = app_theme.get_pixbuf("category/%s.png" % (self.index)).get_pixbuf()
         draw_pixbuf(
@@ -401,13 +403,15 @@ class SecondCategoryItem(TreeItem):
     def render_name(self, cr, rect):
         text_color = "#000000"
         if self.is_select:
-            cr.set_source_rgb(*color_hex_to_cairo("#5080D8"))
-            draw_round_rectangle(cr, rect.x, rect.y, rect.width, rect.height, 5)
+            cr.set_source_rgba(*color_hex_to_cairo(app_theme.get_color("sidebar_select").get_color()))
+            cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
             
             text_color = "#FFFFFF"
         elif self.is_hover:
-            text_color = "#5080D8"
+            cr.set_source_rgba(*color_hex_to_cairo(app_theme.get_color("sidebar_hover").get_color()))
+            cr.rectangle(rect.x, rect.y, rect.width, rect.height)
+            cr.fill()
         
         draw_text(cr, 
                   self.second_category_name,
@@ -509,13 +513,15 @@ class RecommendItem(TreeItem):
     def render_name(self, cr, rect):
         text_color = "#000000"
         if self.is_select:
-            cr.set_source_rgb(*color_hex_to_cairo("#5080D8"))
+            cr.set_source_rgba(*color_hex_to_cairo(app_theme.get_color("sidebar_select").get_color()))
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
             
             text_color = "#FFFFFF"
         elif self.is_hover:
-            text_color = "#5080D8"
+            cr.set_source_rgba(*color_hex_to_cairo(app_theme.get_color("sidebar_hover").get_color()))
+            cr.rectangle(rect.x, rect.y, rect.width, rect.height)
+            cr.fill()
         
         pixbuf = app_theme.get_pixbuf("category/12.png").get_pixbuf()
         draw_pixbuf(
