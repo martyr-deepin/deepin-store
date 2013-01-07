@@ -16,6 +16,7 @@
  "buttonFont" : "#000000",
  "sidebar_select" : "#ccc683",
  "sidebar_hover" : "#e3e2be",
+ "homepage" : "#333333",
  },	
  "alpha_colors" : {
      "frame" : ("#000000", 0.5),

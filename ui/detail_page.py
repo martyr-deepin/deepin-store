@@ -28,14 +28,13 @@ from skin import app_theme
 import sys
 from deepin_utils.file import get_parent_dir, read_file, write_file, remove_file, format_file_size
 from deepin_utils.process import run_command
-from dtk.ui.utils import color_hex_to_cairo, container_remove_all, get_resize_pixbuf_with_height
+from dtk.ui.utils import color_hex_to_cairo, container_remove_all, get_resize_pixbuf_with_height, set_clickable_cursor
 import zipfile
 from dtk.ui.label import Label
 from dtk.ui.draw import draw_pixbuf, draw_text
 from dtk.ui.star_view import StarBuffer
 from resizable_label import ResizableLabel
 from slide_switcher import SlideSwitcher
-from dtk.ui.button import Button
 from constant import SCREENSHOT_HOST, SCREENSHOT_DOWNLOAD_DIR
 import threading
 import gobject
@@ -61,7 +60,7 @@ class DetailPage(gtk.HBox):
     ICON_PADDING_X = 50
     
     STAR_PADDING_X = 30
-    STAR_PADDING_Y = 10
+    STAR_PADDING_Y = 12
     STAR_SIZE = 13
 
     MARK_NUMBER_SIZE = 11
@@ -124,9 +123,6 @@ class DetailPage(gtk.HBox):
         self.left_size_label = Label()
         self.left_download_label = Label()
         
-        self.left_homepage_align = gtk.Alignment()
-        self.left_homepage_align.set(0.5, 0.5, 0, 0)
-        self.left_homepage_align.set_padding(10, 10, 0, 0)
         self.left_homepage_box = gtk.HBox()
         
         self.right_info_box = gtk.VBox()
@@ -167,10 +163,9 @@ class DetailPage(gtk.HBox):
         self.left_label_table.attach(self.left_version_label, 0, 1, 1, 2)
         self.left_label_table.attach(self.left_size_label, 0, 1, 2, 3)
         self.left_label_table.attach(self.left_download_label, 0, 1, 3, 4)
+        self.left_label_table.attach(self.left_homepage_box, 0, 1, 4, 5)
         self.left_label_align.add(self.left_label_table)
         self.left_view_box.pack_start(self.left_label_align, False, False)
-        self.left_homepage_align.add(self.left_homepage_box)
-        self.left_view_box.pack_start(self.left_homepage_align, False, False)
         self.right_info_box.pack_start(self.scrolled_window, True, True)
         self.pack_start(self.left_view_box, False, False)
         self.pack_start(self.right_info_box, True, True)
@@ -292,7 +287,7 @@ class DetailPage(gtk.HBox):
         container_remove_all(self.left_category_box)
         
         if self.category != None:
-            self.left_category_label.set_text("类别：%s" % self.category)
+            self.left_category_label.set_text("类别：%s" % self.category[1])
             self.left_category_box.add(self.left_category_label)
         self.left_version_label.set_text("版本：%s" % self.version)
         self.left_size_label.set_text("大小：%s" % format_file_size(self.size))
@@ -300,9 +295,10 @@ class DetailPage(gtk.HBox):
         
         container_remove_all(self.left_homepage_box)
         if self.homepage != "":
-            homepage_button = Button("访问首页")
-            homepage_button.connect("clicked", lambda w: run_command("xdg-open %s" % self.homepage))
-            self.left_homepage_box.pack_start(homepage_button)
+            homepage_label = Label("访问首页", text_color=app_theme.get_color("homepage"))
+            set_clickable_cursor(homepage_label)
+            homepage_label.connect("button-press-event", lambda w, e: run_command("xdg-open %s" % self.homepage))
+            self.left_homepage_box.pack_start(homepage_label)
         
         container_remove_all(self.right_desc_box)
         resizable_label = ResizableLabel(self.long_desc, self.LONG_DESC_WRAP_WIDTH, self.LONG_DESC_INIT_HEIGHT, 3)

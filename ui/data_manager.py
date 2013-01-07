@@ -119,7 +119,7 @@ class DataManager(object):
         else:
             (first_category_index, second_category_index) = (eval(category_indexes[0]))[0]
             self.category_db_cursor.execute(
-                "SELECT second_category_name FROM category_name WHERE first_category_index=? and second_category_index=?",
+                "SELECT first_category_name, second_category_name FROM category_name WHERE first_category_index=? and second_category_index=?",
                 [first_category_index, second_category_index])
             category = self.category_db_cursor.fetchone()
         
