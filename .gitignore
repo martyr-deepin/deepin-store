@@ -11,3 +11,4 @@ dist
 dtk.egg-info
 *.po~
 *.swp
+pkg_manager/apt/update_md5

@@ -94,7 +94,7 @@ class UpdateData(Thread):
                     temp_file = ""
                     signal = self.signal.get()
                     if signal == "download-finish":
-                        for (data_md5, patch_md5, patch_name) in download_patches:
+                        for (patch_index, (data_md5, patch_md5, patch_name)) in enumerate(download_patches):
                             patch_path = os.path.join(UPDATE_TEMP_DIR, patch_name)
                             if md5_file(patch_path) == patch_md5:
                                 print "Check patch md5 sucess: %s" % (patch_path)
@@ -116,6 +116,8 @@ class UpdateData(Thread):
                                 temp_file = new_temp_file
                                 
                             write_file(md5_filepath, data_md5)    
+                            
+                            global_event.emit("update-data-update", patch_index, len(download_patches))
                             
                             print "Apply patch: %s sucess" % patch_name
                             
