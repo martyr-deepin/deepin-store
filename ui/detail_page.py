@@ -22,7 +22,9 @@
 
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.constant import ALIGN_MIDDLE
+from dtk.ui.button import ImageButton
 import traceback
+from skin import app_theme
 import sys
 from deepin_utils.file import get_parent_dir, read_file, write_file, remove_file, format_file_size
 from deepin_utils.process import run_command
@@ -129,13 +131,28 @@ class DetailPage(gtk.HBox):
         self.scrolled_window = ScrolledWindow()
         self.right_view_box = gtk.VBox()
         
-        self.right_title_box = gtk.VBox()
-        self.right_title_box.set_size_request(-1, self.RIGHT_TITLE_BOX_HEIGHT)
+        self.right_top_box = gtk.HBox()
+        self.right_top_box.set_size_request(-1, self.RIGHT_TITLE_BOX_HEIGHT)
         self.right_desc_box = gtk.VBox()
         self.right_slide_box = gtk.VBox()
         self.right_comment_box = gtk.VBox()
         
-        self.right_view_box.pack_start(self.right_title_box, False, False)
+        self.right_title_box = gtk.VBox()
+        
+        self.return_align = gtk.Alignment()
+        self.return_align.set(0.5, 0.5, 1, 1)
+        self.return_align.set_padding(self.ALIAS_NAME_PADDING_Y, 0, 0, self.RIGHT_INFO_PADDING_X)
+        self.return_button = ImageButton(
+            app_theme.get_pixbuf("detail/normal.png"),
+            app_theme.get_pixbuf("detail/hover.png"),
+            app_theme.get_pixbuf("detail/press.png"),
+            )
+        self.return_align.add(self.return_button)
+        
+        self.right_top_box.pack_start(self.right_title_box, True, True)
+        self.right_top_box.pack_start(self.return_align, False, False)
+        
+        self.right_view_box.pack_start(self.right_top_box, False, False)
         self.right_view_box.pack_start(self.right_desc_box, False, False)
         self.right_view_box.pack_start(self.right_slide_box, False, False)
         self.right_view_box.pack_start(self.right_comment_box, False, False)
@@ -157,6 +174,7 @@ class DetailPage(gtk.HBox):
         self.left_view_box.connect("expose-event", self.expose_left_view)
         self.right_view_box.connect("expose-event", self.expose_right_view)
         self.left_logo_box.connect("expose-event", self.expose_left_logo_box)
+        self.right_top_box.connect("expose-event", self.expose_right_top_box)
         self.right_title_box.connect("expose-event", self.expose_right_title_box)
         
         self.download_screenshot = DownloadScreenshot()
@@ -221,16 +239,21 @@ class DetailPage(gtk.HBox):
                 text_color="#F07200"
                 )
             
+    def expose_right_top_box(self, widget, event):
+        # Init.
+        cr = widget.window.cairo_create()
+        rect = widget.allocation
+        
+        # Draw background.
+        cr.set_source_rgb(*color_hex_to_cairo("#FFFFFF"))
+        cr.rectangle(rect.x, rect.y, rect.width, rect.height)
+        cr.fill()
+            
     def expose_right_title_box(self, widget, event):
         if self.pkg_name != None:
             # Init.
             cr = widget.window.cairo_create()
             rect = widget.allocation
-            
-            # Draw background.
-            cr.set_source_rgb(*color_hex_to_cairo("#FFFFFF"))
-            cr.rectangle(rect.x, rect.y, rect.width, rect.height)
-            cr.fill()
             
             # Draw alias name.
             draw_text(
