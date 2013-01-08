@@ -30,7 +30,8 @@ from split_word import init_jieba
 from dtk.ui.button import LinkButton
 from dtk.ui.navigatebar import Navigatebar
 from deepin_utils.ipc import is_dbus_name_exists
-from dtk.ui.utils import container_remove_all, set_cursor, touch_file, read_file, write_file
+from deepin_utils.file import read_file, write_file, touch_file
+from dtk.ui.utils import container_remove_all, set_cursor
 from dtk.ui.application import Application
 from dtk.ui.statusbar import Statusbar
 from home_page import HomePage

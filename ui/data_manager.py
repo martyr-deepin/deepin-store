@@ -122,6 +122,7 @@ class DataManager(object):
         self.desktop_db_cursor.execute(
             "SELECT category_indexes FROM desktop WHERE pkg_name=?", [pkg_name])
         category_indexes = self.desktop_db_cursor.fetchone()
+        recommend_pkgs = []
         if category_indexes == None:
             category = None
         else:
@@ -130,12 +131,23 @@ class DataManager(object):
                 "SELECT first_category_name, second_category_name FROM category_name WHERE first_category_index=? and second_category_index=?",
                 [first_category_index, second_category_index])
             category = self.category_db_cursor.fetchone()
+            
+            self.category_db_cursor.execute(
+                "SELECT recommend_pkgs FROM recommend WHERE first_category_index=? and second_category_index=?",
+                [first_category_index, second_category_index])
+            names = eval(self.category_db_cursor.fetchone()[0])
+            for name in names:
+                if name != pkg_name:
+                    self.software_db_cursor.execute(
+                        "SELECT alias_name, star FROM software WHERE pkg_name=?", [name])
+                    (alias_name, star) = self.software_db_cursor.fetchone()
+                    recommend_pkgs.append((name, alias_name, star))
         
         self.software_db_cursor.execute(
             "SELECT long_desc, version, homepage, size, star, download, alias_name, have_screenshot FROM software WHERE pkg_name=?", [pkg_name])
         (long_desc, version, homepage, size, star, download, alias_name, have_screenshot) = self.software_db_cursor.fetchone()
         
-        return (category, long_desc, version, homepage, size, star, download, alias_name, have_screenshot)
+        return (category, long_desc, version, homepage, size, star, download, alias_name, have_screenshot, recommend_pkgs)
         
     def get_pkg_search_info(self, pkg_name):
         self.software_db_cursor.execute(

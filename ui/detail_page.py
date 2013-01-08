@@ -21,14 +21,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from dtk.ui.scrolled_window import ScrolledWindow
+import copy
 from dtk.ui.constant import ALIGN_MIDDLE
 from dtk.ui.button import ImageButton
+from dtk.ui.star_view import StarView
+from constant import ICON_DIR
 import traceback
 from skin import app_theme
 import sys
 from deepin_utils.file import get_parent_dir, read_file, write_file, remove_file, format_file_size
 from deepin_utils.process import run_command
-from dtk.ui.utils import color_hex_to_cairo, container_remove_all, get_resize_pixbuf_with_height, set_clickable_cursor
+from dtk.ui.utils import color_hex_to_cairo, container_remove_all, get_resize_pixbuf_with_height
 import zipfile
 from dtk.ui.label import Label
 from dtk.ui.draw import draw_pixbuf, draw_text
@@ -119,8 +122,8 @@ class DetailPage(gtk.HBox):
         self.left_label_table.set_row_spacings(4)
         
         self.left_label_align = gtk.Alignment()
-        self.left_label_align.set(0.5, 0.5, 0, 0)
-        self.left_label_align.set_padding(0, 0, 6, 0)
+        self.left_label_align.set(0.0, 0.5, 0, 0)
+        self.left_label_align.set_padding(0, 0, 14, 0)
         
         self.left_category_name_label = Label()
         self.left_category_label = Label(hover_color=app_theme.get_color("homepage_hover"))
@@ -140,6 +143,14 @@ class DetailPage(gtk.HBox):
         self.left_homepage_box_align = gtk.Alignment()
         self.left_homepage_box_align.set(0.0, 0.5, 0, 0)
         self.left_homepage_box_align.add(self.left_homepage_box)
+        
+        self.left_recommend_box = gtk.VBox()
+        self.left_recommend_box_align = gtk.Alignment()
+        self.left_recommend_box_align.set(0.0, 0.0, 0, 0)
+        self.left_recommend_box_align.set_padding(30, 0, 14, 0)
+        self.left_recommend_box_align.add(self.left_recommend_box)
+        
+        self.left_recommend_label = Label("同类热门推荐")
         
         self.right_info_box = gtk.VBox()
         self.scrolled_window = ScrolledWindow()
@@ -183,6 +194,7 @@ class DetailPage(gtk.HBox):
         self.left_label_table.attach(self.left_homepage_box_align, 0, 1, 4, 5)
         self.left_label_align.add(self.left_label_table)
         self.left_view_box.pack_start(self.left_label_align, False, False)
+        self.left_view_box.pack_start(self.left_recommend_box_align, False, False)
         self.right_info_box.pack_start(self.scrolled_window, True, True)
         self.pack_start(self.left_view_box, False, False)
         self.pack_start(self.right_info_box, True, True)
@@ -311,7 +323,8 @@ class DetailPage(gtk.HBox):
          self.version, self.homepage, 
          self.size, self.star, 
          self.download, self.alias_name,
-         self.have_screenshot) = self.data_manager.get_pkg_detail_info(self.pkg_name)
+         self.have_screenshot,
+         self.recommend_pkgs) = self.data_manager.get_pkg_detail_info(self.pkg_name)
         self.star_buffer = StarBuffer(self.star)
         
         container_remove_all(self.left_action_box)
@@ -354,6 +367,14 @@ class DetailPage(gtk.HBox):
             homepage_label.set_clickable()
             homepage_label.connect("button-press-event", lambda w, e: run_command("xdg-open %s" % self.homepage))
             self.left_homepage_box.pack_start(homepage_label)
+            
+        container_remove_all(self.left_recommend_box)    
+        print self.recommend_pkgs
+        if len(self.recommend_pkgs) > 0:
+            self.left_recommend_box.pack_start(self.left_recommend_label, False, False, 8)
+            
+            for (recommend_pkg_name, alias_name, star) in self.recommend_pkgs:
+                self.left_recommend_box.pack_start(RecommendPkgItem(self, recommend_pkg_name, alias_name, star), False, False, 4)
         
         container_remove_all(self.right_desc_box)
         resizable_label = ResizableLabel(self.long_desc, self.LONG_DESC_WRAP_WIDTH, self.LONG_DESC_INIT_HEIGHT, 3)
@@ -500,3 +521,69 @@ class DownloadScreenshot(object):
         if self.fetch_files_dict.has_key(pkg_name):
             self.fetch_service_thread.fetch_service.pause_fetch(self.fetch_files_dict[pkg_name])
             self.fetch_files_dict.pop(pkg_name)
+
+class RecommendPkgItem(gtk.HBox):
+    '''
+    class docs
+    '''
+    
+    MARK_SIZE = 11
+    MARK_PADDING_X = 5
+    MARK_PADDING_Y = -3
+	
+    def __init__(self, detail_page, pkg_name, alias_name, star):
+        '''
+        init docs
+        '''
+        gtk.HBox.__init__(self)
+        self.star = star
+        self.pkg_name = pkg_name
+                
+        v_box = gtk.VBox()
+        pkg_icon_image = gtk.image_new_from_pixbuf(
+            gtk.gdk.pixbuf_new_from_file_at_size(os.path.join(ICON_DIR, "%s.png" % pkg_name), 32, 32))
+        pkg_alias_label = Label(alias_name,
+                                hover_color=app_theme.get_color("homepage_hover"))
+        pkg_alias_label.set_clickable()
+        pkg_alias_label.connect("button-press-event", lambda w, e: detail_page.update_pkg_info(pkg_name))
+        
+        self.pkg_star_box = gtk.HBox()
+        
+        self.pkg_star_view = StarView()
+        self.pkg_star_view.star_buffer.star_level = int(star)
+        self.pkg_star_view.connect("clicked", lambda w: self.grade_pkg())
+        
+        self.pkg_star_mark = gtk.VBox()
+        
+        self.pack_start(pkg_icon_image, False, False)
+        self.pack_start(v_box, True, True, 8)
+        v_box.pack_start(pkg_alias_label, False, False, 2)
+        v_box.pack_start(self.pkg_star_box, False, False, 2)
+        self.pkg_star_box.pack_start(self.pkg_star_view, False, False)
+        self.pkg_star_box.pack_start(self.pkg_star_mark, False, False)
+        
+        self.pkg_star_mark.connect("expose-event", self.expose_star_mark)
+        
+    def grade_pkg(self):
+        global_event.emit("grade-pkg", self.pkg_name, self.pkg_star_view.star_buffer.star_level)
+        
+        self.pkg_star_view.star_buffer.star_level = int(self.star)
+        self.pkg_star_view.queue_draw()
+        
+    def expose_star_mark(self, widget, event):
+        # Init.
+        cr = widget.window.cairo_create()
+        rect = widget.allocation
+        
+        draw_text(
+            cr, 
+            str(self.star),
+            rect.x + self.MARK_PADDING_X,
+            rect.y + self.MARK_PADDING_Y,
+            100,
+            self.MARK_SIZE,
+            text_size=self.MARK_SIZE,
+            text_color="#F07200"
+            )
+        
+gobject.type_register(RecommendPkgItem)        
