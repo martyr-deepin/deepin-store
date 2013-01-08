@@ -72,21 +72,6 @@ class RecommendIconItem(IconItem):
                     rect.x + padding_x,
                     rect.y + padding_y)    
         
-        if self.hover_flag:
-            cr.rectangle(rect.x + padding_x, 
-                         rect.y + padding_y, 
-                         rect.width - padding_x * 2,
-                         rect.height - padding_y * 2)
-            cr.clip()
-            
-            cr.set_source_rgba(0, 0, 0, 0.7)
-            cr.arc(rect.x + rect.width - padding_x,
-                   rect.y + rect.height - padding_y,
-                   40,
-                   0, 
-                   pi * 2)
-            cr.fill()
-        
     def icon_item_double_click(self, x, y):
         '''
         Handle double click event.

@@ -369,7 +369,6 @@ class DetailPage(gtk.HBox):
             self.left_homepage_box.pack_start(homepage_label)
             
         container_remove_all(self.left_recommend_box)    
-        print self.recommend_pkgs
         if len(self.recommend_pkgs) > 0:
             self.left_recommend_box.pack_start(self.left_recommend_label, False, False, 8)
             
