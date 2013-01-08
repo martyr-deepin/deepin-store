@@ -37,7 +37,7 @@ class SlideSwitcher(EventBox):
 	
     def __init__(self, 
                  images,
-                 pointer_offset_x=-105,
+                 pointer_offset_x=-130,
                  pointer_offset_y=-20,
                  pointer_padding=20,
                  hover_animation_time=500,
