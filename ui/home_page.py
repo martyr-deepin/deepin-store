@@ -25,7 +25,7 @@ import copy
 import gtk
 import os
 import gobject
-from dtk.ui.utils import remove_timeout_id, cairo_state
+from dtk.ui.utils import remove_timeout_id, cairo_state, get_content_size
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
 from item_render import STAR_SIZE, get_star_level, get_icon_pixbuf_path, NAME_SIZE, ITEM_PADDING_X
 from search_page import SearchPage
@@ -881,6 +881,24 @@ class PkgIconItem(IconItem):
                            self.BUTTON_HEIGHT,
                            ))
     
+    def is_in_icon_area(self, x, y):
+        if self.pkg_icon_pixbuf == None:
+            self.pkg_icon_pixbuf = gtk.gdk.pixbuf_new_from_file(get_icon_pixbuf_path(self.pkg_name))        
+            
+        return is_in_rect((x, y),
+                          (self.DRAW_PADDING_LEFT,
+                           self.DRAW_PADDING_Y,
+                           self.pkg_icon_pixbuf.get_width(),
+                           self.pkg_icon_pixbuf.get_height()))
+    
+    def is_in_name_area(self, x, y):
+        (text_width, text_height) = get_content_size(self.alias_name, text_size=NAME_SIZE)
+        return is_in_rect((x, y),
+                          (self.DRAW_PADDING_LEFT + self.pkg_icon_pixbuf.get_width() + self.DRAW_INFO_PADDING_X,
+                           self.DRAW_PADDING_Y,
+                           text_width,
+                           NAME_SIZE))
+    
     def icon_item_motion_notify(self, x, y):
         '''
         Handle `motion-notify-event` signal.
@@ -902,6 +920,8 @@ class PkgIconItem(IconItem):
             self.star_buffer.star_level = self.grade_star
             
             self.emit_redraw_request()
+        elif self.is_in_icon_area(x, y) or self.is_in_name_area(x, y):
+            global_event.emit("set-cursor", gtk.gdk.HAND2)    
         else:
             global_event.emit("set-cursor", None)
             
@@ -938,7 +958,7 @@ class PkgIconItem(IconItem):
                 
             self.button_status = BUTTON_PRESS
             self.emit_redraw_request()
-        else:
+        elif self.is_in_icon_area(x, y) or self.is_in_name_area(x, y):
             global_event.emit("switch-to-detail-page", self.pkg_name)
     
     def icon_item_button_release(self, x, y):
