@@ -635,9 +635,13 @@ class RecommendItem(TreeItem):
         
         self.box = gtk.VBox()
         
+        slide_pkg_names = self.data_manager.get_slide_info()
         self.slider_switcher = SlideSwitcher(
             map(lambda pkg_name: gtk.gdk.pixbuf_new_from_file(os.path.join(SLIDE_PICTURE_DIR, "%s.jpg" % pkg_name)),
-                self.data_manager.get_slide_info()))
+                slide_pkg_names))
+        self.slider_switcher.connect("motion-notify-index", lambda w, i: global_event.emit("set-cursor", gtk.gdk.HAND2))
+        self.slider_switcher.connect("button-press-index", lambda w, i: global_event.emit("switch-to-detail-page", slide_pkg_names[i]))
+        self.slider_switcher.connect("leave-notify-index", lambda w, i: global_event.emit("set-cursor", None))
         self.box_align = gtk.Alignment()
         self.box_align.set(0.5, 0.5, 1, 1)
         self.box_align.set_padding(5, 0, 10, 11)

@@ -35,6 +35,12 @@ class SlideSwitcher(EventBox):
     class docs
     '''
 	
+    __gsignals__ = {
+        "motion-notify-index" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (int,)),
+        "button-press-index" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (int,)),
+        "leave-notify-index" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (int,)),
+    }
+    
     def __init__(self, 
                  images,
                  pointer_offset_x=-130,
@@ -83,7 +89,7 @@ class SlideSwitcher(EventBox):
         self.set_size_request(-1, size_pixbuf.get_height() + height_offset)
         
         self.connect("expose-event", self.expose_slide_switcher)
-        self.connect("motion-notify-event", self.handle_animation)
+        self.connect("motion-notify-event", self.motion_notify_slide_switcher)
         self.connect("leave-notify-event", self.leave_notify_slide_switcher)
         self.connect("enter-notify-event", lambda w, e: self.stop_auto_slide())
         self.connect("button-press-event", lambda w, e: self.handle_animation(w, e, True))
@@ -168,6 +174,8 @@ class SlideSwitcher(EventBox):
             self.start_auto_slide()
             
         set_cursor(widget, None)    
+        
+        self.emit("leave-notify-index", self.active_index)
     
     def update_animation(self, source, status):
         self.active_alpha = 1.0 - status
@@ -189,6 +197,9 @@ class SlideSwitcher(EventBox):
             if self.active_index != self.motion_index:
                 self.start_animation(self.hover_animation_time, self.motion_index)
     
+    def motion_notify_slide_switcher(self, widget, event):            
+        self.handle_animation(widget, event)
+                
     def handle_animation(self, widget, event, button_press=False):    
         # Init.
         rect = widget.allocation
@@ -210,6 +221,11 @@ class SlideSwitcher(EventBox):
                         break
         else:
             set_cursor(widget, None)
+            
+            if button_press:
+                self.emit("button-press-index", self.active_index)
+            else:
+                self.emit("motion-notify-index", self.active_index)
             
     def start_animation(self, animation_time, index=None):
         # Update ticker with active index if option index is None.
