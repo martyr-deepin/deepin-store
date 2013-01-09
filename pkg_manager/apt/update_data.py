@@ -121,7 +121,7 @@ class UpdateData(Thread):
                                 
                             write_file(md5_filepath, data_md5)    
                             
-                            global_event.emit("update-data-update", patch_index, len(download_patches))
+                            global_event.emit("update-data-update", patch_index + 1, len(download_patches))
                             
                             print "Apply patch: %s sucess" % patch_name
                             
