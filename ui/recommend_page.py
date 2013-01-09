@@ -26,6 +26,7 @@ import os
 from deepin_utils.file import get_parent_dir
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.iconview import IconItem
+from dtk.ui.utils import is_in_rect
 from events import global_event
 
 PKG_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update_data", "recommend_picture", "zh_CN")
@@ -70,6 +71,25 @@ class RecommendIconItem(IconItem):
                     self.pkg_picture_pixbuf, 
                     rect.x + padding_x,
                     rect.y + padding_y)    
+        
+    def is_in_icon_area(self, x, y):    
+        if self.pkg_picture_pixbuf == None:
+            self.pkg_picture_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(PKG_PICTURE_DIR, "%s.jpg" % self.pkg_name))
+            
+        padding_x = (self.get_width() - self.pkg_picture_pixbuf.get_width()) / 2
+        padding_y = (self.get_height() - self.pkg_picture_pixbuf.get_height()) / 2
+        return is_in_rect((x, y), (padding_x, padding_y, self.pkg_picture_pixbuf.get_width(), self.pkg_picture_pixbuf.get_height()))
+        
+    def icon_item_motion_notify(self, x, y):
+        if self.is_in_icon_area(x, y):
+            global_event.emit("set-cursor", gtk.gdk.HAND2)    
+        else:
+            global_event.emit("set-cursor", None)    
+            
+    def icon_item_button_press(self, x, y):
+        if self.is_in_icon_area(x, y):
+            global_event.emit("switch-to-detail-page", self.pkg_name)
+            global_event.emit("set-cursor", None)    
         
     def icon_item_double_click(self, x, y):
         '''
