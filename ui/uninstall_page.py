@@ -27,11 +27,11 @@ from dtk.ui.new_treeview import TreeView, TreeItem
 from dtk.ui.progressbar import ProgressBuffer
 from dtk.ui.threads import post_gui, AnonymityThread
 from dtk.ui.star_view import StarBuffer
-from dtk.ui.utils import is_in_rect
+from dtk.ui.utils import is_in_rect, get_content_size
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
 from item_render import (render_pkg_info, STAR_SIZE, get_star_level, get_icon_pixbuf_path,
-                         ITEM_INFO_AREA_WIDTH, ITEM_CONFIRM_BUTTON_PADDING_RIGHT, ITEM_CANCEL_BUTTON_PADDING_RIGHT,
-                         ITEM_STAR_AREA_WIDTH, ITEM_STATUS_TEXT_PADDING_RIGHT,
+                         ITEM_INFO_AREA_WIDTH, ITEM_CONFIRM_BUTTON_PADDING_RIGHT, ITEM_CANCEL_BUTTON_PADDING_RIGHT, ITEM_PADDING_X,
+                         ITEM_STAR_AREA_WIDTH, ITEM_STATUS_TEXT_PADDING_RIGHT, NAME_SIZE, ITEM_PADDING_Y, ICON_SIZE, ITEM_PADDING_MIDDLE,
                          ITEM_BUTTON_AREA_WIDTH, ITEM_BUTTON_PADDING_RIGHT,
                          ITEM_HEIGHT, PROGRESSBAR_HEIGHT, ITEM_PKG_OFFSET_X
                          )
@@ -293,69 +293,85 @@ class UninstallItem(TreeItem):
         pass
     
     def motion_notify(self, column, offset_x, offset_y):
-        if self.status == self.STATUS_NORMAL:
-            if self.is_in_button_area(column, offset_x, offset_y):
-                self.button_status = BUTTON_HOVER
-                
-                if self.redraw_request_callback:
-                    self.redraw_request_callback(self)
-            elif self.button_status != BUTTON_NORMAL:
-                self.button_status = BUTTON_NORMAL
-                
-                if self.redraw_request_callback:
-                    self.redraw_request_callback(self)
-    
-            if self.is_in_star_area(column, offset_x, offset_y):
-                global_event.emit("set-cursor", gtk.gdk.HAND2)
-                
-                times = offset_x / STAR_SIZE 
-                self.grade_star = times * 2 + 2
-                    
-                self.grade_star = min(self.grade_star, 10)    
-                self.star_buffer.star_level = self.grade_star
-                
-                if self.redraw_request_callback:
-                    self.redraw_request_callback(self)
+        if column == 0:
+            if self.is_in_icon_area(column, offset_x, offset_y):
+                global_event.emit("set-cursor", gtk.gdk.HAND2)    
+            elif self.is_in_name_area(column, offset_x, offset_y):
+                global_event.emit("set-cursor", gtk.gdk.HAND2)    
             else:
                 global_event.emit("set-cursor", None)
-                
-                if self.star_buffer.star_level != self.star_level:
-                    self.star_buffer.star_level = self.star_level
+        else:
+            if self.status == self.STATUS_NORMAL:
+                if self.is_in_button_area(column, offset_x, offset_y):
+                    self.button_status = BUTTON_HOVER
                     
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
+                elif self.button_status != BUTTON_NORMAL:
+                    self.button_status = BUTTON_NORMAL
+                    
+                    if self.redraw_request_callback:
+                        self.redraw_request_callback(self)
+            
+                if self.is_in_star_area(column, offset_x, offset_y):
+                    global_event.emit("set-cursor", gtk.gdk.HAND2)
+                    
+                    times = offset_x / STAR_SIZE 
+                    self.grade_star = times * 2 + 2
+                        
+                    self.grade_star = min(self.grade_star, 10)    
+                    self.star_buffer.star_level = self.grade_star
+                    
+                    if self.redraw_request_callback:
+                        self.redraw_request_callback(self)
+                else:
+                    global_event.emit("set-cursor", None)
+                    
+                    if self.star_buffer.star_level != self.star_level:
+                        self.star_buffer.star_level = self.star_level
+                        
+                        if self.redraw_request_callback:
+                            self.redraw_request_callback(self)
                     
     def button_press(self, column, offset_x, offset_y):
-        if self.status == self.STATUS_NORMAL:
-            if self.is_in_button_area(column, offset_x, offset_y):
-                self.status = self.STATUS_CONFIRM
-            
-                if self.redraw_request_callback:
-                    self.redraw_request_callback(self)            
-            elif self.is_in_star_area(column, offset_x, offset_y):
-                global_event.emit("grade-pkg", self.pkg_name, self.grade_star)
-        elif self.status == self.STATUS_CONFIRM:
-            if self.is_confirm_button_area(column, offset_x, offset_y):
-                self.status = self.STATUS_WAIT_ACTION
-                self.status_text = "等待卸载"
+        if column == 0:
+            if self.is_in_icon_area(column, offset_x, offset_y):
+                global_event.emit("switch-to-detail-page", self.pkg_name)    
+                global_event.emit("set-cursor", None)    
+            elif self.is_in_name_area(column, offset_x, offset_y):
+                global_event.emit("switch-to-detail-page", self.pkg_name)    
+                global_event.emit("set-cursor", None)    
+        else:
+            if self.status == self.STATUS_NORMAL:
+                if self.is_in_button_area(column, offset_x, offset_y):
+                    self.status = self.STATUS_CONFIRM
                 
-                if self.redraw_request_callback:
-                    self.redraw_request_callback(self)
+                    if self.redraw_request_callback:
+                        self.redraw_request_callback(self)            
+                elif self.is_in_star_area(column, offset_x, offset_y):
+                    global_event.emit("grade-pkg", self.pkg_name, self.grade_star)
+            elif self.status == self.STATUS_CONFIRM:
+                if self.is_confirm_button_area(column, offset_x, offset_y):
+                    self.status = self.STATUS_WAIT_ACTION
+                    self.status_text = "等待卸载"
                     
-                global_event.emit("uninstall-pkg", [self.pkg_name])
-            elif self.is_cancel_button_area(column, offset_x, offset_y):
-                self.status = self.STATUS_NORMAL
-                
-                if self.redraw_request_callback:
-                    self.redraw_request_callback(self)
-        elif self.status == self.STATUS_WAIT_ACTION:
-            if self.is_cancel_button_area(column, offset_x, offset_y):
-                self.status = self.STATUS_NORMAL
-                
-                global_event.emit("remove-wait-action", [(str((self.pkg_name, ACTION_UNINSTALL)))])
-                
-                if self.redraw_request_callback:
-                    self.redraw_request_callback(self)
+                    if self.redraw_request_callback:
+                        self.redraw_request_callback(self)
+                        
+                    global_event.emit("uninstall-pkg", [self.pkg_name])
+                elif self.is_cancel_button_area(column, offset_x, offset_y):
+                    self.status = self.STATUS_NORMAL
+                    
+                    if self.redraw_request_callback:
+                        self.redraw_request_callback(self)
+            elif self.status == self.STATUS_WAIT_ACTION:
+                if self.is_cancel_button_area(column, offset_x, offset_y):
+                    self.status = self.STATUS_NORMAL
+                    
+                    global_event.emit("remove-wait-action", [(str((self.pkg_name, ACTION_UNINSTALL)))])
+                    
+                    if self.redraw_request_callback:
+                        self.redraw_request_callback(self)
                 
     def button_release(self, column, offset_x, offset_y):
         pass
@@ -399,6 +415,24 @@ class UninstallItem(TreeItem):
                                 (ITEM_HEIGHT - cancel_pixbuf.get_height()) / 2,
                                 cancel_pixbuf.get_width(),
                                 cancel_pixbuf.get_height())))
+    
+    def is_in_name_area(self, column, offset_x, offset_y):
+        (name_width, name_height) = get_content_size(self.alias_name, NAME_SIZE)
+        return (column == 0
+                and is_in_rect((offset_x, offset_y),
+                               (ITEM_PADDING_X + ITEM_PKG_OFFSET_X + ICON_SIZE + ITEM_PADDING_MIDDLE,
+                                ITEM_PADDING_Y,
+                                name_width,
+                                NAME_SIZE)))
+    
+    def is_in_icon_area(self, column, offset_x, offset_y):
+        return (column == 0
+                and self.icon_pixbuf != None
+                and is_in_rect((offset_x, offset_y),
+                               (ITEM_PADDING_X + ITEM_PKG_OFFSET_X,
+                                ITEM_PADDING_Y,
+                                self.icon_pixbuf.get_width(),
+                                self.icon_pixbuf.get_height())))
     
     def action_wait(self):
         self.status = self.STATUS_WAIT_ACTION
