@@ -21,7 +21,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from dtk.ui.scrolled_window import ScrolledWindow
-import copy
 from dtk.ui.constant import ALIGN_MIDDLE
 from dtk.ui.button import ImageButton
 from dtk.ui.star_view import StarView

@@ -93,7 +93,7 @@ class HomePage(gtk.HBox):
         search_entry.connect("action-active", lambda entry, search_string: self.show_search_page(search_string))
         search_entry.entry.connect("press-return", lambda entry: self.show_search_page(entry.get_text(), True))
         
-        recommend_item = RecommendItem(data_manager)
+        self.recommend_item = RecommendItem(data_manager)
         
         category_pkg_info = data_manager.get_category_pkg_info()
         category_items = map(lambda (index, (first_category_name, second_category_items)):
@@ -105,7 +105,7 @@ class HomePage(gtk.HBox):
                              enumerate(category_pkg_info.items()))
         
         self.category_view = TreeView(
-            [recommend_item] + category_items,
+            [self.recommend_item] + category_items,
             enable_drag_drop=False
             )
         self.category_view.draw_mask = self.draw_mask
@@ -121,9 +121,6 @@ class HomePage(gtk.HBox):
         self.pack_start(self.sidebar_box, False, False)
         self.pack_start(self.split_line, False, False)
         self.pack_start(self.page_box, True, True)
-        
-        self.category_view.connect("realize", lambda w: recommend_item.show_page())
-        self.category_view.connect("realize", lambda w: w.select_first_item())
         
         self.canopy.connect("expose-event", self.expose_canopy)
         self.split_line.connect("expose-event", self.expose_split_line)
@@ -218,6 +215,8 @@ class HomePage(gtk.HBox):
             self.entry_changed = False
         
     def show_search_page(self, search_string, press_return=False):
+        self.category_view.unselect_all()
+        
         self.press_return = press_return
         
         if self.press_return:

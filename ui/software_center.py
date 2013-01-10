@@ -156,7 +156,10 @@ def switch_page(page_switcher, page_box, page, detail_page):
         
     container_remove_all(page_box)
     
-    if isinstance(page, UpgradePage):
+    if isinstance(page, HomePage):
+        page.recommend_item.show_page()
+        page.category_view.select_first_item()
+    elif isinstance(page, UpgradePage):
         if page.in_no_notify_page:
             page.show_upgrade_page()
     
