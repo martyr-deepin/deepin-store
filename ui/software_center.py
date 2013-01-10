@@ -470,7 +470,7 @@ class DeepinSoftwareCenter(object):
         join_us_button = LinkButton("加入我们", "http://www.linuxdeepin.com/joinus/job")
         join_us_button_align = gtk.Alignment()
         join_us_button_align.set(0.5, 0.5, 0, 0)
-        join_us_button_align.set_padding(0, 0, 0, 10)
+        join_us_button_align.set_padding(0, 3, 0, 10)
         join_us_button_align.add(join_us_button)
         status_box.pack_start(message_box, True, True)
         status_box.pack_start(join_us_button_align, False, False)
