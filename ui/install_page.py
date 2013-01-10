@@ -23,7 +23,7 @@
 import gtk
 import gobject
 from constant import VIEW_PADDING_X, VIEW_PADDING_Y
-from dtk.ui.utils import is_in_rect, format_file_size
+from dtk.ui.utils import is_in_rect, format_file_size, get_content_size
 from dtk.ui.new_treeview import TreeView, TreeItem
 from dtk.ui.star_view import StarBuffer
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
@@ -31,7 +31,7 @@ from dtk.ui.progressbar import ProgressBuffer
 from events import global_event
 from skin import app_theme
 from item_render import (render_pkg_info, STAR_SIZE, get_star_level, get_icon_pixbuf_path,
-                         ITEM_INFO_AREA_WIDTH, ITEM_CANCEL_BUTTON_PADDING_RIGHT,
+                         ITEM_INFO_AREA_WIDTH, ITEM_CANCEL_BUTTON_PADDING_RIGHT, ITEM_PADDING_X, ITEM_PKG_OFFSET_X, ICON_SIZE, ITEM_PADDING_MIDDLE, ITEM_PADDING_Y, NAME_SIZE,
                          ITEM_STAR_AREA_WIDTH, ITEM_STATUS_TEXT_PADDING_RIGHT,
                          ITEM_BUTTON_AREA_WIDTH, ITEM_BUTTON_PADDING_RIGHT,
                          ITEM_HEIGHT, ITEM_PKG_OFFSET_X,
@@ -401,60 +401,76 @@ class InstallItem(TreeItem):
         pass
     
     def motion_notify(self, column, offset_x, offset_y):
-        if self.status == self.STATUS_WAIT_DOWNLOAD:
-            if self.is_in_star_area(column, offset_x, offset_y):
-                global_event.emit("set-cursor", gtk.gdk.HAND2)
-                
-                times = offset_x / STAR_SIZE 
-                self.grade_star = times * 2 + 2
-                    
-                self.grade_star = min(self.grade_star, 10)    
-                self.star_buffer.star_level = self.grade_star
-                
-                if self.redraw_request_callback:
-                    self.redraw_request_callback(self)
+        if column == 0:
+            if self.is_in_icon_area(column, offset_x, offset_y):
+                global_event.emit("set-cursor", gtk.gdk.HAND2)    
+            elif self.is_in_name_area(column, offset_x, offset_y):
+                global_event.emit("set-cursor", gtk.gdk.HAND2)    
             else:
                 global_event.emit("set-cursor", None)
-                
-                if self.star_buffer.star_level != self.star_level:
-                    self.star_buffer.star_level = self.star_level
+        else:        
+            if self.status == self.STATUS_WAIT_DOWNLOAD:
+                if self.is_in_star_area(column, offset_x, offset_y):
+                    global_event.emit("set-cursor", gtk.gdk.HAND2)
+                    
+                    times = offset_x / STAR_SIZE 
+                    self.grade_star = times * 2 + 2
+                        
+                    self.grade_star = min(self.grade_star, 10)    
+                    self.star_buffer.star_level = self.grade_star
                     
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
+                else:
+                    global_event.emit("set-cursor", None)
+                    
+                    if self.star_buffer.star_level != self.star_level:
+                        self.star_buffer.star_level = self.star_level
+                        
+                        if self.redraw_request_callback:
+                            self.redraw_request_callback(self)
     
     def button_press(self, column, offset_x, offset_y):
-        if self.status == self.STATUS_WAIT_DOWNLOAD:
-            if self.is_stop_button_can_click(column, offset_x, offset_y):
-                self.status = self.STATUS_STOP_DOWNLOAD
-                self.status_text = "下载被终止"
-                
-                if self.redraw_request_callback:
-                    self.redraw_request_callback(self)
+        if column == 0:
+            if self.is_in_icon_area(column, offset_x, offset_y):
+                global_event.emit("switch-to-detail-page", self.pkg_name)    
+                global_event.emit("set-cursor", None)    
+            elif self.is_in_name_area(column, offset_x, offset_y):
+                global_event.emit("switch-to-detail-page", self.pkg_name)    
+                global_event.emit("set-cursor", None)    
+        else:
+            if self.status == self.STATUS_WAIT_DOWNLOAD:
+                if self.is_stop_button_can_click(column, offset_x, offset_y):
+                    self.status = self.STATUS_STOP_DOWNLOAD
+                    self.status_text = "下载被终止"
                     
-                global_event.emit("remove-wait-download", [self.pkg_name])
-                global_event.emit("request-stop-install-actions", [self.pkg_name])
-            elif self.is_in_star_area(column, offset_x, offset_y):
-                global_event.emit("grade-pkg", self.pkg_name, self.grade_star)
-        elif self.status == self.STATUS_IN_DOWNLOAD:
-            if self.is_stop_button_can_click(column, offset_x, offset_y):
-                self.status = self.STATUS_STOP_DOWNLOAD
-                self.status_text = "下载被终止"
-                
-                if self.redraw_request_callback:
-                    self.redraw_request_callback(self)
+                    if self.redraw_request_callback:
+                        self.redraw_request_callback(self)
+                        
+                    global_event.emit("remove-wait-download", [self.pkg_name])
+                    global_event.emit("request-stop-install-actions", [self.pkg_name])
+                elif self.is_in_star_area(column, offset_x, offset_y):
+                    global_event.emit("grade-pkg", self.pkg_name, self.grade_star)
+            elif self.status == self.STATUS_IN_DOWNLOAD:
+                if self.is_stop_button_can_click(column, offset_x, offset_y):
+                    self.status = self.STATUS_STOP_DOWNLOAD
+                    self.status_text = "下载被终止"
                     
-                global_event.emit("stop-download-pkg", [self.pkg_name])
-                global_event.emit("request-stop-install-actions", [self.pkg_name])
-        elif self.status == self.STATUS_WAIT_INSTALL:
-            if self.is_stop_button_can_click(column, offset_x, offset_y):
-                self.status = self.STATUS_STOP_WAIT_INSTALL
-                self.status_text = "安装被终止"
-                
-                if self.redraw_request_callback:
-                    self.redraw_request_callback(self)
+                    if self.redraw_request_callback:
+                        self.redraw_request_callback(self)
+                        
+                    global_event.emit("stop-download-pkg", [self.pkg_name])
+                    global_event.emit("request-stop-install-actions", [self.pkg_name])
+            elif self.status == self.STATUS_WAIT_INSTALL:
+                if self.is_stop_button_can_click(column, offset_x, offset_y):
+                    self.status = self.STATUS_STOP_WAIT_INSTALL
+                    self.status_text = "安装被终止"
                     
-                global_event.emit("remove-wait-action", [(str((self.pkg_name, ACTION_INSTALL)))])
-                global_event.emit("request-stop-install-actions", [self.pkg_name])
+                    if self.redraw_request_callback:
+                        self.redraw_request_callback(self)
+                        
+                    global_event.emit("remove-wait-action", [(str((self.pkg_name, ACTION_INSTALL)))])
+                    global_event.emit("request-stop-install-actions", [self.pkg_name])
                 
     def button_release(self, column, offset_x, offset_y):
         pass
@@ -546,6 +562,24 @@ class InstallItem(TreeItem):
         
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
+    
+    def is_in_name_area(self, column, offset_x, offset_y):
+        (name_width, name_height) = get_content_size(self.alias_name, NAME_SIZE)
+        return (column == 0
+                and is_in_rect((offset_x, offset_y),
+                               (ITEM_PADDING_X + ITEM_PKG_OFFSET_X + ICON_SIZE + ITEM_PADDING_MIDDLE,
+                                ITEM_PADDING_Y,
+                                name_width,
+                                NAME_SIZE)))
+    
+    def is_in_icon_area(self, column, offset_x, offset_y):
+        return (column == 0
+                and self.icon_pixbuf != None
+                and is_in_rect((offset_x, offset_y),
+                               (ITEM_PADDING_X + ITEM_PKG_OFFSET_X,
+                                ITEM_PADDING_Y,
+                                self.icon_pixbuf.get_width(),
+                                self.icon_pixbuf.get_height())))
     
     def release_resource(self):
         '''
