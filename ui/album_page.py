@@ -26,7 +26,7 @@ from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.new_treeview import TreeView, TreeItem
 from dtk.ui.iconview import IconView, IconItem
 from deepin_utils.file import get_parent_dir
-from dtk.ui.utils import container_remove_all, is_in_rect
+from dtk.ui.utils import container_remove_all, is_in_rect, get_content_size
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
 from events import global_event
 import gtk
@@ -383,19 +383,48 @@ class AlbumDetailItem(TreeItem):
                                 pixbuf.get_width(),
                                 pixbuf.get_height()
                                 )))
-        
+    
+    def is_in_picture_area(self, column, offset_x, offset_y):
+        return (column == 0
+                and is_in_rect((offset_x, offset_y),
+                               (self.PICTURE_PADDING_X, 
+                                self.PICTURE_PADDING_Y,
+                                self.pixbuf.get_width(),
+                                self.pixbuf.get_height())))
+    
+    def is_in_name_area(self, column, offset_x, offset_y):
+        (name_with, name_height) = get_content_size(self.pkg_title, self.TITLE_SIZE)
+        return (column == 1
+                and is_in_rect((offset_x, offset_y),
+                               (0,
+                                self.PICTURE_PADDING_Y,
+                                name_with,
+                                name_height)))
         
     def motion_notify(self, column, offset_x, offset_y):
-        if self.is_in_button_area(column, offset_x, offset_y):
-            self.button_status = BUTTON_HOVER
-            
-            if self.redraw_request_callback:
-                self.redraw_request_callback(self, True)
+        if column == 0:
+            if self.is_in_picture_area(column, offset_x, offset_y):
+                global_event.emit("set-cursor", gtk.gdk.HAND2)    
+            else:
+                global_event.emit("set-cursor", None)    
+        elif column == 1:
+            if self.is_in_name_area(column, offset_x, offset_y):
+                global_event.emit("set-cursor", gtk.gdk.HAND2)    
+            else:
+                global_event.emit("set-cursor", None)    
         else:
-            self.button_status = BUTTON_NORMAL
-            
-            if self.redraw_request_callback:
-                self.redraw_request_callback(self, True)
+            global_event.emit("set-cursor", None)
+                
+            if self.is_in_button_area(column, offset_x, offset_y):
+                self.button_status = BUTTON_HOVER
+                
+                if self.redraw_request_callback:
+                    self.redraw_request_callback(self, True)
+            else:
+                self.button_status = BUTTON_NORMAL
+                
+                if self.redraw_request_callback:
+                    self.redraw_request_callback(self, True)
             
     def get_offset_with_button(self, offset_x, offset_y):
         pixbuf = app_theme.get_pixbuf("button/start_normal.png").get_pixbuf()
@@ -404,16 +433,25 @@ class AlbumDetailItem(TreeItem):
         return (offset_x, offset_y, popup_x, popup_y)
     
     def button_press(self, column, offset_x, offset_y):
-        if self.is_in_button_area(column, offset_x, offset_y):
-            if self.is_installed:
-                global_event.emit("start-pkg", self.alias_name, self.desktop_info, self.get_offset_with_button(offset_x, offset_y))
-            else:
-                global_event.emit("install-pkg", [self.pkg_name])
-                
-            self.button_status = BUTTON_PRESS
-                
-            if self.redraw_request_callback:
-                self.redraw_request_callback(self, True)
+        if column == 0:
+            if self.is_in_picture_area(column, offset_x, offset_y):
+                global_event.emit("switch-to-detail-page", self.pkg_name)
+                global_event.emit("set-cursor", None)
+        elif column == 1:
+            if self.is_in_name_area(column, offset_x, offset_y):
+                global_event.emit("switch-to-detail-page", self.pkg_name)
+                global_event.emit("set-cursor", gtk.gdk.HAND2)    
+        else:        
+            if self.is_in_button_area(column, offset_x, offset_y):
+                if self.is_installed:
+                    global_event.emit("start-pkg", self.alias_name, self.desktop_info, self.get_offset_with_button(offset_x, offset_y))
+                else:
+                    global_event.emit("install-pkg", [self.pkg_name])
+                    
+                self.button_status = BUTTON_PRESS
+                    
+                if self.redraw_request_callback:
+                    self.redraw_request_callback(self, True)
                 
     def button_release(self, column, offset_x, offset_y):
         if self.is_in_button_area(column, offset_x, offset_y):
