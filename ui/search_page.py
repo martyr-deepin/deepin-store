@@ -27,12 +27,12 @@ from skin import app_theme
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from dtk.ui.cycle_strip import CycleStrip
 from dtk.ui.constant import DEFAULT_FONT_SIZE
-from dtk.ui.utils import cairo_state, is_in_rect
+from dtk.ui.utils import cairo_state, is_in_rect, get_content_size
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
 from dtk.ui.new_treeview import TreeView, TreeItem
 from dtk.ui.star_view import StarBuffer
 from item_render import (render_pkg_icon, render_pkg_name, STAR_SIZE, get_star_level, get_icon_pixbuf_path,
-                         ITEM_INFO_AREA_WIDTH,
+                         ITEM_INFO_AREA_WIDTH, NAME_SIZE,
                          ITEM_STAR_AREA_WIDTH,
                          ITEM_BUTTON_AREA_WIDTH, ITEM_BUTTON_PADDING_RIGHT,
                          ITEM_HEIGHT,
@@ -218,6 +218,25 @@ class SearchItem(TreeItem):
                                 ITEM_STAR_AREA_WIDTH,
                                 STAR_SIZE)))
     
+    def is_in_icon_area(self, column, offset_x, offset_y):
+        return (column == 0
+                and is_in_rect((offset_x, offset_y),
+                               (ITEM_PADDING_X,
+                                ITEM_PADDING_Y,
+                                self.icon_pixbuf.get_width(),
+                                self.icon_pixbuf.get_height()
+                                )))
+    
+    def is_in_name_area(self, column, offset_x, offset_y):
+        (name_width, name_height) = get_content_size(self.alias_name, NAME_SIZE)
+        return (column == 0
+                and is_in_rect((offset_x, offset_y),
+                               (ITEM_PADDING_X + ICON_SIZE + ITEM_PADDING_MIDDLE,
+                                ITEM_PADDING_Y,
+                                name_width,
+                                name_height,
+                                )))
+    
     def get_height(self):
         return ITEM_HEIGHT
     
@@ -242,37 +261,43 @@ class SearchItem(TreeItem):
         pass
     
     def motion_notify(self, column, offset_x, offset_y):
-        if self.is_in_star_area(column, offset_x, offset_y):
-            global_event.emit("set-cursor", gtk.gdk.HAND2)
-            
-            times = offset_x / STAR_SIZE 
-            self.grade_star = times * 2 + 2
-                
-            self.grade_star = min(self.grade_star, 10)    
-            self.star_buffer.star_level = self.grade_star
-            
-            if self.redraw_request_callback:
-                self.redraw_request_callback(self)
+        if column == 0:
+            if self.is_in_icon_area(column, offset_x, offset_y) or self.is_in_name_area(column, offset_x, offset_y):
+                global_event.emit("set-cursor", gtk.gdk.HAND2)
+            else:
+                global_event.emit("set-cursor", None)
         else:
-            if self.is_have_desktop_file:
-                if self.is_in_button_area(column, offset_x, offset_y):
-                    self.button_status = BUTTON_HOVER
+            if self.is_in_star_area(column, offset_x, offset_y):
+                global_event.emit("set-cursor", gtk.gdk.HAND2)
+                
+                times = offset_x / STAR_SIZE 
+                self.grade_star = times * 2 + 2
                     
-                    if self.redraw_request_callback:
-                        self.redraw_request_callback(self, True)
-                else:
-                    self.button_status = BUTTON_NORMAL
-                    
-                    if self.redraw_request_callback:
-                        self.redraw_request_callback(self, True)
-            
-            global_event.emit("set-cursor", None)
-            
-            if self.star_buffer.star_level != self.star_level:
-                self.star_buffer.star_level = self.star_level
+                self.grade_star = min(self.grade_star, 10)    
+                self.star_buffer.star_level = self.grade_star
                 
                 if self.redraw_request_callback:
                     self.redraw_request_callback(self)
+            else:
+                if self.is_have_desktop_file:
+                    if self.is_in_button_area(column, offset_x, offset_y):
+                        self.button_status = BUTTON_HOVER
+                        
+                        if self.redraw_request_callback:
+                            self.redraw_request_callback(self, True)
+                    else:
+                        self.button_status = BUTTON_NORMAL
+                        
+                        if self.redraw_request_callback:
+                            self.redraw_request_callback(self, True)
+                
+                global_event.emit("set-cursor", None)
+                
+                if self.star_buffer.star_level != self.star_level:
+                    self.star_buffer.star_level = self.star_level
+                    
+                    if self.redraw_request_callback:
+                        self.redraw_request_callback(self)
         
     def get_offset_with_button(self, offset_x, offset_y):
         pixbuf = app_theme.get_pixbuf("button/start_normal.png").get_pixbuf()
@@ -281,21 +306,26 @@ class SearchItem(TreeItem):
         return (offset_x, offset_y, popup_x, popup_y)
                     
     def button_press(self, column, offset_x, offset_y):
-        if self.is_in_star_area(column, offset_x, offset_y):
-            global_event.emit("grade-pkg", self.pkg_name, self.grade_star)
-        elif self.is_in_button_area(column, offset_x, offset_y):
-            if self.is_have_desktop_file:
-                if self.is_installed:
-                    global_event.emit("start-pkg", self.alias_name, self.desktop_info, self.get_offset_with_button(offset_x, offset_y))
-                else:
-                    global_event.emit("install-pkg", [self.pkg_name])
-                    
-                self.button_status = BUTTON_PRESS
-                    
-                if self.redraw_request_callback:
-                    self.redraw_request_callback(self, True)
+        if column == 0:
+            if self.is_in_icon_area(column, offset_x, offset_y) or self.is_in_name_area(column, offset_x, offset_y):
+                global_event.emit("switch-to-detail-page", self.pkg_name)
+                global_event.emit("set-cursor", None)
         else:
-            global_event.emit("switch-to-detail-page", self.pkg_name)
+            if self.is_in_star_area(column, offset_x, offset_y):
+                global_event.emit("grade-pkg", self.pkg_name, self.grade_star)
+            elif self.is_in_button_area(column, offset_x, offset_y):
+                if self.is_have_desktop_file:
+                    if self.is_installed:
+                        global_event.emit("start-pkg", self.alias_name, self.desktop_info, self.get_offset_with_button(offset_x, offset_y))
+                    else:
+                        global_event.emit("install-pkg", [self.pkg_name])
+                        
+                    self.button_status = BUTTON_PRESS
+                        
+                    if self.redraw_request_callback:
+                        self.redraw_request_callback(self, True)
+            else:
+                global_event.emit("switch-to-detail-page", self.pkg_name)
                 
     def button_release(self, column, offset_x, offset_y):
         if self.is_have_desktop_file:
