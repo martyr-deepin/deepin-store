@@ -314,6 +314,21 @@ class PkgIconItem(IconItem):
                            STAR_SIZE * 5,
                            STAR_SIZE
                            ))
+    
+    def is_in_icon_area(self, x, y):
+        return is_in_rect((x, y),
+                          (self.ICON_PADDING_X,
+                           self.ICON_PADDING_TOP,
+                           self.icon_pixbuf.get_width(),
+                           self.icon_pixbuf.get_height()))
+
+    def is_in_name_area(self, x, y):
+        (name_width, name_height) = get_content_size(self.alias_name, DEFAULT_FONT_SIZE)
+        return is_in_rect((x, y),
+                          (0,
+                           self.icon_padding_y + self.icon_pixbuf.get_height() + self.name_padding_y,
+                           name_width,
+                           name_height))
         
     def icon_item_motion_notify(self, x, y):
         '''
@@ -325,7 +340,9 @@ class PkgIconItem(IconItem):
         
         self.emit_redraw_request()
         
-        if self.is_in_star_area(x, y):
+        if self.is_in_icon_area(x, y) or self.is_in_name_area(x, y):
+            global_event.emit("set-cursor", gtk.gdk.HAND2)
+        elif self.is_in_star_area(x, y):
             global_event.emit("set-cursor", gtk.gdk.HAND2)
             
             offset_x = x - (self.width - STAR_SIZE * 5) / 2
@@ -364,7 +381,10 @@ class PkgIconItem(IconItem):
         
         This is IconView interface, you should implement it.
         '''
-        if self.is_in_star_area(x, y):
+        if self.is_in_icon_area(x, y) and self.is_in_name_area(x, y):
+            global_event.emit("switch-to-detail-page", self.pkg_name)
+            global_event.emit("set-cursor", None)
+        elif self.is_in_star_area(x, y):
             global_event.emit("grade-pkg", self.pkg_name, self.grade_star)
         elif self.is_in_button_area(x, y):
             if self.is_installed:
