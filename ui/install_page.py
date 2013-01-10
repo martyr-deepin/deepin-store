@@ -30,7 +30,7 @@ from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from dtk.ui.progressbar import ProgressBuffer
 from events import global_event
 from skin import app_theme
-from item_render import (render_pkg_info, STAR_SIZE, get_star_level,
+from item_render import (render_pkg_info, STAR_SIZE, get_star_level, get_icon_pixbuf_path,
                          ITEM_INFO_AREA_WIDTH, ITEM_CANCEL_BUTTON_PADDING_RIGHT,
                          ITEM_STAR_AREA_WIDTH, ITEM_STATUS_TEXT_PADDING_RIGHT,
                          ITEM_BUTTON_AREA_WIDTH, ITEM_BUTTON_PADDING_RIGHT,
@@ -225,6 +225,9 @@ class InstallItem(TreeItem):
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
         
+        if self.icon_pixbuf == None:
+            self.icon_pixbuf = gtk.gdk.pixbuf_new_from_file(get_icon_pixbuf_path(self.pkg_name))        
+            
         render_pkg_info(cr, rect, self.alias_name, self.pkg_name, self.icon_pixbuf, self.pkg_version, self.short_desc, ITEM_PKG_OFFSET_X)
         
     def render_pkg_status(self, cr, rect):

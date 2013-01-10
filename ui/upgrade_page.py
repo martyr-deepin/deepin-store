@@ -32,11 +32,11 @@ from dtk.ui.star_view import StarBuffer
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
 from deepin_utils.core import split_with
 from deepin_utils.file import read_file, write_file, format_file_size
-from dtk.ui.utils import is_in_rect, container_remove_all
+from dtk.ui.utils import is_in_rect, container_remove_all, get_content_size
 from dtk.ui.label import Label
 from dtk.ui.button import Button
-from item_render import (render_pkg_info, STAR_SIZE, get_star_level,
-                         ITEM_INFO_AREA_WIDTH, ITEM_CANCEL_BUTTON_PADDING_RIGHT,
+from item_render import (render_pkg_info, STAR_SIZE, get_star_level, ITEM_PADDING_Y, get_icon_pixbuf_path,
+                         ITEM_INFO_AREA_WIDTH, ITEM_CANCEL_BUTTON_PADDING_RIGHT, NAME_SIZE, ICON_SIZE, ITEM_PADDING_MIDDLE,
                          ITEM_STAR_AREA_WIDTH, ITEM_STATUS_TEXT_PADDING_RIGHT,
                          ITEM_BUTTON_AREA_WIDTH, ITEM_BUTTON_PADDING_RIGHT, ITEM_PADDING_X,
                          ITEM_HEIGHT, ITEM_CHECKBUTTON_WIDTH, ITEM_CHECKBUTTON_PADDING_X, ITEM_CHECKBUTTON_PADDING_Y,
@@ -548,6 +548,9 @@ class UpgradeItem(TreeItem):
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
         
+        if self.icon_pixbuf == None:
+            self.icon_pixbuf = gtk.gdk.pixbuf_new_from_file(get_icon_pixbuf_path(self.pkg_name))        
+            
         render_pkg_info(cr, rect, self.alias_name, self.pkg_name, self.icon_pixbuf, self.pkg_version, self.short_desc, -ITEM_PADDING_X)
         
     def render_no_notify(self, cr, rect):
@@ -745,7 +748,18 @@ class UpgradeItem(TreeItem):
             if self.check_button_buffer.motion_button(offset_x, offset_y):
                 if self.redraw_request_callback:
                     self.redraw_request_callback(self)
+                    
+            global_event.emit("set-cursor", None)    
+        elif column == 1:
+            if self.is_in_icon_area(column, offset_x, offset_y):
+                global_event.emit("set-cursor", gtk.gdk.HAND2)    
+            elif self.is_in_name_area(column, offset_x, offset_y):
+                global_event.emit("set-cursor", gtk.gdk.HAND2)    
+            else:
+                global_event.emit("set-cursor", None)    
         elif column == 2:
+            global_event.emit("set-cursor", None)    
+            
             if self.status == self.STATUS_NORMAL:
                 if self.is_in_no_notify_area(column, offset_x, offset_y):
                     if not self.notify_button_hover:
@@ -801,6 +815,11 @@ class UpgradeItem(TreeItem):
             if self.check_button_buffer.press_button(offset_x, offset_y):
                 if self.redraw_request_callback:
                     self.redraw_request_callback(self)
+        elif column == 1:
+            if self.is_in_icon_area(column, offset_x, offset_y):
+                global_event.emit("switch-to-detail-page", self.pkg_name)
+            elif self.is_in_name_area(column, offset_x, offset_y):
+                global_event.emit("switch-to-detail-page", self.pkg_name)
         elif column == 2:
             if self.status == self.STATUS_NORMAL:
                 if self.is_in_no_notify_area(column, offset_x, offset_y):
@@ -901,6 +920,24 @@ class UpgradeItem(TreeItem):
                                 ITEM_NO_NOTIFY_WIDTH,
                                 ITEM_NO_NOTIFY_HEIGHT)))
             
+    def is_in_name_area(self, column, offset_x, offset_y):
+        (name_width, name_height) = get_content_size(self.alias_name, NAME_SIZE)
+        return (column == 1
+                and is_in_rect((offset_x, offset_y),
+                               (ICON_SIZE + ITEM_PADDING_MIDDLE,
+                                ITEM_PADDING_Y,
+                                name_width,
+                                NAME_SIZE)))
+    
+    def is_in_icon_area(self, column, offset_x, offset_y):
+        return (column == 1
+                and self.icon_pixbuf != None
+                and is_in_rect((offset_x, offset_y),
+                               (0,
+                                ITEM_PADDING_Y,
+                                self.icon_pixbuf.get_width(),
+                                self.icon_pixbuf.get_height())))
+    
     def download_wait(self):
         self.status = self.STATUS_WAIT_DOWNLOAD
         self.status_text = "等待下载"
@@ -1050,6 +1087,9 @@ class NoNotifyItem(TreeItem):
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
         
+        if self.icon_pixbuf == None:
+            self.icon_pixbuf = gtk.gdk.pixbuf_new_from_file(get_icon_pixbuf_path(self.pkg_name))        
+            
         render_pkg_info(cr, rect, self.alias_name, self.pkg_name, self.icon_pixbuf, self.pkg_version, self.short_desc, -ITEM_PADDING_X)
         
     def render_notify_again(self, cr, rect):
@@ -1111,6 +1151,13 @@ class NoNotifyItem(TreeItem):
             if self.check_button_buffer.motion_button(offset_x, offset_y):
                 if self.redraw_request_callback:
                     self.redraw_request_callback(self)
+        elif column == 1:            
+            if self.is_in_icon_area(column, offset_x, offset_y):
+                global_event.emit("set-cursor", gtk.gdk.HAND2)    
+            elif self.is_in_name_area(column, offset_x, offset_y):
+                global_event.emit("set-cursor", gtk.gdk.HAND2)    
+            else:
+                global_event.emit("set-cursor", None)    
         elif column == 2:
             if self.status == self.STATUS_NORMAL:
                 if self.is_in_star_area(column, offset_x, offset_y):
@@ -1149,12 +1196,17 @@ class NoNotifyItem(TreeItem):
                         self.redraw_request_callback(self)
                         
                     global_event.emit("set-cursor", None)    
-    
+                    
     def button_press(self, column, offset_x, offset_y):
         if column == 0:
             if self.check_button_buffer.press_button(offset_x, offset_y):
                 if self.redraw_request_callback:
                     self.redraw_request_callback(self)
+        elif column == 1:
+            if self.is_in_icon_area(column, offset_x, offset_y):
+                global_event.emit("switch-to-detail-page", self.pkg_name)
+            elif self.is_in_name_area(column, offset_x, offset_y):
+                global_event.emit("switch-to-detail-page", self.pkg_name)
         elif column == 2:
             if self.is_in_star_area(column, offset_x, offset_y):
                 global_event.emit("grade-pkg", self.pkg_name, self.grade_star)
@@ -1208,6 +1260,24 @@ class NoNotifyItem(TreeItem):
                                 )
                                ))
             
+    def is_in_name_area(self, column, offset_x, offset_y):
+        (name_width, name_height) = get_content_size(self.alias_name, NAME_SIZE)
+        return (column == 1
+                and is_in_rect((offset_x, offset_y),
+                               (ICON_SIZE + ITEM_PADDING_MIDDLE,
+                                ITEM_PADDING_Y,
+                                name_width,
+                                NAME_SIZE)))
+    
+    def is_in_icon_area(self, column, offset_x, offset_y):
+        return (column == 1
+                and self.icon_pixbuf != None
+                and is_in_rect((offset_x, offset_y),
+                               (0,
+                                ITEM_PADDING_Y,
+                                self.icon_pixbuf.get_width(),
+                                self.icon_pixbuf.get_height())))
+    
     def release_resource(self):
         '''
         Release item resource.

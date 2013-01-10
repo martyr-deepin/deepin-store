@@ -66,9 +66,6 @@ def get_icon_pixbuf_path(pkg_name):
         return os.path.join(ICON_DIR, "default.png")
 
 def render_pkg_icon(cr, rect, pkg_name, icon_pixbuf, offset_x=0):
-    if icon_pixbuf == None:
-        icon_pixbuf = gtk.gdk.pixbuf_new_from_file(get_icon_pixbuf_path(pkg_name))        
-        
     # Draw icon.
     draw_pixbuf(cr, 
                 icon_pixbuf, 

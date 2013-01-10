@@ -31,7 +31,7 @@ from dtk.ui.utils import cairo_state, is_in_rect
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
 from dtk.ui.new_treeview import TreeView, TreeItem
 from dtk.ui.star_view import StarBuffer
-from item_render import (render_pkg_icon, render_pkg_name, STAR_SIZE, get_star_level,
+from item_render import (render_pkg_icon, render_pkg_name, STAR_SIZE, get_star_level, get_icon_pixbuf_path,
                          ITEM_INFO_AREA_WIDTH,
                          ITEM_STAR_AREA_WIDTH,
                          ITEM_BUTTON_AREA_WIDTH, ITEM_BUTTON_PADDING_RIGHT,
@@ -128,6 +128,9 @@ class SearchItem(TreeItem):
             cr.fill()
         
         # Render icon.
+        if self.icon_pixbuf == None:
+            self.icon_pixbuf = gtk.gdk.pixbuf_new_from_file(get_icon_pixbuf_path(self.pkg_name))        
+            
         render_pkg_icon(cr, rect, self.pkg_name, self.icon_pixbuf)
 
         # Render name.

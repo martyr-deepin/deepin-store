@@ -29,7 +29,7 @@ from dtk.ui.threads import post_gui, AnonymityThread
 from dtk.ui.star_view import StarBuffer
 from dtk.ui.utils import is_in_rect
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
-from item_render import (render_pkg_info, STAR_SIZE, get_star_level, 
+from item_render import (render_pkg_info, STAR_SIZE, get_star_level, get_icon_pixbuf_path,
                          ITEM_INFO_AREA_WIDTH, ITEM_CONFIRM_BUTTON_PADDING_RIGHT, ITEM_CANCEL_BUTTON_PADDING_RIGHT,
                          ITEM_STAR_AREA_WIDTH, ITEM_STATUS_TEXT_PADDING_RIGHT,
                          ITEM_BUTTON_AREA_WIDTH, ITEM_BUTTON_PADDING_RIGHT,
@@ -182,6 +182,9 @@ class UninstallItem(TreeItem):
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
         
+        if self.icon_pixbuf == None:
+            self.icon_pixbuf = gtk.gdk.pixbuf_new_from_file(get_icon_pixbuf_path(self.pkg_name))        
+            
         render_pkg_info(cr, rect, self.alias_name, self.pkg_name, self.icon_pixbuf, self.pkg_version, self.short_desc, ITEM_PKG_OFFSET_X)
         
     def render_pkg_status(self, cr, rect):
