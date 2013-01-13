@@ -23,11 +23,11 @@
 import gtk
 import pango
 import gobject
-from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, CONFIG_DIR
+from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, CONFIG_DIR, STRIP_PADDING_X, CHECK_BUTTON_PADDING_X
 import os
 from dtk.ui.new_treeview import TreeView, TreeItem
 from dtk.ui.threads import post_gui, AnonymityThread
-from dtk.ui.button import CheckButtonBuffer
+from dtk.ui.button import CheckButtonBuffer, ImageButton, CheckButton
 from dtk.ui.star_view import StarBuffer
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
 from deepin_utils.core import split_with
@@ -60,34 +60,58 @@ class UpgradeBar(gtk.HBox):
         '''
         gtk.HBox.__init__(self)
         
+        self.select_button = CheckButton()
+        self.select_button.set_active(True)
+        self.select_button_align = gtk.Alignment()
+        self.select_button_align.set(0.0, 0.5, 0, 0)
+        self.select_button_align.set_padding(0, 0, CHECK_BUTTON_PADDING_X, 0)
+        self.select_button_align.add(self.select_button)
         self.message_label = Label()
-        self.no_notify_button_box = gtk.VBox()
-        self.no_notify_button = Button()
-        self.select_all_button = Button("选择全部")
-        self.unselect_all_button = Button("取消全选")
-        self.upgrade_selected_button = Button("升级选中的")
+        self.message_label_align = gtk.Alignment()
+        self.message_label_align.set(0.0, 0.5, 0, 0)
+        self.message_label_align.set_padding(0, 0, 0, 0)
+        self.message_label_align.add(self.message_label)
+        self.no_notify_label = Label(
+            hover_color=app_theme.get_color("homepage_hover"))
+        self.no_notify_label.set_clickable()
+        self.no_notify_label_align = gtk.Alignment()
+        self.no_notify_label_align.set(1.0, 0.5, 0, 0)
+        self.no_notify_label_align.set_padding(0, 0, 0, 100)
+        self.upgrade_selected_button = ImageButton(
+            app_theme.get_pixbuf("button/upgrade_all_normal.png"),
+            app_theme.get_pixbuf("button/upgrade_all_hover.png"),
+            app_theme.get_pixbuf("button/upgrade_all_press.png"),
+            )
+        self.upgrade_selected_button_align = gtk.Alignment()
+        self.upgrade_selected_button_align.set(0.0, 0.5, 0, 0)
+        self.upgrade_selected_button_align.set_padding(0, 0, 40, 40)
+        self.upgrade_selected_button_align.add(self.upgrade_selected_button)
         
-        self.pack_start(self.message_label, False, False)
-        self.pack_start(self.no_notify_button_box, True, True)
-        self.pack_start(self.select_all_button, False, False)
-        self.pack_start(self.unselect_all_button, False, False)
-        self.pack_start(self.upgrade_selected_button, False, False)
+        self.pack_start(self.select_button_align, False, False)
+        self.pack_start(self.message_label_align, False, False)
+        self.pack_start(self.no_notify_label_align, True, True)
+        self.pack_start(self.upgrade_selected_button_align, False, False)
         
-        self.no_notify_button.connect("clicked", lambda w: global_event.emit("show-no-notify-page"))
-        self.select_all_button.connect("clicked", lambda w: global_event.emit("select-all-upgrade-pkg"))
-        self.unselect_all_button.connect("clicked", lambda w: global_event.emit("unselect-all-upgrade-pkg"))
+        self.no_notify_label.connect("button-press-event", lambda w, e: global_event.emit("show-no-notify-page"))
+        self.select_button.connect("clicked", self.click_select_button)
         self.upgrade_selected_button.connect("clicked", lambda w: global_event.emit("upgrade-selected-pkg"))
         
+    def click_select_button(self, widget):
+        if widget.get_active():
+            global_event.emit("select-all-upgrade-pkg")
+        else:
+            global_event.emit("unselect-all-upgrade-pkg")
+        
     def set_upgrade_info(self, upgrade_num, no_notify_num):
-        self.message_label.set_text("有%s款软件可以升级" % upgrade_num)
+        self.message_label.set_text("当前可升级软件共 %s 款" % upgrade_num)
         
         if no_notify_num > 0:
-            self.no_notify_button.set_label("有%s款软件不再提醒升级" % no_notify_num)
-            self.no_notify_button_box.pack_start(self.no_notify_button)
+            self.no_notify_label.set_text("不再提醒升级(%s)" % no_notify_num)
+            self.no_notify_label_align.add(self.no_notify_label)
             
             self.show_all()
         else:
-            container_remove_all(self.no_notify_button_box)
+            container_remove_all(self.no_notify_label_align)
         
 gobject.type_register(UpgradeBar)        
 

@@ -46,3 +46,6 @@ ONE_DAY_SECONDS = 24 * 60 * 60
 
 SCREENSHOT_HOST = "http://package-screenshot.b0.upaiyun.com"
 SCREENSHOT_DOWNLOAD_DIR = os.path.join(os.path.expanduser("~"), ".cache", "deepin-software-center", "screenshot")
+
+CHECK_BUTTON_PADDING_X = 0
+STRIP_PADDING_X = 14
