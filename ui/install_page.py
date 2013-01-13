@@ -20,9 +20,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
 import gtk
 import gobject
-from dtk.ui.utils import is_in_rect, format_file_size, get_content_size
+from deepin_utils.file import format_file_size, get_parent_dir
+from dtk.ui.utils import is_in_rect, get_content_size, container_remove_all
 from dtk.ui.new_treeview import TreeView, TreeItem
 from dtk.ui.star_view import StarBuffer
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
@@ -56,15 +58,61 @@ class InstallPage(gtk.VBox):
         self.message_bar = MessageBar(32)
         
         self.treeview = TreeView(enable_drag_drop=False)
+        self.cute_message_image = gtk.VBox()
+        self.content_box = gtk.VBox()
         self.pack_start(self.message_bar, False, False)
-        self.pack_start(self.treeview, True, True)
+        self.pack_start(self.content_box, True, True)
+        
+        self.cute_message_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(get_parent_dir(__file__, 2), "image", "zh_CN", "no_download.png"))
+        self.content_box.pack_start(self.cute_message_image, True, True)
         
         self.treeview.draw_mask = self.draw_mask
         
+        self.cute_message_image.connect("expose-event", self.expose_cute_message_image)
         self.treeview.connect("items-change", self.update_message_bar)
         
+    def expose_cute_message_image(self, widget, event):
+        if self.cute_message_pixbuf:
+            cr = widget.window.cairo_create()
+            rect = widget.allocation
+            
+            cr.set_source_rgb(1, 1, 1)
+            cr.rectangle(rect.x, rect.y, rect.width, rect.height)
+            cr.fill()
+            
+            draw_pixbuf(
+                cr,
+                self.cute_message_pixbuf,
+                rect.x + (rect.width - self.cute_message_pixbuf.get_width()) / 2,
+                rect.y + (rect.height - self.cute_message_pixbuf.get_height()) / 2,
+                )
+        
     def update_message_bar(self, treeview):
-        self.message_bar.set_message("%s款软件正在安装" % len(treeview.visible_items))
+        if len(treeview.visible_items) == 0:
+            self.message_bar.set_message("")
+            
+            children = self.content_box.get_children()
+            if len(children) == 0 or children[0] == self.treeview:
+                if self.cute_message_pixbuf == None:
+                    self.cute_message_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(get_parent_dir(__file__, 2), "image", "zh_CN", "no_download.png"))
+                
+                container_remove_all(self.content_box)
+                self.content_box.pack_start(self.cute_message_image, True, True)
+                
+                self.show_all()
+        else:
+            self.message_bar.set_message("%s款软件正在安装" % len(treeview.visible_items))
+            
+            children = self.content_box.get_children()
+            if len(children) == 0 or children[0] == self.cute_message_image:
+                if self.cute_message_pixbuf:
+                    del self.cute_message_pixbuf
+                    self.cute_message_pixbuf = None
+                
+                container_remove_all(self.content_box)
+                self.content_box.pack_start(self.treeview, True, True)
+                
+                self.show_all()
         
     def draw_mask(self, cr, x, y, w, h):
         '''
