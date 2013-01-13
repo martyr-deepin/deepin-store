@@ -326,6 +326,7 @@ class UpgradePage(gtk.VBox):
         container_remove_all(self)
         container_remove_all(self.cycle_strip)
         
+        self.no_notify_bar.set_notify_info(self.no_notify_pkg_num)
         self.cycle_strip.add(self.no_notify_bar)
         self.pack_start(self.cycle_strip, False, False)
         self.pack_start(self.no_notify_treeview, True, True)
