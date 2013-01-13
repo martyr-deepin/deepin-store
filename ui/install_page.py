@@ -22,7 +22,6 @@
 
 import gtk
 import gobject
-from constant import VIEW_PADDING_X, VIEW_PADDING_Y
 from dtk.ui.utils import is_in_rect, format_file_size, get_content_size
 from dtk.ui.new_treeview import TreeView, TreeItem
 from dtk.ui.star_view import StarBuffer
@@ -31,14 +30,14 @@ from dtk.ui.progressbar import ProgressBuffer
 from events import global_event
 from skin import app_theme
 from item_render import (render_pkg_info, STAR_SIZE, get_star_level, get_icon_pixbuf_path,
-                         ITEM_INFO_AREA_WIDTH, ITEM_CANCEL_BUTTON_PADDING_RIGHT, ITEM_PADDING_X, ITEM_PKG_OFFSET_X, ICON_SIZE, ITEM_PADDING_MIDDLE, ITEM_PADDING_Y, NAME_SIZE,
+                         ITEM_INFO_AREA_WIDTH, ITEM_CANCEL_BUTTON_PADDING_RIGHT, ITEM_PADDING_X, ICON_SIZE, ITEM_PADDING_MIDDLE, ITEM_PADDING_Y, NAME_SIZE,
                          ITEM_STAR_AREA_WIDTH, ITEM_STATUS_TEXT_PADDING_RIGHT,
-                         ITEM_BUTTON_AREA_WIDTH, ITEM_BUTTON_PADDING_RIGHT,
+                         ITEM_BUTTON_AREA_WIDTH, 
                          ITEM_HEIGHT, ITEM_PKG_OFFSET_X,
                          PROGRESSBAR_HEIGHT
                          )
 from constant import ACTION_INSTALL
-from dtk.ui.cycle_strip import CycleStrip
+from message_bar import MessageBar
 
 class InstallPage(gtk.VBox):
     '''
@@ -54,13 +53,18 @@ class InstallPage(gtk.VBox):
         self.bus_interface = bus_interface
         self.data_manager = data_manager
 
-        self.cycle_strip = CycleStrip(app_theme.get_pixbuf("strip/background.png"))
+        self.message_bar = MessageBar(32)
         
         self.treeview = TreeView(enable_drag_drop=False)
-        self.pack_start(self.cycle_strip,False, False)
+        self.pack_start(self.message_bar, False, False)
         self.pack_start(self.treeview, True, True)
         
         self.treeview.draw_mask = self.draw_mask
+        
+        self.treeview.connect("items-change", self.update_message_bar)
+        
+    def update_message_bar(self, treeview):
+        self.message_bar.set_message("%s款软件正在安装" % len(treeview.visible_items))
         
     def draw_mask(self, cr, x, y, w, h):
         '''
