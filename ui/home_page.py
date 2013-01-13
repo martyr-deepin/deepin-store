@@ -363,9 +363,11 @@ class CategoryItem(TreeItem):
         self.page_box = gtk.VBox()    
             
         self.message_bar = MessageBar(18)
-        self.message_bar.set_message("%s: %s款软件" % (self.first_category_name, len(pkg_names)))
         
         self.pkg_icon_view = IconView() 
+        self.pkg_icon_view.connect(
+            "items-change", 
+            lambda iconview: self.message_bar.set_message("%s: %s款软件" % (self.first_category_name, len(iconview.items))))
         self.pkg_icon_view.add_items(items)
         self.pkg_icon_scrolled_window = ScrolledWindow()
         self.pkg_icon_scrolled_window.add_child(self.pkg_icon_view)
@@ -519,9 +521,11 @@ class SecondCategoryItem(TreeItem):
         self.page_box = gtk.VBox()    
             
         self.message_bar = MessageBar(18)
-        self.message_bar.set_message("%s>%s: %s款软件" % (self.first_category_name, self.second_category_name, len(items)))
         
         self.pkg_icon_view = IconView() 
+        self.pkg_icon_view.connect(
+            "items-change", 
+            lambda iconview: self.message_bar.set_message("%s>%s: %s款软件" % (self.first_category_name, self.second_category_name, len(iconview.items))))
         self.pkg_icon_view.add_items(items)
         self.pkg_icon_scrolled_window = ScrolledWindow()
         self.pkg_icon_scrolled_window.add_child(self.pkg_icon_view)
@@ -532,7 +536,7 @@ class SecondCategoryItem(TreeItem):
         self.page_box.pack_start(self.pkg_icon_scrolled_window, True, True)
         
         global_event.emit("show-pkg-view", self.page_box)
-    
+        
     def draw_row_mask(self, cr, rect, row):
         if row % 2 == 1:
             cr.set_source_rgba(1, 1, 1, 0.5)

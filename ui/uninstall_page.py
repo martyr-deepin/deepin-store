@@ -22,7 +22,7 @@
 
 import gtk
 import gobject
-from constant import VIEW_PADDING_X, VIEW_PADDING_Y, BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
+from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
 from dtk.ui.new_treeview import TreeView, TreeItem
 from dtk.ui.progressbar import ProgressBuffer
 from dtk.ui.threads import post_gui, AnonymityThread
@@ -38,7 +38,7 @@ from item_render import (render_pkg_info, STAR_SIZE, get_star_level, get_icon_pi
 from skin import app_theme
 from events import global_event
 from constant import ACTION_UNINSTALL
-from dtk.ui.cycle_strip import CycleStrip
+from message_bar import MessageBar
 
 class UninstallPage(gtk.VBox):
     '''
@@ -54,14 +54,19 @@ class UninstallPage(gtk.VBox):
         self.bus_interface = bus_interface        
         self.data_manager = data_manager
         
-        self.cycle_strip = CycleStrip(app_theme.get_pixbuf("strip/background.png"))
+        self.message_bar = MessageBar(32)
         self.treeview = TreeView(enable_drag_drop=False)
-        self.pack_start(self.cycle_strip,False, False)
+        self.pack_start(self.message_bar, False, False)
         self.pack_start(self.treeview, True, True)
+        
+        self.treeview.connect("items-change", self.update_message_bar)
         
         self.fetch_uninstall_info()
         
         self.treeview.draw_mask = self.draw_mask    
+        
+    def update_message_bar(self, treeview):    
+        self.message_bar.set_message("%s款软件可以卸载" % len(treeview.visible_items))
         
     def draw_mask(self, cr, x, y, w, h):
         '''

@@ -56,13 +56,19 @@ class SearchPage(gtk.VBox):
         gtk.VBox.__init__(self)
         self.data_manager = data_manager
         
+        self.keywords = []
         self.message_bar = MessageBar(18)
         
         self.treeview = TreeView(enable_drag_drop=False)
         self.pack_start(self.message_bar,False, False)
         self.pack_start(self.treeview, True, True)
         
+        self.treeview.connect("items-change", self.update_message_bar)
+        
         self.treeview.draw_mask = self.draw_mask
+        
+    def update_message_bar(self, treeview):
+        self.message_bar.set_message("%s: 搜索到%s款软件" % (' '.join(self.keywords), len(treeview.visible_items)))
         
     def draw_mask(self, cr, x, y, w, h):
         '''
@@ -85,13 +91,13 @@ class SearchPage(gtk.VBox):
         self.render_search_info(self.data_manager.get_pkgs_info_match_keyword(self.keywords), keywords)
 
     def render_search_info(self, pkg_infos, keywords):
+        self.keywords = keywords
+        
         items = []
         for pkg_info in pkg_infos:
             items.append(SearchItem(pkg_info, self.data_manager, keywords))
             
         self.treeview.add_items(items)    
-        
-        self.message_bar.set_message("%s: 搜索到%s款软件" % (' '.join(keywords), len(items)))
         
 gobject.type_register(SearchPage)
 
