@@ -24,8 +24,8 @@ import gtk
 import pango
 import gobject
 from skin import app_theme
+from message_bar import MessageBar
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
-from dtk.ui.cycle_strip import CycleStrip
 from dtk.ui.constant import DEFAULT_FONT_SIZE
 from dtk.ui.utils import cairo_state, is_in_rect, get_content_size
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
@@ -56,10 +56,10 @@ class SearchPage(gtk.VBox):
         gtk.VBox.__init__(self)
         self.data_manager = data_manager
         
-        self.cycle_strip = CycleStrip(app_theme.get_pixbuf("strip/background.png"))
+        self.message_bar = MessageBar(18)
         
         self.treeview = TreeView(enable_drag_drop=False)
-        self.pack_start(self.cycle_strip,False, False)
+        self.pack_start(self.message_bar,False, False)
         self.pack_start(self.treeview, True, True)
         
         self.treeview.draw_mask = self.draw_mask
@@ -90,6 +90,8 @@ class SearchPage(gtk.VBox):
             items.append(SearchItem(pkg_info, self.data_manager, keywords))
             
         self.treeview.add_items(items)    
+        
+        self.message_bar.set_message("%s: 搜索到%s款软件" % (' '.join(keywords), len(items)))
         
 gobject.type_register(SearchPage)
 

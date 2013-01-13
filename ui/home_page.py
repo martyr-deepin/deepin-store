@@ -24,12 +24,12 @@ import copy
 import gtk
 import os
 import gobject
+from message_bar import MessageBar
 from dtk.ui.utils import remove_timeout_id, cairo_state, get_content_size
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
 from item_render import STAR_SIZE, get_star_level, get_icon_pixbuf_path, NAME_SIZE, ITEM_PADDING_X
 from search_page import SearchPage
 from dtk.ui.new_treeview import TreeView, TreeItem
-from dtk.ui.cycle_strip import CycleStrip
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from deepin_utils.file import get_parent_dir
 from dtk.ui.utils import color_hex_to_cairo, container_remove_all, is_in_rect
@@ -362,7 +362,8 @@ class CategoryItem(TreeItem):
         
         self.page_box = gtk.VBox()    
             
-        self.cycle_strip = CycleStrip(app_theme.get_pixbuf("strip/background.png"))
+        self.message_bar = MessageBar(18)
+        self.message_bar.set_message("%s: %s款软件" % (self.first_category_name, len(pkg_names)))
         
         self.pkg_icon_view = IconView() 
         self.pkg_icon_view.add_items(items)
@@ -371,7 +372,7 @@ class CategoryItem(TreeItem):
         self.pkg_icon_view.draw_mask = self.draw_mask
         self.pkg_icon_view.draw_row_mask = self.draw_row_mask
         
-        self.page_box.pack_start(self.cycle_strip,False, False)
+        self.page_box.pack_start(self.message_bar, False, False)
         self.page_box.pack_start(self.pkg_icon_scrolled_window, True, True)
         
         global_event.emit("show-pkg-view", self.page_box)
@@ -415,7 +416,7 @@ class CategoryItem(TreeItem):
                 pkg_names.append(pkg_name)
                 desktop_infos[pkg_name] = desktop_info
                 
-            items.append(SecondCategoryItem(second_category_name, pkg_names, self.data_manager, desktop_infos))    
+            items.append(SecondCategoryItem(self.first_category_name, second_category_name, pkg_names, self.data_manager, desktop_infos))    
             
         self.child_items = items    
         self.add_items_callback(self.child_items, self.row_index + 1)
@@ -446,11 +447,12 @@ class SecondCategoryItem(TreeItem):
     class docs
     '''
 	
-    def __init__(self, second_category_name, pkg_names, data_manager, desktop_infos):
+    def __init__(self, first_category_name, second_category_name, pkg_names, data_manager, desktop_infos):
         '''
         init docs
         '''
         TreeItem.__init__(self)
+        self.first_category_name = first_category_name
         self.second_category_name = second_category_name
         self.pkg_names = pkg_names
         self.data_manager = data_manager
@@ -516,7 +518,8 @@ class SecondCategoryItem(TreeItem):
             
         self.page_box = gtk.VBox()    
             
-        self.cycle_strip = CycleStrip(app_theme.get_pixbuf("strip/background.png"))
+        self.message_bar = MessageBar(18)
+        self.message_bar.set_message("%s>%s: %s款软件" % (self.first_category_name, self.second_category_name, len(items)))
         
         self.pkg_icon_view = IconView() 
         self.pkg_icon_view.add_items(items)
@@ -525,7 +528,7 @@ class SecondCategoryItem(TreeItem):
         self.pkg_icon_view.draw_mask = self.draw_mask
         self.pkg_icon_view.draw_row_mask = self.draw_row_mask
         
-        self.page_box.pack_start(self.cycle_strip, False, False)
+        self.page_box.pack_start(self.message_bar, False, False)
         self.page_box.pack_start(self.pkg_icon_scrolled_window, True, True)
         
         global_event.emit("show-pkg-view", self.page_box)

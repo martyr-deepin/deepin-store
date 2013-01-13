@@ -23,7 +23,7 @@
 import gtk
 import pango
 import gobject
-from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, CONFIG_DIR, STRIP_PADDING_X, CHECK_BUTTON_PADDING_X
+from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, CONFIG_DIR, CHECK_BUTTON_PADDING_X
 import os
 from dtk.ui.new_treeview import TreeView, TreeItem
 from dtk.ui.threads import post_gui, AnonymityThread
@@ -34,7 +34,6 @@ from deepin_utils.core import split_with
 from deepin_utils.file import read_file, write_file, format_file_size
 from dtk.ui.utils import is_in_rect, container_remove_all, get_content_size
 from dtk.ui.label import Label
-from dtk.ui.button import Button
 from item_render import (render_pkg_info, STAR_SIZE, get_star_level, ITEM_PADDING_Y, get_icon_pixbuf_path,
                          ITEM_INFO_AREA_WIDTH, ITEM_CANCEL_BUTTON_PADDING_RIGHT, NAME_SIZE, ICON_SIZE, ITEM_PADDING_MIDDLE,
                          ITEM_STAR_AREA_WIDTH, ITEM_STATUS_TEXT_PADDING_RIGHT,
