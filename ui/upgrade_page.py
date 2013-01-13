@@ -72,7 +72,8 @@ class UpgradeBar(gtk.HBox):
         self.message_label_align.set_padding(0, 0, 0, 0)
         self.message_label_align.add(self.message_label)
         self.no_notify_label = Label(
-            hover_color=app_theme.get_color("homepage_hover"))
+            hover_color=app_theme.get_color("homepage_hover")
+            )
         self.no_notify_label.set_clickable()
         self.no_notify_label_align = gtk.Alignment()
         self.no_notify_label_align.set(1.0, 0.5, 0, 0)
@@ -125,25 +126,55 @@ class NoNotifyBar(gtk.HBox):
         '''
         gtk.HBox.__init__(self)
         
+        self.select_button = CheckButton()
+        self.select_button.set_active(True)
+        self.select_button_align = gtk.Alignment()
+        self.select_button_align.set(0.0, 0.5, 0, 0)
+        self.select_button_align.set_padding(0, 0, CHECK_BUTTON_PADDING_X, 0)
+        self.select_button_align.add(self.select_button)
         self.message_label = Label()
-        self.select_all_button = Button("选择全部")
-        self.unselect_all_button = Button("取消全选")
-        self.notify_again_button = Button("重新提醒")
-        self.return_button = Button("返回")
+        self.message_label_align = gtk.Alignment()
+        self.message_label_align.set(0.0, 0.5, 0, 0)
+        self.message_label_align.set_padding(0, 0, 0, 0)
+        self.message_label_align.add(self.message_label)
+        self.notify_again_label = Label(
+            "重新提醒",
+            hover_color=app_theme.get_color("homepage_hover")
+            )
+        self.notify_again_label.set_clickable()
+        self.notify_again_label_align = gtk.Alignment()
+        self.notify_again_label_align.set(1.0, 0.5, 0, 0)
+        self.notify_again_label_align.set_padding(0, 0, 0, 5)
+        self.notify_again_label_align.add(self.notify_again_label)
+        self.return_button = ImageButton(
+            app_theme.get_pixbuf("detail/normal.png"),
+            app_theme.get_pixbuf("detail/hover.png"),
+            app_theme.get_pixbuf("detail/press.png"),
+            )
+        self.return_align = gtk.Alignment()
+        self.return_align.set(0.5, 0.5, 0, 0)
+        self.return_align.set_padding(0, 0, 5, 5)
+        self.return_align.add(self.return_button)
         
-        self.pack_start(self.message_label, True, True)
-        self.pack_start(self.select_all_button, False, False)
-        self.pack_start(self.unselect_all_button, False, False)
-        self.pack_start(self.notify_again_button, False, False)
-        self.pack_start(self.return_button, False, False)
+        self.pack_start(self.select_button_align, False, False)
+        self.pack_start(self.message_label_align, True, True)
+        self.pack_start(self.notify_again_label_align, False, False)
+        self.pack_start(self.return_align, False, False)
         
-        self.select_all_button.connect("clicked", lambda w: global_event.emit("select-all-notify-pkg"))
-        self.unselect_all_button.connect("clicked", lambda w: global_event.emit("unselect-all-notify-pkg"))
-        self.notify_again_button.connect("clicked", lambda w: global_event.emit("notify-selected-pkg"))
+        self.select_button.connect("clicked", self.click_select_button)
+        self.notify_again_label.connect("button-press-event", lambda w, e: global_event.emit("notify-selected-pkg"))
         self.return_button.connect("clicked", lambda w: global_event.emit("show-upgrade-page"))
+        
+    def click_select_button(self, widget):
+        if widget.get_active():
+            global_event.emit("select-all-notify-pkg")
+        else:
+            global_event.emit("unselect-all-notify-pkg")
         
     def set_notify_info(self, notify_again_num):
         self.message_label.set_text("有%s款软件不再提醒" % notify_again_num)
+        
+        self.message_label_align.show_all()
         
 gobject.type_register(NoNotifyBar)        
 
