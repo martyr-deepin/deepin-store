@@ -105,14 +105,13 @@ class UpgradeBar(gtk.HBox):
     def set_upgrade_info(self, upgrade_num, no_notify_num):
         self.message_label.set_text("当前可升级软件共 %s 款" % upgrade_num)
         
+        container_remove_all(self.no_notify_label_align)
         if no_notify_num > 0:
             self.no_notify_label.set_text("不再提醒升级(%s)" % no_notify_num)
             self.no_notify_label_align.add(self.no_notify_label)
             
             self.show_all()
-        else:
-            container_remove_all(self.no_notify_label_align)
-        
+            
 gobject.type_register(UpgradeBar)        
 
 class NoNotifyBar(gtk.HBox):
