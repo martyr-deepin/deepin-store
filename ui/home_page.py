@@ -20,7 +20,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from split_word import split_word
 import copy
 import gtk
 import os
@@ -223,7 +222,7 @@ class HomePage(gtk.HBox):
             completion_grab_window.popup_grab_window_focus_out()
         
         search_page = SearchPage(self.data_manager)
-        search_page.update(map(lambda word: word.encode("utf8"), split_word(search_string)))
+        search_page.update(map(lambda word: word.encode("utf8"), search_string.split(" ")))
         self.show_pkg_view(search_page)
         
     def show_pkg_view(self, widget):
@@ -376,6 +375,9 @@ class CategoryItem(TreeItem):
         self.page_box.pack_start(self.pkg_icon_scrolled_window, True, True)
         
         global_event.emit("show-pkg-view", self.page_box)
+        
+        # from meliae import scanner
+        # scanner.dump_all_objects("/tmp/dsc_memory.json")
         
     def draw_row_mask(self, cr, rect, row):
         if row % 2 == 1:

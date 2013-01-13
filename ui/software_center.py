@@ -26,7 +26,6 @@ from nls import _
 
 import glib
 from detail_page import DetailPage
-from split_word import init_jieba
 from dtk.ui.button import LinkButton
 from dtk.ui.navigatebar import Navigatebar
 from deepin_utils.ipc import is_dbus_name_exists
@@ -46,7 +45,6 @@ import dbus.service
 import time
 from constant import DSC_SERVICE_NAME, DSC_SERVICE_PATH, DSC_FRONTEND_NAME, DSC_FRONTEND_PATH, ACTION_INSTALL, ACTION_UNINSTALL, ACTION_UPGRADE, CONFIG_DIR, ONE_DAY_SECONDS
 from dtk.ui.new_slider import HSlider
-from dtk.ui.threads import AnonymityThread
 from events import global_event
 import dtk.ui.tooltip as Tooltip
 from dtk.ui.label import Label
@@ -384,7 +382,7 @@ class DeepinSoftwareCenter(object):
     '''
     class docs
     '''
-	
+
     def __init__(self, arguments):
         '''
         init docs
@@ -505,7 +503,6 @@ class DeepinSoftwareCenter(object):
         self.application.titlebar.set_size_request(-1, 56)
         self.application.titlebar.left_box.pack_start(navigatebar_align, True, True)
         self.application.window.add_move_event(navigatebar)
-        self.application.window.connect("realize", lambda w: AnonymityThread(init_jieba).start())
         self.application.window.connect("show", lambda w: request_status(self.bus_interface, install_page, upgrade_page, uninstall_page))
         
         # Handle global event.

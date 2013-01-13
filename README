@@ -1,2 +1,2 @@
 Depend:
-sudo aptitude install jieba python-xappy deepin-storm xdelta3
+sudo aptitude install python-xappy deepin-storm xdelta3
