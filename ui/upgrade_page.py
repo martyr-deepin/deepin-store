@@ -21,7 +21,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import gtk
-import pango
 import gobject
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, CONFIG_DIR, CHECK_BUTTON_PADDING_X
 import os
@@ -31,7 +30,7 @@ from dtk.ui.button import CheckButtonBuffer, ImageButton, CheckButton
 from dtk.ui.star_view import StarBuffer
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
 from deepin_utils.core import split_with
-from deepin_utils.file import read_file, write_file, format_file_size
+from deepin_utils.file import read_file, write_file, format_file_size, get_parent_dir
 from dtk.ui.utils import is_in_rect, container_remove_all, get_content_size
 from dtk.ui.label import Label
 from item_render import (render_pkg_info, STAR_SIZE, get_star_level, ITEM_PADDING_Y, get_icon_pixbuf_path,
@@ -201,13 +200,23 @@ class UpgradePage(gtk.VBox):
         self.no_notify_bar = NoNotifyBar()
         
         self.cycle_strip = CycleStrip(app_theme.get_pixbuf("strip/background.png"))
-        self.cycle_strip.add(self.upgrade_bar)
         
         self.update_view = gtk.VBox()
+        self.update_list_pixbuf = None
+        self.update_view.connect("expose-event", self.expose_update_view)
         self.upgrade_treeview = TreeView(enable_drag_drop=False)
+        
+        self.newest_view = gtk.VBox()
+        self.newest_pixbuf = None
+        self.newest_view.connect("expose-event", self.expose_newest_view)
+
+        self.network_disable_view = gtk.VBox()
+        self.network_disable_pixbuf = None
+        self.network_disable_view.connect("expose-event", self.expose_network_disable_view)
+        
+        self.pack_start(self.cycle_strip, False, False)
         self.pack_start(self.update_view, True, True)
         
-        self.update_view.connect("expose-event", self.expose_update_view)
         gtk.timeout_add(200, self.render_upgrade_progress)
         
         self.no_notify_treeview = TreeView(enable_drag_drop=False)
@@ -229,9 +238,26 @@ class UpgradePage(gtk.VBox):
         global_event.register_event("show-upgrade-page", self.show_upgrade_page)
         global_event.register_event("notify-again-pkg", self.notify_again_pkg)
         
+        global_event.register_event("show-newest-view", self.show_newest_view)
+        global_event.register_event("show-network-disable-view", self.show_newest_view)
+        
         self.upgrade_treeview.draw_mask = self.draw_mask
         self.no_notify_treeview.draw_mask = self.draw_mask
         
+    def show_newest_view(self):
+        container_remove_all(self)
+        container_remove_all(self.cycle_strip)
+        
+        self.pack_start(self.cycle_strip, False, False)
+        self.pack_start(self.newest_view, True, True)
+        
+        self.show_all()
+
+    def show_network_disable_view(self):
+        container_remove_all(self)
+        self.pack_start(self.network_disable_view, True, True)
+        
+        self.show_all()
         
     def draw_mask(self, cr, x, y, w, h):
         '''
@@ -304,7 +330,7 @@ class UpgradePage(gtk.VBox):
                 break
             
         self.no_notify_treeview.add_items([NoNotifyItem(pkg_name, self.pkg_info_dict[pkg_name], self.data_manager)])
-            
+        
     def notify_again_pkg(self, pkg_name):
         self.remove_no_notify_pkg(pkg_name)
         self.upgrade_pkg_num += 1
@@ -410,20 +436,54 @@ class UpgradePage(gtk.VBox):
         cr = widget.window.cairo_create()
         rect = widget.allocation
         
+        if self.update_list_pixbuf == None:
+            self.update_list_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(get_parent_dir(__file__, 2), "image", "zh_CN", "upgrading.png"))
+        
         cr.set_source_rgb(1, 1, 1)
         cr.rectangle(rect.x, rect.y, rect.width, rect.height)
         cr.fill()
         
-        # Draw text.
-        draw_text(
+        draw_pixbuf(
             cr,
-            str(self.current_progress),
-            rect.x,
-            rect.y,
-            rect.width,
-            rect.height,
-            alignment=pango.ALIGN_CENTER
-            )
+            self.update_list_pixbuf,
+            rect.x + (rect.width - self.update_list_pixbuf.get_width()) / 2,
+            rect.y + (rect.height - self.update_list_pixbuf.get_height()) / 2)
+        
+    def expose_newest_view(self, widget, event):
+        # Init.
+        cr = widget.window.cairo_create()
+        rect = widget.allocation
+        
+        if self.newest_pixbuf == None:
+            self.newest_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(get_parent_dir(__file__, 2), "image", "zh_CN", "newest.png"))
+        
+        cr.set_source_rgb(1, 1, 1)
+        cr.rectangle(rect.x, rect.y, rect.width, rect.height)
+        cr.fill()
+        
+        draw_pixbuf(
+            cr,
+            self.newest_pixbuf,
+            rect.x + (rect.width - self.newest_pixbuf.get_width()) / 2,
+            rect.y + (rect.height - self.newest_pixbuf.get_height()) / 2)
+
+    def expose_network_disable_view(self, widget, event):
+        # Init.
+        cr = widget.window.cairo_create()
+        rect = widget.allocation
+        
+        if self.network_disable_pixbuf == None:
+            self.network_disable_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(get_parent_dir(__file__, 2), "image", "zh_CN", "network_disable.png"))
+        
+        cr.set_source_rgb(1, 1, 1)
+        cr.rectangle(rect.x, rect.y, rect.width, rect.height)
+        cr.fill()
+        
+        draw_pixbuf(
+            cr,
+            self.network_disable_pixbuf,
+            rect.x + (rect.width - self.network_disable_pixbuf.get_width()) / 2,
+            rect.y + (rect.height - self.network_disable_pixbuf.get_height()) / 2)
         
     def fetch_upgrade_info(self):
         AnonymityThread(lambda : self.bus_interface.request_upgrade_pkgs(),
@@ -462,12 +522,20 @@ class UpgradePage(gtk.VBox):
     @post_gui
     def render_upgrade_info(self, pkg_infos):
         if len(pkg_infos) > 0:
+            if self.update_list_pixbuf:
+                del self.update_list_pixbuf
+                self.update_list_pixbuf = None
+            
             (desktop_pkg_infos, library_pkg_infos) = split_with(
                 pkg_infos, 
                 lambda pkg_info: self.data_manager.is_pkg_have_desktop_file((eval(pkg_info)[0])))
             
             if self.get_children()[0] != self.upgrade_treeview:
                 container_remove_all(self)
+                container_remove_all(self.cycle_strip)
+                
+                self.cycle_strip.add(self.upgrade_bar)
+                
                 self.pack_start(self.cycle_strip, False, False)
                 self.pack_start(self.upgrade_treeview, True, True)
                 
@@ -491,6 +559,8 @@ class UpgradePage(gtk.VBox):
             self.no_notify_treeview.add_items(no_notify_items)
             
             self.upgrade_bar.set_upgrade_info(self.upgrade_pkg_num, self.no_notify_pkg_num)
+        else:
+            global_event.emit("show-newest-view")
         
     def download_start(self, pkg_name):
         for item in self.upgrade_treeview.visible_items:

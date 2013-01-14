@@ -226,8 +226,10 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
             upgrade_page.fetch_upgrade_info()
             
             request_status(bus_interface, install_page, upgrade_page, uninstall_page)
+            print "update-list finish"
         elif signal_type == "update-list-update":
             upgrade_page.update_upgrade_progress(action_content)
+            print "update-list update"
         elif signal_type == "parse-download-error":
             (pkg_name, action_type) = action_content
             if action_type == ACTION_INSTALL:
