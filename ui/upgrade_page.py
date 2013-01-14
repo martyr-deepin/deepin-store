@@ -205,6 +205,7 @@ class UpgradePage(gtk.VBox):
         self.update_list_pixbuf = None
         self.update_view.connect("expose-event", self.expose_update_view)
         self.upgrade_treeview = TreeView(enable_drag_drop=False)
+        self.upgrade_treeview.connect("items-change", self.monitor_upgrade_view)
         
         self.newest_view = gtk.VBox()
         self.newest_pixbuf = None
@@ -243,6 +244,10 @@ class UpgradePage(gtk.VBox):
         
         self.upgrade_treeview.draw_mask = self.draw_mask
         self.no_notify_treeview.draw_mask = self.draw_mask
+        
+    def monitor_upgrade_view(self, treeview):
+        if len(treeview.visible_items) == 0:
+            global_event.emit("show-newest-view")
         
     def show_newest_view(self):
         container_remove_all(self)
@@ -555,10 +560,14 @@ class UpgradePage(gtk.VBox):
                     self.upgrade_pkg_num += 1
                     upgrade_items.append(UpgradeItem(pkg_name, pkg_version, self.data_manager))
                 
-            self.upgrade_treeview.add_items(upgrade_items)    
-            self.no_notify_treeview.add_items(no_notify_items)
-            
             self.upgrade_bar.set_upgrade_info(self.upgrade_pkg_num, self.no_notify_pkg_num)
+            
+            if len(upgrade_items) == 0:        
+                global_event.emit("show-newest-view")
+            else:
+                self.upgrade_treeview.add_items(upgrade_items)    
+                
+            self.no_notify_treeview.add_items(no_notify_items)
         else:
             global_event.emit("show-newest-view")
         

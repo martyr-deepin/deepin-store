@@ -302,12 +302,11 @@ class PackageManager(dbus.service.Object):
         
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="as")    
     def request_upgrade_pkgs(self):
-        # print "*****************"
-        # if self.in_update_list:
-        #     return []
-        # else:
-        #     return self.pkg_cache.get_upgrade_pkgs()
-        return []
+        print "*****************"
+        if self.in_update_list:
+            return []
+        else:
+            return self.pkg_cache.get_upgrade_pkgs()
     
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="as")    
     def request_uninstall_pkgs(self):
