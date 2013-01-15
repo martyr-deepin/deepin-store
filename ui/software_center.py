@@ -25,10 +25,13 @@ from skin import app_theme
 from nls import _
 
 import glib
+from icon_window import IconWindow
 from detail_page import DetailPage
 from dtk.ui.button import LinkButton
 from dtk.ui.navigatebar import Navigatebar
+from dtk.ui.timeline import Timeline, CURVE_SINE
 from deepin_utils.ipc import is_dbus_name_exists
+from deepin_utils.math_lib import solve_parabola
 from deepin_utils.file import read_file, write_file, touch_file
 from dtk.ui.utils import container_remove_all, set_cursor
 from dtk.ui.application import Application
@@ -262,10 +265,47 @@ def clear_install_stop_list(install_page):
         
     return True    
 
-def install_pkg(bus_interface, install_page, pkg_names):
+def install_pkg(bus_interface, install_page, pkg_names, window):
+    # Add to install page.
     install_page.add_install_actions(pkg_names)
     
+    # Send install command.
     bus_interface.install_pkg(pkg_names)
+    
+    # Add install animation.
+    (screen, px, py, modifier_type) = window.get_display().get_pointer()
+    ax, ay = px, py
+    
+    (wx, wy) = window.window.get_origin()
+    offset_bx = 430
+    offset_by = -20
+    bx, by = wx + offset_bx, wy + offset_by
+    
+    offset_cx = 10
+    offset_cy = 10
+    if ax < bx:
+        cx, cy = wx + offset_bx + offset_cx, wy + offset_by + offset_cy
+    else:
+        cx, cy = wx + offset_bx - offset_cx, wy + offset_by + offset_cy
+    
+    [[a], [b], [c]] = solve_parabola((ax, ay), (bx, by), (cx, cy))
+    
+    icon_window = IconWindow(pkg_names[0])
+    
+    timeline = Timeline(300, CURVE_SINE)
+    timeline.connect("update", lambda source, status: update(source, status, icon_window, (ax, ay), (bx, by), (cx, cy), (a, b, c)))
+    timeline.connect("completed", lambda source: finish(source, icon_window))
+    timeline.run()
+    
+def update(source, status, icon_window, (ax, ay), (bx, by), (cx, cy), (a, b, c)):
+    move_x = ax + (cx - ax) * status
+    move_y = a * pow(move_x, 2) + b * move_x + c
+    
+    icon_window.move(int(move_x), int(move_y))
+    icon_window.show_all()
+    
+def finish(source, icon_window):
+    icon_window.destroy()
     
 clear_failed_action_dict = {
     ACTION_INSTALL : [],
@@ -506,7 +546,7 @@ class DeepinSoftwareCenter(object):
         self.application.window.connect("show", lambda w: request_status(self.bus_interface, install_page, upgrade_page, uninstall_page))
         
         # Handle global event.
-        global_event.register_event("install-pkg", lambda pkg_names: install_pkg(self.bus_interface, install_page, pkg_names))
+        global_event.register_event("install-pkg", lambda pkg_names: install_pkg(self.bus_interface, install_page, pkg_names, self.application.window))
         global_event.register_event("upgrade-pkg", self.bus_interface.upgrade_pkg)
         global_event.register_event("uninstall-pkg", self.bus_interface.uninstall_pkg)
         global_event.register_event("stop-download-pkg", self.bus_interface.stop_download_pkg)
