@@ -21,6 +21,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from apt.progress.old import FetchProgress
+from deepin_utils.net import is_network_connected
 import threading as td
 import apt
 import apt_pkg
@@ -62,33 +63,34 @@ class UpdateList(td.Thread):
         self.simulate = simulate
         
         self.simulate_update_counter = 0
-        self.simulate_update_delay = 0.01 # milliseconds
-        # self.simulate_update_delay = 0.1 # milliseconds
+        # self.simulate_update_delay = 0.01 # milliseconds
+        self.simulate_update_delay = 0.1 # milliseconds
         
     def run(self):
         '''Update package list.'''
-        try:
-            global_event.emit("update-list-start")
-            
-            # if self.simulate:
-            if True:
-                while self.simulate_update_counter <= 100:
-                    global_event.emit("update-list-update", self.simulate_update_counter)
-                    
-                    time.sleep(self.simulate_update_delay)
-                    
-                    self.simulate_update_counter += 1
-            else:
-                apt_pkg.init()
-                cache = apt.Cache()
-                progress = UpdateListProgress()
-                cache.update(progress)
-            
-            global_event.emit("update-list-finish")
-        except Exception, e:
-            print "UpdateList.run(): %s" % (e)
-            
-            global_event.emit("update-list-failed")
+        if is_network_connected():
+            try:
+                global_event.emit("update-list-start")
+                
+                # if self.simulate:
+                if True:
+                    while self.simulate_update_counter <= 100:
+                        global_event.emit("update-list-update", self.simulate_update_counter)
+                        
+                        time.sleep(self.simulate_update_delay)
+                        
+                        self.simulate_update_counter += 1
+                else:
+                    apt_pkg.init()
+                    cache = apt.Cache()
+                    progress = UpdateListProgress()
+                    cache.update(progress)
+                
+                global_event.emit("update-list-finish")
+            except Exception, e:
+                print "UpdateList.run(): %s" % (e)
+                
+                global_event.emit("update-list-failed")
     
 if __name__ == "__main__":
     import gtk

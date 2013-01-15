@@ -56,11 +56,13 @@ class InstallPage(gtk.VBox):
         self.data_manager = data_manager
 
         self.message_bar = MessageBar(32)
+        self.message_box = gtk.HBox()
         
         self.treeview = TreeView(enable_drag_drop=False)
         self.cute_message_image = gtk.VBox()
         self.content_box = gtk.VBox()
-        self.pack_start(self.message_bar, False, False)
+        
+        self.pack_start(self.message_box, False, False)
         self.pack_start(self.content_box, True, True)
         
         self.cute_message_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(get_parent_dir(__file__, 2), "image", "zh_CN", "no_download.png"))
@@ -89,7 +91,7 @@ class InstallPage(gtk.VBox):
         
     def update_message_bar(self, treeview):
         if len(treeview.visible_items) == 0:
-            self.message_bar.set_message("")
+            container_remove_all(self.message_box)
             
             children = self.content_box.get_children()
             if len(children) == 0 or children[0] == self.treeview:
@@ -101,6 +103,8 @@ class InstallPage(gtk.VBox):
                 
                 self.show_all()
         else:
+            container_remove_all(self.message_box)
+            self.message_box.pack_start(self.message_bar, True, True)
             self.message_bar.set_message("%s款软件正在安装" % len(treeview.visible_items))
             
             children = self.content_box.get_children()

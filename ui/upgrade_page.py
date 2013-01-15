@@ -30,6 +30,7 @@ from dtk.ui.button import CheckButtonBuffer, ImageButton, CheckAllButton
 from dtk.ui.star_view import StarBuffer
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
 from deepin_utils.core import split_with
+from deepin_utils.net import is_network_connected
 from deepin_utils.date_time import get_current_time
 from deepin_utils.file import read_file, write_file, format_file_size, get_parent_dir
 from dtk.ui.utils import is_in_rect, container_remove_all, get_content_size
@@ -283,10 +284,6 @@ class UpgradePage(gtk.VBox):
         self.upgrade_treeview = TreeView(enable_drag_drop=False)
         self.upgrade_treeview.connect("items-change", self.monitor_upgrade_view)
         
-        self.cycle_strip.add(self.upgrading_bar)
-        self.pack_start(self.cycle_strip, False, False)
-        self.pack_start(self.update_view, True, True)
-        
         gtk.timeout_add(200, self.render_upgrade_progress)
         
         self.no_notify_treeview = TreeView(enable_drag_drop=False)
@@ -309,14 +306,17 @@ class UpgradePage(gtk.VBox):
         global_event.register_event("show-upgrade-page", self.show_upgrade_page)
         global_event.register_event("notify-again-pkg", self.notify_again_pkg)
         
+        global_event.register_event("show-updating-view", self.show_updating_view)
         global_event.register_event("show-newest-view", self.show_newest_view)
-        global_event.register_event("show-network-disable-view", self.show_newest_view)
+        global_event.register_event("show-network-disable-view", self.show_network_disable_view)
         
         global_event.register_event("click-upgrade-check-button", self.click_upgrade_check_button)
         global_event.register_event("click-notify-check-button", self.click_notify_check_button)
         
         self.upgrade_treeview.draw_mask = self.draw_mask
         self.no_notify_treeview.draw_mask = self.draw_mask
+        
+        global_event.emit("show-updating-view")
         
     def click_upgrade_check_button(self):
         self.upgrade_bar.select_button.update_status(map(lambda item: item.check_button_buffer.active, self.upgrade_treeview.visible_items))
@@ -338,6 +338,19 @@ class UpgradePage(gtk.VBox):
         if len(treeview.visible_items) == 0:
             global_event.emit("show-upgrade-page")
         
+    def show_updating_view(self):
+        if is_network_connected():
+            container_remove_all(self)
+            container_remove_all(self.cycle_strip)
+            
+            self.cycle_strip.add(self.upgrading_bar)
+            self.pack_start(self.cycle_strip, False, False)
+            self.pack_start(self.update_view, True, True)
+            
+            self.show_all()
+        else:
+            global_event.emit("show-network-disable-view")
+            
     def show_newest_view(self):
         container_remove_all(self)
         container_remove_all(self.cycle_strip)
@@ -624,7 +637,7 @@ class UpgradePage(gtk.VBox):
                 pkg_infos, 
                 lambda pkg_info: self.data_manager.is_pkg_have_desktop_file((eval(pkg_info)[0])))
             
-            if self.get_children()[0] != self.upgrade_treeview:
+            if len(self.get_children()) == 0 or self.get_children()[0] != self.upgrade_treeview:
                 container_remove_all(self)
                 container_remove_all(self.cycle_strip)
                 
