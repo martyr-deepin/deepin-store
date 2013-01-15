@@ -159,7 +159,7 @@ def switch_page(page_switcher, page_box, page, detail_page):
         page.category_view.select_first_item()
     elif isinstance(page, UpgradePage):
         if page.in_no_notify_page:
-            page.show_upgrade_page()
+            page.show_init_page()
     
     page_box.pack_start(page, True, True)
     page_box.show_all()

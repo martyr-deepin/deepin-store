@@ -65,18 +65,7 @@ class UpgradingBar(gtk.HBox):
         self.message_label_align.set_padding(0, 0, 8, 0)
         self.message_label_align.add(self.message_label)
         
-        self.stop_update_button = ImageButton(
-            app_theme.get_pixbuf("button/stop_update_normal.png"),
-            app_theme.get_pixbuf("button/stop_update_hover.png"),
-            app_theme.get_pixbuf("button/stop_update_press.png"),
-            )
-        self.stop_update_button_align = gtk.Alignment()
-        self.stop_update_button_align.set(0.0, 0.5, 0, 0)
-        self.stop_update_button_align.set_padding(0, 0, 10, 10)
-        self.stop_update_button_align.add(self.stop_update_button)
-        
         self.pack_start(self.message_label_align, True, True)
-        self.pack_start(self.stop_update_button_align, False, False)
         
     def set_upgrading_message(self, message):
         self.message_label.set_text(message)
@@ -104,21 +93,10 @@ class NewestBar(gtk.HBox):
         self.no_notify_label.set_clickable()
         self.no_notify_label_align = gtk.Alignment()
         self.no_notify_label_align.set(1.0, 0.5, 0, 0)
-        self.no_notify_label_align.set_padding(0, 0, 0, 0)
-        
-        self.refresh_button = ImageButton(
-            app_theme.get_pixbuf("button/refresh_normal.png"),
-            app_theme.get_pixbuf("button/refresh_hover.png"),
-            app_theme.get_pixbuf("button/refresh_press.png"),
-            )
-        self.refresh_button_align = gtk.Alignment()
-        self.refresh_button_align.set(0.0, 0.5, 0, 0)
-        self.refresh_button_align.set_padding(0, 0, 10, 10)
-        self.refresh_button_align.add(self.refresh_button)
+        self.no_notify_label_align.set_padding(0, 0, 0, 40)
         
         self.pack_start(self.message_label_align, False, False)
         self.pack_start(self.no_notify_label_align, True, True)
-        self.pack_start(self.refresh_button_align, False, False)
         
         self.no_notify_label.connect("button-press-event", lambda w, e: global_event.emit("show-no-notify-page"))
         
@@ -312,6 +290,7 @@ class UpgradePage(gtk.VBox):
         gtk.timeout_add(200, self.render_upgrade_progress)
         
         self.no_notify_treeview = TreeView(enable_drag_drop=False)
+        self.no_notify_treeview.connect("items-change", self.monitor_no_notify_view)
         
         self.in_no_notify_page = False
         
@@ -336,9 +315,19 @@ class UpgradePage(gtk.VBox):
         self.upgrade_treeview.draw_mask = self.draw_mask
         self.no_notify_treeview.draw_mask = self.draw_mask
         
+    def show_init_page(self):
+        if len(self.upgrade_treeview.visible_items) == 0:
+            global_event.emit("show-newest-view")
+        else:
+            global_event.emit("show-upgrade-page")
+        
     def monitor_upgrade_view(self, treeview):
         if len(treeview.visible_items) == 0:
             global_event.emit("show-newest-view")
+            
+    def monitor_no_notify_view(self, treeview):
+        if len(treeview.visible_items) == 0:
+            global_event.emit("show-upgrade-page")
         
     def show_newest_view(self):
         container_remove_all(self)
