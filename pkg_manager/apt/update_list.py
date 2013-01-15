@@ -62,8 +62,8 @@ class UpdateList(td.Thread):
         self.simulate = simulate
         
         self.simulate_update_counter = 0
-        self.simulate_update_delay = 0.01 # milliseconds
-        # self.simulate_update_delay = 0.1 # milliseconds
+        # self.simulate_update_delay = 0.01 # milliseconds
+        self.simulate_update_delay = 0.1 # milliseconds
         
     def run(self):
         '''Update package list.'''

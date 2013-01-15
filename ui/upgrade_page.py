@@ -48,6 +48,39 @@ from events import global_event
 from constant import ACTION_UPGRADE
 from dtk.ui.cycle_strip import CycleStrip
 
+class UpgradingBar(gtk.HBox):
+    '''
+    class docs
+    '''
+	
+    def __init__(self):
+        '''
+        init docs
+        '''
+        gtk.HBox.__init__(self)
+
+        self.message_label = Label()
+        self.message_label_align = gtk.Alignment()
+        self.message_label_align.set(0.0, 0.5, 0, 0)
+        self.message_label_align.set_padding(0, 0, 8, 0)
+        self.message_label_align.add(self.message_label)
+        
+        self.stop_update_button = ImageButton(
+            app_theme.get_pixbuf("button/stop_update_normal.png"),
+            app_theme.get_pixbuf("button/stop_update_hover.png"),
+            app_theme.get_pixbuf("button/stop_update_press.png"),
+            )
+        self.stop_update_button_align = gtk.Alignment()
+        self.stop_update_button_align.set(0.0, 0.5, 0, 0)
+        self.stop_update_button_align.set_padding(0, 0, 10, 10)
+        self.stop_update_button_align.add(self.stop_update_button)
+        
+        self.pack_start(self.message_label_align, True, True)
+        self.pack_start(self.stop_update_button_align, False, False)
+        
+    def set_upgrading_message(self, message):
+        self.message_label.set_text(message)
+        
 class NewestBar(gtk.HBox):
     '''
     class docs
@@ -253,14 +286,13 @@ class UpgradePage(gtk.VBox):
         self.upgrade_bar = UpgradeBar()
         self.no_notify_bar = NoNotifyBar()
         self.newest_bar = NewestBar()
+        self.upgrading_bar = UpgradingBar()
         
         self.cycle_strip = CycleStrip(app_theme.get_pixbuf("strip/background.png"))
         
         self.update_view = gtk.VBox()
         self.update_list_pixbuf = None
         self.update_view.connect("expose-event", self.expose_update_view)
-        self.upgrade_treeview = TreeView(enable_drag_drop=False)
-        self.upgrade_treeview.connect("items-change", self.monitor_upgrade_view)
         
         self.newest_view = gtk.VBox()
         self.newest_pixbuf = None
@@ -270,6 +302,10 @@ class UpgradePage(gtk.VBox):
         self.network_disable_pixbuf = None
         self.network_disable_view.connect("expose-event", self.expose_network_disable_view)
         
+        self.upgrade_treeview = TreeView(enable_drag_drop=False)
+        self.upgrade_treeview.connect("items-change", self.monitor_upgrade_view)
+        
+        self.cycle_strip.add(self.upgrading_bar)
         self.pack_start(self.cycle_strip, False, False)
         self.pack_start(self.update_view, True, True)
         
@@ -485,8 +521,7 @@ class UpgradePage(gtk.VBox):
             self.current_progress = self.upgrade_progress_status[0]
             self.upgrade_progress_status = self.upgrade_progress_status[1::]
             
-            self.update_view.queue_draw()
-            self.show_all()
+            self.upgrading_bar.set_upgrading_message("更新软件列表 %s%%" % self.current_progress)
             
         return True    
         
