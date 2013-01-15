@@ -328,6 +328,7 @@ class DetailPage(gtk.HBox):
         
         container_remove_all(self.left_action_box)
         install_status = self.data_manager.get_pkgs_install_status([self.pkg_name])
+        print install_status
         if install_status[0]:
             if self.category == None:
                 status_label = Label("已安装")

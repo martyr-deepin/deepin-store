@@ -190,7 +190,7 @@ class SearchItem(TreeItem):
             
         pixbuf = app_theme.get_pixbuf("%s_%s.png" % (name, status)).get_pixbuf()
             
-        if self.is_have_desktop_file:
+        if (not self.is_installed) or self.is_have_desktop_file:
             draw_pixbuf(
                 cr,
                 pixbuf,
@@ -322,11 +322,16 @@ class SearchItem(TreeItem):
             if self.is_in_star_area(column, offset_x, offset_y):
                 global_event.emit("grade-pkg", self.pkg_name, self.grade_star)
             elif self.is_in_button_area(column, offset_x, offset_y):
-                if self.is_have_desktop_file:
-                    if self.is_installed:
+                if self.is_installed:
+                    if self.is_have_desktop_file:
                         global_event.emit("start-pkg", self.alias_name, self.desktop_info, self.get_offset_with_button(offset_x, offset_y))
-                    else:
-                        global_event.emit("install-pkg", [self.pkg_name])
+                        
+                        self.button_status = BUTTON_PRESS
+                            
+                        if self.redraw_request_callback:
+                            self.redraw_request_callback(self, True)
+                else:
+                    global_event.emit("install-pkg", [self.pkg_name])
                         
                     self.button_status = BUTTON_PRESS
                         
