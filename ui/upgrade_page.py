@@ -375,7 +375,6 @@ class UpgradePage(gtk.VBox):
         self.upgrade_treeview.queue_draw()
         
     def upgrade_selected_pkg(self):
-        print "upgrade"
         pkg_names = []
         for item in self.upgrade_treeview.visible_items:
             if item.check_button_buffer.active:
@@ -515,7 +514,6 @@ class UpgradePage(gtk.VBox):
         return True    
         
     def update_upgrade_progress(self, percent):
-        print percent
         self.upgrade_progress_status.append(percent)
         
     def expose_update_view(self, widget, event):
