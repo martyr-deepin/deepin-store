@@ -248,7 +248,7 @@ class DetailPage(gtk.HBox):
             self.pkg_pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(get_icon_pixbuf_path(self.pkg_name), self.ICON_SIZE, self.ICON_SIZE)
             draw_pixbuf(cr,
                         self.pkg_pixbuf,
-                        rect.x + self.ICON_PADDING_X,
+                        rect.x + self.ICON_PADDING_X + (self.ICON_SIZE - self.pkg_pixbuf.get_width()) / 2,
                         rect.y + self.PADDING_Y)
             
             # Draw star.

@@ -69,7 +69,7 @@ def render_pkg_icon(cr, rect, pkg_name, icon_pixbuf, offset_x=0):
     # Draw icon.
     draw_pixbuf(cr, 
                 icon_pixbuf, 
-                rect.x + ITEM_PADDING_X + offset_x,
+                rect.x + ITEM_PADDING_X + offset_x + (ICON_SIZE - icon_pixbuf.get_width()) / 2,
                 rect.y + ITEM_PADDING_Y,
                 )    
     

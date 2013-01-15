@@ -27,7 +27,7 @@ import gobject
 from message_bar import MessageBar
 from dtk.ui.utils import remove_timeout_id, cairo_state, get_content_size
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
-from item_render import STAR_SIZE, get_star_level, get_icon_pixbuf_path, NAME_SIZE, ITEM_PADDING_X
+from item_render import STAR_SIZE, get_star_level, get_icon_pixbuf_path, NAME_SIZE, ITEM_PADDING_X, ICON_SIZE
 from search_page import SearchPage
 from dtk.ui.new_treeview import TreeView, TreeItem
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
@@ -807,7 +807,7 @@ class PkgIconItem(IconItem):
         draw_pixbuf(
             cr,
             self.pkg_icon_pixbuf,
-            rect.x + self.DRAW_PADDING_LEFT,
+            rect.x + self.DRAW_PADDING_LEFT + (ICON_SIZE - self.pkg_icon_pixbuf.get_width()) / 2,
             rect.y + self.DRAW_PADDING_Y)    
         
         # Draw button.
@@ -835,7 +835,7 @@ class PkgIconItem(IconItem):
         draw_text(
             cr,
             self.alias_name,
-            rect.x + self.DRAW_PADDING_LEFT + self.pkg_icon_pixbuf.get_width() + self.DRAW_INFO_PADDING_X,
+            rect.x + self.DRAW_PADDING_LEFT + ICON_SIZE + self.DRAW_INFO_PADDING_X,
             rect.y + self.DRAW_PADDING_Y,
             text_width,
             NAME_SIZE,
@@ -845,7 +845,7 @@ class PkgIconItem(IconItem):
         self.star_buffer.render(
             cr,
             gtk.gdk.Rectangle(
-                rect.x + self.DRAW_PADDING_LEFT + self.pkg_icon_pixbuf.get_width() + self.DRAW_INFO_PADDING_X,
+                rect.x + self.DRAW_PADDING_LEFT + ICON_SIZE + self.DRAW_INFO_PADDING_X,
                 rect.y + self.DRAW_STAR_PADDING_Y,
                 STAR_SIZE * 5,
                 STAR_SIZE
@@ -857,7 +857,7 @@ class PkgIconItem(IconItem):
             self.long_desc += "\n"
         with cairo_state(cr):
             cr.rectangle(
-                rect.x + self.DRAW_PADDING_LEFT + self.pkg_icon_pixbuf.get_width() + self.DRAW_INFO_PADDING_X,
+                rect.x + self.DRAW_PADDING_LEFT + ICON_SIZE + self.DRAW_INFO_PADDING_X,
                 rect.y + self.DRAW_LONG_DESC_PADDING_Y,
                 text_width,
                 long_desc_height,
@@ -866,7 +866,7 @@ class PkgIconItem(IconItem):
             draw_text(
                 cr,
                 self.long_desc,
-                rect.x + self.DRAW_PADDING_LEFT + self.pkg_icon_pixbuf.get_width() + self.DRAW_INFO_PADDING_X,
+                rect.x + self.DRAW_PADDING_LEFT + ICON_SIZE + self.DRAW_INFO_PADDING_X,
                 rect.y + self.DRAW_LONG_DESC_PADDING_Y,
                 text_width,
                 long_desc_height,
