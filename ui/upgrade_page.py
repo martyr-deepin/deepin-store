@@ -30,6 +30,7 @@ from dtk.ui.button import CheckButtonBuffer, ImageButton, CheckButton
 from dtk.ui.star_view import StarBuffer
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
 from deepin_utils.core import split_with
+from deepin_utils.date_time import get_current_time
 from deepin_utils.file import read_file, write_file, format_file_size, get_parent_dir
 from dtk.ui.utils import is_in_rect, container_remove_all, get_content_size
 from dtk.ui.label import Label
@@ -47,6 +48,59 @@ from events import global_event
 from constant import ACTION_UPGRADE
 from dtk.ui.cycle_strip import CycleStrip
 
+class NewestBar(gtk.HBox):
+    '''
+    class docs
+    '''
+	
+    def __init__(self):
+        '''
+        init docs
+        '''
+        gtk.HBox.__init__(self)
+        
+        self.message_label = Label()
+        self.message_label_align = gtk.Alignment()
+        self.message_label_align.set(0.0, 0.5, 0, 0)
+        self.message_label_align.set_padding(0, 0, 8, 0)
+        self.message_label_align.add(self.message_label)
+        
+        self.no_notify_label = Label(
+            hover_color=app_theme.get_color("homepage_hover")
+            )
+        self.no_notify_label.set_clickable()
+        self.no_notify_label_align = gtk.Alignment()
+        self.no_notify_label_align.set(1.0, 0.5, 0, 0)
+        self.no_notify_label_align.set_padding(0, 0, 0, 0)
+        
+        self.refresh_button = ImageButton(
+            app_theme.get_pixbuf("button/refresh_normal.png"),
+            app_theme.get_pixbuf("button/refresh_hover.png"),
+            app_theme.get_pixbuf("button/refresh_press.png"),
+            )
+        self.refresh_button_align = gtk.Alignment()
+        self.refresh_button_align.set(0.0, 0.5, 0, 0)
+        self.refresh_button_align.set_padding(0, 0, 10, 10)
+        self.refresh_button_align.add(self.refresh_button)
+        
+        self.pack_start(self.message_label_align, False, False)
+        self.pack_start(self.no_notify_label_align, True, True)
+        self.pack_start(self.refresh_button_align, False, False)
+        
+        self.no_notify_label.connect("button-press-event", lambda w, e: global_event.emit("show-no-notify-page"))
+        
+    def set_update_time(self):
+        self.message_label.set_text("最后更新时间: %s" % get_current_time())
+        
+    def set_no_notify_num(self, no_notify_num):
+        
+        container_remove_all(self.no_notify_label_align)
+        if no_notify_num > 0:
+            self.no_notify_label.set_text("不再提醒升级(%s)" % no_notify_num)
+            self.no_notify_label_align.add(self.no_notify_label)
+            
+            self.show_all()
+        
 class UpgradeBar(gtk.HBox):
     '''
     class docs
@@ -198,6 +252,7 @@ class UpgradePage(gtk.VBox):
         
         self.upgrade_bar = UpgradeBar()
         self.no_notify_bar = NoNotifyBar()
+        self.newest_bar = NewestBar()
         
         self.cycle_strip = CycleStrip(app_theme.get_pixbuf("strip/background.png"))
         
@@ -253,6 +308,9 @@ class UpgradePage(gtk.VBox):
         container_remove_all(self)
         container_remove_all(self.cycle_strip)
         
+        self.newest_bar.set_update_time()
+        self.newest_bar.set_no_notify_num(self.no_notify_pkg_num)
+        self.cycle_strip.add(self.newest_bar)
         self.pack_start(self.cycle_strip, False, False)
         self.pack_start(self.newest_view, True, True)
         
