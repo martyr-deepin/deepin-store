@@ -26,7 +26,7 @@ from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, CONFIG_DIR, CHEC
 import os
 from dtk.ui.new_treeview import TreeView, TreeItem
 from dtk.ui.threads import post_gui, AnonymityThread
-from dtk.ui.button import CheckButtonBuffer, ImageButton, CheckButton
+from dtk.ui.button import CheckButtonBuffer, ImageButton, CheckAllButton
 from dtk.ui.star_view import StarBuffer
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
 from deepin_utils.core import split_with
@@ -123,7 +123,7 @@ class UpgradeBar(gtk.HBox):
         '''
         gtk.HBox.__init__(self)
         
-        self.select_button = CheckButton()
+        self.select_button = CheckAllButton()
         self.select_button.set_active(True)
         self.select_button_align = gtk.Alignment()
         self.select_button_align.set(0.0, 0.5, 0, 0)
@@ -157,11 +157,11 @@ class UpgradeBar(gtk.HBox):
         self.pack_start(self.upgrade_selected_button_align, False, False)
         
         self.no_notify_label.connect("button-press-event", lambda w, e: global_event.emit("show-no-notify-page"))
-        self.select_button.connect("clicked", self.click_select_button)
+        self.select_button.connect("active-changed", self.handle_active_changed)
         self.upgrade_selected_button.connect("clicked", lambda w: global_event.emit("upgrade-selected-pkg"))
         
-    def click_select_button(self, widget):
-        if widget.get_active():
+    def handle_active_changed(self, widget, state):
+        if state:
             global_event.emit("select-all-upgrade-pkg")
         else:
             global_event.emit("unselect-all-upgrade-pkg")
@@ -189,7 +189,7 @@ class NoNotifyBar(gtk.HBox):
         '''
         gtk.HBox.__init__(self)
         
-        self.select_button = CheckButton()
+        self.select_button = CheckAllButton()
         self.select_button.set_active(True)
         self.select_button_align = gtk.Alignment()
         self.select_button_align.set(0.0, 0.5, 0, 0)
@@ -224,12 +224,12 @@ class NoNotifyBar(gtk.HBox):
         self.pack_start(self.notify_again_label_align, False, False)
         self.pack_start(self.return_align, False, False)
         
-        self.select_button.connect("clicked", self.click_select_button)
+        self.select_button.connect("active-changed", self.handle_active_changed)
         self.notify_again_label.connect("button-press-event", lambda w, e: global_event.emit("notify-selected-pkg"))
         self.return_button.connect("clicked", lambda w: global_event.emit("show-upgrade-page"))
         
-    def click_select_button(self, widget):
-        if widget.get_active():
+    def handle_active_changed(self, widget, state):
+        if state:
             global_event.emit("select-all-notify-pkg")
         else:
             global_event.emit("unselect-all-notify-pkg")
@@ -312,9 +312,18 @@ class UpgradePage(gtk.VBox):
         global_event.register_event("show-newest-view", self.show_newest_view)
         global_event.register_event("show-network-disable-view", self.show_newest_view)
         
+        global_event.register_event("click-upgrade-check-button", self.click_upgrade_check_button)
+        global_event.register_event("click-notify-check-button", self.click_notify_check_button)
+        
         self.upgrade_treeview.draw_mask = self.draw_mask
         self.no_notify_treeview.draw_mask = self.draw_mask
         
+    def click_upgrade_check_button(self):
+        self.upgrade_bar.select_button.update_status(map(lambda item: item.check_button_buffer.active, self.upgrade_treeview.visible_items))
+        
+    def click_notify_check_button(self):
+        self.no_notify_bar.select_button.update_status(map(lambda item: item.check_button_buffer.active, self.no_notify_treeview.visible_items))
+    
     def show_init_page(self):
         if len(self.upgrade_treeview.visible_items) == 0:
             global_event.emit("show-newest-view")
@@ -1026,6 +1035,8 @@ class UpgradeItem(TreeItem):
     def button_press(self, column, offset_x, offset_y):
         if column == 0:
             if self.check_button_buffer.press_button(offset_x, offset_y):
+                global_event.emit("click-upgrade-check-button")
+                
                 if self.redraw_request_callback:
                     self.redraw_request_callback(self)
         elif column == 1:
@@ -1413,6 +1424,8 @@ class NoNotifyItem(TreeItem):
     def button_press(self, column, offset_x, offset_y):
         if column == 0:
             if self.check_button_buffer.press_button(offset_x, offset_y):
+                global_event.emit("click-notify-check-button")
+                
                 if self.redraw_request_callback:
                     self.redraw_request_callback(self)
         elif column == 1:
