@@ -27,6 +27,7 @@ from nls import _
 import glib
 from icon_window import IconWindow
 from detail_page import DetailPage
+from dtk.ui.dialog import OpenFileDialog
 from dtk.ui.menu import Menu
 from dtk.ui.constant import WIDGET_POS_BOTTOM_LEFT
 from dtk.ui.button import LinkButton
@@ -447,6 +448,14 @@ class DeepinSoftwareCenter(object):
     def open_download_directory(self):
         run_command("xdg-open /var/cache/apt/archives")
         
+    def open_deb_file(self):
+        OpenFileDialog(
+            "打开Deb文件", 
+            self.application.window,
+            ok_callback=lambda filename: self.bus_interface.install_deb_files([filename]))
+        
+        global_event.emit("show-message", "可以直接拖拽Deb文件到软件中心窗口进行安装哟. :)")
+        
     def run(self):    
         # Exit if frontend has running.
         bus = dbus.SessionBus()
@@ -561,7 +570,7 @@ class DeepinSoftwareCenter(object):
         
         # Init menu.
         menu = Menu(
-            [(None, "安装Deb文件", None),
+            [(None, "安装Deb文件", self.open_deb_file),
              (None, "打开下载目录", self.open_download_directory),
              (None, "智能清理下载文件", None),
              (None, "显示新功能", None),
