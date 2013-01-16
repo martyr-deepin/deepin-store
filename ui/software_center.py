@@ -292,7 +292,7 @@ def install_pkg(bus_interface, install_page, pkg_names, window):
     
     icon_window = IconWindow(pkg_names[0])
     
-    timeline = Timeline(300, CURVE_SINE)
+    timeline = Timeline(500, CURVE_SINE)
     timeline.connect("update", lambda source, status: update(source, status, icon_window, (ax, ay), (bx, by), (cx, cy), (a, b, c)))
     timeline.connect("completed", lambda source: finish(source, icon_window))
     timeline.run()
