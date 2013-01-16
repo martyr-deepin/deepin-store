@@ -2,6 +2,7 @@ data/update_data/
 data/patch/
 data/update_temp/
 data/patch_data.tar.gz
+data/update_md5
 *.pyc
 nohup.out
 .#*

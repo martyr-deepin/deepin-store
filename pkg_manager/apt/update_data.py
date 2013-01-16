@@ -54,7 +54,7 @@ class UpdateData(Thread):
     def run(self):
         try:
             global_event.emit("update-data-start")
-            md5_filepath = os.path.join(get_current_dir(__file__), "update_md5")
+            md5_filepath = os.path.join(get_parent_dir(__file__, 3), "data", "update_md5")
             current_data_md5 = read_file(md5_filepath, True)
             patch_list = urllib2.urlopen("%s/3.0/zh_CN/patch/patch_list.txt" % UPDATE_DATA_URL).read()
             
