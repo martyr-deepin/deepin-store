@@ -454,7 +454,7 @@ class DetailPage(gtk.HBox):
                     
             if len(screenshot_files) > 0:
                 slide_switcher = SlideSwitcher(
-                    map(lambda screenshot_file: get_resize_pixbuf_with_height(screenshot_file, 300), screenshot_files),
+                    map(lambda screenshot_file: get_resize_pixbuf_with_height(screenshot_file, 290), screenshot_files),
                     pointer_offset_x=-370,
                     pointer_offset_y=-15,
                         horizontal_align=ALIGN_MIDDLE,
@@ -468,6 +468,19 @@ class DetailPage(gtk.HBox):
                 slide_align.add(slide_switcher)
                 slide_align.connect("expose-event", self.expose_resizable_label_background)
                 self.right_slide_box.pack_start(slide_align, True, True)
+                
+                powered_link = Label(
+                    "Powered by 又拍云存储",
+                    text_color=app_theme.get_color("homepage"),
+                    hover_color=app_theme.get_color("homepage_hover"),
+                    )
+                powered_link.set_clickable()
+                powered_link.connect("button-press-event", lambda w, e: run_command("xdg-open https://www.upyun.com/"))
+                powered_link_align = gtk.Alignment()
+                powered_link_align.set(1.0, 0.5, 0, 0)
+                powered_link_align.set_padding(0, 0, 0, 100)
+                powered_link_align.add(powered_link)
+                self.right_slide_box.pack_start(powered_link_align, False, False)
                     
                 self.show_all()
             else:
