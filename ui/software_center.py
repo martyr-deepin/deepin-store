@@ -266,12 +266,6 @@ def clear_install_stop_list(install_page):
     return True    
 
 def install_pkg(bus_interface, install_page, pkg_names, window):
-    # Add to install page.
-    install_page.add_install_actions(pkg_names)
-    
-    # Send install command.
-    bus_interface.install_pkg(pkg_names)
-    
     # Add install animation.
     (screen, px, py, modifier_type) = window.get_display().get_pointer()
     ax, ay = px, py
@@ -291,11 +285,19 @@ def install_pkg(bus_interface, install_page, pkg_names, window):
     [[a], [b], [c]] = solve_parabola((ax, ay), (bx, by), (cx, cy))
     
     icon_window = IconWindow(pkg_names[0])
+    icon_window.move(ax, ay)
+    icon_window.show_all()
     
     timeline = Timeline(500, CURVE_SINE)
     timeline.connect("update", lambda source, status: update(source, status, icon_window, (ax, ay), (bx, by), (cx, cy), (a, b, c)))
     timeline.connect("completed", lambda source: finish(source, icon_window))
     timeline.run()
+    
+    # Add to install page.
+    install_page.add_install_actions(pkg_names)
+    
+    # Send install command.
+    bus_interface.install_pkg(pkg_names)
     
 def update(source, status, icon_window, (ax, ay), (bx, by), (cx, cy), (a, b, c)):
     move_x = ax + (cx - ax) * status
