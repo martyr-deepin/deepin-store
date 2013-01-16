@@ -27,13 +27,16 @@ from nls import _
 import glib
 from icon_window import IconWindow
 from detail_page import DetailPage
+from dtk.ui.menu import Menu
+from dtk.ui.constant import WIDGET_POS_BOTTOM_LEFT
 from dtk.ui.button import LinkButton
 from dtk.ui.navigatebar import Navigatebar
 from dtk.ui.timeline import Timeline, CURVE_SINE
 from deepin_utils.ipc import is_dbus_name_exists
+from deepin_utils.process import run_command
 from deepin_utils.math_lib import solve_parabola
 from deepin_utils.file import read_file, write_file, touch_file
-from dtk.ui.utils import container_remove_all, set_cursor
+from dtk.ui.utils import container_remove_all, set_cursor, get_widget_root_coordinate
 from dtk.ui.application import Application
 from dtk.ui.statusbar import Statusbar
 from home_page import HomePage
@@ -438,6 +441,12 @@ class DeepinSoftwareCenter(object):
         self.simulate = "--simulate" in arguments
         self.deb_files = filter(self.is_deb_file, arguments)
         
+    def exit(self):
+        gtk.main_quit()
+        
+    def open_download_directory(self):
+        run_command("xdg-open /var/cache/apt/archives")
+        
     def run(self):    
         # Exit if frontend has running.
         bus = dbus.SessionBus()
@@ -549,6 +558,22 @@ class DeepinSoftwareCenter(object):
         self.application.titlebar.left_box.pack_start(navigatebar_align, True, True)
         self.application.window.add_move_event(navigatebar)
         self.application.window.connect("show", lambda w: request_status(self.bus_interface, install_page, upgrade_page, uninstall_page))
+        
+        # Init menu.
+        menu = Menu(
+            [(None, "安装Deb文件", None),
+             (None, "打开下载目录", self.open_download_directory),
+             (None, "智能清理下载文件", None),
+             (None, "显示新功能", None),
+             (None, "选项", None),
+             (None, "退出", self.exit),
+             ],
+            is_root_menu=True)
+        self.application.set_menu_callback(
+            lambda button:
+                menu.show(
+                get_widget_root_coordinate(button, WIDGET_POS_BOTTOM_LEFT),
+                (button.get_allocation().width, 0)))
         
         # Handle global event.
         global_event.register_event("install-pkg", lambda pkg_names: install_pkg(self.bus_interface, install_page, pkg_names, self.application.window))
