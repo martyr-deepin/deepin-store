@@ -293,7 +293,6 @@ class UpgradePage(gtk.VBox):
         self.in_no_notify_page = False
         
         self.pkg_info_dict = {}
-        self.fetch_upgrade_info()
         
         global_event.register_event("select-all-upgrade-pkg", self.select_all_pkg)
         global_event.register_event("unselect-all-upgrade-pkg", self.unselect_all_pkg)
@@ -318,6 +317,7 @@ class UpgradePage(gtk.VBox):
         self.no_notify_treeview.draw_mask = self.draw_mask
         
         global_event.emit("show-updating-view")
+        self.fetch_upgrade_info()
         
     def click_upgrade_check_button(self):
         self.upgrade_bar.select_button.update_status(map(lambda item: item.check_button_buffer.active, self.upgrade_treeview.visible_items))

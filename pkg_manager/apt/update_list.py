@@ -72,8 +72,8 @@ class UpdateList(td.Thread):
             try:
                 global_event.emit("update-list-start")
                 
-                # if self.simulate:
-                if True:
+                if self.simulate:
+                # if True:
                     while self.simulate_update_counter <= 100:
                         global_event.emit("update-list-update", self.simulate_update_counter)
                         
