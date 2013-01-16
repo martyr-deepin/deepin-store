@@ -54,6 +54,9 @@ from dtk.ui.label import Label
 from dtk.ui.gio_utils import start_desktop_file
 from start_desktop_window import StartDesktopWindow
 
+def update_navigatebar_number(navigatebar, page_index, notify_number):
+    navigatebar.update_notify_num(navigatebar.nav_items[page_index], notify_number)
+
 def jump_to_category(page_switcher, page_box, home_page, detail_page, first_category_name, second_category_name):
     switch_page(page_switcher, page_box, home_page, detail_page)
     home_page.jump_to_category(first_category_name, second_category_name)
@@ -526,10 +529,10 @@ class DeepinSoftwareCenter(object):
         
         # Init navigatebar.
         navigatebar = Navigatebar(
-                [(app_theme.get_pixbuf("navigatebar/nav_recommend.png"), "软件中心", lambda : switch_page(page_switcher, page_box, home_page, detail_page)),
-                (app_theme.get_pixbuf("navigatebar/nav_update.png"), "系统升级", lambda : switch_page(page_switcher, page_box, upgrade_page, detail_page)),
-                (app_theme.get_pixbuf("navigatebar/nav_uninstall.png"), "卸载软件", lambda : switch_page(page_switcher, page_box, uninstall_page, detail_page)),
-                (app_theme.get_pixbuf("navigatebar/nav_download.png"), "安装管理", lambda : switch_page(page_switcher, page_box, install_page, detail_page)),
+                [(app_theme.get_pixbuf("navigatebar/nav_recommend.png"), " 软件中心", lambda : switch_page(page_switcher, page_box, home_page, detail_page)),
+                (app_theme.get_pixbuf("navigatebar/nav_update.png"), " 系统升级", lambda : switch_page(page_switcher, page_box, upgrade_page, detail_page)),
+                (app_theme.get_pixbuf("navigatebar/nav_uninstall.png"), " 卸载软件", lambda : switch_page(page_switcher, page_box, uninstall_page, detail_page)),
+                (app_theme.get_pixbuf("navigatebar/nav_download.png"), " 安装管理", lambda : switch_page(page_switcher, page_box, install_page, detail_page)),
                 ],
                 font_size = 11,
                 padding_x = 2,
@@ -559,6 +562,8 @@ class DeepinSoftwareCenter(object):
         global_event.register_event("request-clear-action-pages", request_clear_action_pages)
         global_event.register_event("request-stop-install-actions", request_stop_install_actions)
         global_event.register_event("request-clear-failed-action", request_clear_failed_action)
+        global_event.register_event("update-upgrade-notify-number", lambda number: update_navigatebar_number(navigatebar, 1, number))        
+        global_event.register_event("update-install-notify-number", lambda number: update_navigatebar_number(navigatebar, 3, number))        
         global_event.register_event("jump-to-category", 
                                     lambda first_category_name, second_category_name: 
                                     jump_to_category(page_switcher, page_box, home_page, detail_page, first_category_name, second_category_name))

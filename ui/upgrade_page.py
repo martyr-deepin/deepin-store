@@ -283,6 +283,7 @@ class UpgradePage(gtk.VBox):
         
         self.upgrade_treeview = TreeView(enable_drag_drop=False)
         self.upgrade_treeview.connect("items-change", self.monitor_upgrade_view)
+        self.upgrade_treeview.connect("items-change", lambda treeview: global_event.emit("update-upgrade-notify-number", len(treeview.visible_items)))
         
         gtk.timeout_add(200, self.render_upgrade_progress)
         

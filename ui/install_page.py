@@ -72,6 +72,7 @@ class InstallPage(gtk.VBox):
         
         self.cute_message_image.connect("expose-event", self.expose_cute_message_image)
         self.treeview.connect("items-change", self.update_message_bar)
+        self.treeview.connect("items-change", lambda treeview: global_event.emit("update-install-notify-number", len(treeview.visible_items)))
         
     def expose_cute_message_image(self, widget, event):
         if self.cute_message_pixbuf:
