@@ -24,7 +24,8 @@ from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.constant import ALIGN_MIDDLE
 from dtk.ui.button import ImageButton
 from dtk.ui.star_view import StarView
-from constant import ICON_DIR
+from dtk.ui.browser import WebView
+from constant import ICON_DIR, CONFIG_DIR, SERVER_ADDRESS
 import traceback
 from skin import app_theme
 import sys
@@ -152,7 +153,7 @@ class DetailPage(gtk.HBox):
         self.left_recommend_label = Label("同类热门推荐")
         
         self.right_info_box = gtk.VBox()
-        self.scrolled_window = ScrolledWindow()
+        self.scrolled_window = ScrolledWindow(0, 0)
         self.right_view_box = gtk.VBox()
         
         self.right_top_box = gtk.HBox()
@@ -390,6 +391,22 @@ class DetailPage(gtk.HBox):
             thread = threading.Thread(target=self.fetch_screenshot)
             thread.setDaemon(True)
             thread.start()
+            
+        container_remove_all(self.right_comment_box)    
+        web_view = WebView(os.path.join(CONFIG_DIR, "cookie.txt"))
+        web_view_align = gtk.Alignment()
+        web_view_align.set(0.5, 0, 0, 0)
+        web_view_align.set_padding(33, 33, 33, 33)
+        web_view_align.add(web_view)
+        web_settings = web_view.get_settings()
+        web_settings.set_property("enable-plugins", True)
+        web_settings.set_property("enable-scripts", True)    
+        web_view.open("%s/softcenter/v1/comment?n=%s&hl=%s" % (
+                SERVER_ADDRESS, 
+                self.pkg_name, 
+                "zh_CN"
+                ))
+        self.right_comment_box.pack_start(web_view_align, True, True)
         
         self.queue_draw()
         

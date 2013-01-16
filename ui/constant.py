@@ -49,3 +49,5 @@ SCREENSHOT_DOWNLOAD_DIR = os.path.join(os.path.expanduser("~"), ".cache", "deepi
 
 CHECK_BUTTON_PADDING_X = 0
 STRIP_PADDING_X = 14
+
+SERVER_ADDRESS = "http://apis.linuxdeepin.com"
