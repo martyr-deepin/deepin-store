@@ -144,15 +144,21 @@ class DataManager(object):
                     recommend_pkgs.append((name, alias_name, star))
         
         self.software_db_cursor.execute(
-            "SELECT long_desc, version, homepage, size, star, download, alias_name, have_screenshot FROM software WHERE pkg_name=?", [pkg_name])
-        (long_desc, version, homepage, size, star, download, alias_name, have_screenshot) = self.software_db_cursor.fetchone()
+            "SELECT long_desc, version, homepage, size, star, download, alias_name FROM software WHERE pkg_name=?", [pkg_name])
+        (long_desc, version, homepage, size, star, download, alias_name) = self.software_db_cursor.fetchone()
         
-        return (category, long_desc, version, homepage, size, star, download, alias_name, have_screenshot, recommend_pkgs)
+        return (category, long_desc, version, homepage, size, star, download, alias_name, recommend_pkgs)
         
     def get_pkg_search_info(self, pkg_name):
         self.software_db_cursor.execute(
             "SELECT alias_name, short_desc, long_desc, star FROM software WHERE pkg_name=?", [pkg_name])
-        return self.software_db_cursor.fetchone()
+        result = self.software_db_cursor.fetchone()
+        
+        if result == None:
+            print "FIXME: get_pkg_search_info got %s data out of repo database" % (pkg_name)
+            return (pkg_name, "FIXME", "FIXME", 5.0)
+        else:
+            return result
     
     def get_item_pkg_info(self, pkg_name):
         self.software_db_cursor.execute(

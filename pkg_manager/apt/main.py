@@ -160,6 +160,8 @@ class PackageManager(dbus.service.Object):
         
         UpdateList().start()
         
+        log("Backend init")
+        
     def action_finish(self, signal_content):
         self.update_signal([("action-finish", signal_content)])
         
@@ -195,7 +197,11 @@ class PackageManager(dbus.service.Object):
         self.update_signal([("update-list-finish", "")])
         print "finish"
         
+        log("Start update data")
+
         UpdateData().start()
+        
+        log("After update data")
         
         self.exit_manager.check()
 

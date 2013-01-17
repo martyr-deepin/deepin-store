@@ -323,7 +323,6 @@ class DetailPage(gtk.HBox):
          self.version, self.homepage, 
          self.size, self.star, 
          self.download, self.alias_name,
-         self.have_screenshot,
          self.recommend_pkgs) = self.data_manager.get_pkg_detail_info(self.pkg_name)
         self.star_buffer = StarBuffer(self.star)
         
@@ -387,10 +386,9 @@ class DetailPage(gtk.HBox):
         
         self.show_screenshot()
         
-        if eval(self.have_screenshot):
-            thread = threading.Thread(target=self.fetch_screenshot)
-            thread.setDaemon(True)
-            thread.start()
+        thread = threading.Thread(target=self.fetch_screenshot)
+        thread.setDaemon(True)
+        thread.start()
             
         container_remove_all(self.right_comment_box)    
         web_view = WebView(os.path.join(CONFIG_DIR, "cookie.txt"))

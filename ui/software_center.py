@@ -427,6 +427,13 @@ class DBusService(dbus.service.Object):
             if len(deb_files) > 0:
                 self.bus_interface.install_deb_files(message_conent)
         
+debug_flag = False                
+
+def log(message):
+    global debug_flag
+    if debug_flag:
+        print message
+                
 class DeepinSoftwareCenter(object):
     '''
     class docs
@@ -441,6 +448,9 @@ class DeepinSoftwareCenter(object):
         
         self.simulate = "--simulate" in arguments
         self.deb_files = filter(self.is_deb_file, arguments)
+        
+        global debug_flag
+        debug_flag = "--debug" in arguments
         
     def exit(self):
         gtk.main_quit()
@@ -457,6 +467,8 @@ class DeepinSoftwareCenter(object):
         global_event.emit("show-message", "可以直接拖拽Deb文件到软件中心窗口进行安装哟. :)")
         
     def run(self):    
+        log("Software center start")
+        
         # Exit if frontend has running.
         bus = dbus.SessionBus()
         if is_dbus_name_exists(DSC_FRONTEND_NAME):
@@ -469,17 +481,25 @@ class DeepinSoftwareCenter(object):
             # Exit program.
             return
         
+        log("Init service dbus")
+        
         # Init DBus.
         system_bus = dbus.SystemBus()
         bus_object = system_bus.get_object(DSC_SERVICE_NAME, DSC_SERVICE_PATH)
         self.bus_interface = dbus.Interface(bus_object, DSC_SERVICE_NAME)
         
+        log("Say hello to backend")
+        
         # Say hello to backend. 
         self.bus_interface.say_hello(self.simulate)
+        
+        log("Test deb files arguments")
         
         # Install deb file.
         if len(self.deb_files) > 0:
             self.bus_interface.install_deb_files(self.deb_files)
+        
+        log("Init application")
         
         # Init application.
         self.application = Application(resizable=False)
@@ -492,22 +512,34 @@ class DeepinSoftwareCenter(object):
                 )
         self.application.window.set_title(_("Deepin Software Center"))
         
+        log("Init DND event for deb files")
+        
         # Make window can received drop data.
         targets = [("text/uri-list", 0, 1)]        
         self.application.window.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_DROP, targets, gtk.gdk.ACTION_COPY)
         self.application.window.connect_after("drag-data-received", self.on_drag_data_received)        
         
+        log("Build unique service.")
+        
         # Build unique service.
         DBusService(self.bus_interface, self.application)
+        
+        log("Init data manager")
         
         # Init data manager.
         data_manager = DataManager(self.bus_interface)
         
+        log("Init page box")
+        
         # Init page box.
         page_box = gtk.VBox()
         
+        log("Init detail view")
+        
         # Init detail view.
         detail_page = DetailPage(data_manager)
+        
+        log("Init page switcher")
         
         # Init page switcher.
         page_switcher = HSlider()
@@ -515,14 +547,20 @@ class DeepinSoftwareCenter(object):
         page_switcher.append_page(detail_page)
         page_switcher.set_to_page(page_box)
         
+        log("Init page align")
+        
         # Init page align.
         page_align = gtk.Alignment()
         page_align.set(0.5, 0.5, 1, 1)
         page_align.set_padding(0, 0, 2, 2)
         
+        log("Append page to switcher.")
+        
         # Append page to switcher.
         page_align.add(page_switcher)
         self.application.main_box.pack_start(page_align, True, True)
+        
+        log("Init status bar.")
         
         # Init status bar.
         statusbar = Statusbar(24)
@@ -538,12 +576,21 @@ class DeepinSoftwareCenter(object):
         statusbar.status_box.pack_start(status_box, True, True)
         self.application.main_box.pack_start(statusbar, False, False)
         
+        log("Init pages.")
+        
         # Init pages.
+        log("Init home page.")
         home_page = HomePage(data_manager)
+        log("Init upgrade page.")
         upgrade_page = UpgradePage(self.bus_interface, data_manager)
+        log("Init uninstall page.")
         uninstall_page = UninstallPage(self.bus_interface, data_manager)
+        log("Init install page.")
         install_page = InstallPage(self.bus_interface, data_manager)
+        log("Init switch page.")
         switch_page(page_switcher, page_box, home_page, detail_page)
+        
+        log("Init navigatebar.")
         
         # Init navigatebar.
         navigatebar = Navigatebar(
@@ -568,6 +615,8 @@ class DeepinSoftwareCenter(object):
         self.application.window.add_move_event(navigatebar)
         self.application.window.connect("show", lambda w: request_status(self.bus_interface, install_page, upgrade_page, uninstall_page))
         
+        log("Init menu.")
+        
         # Init menu.
         menu = Menu(
             [(None, "安装Deb文件", self.open_deb_file),
@@ -583,6 +632,8 @@ class DeepinSoftwareCenter(object):
                 menu.show(
                 get_widget_root_coordinate(button, WIDGET_POS_BOTTOM_LEFT),
                 (button.get_allocation().width, 0)))
+        
+        log("Handle global event.")
         
         # Handle global event.
         global_event.register_event("install-pkg", lambda pkg_names: install_pkg(self.bus_interface, install_page, pkg_names, self.application.window))
@@ -612,8 +663,12 @@ class DeepinSoftwareCenter(object):
         glib.timeout_add(1000, lambda : clear_install_stop_list(install_page))
         glib.timeout_add(1000, lambda : clear_failed_action(install_page, upgrade_page))
         
+        log("Run")
+        
         # Run.
         self.application.run()
+        
+        log("Send exit request to backend when frontend exit.")
         
         # Send exit request to backend when frontend exit.
         self.bus_interface.request_quit()
