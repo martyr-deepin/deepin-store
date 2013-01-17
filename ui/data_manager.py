@@ -139,36 +139,38 @@ class DataManager(object):
             for name in names:
                 if name != pkg_name:
                     self.software_db_cursor.execute(
-                        "SELECT alias_name, star FROM software WHERE pkg_name=?", [name])
-                    (alias_name, star) = self.software_db_cursor.fetchone()
-                    recommend_pkgs.append((name, alias_name, star))
+                        "SELECT alias_name FROM software WHERE pkg_name=?", [name])
+                    (alias_name,) = self.software_db_cursor.fetchone()
+                    recommend_pkgs.append((name, alias_name, 5.0))
         
         self.software_db_cursor.execute(
-            "SELECT long_desc, version, homepage, size, star, download, alias_name FROM software WHERE pkg_name=?", [pkg_name])
-        (long_desc, version, homepage, size, star, download, alias_name) = self.software_db_cursor.fetchone()
+            "SELECT long_desc, version, homepage, size, alias_name FROM software WHERE pkg_name=?", [pkg_name])
+        (long_desc, version, homepage, size, alias_name) = self.software_db_cursor.fetchone()
         
-        return (category, long_desc, version, homepage, size, star, download, alias_name, recommend_pkgs)
+        return (category, long_desc, version, homepage, size, 5.0, 0, alias_name, recommend_pkgs)
         
     def get_pkg_search_info(self, pkg_name):
         self.software_db_cursor.execute(
-            "SELECT alias_name, short_desc, long_desc, star FROM software WHERE pkg_name=?", [pkg_name])
+            "SELECT alias_name, short_desc, long_desc FROM software WHERE pkg_name=?", [pkg_name])
         result = self.software_db_cursor.fetchone()
         
         if result == None:
             print "FIXME: get_pkg_search_info got %s data out of repo database" % (pkg_name)
             return (pkg_name, "FIXME", "FIXME", 5.0)
         else:
-            return result
+            (alias_name, short_desc, long_desc) = result
+            return (alias_name, short_desc, long_desc, 5.0)
     
     def get_item_pkg_info(self, pkg_name):
         self.software_db_cursor.execute(
-            "SELECT short_desc, star, alias_name FROM software WHERE pkg_name=?", [pkg_name])
+            "SELECT short_desc, alias_name FROM software WHERE pkg_name=?", [pkg_name])
         info = self.software_db_cursor.fetchone()
         if info == None:
             short_desc = self.bus_interface.request_pkg_short_desc(pkg_name)
             return (short_desc, 5.0, pkg_name)
         else:
-            return info
+            (short_desc, alias_name) = info
+            return (short_desc, 5.0, alias_name)
     
     def get_item_pkgs_info(self, pkg_names):
         install_status = self.bus_interface.request_pkgs_install_status(pkg_names)
@@ -203,7 +205,7 @@ class DataManager(object):
         for (index, (pkg_name, pkg_title, pkg_summary)) in enumerate(infos):
             self.software_db_cursor.execute(
                 "SELECT alias_name FROM software WHERE pkg_name=?", [pkg_name])
-            (alias_name) = self.software_db_cursor.fetchone()
+            (alias_name,) = self.software_db_cursor.fetchone()
             
             self.desktop_db_cursor.execute(
                 "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
@@ -221,14 +223,14 @@ class DataManager(object):
             "SELECT * FROM week_download_rank")
         for (pkg_name, ) in self.download_rank_db_cursor.fetchall():
             self.software_db_cursor.execute(
-                "SELECT star, alias_name FROM software WHERE pkg_name=?", [pkg_name])
-            (star, alias_name) = self.software_db_cursor.fetchone()
+                "SELECT alias_name FROM software WHERE pkg_name=?", [pkg_name])
+            (alias_name,) = self.software_db_cursor.fetchone()
             
             self.desktop_db_cursor.execute(
                 "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
             desktop_infos = self.desktop_db_cursor.fetchall()
             
-            week_infos.append((pkg_name, alias_name, star, desktop_infos))
+            week_infos.append((pkg_name, alias_name, 5.0, desktop_infos))
             week_pkg_names.append(pkg_name)
             
         week_install_status = self.bus_interface.request_pkgs_install_status(week_pkg_names)
@@ -242,14 +244,14 @@ class DataManager(object):
             "SELECT * FROM month_download_rank")
         for (pkg_name, ) in self.download_rank_db_cursor.fetchall():
             self.software_db_cursor.execute(
-                "SELECT star, alias_name FROM software WHERE pkg_name=?", [pkg_name])
-            (star, alias_name) = self.software_db_cursor.fetchone()
+                "SELECT alias_name FROM software WHERE pkg_name=?", [pkg_name])
+            (alias_name,) = self.software_db_cursor.fetchone()
             
             self.desktop_db_cursor.execute(
                 "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
             desktop_infos = self.desktop_db_cursor.fetchall()
             
-            month_infos.append((pkg_name, alias_name, star, desktop_infos))
+            month_infos.append((pkg_name, alias_name, 5.0, desktop_infos))
             month_pkg_names.append(pkg_name)
             
         month_install_status = self.bus_interface.request_pkgs_install_status(month_pkg_names)
@@ -263,14 +265,14 @@ class DataManager(object):
             "SELECT * FROM all_download_rank")
         for (pkg_name, ) in self.download_rank_db_cursor.fetchall():
             self.software_db_cursor.execute(
-                "SELECT star, alias_name FROM software WHERE pkg_name=?", [pkg_name])
-            (star, alias_name) = self.software_db_cursor.fetchone()
+                "SELECT alias_name FROM software WHERE pkg_name=?", [pkg_name])
+            (alias_name,) = self.software_db_cursor.fetchone()
             
             self.desktop_db_cursor.execute(
                 "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
             desktop_infos = self.desktop_db_cursor.fetchall()
             
-            all_infos.append((pkg_name, alias_name, star, desktop_infos))
+            all_infos.append((pkg_name, alias_name, 5.0, desktop_infos))
             all_pkg_names.append(pkg_name)
 
         all_install_status = self.bus_interface.request_pkgs_install_status(all_pkg_names)
