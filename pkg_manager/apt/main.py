@@ -24,7 +24,6 @@ import os
 from deepin_utils.file import get_parent_dir
 sys.path.append(os.path.join(get_parent_dir(__file__, 3), "download_manager", "deepin_storm"))
 
-import tarfile
 import signal
 from download_manager import DownloadManager
 import apt_pkg
@@ -43,7 +42,6 @@ from events import global_event
 from deepin_utils.ipc import auth_with_policykit
 from utils import log, LOG_PATH
 from update_list import UpdateList
-from update_data import UpdateData
 import threading as td
 from Queue import Queue
 
@@ -57,7 +55,6 @@ class ExitManager(td.Thread):
     def __init__(self, 
                  mainloop,
                  is_update_list_running, 
-                 is_update_data_running, 
                  is_download_action_running,
                  is_apt_action_running,
                  have_exit_request):
@@ -69,7 +66,6 @@ class ExitManager(td.Thread):
         
         self.mainloop = mainloop
         self.is_update_list_running = is_update_list_running
-        self.is_update_data_running = is_update_data_running
         self.is_download_action_running = is_download_action_running
         self.is_apt_action_running = is_apt_action_running
         self.have_exit_request = have_exit_request
@@ -90,9 +86,6 @@ class ExitManager(td.Thread):
                 self.loop()
             elif self.is_update_list_running():
                 print "Update list still runing, exit later"
-                self.loop()
-            elif self.is_update_data_running():
-                print "Update data still runing, exit later"
                 self.loop()
             elif self.is_apt_action_running():
                 print "Apt action still running, exit later"
@@ -142,17 +135,9 @@ class PackageManager(dbus.service.Object):
         global_event.register_event("update-list-failed", self.update_list_failed)
         global_event.register_event("update-list-update", self.update_list_update)
         
-        self.in_update_data = False
-        global_event.register_event("update-data-start", self.update_data_start)
-        global_event.register_event("update-data-finish", self.update_data_finish)
-        global_event.register_event("update-data-failed", self.update_data_failed)
-        global_event.register_event("update-data-update", self.update_data_update)
-        global_event.register_event("update-data-not-need", self.update_data_not_need)
-
         self.exit_manager = ExitManager(
             self.mainloop,
             self.is_update_list_running,
-            self.is_update_data_running,
             self.is_download_action_running,
             self.is_apt_action_running,
             self.have_exit_request)
@@ -175,9 +160,6 @@ class PackageManager(dbus.service.Object):
     def is_update_list_running(self):
         return self.in_update_list
     
-    def is_update_data_running(self):
-        return self.in_update_data
-    
     def is_download_action_running(self):
         return len(self.download_manager.fetch_files_dict) > 0
     
@@ -197,12 +179,6 @@ class PackageManager(dbus.service.Object):
         self.update_signal([("update-list-finish", "")])
         print "finish"
         
-        log("Start update data")
-
-        UpdateData().start()
-        
-        log("After update data")
-        
         self.exit_manager.check()
 
     def update_list_failed(self):
@@ -215,36 +191,6 @@ class PackageManager(dbus.service.Object):
     def update_list_update(self, percent):
         self.update_signal([("update-list-update", percent)])
         print "update: %s" % percent
-
-    def update_data_start(self):
-        self.in_update_data = True
-        self.update_signal([("update-data-start", "")])
-        print "start"
-
-    def update_data_finish(self):
-        self.in_update_data = False
-        self.update_signal([("update-data-finish", "")])
-        print "finish"
-        
-        self.exit_manager.check()
-
-    def update_data_failed(self):
-        self.in_update_data = False
-        self.update_signal([("update-data-failed", "")])
-        print "failed"
-        
-        self.exit_manager.check()
-        
-    def update_data_not_need(self):
-        self.in_update_data = False
-        self.update_signal([("update-data-not-need", "")])
-        print "not need"
-        
-        self.exit_manager.check()
-        
-    def update_data_update(self, patch_index, patch_number):
-        self.update_signal([("update-data-update", patch_index, patch_number)])
-        print "update: %s (%s)" % (patch_index, patch_number)
 
     def handle_dbus_reply(self, *reply):
         log("%s (reply): %s" % (self.module_dbus_name, str(reply)))        
@@ -290,14 +236,6 @@ class PackageManager(dbus.service.Object):
         
         self.exit_flag = False
         self.simulate = simulate
-        
-    @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="b")
-    def try_extract_data(self):
-        if not os.path.exists(os.path.join(DATA_DIR, "update_data")):
-            with tarfile.open(os.path.join(DATA_DIR, "update_data.tar.gz"), "r:gz") as tar:
-                tar.extractall(os.path.join(DATA_DIR, "update_data"))
-                
-        return True
         
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="")    
     def request_quit(self):

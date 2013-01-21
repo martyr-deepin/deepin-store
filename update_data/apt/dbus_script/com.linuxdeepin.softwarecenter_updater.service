@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=com.linuxdeepin.softwarecenter_updater
+Exec=/usr/bin/deepin-software-center-updater.py
+User=root

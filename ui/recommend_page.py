@@ -29,7 +29,7 @@ from dtk.ui.iconview import IconItem
 from dtk.ui.utils import is_in_rect
 from events import global_event
 
-PKG_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update_data", "recommend_picture", "zh_CN")
+PKG_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "current", "home", "recommend_picture", "zh_CN")
 
 class RecommendIconItem(IconItem):
     '''

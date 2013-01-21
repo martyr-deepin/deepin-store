@@ -33,7 +33,7 @@ import gtk
 import gobject
 import os
 
-ALBUM_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update_data", "album_picture", "zh_CN")
+ALBUM_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "current", "home", "album_picture", "zh_CN")
 
 class AlbumPage(gtk.VBox):
     '''

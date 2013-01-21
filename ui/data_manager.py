@@ -26,7 +26,7 @@ import sqlite3
 from collections import OrderedDict
 import xappy
 
-UPDATE_DATA_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update_data")
+UPDATE_DATA_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "current")
 
 class DataManager(object):
     '''
@@ -38,9 +38,6 @@ class DataManager(object):
         init docs
         '''
         self.bus_interface = bus_interface
-        
-        if not self.bus_interface.try_extract_data():
-            return
         
         self.software_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "software", "zh_CN", "software.db"))
         self.software_db_cursor = self.software_db_connect.cursor()
@@ -54,16 +51,16 @@ class DataManager(object):
         self.category_dict = {}
         self.category_name_dict = {}
         
-        self.album_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "album", "zh_CN", "album.db"))
+        self.album_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "home", "album", "zh_CN", "album.db"))
         self.album_db_cursor = self.album_db_connect.cursor()
 
-        self.download_rank_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "download_rank", "zh_CN", "download_rank.db"))
+        self.download_rank_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "home", "download_rank", "zh_CN", "download_rank.db"))
         self.download_rank_db_cursor = self.download_rank_db_connect.cursor()
 
-        self.recommend_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "recommend", "zh_CN", "recommend.db"))
+        self.recommend_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "home", "recommend", "zh_CN", "recommend.db"))
         self.recommend_db_cursor = self.recommend_db_connect.cursor()
 
-        self.slide_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "slide", "zh_CN", "slide.db"))
+        self.slide_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "home", "slide", "zh_CN", "slide.db"))
         self.slide_db_cursor = self.slide_db_connect.cursor()
         
         self.build_category_dict()

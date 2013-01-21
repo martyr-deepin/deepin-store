@@ -29,7 +29,7 @@ DSC_SERVICE_PATH = "/com/linuxdeepin/softwarecenter"
 DSC_FRONTEND_NAME = "com.linuxdeepin.softwarecenter_frontend"
 DSC_FRONTEND_PATH = "/com/linuxdeepin/softwarecenter_frontend"
 
-ICON_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update_data", "app_icon")
+ICON_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "current", "app_icon")
 VIEW_PADDING_X = 10
 VIEW_PADDING_Y = 10
 

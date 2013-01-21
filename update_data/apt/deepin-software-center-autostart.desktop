@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Data updater for Deepin software center
+Comment=Data updater for Deepin software center
+Exec=/usr/bin/deepin-software-center-updater.py
+Terminal=false
+Type=Application
+NoDisplay=true
+OnlyShowIn=neko
