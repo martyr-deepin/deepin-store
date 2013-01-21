@@ -31,8 +31,8 @@ import os
 import tarfile
 import uuid
 
-DSC_UPDATER_NAME = "com.linuxdeepin.softwarecenter_updater"
-DSC_UPDATER_PATH = "/com/linuxdeepin/softwarecenter_updater"
+DSC_UPDATER_NAME = "com.linuxdeepin.softwarecenterupdater"
+DSC_UPDATER_PATH = "/com/linuxdeepin/softwarecenterupdater"
 DATA_DIR = os.path.join(get_parent_dir(__file__, 3), "data")
 
 class UpdateDataService(dbus.service.Object):
@@ -84,22 +84,22 @@ if __name__ == "__main__":
         signal.signal(signal.SIGINT, lambda : mainloop.quit()) # capture "Ctrl + c" signal
         
         # Auth with root permission.
-        if not auth_with_policykit("com.linuxdeepin.softwarecenter_updater.action",
+        if not auth_with_policykit("com.linuxdeepin.softwarecenterupdater.action",
                                    "org.freedesktop.PolicyKit1", 
                                    "/org/freedesktop/PolicyKit1/Authority", 
                                    "org.freedesktop.PolicyKit1.Authority",
                                    ):
             print "Authority failed"
+        else:
+            # Init dbus.
+            system_bus = dbus.SystemBus()
+            bus_name = dbus.service.BusName(DSC_UPDATER_NAME, system_bus)
             
-        # Init dbus.
-        system_bus = dbus.SystemBus()
-        bus_name = dbus.service.BusName(DSC_UPDATER_NAME, system_bus)
-        
-        # Init package manager.
-        UpdateDataService(system_bus).run()
-        
-        # Run.
-        mainloop.run()
+            # Init package manager.
+            UpdateDataService(system_bus).run()
+            
+            # Run.
+            mainloop.run()
     
 # import os
 # import sys

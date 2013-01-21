@@ -6,7 +6,7 @@
   <vendor>Apt service for deepin software center</vendor>
   <vendor_url>http://www.linuxdeepin.com/</vendor_url>
 
-  <action id="com.linuxdeepin.softwarecenter_updater.action">
+  <action id="com.linuxdeepin.softwarecenterupdater.action">
     <description>Mount an iso</description>
     <message>Authentication is required to mount the iso</message>
     <defaults>
