@@ -23,6 +23,7 @@
 from dbus.mainloop.glib import DBusGMainLoop
 import dbus
 import dbus.service
+from deepin_utils.ipc import is_dbus_name_exists
 
 DSC_UPDATER_NAME = "com.linuxdeepin.softwarecenterupdater"
 DSC_UPDATER_PATH = "/com/linuxdeepin/softwarecenterupdater"
@@ -31,8 +32,11 @@ if __name__ == "__main__":
     # Init.
     dbus.mainloop.glib.DBusGMainLoop(set_as_default = True)
     
-    system_bus = dbus.SystemBus()
-    bus_object = system_bus.get_object(DSC_UPDATER_NAME, DSC_UPDATER_PATH)
-    dbus.Interface(bus_object, DSC_UPDATER_NAME)
-    
-    print "Start updater finish."
+    if is_dbus_name_exists(DSC_UPDATER_NAME, False):
+        print "Deepin software center updater has running!"
+    else:
+        system_bus = dbus.SystemBus()
+        bus_object = system_bus.get_object(DSC_UPDATER_NAME, DSC_UPDATER_PATH)
+        dbus.Interface(bus_object, DSC_UPDATER_NAME)
+        
+        print "Start updater finish."
