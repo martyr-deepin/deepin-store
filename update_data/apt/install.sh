@@ -13,7 +13,11 @@ echo "Remove /usr/bin/deepin-software-center-updater.py"
 
 chmod +x `pwd`/main.py
 ln -s `pwd`/main.py /usr/bin/deepin-software-center-updater.py
-echo "Build symbol link for service file"
+echo "Build symbol link for main.py"
+
+chmod +x `pwd`/main.py
+ln -s `pwd`/start_updater.py /usr/bin/deepin-software-center-start-updater.py
+echo "Build symbol link for start_updater.py"
 
 cp ./deepin-software-center-autostart.desktop /etc/xdg/autostart/
 echo "Copy auto start script to /etc/xdg/autostart/"
