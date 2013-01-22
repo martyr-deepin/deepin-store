@@ -27,7 +27,7 @@ from dtk.ui.new_treeview import TreeView, TreeItem
 from dtk.ui.iconview import IconView, IconItem
 from deepin_utils.file import get_parent_dir
 from dtk.ui.utils import container_remove_all, is_in_rect, get_content_size, cairo_state
-from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
+from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear, TEXT_ALIGN_TOP
 from events import global_event
 import gtk
 import gobject
@@ -198,29 +198,23 @@ class AlbumSummaryItem(IconItem):
                   self.TITLE_SIZE,
                   text_size=self.TITLE_SIZE,
                   text_color="#00AAFF",
+                  vertical_alignment=TEXT_ALIGN_TOP,
                   )
         
         # Draw album summary.
-        text_height = rect.height - self.PICTURE_PADDING_Y * 2 - self.TITLE_SIZE - self.SUMMARY_PADDING_Y - 12
-        with cairo_state(cr):
-            draw_x = rect.x + self.PICTURE_PADDING_X + self.pixbuf.get_width() + self.TITLE_PADDING_LEFT
-            draw_y = rect.y + self.PICTURE_PADDING_Y * 2 + self.TITLE_SIZE
-            cr.rectangle(draw_x,
-                         draw_y,
-                         text_width,
-                         text_height)
-            
-            cr.clip()
-            
-            draw_text(cr,
-                      self.album_summary,
-                      draw_x,
-                      draw_y,
-                      text_width,
-                      text_height,
-                      text_size=self.SUMMARY_SIZE,
-                      wrap_width=text_width
-                      )
+        text_height = rect.height - self.PICTURE_PADDING_Y * 2 - self.TITLE_SIZE - self.SUMMARY_PADDING_Y
+        
+        draw_text(cr,
+                  self.album_summary,
+                  rect.x + self.PICTURE_PADDING_X + self.pixbuf.get_width() + self.TITLE_PADDING_LEFT,
+                  rect.y + self.PICTURE_PADDING_Y * 2 + self.TITLE_SIZE,
+                  text_width,
+                  text_height,
+                  text_size=self.SUMMARY_SIZE,
+                  wrap_width=text_width,
+                  vertical_alignment=TEXT_ALIGN_TOP,
+                  clip_line_count=3
+                  )
         
     def icon_item_button_press(self, x, y):
         '''
@@ -305,7 +299,7 @@ class AlbumDetailItem(TreeItem):
     TITLE_PADDING_LEFT = 20
     TITLE_SIZE = 11
     
-    SUMMARY_PADDING_Y = 5
+    SUMMARY_PADDING_Y = 30
     SUMMARY_SIZE = 10
     
     SUMMARY_WIDTH = 440
@@ -349,18 +343,21 @@ class AlbumDetailItem(TreeItem):
                   self.TITLE_SIZE,
                   text_size=self.TITLE_SIZE,
                   text_color="#00AAFF",
+                  vertical_alignment=TEXT_ALIGN_TOP,
                   )
     
         # Draw album summary.
-        text_height = rect.height - self.PICTURE_PADDING_Y - self.TITLE_SIZE - self.SUMMARY_PADDING_Y
+        text_height = rect.height
         draw_text(cr,
                   self.pkg_summary,
                   rect.x,
-                  rect.y + self.PICTURE_PADDING_Y + self.TITLE_SIZE,
+                  rect.y + self.PICTURE_PADDING_Y + self.SUMMARY_PADDING_Y,
                   text_width,
                   text_height,
                   text_size=self.SUMMARY_SIZE,
-                  wrap_width=text_width
+                  wrap_width=text_width,
+                  vertical_alignment=TEXT_ALIGN_TOP,
+                  clip_line_count=3,
                   )
         
     def render_pkg_action(self, cr, rect):
