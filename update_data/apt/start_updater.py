@@ -22,6 +22,7 @@
 
 import dbus
 import dbus.service
+import dbus.mainloop.glib
 from deepin_utils.ipc import is_dbus_name_exists
 import traceback
 import sys
