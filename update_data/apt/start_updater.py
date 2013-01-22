@@ -31,7 +31,6 @@ DSC_UPDATER_PATH = "/com/linuxdeepin/softwarecenterupdater"
 
 if __name__ == "__main__":
     try:
-    # Init.
         dbus.mainloop.glib.DBusGMainLoop(set_as_default = True)
         
         if is_dbus_name_exists(DSC_UPDATER_NAME, False):
