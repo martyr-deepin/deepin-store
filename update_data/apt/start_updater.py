@@ -20,23 +20,29 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dbus.mainloop.glib import DBusGMainLoop
 import dbus
 import dbus.service
 from deepin_utils.ipc import is_dbus_name_exists
+import traceback
+import sys
 
 DSC_UPDATER_NAME = "com.linuxdeepin.softwarecenterupdater"
 DSC_UPDATER_PATH = "/com/linuxdeepin/softwarecenterupdater"
 
 if __name__ == "__main__":
+    try:
     # Init.
-    dbus.mainloop.glib.DBusGMainLoop(set_as_default = True)
-    
-    if is_dbus_name_exists(DSC_UPDATER_NAME, False):
-        print "Deepin software center updater has running!"
-    else:
-        system_bus = dbus.SystemBus()
-        bus_object = system_bus.get_object(DSC_UPDATER_NAME, DSC_UPDATER_PATH)
-        dbus.Interface(bus_object, DSC_UPDATER_NAME)
+        dbus.mainloop.glib.DBusGMainLoop(set_as_default = True)
         
-        print "Start updater finish."
+        if is_dbus_name_exists(DSC_UPDATER_NAME, False):
+            print "Deepin software center updater has running!"
+        else:
+            system_bus = dbus.SystemBus()
+            bus_object = system_bus.get_object(DSC_UPDATER_NAME, DSC_UPDATER_PATH)
+            dbus.Interface(bus_object, DSC_UPDATER_NAME)
+            
+            print "Start updater finish."
+    except Exception, e:
+        print "got error: %s" % (e)
+        traceback.print_exc(file=sys.stdout)
+        
