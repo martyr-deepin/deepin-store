@@ -5,4 +5,3 @@ Exec=/usr/bin/deepin-software-center-start-updater.py
 Terminal=false
 Type=Application
 NoDisplay=true
-OnlyShowIn=neko
