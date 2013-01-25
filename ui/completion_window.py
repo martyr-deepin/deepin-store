@@ -67,6 +67,7 @@ class CompletionWindow(Window):
         self.treeview_align.set_padding(self.align_size, self.align_size, self.align_size, self.align_size)
         self.treeview_align.add(self.treeview)
         self.treeview.connect("press-return", self.treeview_press_return)
+        self.treeview.draw_mask = self.draw_mask
         
         self.window_frame.pack_start(self.treeview_align, True, True)
         
@@ -87,6 +88,21 @@ class CompletionWindow(Window):
             "Up" : self.treeview.select_prev_item,
             "Down" : self.treeview.select_next_item,
             }
+        
+    def draw_mask(self, cr, x, y, w, h):
+        '''
+        Draw mask interface.
+        
+        @param cr: Cairo context.
+        @param x: X coordiante of draw area.
+        @param y: Y coordiante of draw area.
+        @param w: Width of draw area.
+        @param h: Height of draw area.
+        '''
+        draw_vlinear(cr, x, y, w, h,
+                     [(0, ("#ffffff", 0.9)),
+                      (1, ("#ffffff", 0.9)),]
+                     )
         
     def treeview_press_return(self, treeview, select_items):
         if len(select_items) > 0:
