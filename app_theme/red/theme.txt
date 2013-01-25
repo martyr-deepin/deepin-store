@@ -18,7 +18,7 @@
  "sidebar_hover" : "#f1d5d5",
  "homepage" : "#333333",
  "homepage_hover" : "#00AAFF",
- "sidebar_background" : "#ffe5e5",
+ "sidebar_background" : "#fff2f2",
  },	
  "alpha_colors" : {
      "frame" : ("#000000", 0.5),
