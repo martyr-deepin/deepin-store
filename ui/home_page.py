@@ -156,8 +156,8 @@ class HomePage(gtk.HBox):
         @param h: Height of draw area.
         '''
         draw_vlinear(cr, x, y, w, h,
-                     [(0, ("#FFFFFF", 0.9)),
-                      (1, ("#FFFFFF", 0.9)),]
+                     [(0, ("#dcf2fc", 0.9)),
+                      (1, ("#dcf2fc", 0.9)),]
                      )
         
     def expose_canopy(self, widget, event):
