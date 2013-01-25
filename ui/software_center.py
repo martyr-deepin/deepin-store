@@ -626,7 +626,9 @@ class DeepinSoftwareCenter(object):
              (None, "选项", None),
              (None, "退出", self.exit),
              ],
-            is_root_menu=True)
+            is_root_menu=True,
+            menu_min_width=150,
+            )
         self.application.set_menu_callback(
             lambda button:
                 menu.show(
