@@ -48,7 +48,7 @@ from events import global_event
 from skin import app_theme
 
 FIRST_CATEGORY_PADDING_X = 66
-SECOND_CATEGORY_PADDING_X = 44
+SECOND_CATEGORY_PADDING_X = 46
 
 CATEGORY_VIEW_WIDTH = 155
 SLIDE_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "current", "home", "slide_picture", "zh_CN")
@@ -77,7 +77,7 @@ class HomePage(gtk.HBox):
         
         self.search_align = gtk.Alignment()
         self.search_align.set(0.5, 0.5, 0, 0)
-        self.search_align.set_padding(5, 13, 0, 0)
+        self.search_align.set_padding(5, 13, 13, 13)
         self.search_align.add(search_entry)
         
         self.in_press = False
@@ -273,12 +273,12 @@ class CategoryItem(TreeItem):
         draw_pixbuf(
             cr,
             pixbuf,
-            rect.x + 10,
+            rect.x + 12,
             rect.y + (rect.height - pixbuf.get_height()) / 2)
         
         draw_text(cr, 
                   self.first_category_name,
-                  rect.x + pixbuf.get_width() + 20, 
+                  rect.x + pixbuf.get_width() + 22, 
                   rect.y,
                   rect.width,
                   rect.height,
@@ -591,12 +591,12 @@ class RecommendItem(TreeItem):
         draw_pixbuf(
             cr,
             pixbuf,
-            rect.x + 10,
+            rect.x + 12,
             rect.y + (rect.height - pixbuf.get_height()) / 2)
         
         draw_text(cr, 
                   self.name,
-                  rect.x + pixbuf.get_width() + 20,
+                  rect.x + pixbuf.get_width() + 22,
                   rect.y,
                   rect.width,
                   rect.height,
