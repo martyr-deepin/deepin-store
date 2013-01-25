@@ -162,14 +162,14 @@ class RankTab(gtk.Button):
         rect = widget.allocation
         
         if self.active_flag:
-            text_color = "#00AAFF"
+            text_color = "#2C8BBA"
         else:
             if widget.state == gtk.STATE_NORMAL:
                 text_color = "#333333"
             elif widget.state == gtk.STATE_PRELIGHT:
                 text_color = "#2C8BBA"
             elif widget.state == gtk.STATE_ACTIVE:
-                text_color = "#00AAFF"
+                text_color = "#2C8BBA"
             
         draw_text(cr,
                   self.tab_name,
