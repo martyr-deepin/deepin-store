@@ -257,7 +257,7 @@ class CategoryItem(TreeItem):
         self.data_manager = data_manager
     
     def render_name(self, cr, rect):
-        text_color = "#000000"
+        text_color = "#333333"
         if self.is_select:
             cr.set_source_rgba(*color_hex_to_cairo(app_theme.get_color("sidebar_select").get_color()))
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
@@ -462,7 +462,7 @@ class SecondCategoryItem(TreeItem):
         self.desktop_infos = desktop_infos
     
     def render_name(self, cr, rect):
-        text_color = "#000000"
+        text_color = "#333333"
         if self.is_select:
             cr.set_source_rgba(*color_hex_to_cairo(app_theme.get_color("sidebar_select").get_color()))
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
@@ -575,7 +575,7 @@ class RecommendItem(TreeItem):
         self.data_manager = data_manager
     
     def render_name(self, cr, rect):
-        text_color = "#000000"
+        text_color = "#333333"
         if self.is_select:
             cr.set_source_rgba(*color_hex_to_cairo(app_theme.get_color("sidebar_select").get_color()))
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
