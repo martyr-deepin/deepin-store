@@ -29,7 +29,7 @@ import os
 
 # Init skin config.
 skin_config.init_skin(
-    "blue",
+    "1",
     os.path.join(get_parent_dir(__file__, 2), "skin"),
     os.path.expanduser("~/.config/deepin-software-center/skin"),
     os.path.expanduser("~/.config/deepin-software-center/skin_config.ini"),
