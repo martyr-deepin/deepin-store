@@ -155,9 +155,10 @@ class HomePage(gtk.HBox):
         @param w: Width of draw area.
         @param h: Height of draw area.
         '''
+        sidebar_color = app_theme.get_color("sidebar_background").get_color()
         draw_vlinear(cr, x, y, w, h,
-                     [(0, ("#dcf2fc", 0.9)),
-                      (1, ("#dcf2fc", 0.9)),]
+                     [(0, (sidebar_color, 0.9)),
+                      (1, (sidebar_color, 0.9)),]
                      )
         
     def expose_canopy(self, widget, event):
