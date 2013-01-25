@@ -197,7 +197,7 @@ class AlbumSummaryItem(IconItem):
                   text_width,
                   self.TITLE_SIZE,
                   text_size=self.TITLE_SIZE,
-                  text_color="#00AAFF",
+                  text_color="#000000",
                   vertical_alignment=TEXT_ALIGN_TOP,
                   )
         
@@ -211,6 +211,7 @@ class AlbumSummaryItem(IconItem):
                   text_width,
                   text_height,
                   text_size=self.SUMMARY_SIZE,
+                  text_color="#4c4c4c",
                   wrap_width=text_width,
                   vertical_alignment=TEXT_ALIGN_TOP,
                   clip_line_count=3
@@ -342,7 +343,7 @@ class AlbumDetailItem(TreeItem):
                   text_width,
                   self.TITLE_SIZE,
                   text_size=self.TITLE_SIZE,
-                  text_color="#00AAFF",
+                  text_color="#000000",
                   vertical_alignment=TEXT_ALIGN_TOP,
                   )
     
@@ -355,6 +356,7 @@ class AlbumDetailItem(TreeItem):
                   text_width,
                   text_height,
                   text_size=self.SUMMARY_SIZE,
+                  text_color="#4c4c4c",
                   wrap_width=text_width,
                   vertical_alignment=TEXT_ALIGN_TOP,
                   clip_line_count=3,
