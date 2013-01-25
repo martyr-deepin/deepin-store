@@ -267,7 +267,7 @@ class PkgIconItem(IconItem):
         draw_text(cr, 
                   self.alias_name,
                   rect.x,
-                  rect.y + self.icon_padding_y + self.icon_pixbuf.get_height() + self.name_padding_y,
+                  rect.y + self.icon_padding_y + self.icon_pixbuf.get_height() + self.name_padding_y - 3,
                   rect.width,
                   DEFAULT_FONT_SIZE,
                   alignment=pango.ALIGN_CENTER)
