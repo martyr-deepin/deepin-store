@@ -21,7 +21,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-import gtk
 from dtk.ui.draw import draw_pixbuf, draw_text
 from dtk.ui.constant import DEFAULT_FONT_SIZE
 from dtk.ui.utils import get_content_size

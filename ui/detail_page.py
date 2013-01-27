@@ -568,7 +568,7 @@ class RecommendPkgItem(gtk.HBox):
                 
         v_box = gtk.VBox()
         pkg_icon_image = gtk.image_new_from_pixbuf(
-            gtk.gdk.pixbuf_new_from_file_at_size(os.path.join(ICON_DIR, "%s.png" % pkg_name), 32, 32))
+            gtk.gdk.pixbuf_new_from_file_at_size(get_icon_pixbuf_path(pkg_name), 32, 32))
         pkg_alias_label = Label(alias_name,
                                 hover_color=app_theme.get_color("homepage_hover"))
         pkg_alias_label.set_clickable()
