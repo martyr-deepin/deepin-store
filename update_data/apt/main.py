@@ -30,6 +30,7 @@ from deepin_utils.file import get_parent_dir
 import os
 import tarfile
 import uuid
+import time
 
 DSC_UPDATER_NAME = "com.linuxdeepin.softwarecenterupdater"
 DSC_UPDATER_PATH = "/com/linuxdeepin/softwarecenterupdater"
@@ -53,6 +54,8 @@ class UpdateDataService(dbus.service.Object):
         self.data_update_dir = os.path.join(DATA_DIR, "update")
         
     def run(self):
+        time.sleep(5)
+        
         # Extract data if current directory is not exists.
         if not os.path.exists(self.data_current_dir):
             print "进行第一次数据解压..."
