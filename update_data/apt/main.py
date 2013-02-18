@@ -116,6 +116,7 @@ class UpdateDataService(dbus.service.Object):
                           "data_current_id.ini", 
                           "data_newest_id.ini",
                           "patch_status.ini",
+                          "clean.py",
                           ]
         data_id_list = [current_data_id_config.get("current", "data_id"),
                         newest_data_id_config.get("newest", "data_id")]
