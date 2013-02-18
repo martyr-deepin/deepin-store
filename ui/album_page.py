@@ -34,7 +34,7 @@ import gobject
 import os
 from data import DATA_ID
 
-ALBUM_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", DATA_ID, "home", "album_picture", "zh_CN")
+ALBUM_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "album_picture", "zh_CN")
 
 class AlbumPage(gtk.VBox):
     '''

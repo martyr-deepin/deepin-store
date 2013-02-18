@@ -27,7 +27,7 @@ from collections import OrderedDict
 import xappy
 from data import DATA_ID
 
-UPDATE_DATA_DIR = os.path.join(get_parent_dir(__file__, 2), "data", DATA_ID)
+UPDATE_DATA_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID)
 
 class DataManager(object):
     '''

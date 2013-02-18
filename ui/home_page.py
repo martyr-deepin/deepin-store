@@ -52,7 +52,7 @@ FIRST_CATEGORY_PADDING_X = 66
 SECOND_CATEGORY_PADDING_X = 46
 
 CATEGORY_VIEW_WIDTH = 155
-SLIDE_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", DATA_ID, "home", "slide_picture", "zh_CN")
+SLIDE_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "slide_picture", "zh_CN")
 
 class HomePage(gtk.HBox):
     '''

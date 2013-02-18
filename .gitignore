@@ -7,3 +7,6 @@ dist
 dtk.egg-info
 *.po~
 *.swp
+data/newest
+data/patch
+data/update
