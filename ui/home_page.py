@@ -46,12 +46,13 @@ from download_rank_page import DownloadRankPage
 from completion_window import search_entry, completion_window, completion_grab_window
 from events import global_event
 from skin import app_theme
+from data import DATA_ID
 
 FIRST_CATEGORY_PADDING_X = 66
 SECOND_CATEGORY_PADDING_X = 46
 
 CATEGORY_VIEW_WIDTH = 155
-SLIDE_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "current", "home", "slide_picture", "zh_CN")
+SLIDE_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", DATA_ID, "home", "slide_picture", "zh_CN")
 
 class HomePage(gtk.HBox):
     '''

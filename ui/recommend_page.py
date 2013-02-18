@@ -28,8 +28,9 @@ from dtk.ui.draw import draw_pixbuf
 from dtk.ui.iconview import IconItem
 from dtk.ui.utils import is_in_rect
 from events import global_event
+from data import DATA_ID
 
-PKG_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "current", "home", "recommend_picture", "zh_CN")
+PKG_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", DATA_ID, "home", "recommend_picture", "zh_CN")
 
 class RecommendIconItem(IconItem):
     '''

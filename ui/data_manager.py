@@ -25,8 +25,9 @@ import os
 import sqlite3
 from collections import OrderedDict
 import xappy
+from data import DATA_ID
 
-UPDATE_DATA_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "current")
+UPDATE_DATA_DIR = os.path.join(get_parent_dir(__file__, 2), "data", DATA_ID)
 
 class DataManager(object):
     '''

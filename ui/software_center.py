@@ -25,6 +25,7 @@ from skin import app_theme
 from nls import _
 
 import glib
+from data import data_exit
 from icon_window import IconWindow
 from detail_page import DetailPage
 from dtk.ui.dialog import OpenFileDialog
@@ -674,6 +675,9 @@ class DeepinSoftwareCenter(object):
         
         # Send exit request to backend when frontend exit.
         self.bus_interface.request_quit()
+        
+        # Remove id from config file.
+        data_exit()
 
     def is_deb_file(self, path):
         return path.endswith(".deb") and os.path.exists(path)
