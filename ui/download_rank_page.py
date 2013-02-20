@@ -20,7 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from constant import VIEW_PADDING_X, VIEW_PADDING_Y, BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
+from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
 from skin import app_theme
 from dtk.ui.utils import get_content_size, set_cursor, container_remove_all, is_in_rect
 import gobject
