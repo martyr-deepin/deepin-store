@@ -78,7 +78,7 @@ class HomePage(gtk.HBox):
         
         self.search_align = gtk.Alignment()
         self.search_align.set(0.5, 0.5, 0, 0)
-        self.search_align.set_padding(5, 13, 13, 13)
+        self.search_align.set_padding(15, 5, 13, 13)
         self.search_align.add(search_entry)
         
         self.in_press = False
@@ -109,11 +109,15 @@ class HomePage(gtk.HBox):
             enable_drag_drop=False
             )
         self.category_view.draw_mask = self.draw_mask
+        self.category_view_align = gtk.Alignment()
+        self.category_view_align.set(0.5, 0.5, 1, 1)
+        self.category_view_align.set_padding(10, 10, 0, 0)
+        self.category_view_align.add(self.category_view)
         
         self.background_box.pack_start(self.canopy, False, False)
-        self.background_box.pack_start(self.search_align, False, False)
-        self.sidebar_box.pack_start(self.background_box, False, False)
-        self.sidebar_box.pack_start(self.category_view, True, True)
+        self.background_box.pack_start(self.search_align, True, True)
+        self.background_box.pack_start(self.category_view_align, False, False)
+        self.sidebar_box.pack_start(self.background_box, True, True)
         
         self.split_line = gtk.VBox()
         self.split_line.set_size_request(1, -1)
@@ -236,7 +240,7 @@ class HomePage(gtk.HBox):
 gobject.type_register(HomePage)
 
 CATEGORY_ITEM_NAME_WIDTH = -1
-CATEGORY_ITEM_HEIGHT = 37
+CATEGORY_ITEM_HEIGHT = 39
 CATEGORY_ITEM_NAME_SIZE = 11
 SECOND_CATEGORY_ITEM_NAME_SIZE = 10
 
@@ -661,7 +665,7 @@ class RecommendItem(TreeItem):
         self.tab_switcher = TabSwitcher(["热门推荐", "专题介绍", "下载排行"])
         self.tab_switcher_align = gtk.Alignment()
         self.tab_switcher_align.set(0.5, 0.5, 1, 1)
-        self.tab_switcher_align.set_padding(6, 0, 0, 9)
+        self.tab_switcher_align.set_padding(10, 0, 0, 9)
         
         items = []
         for pkg_name in self.data_manager.get_recommend_info():
@@ -675,7 +679,7 @@ class RecommendItem(TreeItem):
         
         self.pkg_icon_view_align = gtk.Alignment()
         self.pkg_icon_view_align.set(0.5, 0.5, 1, 1)
-        self.pkg_icon_view_align.set_padding(11, 0, 1, 11)
+        self.pkg_icon_view_align.set_padding(6, 0, 1, 11)
         self.pkg_icon_view_align.add(self.pkg_icon_scrolled_window)
         
         self.album_page = AlbumPage(self.data_manager)

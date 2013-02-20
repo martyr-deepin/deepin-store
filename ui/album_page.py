@@ -53,11 +53,11 @@ class AlbumPage(gtk.VBox):
         
         self.album_summary_align = gtk.Alignment()
         self.album_summary_align.set(0.5, 0.5, 1, 1)
-        self.album_summary_align.set_padding(5, 0, 0, 10)
+        self.album_summary_align.set_padding(0, 0, 0, 10)
         
         self.album_detail_align = gtk.Alignment()
         self.album_detail_align.set(0.5, 0.5, 1, 1)
-        self.album_detail_align.set_padding(10, 0, 0, 10)
+        self.album_detail_align.set_padding(5, 0, 0, 10)
         
         self.switch_to_album_summary_view()
         

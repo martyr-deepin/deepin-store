@@ -504,7 +504,7 @@ class DeepinSoftwareCenter(object):
         
         # Init application.
         self.application = Application(resizable=False)
-        self.application.set_default_size(888, 608)
+        self.application.set_default_size(888, 634)
         self.application.set_skin_preview(app_theme.get_pixbuf("frame.png"))
         self.application.set_icon(app_theme.get_pixbuf("icon.ico"))
         self.application.add_titlebar(
