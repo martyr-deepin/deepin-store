@@ -23,8 +23,6 @@
 from apt.progress.old import FetchProgress
 from deepin_utils.net import is_network_connected
 import threading as td
-import apt
-import apt_pkg
 from events import global_event
 import time
 
@@ -55,11 +53,12 @@ class UpdateListProgress(FetchProgress):
 class UpdateList(td.Thread):
     '''Update package list.'''
 	
-    def __init__(self, simulate=False):
+    def __init__(self, pkg_cache, simulate=False):
         '''Init for UpdateList.'''
         td.Thread.__init__(self)
         self.setDaemon(True) # make thread exit when main program exit
         
+        self.pkg_cache = pkg_cache
         self.simulate = simulate
         
         self.simulate_update_counter = 0
@@ -81,10 +80,8 @@ class UpdateList(td.Thread):
                         
                         self.simulate_update_counter += 1
                 else:
-                    apt_pkg.init()
-                    cache = apt.Cache()
                     progress = UpdateListProgress()
-                    cache.update(progress)
+                    self.pkg_cache.cache.update(progress)
                 
                 global_event.emit("update-list-finish")
             except Exception, e:

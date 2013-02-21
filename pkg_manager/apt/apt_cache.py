@@ -87,4 +87,8 @@ class AptCache(object):
 
 if __name__ == "__main__":
     pkg_cache = AptCache()
-    print pkg_cache.get_uninstall_pkgs()
+    
+    import Queue as Q
+    block_signal = Q.Queue()
+    if block_signal.get():
+        print "finish"

@@ -26,8 +26,6 @@ sys.path.append(os.path.join(get_parent_dir(__file__, 3), "download_manager", "d
 
 import signal
 from download_manager import DownloadManager
-import apt_pkg
-import apt
 import apt.debfile as debfile
 from parse_pkg import get_pkg_download_info, get_deb_download_info
 import gobject
@@ -110,7 +108,7 @@ class PackageManager(dbus.service.Object):
         self.exit_flag = False
         self.simulate = False
         
-        self.apt_action_pool = AptActionPool()
+        self.apt_action_pool = AptActionPool(self.pkg_cache)
         self.apt_action_pool.start()
         
         global_event.register_event("action-start", lambda signal_content: self.update_signal([("action-start", signal_content)]))
@@ -143,7 +141,7 @@ class PackageManager(dbus.service.Object):
             self.have_exit_request)
         self.exit_manager.start()
         
-        UpdateList().start()
+        UpdateList(self.pkg_cache).start()
         
         log("Backend init")
         
@@ -199,9 +197,7 @@ class PackageManager(dbus.service.Object):
         log("%s (error): %s" % (self.module_dbus_name, str(error)))
         
     def add_download(self, pkg_name, action_type, simulate=False):
-        apt_pkg.init()
-        cache = apt.Cache()
-        pkg_infos = get_pkg_download_info(cache, pkg_name)
+        pkg_infos = get_pkg_download_info(self.pkg_cache.cache, pkg_name)
         if pkg_infos == DOWNLOAD_STATUS_NOTNEED:
             self.download_finish(pkg_name, action_type, simulate)
             print "Don't need download"
@@ -280,15 +276,13 @@ class PackageManager(dbus.service.Object):
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
     def install_deb_files(self, deb_files):
         if len(deb_files) > 0:
-            apt_pkg.init()
-            cache = apt.Cache()
             for deb_file in deb_files:
-                deb_package = debfile.DebPackage(deb_file, cache)
+                deb_package = debfile.DebPackage(deb_file, self.pkg_cache.cache)
                 deb_pkg_name = deb_package.control_content("control").split("\n")[0].split("Package: ")[1]
                 
                 self.update_signal([("got-install-deb-pkg-name", deb_pkg_name)])
                 
-                pkg_infos = get_deb_download_info(cache, deb_file)
+                pkg_infos = get_deb_download_info(self.pkg_cache.cache, deb_file)
                 if pkg_infos == DOWNLOAD_STATUS_NOTNEED:
                     self.download_finish(deb_pkg_name, ACTION_INSTALL, self.simulate, deb_file)
                     print "Don't need download"
