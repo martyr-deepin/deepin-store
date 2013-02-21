@@ -44,6 +44,7 @@ class ResizableLabelBuffer(gobject.GObject):
                  label_init_line,
                  label_font_size,
                  label_font_color,
+                 animation_time=200, # milliseconds
                  ):
         '''
         init docs
@@ -57,7 +58,7 @@ class ResizableLabelBuffer(gobject.GObject):
         self.label_font_color = label_font_color
         self.label_wrap_width = label_wrap_width
 
-        self.animation_time = 500
+        self.animation_time = animation_time
         self.in_animation = False
         self.label_line_height = int(float(self.label_init_height / self.label_init_line))
         self.label_expand_height = self.label_line_height * 2

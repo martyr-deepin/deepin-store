@@ -25,7 +25,7 @@ from dtk.ui.constant import ALIGN_MIDDLE
 from dtk.ui.button import ImageButton
 from dtk.ui.star_view import StarView
 from dtk.ui.browser import WebView
-from constant import ICON_DIR, CONFIG_DIR, SERVER_ADDRESS
+from constant import CONFIG_DIR, SERVER_ADDRESS
 import traceback
 from skin import app_theme
 import sys
