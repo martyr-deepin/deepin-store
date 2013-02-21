@@ -127,8 +127,9 @@ class UpdateDataService(dbus.service.Object):
             newest_data_id_config.write()
             
         # Remove unused data.
-        if os.path.exists(os.path.join(DATA_DIR, "data_current_id.ini")):
-            current_data_id_config = Config(os.path.join(DATA_DIR, "data_current_id.ini"))
+        DATA_CURRENT_ID_CONFIG_FILE = "/tmp/deepin-software-center/data_current_id.ini"
+        if os.path.exists(DATA_CURRENT_ID_CONFIG_FILE):
+            current_data_id_config = Config(DATA_CURRENT_ID_CONFIG_FILE)
             current_data_id_config.load()
             current_data_id = current_data_id_config.get("current", "data_id")
         else:

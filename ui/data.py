@@ -21,14 +21,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-from deepin_utils.file import get_parent_dir
+from deepin_utils.file import get_parent_dir, touch_file
 from deepin_utils.config import Config
 
 data_init_flag = False
 
 DATA_DIR = os.path.join(get_parent_dir(__file__, 2), "data")
 DATA_NEWEST_ID_CONFIG_FILE = os.path.join(DATA_DIR, "data_newest_id.ini")
-DATA_CURRENT_ID_CONFIG_FILE = os.path.join(DATA_DIR, "data_current_id.ini")
+DATA_CURRENT_ID_CONFIG_FILE = "/tmp/deepin-software-center/data_current_id.ini"
 DATA_ID = None
 
 def data_init():
@@ -43,6 +43,9 @@ def data_init():
         data_newest_id_config.load()
         DATA_ID = data_newest_id_config.get("newest", "data_id")
         
+        if not os.path.exists(DATA_CURRENT_ID_CONFIG_FILE):
+            touch_file(DATA_CURRENT_ID_CONFIG_FILE)
+            
         data_current_id_config = Config(DATA_CURRENT_ID_CONFIG_FILE)
         data_current_id_config.load()
         data_current_id_config.set("current", "data_id", DATA_ID)
