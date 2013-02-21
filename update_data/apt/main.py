@@ -66,14 +66,8 @@ class UpdateDataService(dbus.service.Object):
         
     def run(self):
         # Init ini files.
-        data_current_id_path = os.path.join(DATA_DIR, "data_current_id.ini")
         data_newest_id_path = os.path.join(DATA_DIR, "data_newest_id.ini")
         patch_status_path = os.path.join(DATA_DIR, "patch_status.ini")
-        if not os.path.exists(data_current_id_path):
-            current_data_id_config = Config(data_current_id_path)
-            current_data_id_config.load()
-            current_data_id_config.set("current", "data_id", "")
-            current_data_id_config.write()
             
         if not os.path.exists(data_newest_id_path):
             newest_data_id_config = Config(data_newest_id_path)
@@ -133,8 +127,12 @@ class UpdateDataService(dbus.service.Object):
             newest_data_id_config.write()
             
         # Remove unused data.
-        current_data_id_config = Config(os.path.join(DATA_DIR, "data_current_id.ini"))
-        current_data_id_config.load()
+        if os.path.exists(os.path.join(DATA_DIR, "data_current_id.ini")):
+            current_data_id_config = Config(os.path.join(DATA_DIR, "data_current_id.ini"))
+            current_data_id_config.load()
+            current_data_id = current_data_id_config.get("current", "data_id")
+        else:
+            current_data_id = None
         newest_data_id_config.load()
         data_file_list = ["newest",
                           "origin",
@@ -145,7 +143,7 @@ class UpdateDataService(dbus.service.Object):
                           "patch_status.ini",
                           "clean.py",
                           ]
-        data_id_list = [current_data_id_config.get("current", "data_id"),
+        data_id_list = [current_data_id,
                         newest_data_id_config.get("newest", "data_id")]
         
         for data_file in os.listdir(DATA_DIR):

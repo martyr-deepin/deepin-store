@@ -10,3 +10,4 @@ dtk.egg-info
 data/newest
 data/patch
 data/update
+data/*.ini
