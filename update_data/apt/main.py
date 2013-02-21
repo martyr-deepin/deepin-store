@@ -65,6 +65,33 @@ class UpdateDataService(dbus.service.Object):
         return str(uuid.uuid4())
         
     def run(self):
+        # Init ini files.
+        data_current_id_path = os.path.join(DATA_DIR, "data_current_id.ini")
+        data_newest_id_path = os.path.join(DATA_DIR, "data_newest_id.ini")
+        patch_status_path = os.path.join(DATA_DIR, "patch_status.ini")
+        if not os.path.exists(data_current_id_path):
+            current_data_id_config = Config(data_current_id_path)
+            current_data_id_config.load()
+            current_data_id_config.set("current", "data_id", "")
+            current_data_id_config.write()
+            
+        if not os.path.exists(data_newest_id_path):
+            newest_data_id_config = Config(data_newest_id_path)
+            newest_data_id_config.load()
+            newest_data_id_config.set("newest", "data_id", "")
+            newest_data_id_config.write()
+            
+        if not os.path.exists(patch_status_path):
+            patch_status_config = Config(patch_status_path)
+            patch_status_config.load()
+            patch_status_config.set("data_md5", "dsc-search-data", "")
+            patch_status_config.set("data_md5", "dsc-category-data", "")
+            patch_status_config.set("data_md5", "dsc-software-data", "")
+            patch_status_config.set("data_md5", "dsc-home-data", "")
+            patch_status_config.set("data_md5", "dsc-icon-data", "")
+            patch_status_config.set("data_md5", "dsc-desktop-data", "")
+            patch_status_config.write()
+        
         # Extract data if current directory is not exists.
         newest_data_id_config = Config(os.path.join(DATA_DIR, "data_newest_id.ini"))
         newest_data_id_config.load()
