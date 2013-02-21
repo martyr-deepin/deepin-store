@@ -22,11 +22,35 @@
 
 from software_center import DeepinSoftwareCenter
 import sys
+import dbus
+import dbus.service
+import dbus.mainloop.glib
+from dbus.mainloop.glib import DBusGMainLoop
+from constant import DSC_FRONTEND_NAME, DSC_FRONTEND_PATH
+from deepin_utils.ipc import is_dbus_name_exists
 
 if __name__ == "__main__" :
-    software_center = DeepinSoftwareCenter(sys.argv[1::])
-    try:
-        software_center.run()
-    except KeyboardInterrupt:
-        software_center.bus_interface.request_quit()
+    # Init.
+    DBusGMainLoop(set_as_default=True)
+    session_bus = dbus.SessionBus()
+    arguments = sys.argv[1::]
+    
+    # Send hello message if updater has running.
+    if is_dbus_name_exists(DSC_FRONTEND_NAME, True):
+        print "Software center has running!"
+        
+        bus_object = session_bus.get_object(DSC_FRONTEND_NAME, DSC_FRONTEND_PATH)
+        bus_interface = dbus.Interface(bus_object, DSC_FRONTEND_NAME)
+        bus_interface.hello(arguments)
+        
+        print "Say hello to software center"
+    else:
+        # Init dbus.
+        bus_name = dbus.service.BusName(DSC_FRONTEND_NAME, session_bus)
+            
+        software_center = DeepinSoftwareCenter(session_bus, arguments)
+        try:
+            software_center.run()
+        except KeyboardInterrupt:
+            software_center.bus_interface.request_quit()
     

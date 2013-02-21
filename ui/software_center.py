@@ -34,7 +34,6 @@ from dtk.ui.constant import WIDGET_POS_BOTTOM_LEFT
 from dtk.ui.button import LinkButton
 from dtk.ui.navigatebar import Navigatebar
 from dtk.ui.timeline import Timeline, CURVE_SINE
-from deepin_utils.ipc import is_dbus_name_exists
 from deepin_utils.process import run_command
 from deepin_utils.math_lib import solve_parabola
 from deepin_utils.file import read_file, write_file, touch_file
@@ -47,7 +46,6 @@ from install_page import InstallPage
 from upgrade_page import UpgradePage
 from data_manager import DataManager
 import gtk
-from dbus.mainloop.glib import DBusGMainLoop
 import dbus
 import dbus.service
 import time
@@ -409,25 +407,6 @@ def clear_action_pages(bus_interface, upgrade_page, uninstall_page, install_page
         
     return True    
     
-class DBusService(dbus.service.Object):
-    def __init__(self, bus_interface, application):
-        # Init dbus object.
-        bus_name = dbus.service.BusName(DSC_FRONTEND_NAME, bus=dbus.SessionBus())
-        dbus.service.Object.__init__(self, bus_name, DSC_FRONTEND_PATH)
-        
-        self.bus_interface = bus_interface
-        self.application = application
-
-    @dbus.service.method(DSC_FRONTEND_NAME, in_signature="s", out_signature="")    
-    def message(self, message):
-        (message_type, message_conent) = eval(message)
-        if message_type == "hello":
-            self.application.raise_to_top()
-            
-            deb_files = message_conent
-            if len(deb_files) > 0:
-                self.bus_interface.install_deb_files(message_conent)
-        
 debug_flag = False                
 
 def log(message):
@@ -435,17 +414,16 @@ def log(message):
     if debug_flag:
         print message
                 
-class DeepinSoftwareCenter(object):
+class DeepinSoftwareCenter(dbus.service.Object):
     '''
     class docs
     '''
 
-    def __init__(self, arguments):
+    def __init__(self, session_bus, arguments):
         '''
         init docs
         '''
-        # WARING: only use once in one process
-        DBusGMainLoop(set_as_default=True)
+        dbus.service.Object.__init__(self, session_bus, DSC_FRONTEND_PATH)
         
         self.simulate = "--simulate" in arguments
         self.deb_files = filter(self.is_deb_file, arguments)
@@ -469,20 +447,6 @@ class DeepinSoftwareCenter(object):
         
     def run(self):    
         log("Software center start")
-        
-        # Exit if frontend has running.
-        bus = dbus.SessionBus()
-        if is_dbus_name_exists(DSC_FRONTEND_NAME):
-            print "Deepin software center has running!"
-            
-            bus_object = bus.get_object(DSC_FRONTEND_NAME, DSC_FRONTEND_PATH)
-            bus_interface = dbus.Interface(bus_object, DSC_FRONTEND_NAME)
-            bus_interface.message(str(("hello", self.deb_files)))
-           
-            # Exit program.
-            return
-        
-        log("Init service dbus")
         
         # Init DBus.
         system_bus = dbus.SystemBus()
@@ -519,11 +483,6 @@ class DeepinSoftwareCenter(object):
         targets = [("text/uri-list", 0, 1)]        
         self.application.window.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_DROP, targets, gtk.gdk.ACTION_COPY)
         self.application.window.connect_after("drag-data-received", self.on_drag_data_received)        
-        
-        log("Build unique service.")
-        
-        # Build unique service.
-        DBusService(self.bus_interface, self.application)
         
         log("Init data manager")
         
@@ -695,3 +654,12 @@ class DeepinSoftwareCenter(object):
                         
         if len(deb_files) > 0:                
             self.bus_interface.install_deb_files(deb_files)
+
+    @dbus.service.method(DSC_FRONTEND_NAME, in_signature="as", out_signature="")    
+    def hello(self, arguments):
+        self.application.raise_to_top()
+        
+        deb_files = filter(self.is_deb_file, arguments)        
+        if len(deb_files) > 0:
+            self.bus_interface.install_deb_files(deb_files)
+        
