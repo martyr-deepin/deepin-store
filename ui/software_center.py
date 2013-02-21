@@ -502,7 +502,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         log("Init page switcher")
         
         # Init page switcher.
-        page_switcher = HSlider()
+        page_switcher = HSlider(200)
         page_switcher.append_page(page_box)
         page_switcher.append_page(detail_page)
         page_switcher.set_to_page(page_box)
