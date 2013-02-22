@@ -35,6 +35,7 @@ from deepin_utils.process import run_command
 from dtk.ui.utils import color_hex_to_cairo, container_remove_all, get_resize_pixbuf_with_height
 import zipfile
 from dtk.ui.label import Label
+from dtk.ui.label_utils import show_label_tooltip
 from dtk.ui.draw import draw_pixbuf, draw_text
 from dtk.ui.star_view import StarBuffer
 from resizable_label import ResizableLabel
@@ -137,6 +138,7 @@ class DetailPage(gtk.HBox):
         self.left_category_label_box.pack_start(self.left_category_label_align, True, True)
         self.left_category_box = gtk.VBox()
         self.left_version_label = Label(label_width=136)
+        show_label_tooltip(self.left_version_label)
         self.left_version_label.set_ellipsize(pango.ELLIPSIZE_MIDDLE)
         self.left_size_label = Label()
         self.left_download_label = Label()
