@@ -608,7 +608,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         log("Init switch page.")
         self.switch_page(self.home_page)
         
-        self.application.window.connect("show", lambda w: request_status(self.bus_interface, self.install_page, self.upgrade_page, self.uninstall_page))
+        self.application.window.connect_after("show", lambda w: request_status(self.bus_interface, self.install_page, self.upgrade_page, self.uninstall_page))
         
         log("Handle global event.")
         
