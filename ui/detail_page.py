@@ -20,6 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import pango
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.constant import ALIGN_MIDDLE
 from dtk.ui.button import ImageButton
@@ -135,7 +136,8 @@ class DetailPage(gtk.HBox):
         self.left_category_label_box.pack_start(self.left_category_name_label, False, False)
         self.left_category_label_box.pack_start(self.left_category_label_align, True, True)
         self.left_category_box = gtk.VBox()
-        self.left_version_label = Label()
+        self.left_version_label = Label(label_width=136)
+        self.left_version_label.set_ellipsize(pango.ELLIPSIZE_MIDDLE)
         self.left_size_label = Label()
         self.left_download_label = Label()
         
