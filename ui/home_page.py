@@ -203,7 +203,7 @@ class HomePage(gtk.HBox):
         self.in_press = False
         press_id = copy.deepcopy(self.press_id)
         remove_timeout_id(self.show_timeout_id)
-        self.show_timeout_id = gobject.timeout_add(500, lambda : self.popup_completion(press_id))
+        self.show_timeout_id = gobject.timeout_add(200, lambda : self.popup_completion(press_id))
         
     def popup_completion(self, press_id):
         if (not self.in_press) and (not self.press_return) and press_id == self.press_id and self.entry_changed:
