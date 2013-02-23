@@ -102,6 +102,7 @@ def hide_message(message_box):
     return False
 
 def request_status(bus_interface, install_page, upgrade_page, uninstall_page):
+    print "*****************"
     (download_status, action_status) = map(eval, bus_interface.request_status())
     
     install_page.update_download_status(download_status[ACTION_INSTALL])
@@ -571,54 +572,59 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.application.window.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_DROP, targets, gtk.gdk.ACTION_COPY)
         self.application.window.connect_after("drag-data-received", self.on_drag_data_received)        
         
-        self.application.window.connect_after("show", lambda w: gtk.timeout_add(10, lambda : create_thread(self.init_backend).start()))
+        create_thread(self.init_home_page).start()
         
         self.application.run()
         
-    def init_backend(self):
+    def init_home_page(self):
         log("Say hello to backend")
         
         # Init DBus.
-        system_bus = dbus.SystemBus()
-        bus_object = system_bus.get_object(DSC_SERVICE_NAME, DSC_SERVICE_PATH)
+        self.system_bus = dbus.SystemBus()
+        bus_object = self.system_bus.get_object(DSC_SERVICE_NAME, DSC_SERVICE_PATH)
         self.bus_interface = dbus.Interface(bus_object, DSC_SERVICE_NAME)
         
         # Say hello to backend. 
         self.bus_interface.say_hello(self.simulate)
         
+        log("Init data manager")
+        
+        # Init data manager.
+        self.data_manager = DataManager(self.bus_interface)
+        
+        log("Init home page.")
+        self.home_page = HomePage(self.data_manager)
+        
+        log("Init switch page.")
+        self.switch_page(self.home_page)
+        
+        gtk.timeout_add(10, lambda : create_thread(self.init_backend).start())
+        
+    def init_backend(self):
         log("Test deb files arguments")
         
         # Install deb file.
         if len(self.deb_files) > 0:
             self.bus_interface.install_deb_files(self.deb_files)
         
-        log("Init data manager")
-        
-        # Init data manager.
-        data_manager = DataManager(self.bus_interface)
-        
         log("Init detail view")
         
         # Init detail view.
-        self.detail_page = DetailPage(data_manager)
+        self.detail_page = DetailPage(self.data_manager)
         
         self.page_switcher.append_page(self.detail_page)
         
         log("Init pages.")
         
         # Init pages.
-        log("Init home page.")
-        self.home_page = HomePage(data_manager)
         log("Init upgrade page.")
-        self.upgrade_page = UpgradePage(self.bus_interface, data_manager)
+        self.upgrade_page = UpgradePage(self.bus_interface, self.data_manager)
         log("Init uninstall page.")
-        self.uninstall_page = UninstallPage(self.bus_interface, data_manager)
+        self.uninstall_page = UninstallPage(self.bus_interface, self.data_manager)
         log("Init install page.")
-        self.install_page = InstallPage(self.bus_interface, data_manager)
-        log("Init switch page.")
-        self.switch_page(self.home_page)
+        self.install_page = InstallPage(self.bus_interface, self.data_manager)
         
-        self.application.window.connect_after("show", lambda w: request_status(self.bus_interface, self.install_page, self.upgrade_page, self.uninstall_page))
+        request_status(self.bus_interface, self.install_page, self.upgrade_page, self.uninstall_page)
         
         log("Handle global event.")
         
@@ -649,8 +655,15 @@ class DeepinSoftwareCenter(dbus.service.Object):
         global_event.register_event("show-message", lambda message: show_message(self.statusbar, self.message_box, message))
         global_event.register_event("start-pkg", lambda pkg_name, desktop_infos, offset: start_pkg(pkg_name, desktop_infos, offset, self.application.window))
         global_event.register_event("start-desktop", start_desktop)
-        system_bus.add_signal_receiver(lambda messages: message_handler(messages, self.bus_interface, self.upgrade_page, self.uninstall_page, self.install_page),
-                                       dbus_interface=DSC_SERVICE_NAME, path=DSC_SERVICE_PATH, signal_name="update_signal")
+        self.system_bus.add_signal_receiver(
+            lambda messages: message_handler(messages, 
+                                         self.bus_interface, 
+                                         self.upgrade_page, 
+                                         self.uninstall_page, 
+                                         self.install_page),
+            dbus_interface=DSC_SERVICE_NAME, 
+            path=DSC_SERVICE_PATH, 
+            signal_name="update_signal")
         glib.timeout_add(1000, lambda : clear_action_pages(self.bus_interface, self.upgrade_page, self.uninstall_page, self.install_page))
         glib.timeout_add(1000, lambda : clear_install_stop_list(self.install_page))
         glib.timeout_add(1000, lambda : clear_failed_action(self.install_page, self.upgrade_page))
