@@ -655,6 +655,10 @@ class UpgradePage(gtk.VBox):
                 
             no_notify_config = self.read_no_notify_config()    
                 
+            exists_upgrade_pkg_names = map(lambda item: item.pkg_name, self.upgrade_treeview.visible_items)
+            exists_no_notify_pkg_names = map(lambda item: item.pkg_name, self.no_notify_treeview.visible_items)
+            print (exists_no_notify_pkg_names, exists_upgrade_pkg_names)
+            
             upgrade_items = []
             no_notify_items = []
             for pkg_info in desktop_pkg_infos + library_pkg_infos:
@@ -663,15 +667,17 @@ class UpgradePage(gtk.VBox):
                 self.pkg_info_dict[pkg_name] = pkg_version
                 
                 if pkg_name in no_notify_config:
-                    self.no_notify_pkg_num += 1
-                    no_notify_items.append(NoNotifyItem(pkg_name, pkg_version, self.data_manager))
+                    if pkg_name not in exists_no_notify_pkg_names:
+                        self.no_notify_pkg_num += 1
+                        no_notify_items.append(NoNotifyItem(pkg_name, pkg_version, self.data_manager))
                 else:
-                    self.upgrade_pkg_num += 1
-                    upgrade_items.append(UpgradeItem(pkg_name, pkg_version, self.data_manager))
+                    if pkg_name not in exists_upgrade_pkg_names:
+                        self.upgrade_pkg_num += 1
+                        upgrade_items.append(UpgradeItem(pkg_name, pkg_version, self.data_manager))
                 
             self.upgrade_bar.set_upgrade_info(self.upgrade_pkg_num, self.no_notify_pkg_num)
             
-            if len(upgrade_items) == 0:        
+            if len(upgrade_items) == 0 and len(self.upgrade_treeview.visible_items) == 0:        
                 global_event.emit("show-newest-view")
             else:
                 self.upgrade_treeview.add_items(upgrade_items)    
