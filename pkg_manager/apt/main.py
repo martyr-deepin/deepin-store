@@ -143,12 +143,6 @@ class PackageManager(dbus.service.Object):
             self.have_exit_request)
         self.exit_manager.start()
         
-        log("init backend")
-        
-        # We need set long enough delay to start udpate list,
-        # otherwise, ui will start too slow.
-        # gobject.timeout_add(5000, lambda : UpdateList(self.pkg_cache).start())
-        
         log("init finish")
         
     def action_finish(self, signal_content):
@@ -341,6 +335,14 @@ class PackageManager(dbus.service.Object):
             action_status[ACTION_UNINSTALL].append((pkg_name, info_dict["status"]))
         
         return [str(download_status), str(action_status)]
+    
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="b")
+    def start_update_list(self):
+        log("start update list...")
+        gobject.timeout_add(10, lambda : UpdateList(self.pkg_cache).start())
+        log("start update list done")
+        
+        return True
     
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="ab")
     def request_pkgs_install_status(self, pkg_names):
