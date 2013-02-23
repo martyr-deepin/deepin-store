@@ -157,22 +157,32 @@ def switch_to_detail_page(page_switcher, detail_page, pkg_name):
     page_switcher.slide_to_page(detail_page, "right")
 
 def switch_page(page_switcher, page_box, page, detail_page):
+    log("slide to page")
     if page_switcher.active_widget == detail_page:
         page_switcher.slide_to_page(page_box, "left")
     else:
         page_switcher.slide_to_page(page_box, "right")
         
+    log("remove widgets from page_box")
     container_remove_all(page_box)
     
+    log("init widget in page_box")
     if isinstance(page, HomePage):
+        log("page.recommend_item.show_page()")
         page.recommend_item.show_page()
+        
+        log("page.category_view.select_first_item()")
         page.category_view.select_first_item()
     elif isinstance(page, UpgradePage):
         if page.in_no_notify_page:
             page.show_init_page()
     
+    log("page_box pack widgets")
     page_box.pack_start(page, True, True)
-    page_box.show_all()
+    
+    log("page_box show all")
+    # page_box.show_all()
+    page_box.get_toplevel().show_all()
 
 def handle_dbus_reply(*reply):
     print "handle_dbus_reply" % (str(reply))
@@ -561,7 +571,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.application.window.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_DROP, targets, gtk.gdk.ACTION_COPY)
         self.application.window.connect_after("drag-data-received", self.on_drag_data_received)        
         
-        self.application.window.connect_after("show", lambda w: gtk.timeout_add(500, lambda : create_thread(self.init_backend).start()))
+        self.application.window.connect_after("show", lambda w: gtk.timeout_add(10, lambda : create_thread(self.init_backend).start()))
         
         self.application.run()
         
@@ -644,6 +654,8 @@ class DeepinSoftwareCenter(dbus.service.Object):
         glib.timeout_add(1000, lambda : clear_action_pages(self.bus_interface, self.upgrade_page, self.uninstall_page, self.install_page))
         glib.timeout_add(1000, lambda : clear_install_stop_list(self.install_page))
         glib.timeout_add(1000, lambda : clear_failed_action(self.install_page, self.upgrade_page))
+        
+        log("finish")
         
     def run(self):    
         self.init_ui()

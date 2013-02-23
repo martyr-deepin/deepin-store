@@ -214,11 +214,13 @@ class DataManager(object):
         return detail_infos
     
     def get_download_rank_info(self):
+        print "*** 51"
         week_infos = []
         week_pkg_names = []
         week_pkg_infos = []
         self.download_rank_db_cursor.execute(
             "SELECT * FROM week_download_rank")
+        print "*** 511"
         for (pkg_name, ) in self.download_rank_db_cursor.fetchall():
             self.software_db_cursor.execute(
                 "SELECT alias_name FROM software WHERE pkg_name=?", [pkg_name])
@@ -231,10 +233,12 @@ class DataManager(object):
             week_infos.append((pkg_name, alias_name, 5.0, desktop_infos))
             week_pkg_names.append(pkg_name)
             
+        print "*** 512"
         week_install_status = self.bus_interface.request_pkgs_install_status(week_pkg_names)
         for (index, (pkg_name, alias_name, star, desktop_infos)) in enumerate(week_infos):
             week_pkg_infos.append((pkg_name, alias_name, star, desktop_infos, week_install_status[index]))
 
+        print "*** 52"
         month_infos = []
         month_pkg_names = []
         month_pkg_infos = []
@@ -256,6 +260,7 @@ class DataManager(object):
         for (index, (pkg_name, alias_name, star, desktop_infos)) in enumerate(month_infos):
             month_pkg_infos.append((pkg_name, alias_name, star, desktop_infos, month_install_status[index]))
             
+        print "*** 53"
         all_infos = []
         all_pkg_names = []
         all_pkg_infos = []
@@ -273,10 +278,12 @@ class DataManager(object):
             all_infos.append((pkg_name, alias_name, 5.0, desktop_infos))
             all_pkg_names.append(pkg_name)
 
+        print "*** 54"
         all_install_status = self.bus_interface.request_pkgs_install_status(all_pkg_names)
         for (index, (pkg_name, alias_name, star, desktop_infos)) in enumerate(all_infos):
             all_pkg_infos.append((pkg_name, alias_name, star, desktop_infos, all_install_status[index]))
             
+        print "*** 55"
         return (week_pkg_infos, month_pkg_infos, all_pkg_infos)
 
     def get_recommend_info(self):

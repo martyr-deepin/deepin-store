@@ -22,7 +22,9 @@
 
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
 from skin import app_theme
+from dtk.ui.threads import post_gui
 from dtk.ui.utils import get_content_size, set_cursor, container_remove_all, is_in_rect
+from deepin_utils.multithread import create_thread
 import gobject
 import pango
 from dtk.ui.constant import DEFAULT_FONT_SIZE
@@ -43,6 +45,7 @@ class DownloadRankPage(gtk.VBox):
         '''
         init docs
         '''
+        print "### 41"
         # Init.
         gtk.VBox.__init__(self)
         self.data_manager = data_manager
@@ -59,24 +62,24 @@ class DownloadRankPage(gtk.VBox):
         self.page_align.set(0.5, 0.5, 1, 1)
         self.page_align.set_padding(0, 0, 15, 15)
         
+        print "### 42"
         self.week_rank_icon_view = IconView()
         self.week_rank_icon_view_scrlledwindow = ScrolledWindow()
         self.week_rank_icon_view.draw_mask = self.draw_mask
         
+        print "### 421"
         self.month_rank_icon_view = IconView()
         self.month_rank_icon_view_scrlledwindow = ScrolledWindow()
         self.month_rank_icon_view.draw_mask = self.draw_mask
         
+        print "### 422"
         self.all_rank_icon_view = IconView()
         self.all_rank_icon_view_scrlledwindow = ScrolledWindow()
         self.all_rank_icon_view.draw_mask = self.draw_mask
         
-        (self.week_rank_infos, self.month_rank_infos, self.all_rank_infos) = self.data_manager.get_download_rank_info()
-        for (rank_infos, icon_view) in [(self.week_rank_infos, self.week_rank_icon_view), 
-                                        (self.month_rank_infos, self.month_rank_icon_view),
-                                        (self.all_rank_infos, self.all_rank_icon_view)]:
-            icon_view.add_items(map(lambda info: PkgIconItem(info), rank_infos))
+        print "### 423"
         
+        print "### 43"
         self.week_rank_icon_view_scrlledwindow.add_child(self.week_rank_icon_view)    
         self.month_rank_icon_view_scrlledwindow.add_child(self.month_rank_icon_view)    
         self.all_rank_icon_view_scrlledwindow.add_child(self.all_rank_icon_view)    
@@ -88,6 +91,20 @@ class DownloadRankPage(gtk.VBox):
         self.pack_start(self.page_box, True, True)    
         
         global_event.register_event("update-rank-page", self.update_rank_page)
+        
+        create_thread(self.init_rank_info).start()
+        
+        print "### 44"
+        
+    def init_rank_info(self):
+        (self.week_rank_infos, self.month_rank_infos, self.all_rank_infos) = self.data_manager.get_download_rank_info()
+        self.render_rank_info()
+        
+    def render_rank_info(self):
+        for (rank_infos, icon_view) in [(self.week_rank_infos, self.week_rank_icon_view), 
+                                        (self.month_rank_infos, self.month_rank_icon_view),
+                                        (self.all_rank_infos, self.all_rank_icon_view)]:
+            icon_view.add_items(map(lambda info: PkgIconItem(info), rank_infos))
         
     def draw_mask(self, cr, x, y, w, h):
         '''

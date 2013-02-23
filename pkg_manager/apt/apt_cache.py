@@ -58,6 +58,8 @@ class AptCache(object):
                 
         return pkg_infos
     
+    # from dtk.ui.utils import print_exec_time
+    # @print_exec_time
     def get_pkgs_install_version(self, pkg_names):
         return map(lambda pkg_name: self.cache[pkg_name].versions[0].version, pkg_names)
 
@@ -88,7 +90,8 @@ class AptCache(object):
 if __name__ == "__main__":
     pkg_cache = AptCache()
     
-    import Queue as Q
-    block_signal = Q.Queue()
-    if block_signal.get():
-        print "finish"
+    pkg_cache.get_pkgs_install_version(['exaile', 'subdownloader', 'gmusicbrowser', 'gwibber', 'qutim', 'bibus', 'guvcview', 'kino', 'gnucash', 'gpodder', 'pokerth', 'choqok', 'k3b', 'rekonq', 'terminator', 'synapse', 'kmail', 'kopete', 'gpicview', 'gpixpod', 'furiusisomount', 'liferea'])
+    # import Queue as Q
+    # block_signal = Q.Queue()
+    # if block_signal.get():
+    #     print "finish"

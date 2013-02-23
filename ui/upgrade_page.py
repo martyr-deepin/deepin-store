@@ -594,8 +594,8 @@ class UpgradePage(gtk.VBox):
             rect.y + (rect.height - self.network_disable_pixbuf.get_height()) / 2)
         
     def fetch_upgrade_info(self):
-        AnonymityThread(lambda : self.bus_interface.request_upgrade_pkgs(),
-                        self.render_upgrade_info).run()
+        gobject.timeout_add(10, lambda : AnonymityThread(lambda : self.bus_interface.request_upgrade_pkgs(),
+                                                     self.render_upgrade_info).run())
         
     def read_no_notify_config(self):
         no_notify_config_path = os.path.join(CONFIG_DIR, "no_notify_pkgs")

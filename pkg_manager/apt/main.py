@@ -145,7 +145,9 @@ class PackageManager(dbus.service.Object):
         
         log("init backend")
         
-        UpdateList(self.pkg_cache).start()
+        # We need set long enough delay to start udpate list,
+        # otherwise, ui will start too slow.
+        # gobject.timeout_add(5000, lambda : UpdateList(self.pkg_cache).start())
         
         log("init finish")
         
