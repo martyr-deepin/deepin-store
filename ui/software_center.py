@@ -155,8 +155,8 @@ def switch_from_detail_page(page_switcher, detail_page, page_box):
     page_switcher.slide_to_page(page_box, "left")
     
 def switch_to_detail_page(page_switcher, detail_page, pkg_name):
-    detail_page.update_pkg_info(pkg_name)
     page_switcher.slide_to_page(detail_page, "right")
+    detail_page.update_pkg_info(pkg_name)
 
 def switch_page(page_switcher, page_box, page, detail_page):
     log("slide to page")

@@ -23,6 +23,7 @@
 import pango
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.constant import ALIGN_MIDDLE
+from deepin_utils.net import is_network_connected
 from dtk.ui.button import ImageButton
 from dtk.ui.star_view import StarView
 from dtk.ui.browser import WebView
@@ -41,7 +42,7 @@ from dtk.ui.star_view import StarBuffer
 from resizable_label import ResizableLabel
 from slide_switcher import SlideSwitcher
 from constant import SCREENSHOT_HOST, SCREENSHOT_DOWNLOAD_DIR
-import threading
+from deepin_utils.multithread import create_thread
 import gobject
 import gtk
 from item_render import get_icon_pixbuf_path
@@ -390,30 +391,32 @@ class DetailPage(gtk.HBox):
         
         self.show_screenshot()
         
-        thread = threading.Thread(target=self.fetch_screenshot)
-        thread.setDaemon(True)
-        thread.start()
-            
-        container_remove_all(self.right_comment_box)    
-        web_view = WebView(os.path.join(CONFIG_DIR, "cookie.txt"))
-        web_view_align = gtk.Alignment()
-        web_view_align.set(0.5, 0, 0, 0)
-        web_view_align.set_padding(33, 33, 33, 33)
-        web_view_align.add(web_view)
-        web_settings = web_view.get_settings()
-        web_settings.set_property("enable-plugins", True)
-        web_settings.set_property("enable-scripts", True)    
-        web_view.open("%s/softcenter/v1/comment?n=%s&hl=%s" % (
-                SERVER_ADDRESS, 
-                self.pkg_name, 
-                "zh_CN"
-                ))
-        self.right_comment_box.pack_start(web_view_align, True, True)
+        create_thread(self.fetch_comment).start()
         
         self.queue_draw()
         
         self.show_all()
         
+    def fetch_comment(self):
+        if is_network_connected():
+            container_remove_all(self.right_comment_box)    
+            web_view = WebView(os.path.join(CONFIG_DIR, "cookie.txt"))
+            web_view_align = gtk.Alignment()
+            web_view_align.set(0.5, 0, 0, 0)
+            web_view_align.set_padding(33, 33, 33, 33)
+            web_view_align.add(web_view)
+            web_settings = web_view.get_settings()
+            web_settings.set_property("enable-plugins", True)
+            web_settings.set_property("enable-scripts", True)    
+            web_view.open("%s/softcenter/v1/comment?n=%s&hl=%s" % (
+                    SERVER_ADDRESS, 
+                    self.pkg_name, 
+                    "zh_CN"
+                    ))
+            self.right_comment_box.pack_start(web_view_align, True, True)
+            
+            self.fetch_screenshot()
+            
     def fetch_screenshot(self):
         screenshot_dir = os.path.join(SCREENSHOT_DOWNLOAD_DIR, self.pkg_name)
         screenshot_md5_path = os.path.join(screenshot_dir, "screenshot_md5.txt")
