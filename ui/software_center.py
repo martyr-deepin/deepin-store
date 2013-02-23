@@ -59,6 +59,7 @@ from dtk.ui.gio_utils import start_desktop_file
 from start_desktop_window import StartDesktopWindow
 
 def update_navigatebar_number(navigatebar, page_index, notify_number):
+    print (page_index, notify_number)
     navigatebar.update_notify_num(navigatebar.nav_items[page_index], notify_number)
 
 def jump_to_category(page_switcher, page_box, home_page, detail_page, first_category_name, second_category_name):
