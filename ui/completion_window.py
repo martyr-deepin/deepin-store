@@ -52,8 +52,8 @@ class CompletionWindow(Window):
             expose_frame_function=self.expose_completion_window_frame)
         self.window_width = window_width
         self.window_height = window_height
-        self.window_offset_x = 2
-        self.window_offset_y = 18
+        self.window_offset_x = 8
+        self.window_offset_y = 34
         self.align_size = 2
         
         self.treeview = TreeView(
