@@ -100,6 +100,8 @@ class PackageManager(dbus.service.Object):
     
                 
     def __init__(self, system_bus, mainloop, pkg_cache):
+        log("init dbus")
+        
         # Init dbus service.
         dbus.service.Object.__init__(self, system_bus, DSC_SERVICE_PATH)
         # Init.
@@ -141,9 +143,11 @@ class PackageManager(dbus.service.Object):
             self.have_exit_request)
         self.exit_manager.start()
         
+        log("init backend")
+        
         UpdateList(self.pkg_cache).start()
         
-        log("Backend init")
+        log("init finish")
         
     def action_finish(self, signal_content):
         self.update_signal([("action-finish", signal_content)])
