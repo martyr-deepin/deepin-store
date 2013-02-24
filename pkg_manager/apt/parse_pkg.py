@@ -21,12 +21,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-import sys
 import errno
 import hashlib
 import traceback
 import apt_pkg
 import apt
+from utils import log
 from constant import DOWNLOAD_STATUS_NOTNEED, DOWNLOAD_STATUS_ERROR
 import apt.debfile as debfile
 
@@ -34,32 +34,35 @@ def get_deb_download_info(cache, deb_file):
     try:
         deb_package = debfile.DebPackage(deb_file, cache)
         
-        if not deb_package.check():
-            print "package has installed"
+        if not (deb_package.compare_to_version_in_cache() == deb_package.VERSION_NONE):
+            log("%s: package has installed" % deb_file)
             return DOWNLOAD_STATUS_ERROR
         elif not deb_package.check_breaks_existing_packages():
-            print "install package will break existing package"
+            log("%s: install package will break existing package" % deb_file)
             return DOWNLOAD_STATUS_ERROR
         elif not deb_package.check_conflicts():
-            print "package conflicts with existing packages"
+            log("%s: package conflicts with existing packages" % deb_file)
             return DOWNLOAD_STATUS_ERROR
         else:
+            deb_package.check()
+            (install_packages, remove_packages, unauthenticated_packages) = deb_package.required_changes
+            
             depend_packages = []
             depend_ok = True
+            
             for depend in deb_package.depends:
                 for (pkg_name, require_version, version_operator) in depend:
-                    for pkg_version in cache[pkg_name].versions:
-                        if apt_pkg.check_dep(pkg_version.version, version_operator, require_version):
-                            depend_packages.append(pkg_name)
-                        else:
-                            depend_ok = False
-                            print "Check depend %s failed" % (pkg_name)
-                            return DOWNLOAD_STATUS_ERROR
+                    print "***: %s %s" % (cache[pkg_name].versions, require_version)
+                    newest_version = cache[pkg_name].versions[0].version
+                    if apt_pkg.check_dep(newest_version, version_operator, require_version):
+                        depend_packages.append(pkg_name)
+                    else:
+                        depend_ok = False
+                        log("Check depend %s failed" % (pkg_name))
+                        return DOWNLOAD_STATUS_ERROR
         
             if depend_ok:        
-                (install_packages, remove_packages, unauthenticated_packages) = deb_package.required_changes
-                
-                for pkg_name in depend_packages + install_packages:
+                for pkg_name in install_packages + depend_packages:
                     pkg = cache[pkg_name]
                     if not pkg.installed:
                         pkg.mark_install()
@@ -74,7 +77,7 @@ def get_deb_download_info(cache, deb_file):
                 return check_pkg_download_info(pkgs)
     except Exception, e:
         print "get_deb_download_info error: %s" % (e)
-        traceback.print_exc(file=sys.stdout)
+        log(str(traceback.format_exc()))
         
         return DOWNLOAD_STATUS_ERROR
 
@@ -94,7 +97,7 @@ def get_pkg_download_info(cache, pkg_name):
         
         except Exception, e:
             print "get_pkg_download_info error: %s" % (e)
-            traceback.print_exc(file=sys.stdout)
+            log(str(traceback.format_exc()))
             
             return DOWNLOAD_STATUS_ERROR
     else:
@@ -125,7 +128,7 @@ def check_pkg_download_info(pkgs):
                 return (urls, hash_infos, pkg_sizes)
             except Exception, e:
                 print "get_pkg_download_info error: %s" % (e)
-                traceback.print_exc(file=sys.stdout)
+                log(str(traceback.format_exc()))
                 
                 return DOWNLOAD_STATUS_ERROR
     else:
@@ -181,7 +184,11 @@ if __name__ == "__main__":
     apt_pkg.init()
     cache = apt.Cache()
     
-    (total_size, pkg_infos) = get_pkg_download_info(cache, "eric")
+    # deb_package = debfile.DebPackage("/test/Download/geany_1.22+dfsg-2_amd64.deb", cache)
+    # print deb_package.VERSION_NONE, deb_package.VERSION_OUTDATED, deb_package.VERSION_SAME, deb_package.VERSION_NEWER
+    # print deb_package.compare_to_version_in_cache()
+    # print deb_package.check()
+    # print deb_package.check_breaks_existing_packages()
+    # print deb_package.check_conflicts()
 
-    import pprint
-    pprint.pprint(pkg_infos)
+    print get_deb_download_info(cache, "/test/Download/geany_1.22+dfsg-2_amd64.deb")

@@ -278,7 +278,7 @@ class PackageManager(dbus.service.Object):
         if len(deb_files) > 0:
             for deb_file in deb_files:
                 deb_package = debfile.DebPackage(deb_file, self.pkg_cache.cache)
-                deb_pkg_name = deb_package.control_content("control").split("\n")[0].split("Package: ")[1]
+                deb_pkg_name = deb_package.pkgname
                 
                 self.update_signal([("got-install-deb-pkg-name", deb_pkg_name)])
                 
@@ -292,7 +292,13 @@ class PackageManager(dbus.service.Object):
                 else:
                     (download_urls, download_hash_infos, pkg_sizes) = pkg_infos
                     
-                    self.download_manager.add_download(deb_pkg_name, ACTION_INSTALL, self.simulate, download_urls, download_hash_infos, pkg_sizes, deb_file)
+                    self.download_manager.add_download(deb_pkg_name, 
+                                                       ACTION_INSTALL, 
+                                                       self.simulate, 
+                                                       download_urls, 
+                                                       download_hash_infos, 
+                                                       pkg_sizes, 
+                                                       deb_file)
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
     def stop_download_pkg(self, pkg_names):

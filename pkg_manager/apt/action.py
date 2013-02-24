@@ -45,8 +45,8 @@ class AptProcess(apb.InstallProgress):
 
         log("conffile: %s %s" % (current, new))
         
-    def error(self, errorstr):
-        global_event.emit("action-error", errorstr)
+    def error(self, pkg_name, errorstr):
+        global_event.emit("action-error", (self.pkg_name, errorstr))
         
         log("error: %s" % errorstr)
 
