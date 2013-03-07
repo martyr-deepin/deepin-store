@@ -365,6 +365,11 @@ class DataManager(object):
         
 if __name__ == "__main__":
     from pprint import pprint
+    import dbus
+    from constant import DSC_SERVICE_NAME, DSC_SERVICE_PATH, DSC_FRONTEND_NAME, DSC_FRONTEND_PATH, ACTION_INSTALL, ACTION_UNINSTALL, ACTION_UPGRADE, CONFIG_DIR, ONE_DAY_SECONDS
+    system_bus = dbus.SystemBus()
+    bus_object = system_bus.get_object(DSC_SERVICE_NAME, DSC_SERVICE_PATH)
+    bus_interface = dbus.Interface(bus_object, DSC_SERVICE_NAME)
 
-    data_manager = DataManager()
-    data_manager.get_album_info()
+    data_manager = DataManager(bus_interface)
+    print data_manager.get_category_pkg_info().keys()
