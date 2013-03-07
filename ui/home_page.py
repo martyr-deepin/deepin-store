@@ -106,7 +106,8 @@ class HomePage(gtk.HBox):
         
         self.category_view = TreeView(
             [self.recommend_item] + category_items,
-            enable_drag_drop=False
+            enable_drag_drop=False,
+            enable_multiple_select=False
             )
         self.category_view.draw_mask = self.draw_mask
         self.category_view_align = gtk.Alignment()
@@ -116,8 +117,8 @@ class HomePage(gtk.HBox):
         
         self.background_box.pack_start(self.canopy, False, False)
         self.background_box.pack_start(self.search_align, True, True)
-        self.background_box.pack_start(self.category_view_align, False, False)
-        self.sidebar_box.pack_start(self.background_box, True, True)
+        self.background_box.pack_end(self.category_view_align, False, False)
+        self.sidebar_box.pack_start(self.background_box, False, False)
         
         self.split_line = gtk.VBox()
         self.split_line.set_size_request(1, -1)
