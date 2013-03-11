@@ -110,6 +110,7 @@ class HomePage(gtk.HBox):
             enable_multiple_select=False
             )
         self.category_view.draw_mask = self.draw_mask
+        self.category_view.set_size_request(-1, 470)
         self.category_view_align = gtk.Alignment()
         self.category_view_align.set(0.5, 0.5, 1, 1)
         self.category_view_align.set_padding(10, 10, 0, 0)
