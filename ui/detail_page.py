@@ -99,6 +99,10 @@ class DetailPage(gtk.HBox):
     LONG_DESC_PADDING_Y = 10
     LONG_DESC_WRAP_WIDTH = 630
     LONG_DESC_INIT_HEIGHT = 45
+
+    MARK_SIZE = 11
+    MARK_PADDING_X = 5
+    MARK_PADDING_Y = -3
     
     def __init__(self, data_manager):
         '''
@@ -113,7 +117,12 @@ class DetailPage(gtk.HBox):
         self.left_view_box.set_size_request(self.LEFT_INFO_WIDTH, - 1)
         
         self.left_logo_box = gtk.VBox()
-        self.left_logo_box.set_size_request(-1, 120)
+        self.left_logo_box.set_size_request(-1, 90)
+
+        self.star_box = gtk.HBox()
+        self.star_align = gtk.Alignment(0.4, 0.5, 0, 0)
+        self.star_align.set_padding(0, 5, 0, 0)
+        self.star_align.add(self.star_box)
         
         self.left_action_box = gtk.HBox()
         self.left_action_align = gtk.Alignment()
@@ -191,6 +200,7 @@ class DetailPage(gtk.HBox):
         self.scrolled_window.add_child(self.right_view_box)
         
         self.left_view_box.pack_start(self.left_logo_box, False, False)
+        self.left_view_box.pack_start(self.star_align, False, False)
         self.left_view_box.pack_start(self.left_action_align, False, False)
         self.left_label_table.attach(self.left_category_box, 0, 1, 0, 1)
         self.left_label_table.attach(self.left_version_label, 0, 1, 1, 2)
@@ -216,6 +226,29 @@ class DetailPage(gtk.HBox):
 
         global_event.register_event("download-screenshot-finish", self.download_screenshot_finish)
         
+        
+        
+    def grade_pkg(self):
+        global_event.emit("grade-pkg", self.pkg_name, self.pkg_star_view.star_buffer.star_level)
+        
+        self.pkg_star_view.star_buffer.star_level = int(self.star)
+        self.pkg_star_view.queue_draw()
+        
+    def expose_star_mark(self, widget, event):
+        # Init.
+        cr = widget.window.cairo_create()
+        rect = widget.allocation
+        
+        draw_text(
+            cr, 
+            str(self.star),
+            rect.x + self.MARK_PADDING_X,
+            rect.y + self.MARK_PADDING_Y,
+            100,
+            self.MARK_SIZE,
+            text_size=self.MARK_SIZE,
+            text_color="#F07200"
+            )
     def jump_to_category(self):
         global_event.emit("jump-to-category", self.category[0], self.category[1])
         
@@ -256,26 +289,6 @@ class DetailPage(gtk.HBox):
                         self.pkg_pixbuf,
                         rect.x + self.ICON_PADDING_X + (self.ICON_SIZE - self.pkg_pixbuf.get_width()) / 2,
                         rect.y + self.PADDING_Y)
-            
-            # Draw star.
-            self.star_buffer.render(
-                cr, 
-                gtk.gdk.Rectangle(rect.x + self.STAR_PADDING_X, 
-                                  rect.y + self.PADDING_Y + self.ICON_SIZE + self.STAR_PADDING_Y,
-                                  self.STAR_SIZE * 5,
-                                  self.STAR_SIZE))
-            
-            # Draw mark number.
-            draw_text(
-                cr, 
-                "<b>%s</b>" % str(self.star),
-                rect.x + self.STAR_PADDING_X + self.STAR_SIZE * 5 + self.MARK_NUMBER_PADDING_X,
-                rect.y + self.PADDING_Y + self.ICON_SIZE + self.MARK_NUMBER_PADDING_Y,
-                rect.width - (self.STAR_PADDING_X + self.STAR_SIZE * 5 + self.MARK_NUMBER_PADDING_X),
-                self.MARK_NUMBER_SIZE,
-                text_size=self.MARK_NUMBER_SIZE,
-                text_color="#F07200"
-                )
             
     def expose_right_top_box(self, widget, event):
         # Init.
@@ -329,7 +342,14 @@ class DetailPage(gtk.HBox):
          self.size, self.star, 
          self.download, self.alias_name,
          self.recommend_pkgs) = self.data_manager.get_pkg_detail_info(self.pkg_name)
-        self.star_buffer = StarBuffer(self.star)
+        
+        self.pkg_star_view = StarView()
+        self.pkg_star_view.star_buffer.star_level = int(self.star)
+        self.pkg_star_view.connect("clicked", lambda w: self.grade_pkg())
+        self.pkg_star_mark = gtk.VBox()
+        self.pkg_star_mark.connect("expose-event", self.expose_star_mark)
+        self.star_box.pack_start(self.pkg_star_view, False, False)
+        self.star_box.pack_start(self.pkg_star_mark, False, False)
         
         container_remove_all(self.left_action_box)
         install_status = self.data_manager.get_pkgs_install_status([self.pkg_name])
