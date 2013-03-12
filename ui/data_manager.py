@@ -331,9 +331,9 @@ class DataManager(object):
         #     }
     
         self.desktop_db_cursor.execute(
-            "SELECT desktop_path, pkg_name, icon_name, display_name, category_indexes FROM desktop")    
-        for (desktop_path, pkg_name, icon_name, display_name, category_indexes) in self.desktop_db_cursor.fetchall():
-            for (first_category_index, second_category_index) in eval(category_indexes):
+            "SELECT desktop_path, pkg_name, icon_name, display_name, first_category_index, second_category_index FROM desktop")    
+        for (desktop_path, pkg_name, icon_name, display_name, first_category_index, second_category_index) in self.desktop_db_cursor.fetchall():
+            if first_category_index != "" and second_category_index != "":
                 (first_category, second_category) = self.category_name_dict[(first_category_index, second_category_index)]
                 
                 second_category_dict = self.category_dict[first_category][second_category]    
