@@ -118,13 +118,14 @@ class DataManager(object):
         
     def get_pkg_detail_info(self, pkg_name):
         self.desktop_db_cursor.execute(
-            "SELECT category_indexes FROM desktop WHERE pkg_name=?", [pkg_name])
+            "SELECT first_category_index, second_category_index FROM desktop WHERE pkg_name=?", [pkg_name])
         category_indexes = self.desktop_db_cursor.fetchone()
         recommend_pkgs = []
         if category_indexes == None:
             category = None
         else:
-            (first_category_index, second_category_index) = (eval(category_indexes[0]))[0]
+            print category_indexes
+            (first_category_index, second_category_index) = category_indexes
             self.category_db_cursor.execute(
                 "SELECT first_category_name, second_category_name FROM category_name WHERE first_category_index=? and second_category_index=?",
                 [first_category_index, second_category_index])
