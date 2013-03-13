@@ -38,7 +38,6 @@ import zipfile
 from dtk.ui.label import Label
 from dtk.ui.label_utils import show_label_tooltip
 from dtk.ui.draw import draw_pixbuf, draw_text
-from dtk.ui.star_view import StarBuffer
 from resizable_label import ResizableLabel
 from slide_switcher import SlideSwitcher
 from constant import SCREENSHOT_HOST, SCREENSHOT_DOWNLOAD_DIR
@@ -123,6 +122,13 @@ class DetailPage(gtk.HBox):
         self.star_align = gtk.Alignment(0.4, 0.5, 0, 0)
         self.star_align.set_padding(0, 5, 0, 0)
         self.star_align.add(self.star_box)
+
+        self.pkg_star_view = StarView()
+        self.pkg_star_view.connect("clicked", lambda w: self.grade_pkg())
+        self.pkg_star_mark = gtk.VBox()
+        self.pkg_star_mark.connect("expose-event", self.expose_star_mark)
+        self.star_box.pack_start(self.pkg_star_view, False, False)
+        self.star_box.pack_start(self.pkg_star_mark, False, False)
         
         self.left_action_box = gtk.HBox()
         self.left_action_align = gtk.Alignment()
@@ -226,8 +232,6 @@ class DetailPage(gtk.HBox):
 
         global_event.register_event("download-screenshot-finish", self.download_screenshot_finish)
         
-        
-        
     def grade_pkg(self):
         global_event.emit("grade-pkg", self.pkg_name, self.pkg_star_view.star_buffer.star_level)
         
@@ -249,6 +253,7 @@ class DetailPage(gtk.HBox):
             text_size=self.MARK_SIZE,
             text_color="#F07200"
             )
+
     def jump_to_category(self):
         global_event.emit("jump-to-category", self.category[0], self.category[1])
         
@@ -343,13 +348,7 @@ class DetailPage(gtk.HBox):
          self.download, self.alias_name,
          self.recommend_pkgs) = self.data_manager.get_pkg_detail_info(self.pkg_name)
         
-        self.pkg_star_view = StarView()
         self.pkg_star_view.star_buffer.star_level = int(self.star)
-        self.pkg_star_view.connect("clicked", lambda w: self.grade_pkg())
-        self.pkg_star_mark = gtk.VBox()
-        self.pkg_star_mark.connect("expose-event", self.expose_star_mark)
-        self.star_box.pack_start(self.pkg_star_view, False, False)
-        self.star_box.pack_start(self.pkg_star_mark, False, False)
         
         container_remove_all(self.left_action_box)
         install_status = self.data_manager.get_pkgs_install_status([self.pkg_name])
