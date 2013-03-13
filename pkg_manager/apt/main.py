@@ -360,7 +360,7 @@ class PackageManager(dbus.service.Object):
     def update_signal(self, message):
         # The signal is emitted when this method exits
         # You can have code here if you wish
-        pass
+        print message
         
 if __name__ == "__main__":
     # dpkg will failed if not set TERM and PATH environment variable.  

@@ -22,4 +22,12 @@
 
 from dtk.ui.events import EventRegister
 
-global_event = EventRegister()
+class GlobalEvent(EventRegister):
+    def __init__(self):
+        EventRegister.__init__(self)
+
+    def emit(self, event, *args, **kwargs):
+        print "Event DEBUG: %s" % event
+        EventRegister.emit(self, event, *args, **kwargs)
+
+global_event = GlobalEvent()
