@@ -533,7 +533,7 @@ class SecondCategoryItem(TreeItem):
         self.pkg_icon_view = IconView() 
         self.pkg_icon_view.connect(
             "items-change", 
-            lambda iconview: self.message_bar.set_message("%s>%s: %s款软件" % (self.first_category_name, self.second_category_name, len(iconview.items))))
+            lambda iconview: self.message_bar.set_message("%s > %s: %s款软件" % (self.first_category_name, self.second_category_name, len(iconview.items))))
         self.pkg_icon_view.add_items(items)
         self.pkg_icon_scrolled_window = ScrolledWindow()
         self.pkg_icon_scrolled_window.add_child(self.pkg_icon_view)

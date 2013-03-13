@@ -54,6 +54,7 @@ class SlideSwitcher(EventBox):
                  height_offset=0,
                  hover_switch=True,
                  auto_switch=True,
+                 navigate_switch=False,
                  active_dpixbuf=app_theme.get_pixbuf("slide_switcher/active.png"),
                  inactive_dpixbuf=app_theme.get_pixbuf("slide_switcher/inactive.png"),
                  ):
@@ -78,6 +79,7 @@ class SlideSwitcher(EventBox):
         self.vertical_align = vertical_align
         self.hover_switch = hover_switch
         self.auto_switch = auto_switch
+        self.navigate_switch = navigate_switch
         self.active_dpixbuf = active_dpixbuf
         self.inactive_dpixbuf = inactive_dpixbuf
         size_pixbuf = self.slide_images[0]
@@ -206,6 +208,8 @@ class SlideSwitcher(EventBox):
         
         start_x = rect.width + self.pointer_offset_x - self.pointer_radious
         start_y = rect.height + self.pointer_offset_y
+        left_retangle = (rect.x, rect.y, rect.width/3, rect.height)
+        right_retangle = (rect.x + 2*rect.width/3, rect.y, rect.width/3, rect.height)
         if self.image_number > 1 and (start_y - 4 * self.pointer_radious < event.y < start_y + self.pointer_radious * 6 
             and start_x - 2 * self.pointer_radious < event.x < start_x + 4 * self.pointer_padding + 4 * self.pointer_radious):
 
@@ -219,6 +223,14 @@ class SlideSwitcher(EventBox):
                         if self.active_index != index:
                             self.start_animation(self.hover_animation_time, index)
                         break
+        elif self.image_number > 1 and is_in_rect((event.x, event.y), left_retangle) and self.navigate_switch:
+            set_cursor(widget, gtk.gdk.HAND2)
+            if button_press:
+                self.to_left_animation()
+        elif self.image_number > 1 and is_in_rect((event.x, event.y), right_retangle) and self.navigate_switch:
+            set_cursor(widget, gtk.gdk.HAND2)
+            if button_press:
+                self.to_right_animation()
         else:
             set_cursor(widget, None)
             
@@ -246,6 +258,16 @@ class SlideSwitcher(EventBox):
             
         return True    
             
+    def to_left_animation(self, animation_time=500):
+        if self.active_index == 0:
+            index = self.image_number - 1
+        else:
+            index = self.active_index - 1
+        self.start_animation(animation_time, index)
+
+    def to_right_animation(self, animation_time=500):
+        self.start_animation(animation_time)
+
     def start_auto_slide(self):
         if self.auto_switch:
             self.auto_slide_timeout_id = gtk.timeout_add(self.auto_slide_timeout, lambda : self.start_animation(self.auto_animation_time))

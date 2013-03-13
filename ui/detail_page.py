@@ -503,6 +503,7 @@ class DetailPage(gtk.HBox):
                         height_offset=60,
                         hover_switch=False,
                         auto_switch=False,
+                        navigate_switch=True,
                         )
                 slide_align = gtk.Alignment()
                 slide_align.set(0.5, 0.5, 1, 1)
