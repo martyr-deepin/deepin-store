@@ -80,6 +80,8 @@ class SlideSwitcher(EventBox):
         self.hover_switch = hover_switch
         self.auto_switch = auto_switch
         self.navigate_switch = navigate_switch
+        self.in_right_nav = False
+        self.in_left_nav = False
         self.active_dpixbuf = active_dpixbuf
         self.inactive_dpixbuf = inactive_dpixbuf
         size_pixbuf = self.slide_images[0]
@@ -93,7 +95,7 @@ class SlideSwitcher(EventBox):
         self.connect("expose-event", self.expose_slide_switcher)
         self.connect("motion-notify-event", self.motion_notify_slide_switcher)
         self.connect("leave-notify-event", self.leave_notify_slide_switcher)
-        self.connect("enter-notify-event", lambda w, e: self.stop_auto_slide())
+        self.connect("enter-notify-event", self.enter_notify_slide_switcher)
         self.connect("button-press-event", lambda w, e: self.handle_animation(w, e, True))
         
         self.start_auto_slide()
@@ -145,6 +147,19 @@ class SlideSwitcher(EventBox):
                         render_x,
                         render_y,
                         self.target_alpha)
+
+        # Draw navigation
+        target_pixbuf = self.slide_images[self.active_index]
+        self.left_retangle = (render_x, render_y, 50, target_pixbuf.get_height())
+        self.right_retangle = (render_x + target_pixbuf.get_width() - 50, render_y, 50, target_pixbuf.get_height())
+        if self.in_left_nav:
+            cr.set_source_rgba(0, 0, 0, 0.2)
+            cr.rectangle(*self.left_retangle)
+            cr.fill()
+        if self.in_right_nav:
+            cr.set_source_rgba(0, 0, 0, 0.2)
+            cr.rectangle(*self.right_retangle)
+            cr.fill()
         
         # Draw select pointer.
         if self.image_number > 1:
@@ -167,6 +182,9 @@ class SlideSwitcher(EventBox):
                             )        
         
         return True
+
+    def enter_notify_slide_switcher(self, widget, event):
+        self.stop_auto_slide()
     
     def leave_notify_slide_switcher(self, widget, event):
         rect = widget.allocation
@@ -208,8 +226,7 @@ class SlideSwitcher(EventBox):
         
         start_x = rect.width + self.pointer_offset_x - self.pointer_radious
         start_y = rect.height + self.pointer_offset_y
-        left_retangle = (rect.x, rect.y, rect.width/3, rect.height)
-        right_retangle = (rect.x + 2*rect.width/3, rect.y, rect.width/3, rect.height)
+        
         if self.image_number > 1 and (start_y - 4 * self.pointer_radious < event.y < start_y + self.pointer_radious * 6 
             and start_x - 2 * self.pointer_radious < event.x < start_x + 4 * self.pointer_padding + 4 * self.pointer_radious):
 
@@ -223,15 +240,25 @@ class SlideSwitcher(EventBox):
                         if self.active_index != index:
                             self.start_animation(self.hover_animation_time, index)
                         break
-        elif self.image_number > 1 and is_in_rect((event.x, event.y), left_retangle) and self.navigate_switch:
+        elif self.image_number > 1 and is_in_rect((event.x, event.y), self.left_retangle) and self.navigate_switch:
+            if not self.in_left_nav:
+                self.in_left_nav = True
+                self.queue_draw()
             set_cursor(widget, gtk.gdk.HAND2)
             if button_press:
                 self.to_left_animation()
-        elif self.image_number > 1 and is_in_rect((event.x, event.y), right_retangle) and self.navigate_switch:
+        elif self.image_number > 1 and is_in_rect((event.x, event.y), self.right_retangle) and self.navigate_switch:
+            if not self.in_right_nav:
+                self.in_right_nav = True
+                self.queue_draw()
             set_cursor(widget, gtk.gdk.HAND2)
             if button_press:
                 self.to_right_animation()
         else:
+            if self.in_left_nav or self.in_right_nav:
+                self.in_left_nav = False
+                self.in_right_nav = False
+                self.queue_draw()
             set_cursor(widget, None)
             
             if button_press:

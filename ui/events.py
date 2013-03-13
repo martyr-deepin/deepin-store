@@ -27,7 +27,7 @@ class GlobalEvent(EventRegister):
         EventRegister.__init__(self)
 
     def emit(self, event, *args, **kwargs):
-        print "Event DEBUG: %s" % event
+        #print "Event DEBUG: %s" % event
         EventRegister.emit(self, event, *args, **kwargs)
 
 global_event = GlobalEvent()
