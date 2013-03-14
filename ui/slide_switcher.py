@@ -148,19 +148,6 @@ class SlideSwitcher(EventBox):
                         render_y,
                         self.target_alpha)
 
-        # Draw navigation
-        target_pixbuf = self.slide_images[self.active_index]
-        self.left_retangle = (render_x, render_y, 50, target_pixbuf.get_height())
-        self.right_retangle = (render_x + target_pixbuf.get_width() - 50, render_y, 50, target_pixbuf.get_height())
-        if self.in_left_nav:
-            cr.set_source_rgba(0, 0, 0, 0.2)
-            cr.rectangle(*self.left_retangle)
-            cr.fill()
-        if self.in_right_nav:
-            cr.set_source_rgba(0, 0, 0, 0.2)
-            cr.rectangle(*self.right_retangle)
-            cr.fill()
-        
         # Draw select pointer.
         if self.image_number > 1:
             for index in range(0, self.image_number):
@@ -226,6 +213,8 @@ class SlideSwitcher(EventBox):
         
         start_x = rect.width + self.pointer_offset_x - self.pointer_radious
         start_y = rect.height + self.pointer_offset_y
+        self.left_retangle = (0, 0, rect.width/3, rect.height - self.pointer_offset_y)
+        self.right_retangle = (0 + 2*rect.width/3, 0, rect.width/3, rect.height - self.pointer_offset_y)
         
         if self.image_number > 1 and (start_y - 4 * self.pointer_radious < event.y < start_y + self.pointer_radious * 6 
             and start_x - 2 * self.pointer_radious < event.x < start_x + 4 * self.pointer_padding + 4 * self.pointer_radious):
