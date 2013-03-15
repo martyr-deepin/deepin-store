@@ -233,14 +233,14 @@ class SlideSwitcher(EventBox):
             if not self.in_left_nav:
                 self.in_left_nav = True
                 self.queue_draw()
-            set_cursor(widget, gtk.gdk.HAND2)
+            set_cursor(widget, gtk.gdk.SB_LEFT_ARROW)
             if button_press:
                 self.to_left_animation()
         elif self.image_number > 1 and is_in_rect((event.x, event.y), self.right_retangle) and self.navigate_switch:
             if not self.in_right_nav:
                 self.in_right_nav = True
                 self.queue_draw()
-            set_cursor(widget, gtk.gdk.HAND2)
+            set_cursor(widget, gtk.gdk.SB_RIGHT_ARROW)
             if button_press:
                 self.to_right_animation()
         else:
