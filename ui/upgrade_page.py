@@ -321,7 +321,7 @@ class UpgradePage(gtk.VBox):
         self.no_notify_treeview.draw_mask = self.draw_mask
         
         global_event.emit("show-updating-view")
-        self.fetch_upgrade_info()
+        #self.fetch_upgrade_info()
         
         print "upgrade_page: 5"
         

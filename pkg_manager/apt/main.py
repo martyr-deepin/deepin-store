@@ -43,6 +43,7 @@ from update_list import UpdateList
 import threading as td
 from Queue import Queue
 
+from utils import log
 DATA_DIR = os.path.join(get_parent_dir(__file__, 3), "data")
 
 class ExitManager(td.Thread):

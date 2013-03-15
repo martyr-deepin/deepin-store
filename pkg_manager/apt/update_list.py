@@ -25,6 +25,7 @@ from deepin_utils.net import is_network_connected
 import threading as td
 from events import global_event
 import time
+from utils import log
 
 class UpdateListProgress(FetchProgress):
     """ Ready to use progress object for terminal windows """
@@ -70,6 +71,7 @@ class UpdateList(td.Thread):
         if is_network_connected():
             try:
                 global_event.emit("update-list-start")
+                log("update-list sycle start!")
                 
                 if self.simulate:
                 # if True:

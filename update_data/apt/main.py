@@ -65,6 +65,9 @@ class UpdateDataService(dbus.service.Object):
         return str(uuid.uuid4())
         
     def run(self):
+        pass
+
+    def real_run(self):
         # Init ini files.
         data_newest_id_path = os.path.join(DATA_DIR, "data_newest_id.ini")
         patch_status_path = os.path.join(DATA_DIR, "patch_status.ini")

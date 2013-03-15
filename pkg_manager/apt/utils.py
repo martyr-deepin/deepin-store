@@ -19,9 +19,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from datetime import datetime
+
 LOG_PATH = "/tmp/dsc.log"
 
 def log(message):
-    with open(LOG_PATH, "aw") as file_handler:
-        file_handler.write("%s\n" % message)
+    with open(LOG_PATH, "a") as file_handler:
+        now = datetime.now().strftime("[%Y-%m-%d %H:%M:%S]")
+        file_handler.write("%s %s\n" % (now, message))
 
