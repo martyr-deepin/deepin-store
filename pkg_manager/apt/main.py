@@ -52,7 +52,7 @@ class ExitManager(td.Thread):
     '''
 	
     def __init__(self, 
-                 apt_action_pool_exit,
+                 mainloop,
                  is_update_list_running, 
                  is_download_action_running,
                  is_apt_action_running,
@@ -63,7 +63,7 @@ class ExitManager(td.Thread):
         td.Thread.__init__(self)
         self.setDaemon(True)
         
-        self.apt_action_pool_exit = apt_action_pool_exit
+        self.mainloop = mainloop
         self.is_update_list_running = is_update_list_running
         self.is_download_action_running = is_download_action_running
         self.is_apt_action_running = is_apt_action_running
@@ -91,28 +91,28 @@ class ExitManager(td.Thread):
                 self.loop()
             else:
                 if self.have_exit_request():
-                    self.apt_action_pool_exit()
                     print "Exit"
-                    #self.mainloop.quit()
+                    self.mainloop.quit()
                 else:
-                    print "Loop Start!"
+                    print "Pass"
                     self.loop()
                     
 class PackageManager(dbus.service.Object):
     
                 
-    def __init__(self, system_bus, mainloop):
+    def __init__(self, system_bus, mainloop, pkg_cache):
         log("init dbus")
         
         # Init dbus service.
         dbus.service.Object.__init__(self, system_bus, DSC_SERVICE_PATH)
         # Init.
         self.mainloop = mainloop
-        self.pkg_cache = None
+        self.pkg_cache = pkg_cache
         self.exit_flag = False
         self.simulate = False
         
-        self.apt_action_pool = None
+        self.apt_action_pool = AptActionPool(self.pkg_cache)
+        self.apt_action_pool.start()
         
         global_event.register_event("action-start", lambda signal_content: self.update_signal([("action-start", signal_content)]))
         global_event.register_event("action-update", lambda signal_content: self.update_signal([("action-update", signal_content)]))
@@ -137,7 +137,7 @@ class PackageManager(dbus.service.Object):
         global_event.register_event("update-list-update", self.update_list_update)
         
         self.exit_manager = ExitManager(
-            self.apt_action_pool_exit,
+            self.mainloop,
             self.is_update_list_running,
             self.is_download_action_running,
             self.is_apt_action_running,
@@ -145,7 +145,7 @@ class PackageManager(dbus.service.Object):
         self.exit_manager.start()
         
         log("init finish")
-
+        
     def action_finish(self, signal_content):
         self.update_signal([("action-finish", signal_content)])
         
@@ -171,12 +171,12 @@ class PackageManager(dbus.service.Object):
     def update_list_start(self):
         self.in_update_list = True
         self.update_signal([("update-list-start", "")])
-        print "update list start"
+        print "start"
 
     def update_list_finish(self):
         self.in_update_list = False
         self.update_signal([("update-list-finish", "")])
-        print "update list finish"
+        print "finish"
         
         self.exit_manager.check()
 
@@ -189,6 +189,7 @@ class PackageManager(dbus.service.Object):
         
     def update_list_update(self, percent):
         self.update_signal([("update-list-update", percent)])
+        print "update: %s" % percent
 
     def handle_dbus_reply(self, *reply):
         log("%s (reply): %s" % (self.module_dbus_name, str(reply)))        
@@ -223,16 +224,6 @@ class PackageManager(dbus.service.Object):
         self.update_signal([("download-stop", (pkg_name, action_type))])
         
         self.exit_manager.check()    
-
-    def apt_action_pool_exit(self):
-        self.apt_action_pool.add_exit_mission()
-        
-    @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="")    
-    def init_cache(self):
-        self.apt_action_pool = AptActionPool()
-        self.pkg_cache = self.apt_action_pool.pkg_cache
-        self.apt_action_pool.start()
-        log("cache init")
         
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="b", out_signature="")    
     def say_hello(self, simulate):
@@ -370,7 +361,7 @@ class PackageManager(dbus.service.Object):
     def update_signal(self, message):
         # The signal is emitted when this method exits
         # You can have code here if you wish
-        pass
+        print message
         
 if __name__ == "__main__":
     # dpkg will failed if not set TERM and PATH environment variable.  
@@ -408,8 +399,11 @@ if __name__ == "__main__":
     system_bus = dbus.SystemBus()
     bus_name = dbus.service.BusName(DSC_SERVICE_NAME, system_bus)
     
+    # Init cache.
+    pkg_cache = AptCache()
+    
     # Init package manager.
-    PackageManager(system_bus, mainloop)
+    PackageManager(system_bus, mainloop, pkg_cache)
     
     # Run.
     mainloop.run()

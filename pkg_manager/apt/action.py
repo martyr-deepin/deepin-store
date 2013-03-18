@@ -29,8 +29,6 @@ from time import sleep
 import traceback
 from utils import log
 from constant import ACTION_INSTALL, ACTION_UPGRADE, ACTION_UNINSTALL
-from apt_cache import AptCache
-import gc
 
 class AptProcess(apb.InstallProgress):
     '''Install progress.'''
@@ -61,21 +59,6 @@ class AptProcess(apb.InstallProgress):
         global_event.emit("action-update", (self.pkg_name, self.action_type, int(percent), status))
         
         log(str((self.pkg_name, self.action_type, int(percent), status)))
-
-class DeleteCacheThread(MissionThread):
-    def __init__(self, pkg_cache, apt_action_pool):
-        MissionThread.__init__(self)
-        self.pkg_cache = pkg_cache
-        self.apt_action_pool = apt_action_pool
-
-    def start_mission(self):
-        self.apt_action_pool.delete_cache()
-        log("del pkg_cache")
-        sleep(3)
-        self.apt_action_pool.mission_lock.put(self.apt_action_pool.FINISH_SIGNAL)
-
-    def get_mission_result(self):
-        return ("delete packages cache", None)
 
 class AptActionThread(MissionThread):
     '''
@@ -157,7 +140,7 @@ class AptActionPool(MissionThreadPool):
     class docs
     '''
 	
-    def __init__(self):
+    def __init__(self, pkg_cache):
         '''
         init docs
         '''
@@ -166,28 +149,16 @@ class AptActionPool(MissionThreadPool):
             1,
             1,
             self.clean_action,
-            True
             )
         
-        self.pkg_cache = AptCache()
+        self.pkg_cache = pkg_cache
         self.install_action_dict = {}
         self.uninstall_action_dict = {}
         self.upgrade_action_dict = {}
-        self.setDaemon(False)
         
         global_event.register_event("action-start", self.start_action)
         global_event.register_event("action-update", self.update_action)
-
-    def delete_cache(self):
-        del self.pkg_cache
-        gc.collect()
         
-    def add_exit_mission(self):
-        missions = []
-        delete_cache_mission = DeleteCacheThread(self.pkg_cache, self)
-        missions.append(delete_cache_mission)
-        self.add_missions(missions)
-
     def start_action(self, (pkg_name, action_type)):
         if action_type == ACTION_INSTALL:
             if self.install_action_dict.has_key(pkg_name):

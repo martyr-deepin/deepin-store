@@ -45,7 +45,7 @@ class UpdateListProgress(FetchProgress):
                 self.eta = ((self.totalBytes - self.currentBytes) /
                             float(self.currentCPS))
                 
-            global_event.emit("update-list-update", "%.2f" % self.percent)
+            global_event.emit("update-list-update", self.percent)
         except Exception, e:
             print "UpdateListProgress.pulse(): %s" % (e)
         

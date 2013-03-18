@@ -587,9 +587,6 @@ class DeepinSoftwareCenter(dbus.service.Object):
         bus_object = self.system_bus.get_object(DSC_SERVICE_NAME, DSC_SERVICE_PATH)
         self.bus_interface = dbus.Interface(bus_object, DSC_SERVICE_NAME)
         
-        # init cache
-        self.bus_interface.init_cache()
-        
         # Say hello to backend. 
         self.bus_interface.say_hello(self.simulate)
         
