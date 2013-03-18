@@ -284,12 +284,14 @@ class UpgradePage(gtk.VBox):
         self.network_disable_view.connect("expose-event", self.expose_network_disable_view)
         
         self.upgrade_treeview = TreeView(enable_drag_drop=False)
+        self.upgrade_treeview.set_expand_column(1)
         self.upgrade_treeview.connect("items-change", self.monitor_upgrade_view)
         self.upgrade_treeview.connect("items-change", lambda treeview: global_event.emit("update-upgrade-notify-number", len(treeview.visible_items)))
         
         gtk.timeout_add(200, self.render_upgrade_progress)
         
         self.no_notify_treeview = TreeView(enable_drag_drop=False)
+        self.no_notify_treeview.set_expand_column(1)
         self.no_notify_treeview.connect("items-change", self.monitor_no_notify_view)
         
         self.in_no_notify_page = False
@@ -321,7 +323,7 @@ class UpgradePage(gtk.VBox):
         self.no_notify_treeview.draw_mask = self.draw_mask
         
         global_event.emit("show-updating-view")
-        #self.fetch_upgrade_info()
+        self.fetch_upgrade_info()
         
         print "upgrade_page: 5"
         

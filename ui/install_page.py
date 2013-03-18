@@ -59,6 +59,7 @@ class InstallPage(gtk.VBox):
         self.message_box = gtk.HBox()
         
         self.treeview = TreeView(enable_drag_drop=False)
+        self.treeview.set_expand_column(0)
         self.cute_message_image = gtk.VBox()
         self.content_box = gtk.VBox()
         

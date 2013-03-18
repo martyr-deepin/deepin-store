@@ -671,7 +671,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         glib.timeout_add(1000, lambda : clear_install_stop_list(self.install_page))
         glib.timeout_add(1000, lambda : clear_failed_action(self.install_page, self.upgrade_page))
         
-        self.bus_interface.start_update_list()
+        #self.bus_interface.start_update_list()
         
         log("finish")
         

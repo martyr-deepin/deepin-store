@@ -56,6 +56,7 @@ class UninstallPage(gtk.VBox):
         
         self.message_bar = MessageBar(32)
         self.treeview = TreeView(enable_drag_drop=False)
+        self.treeview.set_expand_column(0)
         self.pack_start(self.message_bar, False, False)
         self.pack_start(self.treeview, True, True)
         
