@@ -59,12 +59,14 @@ class UpdateList(dbus.service.Object):
 
         self.system_bus = None
         self.bus_interface = None
+        self.delay_update_id = None
         self.sleep_time = UPDATE_INTERVAL
 
         log("Start Update List Daemon")
 
     def run(self):
         self.update_handler()
+        return False
 
     def set_delay_update(self, seconds):
         if self.delay_update_id:
@@ -162,7 +164,7 @@ if __name__ == "__main__" :
             
         update_list = UpdateList(session_bus, mainloop)
         try:
-            update_list.run()
+            glib.timeout_add_seconds(5, update_list.run)
             mainloop.run()
         except KeyboardInterrupt:
             update_list.exit_loop()
