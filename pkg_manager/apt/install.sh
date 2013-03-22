@@ -1,4 +1,5 @@
 #!/bin/sh
+cd `dirname $0`
 cp ./dbus_script/com.linuxdeepin.softwarecenter.service /usr/share/dbus-1/system-services/ 
 echo "Copy .service file to /usr/share/dbus-1/system-services/"
 
