@@ -59,12 +59,17 @@ class UpdateList(dbus.service.Object):
 
         self.system_bus = None
         self.bus_interface = None
-        log("Start Update List Daemon")
         self.sleep_time = UPDATE_INTERVAL
+
+        log("Start Update List Daemon")
 
     def run(self):
         self.update_handler()
-        glib.timeout_add_seconds(UPDATE_INTERVAL, self.update_handler)
+
+    def set_delay_update(self, seconds):
+        if self.delay_update_id:
+            glib.source_remove(self.delay_update_id)
+        self.delay_update_id = glib.timeout_add_seconds(seconds, self.update_handler)
 
     def start_backend_loop(self):
         print "daemon loop start"
@@ -103,20 +108,25 @@ class UpdateList(dbus.service.Object):
                         dbus_interface=DSC_SERVICE_NAME, 
                         path=DSC_SERVICE_PATH)
                 self.bus_interface.request_quit()
+                self.set_delay_update(UPDATE_INTERVAL)
                 log("Update List Finish")
                 print "update finished!"
                 log("Deepin Software Service Quit!")
             elif signal_type == "update-list-failed":
                 self.is_in_update_list = False
                 self.update_status = "failed"
+                self.bus_interface.request_quit()
+                self.set_delay_update(DELAY_UPDATE_INTERVAL)
                 print "update failed, daemon will try again next time"
                 log("update failed, daemon will try again next time")
         return True
 
     def update_handler(self):
-        if not self.is_fontend_running() and not self.is_in_update_list:
+        if self.is_fontend_running():
+            self.set_delay_update(DELAY_UPDATE_INTERVAL)
+        else:
             self.start_dsc_backend()
-            glib.timeout_add_seconds(2, self.start_update_list, self.bus_interface)
+            glib.timeout_add_seconds(1, self.start_update_list, self.bus_interface)
         return True
 
     def start_update_list(self, bus_interface):
