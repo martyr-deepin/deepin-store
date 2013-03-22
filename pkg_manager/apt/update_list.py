@@ -86,6 +86,7 @@ class UpdateList(td.Thread):
                     self.pkg_cache.cache.update(progress)
                 
                 global_event.emit("update-list-finish")
+                log("update list finish")
             except Exception, e:
                 print "UpdateList.run(): %s" % (e)
                 
