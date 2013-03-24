@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 # Copyright (C) 2011 ~ 2012 Deepin, Inc.
@@ -36,6 +36,7 @@ import os
 import tarfile
 import uuid
 import subprocess
+from datetime import datetime
 
 join_glib_loop()
 
@@ -44,17 +45,25 @@ DSC_UPDATER_PATH = "/com/linuxdeepin/softwarecenterupdater"
 DATA_DIR = os.path.join(get_parent_dir(__file__, 3), "data")
 UPDATE_DATA_URL = "b0.upaiyun.com"
 
+LOG_PATH = "/tmp/dsc-updater.log"
+
+def log(message):
+    with open(LOG_PATH, "a") as file_handler:
+        now = datetime.now().strftime("[%Y-%m-%d %H:%M:%S]")
+        file_handler.write("%s %s\n" % (now, message))
+
 class UpdateDataService(dbus.service.Object):
     '''
     class docs
     '''
 	
-    def __init__(self, system_bus):
+    def __init__(self, system_bus, mainloop):
         '''
         init docs
         '''
         # Init dbus service.
         dbus.service.Object.__init__(self, system_bus, DSC_UPDATER_PATH)
+        self.mainloop = mainloop
         
         self.data_origin_dir = os.path.join(DATA_DIR, "origin")
         self.data_newest_dir = os.path.join(DATA_DIR, "newest")
@@ -94,10 +103,12 @@ class UpdateDataService(dbus.service.Object):
             newest_data_dir = os.path.join(DATA_DIR, "update", newest_data_id)
             
             print "进行第一次数据解压..."
+            log("进行第一次数据解压...")
             for data_file in os.listdir(self.data_origin_dir):
                 with tarfile.open(os.path.join(self.data_origin_dir, data_file), "r:gz") as tar_file:
                     tar_file.extractall(newest_data_dir)
             print "进行第一次数据解压完成"
+            log("进行第一次数据解压完成")
             
             newest_data_id_config.set("newest", "data_id", newest_data_id)
             newest_data_id_config.write()
@@ -117,11 +128,12 @@ class UpdateDataService(dbus.service.Object):
             newest_data_dir = os.path.join(DATA_DIR, "update", newest_data_id)
             
             print "解压最新数据..."
+            log("解压最新数据...")
             for space_name in os.listdir(os.path.join(self.data_newest_dir)):
                 for data_file in os.listdir(os.path.join(self.data_newest_dir, space_name)):
                     with tarfile.open(os.path.join(self.data_newest_dir, space_name, data_file), "r:gz") as tar_file:
                         tar_file.extractall(newest_data_dir)
-            print "解压最新数据完成"
+            log("解压最新数据完成")
             
             newest_data_id_config.set("newest", "data_id", newest_data_id)
             newest_data_id_config.write()
@@ -151,10 +163,12 @@ class UpdateDataService(dbus.service.Object):
             if data_file not in data_file_list:
                 remove_directory(os.path.join(DATA_DIR, data_file))
                 print "remove file: %s" % data_file
+                log("remove file: %s" % data_file)
             elif data_file == "update":
                 for data_id in os.listdir(os.path.join(DATA_DIR, "update")):
                     if data_id not in data_id_list:
                         remove_directory(os.path.join(DATA_DIR, "update", data_id))
+        gobject.timeout_add_seconds(3, self.mainloop.quit)
         
     def download_data(self, data_file):
         space_name = data_file.split(".tar.gz")[0]
@@ -210,8 +224,10 @@ class UpdateDataService(dbus.service.Object):
                     write_file(patch_md5_list, str(map(lambda (data_md5, patch_md5, patch_name): (patch_name, data_md5), download_patches)))
             else:
                 print "%s have newest" % space_name
+                log("%s have newest" % space_name)
         else:
             print "%s haven't any updata patch" % space_name
+            log("%s haven't any updata patch" % space_name)
             
     def apply_data(self, space_name):
         space_dir = os.path.join(self.data_newest_dir, space_name)
@@ -260,6 +276,7 @@ class UpdateDataService(dbus.service.Object):
                     patch_config.write()
                         
                     print "patch %s finish" % patch_filename    
+                    log("patch %s finish" % patch_filename)
                     
         if temp_src_file != "":
             remove_file(patch_md5_file)
@@ -276,6 +293,7 @@ if __name__ == "__main__":
     # Exit if updater has running.
     if is_dbus_name_exists(DSC_UPDATER_NAME, False):
         print "Deepin software center updater has running!"
+        log("Deepin software center updater has running!")
     else:
         # Init mainloop.
         mainloop = gobject.MainLoop()
@@ -288,13 +306,16 @@ if __name__ == "__main__":
                                    "org.freedesktop.PolicyKit1.Authority",
                                    ):
             print "Authority failed"
+            log("Authority failed")
         else:
             # Init dbus.
             system_bus = dbus.SystemBus()
             bus_name = dbus.service.BusName(DSC_UPDATER_NAME, system_bus)
             
             # Init package manager.
-            UpdateDataService(system_bus).run()
+            log("Start update data...")
+            gobject.timeout_add_seconds(10, UpdateDataService(system_bus, mainloop).run)
             
             # Run.
+            log("Run Loop")
             mainloop.run()
