@@ -86,17 +86,6 @@ class UpdateDataService(dbus.service.Object):
             newest_data_id_config.set("self.newest", "update_date", "")
             newest_data_id_config.write()
             
-        if not os.path.exists(self.data_patch_config_filepath):
-            patch_status_config = Config(self.data_patch_config_filepath)
-            patch_status_config.load()
-            patch_status_config.set("data_md5", "dsc-search-data", "")
-            patch_status_config.set("data_md5", "dsc-category-data", "")
-            patch_status_config.set("data_md5", "dsc-software-data", "")
-            patch_status_config.set("data_md5", "dsc-home-data", "")
-            patch_status_config.set("data_md5", "dsc-icon-data", "")
-            patch_status_config.set("data_md5", "dsc-desktop-data", "")
-            patch_status_config.write()
-        
         # Extract data if current directory is not exists.
         newest_data_id_config = Config(self.data_newest_id_path)
         newest_data_id_config.load()
@@ -123,6 +112,17 @@ class UpdateDataService(dbus.service.Object):
             newest_data_id_config.set("newest", "update_date", UPDATE_DATE)
             newest_data_id_config.write()
             
+        if not os.path.exists(self.data_patch_config_filepath):
+            patch_status_config = Config(self.data_patch_config_filepath)
+            patch_status_config.load()
+            patch_status_config.set("data_md5", "dsc-search-data", "")
+            patch_status_config.set("data_md5", "dsc-category-data", "")
+            patch_status_config.set("data_md5", "dsc-software-data", "")
+            patch_status_config.set("data_md5", "dsc-home-data", "")
+            patch_status_config.set("data_md5", "dsc-icon-data", "")
+            patch_status_config.set("data_md5", "dsc-desktop-data", "")
+            patch_status_config.write()
+        
         # Download update data.
         self.have_update = False    
         for data_file in os.listdir(self.data_origin_dir):
@@ -143,6 +143,7 @@ class UpdateDataService(dbus.service.Object):
                 for data_file in os.listdir(os.path.join(self.data_newest_dir, space_name)):
                     with tarfile.open(os.path.join(self.data_newest_dir, space_name, data_file), "r:gz") as tar_file:
                         tar_file.extractall(newest_data_dir)
+            print "解压最新数据完成"
             log("解压最新数据完成")
             
             newest_data_id_config.set("newest", "data_id", newest_data_id)
@@ -296,6 +297,7 @@ class UpdateDataService(dbus.service.Object):
         print space_name
 
     def clean(self):
+        remove_file(os.path.join(DATA_DIR, "patch_status.ini"))
         for dir_name in os.listdir(DATA_DIR):
             if dir_name in ["newest", "update", "patch"]:
                 remove_path(os.path.join(DATA_DIR, dir_name))

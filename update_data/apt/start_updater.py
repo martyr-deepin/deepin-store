@@ -56,8 +56,6 @@ def log(message):
 
 def start_updater(loop=True):
     try:
-        dbus.mainloop.glib.DBusGMainLoop(set_as_default = True)
-        
         if is_dbus_name_exists(DSC_UPDATER_NAME, False):
             log("Deepin software center updater has running!")
             print "Deepin software center updater has running!"
@@ -73,8 +71,6 @@ def start_updater(loop=True):
         traceback.print_exc(file=sys.stdout)
 
     return loop
-
-
 
 class Update(dbus.service.Object):
     def __init__(self, session_bus, mainloop):
@@ -132,7 +128,7 @@ class Update(dbus.service.Object):
                         path=DSC_SERVICE_PATH)
                 update_num = len(self.bus_interface.request_upgrade_pkgs())
                 if update_num != self.update_num:
-                    self.show_notify("There is %s packages to update" % update_num)
+                    self.show_notify("There are %s packages to update" % update_num)
                 self.update_num = update_num
                 self.bus_interface.request_quit()
                 self.set_delay_update(UPDATE_INTERVAL)
