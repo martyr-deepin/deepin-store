@@ -76,7 +76,7 @@ def start_updater(loop=True):
 
 
 
-class UpdateList(dbus.service.Object):
+class Update(dbus.service.Object):
     def __init__(self, session_bus, mainloop):
         dbus.service.Object.__init__(self, session_bus, DSC_UPDATELIST_PATH)
         self.mainloop = mainloop
@@ -133,6 +133,7 @@ class UpdateList(dbus.service.Object):
                 update_num = len(self.bus_interface.request_upgrade_pkgs())
                 if update_num != self.update_num:
                     self.show_notify("There is %s packages to update" % update_num)
+                self.update_num = update_num
                 self.bus_interface.request_quit()
                 self.set_delay_update(UPDATE_INTERVAL)
                 log("Update List Finish")
@@ -153,6 +154,7 @@ class UpdateList(dbus.service.Object):
         else:
             self.start_dsc_backend()
             glib.timeout_add_seconds(1, self.start_update_list, self.bus_interface)
+            glib.timeout_add_seconds(5, start_updater, False)
         return True
 
     def start_update_list(self, bus_interface):
@@ -197,11 +199,9 @@ if __name__ == "__main__" :
     else:
         bus_name = dbus.service.BusName(DSC_UPDATELIST_NAME, session_bus)
             
-        update_list = UpdateList(session_bus, mainloop)
+        update = Update(session_bus, mainloop)
         try:
-            glib.timeout_add_seconds(15, start_updater, False) # first run
-            glib.timeout_add_seconds(UPDATE_INTERVAL, start_updater)
-            glib.timeout_add_seconds(15, update_list.run)
+            glib.timeout_add_seconds(15, update.run)
             mainloop.run()
         except KeyboardInterrupt:
-            update_list.exit_loop()
+            update.exit_loop()
