@@ -27,7 +27,7 @@ import gobject
 import signal
 import shutil
 from deepin_utils.ipc import auth_with_policykit, is_dbus_name_exists
-from deepin_utils.file import get_parent_dir, create_directory, write_file, eval_file, remove_file, remove_directory
+from deepin_utils.file import get_parent_dir, create_directory, write_file, eval_file, remove_file, remove_directory, remove_path
 from deepin_utils.config import Config
 from deepin_storm.download import FetchServiceThread, join_glib_loop, FetchFiles
 from gevent.queue import Queue
@@ -44,6 +44,8 @@ DSC_UPDATER_NAME = "com.linuxdeepin.softwarecenterupdater"
 DSC_UPDATER_PATH = "/com/linuxdeepin/softwarecenterupdater"
 DATA_DIR = os.path.join(get_parent_dir(__file__, 3), "data")
 UPDATE_DATA_URL = "b0.upaiyun.com"
+
+UPDATE_DATE = "2013-03-25"  # origin data update date flag
 
 LOG_PATH = "/tmp/dsc-updater.log"
 
@@ -69,23 +71,23 @@ class UpdateDataService(dbus.service.Object):
         self.data_newest_dir = os.path.join(DATA_DIR, "newest")
         self.data_patch_dir = os.path.join(DATA_DIR, "patch")
         self.data_patch_config_filepath = os.path.join(DATA_DIR, "patch_status.ini")
+        self.data_newest_id_path = os.path.join(DATA_DIR, "data_newest_id.ini")
         
     def get_unique_id(self):
         return str(uuid.uuid4())
         
     def run(self):
         # Init ini files.
-        data_newest_id_path = os.path.join(DATA_DIR, "data_newest_id.ini")
-        patch_status_path = os.path.join(DATA_DIR, "patch_status.ini")
             
-        if not os.path.exists(data_newest_id_path):
-            newest_data_id_config = Config(data_newest_id_path)
+        if not os.path.exists(self.data_newest_id_path):
+            newest_data_id_config = Config(self.data_newest_id_path)
             newest_data_id_config.load()
-            newest_data_id_config.set("newest", "data_id", "")
+            newest_data_id_config.set("self.newest", "data_id", "")
+            newest_data_id_config.set("self.newest", "update_date", "")
             newest_data_id_config.write()
             
-        if not os.path.exists(patch_status_path):
-            patch_status_config = Config(patch_status_path)
+        if not os.path.exists(self.data_patch_config_filepath):
+            patch_status_config = Config(self.data_patch_config_filepath)
             patch_status_config.load()
             patch_status_config.set("data_md5", "dsc-search-data", "")
             patch_status_config.set("data_md5", "dsc-category-data", "")
@@ -96,9 +98,16 @@ class UpdateDataService(dbus.service.Object):
             patch_status_config.write()
         
         # Extract data if current directory is not exists.
-        newest_data_id_config = Config(os.path.join(DATA_DIR, "data_newest_id.ini"))
+        newest_data_id_config = Config(self.data_newest_id_path)
         newest_data_id_config.load()
-        if newest_data_id_config.get("newest", "data_id") == "":
+
+        try:
+            update_date = newest_data_id_config.get("newest", "update_date")
+        except Exception:
+            update_date = ""
+
+        if newest_data_id_config.get("newest", "data_id") == "" or update_date != UPDATE_DATE:
+            self.clean()
             newest_data_id = self.get_unique_id()
             newest_data_dir = os.path.join(DATA_DIR, "update", newest_data_id)
             
@@ -111,6 +120,7 @@ class UpdateDataService(dbus.service.Object):
             log("进行第一次数据解压完成")
             
             newest_data_id_config.set("newest", "data_id", newest_data_id)
+            newest_data_id_config.set("newest", "update_date", UPDATE_DATE)
             newest_data_id_config.write()
             
         # Download update data.
@@ -284,6 +294,11 @@ class UpdateDataService(dbus.service.Object):
             os.renames(temp_src_file, origin_data_file)
         
         print space_name
+
+    def clean(self):
+        for dir_name in os.listdir(DATA_DIR):
+            if dir_name in ["newest", "update", "patch"]:
+                remove_path(os.path.join(DATA_DIR, dir_name))
         
 if __name__ == "__main__":
     # Init.
