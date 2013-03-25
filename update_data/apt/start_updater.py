@@ -197,7 +197,7 @@ if __name__ == "__main__" :
             
         update = Update(session_bus, mainloop)
         try:
-            glib.timeout_add_seconds(15, update.run)
+            glib.timeout_add_seconds(30, update.run)
             mainloop.run()
         except KeyboardInterrupt:
             update.exit_loop()
