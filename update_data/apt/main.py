@@ -82,8 +82,8 @@ class UpdateDataService(dbus.service.Object):
         if not os.path.exists(self.data_newest_id_path):
             newest_data_id_config = Config(self.data_newest_id_path)
             newest_data_id_config.load()
-            newest_data_id_config.set("self.newest", "data_id", "")
-            newest_data_id_config.set("self.newest", "update_date", "")
+            newest_data_id_config.set("newest", "data_id", "")
+            newest_data_id_config.set("newest", "update_date", "")
             newest_data_id_config.write()
             
         # Extract data if current directory is not exists.

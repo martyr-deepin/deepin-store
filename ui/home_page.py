@@ -47,6 +47,7 @@ from completion_window import search_entry, completion_window, completion_grab_w
 from events import global_event
 from skin import app_theme
 from data import DATA_ID
+from category_info import get_category_name
 
 FIRST_CATEGORY_PADDING_X = 66
 SECOND_CATEGORY_PADDING_X = 46
@@ -285,7 +286,7 @@ class CategoryItem(TreeItem):
             rect.y + (rect.height - pixbuf.get_height()) / 2)
         
         draw_text(cr, 
-                  self.first_category_name,
+                  get_category_name(self.first_category_name),
                   rect.x + pixbuf.get_width() + 22, 
                   rect.y,
                   rect.width,
@@ -483,7 +484,7 @@ class SecondCategoryItem(TreeItem):
             cr.fill()
         
         draw_text(cr, 
-                  self.second_category_name,
+                  get_category_name(self.second_category_name),
                   rect.x + SECOND_CATEGORY_PADDING_X,
                   rect.y,
                   rect.width,
@@ -534,7 +535,10 @@ class SecondCategoryItem(TreeItem):
         self.pkg_icon_view = IconView() 
         self.pkg_icon_view.connect(
             "items-change", 
-            lambda iconview: self.message_bar.set_message("%s > %s: %s款软件" % (self.first_category_name, self.second_category_name, len(iconview.items))))
+            lambda iconview: self.message_bar.set_message("%s > %s: %s款软件" % (
+                get_category_name(self.first_category_name), 
+                get_category_name(self.second_category_name), 
+                len(iconview.items))))
         self.pkg_icon_view.add_items(items)
         self.pkg_icon_scrolled_window = ScrolledWindow()
         self.pkg_icon_scrolled_window.add_child(self.pkg_icon_view)
