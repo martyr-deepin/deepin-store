@@ -59,7 +59,7 @@ class SearchPage(gtk.VBox):
         self.keywords = []
         self.message_bar = MessageBar(18)
         
-        self.treeview = TreeView(enable_drag_drop=False)
+        self.treeview = TreeView(enable_drag_drop=False, expand_column=0)
         self.pack_start(self.message_bar,False, False)
         self.pack_start(self.treeview, True, True)
         
