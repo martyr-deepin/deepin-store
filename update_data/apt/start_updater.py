@@ -29,7 +29,7 @@ from dbus.mainloop.glib import DBusGMainLoop
 from deepin_utils.ipc import is_dbus_name_exists
 from datetime import datetime
 import traceback
-import sys
+import sys, os
 import pynotify
 
 DSC_SERVICE_NAME = "com.linuxdeepin.softwarecenter"
@@ -150,7 +150,7 @@ class Update(dbus.service.Object):
         else:
             self.start_dsc_backend()
             glib.timeout_add_seconds(1, self.start_update_list, self.bus_interface)
-            glib.timeout_add_seconds(5, start_updater, False)
+            glib.timeout_add_seconds(1, start_updater, False)
         return True
 
     def start_update_list(self, bus_interface):
@@ -183,6 +183,11 @@ class Update(dbus.service.Object):
                 pass
 
 if __name__ == "__main__" :
+
+    uid = os.geteuid()
+    if uid == 0:
+        sys.exit(0)
+
     pynotify.init("Update Notice")
     DBusGMainLoop(set_as_default=True)
     session_bus = dbus.SessionBus()
