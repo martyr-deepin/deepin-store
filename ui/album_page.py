@@ -263,7 +263,8 @@ class AlbumDetailPage(gtk.VBox):
         '''
         gtk.VBox.__init__(self)
         self.treeview = TreeView(
-            enable_drag_drop=False)
+            enable_drag_drop=False,
+            expand_column=1)
         
         items = []
         for (pkg_name, pkg_title, pkg_summary, alias_name, desktop_info, is_installed) in data_manager.get_album_detail_info(album_id):
