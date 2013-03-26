@@ -67,6 +67,13 @@ def run():
         newest_data_id_config.set("newest", "update_date", UPDATE_DATE)
         newest_data_id_config.write()
 
+def clean_tmp():
+    dsc_update_list_tmp_path = "/tmp/dsc-update-list.log"
+    tmp_file_dict = [dsc_update_list_tmp_path,]
+    for path in tmp_file_dict:
+        if os.path.exists(path):
+            remove_file(path)
+
 def clean():
     remove_file(os.path.join(DATA_DIR, "patch_status.ini"))
     for dir_name in os.listdir(DATA_DIR):
@@ -74,4 +81,5 @@ def clean():
             remove_path(os.path.join(DATA_DIR, dir_name))
 
 if __name__ == "__main__":
+    clean_tmp()
     run()
