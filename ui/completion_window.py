@@ -61,6 +61,7 @@ class CompletionWindow(Window):
             enable_highlight=False,
             enable_multiple_select=False,
             enable_drag_drop=False,
+            expand_column=0,
             )
         self.treeview.scrolled_window.tag_by_popup_grab_window = True
         self.treeview_align = gtk.Alignment()
