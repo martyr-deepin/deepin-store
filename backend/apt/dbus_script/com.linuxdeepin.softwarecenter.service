@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=com.linuxdeepin.softwarecenter
+Exec=/usr/bin/deepin-software-center-backend.py
+User=root
