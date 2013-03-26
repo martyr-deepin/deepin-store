@@ -33,8 +33,6 @@ if not os.path.exists(LOCALE_DIR):
 
 _ = None    
 try:
-    gettext.bindtextdomain("deepin-software-center", LOCALE_DIR)
-    gettext.textdomain("deepin-software-center")
-    _ = gettext.gettext
+    _ = gettext.translation("deepin-software-center", LOCALE_DIR).gettext
 except Exception, e:
     _ = lambda i : i

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 # Copyright (C) 2012 ~ 2013 Deepin, Inc.
@@ -29,8 +29,8 @@ from dbus.mainloop.glib import DBusGMainLoop
 from deepin_utils.ipc import is_dbus_name_exists
 from datetime import datetime
 import traceback
-import sys
-import pynotify
+import sys, os
+from dtk.ui.dbus_notify import DbusNotify
 
 DSC_SERVICE_NAME = "com.linuxdeepin.softwarecenter"
 DSC_SERVICE_PATH = "/com/linuxdeepin/softwarecenter"
@@ -127,8 +127,8 @@ class Update(dbus.service.Object):
                         dbus_interface=DSC_SERVICE_NAME, 
                         path=DSC_SERVICE_PATH)
                 update_num = len(self.bus_interface.request_upgrade_pkgs())
-                if update_num != self.update_num:
-                    self.show_notify("There are %s packages to update" % update_num)
+                if update_num != 0 and update_num != self.update_num:
+                    self.show_notify("您的系统有%s个软件包需要升级，请打开软件中心进行升级！" % update_num)
                 self.update_num = update_num
                 self.bus_interface.request_quit()
                 self.set_delay_update(UPDATE_INTERVAL)
@@ -150,7 +150,7 @@ class Update(dbus.service.Object):
         else:
             self.start_dsc_backend()
             glib.timeout_add_seconds(1, self.start_update_list, self.bus_interface)
-            glib.timeout_add_seconds(5, start_updater, False)
+            glib.timeout_add_seconds(1, start_updater, False)
         return True
 
     def start_update_list(self, bus_interface):
@@ -173,17 +173,17 @@ class Update(dbus.service.Object):
         return self.is_in_update_list
 
     def show_notify(self, message=None, timeout=None):
-        if pynotify and message:
-            notification = pynotify.Notification('Update Notice', message)
-            if timeout:
-                notification.set_timeout(timeout)
-            try:
-                notification.show()
-            except:
-                pass
+        notification = DbusNotify("deepin-software-center")
+        notification.set_summary("Update Notice")
+        notification.set_body(message)
+        notification.notify()
 
 if __name__ == "__main__" :
-    pynotify.init("Update Notice")
+
+    uid = os.geteuid()
+    if uid == 0:
+        sys.exit(0)
+
     DBusGMainLoop(set_as_default=True)
     session_bus = dbus.SessionBus()
     

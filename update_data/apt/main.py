@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 # Copyright (C) 2011 ~ 2012 Deepin, Inc.
@@ -45,7 +45,7 @@ DSC_UPDATER_PATH = "/com/linuxdeepin/softwarecenterupdater"
 DATA_DIR = os.path.join(get_parent_dir(__file__, 3), "data")
 UPDATE_DATA_URL = "b0.upaiyun.com"
 
-UPDATE_DATE = "2013-03-25"  # origin data update date flag
+UPDATE_DATE = "2013-03-26"  # origin data update date flag
 
 LOG_PATH = "/tmp/dsc-updater.log"
 
@@ -179,7 +179,7 @@ class UpdateDataService(dbus.service.Object):
                 for data_id in os.listdir(os.path.join(DATA_DIR, "update")):
                     if data_id not in data_id_list:
                         remove_directory(os.path.join(DATA_DIR, "update", data_id))
-        gobject.timeout_add_seconds(3, self.mainloop.quit)
+        #gobject.timeout_add_seconds(3, self.mainloop.quit)
         
     def download_data(self, data_file):
         space_name = data_file.split(".tar.gz")[0]
@@ -331,8 +331,9 @@ if __name__ == "__main__":
             
             # Init package manager.
             log("Start update data...")
-            gobject.timeout_add_seconds(10, UpdateDataService(system_bus, mainloop).run)
+            UpdateDataService(system_bus, mainloop).run()
+            log("Finish update data.")
             
             # Run.
-            log("Run Loop")
-            mainloop.run()
+            #log("Run Loop")
+            #mainloop.run()
