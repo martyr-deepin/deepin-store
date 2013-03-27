@@ -377,7 +377,7 @@ class CategoryItem(TreeItem):
         self.pkg_icon_view = IconView() 
         self.pkg_icon_view.connect(
             "items-change", 
-            lambda iconview: self.message_bar.set_message("%s: %s款软件" % (self.first_category_name, len(iconview.items))))
+            lambda iconview: self.message_bar.set_message("%s: %s款软件" % (get_category_name(self.first_category_name), len(iconview.items))))
         self.pkg_icon_view.add_items(items)
         self.pkg_icon_scrolled_window = ScrolledWindow()
         self.pkg_icon_scrolled_window.add_child(self.pkg_icon_view)

@@ -149,8 +149,8 @@ class Update(dbus.service.Object):
             self.set_delay_update(DELAY_UPDATE_INTERVAL)
         else:
             self.start_dsc_backend()
-            glib.timeout_add_seconds(1, self.start_update_list, self.bus_interface)
             glib.timeout_add_seconds(1, start_updater, False)
+            glib.timeout_add_seconds(10, self.start_update_list, self.bus_interface)
         return True
 
     def start_update_list(self, bus_interface):
@@ -174,7 +174,7 @@ class Update(dbus.service.Object):
 
     def show_notify(self, message=None, timeout=None):
         notification = DbusNotify("deepin-software-center")
-        notification.set_summary("Update Notice")
+        notification.set_summary("更新提示")
         notification.set_body(message)
         notification.notify()
 

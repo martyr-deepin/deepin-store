@@ -27,7 +27,7 @@ import uuid
 import tarfile
 
 DATA_DIR = os.path.join(get_parent_dir(__file__), "data")
-UPDATE_DATE = "2013-03-26"  # origin data update date flag
+UPDATE_DATE = "2013-03-27"  # origin data update date flag
 
 data_origin_dir = os.path.join(DATA_DIR, "origin")
 data_newest_dir = os.path.join(DATA_DIR, "newest")

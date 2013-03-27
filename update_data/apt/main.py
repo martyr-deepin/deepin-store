@@ -45,7 +45,7 @@ DSC_UPDATER_PATH = "/com/linuxdeepin/softwarecenterupdater"
 DATA_DIR = os.path.join(get_parent_dir(__file__, 3), "data")
 UPDATE_DATA_URL = "b0.upaiyun.com"
 
-UPDATE_DATE = "2013-03-26"  # origin data update date flag
+UPDATE_DATE = "2013-03-27"  # origin data update date flag
 
 LOG_PATH = "/tmp/dsc-updater.log"
 
