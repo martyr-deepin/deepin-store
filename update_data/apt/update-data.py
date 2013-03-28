@@ -29,6 +29,7 @@ import shutil
 from deepin_utils.ipc import auth_with_policykit, is_dbus_name_exists
 from deepin_utils.file import get_parent_dir, create_directory, write_file, eval_file, remove_file, remove_directory, remove_path
 from deepin_utils.config import Config
+from deepin_utils.hash import md5_file
 from deepin_storm.download import FetchServiceThread, join_glib_loop, FetchFiles
 from gevent.queue import Queue
 import urllib2
@@ -181,7 +182,8 @@ class UpdateDataService(dbus.service.Object):
                         remove_directory(os.path.join(DATA_DIR, "update", data_id))
         #gobject.timeout_add_seconds(3, self.mainloop.quit)
         
-    def download_data(self, data_file):
+    def download_data(self, data_file, test=False):
+        origin_data_md5 = md5_file(os.path.join(self.data_origin_dir, data_file))
         space_name = data_file.split(".tar.gz")[0]
         patch_dir = os.path.join(self.data_patch_dir, space_name)
         
@@ -189,26 +191,37 @@ class UpdateDataService(dbus.service.Object):
         create_directory(patch_dir)
                 
         if space_name == "dsc-icon-data":
-            remote_url = "http://%s.%s/3.0" % (space_name, UPDATE_DATA_URL)
+            if test:
+                remote_url = "http://%s.%s/3.0_test" % (space_name, UPDATE_DATA_URL)
+            else:
+                remote_url = "http://%s.%s/3.0" % (space_name, UPDATE_DATA_URL)
         else:
-            remote_url = "http://%s.%s/3.0/zh_CN" % (space_name, UPDATE_DATA_URL)
+            if test:
+                remote_url = "http://%s.%s/3.0_test/zh_CN" % (space_name, UPDATE_DATA_URL)
+            else:
+                remote_url = "http://%s.%s/3.0/zh_CN" % (space_name, UPDATE_DATA_URL)
             
-        patch_list_url = "%s/patch/patch_list.txt" % (remote_url)    
-        patch_list = urllib2.urlopen(patch_list_url).read()
-        if patch_list != "":
-            download_patches = []
+        patch_list_url = "%s/patch/%s/patch_md5.json" % (remote_url, origin_data_md5)    
+
+        try:
+            patch_list_json = eval(urllib2.urlopen(patch_list_url).read())
+        except:
+            patch_list_json = ""
             
-            patch_config = Config(self.data_patch_config_filepath)
-            patch_config.load()
-            current_data_md5 = patch_config.get("data_md5", space_name)
+        if patch_list_json != "":
+            patch_name = patch_list_json["current_patch"][0]["name"]
+            patch_md5 = patch_list_json["current_patch"][0]["md5"]
+            #patch_config = Config(self.data_patch_config_filepath)
+            #patch_config.load()
+            #current_data_md5 = patch_config.get("data_md5", space_name)
             
-            for patch_line in patch_list.split("\n"):
-                if patch_line != "":
-                    (data_md5, patch_md5, patch_name) = tuple(patch_line.split(" "))
-                    if data_md5 == current_data_md5:
-                        download_patches = []
-                    else:
-                        download_patches.append((data_md5, patch_md5, patch_name))
+            #for patch_line in patch_list.split("\n"):
+                #if patch_line != "":
+                    #(data_md5, patch_md5, patch_name) = tuple(patch_line.split(" "))
+                    #if data_md5 == current_data_md5:
+                        #download_patches = []
+                    #else:
+                        #download_patches.append((data_md5, patch_md5, patch_name))
 
             if len(download_patches) > 0:
                 self.have_update = True
@@ -237,8 +250,8 @@ class UpdateDataService(dbus.service.Object):
                 print "%s have newest" % space_name
                 log("%s have newest" % space_name)
         else:
-            print "%s haven't any updata patch" % space_name
-            log("%s haven't any updata patch" % space_name)
+            print "%s haven't any update patch" % space_name
+            log("%s haven't any update patch" % space_name)
             
     def apply_data(self, space_name):
         space_dir = os.path.join(self.data_newest_dir, space_name)
