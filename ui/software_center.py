@@ -239,6 +239,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
             elif action_type == ACTION_INSTALL:
                 install_page.action_update(pkg_name, percent)
         elif signal_type == "action-finish":
+            global_event.emit("package-status-change", "action-finish", action_content)
             (pkg_name, action_type, pkg_info_list) = action_content
             if action_type == ACTION_UNINSTALL:
                 uninstall_page.action_finish(pkg_name, pkg_info_list)
@@ -378,7 +379,6 @@ def clear_action_pages(bus_interface, upgrade_page, uninstall_page, install_page
     global clear_action_list
     
     if len(clear_action_list) > 0:
-        print "Clear: %s" % (str(clear_action_list))
         
         # Delete items from treeview.
         installed_items = []
@@ -389,23 +389,24 @@ def clear_action_pages(bus_interface, upgrade_page, uninstall_page, install_page
         for (pkg_name, marked_delete, marked_install, marked_upgrade) in clear_action_list:
             if marked_delete:
                 for item in uninstall_page.treeview.visible_items:
-                    if item.pkg_name == pkg_name:
+                    if item.pkg_name == pkg_name and bus_interface.get_pkg_status(pkg_name) == "uninstalled":
                         uninstalled_items.append(item)
                         break
             elif marked_install:
                 for item in install_page.treeview.visible_items:
-                    if item.pkg_name == pkg_name:
+                    if item.pkg_name == pkg_name and bus_interface.get_pkg_status(pkg_name) == "installed":
                         installed_items.append(item)
                         
                         install_pkgs.append(pkg_name)
                         break
             elif marked_upgrade:
                 for item in upgrade_page.upgrade_treeview.visible_items:
-                    if item.pkg_name == pkg_name:
+                    if item.pkg_name == pkg_name and bus_interface.get_pkg_status(pkg_name) == "upgraded":
                         upgraded_items.append(item)
                         
                         install_pkgs.append(pkg_name)
                         break
+
                     
         uninstall_page.treeview.delete_items(uninstalled_items)
         install_page.treeview.delete_items(installed_items)
@@ -594,6 +595,9 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
         # Init data manager.
         self.data_manager = DataManager(self.bus_interface)
+
+        # Init packages status
+        self.packages_status = {}
         
         log("Init home page.")
         self.home_page = HomePage(self.data_manager)
@@ -658,6 +662,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         global_event.register_event("show-message", lambda message: show_message(self.statusbar, self.message_box, message))
         global_event.register_event("start-pkg", lambda pkg_name, desktop_infos, offset: start_pkg(pkg_name, desktop_infos, offset, self.application.window))
         global_event.register_event("start-desktop", start_desktop)
+        global_event.register_event("package-status-change", self.package_status_change)
         self.system_bus.add_signal_receiver(
             lambda messages: message_handler(messages, 
                                          self.bus_interface, 
@@ -672,6 +677,16 @@ class DeepinSoftwareCenter(dbus.service.Object):
         glib.timeout_add(1000, lambda : clear_failed_action(self.install_page, self.upgrade_page))
         
         log("finish")
+
+    def package_status_change(self, action, action_content):
+        if action == "action-finish":
+            (pkg_name, action_type, pkg_info_list) = action_content
+            if action_type == ACTION_UNINSTALL:
+                self.bus_interface.set_pkg_status([pkg_name, "uninstalled"])
+            elif action_type == ACTION_UPGRADE:
+                self.bus_interface.set_pkg_status([pkg_name, "upgraded"])
+            elif action_type == ACTION_INSTALL:
+                self.bus_interface.set_pkg_status([pkg_name, "installed"])
         
     def run(self):    
         self.init_ui()

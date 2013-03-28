@@ -637,6 +637,7 @@ class UpgradePage(gtk.VBox):
         
     @post_gui
     def render_upgrade_info(self, pkg_infos):
+        print len(pkg_infos)
         if len(pkg_infos) > 0:
             if self.update_list_pixbuf:
                 del self.update_list_pixbuf
@@ -659,7 +660,6 @@ class UpgradePage(gtk.VBox):
                 
             exists_upgrade_pkg_names = map(lambda item: item.pkg_name, self.upgrade_treeview.visible_items)
             exists_no_notify_pkg_names = map(lambda item: item.pkg_name, self.no_notify_treeview.visible_items)
-            print (exists_no_notify_pkg_names, exists_upgrade_pkg_names)
             
             upgrade_items = []
             no_notify_items = []

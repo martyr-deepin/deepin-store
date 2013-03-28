@@ -43,7 +43,6 @@ from update_list import UpdateList
 import threading as td
 from Queue import Queue
 
-from utils import log
 DATA_DIR = os.path.join(get_parent_dir(__file__, 3), "data")
 
 class ExitManager(td.Thread):
@@ -135,6 +134,8 @@ class PackageManager(dbus.service.Object):
         global_event.register_event("update-list-finish", self.update_list_finish)
         global_event.register_event("update-list-failed", self.update_list_failed)
         global_event.register_event("update-list-update", self.update_list_update)
+
+        self.packages_status = {}
         
         self.exit_manager = ExitManager(
             self.mainloop,
@@ -246,6 +247,11 @@ class PackageManager(dbus.service.Object):
         if self.in_update_list:
             return []
         else:
+            cache_upgrade_pkgs = self.pkg_cache.get_upgrade_pkgs()
+            for item in cache_upgrade_pkgs:
+                pkg_name, pkg_version = item
+                if self.packages_status.get(pkg_name) == "upgraded" or self.packages_status.get(pkg_name) == "installed":
+                    cache_upgrade_pkgs.remove(item)
             return self.pkg_cache.get_upgrade_pkgs()
     
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="as")    
@@ -353,8 +359,29 @@ class PackageManager(dbus.service.Object):
     
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="ab")
     def request_pkgs_install_status(self, pkg_names):
-        return map(self.pkg_cache.is_pkg_installed, pkg_names)
+        status_dict = []
+        for pkg in pkg_names:
+            status = self.packages_status.get(pkg)
+            if status == "installed" or status == "upgraded":
+                status_dict.append(True)
+            elif status == "uninstalled":
+                status_dict.append(False)
+            else:
+                status_dict.append(self.pkg_cache.is_pkg_installed(pkg))
+        return status_dict
             
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")
+    def set_pkg_status(self, pkg_status):
+        pkg_name, status = pkg_status
+        self.packages_status[pkg_name] = status
+
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="s")
+    def get_pkg_status(self, pkg_name):
+        status = self.packages_status.get(pkg_name)
+        if not status:
+            status = self.pkg_cache.get_pkg_status(pkg_name)
+        return status
+
     @dbus.service.signal(DSC_SERVICE_NAME)    
     # Use below command for test:
     # dbus-monitor --system "type='signal', interface='com.linuxdeepin.softwarecenter'" 

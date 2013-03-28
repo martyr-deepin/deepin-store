@@ -49,6 +49,15 @@ class AptCache(object):
                 
         return pkg_infos
 
+    def get_pkg_status(self, pkg_name):
+        try:
+            if self.cache[pkg_name].is_installed:
+                return "installed"
+            else:
+                return "uninstalled"
+        except:
+            return "uninstalled"
+
     def get_uninstall_pkgs(self):
         pkg_infos = []
         for pkg in self.cache:
