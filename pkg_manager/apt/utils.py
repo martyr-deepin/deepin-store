@@ -21,7 +21,7 @@
 
 from datetime import datetime
 
-LOG_PATH = "/tmp/dsc.log"
+LOG_PATH = "/tmp/dsc-backend.log"
 
 def log(message):
     with open(LOG_PATH, "a") as file_handler:

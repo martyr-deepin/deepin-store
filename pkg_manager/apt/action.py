@@ -58,7 +58,7 @@ class AptProcess(apb.InstallProgress):
         '''Progress status change.'''
         global_event.emit("action-update", (self.pkg_name, self.action_type, int(percent), status))
         
-        log(str((self.pkg_name, self.action_type, int(percent), status)))
+        #log(str((self.pkg_name, self.action_type, int(percent), status)))
 
 class AptActionThread(MissionThread):
     '''
@@ -82,14 +82,18 @@ class AptActionThread(MissionThread):
         
         if self.action_type == ACTION_INSTALL:
             self.pkg_cache.cache[self.pkg_name].mark_install()
+            log("Start Install %s" % self.pkg_name)
         elif self.action_type == ACTION_UPGRADE:
+            log("Start Upgrade %s" % self.pkg_name)
             self.pkg_cache.cache[self.pkg_name].mark_upgrade()
         elif self.action_type == ACTION_UNINSTALL:
+            log("Start Uninstall %s" % self.pkg_name)
             self.pkg_cache.cache[self.pkg_name].mark_delete()
             
         pkg_info_list = map(lambda pkg: (pkg.name, pkg.marked_delete, pkg.marked_install, pkg.marked_upgrade), 
                             sorted(self.pkg_cache.cache.get_changes(), key=lambda p: p.name))
         
+        log(pkg_info_list)
         if len(pkg_info_list) > 0:
             try:
                 global_event.emit("action-start", (self.pkg_name, self.action_type))
