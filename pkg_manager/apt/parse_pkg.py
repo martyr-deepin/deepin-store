@@ -83,6 +83,7 @@ def get_deb_download_info(cache, deb_file):
 
 def get_pkg_download_info(cache, pkg_name):
     # Mark package in apt cache.
+    cache.open(None)
     if pkg_name in cache:
         try:
             pkg = cache[pkg_name]
@@ -93,6 +94,7 @@ def get_pkg_download_info(cache, pkg_name):
                 
             # Get package information.
             pkgs = sorted(cache.get_changes(), key=lambda pkg: pkg.name)
+            cache.open(None)
             return check_pkg_download_info(pkgs)
         
         except Exception, e:

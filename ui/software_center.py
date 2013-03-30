@@ -389,19 +389,19 @@ def clear_action_pages(bus_interface, upgrade_page, uninstall_page, install_page
         for (pkg_name, marked_delete, marked_install, marked_upgrade) in clear_action_list:
             if marked_delete:
                 for item in uninstall_page.treeview.visible_items:
-                    if item.pkg_name == pkg_name and bus_interface.get_pkg_status(pkg_name) == "uninstalled":
+                    if item.pkg_name == pkg_name:
                         uninstalled_items.append(item)
                         break
             elif marked_install:
                 for item in install_page.treeview.visible_items:
-                    if item.pkg_name == pkg_name and bus_interface.get_pkg_status(pkg_name) == "installed":
+                    if item.pkg_name == pkg_name:
                         installed_items.append(item)
                         
                         install_pkgs.append(pkg_name)
                         break
             elif marked_upgrade:
                 for item in upgrade_page.upgrade_treeview.visible_items:
-                    if item.pkg_name == pkg_name and bus_interface.get_pkg_status(pkg_name) == "upgraded":
+                    if item.pkg_name == pkg_name:
                         upgraded_items.append(item)
                         
                         install_pkgs.append(pkg_name)
@@ -675,6 +675,8 @@ class DeepinSoftwareCenter(dbus.service.Object):
         glib.timeout_add(1000, lambda : clear_action_pages(self.bus_interface, self.upgrade_page, self.uninstall_page, self.install_page))
         glib.timeout_add(1000, lambda : clear_install_stop_list(self.install_page))
         glib.timeout_add(1000, lambda : clear_failed_action(self.install_page, self.upgrade_page))
+
+        #self.bus_interface.start_update_list()
         
         log("finish")
 

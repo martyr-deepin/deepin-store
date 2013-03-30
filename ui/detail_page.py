@@ -459,7 +459,7 @@ class DetailPage(gtk.HBox):
                 write_file(screenshot_md5_path, remote_md5, True)
                 self.download_screenshot.add_download(self.pkg_name, remote_screenshot_zip_url)
         except Exception, e:
-            traceback.print_exc(file=sys.stdout)
+            #traceback.print_exc(file=sys.stdout)
             print "fetch_screenshot got error: %s" % e
             
     def download_screenshot_finish(self, pkg_name):

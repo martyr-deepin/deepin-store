@@ -46,6 +46,7 @@ class UpdateListProgress(FetchProgress):
                             float(self.currentCPS))
                 
             global_event.emit("update-list-update", self.percent)
+            log(self.percent)
         except Exception, e:
             print "UpdateListProgress.pulse(): %s" % (e)
         
@@ -87,10 +88,11 @@ class UpdateList(td.Thread):
                 
                 global_event.emit("update-list-finish")
                 log("update list finish")
+                self.pkg_cache.cache.open(None)
             except Exception, e:
-                print "UpdateList.run(): %s" % (e)
-                
                 global_event.emit("update-list-failed")
+                print "UpdateList.run(): %s" % (e)
+                log("UpdateList.run(): %s" % (e))
     
 if __name__ == "__main__":
     import gtk
