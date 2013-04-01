@@ -87,6 +87,10 @@ class AptActionThread(MissionThread):
         elif self.action_type == ACTION_UNINSTALL:
             self.pkg_cache.cache[self.pkg_name].mark_delete()
             
+        for pkg in self.pkg_cache.cache:
+            if pkg.is_auto_removable:
+                pkg.mark_delete()
+
         pkg_info_list = map(lambda pkg: (pkg.name, pkg.marked_delete, pkg.marked_install, pkg.marked_upgrade), 
                             sorted(self.pkg_cache.cache.get_changes(), key=lambda p: p.name))
         
