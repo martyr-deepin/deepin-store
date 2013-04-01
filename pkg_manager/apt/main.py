@@ -38,7 +38,7 @@ from apt_cache import AptCache
 from action import AptActionPool
 from events import global_event
 from deepin_utils.ipc import auth_with_policykit
-from utils import log, LOG_PATH
+from utils import log
 from update_list import UpdateList
 import threading as td
 from Queue import Queue

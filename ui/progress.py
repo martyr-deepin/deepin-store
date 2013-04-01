@@ -359,7 +359,7 @@ class GtkAptProgress(gtk.VBox):
         # Setup the always italic status label
         self._label = gtk.Label()
         attr_list = pango.AttrList()
-        attr_list.insert(pango.AttrStyle(pango.STYLE_ITALIC, 0, -1))
+        attr_list.insert(pango.AttrStyle(pango.STYLE_NORMAL, 0, -1))
         self._label.set_attributes(attr_list)
         self._label.set_ellipsize(pango.ELLIPSIZE_END)
         self._label.set_alignment(0, 0)

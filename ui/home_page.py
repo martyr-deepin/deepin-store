@@ -649,7 +649,6 @@ class RecommendItem(TreeItem):
         self.show_page()
         
     def show_page(self):    
-        print "*** 1"
         self.recommend_scrolled_window = ScrolledWindow()
         
         self.background_box = BackgroundBox()
@@ -657,7 +656,6 @@ class RecommendItem(TreeItem):
         
         self.box = gtk.VBox()
         
-        print "*** 2"
         slide_pkg_names = self.data_manager.get_slide_info()
         self.slider_switcher = SlideSwitcher(
             map(lambda pkg_name: gtk.gdk.pixbuf_new_from_file(os.path.join(SLIDE_PICTURE_DIR, "%s.jpg" % pkg_name)),
@@ -676,7 +674,6 @@ class RecommendItem(TreeItem):
         self.tab_switcher_align.set(0.5, 0.5, 1, 1)
         self.tab_switcher_align.set_padding(10, 0, 0, 9)
         
-        print "*** 3"
         items = []
         for pkg_name in self.data_manager.get_recommend_info():
             items.append(RecommendIconItem(pkg_name))
@@ -687,19 +684,15 @@ class RecommendItem(TreeItem):
         self.pkg_icon_scrolled_window.add_child(self.pkg_icon_view)
         self.pkg_icon_view.draw_mask = self.draw_mask
         
-        print "*** 31"
         self.pkg_icon_view_align = gtk.Alignment()
         self.pkg_icon_view_align.set(0.5, 0.5, 1, 1)
         self.pkg_icon_view_align.set_padding(6, 0, 1, 11)
         self.pkg_icon_view_align.add(self.pkg_icon_scrolled_window)
         
-        print "*** 32"
         self.album_page = AlbumPage(self.data_manager)
         
-        print "*** 33"
         self.download_rank_page = DownloadRankPage(self.data_manager)
         
-        print "*** 34"
         self.pages = [self.pkg_icon_view_align, self.album_page, self.download_rank_page]
         
         self.tab_switcher_align.add(self.tab_switcher)
@@ -707,7 +700,6 @@ class RecommendItem(TreeItem):
         self.box.pack_start(self.slider_switcher, False, False)
         self.box.pack_start(self.tab_switcher_align, False, False)
         
-        print "*** 4"
         self.box_align.add(self.box)
         
         self.background_box.pack_start(self.box_align)
@@ -721,8 +713,6 @@ class RecommendItem(TreeItem):
         self.tab_switcher.connect("click-current-tab", lambda switcher, page_index: self.click_page(page_index))
         
         global_event.emit("show-pkg-view", self.recommend_scrolled_window)
-        
-        print "*** 5"
         
     def draw_blank_mask(self, cr, x, y, w, h):
         pass

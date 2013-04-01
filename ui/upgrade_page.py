@@ -251,7 +251,6 @@ class UpgradePage(gtk.VBox):
         '''
         init docs
         '''
-        print "upgrade_page: 1"
         # Init.
         gtk.VBox.__init__(self)
         self.bus_interface = bus_interface        
@@ -274,7 +273,6 @@ class UpgradePage(gtk.VBox):
         self.update_list_pixbuf = None
         self.update_view.connect("expose-event", self.expose_update_view)
         
-        print "upgrade_page: 2"
         self.newest_view = gtk.VBox()
         self.newest_pixbuf = None
         self.newest_view.connect("expose-event", self.expose_newest_view)
@@ -298,7 +296,6 @@ class UpgradePage(gtk.VBox):
         
         self.pkg_info_dict = {}
         
-        print "upgrade_page: 3"
         global_event.register_event("select-all-upgrade-pkg", self.select_all_pkg)
         global_event.register_event("unselect-all-upgrade-pkg", self.unselect_all_pkg)
         global_event.register_event("upgrade-selected-pkg", self.upgrade_selected_pkg)
@@ -318,14 +315,11 @@ class UpgradePage(gtk.VBox):
         global_event.register_event("click-upgrade-check-button", self.click_upgrade_check_button)
         global_event.register_event("click-notify-check-button", self.click_notify_check_button)
         
-        print "upgrade_page: 4"
         self.upgrade_treeview.draw_mask = self.draw_mask
         self.no_notify_treeview.draw_mask = self.draw_mask
         
         global_event.emit("show-updating-view")
         self.fetch_upgrade_info()
-        
-        print "upgrade_page: 5"
         
     def click_upgrade_check_button(self):
         self.upgrade_bar.select_button.update_status(map(lambda item: item.check_button_buffer.active, self.upgrade_treeview.visible_items))
@@ -409,6 +403,7 @@ class UpgradePage(gtk.VBox):
         pkg_names = []
         for item in self.upgrade_treeview.visible_items:
             if item.check_button_buffer.active:
+                item.check_button_buffer.set_sensitive(False)
                 pkg_names.append(item.pkg_name)
                 
         global_event.emit("upgrade-pkg", pkg_names)        
@@ -637,7 +632,6 @@ class UpgradePage(gtk.VBox):
         
     @post_gui
     def render_upgrade_info(self, pkg_infos):
-        print len(pkg_infos)
         if len(pkg_infos) > 0:
             if self.update_list_pixbuf:
                 del self.update_list_pixbuf

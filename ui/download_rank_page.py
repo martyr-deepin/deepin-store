@@ -45,7 +45,6 @@ class DownloadRankPage(gtk.VBox):
         '''
         init docs
         '''
-        print "### 41"
         # Init.
         gtk.VBox.__init__(self)
         self.data_manager = data_manager
@@ -62,24 +61,18 @@ class DownloadRankPage(gtk.VBox):
         self.page_align.set(0.5, 0.5, 1, 1)
         self.page_align.set_padding(0, 0, 15, 15)
         
-        print "### 42"
         self.week_rank_icon_view = IconView()
         self.week_rank_icon_view_scrlledwindow = ScrolledWindow()
         self.week_rank_icon_view.draw_mask = self.draw_mask
         
-        print "### 421"
         self.month_rank_icon_view = IconView()
         self.month_rank_icon_view_scrlledwindow = ScrolledWindow()
         self.month_rank_icon_view.draw_mask = self.draw_mask
         
-        print "### 422"
         self.all_rank_icon_view = IconView()
         self.all_rank_icon_view_scrlledwindow = ScrolledWindow()
         self.all_rank_icon_view.draw_mask = self.draw_mask
         
-        print "### 423"
-        
-        print "### 43"
         self.week_rank_icon_view_scrlledwindow.add_child(self.week_rank_icon_view)    
         self.month_rank_icon_view_scrlledwindow.add_child(self.month_rank_icon_view)    
         self.all_rank_icon_view_scrlledwindow.add_child(self.all_rank_icon_view)    
@@ -93,8 +86,6 @@ class DownloadRankPage(gtk.VBox):
         global_event.register_event("update-rank-page", self.update_rank_page)
         
         create_thread(self.init_rank_info).start()
-        
-        print "### 44"
         
     def init_rank_info(self):
         (self.week_rank_infos, self.month_rank_infos, self.all_rank_infos) = self.data_manager.get_download_rank_info()
