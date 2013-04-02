@@ -729,3 +729,6 @@ class DeepinSoftwareCenter(dbus.service.Object):
         if len(deb_files) > 0:
             self.bus_interface.install_deb_files(deb_files)
         
+    @dbus.service.signal(DSC_FRONTEND_NAME)
+    def update_signal(self, message):
+        pass

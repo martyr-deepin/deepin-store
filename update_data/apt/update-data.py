@@ -38,11 +38,16 @@ import tarfile
 import uuid
 import subprocess
 from datetime import datetime
+import time
 
 join_glib_loop()
 
 DSC_UPDATER_NAME = "com.linuxdeepin.softwarecenterupdater"
 DSC_UPDATER_PATH = "/com/linuxdeepin/softwarecenterupdater"
+
+DSC_FRONTEND_NAME = "com.linuxdeepin.softwarecenter_frontend"
+DSC_FRONTEND_PATH = "/com/linuxdeepin/softwarecenter_frontend"
+
 DATA_DIR = os.path.join(get_parent_dir(__file__, 3), "data")
 UPDATE_DATA_URL = "b0.upaiyun.com"
 
@@ -77,26 +82,24 @@ class UpdateDataService(dbus.service.Object):
     def get_unique_id(self):
         return str(uuid.uuid4())
         
-    def run(self):
+    def run(self, test):
         # Init ini files.
-            
         if not os.path.exists(self.data_newest_id_path):
-            newest_data_id_config = Config(self.data_newest_id_path)
-            newest_data_id_config.load()
-            newest_data_id_config.set("newest", "data_id", "")
-            newest_data_id_config.set("newest", "update_date", "")
-            newest_data_id_config.write()
+            self.newest_data_id_config = Config(self.data_newest_id_path)
+            self.newest_data_id_config.load()
+            self.newest_data_id_config.set("newest", "data_id", "")
+            self.newest_data_id_config.set("newest", "update_date", "")
+            self.newest_data_id_config.write()
+        else:
+            self.newest_data_id_config = Config(self.data_newest_id_path)
+            self.newest_data_id_config.load()
             
-        # Extract data if current directory is not exists.
-        newest_data_id_config = Config(self.data_newest_id_path)
-        newest_data_id_config.load()
-
         try:
-            update_date = newest_data_id_config.get("newest", "update_date")
+            update_date = self.newest_data_id_config.get("newest", "update_date")
         except Exception:
             update_date = ""
 
-        if newest_data_id_config.get("newest", "data_id") == "" or update_date != UPDATE_DATE:
+        if self.newest_data_id_config.get("newest", "data_id") == "" or update_date != UPDATE_DATE:
             self.clean()
             newest_data_id = self.get_unique_id()
             newest_data_dir = os.path.join(DATA_DIR, "update", newest_data_id)
@@ -109,9 +112,9 @@ class UpdateDataService(dbus.service.Object):
             print "进行第一次数据解压完成"
             log("进行第一次数据解压完成")
             
-            newest_data_id_config.set("newest", "data_id", newest_data_id)
-            newest_data_id_config.set("newest", "update_date", UPDATE_DATE)
-            newest_data_id_config.write()
+            self.newest_data_id_config.set("newest", "data_id", newest_data_id)
+            self.newest_data_id_config.set("newest", "update_date", UPDATE_DATE)
+            self.newest_data_id_config.write()
             
         if not os.path.exists(self.data_patch_config_filepath):
             self.patch_status_config = Config(self.data_patch_config_filepath)
@@ -130,9 +133,9 @@ class UpdateDataService(dbus.service.Object):
         # Download update data.
         self.have_update = []
         for data_file in os.listdir(self.data_origin_dir):
-            self.download_data(data_file)
+            self.download_data(data_file, test)
             
-        if self.have_update:   
+        if self.have_update:
             # Apply update data.
             for space_name in os.listdir(self.data_patch_dir):
                 if space_name in self.have_update:
@@ -151,9 +154,35 @@ class UpdateDataService(dbus.service.Object):
             print "解压最新数据完成"
             log("解压最新数据完成")
             
-            newest_data_id_config.set("newest", "data_id", newest_data_id)
-            newest_data_id_config.write()
-            
+            self.previous_data_id = self.newest_data_id_config.get("newest", "data_id")
+            self.newest_data_id_config.set("newest", "data_id", newest_data_id)
+            self.newest_data_id_config.write()
+
+        if self.have_update:
+            session_bus = dbus.SessionBus()
+            if not session_bus.name_has_owner(DSC_FRONTEND_NAME):
+                self.clear_data_folder()
+                self.mainloop.quit()
+                log("Finish update data.")
+            else:
+                log("前端正在运行，等待结束后清理数据")
+                bus_obj = session_bus.get_object(DSC_FRONTEND_NAME, DSC_FRONTEND_PATH)
+                bus_interface = dbus.Interface(bus_obj, DSC_FRONTEND_NAME)
+                session_bus.add_signal_receiver(
+                        self.dsc_fronend_signal_handler,
+                        dbus_interface = DSC_FRONTEND_NAME,
+                        path = DSC_FRONTEND_PATH,
+                        )
+
+    def dsc_fronend_signal_handler(self, messages):
+        for message in messages:
+            if message == "quit":
+                time.sleep(1)
+                self.clear_data_folder()
+                self.mainloop.quit()
+                log("Finish update data.")
+
+    def clear_data_folder(self):
         # TODO: Design how to remove unused data when UI is running
         DATA_CURRENT_ID_CONFIG_FILE = "/tmp/deepin-software-center/data_current_id.ini"
         if os.path.exists(DATA_CURRENT_ID_CONFIG_FILE):
@@ -162,7 +191,7 @@ class UpdateDataService(dbus.service.Object):
             current_data_id = current_data_id_config.get("current", "data_id")
         else:
             current_data_id = None
-        newest_data_id_config.load()
+        self.newest_data_id_config.load()
         data_file_list = ["newest",
                           "origin",
                           "patch",
@@ -185,7 +214,7 @@ class UpdateDataService(dbus.service.Object):
                     if data_id not in data_id_list:
                         remove_directory(os.path.join(DATA_DIR, "update", data_id))
         
-    def download_data(self, data_file, test=False):
+    def download_data(self, data_file, test):
         origin_data_md5 = md5_file(os.path.join(self.data_origin_dir, data_file))
         space_name = data_file.split(".tar.gz")[0]
         patch_dir = os.path.join(self.data_patch_dir, space_name)
@@ -226,7 +255,7 @@ class UpdateDataService(dbus.service.Object):
                 download_task = TaskObject(download_url, local_patch_file)
                 download_task.run()
 
-                if md5_file(local_patch_file) == patch_md5:
+                if download_task.isfinish() and md5_file(local_patch_file) == patch_md5:
                     self.have_update.append(space_name)
                     remove_file(os.path.join(self.data_patch_dir, eval(local_patch_info)[0]))
                     self.patch_status_config.set("data_md5", space_name, (patch_name, patch_md5))
@@ -273,6 +302,7 @@ class UpdateDataService(dbus.service.Object):
 if __name__ == "__main__":
     # Init.
     dbus.mainloop.glib.DBusGMainLoop(set_as_default = True)
+    arguments = sys.argv[1::]
     gobject.threads_init()
     
     # Exit if updater has running.
@@ -299,9 +329,8 @@ if __name__ == "__main__":
             
             # Init package manager.
             log("Start update data...")
-            UpdateDataService(system_bus, mainloop).run()
-            log("Finish update data.")
+            UpdateDataService(system_bus, mainloop).run("--test" in arguments)
             
             # Run.
-            #log("Run Loop")
-            #mainloop.run()
+            log("Run Loop")
+            mainloop.run()
