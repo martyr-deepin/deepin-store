@@ -94,7 +94,6 @@ def get_pkg_download_info(cache, pkg_name):
                 
             # Get package information.
             pkgs = sorted(cache.get_changes(), key=lambda pkg: pkg.name)
-            cache.open(None)
             return check_pkg_download_info(pkgs)
         
         except Exception, e:

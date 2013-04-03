@@ -241,6 +241,7 @@ class PackageManager(dbus.service.Object):
         self.exit_flag = True
         
         self.exit_manager.check()
+        self.update_signal("frontend-quit")
         
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="as")    
     def request_upgrade_pkgs(self):
