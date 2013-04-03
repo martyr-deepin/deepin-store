@@ -49,8 +49,7 @@ DSC_UPDATER_PATH = "/com/linuxdeepin/softwarecenterupdater"
 
 LOG_PATH = "/tmp/dsc-update-list.log"
 
-#UPDATE_INTERVAL = 3600*1
-UPDATE_INTERVAL = 300
+UPDATE_INTERVAL = 3600*1
 DELAY_UPDATE_INTERVAL = 600
 
 def log(message):
@@ -264,7 +263,7 @@ if __name__ == "__main__" :
             
         update = Update(session_bus, mainloop)
         try:
-            gobject.timeout_add_seconds(1, update.run)
+            gobject.timeout_add_seconds(30, update.run)
             mainloop.run()
         except KeyboardInterrupt:
             update.exit_loop()
