@@ -20,17 +20,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import glib
+import gobject
 import signal
 import dbus
 import dbus.service
 import dbus.mainloop.glib
 from dbus.mainloop.glib import DBusGMainLoop
 from deepin_utils.ipc import is_dbus_name_exists
+from dtk.ui.dbus_notify import DbusNotify
 from datetime import datetime
 import traceback
 import sys, os
-from dtk.ui.dbus_notify import DbusNotify
+import subprocess
+import apt_pkg
+
 
 DSC_SERVICE_NAME = "com.linuxdeepin.softwarecenter"
 DSC_SERVICE_PATH = "/com/linuxdeepin/softwarecenter"
@@ -46,7 +49,8 @@ DSC_UPDATER_PATH = "/com/linuxdeepin/softwarecenterupdater"
 
 LOG_PATH = "/tmp/dsc-update-list.log"
 
-UPDATE_INTERVAL = 3600*1
+#UPDATE_INTERVAL = 3600*1
+UPDATE_INTERVAL = 300
 DELAY_UPDATE_INTERVAL = 600
 
 def log(message):
@@ -72,6 +76,54 @@ def start_updater(loop=True):
 
     return loop
 
+class NetworkDetector(gobject.GObject):
+
+    NETWORK_STATUS_OK = 0
+    NETWORK_STATUS_FAILED = 1
+
+    __gsignals__ = {
+            "network-status-changed":(gobject.SIGNAL_RUN_LAST, 
+                                      gobject.TYPE_NONE,
+                                      (gobject.TYPE_INT, ))
+        }
+
+    def __init__(self):
+        gobject.GObject.__init__(self)
+        self.network_status = self.NETWORK_STATUS_FAILED
+
+    def start_detect_source_available(self):
+        apt_pkg.init_config()
+        apt_pkg.init_system()
+        source_list_obj = apt_pkg.SourceList()
+        source_list_obj.read_main_list()
+        uri = source_list_obj.list[0].uri.split("/")[2]
+        gobject.timeout_add(1000, self.network_detect_loop, uri)
+
+    def network_detect_loop(self, uri):
+        current_status = None
+        if self.ping_uri(uri):
+            current_status = self.NETWORK_STATUS_OK
+            if self.network_status != current_status:
+                self.network_status = current_status
+                self.emit("network-status-changed", self.network_status)
+            return False
+        else:
+            current_status = self.NETWORK_STATUS_FAILED
+            if self.network_status != current_status:
+                self.network_status = current_status
+                self.emit("network-status-changed", self.network_status)
+            return True
+
+    def ping_uri(self, uri):
+        fnull = open(os.devnull, 'w')
+        return1 = subprocess.call('ping -c 1 %s' % uri, shell = True, stdout = fnull, stderr = fnull)
+        if return1:
+            fnull.close()
+            return False
+        else:
+            fnull.close()
+            return True
+
 class Update(dbus.service.Object):
     def __init__(self, session_bus, mainloop):
         dbus.service.Object.__init__(self, session_bus, DSC_UPDATELIST_PATH)
@@ -88,6 +140,8 @@ class Update(dbus.service.Object):
 
         self.update_num = 0
 
+        self.net_detector = NetworkDetector()
+
         log("Start Update List Daemon")
 
     def run(self):
@@ -96,8 +150,8 @@ class Update(dbus.service.Object):
 
     def set_delay_update(self, seconds):
         if self.delay_update_id:
-            glib.source_remove(self.delay_update_id)
-        self.delay_update_id = glib.timeout_add_seconds(seconds, self.update_handler)
+            gobject.source_remove(self.delay_update_id)
+        self.delay_update_id = gobject.timeout_add_seconds(seconds, self.update_handler)
 
     def start_dsc_backend(self):
         print "start dsc dbus service"
@@ -138,19 +192,32 @@ class Update(dbus.service.Object):
             elif signal_type == "update-list-failed":
                 self.is_in_update_list = False
                 self.update_status = "failed"
+                self.system_bus.remove_signal_receiver(
+                        self.signal_receiver, 
+                        signal_name="update_signal", 
+                        dbus_interface=DSC_SERVICE_NAME, 
+                        path=DSC_SERVICE_PATH)
                 self.bus_interface.request_quit()
-                self.set_delay_update(DELAY_UPDATE_INTERVAL)
-                print "update failed, daemon will try again next time"
-                log("update failed, daemon will try again next time")
+                self.start_detector()
+                print "update failed, daemon will try when network is OK!"
+                log("update failed, daemon will try when network is OK!")
         return True
+
+    def start_detector(self):
+        self.net_detector.start_detect_source_available()
+        self.net_detector.connect("network-status-changed", self.network_changed_handler)
+
+    def network_changed_handler(self, obj, status):
+        if status == NetworkDetector.NETWORK_STATUS_OK:
+            self.update_handler()
 
     def update_handler(self):
         if self.is_fontend_running():
             self.set_delay_update(DELAY_UPDATE_INTERVAL)
         else:
             self.start_dsc_backend()
-            glib.timeout_add_seconds(1, start_updater, False)
-            glib.timeout_add_seconds(1, self.start_update_list, self.bus_interface)
+            gobject.timeout_add_seconds(1, start_updater, False)
+            gobject.timeout_add_seconds(1, self.start_update_list, self.bus_interface)
         return True
 
     def start_update_list(self, bus_interface):
@@ -187,7 +254,7 @@ if __name__ == "__main__" :
     DBusGMainLoop(set_as_default=True)
     session_bus = dbus.SessionBus()
     
-    mainloop = glib.MainLoop()
+    mainloop = gobject.MainLoop()
     signal.signal(signal.SIGINT, lambda : mainloop.quit()) # capture "Ctrl + c" signal
 
     if is_dbus_name_exists(DSC_UPDATELIST_NAME, True):
@@ -197,7 +264,7 @@ if __name__ == "__main__" :
             
         update = Update(session_bus, mainloop)
         try:
-            glib.timeout_add_seconds(30, update.run)
+            gobject.timeout_add_seconds(1, update.run)
             mainloop.run()
         except KeyboardInterrupt:
             update.exit_loop()

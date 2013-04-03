@@ -249,10 +249,6 @@ class PackageManager(dbus.service.Object):
             return []
         else:
             cache_upgrade_pkgs = self.pkg_cache.get_upgrade_pkgs()
-            for item in cache_upgrade_pkgs:
-                pkg_name, pkg_version = eval(item)
-                if self.packages_status.get(pkg_name) == "upgraded" or self.packages_status.get(pkg_name) == "installed":
-                    cache_upgrade_pkgs.remove(item)
             return cache_upgrade_pkgs
     
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="as")    

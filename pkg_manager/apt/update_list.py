@@ -21,7 +21,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from apt.progress.old import FetchProgress
-from deepin_utils.net import is_network_connected
 import threading as td
 from events import global_event
 import time
@@ -69,30 +68,34 @@ class UpdateList(td.Thread):
         
     def run(self):
         '''Update package list.'''
-        if is_network_connected():
-            try:
-                global_event.emit("update-list-start")
-                log("update-list sycle start!")
-                
-                if self.simulate:
-                # if True:
-                    while self.simulate_update_counter <= 100:
-                        global_event.emit("update-list-update", self.simulate_update_counter)
-                        
-                        time.sleep(self.simulate_update_delay)
-                        
-                        self.simulate_update_counter += 1
-                else:
-                    progress = UpdateListProgress()
-                    self.pkg_cache.cache.update(progress)
-                
+        try:
+            global_event.emit("update-list-start")
+            log("update-list sycle start!")
+            
+            if self.simulate:
+            # if True:
+                while self.simulate_update_counter <= 100:
+                    global_event.emit("update-list-update", self.simulate_update_counter)
+                    
+                    time.sleep(self.simulate_update_delay)
+                    
+                    self.simulate_update_counter += 1
                 global_event.emit("update-list-finish")
-                log("update list finish")
-                self.pkg_cache.cache.open(None)
-            except Exception, e:
-                global_event.emit("update-list-failed")
-                print "UpdateList.run(): %s" % (e)
-                log("UpdateList.run(): %s" % (e))
+                log("update list finish in simulate")
+            else:
+                progress = UpdateListProgress()
+                self.pkg_cache.cache.update(progress)
+                if progress.percent == 0:
+                    global_event.emit("update-list-failed")
+                    log("update list failed!")
+                else:
+                    global_event.emit("update-list-finish")
+                    log("update list finish")
+                    self.pkg_cache.cache.open(None)
+        except Exception, e:
+            global_event.emit("update-list-failed")
+            print "UpdateList.run(): %s" % (e)
+            log("UpdateList.run(): %s" % (e))
     
 if __name__ == "__main__":
     import gtk
