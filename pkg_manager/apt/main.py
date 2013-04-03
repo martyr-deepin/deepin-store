@@ -38,7 +38,7 @@ from apt_cache import AptCache
 from action import AptActionPool
 from events import global_event
 from deepin_utils.ipc import auth_with_policykit
-from utils import log, LOG_PATH
+from utils import log
 from update_list import UpdateList
 import threading as td
 from Queue import Queue
@@ -362,13 +362,7 @@ class PackageManager(dbus.service.Object):
     def request_pkgs_install_status(self, pkg_names):
         status_dict = []
         for pkg in pkg_names:
-            status = self.packages_status.get(pkg)
-            if status == "installed" or status == "upgraded":
-                status_dict.append(True)
-            elif status == "uninstalled":
-                status_dict.append(False)
-            else:
-                status_dict.append(self.pkg_cache.is_pkg_installed(pkg))
+            status_dict.append(self.pkg_cache.is_pkg_installed(pkg))
         return status_dict
             
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")
@@ -416,8 +410,8 @@ if __name__ == "__main__":
         log("Auth failed")
         
     # Remove log file.
-    if os.path.exists(LOG_PATH):
-        os.remove(LOG_PATH)
+    #if os.path.exists(LOG_PATH):
+        #os.remove(LOG_PATH)
         
     # Remove lock file if it exist.
     if os.path.exists("/var/lib/apt/lists/lock"):
