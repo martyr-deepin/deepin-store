@@ -130,7 +130,6 @@ class AptActionThread(MissionThread):
                 print e
                 
                 log("failed: %s" % e)
-            self.pkg_cache.cache.open(None)
         else:
             log("nothing to change")
             

@@ -403,7 +403,6 @@ class UpgradePage(gtk.VBox):
         pkg_names = []
         for item in self.upgrade_treeview.visible_items:
             if item.check_button_buffer.active:
-                item.check_button_buffer.set_sensitive(False)
                 pkg_names.append(item.pkg_name)
                 
         global_event.emit("upgrade-pkg", pkg_names)        
