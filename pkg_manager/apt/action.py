@@ -78,60 +78,55 @@ class AptActionThread(MissionThread):
         
     def start_mission(self):
         log("start thread")
+        #if os.path.exists(self.deb_file):
+            #log("install: %s") % self.deb_file
+            #deb_package = debfile.DebPackage(self.deb_file, self.pkg_cache)
+            #deb_package.install(AptProcess(self.pkg_name, self.action_type))
         
         if self.action_type == ACTION_INSTALL:
-            self.pkg_cache.cache[self.pkg_name].mark_install()
+            self.pkg_cache[self.pkg_name].mark_install()
         elif self.action_type == ACTION_UPGRADE:
-            self.pkg_cache.cache[self.pkg_name].mark_upgrade()
+            self.pkg_cache[self.pkg_name].mark_upgrade()
         elif self.action_type == ACTION_UNINSTALL:
-            self.pkg_cache.cache[self.pkg_name].mark_delete()
+            self.pkg_cache[self.pkg_name].mark_delete()
             
-        for pkg in self.pkg_cache.cache:
+        for pkg in self.pkg_cache:
             if pkg.is_auto_removable:
                 pkg.mark_delete()
 
         pkg_info_list = map(lambda pkg: (pkg.name, pkg.marked_delete, pkg.marked_install, pkg.marked_upgrade), 
-                            sorted(self.pkg_cache.cache.get_changes(), key=lambda p: p.name))
+                            sorted(self.pkg_cache.get_changes(), key=lambda p: p.name))
         
         if len(pkg_info_list) > 0:
-            try:
-                global_event.emit("action-start", (self.pkg_name, self.action_type))
-                if self.simulate:
-                    global_event.emit("action-update", (self.pkg_name, self.action_type, 10, ""))
-                    sleep(2)
-            
-                    global_event.emit("action-update", (self.pkg_name, self.action_type, 30, ""))
-                    sleep(2)
-                    
-                    global_event.emit("action-update", (self.pkg_name, self.action_type, 50, ""))
-                    sleep(2)
-                    
-                    global_event.emit("action-update", (self.pkg_name, self.action_type, 70, ""))
-                    sleep(2)
-            
-                    global_event.emit("action-update", (self.pkg_name, self.action_type, 100, ""))
-                else:
-                    self.pkg_cache.cache.commit(None, AptProcess(self.pkg_name, self.action_type))
-                    
-                    if os.path.exists(self.deb_file):
-                        print "install: %s" % self.deb_file
-                        deb_package = debfile.DebPackage(self.deb_file, self.pkg_cache.cache)                        
-                        deb_package.install(AptProcess(self.pkg_name, self.action_type))
+            global_event.emit("action-start", (self.pkg_name, self.action_type))
+            if self.simulate:
+                global_event.emit("action-update", (self.pkg_name, self.action_type, 10, ""))
+                sleep(2)
+        
+                global_event.emit("action-update", (self.pkg_name, self.action_type, 30, ""))
+                sleep(2)
+                
+                global_event.emit("action-update", (self.pkg_name, self.action_type, 50, ""))
+                sleep(2)
+                
+                global_event.emit("action-update", (self.pkg_name, self.action_type, 70, ""))
+                sleep(2)
+        
+                global_event.emit("action-update", (self.pkg_name, self.action_type, 100, ""))
                 
                 global_event.emit("action-finish", (self.pkg_name, self.action_type, pkg_info_list))
-                
-                log("success")
-            except Exception, e:
-                log(str(traceback.format_exc()))
-                
-                global_event.emit("action-failed", (self.pkg_name, self.action_type, pkg_info_list))
-                
-                print e
-                
-                log("failed: %s" % e)
+            else:
+                # FIXME: it's very strange, there is no return code with commit method
+                try:
+                    self.pkg_cache.commit(None, AptProcess(self.pkg_name, self.action_type))
+                    log("success")
+                    global_event.emit("action-finish", (self.pkg_name, self.action_type, pkg_info_list))
+                except Exception, e:
+                    log("Commit Failed: %s" % e)
+                    log(str(traceback.format_exc()))
+                    global_event.emit("action-failed", (self.pkg_name, self.action_type, pkg_info_list))
         else:
             log("nothing to change")
-            
         log("end thread")
         
     def get_mission_result(self):

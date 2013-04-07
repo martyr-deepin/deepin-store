@@ -52,7 +52,13 @@ import gtk
 import dbus
 import dbus.service
 import time
-from constant import DSC_SERVICE_NAME, DSC_SERVICE_PATH, DSC_FRONTEND_NAME, DSC_FRONTEND_PATH, ACTION_INSTALL, ACTION_UNINSTALL, ACTION_UPGRADE, CONFIG_DIR, ONE_DAY_SECONDS
+from constant import (
+            DSC_SERVICE_NAME, DSC_SERVICE_PATH, 
+            DSC_FRONTEND_NAME, DSC_FRONTEND_PATH, 
+            ACTION_INSTALL, ACTION_UNINSTALL, ACTION_UPGRADE,
+            PKG_STATUS_INSTALLED, PKG_STATUS_UNINSTALLED, PKG_STATUS_UPGRADED,
+            CONFIG_DIR, ONE_DAY_SECONDS,
+        )
 from dtk.ui.new_slider import HSlider
 from events import global_event
 import dtk.ui.tooltip as Tooltip
@@ -239,7 +245,6 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
             elif action_type == ACTION_INSTALL:
                 install_page.action_update(pkg_name, percent)
         elif signal_type == "action-finish":
-            global_event.emit("package-status-change", "action-finish", action_content)
             (pkg_name, action_type, pkg_info_list) = action_content
             if action_type == ACTION_UNINSTALL:
                 uninstall_page.action_finish(pkg_name, pkg_info_list)
@@ -389,24 +394,23 @@ def clear_action_pages(bus_interface, upgrade_page, uninstall_page, install_page
         for (pkg_name, marked_delete, marked_install, marked_upgrade) in clear_action_list:
             if marked_delete:
                 for item in uninstall_page.treeview.visible_items:
-                    if item.pkg_name == pkg_name:
+                    if item.pkg_name == pkg_name and bus_interface.get_pkg_status(pkg_name) == PKG_STATUS_UNINSTALLED:
                         uninstalled_items.append(item)
                         break
             elif marked_install:
                 for item in install_page.treeview.visible_items:
-                    if item.pkg_name == pkg_name:
+                    if item.pkg_name == pkg_name and bus_interface.get_pkg_status(pkg_name) == PKG_STATUS_INSTALLED:
                         installed_items.append(item)
                         
                         install_pkgs.append(pkg_name)
                         break
             elif marked_upgrade:
                 for item in upgrade_page.upgrade_treeview.visible_items:
-                    if item.pkg_name == pkg_name:
+                    if item.pkg_name == pkg_name and bus_interface.get_pkg_status(pkg_name) == PKG_STATUS_UPGRADED:
                         upgraded_items.append(item)
                         
                         install_pkgs.append(pkg_name)
                         break
-
                     
         uninstall_page.treeview.delete_items(uninstalled_items)
         install_page.treeview.delete_items(installed_items)
@@ -486,7 +490,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.application = Application(resizable=False)
         self.application.set_default_size(888, 634)
         self.application.set_skin_preview(app_theme.get_pixbuf("frame.png"))
-        self.application.set_icon(app_theme.get_pixbuf("icon.ico"))
+        self.application.set_icon(app_theme.get_pixbuf("icon.png"))
         self.application.add_titlebar(
                 ["theme", "menu", "min", "close"],
                 show_title=False
@@ -662,7 +666,6 @@ class DeepinSoftwareCenter(dbus.service.Object):
         global_event.register_event("show-message", lambda message: show_message(self.statusbar, self.message_box, message))
         global_event.register_event("start-pkg", lambda pkg_name, desktop_infos, offset: start_pkg(pkg_name, desktop_infos, offset, self.application.window))
         global_event.register_event("start-desktop", start_desktop)
-        global_event.register_event("package-status-change", self.package_status_change)
         self.system_bus.add_signal_receiver(
             lambda messages: message_handler(messages, 
                                          self.bus_interface, 
@@ -684,17 +687,6 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.bus_interface.upgrade_pkg(pkg_names)
         return False
 
-
-    def package_status_change(self, action, action_content):
-        if action == "action-finish":
-            (pkg_name, action_type, pkg_info_list) = action_content
-            if action_type == ACTION_UNINSTALL:
-                self.bus_interface.set_pkg_status([pkg_name, "uninstalled"])
-            elif action_type == ACTION_UPGRADE:
-                self.bus_interface.set_pkg_status([pkg_name, "upgraded"])
-            elif action_type == ACTION_INSTALL:
-                self.bus_interface.set_pkg_status([pkg_name, "installed"])
-        
     def run(self):    
         self.init_ui()
         
