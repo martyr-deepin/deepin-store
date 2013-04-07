@@ -43,10 +43,6 @@ class AptCache(object):
                 pkg_version = pkg.versions[0].version
                 pkg_infos.append(str((pkg.name, pkg_version)))
         
-        # # JUST FOR DEBUG.
-        # for pkg_name in ["deepin-music-player", "deepin-media-player", "deepin-screenshot"]:
-        #     pkg_infos.append(str((pkg_name, self.cache[pkg_name].versions[0].version)))
-                
         return pkg_infos
 
     def get_pkg_status(self, pkg_name):

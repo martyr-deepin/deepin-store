@@ -97,7 +97,10 @@ class ExitManager(td.Thread):
                     self.loop()
                     
 class PackageManager(dbus.service.Object):
-    
+    # package status constant
+    PKG_STATUS_INSTALLED = 0
+    PKG_STATUS_UNINSTALLED = 1
+    PKG_STATUS_UPGRADED = 2
                 
     def __init__(self, system_bus, mainloop, pkg_cache):
         log("init dbus")
@@ -148,8 +151,18 @@ class PackageManager(dbus.service.Object):
         log("init finish")
         
     def action_finish(self, signal_content):
+        pkg_name, action_type, pkg_info_list = signal_content
+        if action_type == ACTION_INSTALL:
+            for pkg_info in pkg_info_list:
+                self.packages_status[pkg_info[0]] = self.PKG_STATUS_INSTALLED
+        elif action_type == ACTION_UPGRADE:
+            for pkg_info in pkg_info_list:
+                self.packages_status[pkg_info[0]] = self.PKG_STATUS_UPGRADED
+        elif action_type == ACTION_UNINSTALL:
+            for pkg_info in pkg_info_list:
+                self.packages_status[pkg_info[0]] = self.PKG_STATUS_UNINSTALLED
+
         self.update_signal([("action-finish", signal_content)])
-        
         self.exit_manager.check()
 
     def action_failed(self, signal_content):

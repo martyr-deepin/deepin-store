@@ -78,7 +78,6 @@ class AptActionThread(MissionThread):
         
     def start_mission(self):
         log("start thread")
-        self.pkg_cache.cache.open(None)
         
         if self.action_type == ACTION_INSTALL:
             self.pkg_cache.cache[self.pkg_name].mark_install()
