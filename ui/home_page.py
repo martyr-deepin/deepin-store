@@ -247,6 +247,7 @@ CATEGORY_ITEM_NAME_WIDTH = -1
 CATEGORY_ITEM_HEIGHT = 42
 CATEGORY_ITEM_NAME_SIZE = 11
 SECOND_CATEGORY_ITEM_NAME_SIZE = 10
+SECOND_CATEGORY_ITEM_HEIGHT = 35
 
 CATEGORY_ITEM_EXPAND_PADDING_X = 30
 
@@ -494,7 +495,7 @@ class SecondCategoryItem(TreeItem):
                   )
         
     def get_height(self):
-        return CATEGORY_ITEM_HEIGHT
+        return SECOND_CATEGORY_ITEM_HEIGHT
     
     def get_column_widths(self):
         return [CATEGORY_ITEM_NAME_WIDTH]

@@ -56,7 +56,7 @@ from constant import (
             DSC_SERVICE_NAME, DSC_SERVICE_PATH, 
             DSC_FRONTEND_NAME, DSC_FRONTEND_PATH, 
             ACTION_INSTALL, ACTION_UNINSTALL, ACTION_UPGRADE,
-            PKG_STATUS_INSTALLED, PKG_STATUS_UNINSTALLED, PKG_STATUS_UPGRADED,
+            #PKG_STATUS_INSTALLED, PKG_STATUS_UNINSTALLED, PKG_STATUS_UPGRADED,
             CONFIG_DIR, ONE_DAY_SECONDS,
         )
 from dtk.ui.new_slider import HSlider
@@ -410,19 +410,19 @@ def clear_action_pages(bus_interface, upgrade_page, uninstall_page, install_page
         for (pkg_name, marked_delete, marked_install, marked_upgrade) in clear_action_list:
             if marked_delete:
                 for item in uninstall_page.treeview.visible_items:
-                    if item.pkg_name == pkg_name and bus_interface.get_pkg_status(pkg_name) == PKG_STATUS_UNINSTALLED:
+                    if item.pkg_name == pkg_name:
                         uninstalled_items.append(item)
                         break
             elif marked_install:
                 for item in install_page.treeview.visible_items:
-                    if item.pkg_name == pkg_name and bus_interface.get_pkg_status(pkg_name) == PKG_STATUS_INSTALLED:
+                    if item.pkg_name == pkg_name:
                         installed_items.append(item)
                         
                         install_pkgs.append(pkg_name)
                         break
             elif marked_upgrade:
                 for item in upgrade_page.upgrade_treeview.visible_items:
-                    if item.pkg_name == pkg_name and bus_interface.get_pkg_status(pkg_name) == PKG_STATUS_UPGRADED:
+                    if item.pkg_name == pkg_name:
                         upgraded_items.append(item)
                         
                         install_pkgs.append(pkg_name)
