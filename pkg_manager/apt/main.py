@@ -211,6 +211,7 @@ class PackageManager(dbus.service.Object):
         log("%s (error): %s" % (self.module_dbus_name, str(error)))
         
     def add_download(self, pkg_name, action_type, simulate=False):
+        self.update_signal([("ready-download-start", (pkg_name, action_type))])
         pkg_infos = get_pkg_download_info(self.pkg_cache, pkg_name)
         if pkg_infos == DOWNLOAD_STATUS_NOTNEED:
             self.download_finish(pkg_name, action_type, simulate)

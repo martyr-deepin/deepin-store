@@ -198,6 +198,9 @@ class InstallPage(gtk.VBox):
 
         return action_item    
         
+    def download_ready(self, pkg_name):
+        self.get_action_item(pkg_name).download_ready()
+
     def download_start(self, pkg_name):
         self.get_action_item(pkg_name).download_start()
 
@@ -254,6 +257,7 @@ class InstallItem(TreeItem):
     STATUS_IN_INSTALL = 6
     STATUS_INSTALL_FINISH = 7
     STATUS_PARSE_DOWNLOAD_FAILED = 8
+    STATUS_READY_DOWNLOAD= 9
 	
     STATUS_PADDING_X = 15
     
@@ -273,8 +277,8 @@ class InstallItem(TreeItem):
         
         self.grade_star = 0
         
-        self.status = self.STATUS_WAIT_DOWNLOAD
-        self.status_text = "等待下载"
+        self.status = self.STATUS_READY_DOWNLOAD
+        self.status_text = "准备下载"
         self.progress_buffer = ProgressBuffer()
         
     def render_pkg_info(self, cr, rect):
@@ -294,7 +298,16 @@ class InstallItem(TreeItem):
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
         
-        if self.status == self.STATUS_WAIT_DOWNLOAD:
+        if self.status == self.STATUS_READY_DOWNLOAD:
+            draw_text(
+                cr,
+                self.status_text,
+                rect.x + rect.width - ITEM_STATUS_TEXT_PADDING_RIGHT,
+                rect.y,
+                rect.width - ITEM_STAR_AREA_WIDTH - self.STATUS_PADDING_X,
+                ITEM_HEIGHT,
+                )
+        elif self.status == self.STATUS_WAIT_DOWNLOAD:
             # Draw star.
             self.star_buffer.render(cr, gtk.gdk.Rectangle(rect.x, rect.y, ITEM_STAR_AREA_WIDTH, ITEM_HEIGHT))
             
@@ -467,7 +480,7 @@ class InstallItem(TreeItem):
             else:
                 global_event.emit("set-cursor", None)
         else:        
-            if self.status == self.STATUS_WAIT_DOWNLOAD:
+            if self.status == self.STATUS_READY_DOWNLOAD:
                 if self.is_in_star_area(column, offset_x, offset_y):
                     global_event.emit("set-cursor", gtk.gdk.HAND2)
                     
@@ -555,6 +568,13 @@ class InstallItem(TreeItem):
                                 (ITEM_HEIGHT - pixbuf.get_height()) / 2,
                                 pixbuf.get_width(),
                                 pixbuf.get_height())))
+    
+    def download_ready(self):
+        self.status = self.STATUS_READY_DOWNLOAD
+        self.status_text = "准备下载"
+
+        if self.redraw_request_callback:
+            self.redraw_request_callback(self)
     
     def download_wait(self):
         self.status = self.STATUS_WAIT_DOWNLOAD

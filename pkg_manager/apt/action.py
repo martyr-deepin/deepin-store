@@ -29,6 +29,7 @@ from time import sleep
 import traceback
 from utils import log
 from constant import ACTION_INSTALL, ACTION_UPGRADE, ACTION_UNINSTALL
+import time
 
 class AptProcess(apb.InstallProgress):
     '''Install progress.'''
@@ -83,6 +84,10 @@ class AptActionThread(MissionThread):
             #deb_package = debfile.DebPackage(self.deb_file, self.pkg_cache)
             #deb_package.install(AptProcess(self.pkg_name, self.action_type))
         
+        start = time.time()
+        self.pkg_cache.open(None)
+        log("Reopen Cache Time: %s" % (time.time()-start,))
+
         if self.action_type == ACTION_INSTALL:
             self.pkg_cache[self.pkg_name].mark_install()
         elif self.action_type == ACTION_UPGRADE:
