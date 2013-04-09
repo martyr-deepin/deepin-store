@@ -108,9 +108,9 @@ class HomePage(gtk.HBox):
         self.category_view = TreeView(
             [self.recommend_item] + category_items,
             enable_drag_drop=False,
-            enable_multiple_select=False
+            enable_multiple_select=False,
+            expand_column=0,
             )
-        self.category_view.set_expand_column(0)
         self.category_view.draw_mask = self.draw_mask
         self.category_view.set_size_request(-1, 470)
         self.category_view_align = gtk.Alignment()

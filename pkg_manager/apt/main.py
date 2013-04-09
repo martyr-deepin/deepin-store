@@ -40,6 +40,7 @@ from events import global_event
 from deepin_utils.ipc import auth_with_policykit
 from utils import log
 from update_list import UpdateList
+import thread
 import threading as td
 from Queue import Queue
 
@@ -95,7 +96,7 @@ class ExitManager(td.Thread):
                 else:
                     print "Pass"
                     self.loop()
-                    
+
 class PackageManager(dbus.service.Object):
     '''
     docs
@@ -211,7 +212,7 @@ class PackageManager(dbus.service.Object):
         log("%s (error): %s" % (self.module_dbus_name, str(error)))
         
     def add_download(self, pkg_name, action_type, simulate=False):
-        self.update_signal([("ready-download-start", (pkg_name, action_type))])
+        #self.update_signal([("ready-download-start", (pkg_name, action_type))])
         pkg_infos = get_pkg_download_info(self.pkg_cache, pkg_name)
         if pkg_infos == DOWNLOAD_STATUS_NOTNEED:
             self.download_finish(pkg_name, action_type, simulate)
@@ -279,7 +280,7 @@ class PackageManager(dbus.service.Object):
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
     def install_pkg(self, pkg_names):
         for pkg_name in pkg_names:
-            self.add_download(pkg_name, ACTION_INSTALL, self.simulate)
+            thread.start_new_thread(self.add_download, (pkg_name, ACTION_INSTALL, self.simulate))
     
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
     def uninstall_pkg(self, pkg_names):
@@ -288,7 +289,7 @@ class PackageManager(dbus.service.Object):
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
     def upgrade_pkg(self, pkg_names):
         for pkg_name in pkg_names:
-            self.add_download(pkg_name, ACTION_UPGRADE, self.simulate)
+            thread.start_new_thread(self.add_download, (pkg_name, ACTION_UPGRADE, self.simulate))
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
     def install_deb_files(self, deb_files):
