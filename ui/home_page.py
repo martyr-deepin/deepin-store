@@ -29,7 +29,7 @@ from dtk.ui.utils import remove_timeout_id, cairo_state, get_content_size
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
 from item_render import STAR_SIZE, get_star_level, get_icon_pixbuf_path, NAME_SIZE, ITEM_PADDING_X, ICON_SIZE
 from search_page import SearchPage
-from dtk.ui.new_treeview import TreeView, TreeItem
+from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from deepin_utils.file import get_parent_dir
 from dtk.ui.utils import color_hex_to_cairo, container_remove_all, is_in_rect

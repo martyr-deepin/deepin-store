@@ -23,7 +23,7 @@
 from skin import app_theme
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
 from dtk.ui.scrolled_window import ScrolledWindow
-from dtk.ui.new_treeview import TreeView, TreeItem
+from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.iconview import IconView, IconItem
 from deepin_utils.file import get_parent_dir
 from dtk.ui.utils import container_remove_all, is_in_rect, get_content_size, cairo_state

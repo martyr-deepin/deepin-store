@@ -29,7 +29,7 @@ from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from dtk.ui.constant import DEFAULT_FONT_SIZE
 from dtk.ui.utils import cairo_state, is_in_rect, get_content_size
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
-from dtk.ui.new_treeview import TreeView, TreeItem
+from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.star_view import StarBuffer
 from item_render import (render_pkg_icon, render_pkg_name, STAR_SIZE, get_star_level, get_icon_pixbuf_path,
                          ITEM_INFO_AREA_WIDTH, NAME_SIZE,
