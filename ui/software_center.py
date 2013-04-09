@@ -59,7 +59,7 @@ from constant import (
             #PKG_STATUS_INSTALLED, PKG_STATUS_UNINSTALLED, PKG_STATUS_UPGRADED,
             CONFIG_DIR, ONE_DAY_SECONDS,
         )
-from dtk.ui.new_slider import HSlider
+from dtk.ui.slider import HSlider
 from events import global_event
 import dtk.ui.tooltip as Tooltip
 from dtk.ui.label import Label

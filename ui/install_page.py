@@ -25,7 +25,7 @@ import gtk
 import gobject
 from deepin_utils.file import format_file_size, get_parent_dir
 from dtk.ui.utils import is_in_rect, get_content_size, container_remove_all
-from dtk.ui.new_treeview import TreeView, TreeItem
+from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.star_view import StarBuffer
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from dtk.ui.progressbar import ProgressBuffer

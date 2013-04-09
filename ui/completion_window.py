@@ -24,7 +24,7 @@ from skin import app_theme
 from events import global_event
 import gtk
 import gobject
-from dtk.ui.new_treeview import TreeView, TreeItem
+from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.constant import DEFAULT_FONT_SIZE
 from dtk.ui.utils import (get_widget_root_coordinate, WIDGET_POS_BOTTOM_LEFT, cairo_disable_antialias, 
                           alpha_color_hex_to_cairo, get_content_size)
@@ -32,7 +32,7 @@ from dtk.ui.draw import draw_text, draw_vlinear
 from dtk.ui.theme import ui_theme
 from dtk.ui.popup_grab_window import PopupGrabWindow, wrap_grab_window
 from dtk.ui.window import Window
-from dtk.ui.new_entry import InputEntry
+from dtk.ui.entry import InputEntry
 from dtk.ui.button import ImageButton
 
 class CompletionWindow(Window):

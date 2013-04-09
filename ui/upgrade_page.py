@@ -24,7 +24,7 @@ import gtk
 import gobject
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, CONFIG_DIR, CHECK_BUTTON_PADDING_X
 import os
-from dtk.ui.new_treeview import TreeView, TreeItem
+from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.threads import post_gui, AnonymityThread
 from dtk.ui.button import CheckButtonBuffer, ImageButton, CheckAllButton
 from dtk.ui.star_view import StarBuffer
