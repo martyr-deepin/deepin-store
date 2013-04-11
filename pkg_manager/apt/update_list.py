@@ -84,14 +84,14 @@ class UpdateList(td.Thread):
                 log("update list finish in simulate")
             else:
                 progress = UpdateListProgress()
-                self.pkg_cache.cache.update(progress)
+                self.pkg_cache.update(progress)
                 if progress.percent == 0:
                     global_event.emit("update-list-failed")
                     log("update list failed!")
                 else:
                     global_event.emit("update-list-finish")
                     log("update list finish")
-                    self.pkg_cache.cache.open(None)
+                    self.pkg_cache.open(None)
         except Exception, e:
             global_event.emit("update-list-failed")
             print "UpdateList.run(): %s" % (e)

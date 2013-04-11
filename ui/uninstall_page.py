@@ -23,7 +23,7 @@
 import gtk
 import gobject
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
-from dtk.ui.new_treeview import TreeView, TreeItem
+from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.progressbar import ProgressBuffer
 from dtk.ui.threads import post_gui, AnonymityThread
 from dtk.ui.star_view import StarBuffer

@@ -24,7 +24,7 @@ import gtk
 import gobject
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, CONFIG_DIR, CHECK_BUTTON_PADDING_X
 import os
-from dtk.ui.new_treeview import TreeView, TreeItem
+from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.threads import post_gui, AnonymityThread
 from dtk.ui.button import CheckButtonBuffer, ImageButton, CheckAllButton
 from dtk.ui.star_view import StarBuffer
@@ -681,6 +681,12 @@ class UpgradePage(gtk.VBox):
         else:
             global_event.emit("show-newest-view")
         
+    def download_ready(self, pkg_name):
+        for item in self.upgrade_treeview.visible_items:
+            if item.pkg_name == pkg_name:
+                item.download_ready()
+                break
+
     def download_start(self, pkg_name):
         for item in self.upgrade_treeview.visible_items:
             if item.pkg_name == pkg_name:
@@ -744,6 +750,8 @@ class UpgradeItem(TreeItem):
     STATUS_WAIT_UPGRADE = 4
     STATUS_IN_UPGRADE = 5
     STATUS_UPGRADE_FINISH = 6
+    STATUS_PARSE_DOWNLOAD_FAILED = 7
+    STATUS_READY_DOWNLOAD = 8
     
     STATUS_PADDING_X = 15
     
@@ -824,7 +832,16 @@ class UpgradeItem(TreeItem):
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
         
-        if self.status == self.STATUS_WAIT_DOWNLOAD:
+        if self.status == self.STATUS_READY_DOWNLOAD:
+            draw_text(
+                cr,
+                self.status_text,
+                rect.x + rect.width - ITEM_STATUS_TEXT_PADDING_RIGHT,
+                rect.y,
+                rect.width - ITEM_STAR_AREA_WIDTH - self.STATUS_PADDING_X,
+                ITEM_HEIGHT,
+                )
+        elif self.status == self.STATUS_WAIT_DOWNLOAD:
             # Draw star.
             self.star_buffer.render(cr, gtk.gdk.Rectangle(rect.x, rect.y, ITEM_STAR_AREA_WIDTH, ITEM_HEIGHT))
             
@@ -1183,6 +1200,13 @@ class UpgradeItem(TreeItem):
                                 self.icon_pixbuf.get_width(),
                                 self.icon_pixbuf.get_height())))
     
+    def download_ready(self):
+        self.status = self.STATUS_READY_DOWNLOAD
+        self.status_text = "准备下载"
+    
+        if self.redraw_request_callback:
+            self.redraw_request_callback(self)
+                
     def download_wait(self):
         self.status = self.STATUS_WAIT_DOWNLOAD
         self.status_text = "等待下载"

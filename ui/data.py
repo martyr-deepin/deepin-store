@@ -45,6 +45,7 @@ def data_init():
         
         if not os.path.exists(DATA_CURRENT_ID_CONFIG_FILE):
             touch_file(DATA_CURRENT_ID_CONFIG_FILE)
+            os.chmod(DATA_CURRENT_ID_CONFIG_FILE, 0777)
             
         data_current_id_config = Config(DATA_CURRENT_ID_CONFIG_FILE)
         data_current_id_config.load()

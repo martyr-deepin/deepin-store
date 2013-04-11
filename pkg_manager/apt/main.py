@@ -95,10 +95,26 @@ class ExitManager(td.Thread):
                 else:
                     print "Pass"
                     self.loop()
-                    
+
+class ThreadMethod(td.Thread):
+    '''
+    func: a method name
+    args: arguments tuple
+    '''
+    def __init__(self, func, args, daemon=False):
+        td.Thread.__init__(self)
+        self.func = func
+        self.args = args
+        self.setDaemon(daemon)
+
+    def run(self):
+        self.func(*self.args)
+
 class PackageManager(dbus.service.Object):
-    
-                
+    '''
+    docs
+    '''
+
     def __init__(self, system_bus, mainloop, pkg_cache):
         log("init dbus")
         
@@ -148,8 +164,18 @@ class PackageManager(dbus.service.Object):
         log("init finish")
         
     def action_finish(self, signal_content):
+        pkg_name, action_type, pkg_info_list = signal_content
+        if action_type == ACTION_INSTALL:
+            for pkg_info in pkg_info_list:
+                self.pkg_cache.set_pkg_status(pkg_name, self.pkg_cache.PKG_STATUS_INSTALLED)
+        elif action_type == ACTION_UPGRADE:
+            for pkg_info in pkg_info_list:
+                self.pkg_cache.set_pkg_status(pkg_name, self.pkg_cache.PKG_STATUS_UPGRADED)
+        elif action_type == ACTION_UNINSTALL:
+            for pkg_info in pkg_info_list:
+                self.pkg_cache.set_pkg_status(pkg_name, self.pkg_cache.PKG_STATUS_UNINSTALLED)
+
         self.update_signal([("action-finish", signal_content)])
-        
         self.exit_manager.check()
 
     def action_failed(self, signal_content):
@@ -199,7 +225,8 @@ class PackageManager(dbus.service.Object):
         log("%s (error): %s" % (self.module_dbus_name, str(error)))
         
     def add_download(self, pkg_name, action_type, simulate=False):
-        pkg_infos = get_pkg_download_info(self.pkg_cache.cache, pkg_name)
+        self.update_signal([("ready-download-start", (pkg_name, action_type))])
+        pkg_infos = get_pkg_download_info(self.pkg_cache, pkg_name)
         if pkg_infos == DOWNLOAD_STATUS_NOTNEED:
             self.download_finish(pkg_name, action_type, simulate)
             print "Don't need download"
@@ -266,7 +293,7 @@ class PackageManager(dbus.service.Object):
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
     def install_pkg(self, pkg_names):
         for pkg_name in pkg_names:
-            self.add_download(pkg_name, ACTION_INSTALL, self.simulate)
+            ThreadMethod(self.add_download, (pkg_name, ACTION_INSTALL, self.simulate)).start()
     
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
     def uninstall_pkg(self, pkg_names):
@@ -275,18 +302,18 @@ class PackageManager(dbus.service.Object):
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
     def upgrade_pkg(self, pkg_names):
         for pkg_name in pkg_names:
-            self.add_download(pkg_name, ACTION_UPGRADE, self.simulate)
+            ThreadMethod(self.add_download, (pkg_name, ACTION_UPGRADE, self.simulate)).start()
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
     def install_deb_files(self, deb_files):
         if len(deb_files) > 0:
             for deb_file in deb_files:
-                deb_package = debfile.DebPackage(deb_file, self.pkg_cache.cache)
+                deb_package = debfile.DebPackage(deb_file, self.pkg_cache)
                 deb_pkg_name = deb_package.pkgname
                 
                 self.update_signal([("got-install-deb-pkg-name", deb_pkg_name)])
                 
-                pkg_infos = get_deb_download_info(self.pkg_cache.cache, deb_file)
+                pkg_infos = get_deb_download_info(self.pkg_cache, deb_file)
                 if pkg_infos == DOWNLOAD_STATUS_NOTNEED:
                     self.download_finish(deb_pkg_name, ACTION_INSTALL, self.simulate, deb_file)
                     print "Don't need download"
@@ -361,17 +388,14 @@ class PackageManager(dbus.service.Object):
             status_dict.append(self.pkg_cache.is_pkg_installed(pkg))
         return status_dict
             
-    @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="(si)", out_signature="")
     def set_pkg_status(self, pkg_status):
         pkg_name, status = pkg_status
-        self.packages_status[pkg_name] = status
+        self.pkg_cache.set_pkg_status(pkg_name, pkg_status)
 
-    @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="s")
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="i")
     def get_pkg_status(self, pkg_name):
-        status = self.packages_status.get(pkg_name)
-        if not status:
-            status = self.pkg_cache.get_pkg_status(pkg_name)
-        return status
+        return self.pkg_cache.get_pkg_status(pkg_name)
 
     @dbus.service.signal(DSC_SERVICE_NAME)    
     # Use below command for test:
@@ -391,6 +415,7 @@ if __name__ == "__main__":
     
     # Init.
     dbus.mainloop.glib.DBusGMainLoop(set_as_default = True)
+    dbus.mainloop.glib.threads_init()
     gobject.threads_init()
     
     # Init mainloop.

@@ -53,6 +53,9 @@ UPDATE_INTERVAL = 3600*1
 DELAY_UPDATE_INTERVAL = 600
 
 def log(message):
+    if not os.path.exists(LOG_PATH):
+        open(LOG_PATH, "w").close()
+        os.chmod(LOG_PATH, 0777)
     with open(LOG_PATH, "a") as file_handler:
         now = datetime.now().strftime("[%Y-%m-%d %H:%M:%S]")
         file_handler.write("%s %s\n" % (now, message))

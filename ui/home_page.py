@@ -29,7 +29,7 @@ from dtk.ui.utils import remove_timeout_id, cairo_state, get_content_size
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
 from item_render import STAR_SIZE, get_star_level, get_icon_pixbuf_path, NAME_SIZE, ITEM_PADDING_X, ICON_SIZE
 from search_page import SearchPage
-from dtk.ui.new_treeview import TreeView, TreeItem
+from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from deepin_utils.file import get_parent_dir
 from dtk.ui.utils import color_hex_to_cairo, container_remove_all, is_in_rect
@@ -108,9 +108,9 @@ class HomePage(gtk.HBox):
         self.category_view = TreeView(
             [self.recommend_item] + category_items,
             enable_drag_drop=False,
-            enable_multiple_select=False
+            enable_multiple_select=False,
+            expand_column=0,
             )
-        self.category_view.set_expand_column(0)
         self.category_view.draw_mask = self.draw_mask
         self.category_view.set_size_request(-1, 470)
         self.category_view_align = gtk.Alignment()
@@ -247,6 +247,7 @@ CATEGORY_ITEM_NAME_WIDTH = -1
 CATEGORY_ITEM_HEIGHT = 42
 CATEGORY_ITEM_NAME_SIZE = 11
 SECOND_CATEGORY_ITEM_NAME_SIZE = 10
+SECOND_CATEGORY_ITEM_HEIGHT = 35
 
 CATEGORY_ITEM_EXPAND_PADDING_X = 30
 
@@ -494,7 +495,7 @@ class SecondCategoryItem(TreeItem):
                   )
         
     def get_height(self):
-        return CATEGORY_ITEM_HEIGHT
+        return SECOND_CATEGORY_ITEM_HEIGHT
     
     def get_column_widths(self):
         return [CATEGORY_ITEM_NAME_WIDTH]

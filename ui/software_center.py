@@ -52,8 +52,14 @@ import gtk
 import dbus
 import dbus.service
 import time
-from constant import DSC_SERVICE_NAME, DSC_SERVICE_PATH, DSC_FRONTEND_NAME, DSC_FRONTEND_PATH, ACTION_INSTALL, ACTION_UNINSTALL, ACTION_UPGRADE, CONFIG_DIR, ONE_DAY_SECONDS
-from dtk.ui.new_slider import HSlider
+from constant import (
+            DSC_SERVICE_NAME, DSC_SERVICE_PATH, 
+            DSC_FRONTEND_NAME, DSC_FRONTEND_PATH, 
+            ACTION_INSTALL, ACTION_UNINSTALL, ACTION_UPGRADE,
+            #PKG_STATUS_INSTALLED, PKG_STATUS_UNINSTALLED, PKG_STATUS_UPGRADED,
+            CONFIG_DIR, ONE_DAY_SECONDS,
+        )
+from dtk.ui.slider import HSlider
 from events import global_event
 import dtk.ui.tooltip as Tooltip
 from dtk.ui.label import Label
@@ -197,31 +203,42 @@ def handle_dbus_error(*error):
 def message_handler(messages, bus_interface, upgrade_page, uninstall_page, install_page):
     for message in messages:
         (signal_type, action_content) = message
-        
-        if signal_type == "download-start":
+
+        if signal_type == "ready-download-start":
+            (pkg_name, action_type) = action_content
+            if action_type == ACTION_INSTALL:
+                install_page.download_ready(pkg_name)
+            elif action_type == ACTION_UPGRADE:
+                upgrade_page.download_ready(pkg_name)
+
+        elif signal_type == "download-start":
             (pkg_name, action_type) = action_content
             if action_type == ACTION_INSTALL:
                 install_page.download_start(pkg_name)
             elif action_type == ACTION_UPGRADE:
                 upgrade_page.download_start(pkg_name)
+
         elif signal_type == "download-update":
             (pkg_name, action_type, percent, speed) = action_content
             if action_type == ACTION_INSTALL:
                 install_page.download_update(pkg_name, percent, speed)
             elif action_type == ACTION_UPGRADE:
                 upgrade_page.download_update(pkg_name, percent, speed)
+
         elif signal_type == "download-finish":
             (pkg_name, action_type) = action_content
             if action_type == ACTION_INSTALL:
                 install_page.download_finish(pkg_name)
             elif action_type == ACTION_UPGRADE:
                 upgrade_page.download_finish(pkg_name)
+
         elif signal_type == "download-stop":
             (pkg_name, action_type) = action_content
             if action_type == ACTION_INSTALL:
                 install_page.download_stop(pkg_name)
             elif action_type == ACTION_UPGRADE:
                 upgrade_page.download_stop(pkg_name)
+
         elif signal_type == "action-start":
             (pkg_name, action_type) = action_content
             if action_type == ACTION_UNINSTALL:
@@ -230,6 +247,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 upgrade_page.action_start(pkg_name)
             elif action_type == ACTION_INSTALL:
                 install_page.action_start(pkg_name)
+
         elif signal_type == "action-update":
             (pkg_name, action_type, percent, status) = action_content
             if action_type == ACTION_UNINSTALL:
@@ -238,8 +256,8 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 upgrade_page.action_update(pkg_name, percent)
             elif action_type == ACTION_INSTALL:
                 install_page.action_update(pkg_name, percent)
+
         elif signal_type == "action-finish":
-            global_event.emit("package-status-change", "action-finish", action_content)
             (pkg_name, action_type, pkg_info_list) = action_content
             if action_type == ACTION_UNINSTALL:
                 uninstall_page.action_finish(pkg_name, pkg_info_list)
@@ -247,12 +265,14 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 upgrade_page.action_finish(pkg_name, pkg_info_list)
             elif action_type == ACTION_INSTALL:
                 install_page.action_finish(pkg_name, pkg_info_list)
+
         elif signal_type == "update-list-finish":
             upgrade_page.fetch_upgrade_info()
-            
             request_status(bus_interface, install_page, upgrade_page, uninstall_page)
+
         elif signal_type == "update-list-update":
             upgrade_page.update_upgrade_progress(action_content)
+
         elif signal_type == "parse-download-error":
             (pkg_name, action_type) = action_content
             if action_type == ACTION_INSTALL:
@@ -261,6 +281,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
             elif action_type == ACTION_UPGRADE:
                 upgrade_page.download_parse_failed(pkg_name)
                 global_event.emit("show-message", "分析%s依赖出现问题， 升级停止" % pkg_name)
+
         elif signal_type == "got-install-deb-pkg-name":
             pkg_name = action_content
             install_page.add_install_actions([pkg_name])
@@ -406,7 +427,6 @@ def clear_action_pages(bus_interface, upgrade_page, uninstall_page, install_page
                         
                         install_pkgs.append(pkg_name)
                         break
-
                     
         uninstall_page.treeview.delete_items(uninstalled_items)
         install_page.treeview.delete_items(installed_items)
@@ -486,12 +506,13 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.application = Application(resizable=False)
         self.application.set_default_size(888, 634)
         self.application.set_skin_preview(app_theme.get_pixbuf("frame.png"))
-        self.application.set_icon(app_theme.get_pixbuf("icon.ico"))
+        self.application.set_icon(app_theme.get_pixbuf("icon.png"))
         self.application.add_titlebar(
                 ["theme", "menu", "min", "close"],
                 show_title=False
                 )
         self.application.window.set_title(_("Deepin Software Center"))
+        self.application.window.connect("event", self.listen_redraw)
         
         # Init page box.
         self.page_box = gtk.VBox()
@@ -662,7 +683,6 @@ class DeepinSoftwareCenter(dbus.service.Object):
         global_event.register_event("show-message", lambda message: show_message(self.statusbar, self.message_box, message))
         global_event.register_event("start-pkg", lambda pkg_name, desktop_infos, offset: start_pkg(pkg_name, desktop_infos, offset, self.application.window))
         global_event.register_event("start-desktop", start_desktop)
-        global_event.register_event("package-status-change", self.package_status_change)
         self.system_bus.add_signal_receiver(
             lambda messages: message_handler(messages, 
                                          self.bus_interface, 
@@ -680,21 +700,21 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
         log("finish")
 
+    def listen_redraw(self, widget, event=None):
+        if event.type == gtk.gdk.EXPOSE:
+            #print event.area
+            pass
+
     def upgrade_pkg(self, pkg_names):
-        self.bus_interface.upgrade_pkg(pkg_names)
+        self.bus_interface.upgrade_pkg(pkg_names, reply_handler=self.handle_dbus_reply, error_handler=self.handle_dbus_error)
         return False
 
+    def handle_dbus_reply(self, data=None):
+        print "Normal Reply: %s " % data
 
-    def package_status_change(self, action, action_content):
-        if action == "action-finish":
-            (pkg_name, action_type, pkg_info_list) = action_content
-            if action_type == ACTION_UNINSTALL:
-                self.bus_interface.set_pkg_status([pkg_name, "uninstalled"])
-            elif action_type == ACTION_UPGRADE:
-                self.bus_interface.set_pkg_status([pkg_name, "upgraded"])
-            elif action_type == ACTION_INSTALL:
-                self.bus_interface.set_pkg_status([pkg_name, "installed"])
-        
+    def handle_dbus_error(self, data=None):
+        print "Error Reply: %s " % data
+
     def run(self):    
         self.init_ui()
         
