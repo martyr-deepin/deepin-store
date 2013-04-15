@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-25 16:27+0800\n"
+"POT-Creation-Date: 2013-04-15 11:25+0800\n"
 "PO-Revision-Date: 2013-03-25 15:30+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,306 +17,310 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../ui/software_center.py:493
+#: ../ui/home_page.py:588
+msgid "Home Recommends"
+msgstr "首页推荐"
+
+#: ../ui/software_center.py:514
 msgid "Deepin Software Center"
 msgstr "软件中心"
 
 #: ../ui/category_info.py:26
-msgid "internet"
+msgid "Internet"
 msgstr "网络应用"
 
 #: ../ui/category_info.py:27
-msgid "browser"
+msgid "Browser"
 msgstr "浏览器"
 
 #: ../ui/category_info.py:28
-msgid "instant_messaging"
+msgid "Instant messaging"
 msgstr "即时通讯"
 
 #: ../ui/category_info.py:29
-msgid "email"
+msgid "Email"
 msgstr "电子邮件"
 
 #: ../ui/category_info.py:30
-msgid "file_transfer"
+msgid "File transfer"
 msgstr "文件传输"
 
 #: ../ui/category_info.py:31
-msgid "news"
+msgid "News"
 msgstr "新闻"
 
 #: ../ui/category_info.py:32
-msgid "remote_access"
+msgid "Remote access"
 msgstr "远程访问"
 
 #: ../ui/category_info.py:33
-msgid "security"
+msgid "Security"
 msgstr "安全"
 
 #: ../ui/category_info.py:34
-msgid "miscellaneous"
+msgid "Miscellaneous"
 msgstr "杂项"
 
 #: ../ui/category_info.py:35
-msgid "multimedia"
+msgid "Multimedia"
 msgstr "影音播放"
 
 #: ../ui/category_info.py:36
-msgid "audiovideo"
+msgid "Audiovideo"
 msgstr "音频视频"
 
 #: ../ui/category_info.py:37
-msgid "audiovideo_editing"
+msgid "Audiovideo editing"
 msgstr "媒体编辑"
 
 #: ../ui/category_info.py:38
-msgid "disc_burner"
+msgid "Disc burner"
 msgstr "光盘刻录"
 
 #: ../ui/category_info.py:39
-msgid "midi"
+msgid "MIDI"
 msgstr "乐器数字接口"
 
 #: ../ui/category_info.py:40
-msgid "mixer"
+msgid "Mixer"
 msgstr "混音器"
 
 #: ../ui/category_info.py:41
-msgid "player"
+msgid "Player"
 msgstr "播放器"
 
 #: ../ui/category_info.py:42
-msgid "recorder"
+msgid "Recorder"
 msgstr "录音机"
 
 #: ../ui/category_info.py:43
-msgid "sequencer"
+msgid "Sequencer"
 msgstr "音序器"
 
 #: ../ui/category_info.py:44
-msgid "tuner"
+msgid "Tuner"
 msgstr "调谐器"
 
 #: ../ui/category_info.py:45
-msgid "games"
+msgid "Games"
 msgstr "游戏娱乐"
 
 #: ../ui/category_info.py:46
-msgid "action_games"
+msgid "Action games"
 msgstr "动作游戏"
 
 #: ../ui/category_info.py:47
-msgid "advernture_games"
+msgid "Advernture games"
 msgstr "探险游戏"
 
 #: ../ui/category_info.py:48
-msgid "arcade_games"
+msgid "Arcade games"
 msgstr "街机游戏"
 
 #: ../ui/category_info.py:49
-msgid "board_games"
+msgid "Board games"
 msgstr "棋盘游戏"
 
 #: ../ui/category_info.py:50
-msgid "card_games"
+msgid "Card games"
 msgstr "纸牌游戏"
 
 #: ../ui/category_info.py:51
-msgid "emulator"
+msgid "Emulator"
 msgstr "模拟器"
 
 #: ../ui/category_info.py:52
-msgid "kids_games"
+msgid "Kids games"
 msgstr "儿童游戏"
 
 #: ../ui/category_info.py:53
-msgid "logic_games"
+msgid "Logic games"
 msgstr "逻辑游戏"
 
 #: ../ui/category_info.py:54
-msgid "puzzle_games"
+msgid "Puzzle games"
 msgstr "益智游戏"
 
 #: ../ui/category_info.py:55
-msgid "role_playing_games"
+msgid "Role-playing games"
 msgstr "角色扮演游戏"
 
 #: ../ui/category_info.py:56
-msgid "sports_games"
+msgid "Sports games"
 msgstr "体育游戏"
 
 #: ../ui/category_info.py:57
-msgid "strategy_games"
+msgid "Strategy games"
 msgstr "策略游戏"
 
 #: ../ui/category_info.py:58
-msgid "graphics"
+msgid "Graphics"
 msgstr "图形图像"
 
 #: ../ui/category_info.py:59
-msgid "2d_graphics"
+msgid "2D graphics"
 msgstr "二维图形"
 
 #: ../ui/category_info.py:60
-msgid "3d_graphics"
+msgid "3D graphics"
 msgstr "三维图形"
 
 #: ../ui/category_info.py:61
-msgid "image_processing"
+msgid "Image processing"
 msgstr "图像处理"
 
 #: ../ui/category_info.py:62
-msgid "photography"
+msgid "Photography"
 msgstr "摄影艺术"
 
 #: ../ui/category_info.py:63
-msgid "vector_graphics"
+msgid "Vector graphics"
 msgstr "矢量图形"
 
 #: ../ui/category_info.py:64
-msgid "viewer"
+msgid "Viewer"
 msgstr "图片查看"
 
 #: ../ui/category_info.py:65
-msgid "productivity"
+msgid "Productivity"
 msgstr "办公软件"
 
 #: ../ui/category_info.py:66
-msgid "office"
+msgid "Office"
 msgstr "办公套件"
 
 #: ../ui/category_info.py:67
-msgid "scanning_printing"
+msgid "Scanning printing"
 msgstr "扫描打印"
 
 #: ../ui/category_info.py:68
-msgid "industry"
+msgid "Industry"
 msgstr "行业软件"
 
 #: ../ui/category_info.py:69
-msgid "engineering"
+msgid "Engineering"
 msgstr "工程"
 
 #: ../ui/category_info.py:70
-msgid "finance"
+msgid "Finance"
 msgstr "金融"
 
 #: ../ui/category_info.py:71
-msgid "ham_radio"
+msgid "Ham radio"
 msgstr "业余电台"
 
 #: ../ui/category_info.py:72
-msgid "medical"
+msgid "Medical"
 msgstr "医疗"
 
 #: ../ui/category_info.py:73
-msgid "publishing"
+msgid "Publishing"
 msgstr "出版"
 
 #: ../ui/category_info.py:74
-msgid "education"
+msgid "Education"
 msgstr "科学教育"
 
 #: ../ui/category_info.py:75
-msgid "languages"
+msgid "Languages"
 msgstr "语言"
 
 #: ../ui/category_info.py:76
-msgid "religion"
+msgid "Religion"
 msgstr "宗教"
 
 #: ../ui/category_info.py:77
-msgid "science"
+msgid "Science"
 msgstr "科学"
 
 #: ../ui/category_info.py:78
-msgid "development"
+msgid "Development"
 msgstr "编程开发"
 
 #: ../ui/category_info.py:79
-msgid "database"
+msgid "Database"
 msgstr "数据库"
 
 #: ../ui/category_info.py:80
-msgid "debugging"
+msgid "Debugging"
 msgstr "调试"
 
 #: ../ui/category_info.py:81
-msgid "ide"
+msgid "IDE"
 msgstr "集成开发环境"
 
 #: ../ui/category_info.py:82
-msgid "software_development"
+msgid "Software development"
 msgstr "软件开发"
 
 #: ../ui/category_info.py:83
-msgid "version_control"
+msgid "Version control"
 msgstr "版本控制"
 
 #: ../ui/category_info.py:84
-msgid "web_development"
+msgid "Web development"
 msgstr "网络开发"
 
 #: ../ui/category_info.py:85
-msgid "system"
+msgid "System"
 msgstr "系统管理"
 
 #: ../ui/category_info.py:86
-msgid "desktop_environment"
+msgid "Desktop environment"
 msgstr "桌面环境"
 
 #: ../ui/category_info.py:87
-msgid "monitor"
+msgid "Monitor"
 msgstr "监视器"
 
 #: ../ui/category_info.py:88
-msgid "network"
+msgid "Network"
 msgstr "网络"
 
 #: ../ui/category_info.py:89
-msgid "package_manager"
+msgid "Package manager"
 msgstr "软件包管理器"
 
 #: ../ui/category_info.py:90
-msgid "settings"
+msgid "Settings"
 msgstr "设置"
 
 #: ../ui/category_info.py:91
-msgid "virtualization"
+msgid "Virtualization"
 msgstr "虚拟化"
 
 #: ../ui/category_info.py:92
-msgid "window_manager"
+msgid "Window manager"
 msgstr "窗口管理器"
 
 #: ../ui/category_info.py:93
-msgid "utilities"
+msgid "Utilities"
 msgstr "实用工具"
 
 #: ../ui/category_info.py:94
-msgid "accessories"
+msgid "Accessories"
 msgstr "附件"
 
 #: ../ui/category_info.py:95
-msgid "archiving"
+msgid "Archiving"
 msgstr "压缩归档"
 
 #: ../ui/category_info.py:96
-msgid "emulation"
+msgid "Emulation"
 msgstr "模拟"
 
 #: ../ui/category_info.py:97
-msgid "file_manager"
+msgid "File manager"
 msgstr "文件管理器"
 
 #: ../ui/category_info.py:98
-msgid "screensaver"
+msgid "Screensaver"
 msgstr "屏保"
 
 #: ../ui/category_info.py:99
-msgid "terminal_emulator"
+msgid "Terminal emulator"
 msgstr "终端模拟器"
 
 #: ../ui/category_info.py:100
-msgid "text_editor"
+msgid "Text editor"
 msgstr "文本编辑器"

@@ -48,6 +48,7 @@ from events import global_event
 from skin import app_theme
 from data import DATA_ID
 from category_info import get_category_name
+from nls import _
 
 FIRST_CATEGORY_PADDING_X = 66
 SECOND_CATEGORY_PADDING_X = 46
@@ -584,7 +585,7 @@ class RecommendItem(TreeItem):
         init docs
         '''
         TreeItem.__init__(self)
-        self.name = "首页推荐"
+        self.name = _("Home Recommends")
         self.data_manager = data_manager
     
     def render_name(self, cr, rect):

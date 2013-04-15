@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-25 16:27+0800\n"
+"POT-Creation-Date: 2013-04-15 11:25+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,306 +17,310 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../ui/software_center.py:493
+#: ../ui/home_page.py:588
+msgid "Home Recommends"
+msgstr ""
+
+#: ../ui/software_center.py:514
 msgid "Deepin Software Center"
 msgstr ""
 
 #: ../ui/category_info.py:26
-msgid "internet"
+msgid "Internet"
 msgstr ""
 
 #: ../ui/category_info.py:27
-msgid "browser"
+msgid "Browser"
 msgstr ""
 
 #: ../ui/category_info.py:28
-msgid "instant_messaging"
+msgid "Instant messaging"
 msgstr ""
 
 #: ../ui/category_info.py:29
-msgid "email"
+msgid "Email"
 msgstr ""
 
 #: ../ui/category_info.py:30
-msgid "file_transfer"
+msgid "File transfer"
 msgstr ""
 
 #: ../ui/category_info.py:31
-msgid "news"
+msgid "News"
 msgstr ""
 
 #: ../ui/category_info.py:32
-msgid "remote_access"
+msgid "Remote access"
 msgstr ""
 
 #: ../ui/category_info.py:33
-msgid "security"
+msgid "Security"
 msgstr ""
 
 #: ../ui/category_info.py:34
-msgid "miscellaneous"
+msgid "Miscellaneous"
 msgstr ""
 
 #: ../ui/category_info.py:35
-msgid "multimedia"
+msgid "Multimedia"
 msgstr ""
 
 #: ../ui/category_info.py:36
-msgid "audiovideo"
+msgid "Audiovideo"
 msgstr ""
 
 #: ../ui/category_info.py:37
-msgid "audiovideo_editing"
+msgid "Audiovideo editing"
 msgstr ""
 
 #: ../ui/category_info.py:38
-msgid "disc_burner"
+msgid "Disc burner"
 msgstr ""
 
 #: ../ui/category_info.py:39
-msgid "midi"
+msgid "MIDI"
 msgstr ""
 
 #: ../ui/category_info.py:40
-msgid "mixer"
+msgid "Mixer"
 msgstr ""
 
 #: ../ui/category_info.py:41
-msgid "player"
+msgid "Player"
 msgstr ""
 
 #: ../ui/category_info.py:42
-msgid "recorder"
+msgid "Recorder"
 msgstr ""
 
 #: ../ui/category_info.py:43
-msgid "sequencer"
+msgid "Sequencer"
 msgstr ""
 
 #: ../ui/category_info.py:44
-msgid "tuner"
+msgid "Tuner"
 msgstr ""
 
 #: ../ui/category_info.py:45
-msgid "games"
+msgid "Games"
 msgstr ""
 
 #: ../ui/category_info.py:46
-msgid "action_games"
+msgid "Action games"
 msgstr ""
 
 #: ../ui/category_info.py:47
-msgid "advernture_games"
+msgid "Advernture games"
 msgstr ""
 
 #: ../ui/category_info.py:48
-msgid "arcade_games"
+msgid "Arcade games"
 msgstr ""
 
 #: ../ui/category_info.py:49
-msgid "board_games"
+msgid "Board games"
 msgstr ""
 
 #: ../ui/category_info.py:50
-msgid "card_games"
+msgid "Card games"
 msgstr ""
 
 #: ../ui/category_info.py:51
-msgid "emulator"
+msgid "Emulator"
 msgstr ""
 
 #: ../ui/category_info.py:52
-msgid "kids_games"
+msgid "Kids games"
 msgstr ""
 
 #: ../ui/category_info.py:53
-msgid "logic_games"
+msgid "Logic games"
 msgstr ""
 
 #: ../ui/category_info.py:54
-msgid "puzzle_games"
+msgid "Puzzle games"
 msgstr ""
 
 #: ../ui/category_info.py:55
-msgid "role_playing_games"
+msgid "Role-playing games"
 msgstr ""
 
 #: ../ui/category_info.py:56
-msgid "sports_games"
+msgid "Sports games"
 msgstr ""
 
 #: ../ui/category_info.py:57
-msgid "strategy_games"
+msgid "Strategy games"
 msgstr ""
 
 #: ../ui/category_info.py:58
-msgid "graphics"
+msgid "Graphics"
 msgstr ""
 
 #: ../ui/category_info.py:59
-msgid "2d_graphics"
+msgid "2D graphics"
 msgstr ""
 
 #: ../ui/category_info.py:60
-msgid "3d_graphics"
+msgid "3D graphics"
 msgstr ""
 
 #: ../ui/category_info.py:61
-msgid "image_processing"
+msgid "Image processing"
 msgstr ""
 
 #: ../ui/category_info.py:62
-msgid "photography"
+msgid "Photography"
 msgstr ""
 
 #: ../ui/category_info.py:63
-msgid "vector_graphics"
+msgid "Vector graphics"
 msgstr ""
 
 #: ../ui/category_info.py:64
-msgid "viewer"
+msgid "Viewer"
 msgstr ""
 
 #: ../ui/category_info.py:65
-msgid "productivity"
+msgid "Productivity"
 msgstr ""
 
 #: ../ui/category_info.py:66
-msgid "office"
+msgid "Office"
 msgstr ""
 
 #: ../ui/category_info.py:67
-msgid "scanning_printing"
+msgid "Scanning printing"
 msgstr ""
 
 #: ../ui/category_info.py:68
-msgid "industry"
+msgid "Industry"
 msgstr ""
 
 #: ../ui/category_info.py:69
-msgid "engineering"
+msgid "Engineering"
 msgstr ""
 
 #: ../ui/category_info.py:70
-msgid "finance"
+msgid "Finance"
 msgstr ""
 
 #: ../ui/category_info.py:71
-msgid "ham_radio"
+msgid "Ham radio"
 msgstr ""
 
 #: ../ui/category_info.py:72
-msgid "medical"
+msgid "Medical"
 msgstr ""
 
 #: ../ui/category_info.py:73
-msgid "publishing"
+msgid "Publishing"
 msgstr ""
 
 #: ../ui/category_info.py:74
-msgid "education"
+msgid "Education"
 msgstr ""
 
 #: ../ui/category_info.py:75
-msgid "languages"
+msgid "Languages"
 msgstr ""
 
 #: ../ui/category_info.py:76
-msgid "religion"
+msgid "Religion"
 msgstr ""
 
 #: ../ui/category_info.py:77
-msgid "science"
+msgid "Science"
 msgstr ""
 
 #: ../ui/category_info.py:78
-msgid "development"
+msgid "Development"
 msgstr ""
 
 #: ../ui/category_info.py:79
-msgid "database"
+msgid "Database"
 msgstr ""
 
 #: ../ui/category_info.py:80
-msgid "debugging"
+msgid "Debugging"
 msgstr ""
 
 #: ../ui/category_info.py:81
-msgid "ide"
+msgid "IDE"
 msgstr ""
 
 #: ../ui/category_info.py:82
-msgid "software_development"
+msgid "Software development"
 msgstr ""
 
 #: ../ui/category_info.py:83
-msgid "version_control"
+msgid "Version control"
 msgstr ""
 
 #: ../ui/category_info.py:84
-msgid "web_development"
+msgid "Web development"
 msgstr ""
 
 #: ../ui/category_info.py:85
-msgid "system"
+msgid "System"
 msgstr ""
 
 #: ../ui/category_info.py:86
-msgid "desktop_environment"
+msgid "Desktop environment"
 msgstr ""
 
 #: ../ui/category_info.py:87
-msgid "monitor"
+msgid "Monitor"
 msgstr ""
 
 #: ../ui/category_info.py:88
-msgid "network"
+msgid "Network"
 msgstr ""
 
 #: ../ui/category_info.py:89
-msgid "package_manager"
+msgid "Package manager"
 msgstr ""
 
 #: ../ui/category_info.py:90
-msgid "settings"
+msgid "Settings"
 msgstr ""
 
 #: ../ui/category_info.py:91
-msgid "virtualization"
+msgid "Virtualization"
 msgstr ""
 
 #: ../ui/category_info.py:92
-msgid "window_manager"
+msgid "Window manager"
 msgstr ""
 
 #: ../ui/category_info.py:93
-msgid "utilities"
+msgid "Utilities"
 msgstr ""
 
 #: ../ui/category_info.py:94
-msgid "accessories"
+msgid "Accessories"
 msgstr ""
 
 #: ../ui/category_info.py:95
-msgid "archiving"
+msgid "Archiving"
 msgstr ""
 
 #: ../ui/category_info.py:96
-msgid "emulation"
+msgid "Emulation"
 msgstr ""
 
 #: ../ui/category_info.py:97
-msgid "file_manager"
+msgid "File manager"
 msgstr ""
 
 #: ../ui/category_info.py:98
-msgid "screensaver"
+msgid "Screensaver"
 msgstr ""
 
 #: ../ui/category_info.py:99
-msgid "terminal_emulator"
+msgid "Terminal emulator"
 msgstr ""
 
 #: ../ui/category_info.py:100
-msgid "text_editor"
+msgid "Text editor"
 msgstr ""
