@@ -699,6 +699,8 @@ class DeepinSoftwareCenter(dbus.service.Object):
         #self.bus_interface.start_update_list()
         
         log("finish")
+        #for event in global_event.events:
+            #print "%s: %s" % (event, global_event.events[event])
 
     def listen_redraw(self, widget, event=None):
         if event.type == gtk.gdk.EXPOSE:

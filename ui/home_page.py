@@ -252,6 +252,8 @@ SECOND_CATEGORY_ITEM_HEIGHT = 35
 
 CATEGORY_ITEM_EXPAND_PADDING_X = 30
 
+LOAD_ITEMS_NUMBER = 20
+
 class CategoryItem(TreeItem):
     '''
     class docs
@@ -359,49 +361,53 @@ class CategoryItem(TreeItem):
                 self.unexpand()
             else:
                 self.expand()
+
+    def scrolled_window_vscrollbar_handler(self, widget, state):
+        if state == "bottom":
+            current_item_number = len(self.pkg_icon_view.items)
+            all_pkgs_number = len(self.all_pkg_names)
+            start = current_item_number
+            if current_item_number < all_pkgs_number and (current_item_number+LOAD_ITEMS_NUMBER) < all_pkgs_number:
+                end = current_item_number+LOAD_ITEMS_NUMBER
+            elif current_item_number < all_pkgs_number and (current_item_number+LOAD_ITEMS_NUMBER) >= all_pkgs_number:
+                end = all_pkgs_number
+            else:
+                return
+            self.load_new_items(self.all_pkg_names[start:end])
             
-    def single_click(self, column, offset_x, offset_y):
+    def load_new_items(self, pkg_names):
         items = []
-        pkg_names = []
-        desktop_infos = {}
+        for (pkg_name, is_installed, long_desc, star, alias_name) in self.data_manager.get_item_pkgs_info(pkg_names):
+            items.append(PkgIconItem(is_installed, alias_name, pkg_name, long_desc, star, self.all_desktop_infos[pkg_name]))
+        self.pkg_icon_view.add_items(items)
+
+    def single_click(self, column, offset_x, offset_y):
+        self.all_pkg_names = []
+        self.all_desktop_infos = {}
         for (second_category, pkg_dict) in self.second_category_items.items():
             for (pkg_name, desktop_info) in pkg_dict.items():
-                pkg_names.append(pkg_name)
-                desktop_infos[pkg_name] = desktop_info
-                
-        for (pkg_name, is_installed, long_desc, star, alias_name) in self.data_manager.get_item_pkgs_info(pkg_names):
-            items.append(PkgIconItem(is_installed, alias_name, pkg_name, long_desc, star, desktop_infos[pkg_name]))
-        
+                self.all_pkg_names.append(pkg_name)
+                self.all_desktop_infos[pkg_name] = desktop_info
+
         self.page_box = gtk.VBox()    
             
         self.message_bar = MessageBar(18)
+        self.message_bar.set_message("%s: %s款软件" % (
+                    get_category_name(self.first_category_name), 
+                    len(self.all_pkg_names),
+                    ))
         
         self.pkg_icon_view = IconView() 
-        self.pkg_icon_scrolled_window = ScrolledWindow()
-        self.pkg_icon_view.connect(
-            "items-change", 
-            lambda iconview: self.message_bar.set_message("%s: %s款软件" % (get_category_name(self.first_category_name), len(iconview.items))))
-        items_number = len(items)
-        pages = int(items_number/12)
-        if pages > 0:
-            tmp_items = items[:12]
-            self.pkg_icon_view.add_items(tmp_items)
-            button_hbox = gtk.HBox(5)
-            for i in range(10):
-                button = gtk.Button(str(i+1))
-                button_hbox.pack_start(button, False, False)
-            button_align = gtk.Alignment(0.5, 0.5, 0, 0)
-            button_align.add(button_hbox)
-
-            self.pkg_icon_box = gtk.VBox()
-            self.pkg_icon_box.pack_start(self.pkg_icon_view)
-            self.pkg_icon_box.pack_start(button_align, False, False)
-            self.pkg_icon_scrolled_window.add_child(self.pkg_icon_box)
+        if len(self.all_pkg_names) > LOAD_ITEMS_NUMBER:
+            self.load_new_items(self.all_pkg_names[:LOAD_ITEMS_NUMBER])
         else:
-            self.pkg_icon_view.add_items(items)
-            self.pkg_icon_scrolled_window.add_child(self.pkg_icon_view)
+            self.load_new_items(self.all_pkg_names)
+
         self.pkg_icon_view.draw_mask = self.draw_mask
         self.pkg_icon_view.draw_row_mask = self.draw_row_mask
+        self.pkg_icon_scrolled_window = ScrolledWindow()
+        self.pkg_icon_scrolled_window.connect("vscrollbar-state-changed", self.scrolled_window_vscrollbar_handler)
+        self.pkg_icon_scrolled_window.add_child(self.pkg_icon_view)
         
         self.page_box.pack_start(self.message_bar, False, False)
         self.page_box.pack_start(self.pkg_icon_scrolled_window, True, True)
@@ -485,9 +491,9 @@ class SecondCategoryItem(TreeItem):
         TreeItem.__init__(self)
         self.first_category_name = first_category_name
         self.second_category_name = second_category_name
-        self.pkg_names = pkg_names
+        self.all_pkg_names = pkg_names
         self.data_manager = data_manager
-        self.desktop_infos = desktop_infos
+        self.all_desktop_infos = desktop_infos
     
     def render_name(self, cr, rect):
         text_color = "#333333"
@@ -541,25 +547,44 @@ class SecondCategoryItem(TreeItem):
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
     
-    def button_press(self, column, offset_x, offset_y):
-        items = []
-        
-        for (pkg_name, is_installed, long_desc, star, alias_name) in self.data_manager.get_item_pkgs_info(self.pkg_names):
-            items.append(PkgIconItem(is_installed, alias_name, pkg_name, long_desc, star, self.desktop_infos[pkg_name]))
+    def scrolled_window_vscrollbar_handler(self, widget, state):
+        if state == "bottom":
+            current_item_number = len(self.pkg_icon_view.items)
+            all_pkgs_number = len(self.all_pkg_names)
+            start = current_item_number
+            if current_item_number < all_pkgs_number and (current_item_number+LOAD_ITEMS_NUMBER) < all_pkgs_number:
+                end = current_item_number+LOAD_ITEMS_NUMBER
+            elif current_item_number < all_pkgs_number and (current_item_number+LOAD_ITEMS_NUMBER) >= all_pkgs_number:
+                end = all_pkgs_number
+            else:
+                return
+            self.load_new_items(self.all_pkg_names[start:end])
             
+    def load_new_items(self, pkg_names):
+        items = []
+        for (pkg_name, is_installed, long_desc, star, alias_name) in self.data_manager.get_item_pkgs_info(pkg_names):
+            items.append(PkgIconItem(is_installed, alias_name, pkg_name, long_desc, star, self.all_desktop_infos[pkg_name]))
+        self.pkg_icon_view.add_items(items)
+
+
+    def button_press(self, column, offset_x, offset_y):
         self.page_box = gtk.VBox()    
             
         self.message_bar = MessageBar(18)
-        
-        self.pkg_icon_view = IconView() 
-        self.pkg_icon_view.connect(
-            "items-change", 
-            lambda iconview: self.message_bar.set_message("%s > %s: %s款软件" % (
+        self.message_bar.set_message("%s > %s: %s款软件" % (
                 get_category_name(self.first_category_name), 
                 get_category_name(self.second_category_name), 
-                len(iconview.items))))
-        self.pkg_icon_view.add_items(items)
+                len(self.all_pkg_names),
+                ))
+        
+        self.pkg_icon_view = IconView() 
+        if len(self.all_pkg_names) > LOAD_ITEMS_NUMBER:
+            self.load_new_items(self.all_pkg_names[:LOAD_ITEMS_NUMBER])
+        else:
+            self.load_new_items(self.all_pkg_names)
+
         self.pkg_icon_scrolled_window = ScrolledWindow()
+        self.pkg_icon_scrolled_window.connect("vscrollbar-state-changed", self.scrolled_window_vscrollbar_handler)
         self.pkg_icon_scrolled_window.add_child(self.pkg_icon_view)
         self.pkg_icon_view.draw_mask = self.draw_mask
         self.pkg_icon_view.draw_row_mask = self.draw_row_mask

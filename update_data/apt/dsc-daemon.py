@@ -218,7 +218,7 @@ class Update(dbus.service.Object):
             self.set_delay_update(DELAY_UPDATE_INTERVAL)
         else:
             self.start_dsc_backend()
-            gobject.timeout_add_seconds(1, start_updater, False)
+            gobject.timeout_add_seconds(30, start_updater, False)
             gobject.timeout_add_seconds(1, self.start_update_list, self.bus_interface)
         return True
 
@@ -266,7 +266,7 @@ if __name__ == "__main__" :
             
         update = Update(session_bus, mainloop)
         try:
-            gobject.timeout_add_seconds(30, update.run)
+            gobject.timeout_add_seconds(60, update.run)
             mainloop.run()
         except KeyboardInterrupt:
             update.exit_loop()
