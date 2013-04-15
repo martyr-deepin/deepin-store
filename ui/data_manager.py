@@ -116,6 +116,7 @@ class DataManager(object):
             "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
         return self.desktop_db_cursor.fetchall()
         
+    @print_exec_time
     def get_pkg_detail_info(self, pkg_name):
         self.desktop_db_cursor.execute(
             "SELECT first_category_index, second_category_index FROM desktop WHERE pkg_name=?", [pkg_name])
@@ -300,14 +301,14 @@ class DataManager(object):
         self.category_db_cursor.execute(
             "SELECT DISTINCT first_category_name, second_category_name FROM category_name ORDER BY second_category_index")
         for (first_category, second_category) in self.category_db_cursor.fetchall():
-            self.category_dict[first_category] = self.category_dict[first_category] + [(second_category, {})]
+            self.category_dict[first_category] = self.category_dict[first_category] + [(second_category, OrderedDict())]
             
         # Bulid OrderedDict of second category.
         for (first_category, second_category_list) in self.category_dict.items():
             self.category_dict[first_category] = OrderedDict(second_category_list)
 
         # Fill data into category dict.
-        self.category_name_dict = {}    
+        self.category_name_dict = OrderedDict()
         self.category_db_cursor.execute(
             "SELECT * FROM category_name")
         for (first_category_index, second_category_index, first_category, second_category) in self.category_db_cursor.fetchall():
@@ -325,7 +326,7 @@ class DataManager(object):
         #     }
     
         self.desktop_db_cursor.execute(
-            "SELECT desktop_path, pkg_name, icon_name, display_name, first_category_index, second_category_index FROM desktop")    
+            "SELECT desktop_path, pkg_name, icon_name, display_name, first_category_index, second_category_index FROM desktop ORDER BY display_name")
         for (desktop_path, pkg_name, icon_name, display_name, first_category_index, second_category_index) in self.desktop_db_cursor.fetchall():
             if first_category_index != "" and second_category_index != "":
                 (first_category, second_category) = self.category_name_dict[(first_category_index, second_category_index)]

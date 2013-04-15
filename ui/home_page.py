@@ -96,7 +96,7 @@ class HomePage(gtk.HBox):
         search_entry.entry.connect("press-return", lambda entry: self.show_search_page(entry.get_text(), True))
         
         self.recommend_item = RecommendItem(data_manager)
-        
+       
         category_pkg_info = data_manager.get_category_pkg_info()
         category_items = map(lambda (index, (first_category_name, second_category_items)):
                                  CategoryItem(index + 1, 
@@ -377,12 +377,29 @@ class CategoryItem(TreeItem):
         self.message_bar = MessageBar(18)
         
         self.pkg_icon_view = IconView() 
+        self.pkg_icon_scrolled_window = ScrolledWindow()
         self.pkg_icon_view.connect(
             "items-change", 
             lambda iconview: self.message_bar.set_message("%s: %s款软件" % (get_category_name(self.first_category_name), len(iconview.items))))
-        self.pkg_icon_view.add_items(items)
-        self.pkg_icon_scrolled_window = ScrolledWindow()
-        self.pkg_icon_scrolled_window.add_child(self.pkg_icon_view)
+        items_number = len(items)
+        pages = int(items_number/12)
+        if pages > 0:
+            tmp_items = items[:12]
+            self.pkg_icon_view.add_items(tmp_items)
+            button_hbox = gtk.HBox(5)
+            for i in range(10):
+                button = gtk.Button(str(i+1))
+                button_hbox.pack_start(button, False, False)
+            button_align = gtk.Alignment(0.5, 0.5, 0, 0)
+            button_align.add(button_hbox)
+
+            self.pkg_icon_box = gtk.VBox()
+            self.pkg_icon_box.pack_start(self.pkg_icon_view)
+            self.pkg_icon_box.pack_start(button_align, False, False)
+            self.pkg_icon_scrolled_window.add_child(self.pkg_icon_box)
+        else:
+            self.pkg_icon_view.add_items(items)
+            self.pkg_icon_scrolled_window.add_child(self.pkg_icon_view)
         self.pkg_icon_view.draw_mask = self.draw_mask
         self.pkg_icon_view.draw_row_mask = self.draw_row_mask
         
