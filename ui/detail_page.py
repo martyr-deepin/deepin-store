@@ -28,9 +28,7 @@ from dtk.ui.button import ImageButton
 from dtk.ui.star_view import StarView
 from dtk.ui.browser import WebView
 from constant import CONFIG_DIR, SERVER_ADDRESS
-import traceback
 from skin import app_theme
-import sys
 from deepin_utils.file import get_parent_dir, read_file, write_file, remove_file, format_file_size
 from deepin_utils.process import run_command
 from dtk.ui.utils import color_hex_to_cairo, container_remove_all, get_resize_pixbuf_with_height
@@ -49,6 +47,7 @@ import os
 from deepin_storm.download import FetchServiceThread, join_glib_loop, FetchFiles
 from events import global_event
 import urllib2
+import webbrowser
 
 join_glib_loop()
 
@@ -415,11 +414,16 @@ class DetailPage(gtk.HBox):
         self.queue_draw()
         
         self.show_all()
+
+    def open_url(self, webview, frame, network_request, nav_action, policy_dec):
+        webbrowser.open(network_request.get_uri())
         
     def fetch_comment(self):
         if is_network_connected():
             container_remove_all(self.right_comment_box)    
             web_view = WebView(os.path.join(CONFIG_DIR, "cookie.txt"))
+            #web_view.enable_inspector()
+            web_view.connect("new-window-policy-decision-requested", self.open_url)
             web_view_align = gtk.Alignment()
             web_view_align.set(0.5, 0, 0, 0)
             web_view_align.set_padding(33, 33, 33, 33)
