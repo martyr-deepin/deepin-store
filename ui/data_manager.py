@@ -116,7 +116,6 @@ class DataManager(object):
             "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
         return self.desktop_db_cursor.fetchall()
         
-    @print_exec_time
     def get_pkg_detail_info(self, pkg_name):
         self.desktop_db_cursor.execute(
             "SELECT first_category_index, second_category_index FROM desktop WHERE pkg_name=?", [pkg_name])
@@ -359,9 +358,8 @@ class DataManager(object):
         return map(lambda result: result.data["pkg_name"][0], results)
         
 if __name__ == "__main__":
-    from pprint import pprint
     import dbus
-    from constant import DSC_SERVICE_NAME, DSC_SERVICE_PATH, DSC_FRONTEND_NAME, DSC_FRONTEND_PATH, ACTION_INSTALL, ACTION_UNINSTALL, ACTION_UPGRADE, CONFIG_DIR, ONE_DAY_SECONDS
+    from constant import DSC_SERVICE_NAME, DSC_SERVICE_PATH
     system_bus = dbus.SystemBus()
     bus_object = system_bus.get_object(DSC_SERVICE_NAME, DSC_SERVICE_PATH)
     bus_interface = dbus.Interface(bus_object, DSC_SERVICE_NAME)
