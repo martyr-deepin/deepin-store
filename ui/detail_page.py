@@ -48,6 +48,7 @@ from deepin_storm.download import FetchServiceThread, join_glib_loop, FetchFiles
 from events import global_event
 import urllib2
 import webbrowser
+from category_info import get_category_name
 
 join_glib_loop()
 
@@ -376,7 +377,7 @@ class DetailPage(gtk.HBox):
         container_remove_all(self.left_category_box)
         if self.category != None:
             self.left_category_name_label.set_text("类别：")
-            self.left_category_label.set_text(self.category[1])
+            self.left_category_label.set_text(get_category_name(self.category[1]))
             self.left_category_box.add(self.left_category_label_box)
         self.left_version_label.set_text("版本：%s" % self.version)
         self.left_size_label.set_text("大小：%s" % format_file_size(self.size))
