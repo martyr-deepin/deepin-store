@@ -336,6 +336,8 @@ class UpgradePage(gtk.VBox):
     def monitor_upgrade_view(self, treeview):
         if len(treeview.visible_items) == 0:
             global_event.emit("show-newest-view")
+        else:
+            self.upgrade_bar.set_upgrade_info(len(treeview.visible_items), self.no_notify_pkg_num)
             
     def monitor_no_notify_view(self, treeview):
         if len(treeview.visible_items) == 0:

@@ -621,7 +621,6 @@ class RecommendItem(TreeItem):
     '''
     class docs
     '''
-	
     def __init__(self, data_manager):
         '''
         init docs
@@ -691,6 +690,34 @@ class RecommendItem(TreeItem):
             
     def button_press(self, column, offset_x, offset_y):
         self.show_page()
+
+    def get_pkg_icon_view_page(self):
+        print "Build package recomendation page"
+        items = []
+        for pkg_name in self.data_manager.get_recommend_info():
+            items.append(RecommendIconItem(pkg_name))
+        
+        self.pkg_icon_view = IconView() 
+        self.pkg_icon_view.add_items(items)
+        self.pkg_icon_scrolled_window = ScrolledWindow()
+        self.pkg_icon_scrolled_window.add_child(self.pkg_icon_view)
+        self.pkg_icon_view.draw_mask = self.draw_mask
+        
+        self.pkg_icon_view_align = gtk.Alignment()
+        self.pkg_icon_view_align.set(0.5, 0.5, 1, 1)
+        self.pkg_icon_view_align.set_padding(6, 0, 1, 11)
+        self.pkg_icon_view_align.add(self.pkg_icon_scrolled_window)
+        return self.pkg_icon_view_align
+
+    def get_download_rank_page(self):
+        print "Build download rank page"
+        self.download_rank_page = DownloadRankPage(self.data_manager)
+        return self.download_rank_page
+    
+    def get_album_page(self):
+        print "Build album page"
+        self.album_page = AlbumPage(self.data_manager)
+        return self.album_page
         
     def show_page(self):    
         self.recommend_scrolled_window = ScrolledWindow()
@@ -717,29 +744,12 @@ class RecommendItem(TreeItem):
         self.tab_switcher_align = gtk.Alignment()
         self.tab_switcher_align.set(0.5, 0.5, 1, 1)
         self.tab_switcher_align.set_padding(10, 0, 0, 9)
-        
-        items = []
-        for pkg_name in self.data_manager.get_recommend_info():
-            items.append(RecommendIconItem(pkg_name))
-        
-        self.pkg_icon_view = IconView() 
-        self.pkg_icon_view.add_items(items)
-        self.pkg_icon_scrolled_window = ScrolledWindow()
-        self.pkg_icon_scrolled_window.add_child(self.pkg_icon_view)
-        self.pkg_icon_view.draw_mask = self.draw_mask
-        
-        self.pkg_icon_view_align = gtk.Alignment()
-        self.pkg_icon_view_align.set(0.5, 0.5, 1, 1)
-        self.pkg_icon_view_align.set_padding(6, 0, 1, 11)
-        self.pkg_icon_view_align.add(self.pkg_icon_scrolled_window)
-        
-        self.album_page = AlbumPage(self.data_manager)
-        
-        self.download_rank_page = DownloadRankPage(self.data_manager)
-        
-        self.pages = [self.pkg_icon_view_align, self.album_page, self.download_rank_page]
-        
         self.tab_switcher_align.add(self.tab_switcher)
+        self.tab_switcher_pages_callback = [
+                "get_pkg_icon_view_page",
+                "get_album_page",
+                "get_download_rank_page",
+                ]
         
         self.box.pack_start(self.slider_switcher, False, False)
         self.box.pack_start(self.tab_switcher_align, False, False)
@@ -782,11 +792,12 @@ class RecommendItem(TreeItem):
         
     def switch_page(self, page_index):
         container_remove_all(self.page_box)
-        self.page_box.pack_start(self.pages[page_index], True, True)
+        active_page = getattr(self, self.tab_switcher_pages_callback[page_index])()
+        self.page_box.pack_start(active_page, True, True)
         
         if page_index == 1:
-            if self.pages[page_index].in_detail_view:
-                self.pages[page_index].switch_to_album_summary_view()
+            if active_page.in_detail_view:
+                active_page.switch_to_album_summary_view()
                 
         self.recommend_scrolled_window.show_all()
         

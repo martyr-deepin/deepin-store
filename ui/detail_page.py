@@ -422,6 +422,11 @@ class DetailPage(gtk.HBox):
     def fetch_comment(self):
         if is_network_connected():
             container_remove_all(self.right_comment_box)    
+            loading_label = gtk.Label("正在加载评论...")
+            loading_label_align = gtk.Alignment(0.5, 0, 0, 0)
+            loading_label_align.add(loading_label)
+            loading_label_align.set_padding(10, 0, 0, 0)
+            self.right_comment_box.pack_start(loading_label_align, False, False)
             web_view = WebView(os.path.join(CONFIG_DIR, "cookie.txt"))
             #web_view.enable_inspector()
             web_view.connect("new-window-policy-decision-requested", self.open_url)
@@ -437,9 +442,16 @@ class DetailPage(gtk.HBox):
                     self.pkg_name, 
                     "zh_CN"
                     ))
-            self.right_comment_box.pack_start(web_view_align, True, True)
+            #self.right_comment_box.pack_start(web_view_align, True, True)
+            web_view.connect("load-finished", self.comment_load_finished_cb, web_view_align)
             
             self.fetch_screenshot()
+
+    def comment_load_finished_cb(self, webview, frame, web_view_align):
+        print "Loading comment finished"
+        container_remove_all(self.right_comment_box)
+        self.right_comment_box.pack_start(web_view_align, True, True)
+        self.right_comment_box.show_all()
             
     def fetch_screenshot(self):
         screenshot_dir = os.path.join(SCREENSHOT_DOWNLOAD_DIR, self.pkg_name)
