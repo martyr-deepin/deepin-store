@@ -1,4 +1,3 @@
-#! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
 # Copyright (C) 2011 ~ 2012 Deepin, Inc.
@@ -65,6 +64,7 @@ import dtk.ui.tooltip as Tooltip
 from dtk.ui.label import Label
 from dtk.ui.gio_utils import start_desktop_file
 from start_desktop_window import StartDesktopWindow
+from utils import log
 
 def update_navigatebar_number(navigatebar, page_index, notify_number):
     print (page_index, notify_number)
@@ -111,7 +111,7 @@ def hide_message(message_box):
     return False
 
 def request_status(bus_interface, install_page, upgrade_page, uninstall_page):
-    print "*****************"
+    print "Refresh install upgrade uninstall status..."
     (download_status, action_status) = map(eval, bus_interface.request_status())
     
     install_page.update_download_status(download_status[ACTION_INSTALL])
@@ -163,8 +163,10 @@ def switch_from_detail_page(page_switcher, detail_page, page_box):
     page_switcher.slide_to_page(page_box, "left")
     
 def switch_to_detail_page(page_switcher, detail_page, pkg_name):
+    log("start switch to detail_page")
     page_switcher.slide_to_page(detail_page, "right")
-    detail_page.update_pkg_info(pkg_name)
+    glib.timeout_add(10, detail_page.update_pkg_info, pkg_name)
+    log("end switch to detail_page")
 
 def switch_page(page_switcher, page_box, page, detail_page):
     log("slide to page")
@@ -445,11 +447,6 @@ def clear_action_pages(bus_interface, upgrade_page, uninstall_page, install_page
     
 debug_flag = False                
 
-def log(message):
-    global debug_flag
-    if debug_flag:
-        print message
-                
 class DeepinSoftwareCenter(dbus.service.Object):
     '''
     class docs
@@ -602,15 +599,13 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.application.run()
         
     def init_home_page(self):
-        log("Say hello to backend")
         
         # Init DBus.
         self.system_bus = dbus.SystemBus()
         bus_object = self.system_bus.get_object(DSC_SERVICE_NAME, DSC_SERVICE_PATH)
         self.bus_interface = dbus.Interface(bus_object, DSC_SERVICE_NAME)
-        
         # Say hello to backend. 
-        self.bus_interface.say_hello(self.simulate)
+        #self.bus_interface.say_hello(self.simulate)
         
         log("Init data manager")
         
@@ -644,6 +639,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
         log("Init pages.")
         
+        start = time.time()
         # Init pages.
         log("Init upgrade page.")
         self.upgrade_page = UpgradePage(self.bus_interface, self.data_manager)
@@ -651,6 +647,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.uninstall_page = UninstallPage(self.bus_interface, self.data_manager)
         log("Init install page.")
         self.install_page = InstallPage(self.bus_interface, self.data_manager)
+        print "Init three pages time: %s" % (time.time()-start, )
         
         request_status(self.bus_interface, self.install_page, self.upgrade_page, self.uninstall_page)
         

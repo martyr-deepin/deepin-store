@@ -692,7 +692,6 @@ class RecommendItem(TreeItem):
         self.show_page()
 
     def get_pkg_icon_view_page(self):
-        print "Build package recomendation page"
         items = []
         for pkg_name in self.data_manager.get_recommend_info():
             items.append(RecommendIconItem(pkg_name))
@@ -710,12 +709,10 @@ class RecommendItem(TreeItem):
         return self.pkg_icon_view_align
 
     def get_download_rank_page(self):
-        print "Build download rank page"
         self.download_rank_page = DownloadRankPage(self.data_manager)
         return self.download_rank_page
     
     def get_album_page(self):
-        print "Build album page"
         self.album_page = AlbumPage(self.data_manager)
         return self.album_page
         

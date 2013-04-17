@@ -49,6 +49,7 @@ from events import global_event
 import urllib2
 import webbrowser
 from category_info import get_category_name
+from utils import log
 
 join_glib_loop()
 
@@ -107,6 +108,7 @@ class DetailPage(gtk.HBox):
         '''
         init docs
         '''
+        log("start init detail page")
         gtk.HBox.__init__(self)
         self.data_manager = data_manager
         self.pkg_name = None
@@ -224,6 +226,7 @@ class DetailPage(gtk.HBox):
         self.download_screenshot = DownloadScreenshot()
 
         global_event.register_event("download-screenshot-finish", self.download_screenshot_finish)
+        log("end init detail page")
         
     def grade_pkg(self):
         global_event.emit("grade-pkg", self.pkg_name, self.pkg_star_view.star_buffer.star_level)
@@ -334,6 +337,7 @@ class DetailPage(gtk.HBox):
                           (int(event.x), int(event.y), pixbuf.get_width() / 2, 0))
             
     def update_pkg_info(self, pkg_name):
+        log("start update package information")
         self.pkg_name = pkg_name
         (self.category, self.long_desc, 
          self.version, self.homepage, 
@@ -414,6 +418,7 @@ class DetailPage(gtk.HBox):
         self.queue_draw()
         
         self.show_all()
+        log("end update package information")
 
     def open_url(self, webview, frame, network_request, nav_action, policy_dec):
         webbrowser.open(network_request.get_uri())
@@ -447,7 +452,6 @@ class DetailPage(gtk.HBox):
             self.fetch_screenshot()
 
     def comment_load_finished_cb(self, webview, frame, web_view_align):
-        print "Loading comment finished"
         container_remove_all(self.right_comment_box)
         self.right_comment_box.pack_start(web_view_align, True, True)
         self.right_comment_box.show_all()

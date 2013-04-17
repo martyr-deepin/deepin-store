@@ -124,7 +124,6 @@ class DataManager(object):
         if category_indexes == None:
             category = None
         else:
-            print category_indexes
             (first_category_index, second_category_index) = category_indexes
             self.category_db_cursor.execute(
                 "SELECT first_category_name, second_category_name FROM category_name WHERE first_category_index=? and second_category_index=?",
