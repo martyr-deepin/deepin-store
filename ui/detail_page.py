@@ -123,13 +123,6 @@ class DetailPage(gtk.HBox):
         self.star_align.set_padding(0, 5, 0, 0)
         self.star_align.add(self.star_box)
 
-        self.pkg_star_view = StarView()
-        self.pkg_star_view.connect("clicked", lambda w: self.grade_pkg())
-        self.pkg_star_mark = gtk.VBox()
-        self.pkg_star_mark.connect("expose-event", self.expose_star_mark)
-        self.star_box.pack_start(self.pkg_star_view, False, False)
-        self.star_box.pack_start(self.pkg_star_mark, False, False)
-        
         self.left_action_box = gtk.HBox()
         self.left_action_align = gtk.Alignment()
         self.left_action_align.set(0.5, 0.5, 0, 0)
@@ -348,11 +341,17 @@ class DetailPage(gtk.HBox):
          self.download, self.alias_name,
          self.recommend_pkgs) = self.data_manager.get_pkg_detail_info(self.pkg_name)
         
+        self.pkg_star_view = StarView()
+        self.pkg_star_view.connect("clicked", lambda w: self.grade_pkg())
+        self.pkg_star_mark = gtk.VBox()
+        self.pkg_star_mark.connect("expose-event", self.expose_star_mark)
+        container_remove_all(self.star_box)
+        self.star_box.pack_start(self.pkg_star_view, False, False)
+        self.star_box.pack_start(self.pkg_star_mark, False, False)
         self.pkg_star_view.star_buffer.star_level = int(self.star)
         
         container_remove_all(self.left_action_box)
         install_status = self.data_manager.get_pkgs_install_status([self.pkg_name])
-        print install_status
         if install_status[0]:
             if self.category == None:
                 status_label = Label("已安装")
