@@ -784,7 +784,7 @@ class RecommendItem(TreeItem):
                      )
         
     def click_page(self, page_index):
-        if page_index == 1 and self.pages[page_index].in_detail_view:
+        if page_index == 1 and self.get_album_page().in_detail_view:
             self.pages[page_index].switch_to_album_summary_view()
         
     def switch_page(self, page_index):
