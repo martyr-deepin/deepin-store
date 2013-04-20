@@ -594,7 +594,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.application.window.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_DROP, targets, gtk.gdk.ACTION_COPY)
         self.application.window.connect_after("drag-data-received", self.on_drag_data_received)        
         
-        create_thread(self.init_home_page).start()
+        self.init_home_page()
         
         self.application.run()
         
@@ -621,7 +621,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         log("Init switch page.")
         self.switch_page(self.home_page)
         
-        gtk.timeout_add(10, lambda : create_thread(self.init_backend).start())
+        self.init_backend()
         
     def init_backend(self):
         log("Test deb files arguments")
