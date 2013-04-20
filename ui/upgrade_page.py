@@ -319,7 +319,7 @@ class UpgradePage(gtk.VBox):
         self.no_notify_treeview.draw_mask = self.draw_mask
         
         global_event.emit("show-updating-view")
-        #self.fetch_upgrade_info()
+        self.fetch_upgrade_info()
         
     def click_upgrade_check_button(self):
         self.upgrade_bar.select_button.update_status(map(lambda item: item.check_button_buffer.active, self.upgrade_treeview.visible_items))
@@ -672,7 +672,7 @@ class UpgradePage(gtk.VBox):
                         self.upgrade_pkg_num += 1
                         upgrade_items.append(UpgradeItem(pkg_name, pkg_version, self.data_manager))
                 
-            self.upgrade_bar.set_upgrade_info(self.upgrade_pkg_num, self.no_notify_pkg_num)
+            self.upgrade_bar.set_upgrade_info(len(self.upgrade_treeview.visible_items), self.no_notify_pkg_num)
             
             if len(upgrade_items) == 0 and len(self.upgrade_treeview.visible_items) == 0:        
                 global_event.emit("show-newest-view")

@@ -38,7 +38,7 @@ from dtk.ui.timeline import Timeline, CURVE_SINE
 from deepin_utils.process import run_command
 from deepin_utils.math_lib import solve_parabola
 from deepin_utils.file import read_file, write_file, touch_file, end_with_suffixs
-from deepin_utils.multithread import create_thread
+#from deepin_utils.multithread import create_thread
 from dtk.ui.utils import container_remove_all, set_cursor, get_widget_root_coordinate, get_pixbuf_support_foramts
 from dtk.ui.application import Application
 from dtk.ui.statusbar import Statusbar
