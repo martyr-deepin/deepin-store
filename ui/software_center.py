@@ -64,10 +64,9 @@ import dtk.ui.tooltip as Tooltip
 from dtk.ui.label import Label
 from dtk.ui.gio_utils import start_desktop_file
 from start_desktop_window import StartDesktopWindow
-from utils import log
+from utils import log, ThreadMethod
 
 def update_navigatebar_number(navigatebar, page_index, notify_number):
-    print (page_index, notify_number)
     navigatebar.update_notify_num(navigatebar.nav_items[page_index], notify_number)
 
 def jump_to_category(page_switcher, page_box, home_page, detail_page, first_category_name, second_category_name):
@@ -165,7 +164,7 @@ def switch_from_detail_page(page_switcher, detail_page, page_box):
 def switch_to_detail_page(page_switcher, detail_page, pkg_name):
     log("start switch to detail_page")
     page_switcher.slide_to_page(detail_page, "right")
-    glib.timeout_add(10, detail_page.update_pkg_info, pkg_name)
+    ThreadMethod(detail_page.update_pkg_info, (pkg_name,)).start()
     log("end switch to detail_page")
 
 def switch_page(page_switcher, page_box, page, detail_page):
@@ -193,6 +192,7 @@ def switch_page(page_switcher, page_box, page, detail_page):
         log("page.category_view.select_first_item()")
         page.category_view.select_first_item()
     elif isinstance(page, UpgradePage):
+        page.fetch_upgrade_info()
         if page.in_no_notify_page:
             page.show_init_page()
 

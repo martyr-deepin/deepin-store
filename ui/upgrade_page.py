@@ -286,7 +286,7 @@ class UpgradePage(gtk.VBox):
         self.upgrade_treeview.connect("items-change", self.monitor_upgrade_view)
         self.upgrade_treeview.connect("items-change", lambda treeview: global_event.emit("update-upgrade-notify-number", len(treeview.visible_items)))
         
-        gtk.timeout_add(200, self.render_upgrade_progress)
+        #gtk.timeout_add(200, self.render_upgrade_progress)
         
         self.no_notify_treeview = TreeView(enable_drag_drop=False)
         self.no_notify_treeview.set_expand_column(1)
@@ -319,7 +319,7 @@ class UpgradePage(gtk.VBox):
         self.no_notify_treeview.draw_mask = self.draw_mask
         
         global_event.emit("show-updating-view")
-        self.fetch_upgrade_info()
+        #self.fetch_upgrade_info()
         
     def click_upgrade_check_button(self):
         self.upgrade_bar.select_button.update_status(map(lambda item: item.check_button_buffer.active, self.upgrade_treeview.visible_items))

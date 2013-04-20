@@ -20,6 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import threading as td
 from datetime import datetime
 
 LOG_PATH = "/tmp/dsc-frontend.log"
@@ -28,4 +29,18 @@ def log(message):
     with open(LOG_PATH, "a") as file_handler:
         now = datetime.now().strftime("[%Y-%m-%d %H:%M:%S]")
         file_handler.write("%s %s\n" % (now, message))
+
+class ThreadMethod(td.Thread):
+    '''
+    func: a method name
+    args: arguments tuple
+    '''
+    def __init__(self, func, args, daemon=False):
+        td.Thread.__init__(self)
+        self.func = func
+        self.args = args
+        self.setDaemon(daemon)
+
+    def run(self):
+        self.func(*self.args)
 

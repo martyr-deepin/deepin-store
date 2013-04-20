@@ -411,7 +411,7 @@ class DetailPage(gtk.HBox):
         resizable_align.connect("expose-event", self.expose_resizable_label_background)
         self.right_desc_box.pack_start(resizable_align, False, False)
         
-        self.show_screenshot()
+        create_thread(self.show_screenshot).start()
         
         create_thread(self.fetch_comment).start()
         
