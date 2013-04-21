@@ -39,7 +39,6 @@ from dtk.ui.draw import draw_pixbuf, draw_text
 from resizable_label import ResizableLabel
 from slide_switcher import SlideSwitcher
 from constant import SCREENSHOT_HOST, SCREENSHOT_DOWNLOAD_DIR
-from deepin_utils.multithread import create_thread
 import gobject
 import gtk
 from item_render import get_icon_pixbuf_path
@@ -411,9 +410,9 @@ class DetailPage(gtk.HBox):
         resizable_align.connect("expose-event", self.expose_resizable_label_background)
         self.right_desc_box.pack_start(resizable_align, False, False)
         
-        create_thread(self.show_screenshot).start()
+        gobject.timeout_add(10, self.show_screenshot)
         
-        create_thread(self.fetch_comment).start()
+        gobject.timeout_add(10, self.fetch_comment)
         
         self.queue_draw()
         
