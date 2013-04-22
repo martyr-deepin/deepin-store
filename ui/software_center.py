@@ -39,7 +39,7 @@ from deepin_utils.process import run_command
 from deepin_utils.math_lib import solve_parabola
 from deepin_utils.file import read_file, write_file, touch_file, end_with_suffixs
 #from deepin_utils.multithread import create_thread
-from dtk.ui.utils import container_remove_all, set_cursor, get_widget_root_coordinate, get_pixbuf_support_foramts
+from dtk.ui.utils import container_remove_all, set_cursor, get_widget_root_coordinate, get_pixbuf_support_formats
 from dtk.ui.application import Application
 from dtk.ui.statusbar import Statusbar
 from home_page import HomePage
@@ -740,7 +740,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
                         if self.is_deb_file(selected_uri):
                             deb_files.append(selected_uri)
                         else:
-                            support_foramts = get_pixbuf_support_foramts()
+                            support_foramts = get_pixbuf_support_formats()
                             if end_with_suffixs(selected_uri, support_foramts):
                                 skin_config.load_skin_from_image(selected_uri)
                         
