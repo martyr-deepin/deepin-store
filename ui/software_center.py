@@ -164,7 +164,8 @@ def switch_from_detail_page(page_switcher, detail_page, page_box):
 def switch_to_detail_page(page_switcher, detail_page, pkg_name):
     log("start switch to detail_page")
     page_switcher.slide_to_page(detail_page, "right")
-    ThreadMethod(detail_page.update_pkg_info, (pkg_name,)).start()
+    # ThreadMethod(detail_page.update_pkg_info, (pkg_name,)).start()
+    detail_page.update_pkg_info(pkg_name)
     log("end switch to detail_page")
 
 def switch_page(page_switcher, page_box, page, detail_page):

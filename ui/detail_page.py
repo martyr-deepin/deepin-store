@@ -20,6 +20,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import urllib
+import traceback
+import sys
 import pango
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.constant import ALIGN_MIDDLE
@@ -44,14 +47,11 @@ import gobject
 import gtk
 from item_render import get_icon_pixbuf_path
 import os
-from deepin_storm.download import FetchServiceThread, join_glib_loop, FetchFiles
 from events import global_event
 import urllib2
 import webbrowser
 from category_info import get_category_name
 from utils import log
-
-join_glib_loop()
 
 PKG_SCREENSHOT_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update_data", "pkg_screenshot", "zh_CN")
 
@@ -112,6 +112,7 @@ class DetailPage(gtk.HBox):
         gtk.HBox.__init__(self)
         self.data_manager = data_manager
         self.pkg_name = None
+        self.alias_name = ""
         self.pkg_pixbuf = None
         
         self.left_view_box = gtk.VBox()
@@ -224,8 +225,6 @@ class DetailPage(gtk.HBox):
         
         self.left_category_label.connect("button-press-event", lambda w, e: self.jump_to_category())
         
-        self.download_screenshot = DownloadScreenshot()
-
         global_event.register_event("download-screenshot-finish", self.download_screenshot_finish)
         log("end init detail page")
         
@@ -406,9 +405,10 @@ class DetailPage(gtk.HBox):
         self.right_desc_box.pack_start(resizable_align, False, False)
         
         print "%s: #4# %s" % (pkg_name, time.time() - start_time)
-        create_thread(self.show_screenshot).start()
+        self.show_screenshot()
         
-        create_thread(self.fetch_comment).start()
+        self.fetch_comment()
+        # create_thread(self.fetch_comment).start()
         
         self.show_all()
         print "%s: end update_pkg_info, %s" % (pkg_name, time.time() - start_time)
@@ -476,7 +476,9 @@ class DetailPage(gtk.HBox):
             #self.right_comment_box.pack_start(web_view_align, True, True)
             web_view.connect("load-finished", self.comment_load_finished_cb, web_view_align)
             
-            self.fetch_screenshot()
+            # self.fetch_screenshot()
+            
+            create_thread(self.fetch_screenshot).start()
 
     def comment_load_finished_cb(self, webview, frame, web_view_align):
         container_remove_all(self.right_comment_box)
@@ -504,10 +506,21 @@ class DetailPage(gtk.HBox):
                 
             if need_download:    
                 write_file(screenshot_md5_path, remote_md5, True)
-                self.download_screenshot.add_download(self.pkg_name, remote_screenshot_zip_url)
+                
+                print "Download start"
+                try:
+                    urllib.urlretrieve(remote_screenshot_zip_url, 
+                                       os.path.join(SCREENSHOT_DOWNLOAD_DIR, self.pkg_name, "screenshot.zip")
+                                       )
+                    global_event.emit("download-screenshot-finish", self.pkg_name)
+                    print "Download finish"
+                except Exception, e:
+                    traceback.print_exc(file=sys.stdout)
+                    print "Download screenshot error: %s" % e
         except Exception, e:
-            #traceback.print_exc(file=sys.stdout)
-            print "fetch_screenshot got error: %s" % e
+            # traceback.print_exc(file=sys.stdout)
+            # print "fetch_screenshot got error: %s" % e
+            pass
             
     def download_screenshot_finish(self, pkg_name):
         if self.pkg_name == pkg_name:
@@ -576,52 +589,6 @@ class DetailPage(gtk.HBox):
                 print "%s haven't any screenshot from zip file" % self.pkg_name
         
 gobject.type_register(DetailPage)        
-
-class DownloadScreenshot(object):
-    '''
-    class docs
-    '''
-	
-    def __init__(self):
-        '''
-        init docs
-        '''
-        self.fetch_service_thread = FetchServiceThread(5)
-        self.fetch_service_thread.start()
-        
-        join_glib_loop()
-        
-        self.fetch_files_dict = {}
-        
-    def add_download(self, pkg_name, url):
-        download_dir = os.path.join(SCREENSHOT_DOWNLOAD_DIR, pkg_name)
-        fetch_files = FetchFiles(
-            [url],
-            file_save_dir=download_dir,
-            )
-        fetch_files.signal.register_event(
-            "start", 
-            lambda : global_event.emit("download-screenshot-start", pkg_name))
-        fetch_files.signal.register_event(
-            "update",
-            lambda percent, speed: global_event.emit("download-screenshot-update", pkg_name, percent, speed))
-        fetch_files.signal.register_event(
-            "finish", 
-            lambda : global_event.emit("download-screenshot-finish", pkg_name))
-        fetch_files.signal.register_event(
-            "pause",
-            lambda : global_event.emit("download-screenshot-pause", pkg_name))
-        fetch_files.signal.register_event(
-            "stop",
-            lambda : global_event.emit("download-screenshot-stop", pkg_name))
-        
-        self.fetch_files_dict[pkg_name] = fetch_files
-        self.fetch_service_thread.fetch_service.add_fetch(fetch_files)
-        
-    def stop_download(self, pkg_name):
-        if self.fetch_files_dict.has_key(pkg_name):
-            self.fetch_service_thread.fetch_service.pause_fetch(self.fetch_files_dict[pkg_name])
-            self.fetch_files_dict.pop(pkg_name)
 
 class RecommendPkgItem(gtk.HBox):
     '''
