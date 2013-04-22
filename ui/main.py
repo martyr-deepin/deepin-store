@@ -28,12 +28,12 @@ import dbus.mainloop.glib
 from dbus.mainloop.glib import DBusGMainLoop
 from constant import DSC_FRONTEND_NAME, DSC_FRONTEND_PATH
 from deepin_utils.ipc import is_dbus_name_exists
-import gobject
+import gtk
 
 if __name__ == "__main__" :
     # Init.
     DBusGMainLoop(set_as_default=True)
-    gobject.threads_init()
+    gtk.gdk.threads_init()
     session_bus = dbus.SessionBus()
     arguments = sys.argv[1::]
     
