@@ -48,7 +48,7 @@ from events import global_event
 import urllib2
 import webbrowser
 from category_info import get_category_name
-from utils import log
+from utils import log, ThreadMethod
 
 join_glib_loop()
 
@@ -107,7 +107,6 @@ class DetailPage(gtk.HBox):
         '''
         init docs
         '''
-        log("start init detail page")
         gtk.HBox.__init__(self)
         self.data_manager = data_manager
         self.pkg_name = None
@@ -334,9 +333,11 @@ class DetailPage(gtk.HBox):
                           self.alias_name, 
                           desktop_info, 
                           (int(event.x), int(event.y), pixbuf.get_width() / 2, 0))
-            
+
     def update_pkg_info(self, pkg_name):
-        log("start update package information")
+        ThreadMethod(self.real_update_pkg_info, (pkg_name,), True).start()
+            
+    def real_update_pkg_info(self, pkg_name):
         self.pkg_name = pkg_name
         (self.category, self.long_desc, 
          self.version, self.homepage, 
@@ -344,6 +345,7 @@ class DetailPage(gtk.HBox):
          self.download, self.alias_name,
          self.recommend_pkgs) = self.data_manager.get_pkg_detail_info(self.pkg_name)
         
+        gtk.gdk.threads_enter()
         self.pkg_star_view = StarView()
         self.pkg_star_view.connect("clicked", lambda w: self.grade_pkg())
         self.pkg_star_mark = gtk.VBox()
@@ -417,7 +419,7 @@ class DetailPage(gtk.HBox):
         self.queue_draw()
         
         self.show_all()
-        log("end update package information")
+        gtk.gdk.threads_leave()
 
     def open_url(self, webview, frame, network_request, nav_action, policy_dec):
         webbrowser.open(network_request.get_uri())

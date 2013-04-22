@@ -273,7 +273,8 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
             request_status(bus_interface, install_page, upgrade_page, uninstall_page)
 
         elif signal_type == "update-list-update":
-            upgrade_page.update_upgrade_progress(action_content)
+            #upgrade_page.update_upgrade_progress(action_content)
+            pass
 
         elif signal_type == "parse-download-error":
             (pkg_name, action_type) = action_content
@@ -594,7 +595,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.application.window.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_DROP, targets, gtk.gdk.ACTION_COPY)
         self.application.window.connect_after("drag-data-received", self.on_drag_data_received)        
         
-        self.init_home_page()
+        ThreadMethod(self.init_home_page, (), True).start()
         
         self.application.run()
         
@@ -614,17 +615,13 @@ class DeepinSoftwareCenter(dbus.service.Object):
 
         # Init packages status
         self.packages_status = {}
-        
+        gtk.gdk.threads_enter() 
         log("Init home page.")
         self.home_page = HomePage(self.data_manager)
         
         log("Init switch page.")
         self.switch_page(self.home_page)
         
-        self.init_backend()
-        
-    def init_backend(self):
-        log("Test deb files arguments")
         
         # Install deb file.
         if len(self.deb_files) > 0:
@@ -693,11 +690,10 @@ class DeepinSoftwareCenter(dbus.service.Object):
         glib.timeout_add(1000, lambda : clear_install_stop_list(self.install_page))
         glib.timeout_add(1000, lambda : clear_failed_action(self.install_page, self.upgrade_page))
 
-        #self.bus_interface.start_update_list()
-        
-        log("finish")
         #for event in global_event.events:
             #print "%s: %s" % (event, global_event.events[event])
+        gtk.gdk.threads_leave()
+        #self.bus_interface.start_update_list()
 
     def listen_redraw(self, widget, event=None):
         if event.type == gtk.gdk.EXPOSE:
