@@ -406,9 +406,10 @@ class DetailPage(gtk.HBox):
         self.right_desc_box.pack_start(resizable_align, False, False)
         
         print "%s: #4# %s" % (pkg_name, time.time() - start_time)
-        create_thread(self.show_screenshot).start()
+        self.show_screenshot()
         
-        create_thread(self.fetch_comment).start()
+        self.fetch_comment()
+        create_thread(self.fetch_screenshot).start()
         
         self.show_all()
         print "%s: end update_pkg_info, %s" % (pkg_name, time.time() - start_time)
@@ -475,8 +476,6 @@ class DetailPage(gtk.HBox):
                     ))
             #self.right_comment_box.pack_start(web_view_align, True, True)
             web_view.connect("load-finished", self.comment_load_finished_cb, web_view_align)
-            
-            self.fetch_screenshot()
 
     def comment_load_finished_cb(self, webview, frame, web_view_align):
         container_remove_all(self.right_comment_box)
@@ -504,6 +503,7 @@ class DetailPage(gtk.HBox):
                 
             if need_download:    
                 write_file(screenshot_md5_path, remote_md5, True)
+                print "download screenshot zip file: %s" % remote_screenshot_zip_url
                 self.download_screenshot.add_download(self.pkg_name, remote_screenshot_zip_url)
         except Exception, e:
             #traceback.print_exc(file=sys.stdout)
