@@ -85,7 +85,7 @@ class DownloadRankPage(gtk.VBox):
         
         global_event.register_event("update-rank-page", self.update_rank_page)
         
-        create_thread(self.init_rank_info).start()
+        self.init_rank_info()
         
     def init_rank_info(self):
         (self.week_rank_infos, self.month_rank_infos, self.all_rank_infos) = self.data_manager.get_download_rank_info()
