@@ -220,6 +220,7 @@ class DetailPage(gtk.HBox):
         self.left_logo_box.connect("expose-event", self.expose_left_logo_box)
         self.right_top_box.connect("expose-event", self.expose_right_top_box)
         self.right_title_box.connect("expose-event", self.expose_right_title_box)
+        self.connect("hierarchy-changed", self.hierarchy_change)
         
         self.left_category_label.connect("button-press-event", lambda w, e: self.jump_to_category())
         
@@ -227,6 +228,12 @@ class DetailPage(gtk.HBox):
 
         global_event.register_event("download-screenshot-finish", self.download_screenshot_finish)
         log("end init detail page")
+        
+    def hierarchy_change(self, widget, previous_toplevel):
+        # When detail page remove from it's container, previous_toplevel is not None.
+        if previous_toplevel != None:
+            container_remove_all(self.right_slide_box) # remove slide box first, to avoid screenshot area flash
+            container_remove_all(self.right_comment_box) # remove comment box first, to avoid comment area flash
         
     def grade_pkg(self):
         global_event.emit("grade-pkg", self.pkg_name, self.pkg_star_view.star_buffer.star_level)
