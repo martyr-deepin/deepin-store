@@ -344,7 +344,9 @@ class DetailPage(gtk.HBox):
                           (int(event.x), int(event.y), pixbuf.get_width() / 2, 0))
             
     def update_pkg_info(self, pkg_name):
-        log("start update package information")
+        import time
+        start_time = time.time()
+        print "%s: start update_pkg_info" % pkg_name
         self.pkg_name = pkg_name
         (self.category, self.long_desc, 
          self.version, self.homepage, 
@@ -361,8 +363,58 @@ class DetailPage(gtk.HBox):
         self.star_box.pack_start(self.pkg_star_mark, False, False)
         self.pkg_star_view.star_buffer.star_level = int(self.star)
         
-        container_remove_all(self.left_action_box)
-        install_status = self.data_manager.get_pkgs_install_status([self.pkg_name])
+        print "%s: #1# %s" % (pkg_name, time.time() - start_time)
+        create_thread(self.fetch_pkg_status).start()
+        
+        container_remove_all(self.left_category_box)
+        if self.category != None:
+            self.left_category_name_label.set_text("类别：")
+            self.left_category_label.set_text(get_category_name(self.category[1]))
+            self.left_category_box.add(self.left_category_label_box)
+        self.left_version_label.set_text("版本：%s" % self.version)
+        self.left_size_label.set_text("大小：%s" % format_file_size(self.size))
+        self.left_download_label.set_text("下载：%s" % self.download)
+        
+        print "%s: #2# %s" % (pkg_name, time.time() - start_time)
+        container_remove_all(self.left_homepage_box)
+        if self.homepage != "":
+            homepage_label = Label("访问首页", 
+                                   text_color=app_theme.get_color("homepage"),
+                                   hover_color=app_theme.get_color("homepage_hover"))
+            homepage_label.set_clickable()
+            homepage_label.connect("button-press-event", lambda w, e: run_command("xdg-open %s" % self.homepage))
+            self.left_homepage_box.pack_start(homepage_label)
+            
+        print "%s: #3# %s" % (pkg_name, time.time() - start_time)
+        container_remove_all(self.left_recommend_box)    
+        if len(self.recommend_pkgs) > 0:
+            self.left_recommend_box.pack_start(self.left_recommend_label, False, False, 8)
+            
+            for (recommend_pkg_name, alias_name, star) in self.recommend_pkgs:
+                self.left_recommend_box.pack_start(RecommendPkgItem(self, recommend_pkg_name, alias_name, star), False, False, 4)
+        
+        container_remove_all(self.right_desc_box)
+        resizable_label = ResizableLabel(self.long_desc.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"), 
+                                         self.LONG_DESC_WRAP_WIDTH, 
+                                         self.LONG_DESC_INIT_HEIGHT, 
+                                         3)
+        resizable_align = gtk.Alignment()
+        resizable_align.set(0.5, 0.5, 1, 1)
+        resizable_align.set_padding(0, 0, self.RIGHT_INFO_PADDING_X, self.RIGHT_INFO_PADDING_X)
+        resizable_align.add(resizable_label)
+        resizable_align.connect("expose-event", self.expose_resizable_label_background)
+        self.right_desc_box.pack_start(resizable_align, False, False)
+        
+        print "%s: #4# %s" % (pkg_name, time.time() - start_time)
+        create_thread(self.show_screenshot).start()
+        
+        create_thread(self.fetch_comment).start()
+        
+        self.show_all()
+        print "%s: end update_pkg_info, %s" % (pkg_name, time.time() - start_time)
+        
+    def handle_pkg_status(self, *reply):
+        install_status = reply
         if install_status[0]:
             if self.category == None:
                 status_label = Label("已安装")
@@ -384,49 +436,17 @@ class DetailPage(gtk.HBox):
             action_button.connect("clicked", lambda w: global_event.emit("install-pkg", [self.pkg_name]))
             self.left_action_box.pack_start(action_button)
         
-        container_remove_all(self.left_category_box)
-        if self.category != None:
-            self.left_category_name_label.set_text("类别：")
-            self.left_category_label.set_text(get_category_name(self.category[1]))
-            self.left_category_box.add(self.left_category_label_box)
-        self.left_version_label.set_text("版本：%s" % self.version)
-        self.left_size_label.set_text("大小：%s" % format_file_size(self.size))
-        self.left_download_label.set_text("下载：%s" % self.download)
+    def handle_dbus_error(self, *error):
+        print "******************* handle_dbus_error"
+        print error
+    
+    def fetch_pkg_status(self):
+        container_remove_all(self.left_action_box)
+        import time
+        start_time = time.time()
+        self.data_manager.get_pkgs_install_status([self.pkg_name], self.handle_pkg_status, self.handle_dbus_error)
+        print self.pkg_name, time.time() - start_time
         
-        container_remove_all(self.left_homepage_box)
-        if self.homepage != "":
-            homepage_label = Label("访问首页", 
-                                   text_color=app_theme.get_color("homepage"),
-                                   hover_color=app_theme.get_color("homepage_hover"))
-            homepage_label.set_clickable()
-            homepage_label.connect("button-press-event", lambda w, e: run_command("xdg-open %s" % self.homepage))
-            self.left_homepage_box.pack_start(homepage_label)
-            
-        container_remove_all(self.left_recommend_box)    
-        if len(self.recommend_pkgs) > 0:
-            self.left_recommend_box.pack_start(self.left_recommend_label, False, False, 8)
-            
-            for (recommend_pkg_name, alias_name, star) in self.recommend_pkgs:
-                self.left_recommend_box.pack_start(RecommendPkgItem(self, recommend_pkg_name, alias_name, star), False, False, 4)
-        
-        container_remove_all(self.right_desc_box)
-        resizable_label = ResizableLabel(self.long_desc, self.LONG_DESC_WRAP_WIDTH, self.LONG_DESC_INIT_HEIGHT, 3)
-        resizable_align = gtk.Alignment()
-        resizable_align.set(0.5, 0.5, 1, 1)
-        resizable_align.set_padding(0, 0, self.RIGHT_INFO_PADDING_X, self.RIGHT_INFO_PADDING_X)
-        resizable_align.add(resizable_label)
-        resizable_align.connect("expose-event", self.expose_resizable_label_background)
-        self.right_desc_box.pack_start(resizable_align, False, False)
-        
-        create_thread(self.show_screenshot).start()
-        
-        create_thread(self.fetch_comment).start()
-        
-        self.queue_draw()
-        
-        self.show_all()
-        log("end update package information")
-
     def open_url(self, webview, frame, network_request, nav_action, policy_dec):
         webbrowser.open(network_request.get_uri())
         
