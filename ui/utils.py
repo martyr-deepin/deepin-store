@@ -43,4 +43,3 @@ class ThreadMethod(td.Thread):
 
     def run(self):
         self.func(*self.args)
-

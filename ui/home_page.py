@@ -49,6 +49,7 @@ from skin import app_theme
 from data import DATA_ID
 from category_info import get_category_name
 from nls import _
+import dtk.ui.tooltip as Tooltip
 
 FIRST_CATEGORY_PADDING_X = 66
 SECOND_CATEGORY_PADDING_X = 46
@@ -382,14 +383,15 @@ class CategoryItem(TreeItem):
         self.pkg_icon_view.add_items(items)
 
     def single_click(self, column, offset_x, offset_y):
+        self.page_box = gtk.VBox()    
+        global_event.emit("show-pkg-view", self.page_box)
+
         self.all_pkg_names = []
         self.all_desktop_infos = {}
         for (second_category, pkg_dict) in self.second_category_items.items():
             for (pkg_name, desktop_info) in pkg_dict.items():
                 self.all_pkg_names.append(pkg_name)
                 self.all_desktop_infos[pkg_name] = desktop_info
-
-        self.page_box = gtk.VBox()    
             
         self.message_bar = MessageBar(18)
         self.message_bar.set_message("%s: %s款软件" % (
@@ -398,6 +400,8 @@ class CategoryItem(TreeItem):
                     ))
         
         self.pkg_icon_view = IconView() 
+        self.pkg_icon_view.connect("motion-notify-item", 
+                lambda view, item, x, y: Tooltip.text(view, item.pkg_name).show_delay(view, 500))
         if len(self.all_pkg_names) > LOAD_ITEMS_NUMBER:
             self.load_new_items(self.all_pkg_names[:LOAD_ITEMS_NUMBER])
         else:
@@ -411,11 +415,6 @@ class CategoryItem(TreeItem):
         
         self.page_box.pack_start(self.message_bar, False, False)
         self.page_box.pack_start(self.pkg_icon_scrolled_window, True, True)
-        
-        global_event.emit("show-pkg-view", self.page_box)
-        
-        # from meliae import scanner
-        # scanner.dump_all_objects("/tmp/dsc_memory.json")
         
     def draw_row_mask(self, cr, rect, row):
         if row % 2 == 1:
@@ -578,6 +577,8 @@ class SecondCategoryItem(TreeItem):
                 ))
         
         self.pkg_icon_view = IconView() 
+        self.pkg_icon_view.connect("motion-notify-item", 
+                lambda view, item, x, y: Tooltip.text(view, item.pkg_name).show_delay(view, 500))
         if len(self.all_pkg_names) > LOAD_ITEMS_NUMBER:
             self.load_new_items(self.all_pkg_names[:LOAD_ITEMS_NUMBER])
         else:
@@ -761,7 +762,7 @@ class RecommendItem(TreeItem):
         self.switch_page(0)
         
         self.tab_switcher.connect("tab-switch-start", lambda switcher, page_index: self.switch_page(page_index))
-        self.tab_switcher.connect("click-current-tab", lambda switcher, page_index: self.click_page(page_index))
+        self.tab_switcher.connect("click-current-tab", lambda switcher, page_index: self.click_page())
         
         global_event.emit("show-pkg-view", self.recommend_scrolled_window)
         
@@ -783,18 +784,18 @@ class RecommendItem(TreeItem):
                       (1, ("#FFFFFF", 0.9)),]
                      )
         
-    def click_page(self, page_index):
-        if page_index == 1 and self.get_album_page().in_detail_view:
-            self.pages[page_index].switch_to_album_summary_view()
+    def click_page(self):
+        if isinstance(self.active_page, AlbumPage) and self.active_page.in_detail_view:
+            self.active_page.switch_to_album_summary_view()
         
     def switch_page(self, page_index):
         container_remove_all(self.page_box)
-        active_page = getattr(self, self.tab_switcher_pages_callback[page_index])()
-        self.page_box.pack_start(active_page, True, True)
+        self.active_page = getattr(self, self.tab_switcher_pages_callback[page_index])()
+        self.page_box.pack_start(self.active_page, True, True)
         
-        if page_index == 1:
-            if active_page.in_detail_view:
-                active_page.switch_to_album_summary_view()
+        if isinstance(self.active_page, AlbumPage):
+            if self.active_page.in_detail_view:
+                self.active_page.switch_to_album_summary_view()
                 
         self.recommend_scrolled_window.show_all()
         
@@ -905,7 +906,7 @@ class PkgIconItem(IconItem):
             text_width,
             NAME_SIZE,
             text_size=NAME_SIZE)
-        
+
         # Draw star.
         self.star_buffer.render(
             cr,
