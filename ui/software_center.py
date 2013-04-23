@@ -64,7 +64,7 @@ import dtk.ui.tooltip as Tooltip
 from dtk.ui.label import Label
 from dtk.ui.gio_utils import start_desktop_file
 from start_desktop_window import StartDesktopWindow
-from utils import log, ThreadMethod
+from utils import log
 
 def update_navigatebar_number(navigatebar, page_index, notify_number):
     navigatebar.update_notify_num(navigatebar.nav_items[page_index], notify_number)
@@ -182,14 +182,13 @@ def switch_page(page_switcher, page_box, page, detail_page):
     page_box.pack_start(page, True, True)
     
     log("page_box show all")
-    # page_box.show_all()
-    page_box.get_toplevel().show_all()
+    page_box.show_all()
     
     log("init widget in page_box")
     if isinstance(page, HomePage):
         log("page.recommend_item.show_page()")
         page.recommend_item.show_page()
-        
+            
         log("page.category_view.select_first_item()")
         page.category_view.select_first_item()
     elif isinstance(page, UpgradePage):
