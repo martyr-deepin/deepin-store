@@ -681,6 +681,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         global_event.register_event("show-message", lambda message: show_message(self.statusbar, self.message_box, message))
         global_event.register_event("start-pkg", lambda pkg_name, desktop_infos, offset: start_pkg(pkg_name, desktop_infos, offset, self.application.window))
         global_event.register_event("start-desktop", start_desktop)
+        global_event.register_event("show-pkg-name-tooltip", lambda pkg_name: show_tooltip(self.application.window, pkg_name))
         self.system_bus.add_signal_receiver(
             lambda messages: message_handler(messages, 
                                          self.bus_interface, 

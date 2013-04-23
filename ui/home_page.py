@@ -49,13 +49,16 @@ from skin import app_theme
 from data import DATA_ID
 from category_info import get_category_name
 from nls import _
-import dtk.ui.tooltip as Tooltip
 
 FIRST_CATEGORY_PADDING_X = 66
 SECOND_CATEGORY_PADDING_X = 46
 
 CATEGORY_VIEW_WIDTH = 155
 SLIDE_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "slide_picture", "zh_CN")
+
+def tooltip_aciton(view, item, x, y):
+    if item.is_in_name_area(x, y):
+        global_event.emit("show-pkg-name-tooltip", item.alias_name)
 
 class HomePage(gtk.HBox):
     '''
@@ -400,8 +403,7 @@ class CategoryItem(TreeItem):
                     ))
         
         self.pkg_icon_view = IconView() 
-        self.pkg_icon_view.connect("motion-notify-item", 
-                lambda view, item, x, y: Tooltip.text(view, item.pkg_name).show_delay(view, 500))
+        self.pkg_icon_view.connect("motion-notify-item", tooltip_aciton)
         if len(self.all_pkg_names) > LOAD_ITEMS_NUMBER:
             self.load_new_items(self.all_pkg_names[:LOAD_ITEMS_NUMBER])
         else:
@@ -577,8 +579,7 @@ class SecondCategoryItem(TreeItem):
                 ))
         
         self.pkg_icon_view = IconView() 
-        self.pkg_icon_view.connect("motion-notify-item", 
-                lambda view, item, x, y: Tooltip.text(view, item.pkg_name).show_delay(view, 500))
+        self.pkg_icon_view.connect("motion-notify-item", tooltip_aciton)
         if len(self.all_pkg_names) > LOAD_ITEMS_NUMBER:
             self.load_new_items(self.all_pkg_names[:LOAD_ITEMS_NUMBER])
         else:
@@ -801,6 +802,20 @@ class RecommendItem(TreeItem):
         
 gobject.type_register(RecommendItem)        
 
+class PkgName(gobject.GObject):
+    def __init__(self):
+        gobject.GObject.__init__(self)
+
+    def render(self, cr, text, rect):
+        draw_text(
+            cr,
+            text,
+            rect.x,
+            rect.y,
+            rect.width,
+            rect.height,
+            text_size=NAME_SIZE)
+
 class PkgIconItem(IconItem):
     '''
     class docs
@@ -843,6 +858,7 @@ class PkgIconItem(IconItem):
         self.star_level = get_star_level(mark)
         self.star_buffer = StarBuffer(self.star_level)
         self.grade_star = 0
+        self.pkg_name_area = PkgName()
         
         self.width = 240
         self.height = 114
@@ -897,15 +913,15 @@ class PkgIconItem(IconItem):
             rect.y + self.DRAW_PADDING_Y + self.DRAW_ICON_SIZE + self.DRAW_BUTTON_PADDING_Y)
         
         # Draw name.
-        text_width = rect.width - self.DRAW_PADDING_LEFT - self.DRAW_PADDING_RIGHT - self.DRAW_INFO_PADDING_X - self.pkg_icon_pixbuf.get_width()
-        draw_text(
+        self.text_width = rect.width - self.DRAW_PADDING_LEFT - self.DRAW_PADDING_RIGHT - self.DRAW_INFO_PADDING_X - self.pkg_icon_pixbuf.get_width()
+        self.pkg_name_area.render(
             cr,
             self.alias_name,
-            rect.x + self.DRAW_PADDING_LEFT + ICON_SIZE + self.DRAW_INFO_PADDING_X,
-            rect.y + self.DRAW_PADDING_Y,
-            text_width,
-            NAME_SIZE,
-            text_size=NAME_SIZE)
+            gtk.gdk.Rectangle(
+                rect.x + self.DRAW_PADDING_LEFT + ICON_SIZE + self.DRAW_INFO_PADDING_X,
+                rect.y + self.DRAW_PADDING_Y,
+                self.text_width,
+                NAME_SIZE))
 
         # Draw star.
         self.star_buffer.render(
@@ -925,7 +941,7 @@ class PkgIconItem(IconItem):
             cr.rectangle(
                 rect.x + self.DRAW_PADDING_LEFT + ICON_SIZE + self.DRAW_INFO_PADDING_X,
                 rect.y + self.DRAW_LONG_DESC_PADDING_Y,
-                text_width,
+                self.text_width,
                 long_desc_height,
                 )
             cr.clip()
@@ -934,9 +950,9 @@ class PkgIconItem(IconItem):
                 self.long_desc,
                 rect.x + self.DRAW_PADDING_LEFT + ICON_SIZE + self.DRAW_INFO_PADDING_X,
                 rect.y + self.DRAW_LONG_DESC_PADDING_Y,
-                text_width,
+                self.text_width,
                 long_desc_height,
-                wrap_width=text_width,
+                wrap_width=self.text_width,
                 )
         
     def is_in_star_area(self, x, y):
