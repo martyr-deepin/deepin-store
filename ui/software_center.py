@@ -169,37 +169,32 @@ def switch_to_detail_page(page_switcher, detail_page, pkg_name):
     log("end switch to detail_page")
 
 def switch_page(page_switcher, page_box, page, detail_page):
-    print page
+    log("slide to page")
+    if page_switcher.active_widget == detail_page:
+        page_switcher.slide_to_page(page_box, "left")
+    else:
+        page_switcher.slide_to_page(page_box, "right")
+        
+    log("remove widgets from page_box")
+    container_remove_all(page_box)
     
-    from deepin_utils.date_time import exec_time
-    with exec_time():
-        log("slide to page")
-        if page_switcher.active_widget == detail_page:
-            page_switcher.slide_to_page(page_box, "left")
-        else:
-            page_switcher.slide_to_page(page_box, "right")
+    log("page_box pack widgets")
+    page_box.pack_start(page, True, True)
+    
+    log("page_box show all")
+    page_box.show_all()
+    
+    log("init widget in page_box")
+    if isinstance(page, HomePage):
+        log("page.recommend_item.show_page()")
+        page.recommend_item.show_page()
             
-        log("remove widgets from page_box")
-        container_remove_all(page_box)
-        
-        log("page_box pack widgets")
-        page_box.pack_start(page, True, True)
-        
-        log("page_box show all")
-        page_box.show_all()
-        
-        log("init widget in page_box")
-        if isinstance(page, HomePage):
-            print "****************************"
-            log("page.recommend_item.show_page()")
-            page.recommend_item.show_page()
-                
-            log("page.category_view.select_first_item()")
-            page.category_view.select_first_item()
-        elif isinstance(page, UpgradePage):
-            page.fetch_upgrade_info()
-            if page.in_no_notify_page:
-                page.show_init_page()
+        log("page.category_view.select_first_item()")
+        page.category_view.select_first_item()
+    elif isinstance(page, UpgradePage):
+        page.fetch_upgrade_info()
+        if page.in_no_notify_page:
+            page.show_init_page()
 
 def handle_dbus_reply(*reply):
     print "handle_dbus_reply" % (str(reply))
