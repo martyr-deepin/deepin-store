@@ -145,10 +145,10 @@ class DataManager(object):
                     recommend_pkgs.append((name, alias_name, 5.0))
         
         self.software_db_cursor.execute(
-            "SELECT long_desc, version, homepage, size, alias_name FROM software WHERE pkg_name=?", [pkg_name])
-        (long_desc, version, homepage, size, alias_name) = self.software_db_cursor.fetchone()
+            "SELECT long_desc, version, homepage, alias_name FROM software WHERE pkg_name=?", [pkg_name])
+        (long_desc, version, homepage, alias_name) = self.software_db_cursor.fetchone()
         
-        return (category, long_desc, version, homepage, size, 5.0, 0, alias_name, recommend_pkgs)
+        return (category, long_desc, version, homepage, 5.0, 0, alias_name, recommend_pkgs)
         
     def get_pkg_search_info(self, pkg_name):
         self.software_db_cursor.execute(

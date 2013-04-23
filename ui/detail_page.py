@@ -152,7 +152,6 @@ class DetailPage(gtk.HBox):
         self.left_version_label = Label(label_width=136)
         show_label_tooltip(self.left_version_label)
         self.left_version_label.set_ellipsize(pango.ELLIPSIZE_MIDDLE)
-        self.left_size_label = Label()
         self.left_download_label = Label()
         
         self.left_homepage_box = gtk.HBox()
@@ -206,7 +205,6 @@ class DetailPage(gtk.HBox):
         self.left_view_box.pack_start(self.left_action_align, False, False)
         self.left_label_table.attach(self.left_category_box, 0, 1, 0, 1)
         self.left_label_table.attach(self.left_version_label, 0, 1, 1, 2)
-        self.left_label_table.attach(self.left_size_label, 0, 1, 2, 3)
         self.left_label_table.attach(self.left_download_label, 0, 1, 3, 4)
         self.left_label_table.attach(self.left_homepage_box_align, 0, 1, 4, 5)
         self.left_label_align.add(self.left_label_table)
@@ -348,8 +346,7 @@ class DetailPage(gtk.HBox):
         print "%s: start update_pkg_info" % pkg_name
         self.pkg_name = pkg_name
         (self.category, self.long_desc, 
-         self.version, self.homepage, 
-         self.size, self.star, 
+         self.version, self.homepage, self.star, 
          self.download, self.alias_name,
          self.recommend_pkgs) = self.data_manager.get_pkg_detail_info(self.pkg_name)
         
@@ -371,7 +368,6 @@ class DetailPage(gtk.HBox):
             self.left_category_label.set_text(get_category_name(self.category[1]))
             self.left_category_box.add(self.left_category_label_box)
         self.left_version_label.set_text("版本：%s" % self.version)
-        self.left_size_label.set_text("大小：%s" % format_file_size(self.size))
         self.left_download_label.set_text("下载：%s" % self.download)
         
         print "%s: #2# %s" % (pkg_name, time.time() - start_time)
