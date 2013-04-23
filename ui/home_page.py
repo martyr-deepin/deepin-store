@@ -629,6 +629,55 @@ class RecommendItem(TreeItem):
         TreeItem.__init__(self)
         self.name = _("Home Recommends")
         self.data_manager = data_manager
+        
+        self.init_recommend_page()
+        
+    def init_recommend_page(self):    
+        self.recommend_scrolled_window = ScrolledWindow()
+        
+        self.background_box = BackgroundBox()
+        self.background_box.draw_mask = self.draw_mask
+        
+        self.box = gtk.VBox()
+        
+        slide_pkg_names = self.data_manager.get_slide_info()
+        self.slider_switcher = SlideSwitcher(
+            map(lambda pkg_name: gtk.gdk.pixbuf_new_from_file(os.path.join(SLIDE_PICTURE_DIR, "%s.jpg" % pkg_name)),
+                slide_pkg_names))
+        self.slider_switcher.connect("motion-notify-index", lambda w, i: global_event.emit("set-cursor", gtk.gdk.HAND2))
+        self.slider_switcher.connect("button-press-index", lambda w, i: global_event.emit("switch-to-detail-page", slide_pkg_names[i]))
+        self.slider_switcher.connect("leave-notify-index", lambda w, i: global_event.emit("set-cursor", None))
+        self.box_align = gtk.Alignment()
+        self.box_align.set(0.5, 0.5, 1, 1)
+        self.box_align.set_padding(5, 0, 10, 11)
+        
+        self.page_box = gtk.VBox()
+        
+        self.tab_switcher = TabSwitcher(["热门推荐", "专题介绍", "下载排行"])
+        self.tab_switcher_align = gtk.Alignment()
+        self.tab_switcher_align.set(0.5, 0.5, 1, 1)
+        self.tab_switcher_align.set_padding(10, 0, 0, 9)
+        self.tab_switcher_align.add(self.tab_switcher)
+        self.tab_switcher_pages_callback = [
+                "get_pkg_icon_view_page",
+                "get_album_page",
+                "get_download_rank_page",
+                ]
+        
+        self.box.pack_start(self.slider_switcher, False, False)
+        self.box.pack_start(self.tab_switcher_align, False, False)
+        
+        self.box_align.add(self.box)
+        
+        self.background_box.pack_start(self.box_align)
+        self.background_box.pack_start(self.page_box)
+        
+        self.recommend_scrolled_window.add_child(self.background_box)
+        
+        self.switch_page(0)
+        
+        self.tab_switcher.connect("tab-switch-start", lambda switcher, page_index: self.switch_page(page_index))
+        self.tab_switcher.connect("click-current-tab", lambda switcher, page_index: self.click_page())
     
     def render_name(self, cr, rect):
         text_color = "#333333"
@@ -717,53 +766,9 @@ class RecommendItem(TreeItem):
         self.album_page = AlbumPage(self.data_manager)
         return self.album_page
         
+    # from deepin_utils.date_time import print_exec_time
+    # @print_exec_time
     def show_page(self):    
-        self.recommend_scrolled_window = ScrolledWindow()
-        
-        self.background_box = BackgroundBox()
-        self.background_box.draw_mask = self.draw_mask
-        
-        self.box = gtk.VBox()
-        
-        slide_pkg_names = self.data_manager.get_slide_info()
-        self.slider_switcher = SlideSwitcher(
-            map(lambda pkg_name: gtk.gdk.pixbuf_new_from_file(os.path.join(SLIDE_PICTURE_DIR, "%s.jpg" % pkg_name)),
-                slide_pkg_names))
-        self.slider_switcher.connect("motion-notify-index", lambda w, i: global_event.emit("set-cursor", gtk.gdk.HAND2))
-        self.slider_switcher.connect("button-press-index", lambda w, i: global_event.emit("switch-to-detail-page", slide_pkg_names[i]))
-        self.slider_switcher.connect("leave-notify-index", lambda w, i: global_event.emit("set-cursor", None))
-        self.box_align = gtk.Alignment()
-        self.box_align.set(0.5, 0.5, 1, 1)
-        self.box_align.set_padding(5, 0, 10, 11)
-        
-        self.page_box = gtk.VBox()
-        
-        self.tab_switcher = TabSwitcher(["热门推荐", "专题介绍", "下载排行"])
-        self.tab_switcher_align = gtk.Alignment()
-        self.tab_switcher_align.set(0.5, 0.5, 1, 1)
-        self.tab_switcher_align.set_padding(10, 0, 0, 9)
-        self.tab_switcher_align.add(self.tab_switcher)
-        self.tab_switcher_pages_callback = [
-                "get_pkg_icon_view_page",
-                "get_album_page",
-                "get_download_rank_page",
-                ]
-        
-        self.box.pack_start(self.slider_switcher, False, False)
-        self.box.pack_start(self.tab_switcher_align, False, False)
-        
-        self.box_align.add(self.box)
-        
-        self.background_box.pack_start(self.box_align)
-        self.background_box.pack_start(self.page_box)
-        
-        self.recommend_scrolled_window.add_child(self.background_box)
-        
-        self.switch_page(0)
-        
-        self.tab_switcher.connect("tab-switch-start", lambda switcher, page_index: self.switch_page(page_index))
-        self.tab_switcher.connect("click-current-tab", lambda switcher, page_index: self.click_page())
-        
         global_event.emit("show-pkg-view", self.recommend_scrolled_window)
         
     def draw_blank_mask(self, cr, x, y, w, h):
