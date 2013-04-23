@@ -43,10 +43,10 @@ class DataManager(object):
         self.software_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "software", "zh_CN", "software.db"))
         self.software_db_cursor = self.software_db_connect.cursor()
 
-        self.desktop_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "desktop", "zh_CN", "desktop.db"))
+        self.desktop_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "desktop", "zh_CN", "new_desktop.db"))
         self.desktop_db_cursor = self.desktop_db_connect.cursor()
         
-        self.category_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "category", "zh_CN", "category.db"))
+        self.category_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "category", "category.db"))
         self.category_db_cursor = self.category_db_connect.cursor()
         
         self.category_dict = {}
@@ -121,21 +121,22 @@ class DataManager(object):
         
     def get_pkg_detail_info(self, pkg_name):
         self.desktop_db_cursor.execute(
-            "SELECT first_category_index, second_category_index FROM desktop WHERE pkg_name=?", [pkg_name])
-        category_indexes = self.desktop_db_cursor.fetchone()
+            "SELECT first_category_name, second_category_name FROM desktop WHERE pkg_name=?", [pkg_name])
+        category_names = self.desktop_db_cursor.fetchone()
         recommend_pkgs = []
-        if category_indexes == None:
+        if category_names == None:
             category = None
         else:
-            (first_category_index, second_category_index) = category_indexes
-            self.category_db_cursor.execute(
-                "SELECT first_category_name, second_category_name FROM category_name WHERE first_category_index=? and second_category_index=?",
-                [first_category_index, second_category_index])
-            category = self.category_db_cursor.fetchone()
+            #(first_category_index, second_category_index) = category_indexes
+            #self.category_db_cursor.execute(
+                #"SELECT first_category_name, second_category_name FROM category_name WHERE first_category_index=? and second_category_index=?",
+                #[first_category_index, second_category_index])
+            category = category_names
+            first_category_name, second_category_name = category
             
             self.category_db_cursor.execute(
-                "SELECT recommend_pkgs FROM recommend WHERE first_category_index=? and second_category_index=?",
-                [first_category_index, second_category_index])
+                "SELECT recommend_pkgs FROM category_name WHERE first_category_name=? and second_category_name=?",
+                [first_category_name, second_category_name])
             names = eval(self.category_db_cursor.fetchone()[0])
             for name in names:
                 if name != pkg_name:
@@ -311,7 +312,7 @@ class DataManager(object):
         # Fill data into category dict.
         self.category_name_dict = OrderedDict()
         self.category_db_cursor.execute(
-            "SELECT * FROM category_name")
+            "SELECT first_category_index, second_category_index, first_category_name, second_category_name FROM category_name")
         for (first_category_index, second_category_index, first_category, second_category) in self.category_db_cursor.fetchall():
             self.category_name_dict[(first_category_index, second_category_index)] = (first_category, second_category)
             
@@ -327,12 +328,11 @@ class DataManager(object):
         #     }
     
         self.desktop_db_cursor.execute(
-            "SELECT desktop_path, pkg_name, icon_name, display_name, first_category_index, second_category_index FROM desktop ORDER BY display_name")
-        for (desktop_path, pkg_name, icon_name, display_name, first_category_index, second_category_index) in self.desktop_db_cursor.fetchall():
-            if first_category_index != "" and second_category_index != "":
-                (first_category, second_category) = self.category_name_dict[(first_category_index, second_category_index)]
+            "SELECT desktop_path, pkg_name, icon_name, display_name, first_category_name, second_category_name FROM desktop ORDER BY display_name")
+        for (desktop_path, pkg_name, icon_name, display_name, first_category_name, second_category_name) in self.desktop_db_cursor.fetchall():
+            if first_category_name != "" and second_category_name != "":
                 
-                second_category_dict = self.category_dict[first_category][second_category]    
+                second_category_dict = self.category_dict[first_category_name][second_category_name]    
                 if not second_category_dict.has_key(pkg_name):
                     second_category_dict[pkg_name] = []
                     
