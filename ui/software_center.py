@@ -197,10 +197,10 @@ def switch_page(page_switcher, page_box, page, detail_page):
             page.show_init_page()
 
 def handle_dbus_reply(*reply):
-    print "handle_dbus_reply" % (str(reply))
+    print "handle_dbus_reply: ", reply
     
 def handle_dbus_error(*error):
-    print "handle_dbus_error" % (str(error))
+    print "handle_dbus_error: ", error
     
 def message_handler(messages, bus_interface, upgrade_page, uninstall_page, install_page):
     for message in messages:
@@ -342,7 +342,9 @@ def install_pkg(bus_interface, install_page, pkg_names, window):
     install_page.add_install_actions(pkg_names)
     
     # Send install command.
-    bus_interface.install_pkg(pkg_names)
+    bus_interface.install_pkg(pkg_names,
+                              reply_handler=handle_dbus_reply, 
+                              error_handler=handle_dbus_error)
     
 def update(source, status, icon_window, (ax, ay), (bx, by), (cx, cy), (a, b, c)):
     move_x = ax + (cx - ax) * status
