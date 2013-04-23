@@ -807,12 +807,12 @@ class UpgradeItem(TreeItem):
         render_pkg_info(cr, rect, self.alias_name, self.pkg_name, self.icon_pixbuf, self.pkg_version, self.short_desc, -ITEM_PADDING_X)
         
     def render_no_notify(self, cr, rect):
-        if self.status == self.STATUS_NORMAL:
-            if self.row_index % 2 == 1:
-                cr.set_source_rgba(1, 1, 1, 0.5)
-                cr.rectangle(rect.x, rect.y, rect.width, rect.height)
-                cr.fill()
+        if self.row_index % 2 == 1:
+            cr.set_source_rgba(1, 1, 1, 0.5)
+            cr.rectangle(rect.x, rect.y, rect.width, rect.height)
+            cr.fill()
             
+        if self.status == self.STATUS_NORMAL:
             if self.notify_button_hover:
                 text_color = "#00AAFF"
             else:
