@@ -84,6 +84,7 @@ class DownloadRankPage(gtk.VBox):
         self.pack_start(self.page_box, True, True)    
         
         global_event.register_event("update-rank-page", self.update_rank_page)
+        global_event.emit("update-current-status-pkg-page", self.week_rank_icon_view)
         
         self.init_rank_info()
         
@@ -117,10 +118,13 @@ class DownloadRankPage(gtk.VBox):
         
         if page_index == 0:
             self.page_align.add(self.week_rank_icon_view_scrlledwindow)
+            global_event.emit("update-current-status-pkg-page", self.week_rank_icon_view)
         elif page_index == 1:
             self.page_align.add(self.month_rank_icon_view_scrlledwindow)
+            global_event.emit("update-current-status-pkg-page", self.month_rank_icon_view)
         else:
             self.page_align.add(self.all_rank_icon_view_scrlledwindow)
+            global_event.emit("update-current-status-pkg-page", self.all_rank_icon_view)
             
         self.show_all()    
         
@@ -151,7 +155,7 @@ class RankTab(gtk.Button):
         
         self.connect("expose-event", self.expose_rank_tab)
         self.connect("motion-notify-event", self.motion_rank_tab)
-        self.connect("button-press-event", self.button_press_rank_tab)
+        self.connect("clicked", self.button_press_rank_tab)
         self.connect("leave-notify-event", self.leave_rank_tab)
         
         global_event.register_event("click-rank-tab", self.click_rank_tab)
@@ -198,7 +202,7 @@ class RankTab(gtk.Button):
     def leave_rank_tab(self, widget, event):
         set_cursor(widget, None)
     
-    def button_press_rank_tab(self, widget, event):
+    def button_press_rank_tab(self, widget, event=None):
         global_event.emit("click-rank-tab", self.tab_index)
         
 gobject.type_register(RankTab)

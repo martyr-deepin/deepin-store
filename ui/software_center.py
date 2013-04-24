@@ -63,8 +63,32 @@ from events import global_event
 import dtk.ui.tooltip as Tooltip
 from dtk.ui.label import Label
 from dtk.ui.gio_utils import start_desktop_file
+from dtk.ui.iconview import IconView
+from dtk.ui.treeview import TreeView
 from start_desktop_window import StartDesktopWindow
-from utils import log, ThreadMethod
+from utils import log
+
+global current_status_pkg_page
+current_status_pkg_page = None
+def update_current_status_pkg_page(obj):
+    global current_status_pkg_page
+    current_status_pkg_page = obj
+
+def refresh_current_page_status(pkg_name, pkg_info_list, bus_interface):
+    change_pkgs = [info[0] for info in pkg_info_list]
+    if isinstance(current_status_pkg_page, IconView):
+        for item in current_status_pkg_page.items:
+            if item.pkg_name in change_pkgs:
+                item.is_installed = bus_interface.request_pkgs_install_status([pkg_name])[0]
+                item.emit_redraw_request()
+    elif isinstance(current_status_pkg_page, DetailPage):
+        if current_status_pkg_page.pkg_name in change_pkgs:
+            current_status_pkg_page.fetch_pkg_status()
+    elif isinstance(current_status_pkg_page, TreeView):
+        for item in current_status_pkg_page.visible_items:
+            if item.pkg_name in change_pkgs:
+                item.is_installed = bus_interface.request_pkgs_install_status([pkg_name])[0]
+                current_status_pkg_page.redraw_request(item, True)
 
 def update_navigatebar_number(navigatebar, page_index, notify_number):
     navigatebar.update_notify_num(navigatebar.nav_items[page_index], notify_number)
@@ -167,6 +191,7 @@ def switch_to_detail_page(page_switcher, detail_page, pkg_name):
     # ThreadMethod(detail_page.update_pkg_info, (pkg_name,)).start()
     detail_page.update_pkg_info(pkg_name)
     log("end switch to detail_page")
+    global_event.emit("update-current-status-pkg-page", detail_page)
 
 def switch_page(page_switcher, page_box, page, detail_page):
     log("slide to page")
@@ -182,14 +207,13 @@ def switch_page(page_switcher, page_box, page, detail_page):
     page_box.pack_start(page, True, True)
     
     log("page_box show all")
-    # page_box.show_all()
-    page_box.get_toplevel().show_all()
+    page_box.show_all()
     
     log("init widget in page_box")
     if isinstance(page, HomePage):
         log("page.recommend_item.show_page()")
         page.recommend_item.show_page()
-        
+            
         log("page.category_view.select_first_item()")
         page.category_view.select_first_item()
     elif isinstance(page, UpgradePage):
@@ -198,12 +222,12 @@ def switch_page(page_switcher, page_box, page, detail_page):
             page.show_init_page()
 
 def handle_dbus_reply(*reply):
-    print "handle_dbus_reply" % (str(reply))
+    print "handle_dbus_reply: ", reply
     
 def handle_dbus_error(*error):
-    print "handle_dbus_error" % (str(error))
+    print "handle_dbus_error: ", error
     
-def message_handler(messages, bus_interface, upgrade_page, uninstall_page, install_page):
+def message_handler(messages, bus_interface, upgrade_page, uninstall_page, install_page, home_page):
     for message in messages:
         (signal_type, action_content) = message
 
@@ -213,6 +237,13 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 install_page.download_ready(pkg_name)
             elif action_type == ACTION_UPGRADE:
                 upgrade_page.download_ready(pkg_name)
+
+        elif signal_type == 'ready-download-finish':
+            (pkg_name, action_type) = action_content
+            if action_type == ACTION_INSTALL:
+                install_page.download_wait(pkg_name)
+            elif action_type == ACTION_UPGRADE:
+                upgrade_page.download_wait(pkg_name)
 
         elif signal_type == "download-start":
             (pkg_name, action_type) = action_content
@@ -268,6 +299,8 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 upgrade_page.action_finish(pkg_name, pkg_info_list)
             elif action_type == ACTION_INSTALL:
                 install_page.action_finish(pkg_name, pkg_info_list)
+            
+            refresh_current_page_status(pkg_name, pkg_info_list, bus_interface)
 
         elif signal_type == "update-list-finish":
             upgrade_page.fetch_upgrade_info()
@@ -343,7 +376,9 @@ def install_pkg(bus_interface, install_page, pkg_names, window):
     install_page.add_install_actions(pkg_names)
     
     # Send install command.
-    bus_interface.install_pkg(pkg_names)
+    bus_interface.install_pkg(pkg_names,
+                              reply_handler=handle_dbus_reply, 
+                              error_handler=handle_dbus_error)
     
 def update(source, status, icon_window, (ax, ay), (bx, by), (cx, cy), (a, b, c)):
     move_x = ax + (cx - ax) * status
@@ -464,7 +499,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
         global debug_flag
         debug_flag = "--debug" in arguments
-        
+
     def exit(self):
         gtk.main_quit()
         
@@ -681,12 +716,15 @@ class DeepinSoftwareCenter(dbus.service.Object):
         global_event.register_event("show-message", lambda message: show_message(self.statusbar, self.message_box, message))
         global_event.register_event("start-pkg", lambda pkg_name, desktop_infos, offset: start_pkg(pkg_name, desktop_infos, offset, self.application.window))
         global_event.register_event("start-desktop", start_desktop)
+        global_event.register_event("show-pkg-name-tooltip", lambda pkg_name: show_tooltip(self.application.window, pkg_name))
+        global_event.register_event("update-current-status-pkg-page", update_current_status_pkg_page)
         self.system_bus.add_signal_receiver(
             lambda messages: message_handler(messages, 
                                          self.bus_interface, 
                                          self.upgrade_page, 
                                          self.uninstall_page, 
-                                         self.install_page),
+                                         self.install_page,
+                                         self.home_page),
             dbus_interface=DSC_SERVICE_NAME, 
             path=DSC_SERVICE_PATH, 
             signal_name="update_signal")
@@ -706,14 +744,8 @@ class DeepinSoftwareCenter(dbus.service.Object):
             pass
 
     def upgrade_pkg(self, pkg_names):
-        self.bus_interface.upgrade_pkg(pkg_names, reply_handler=self.handle_dbus_reply, error_handler=self.handle_dbus_error)
+        self.bus_interface.upgrade_pkg(pkg_names, reply_handler=handle_dbus_reply, error_handler=handle_dbus_error)
         return False
-
-    def handle_dbus_reply(self, data=None):
-        print "Normal Reply: %s " % data
-
-    def handle_dbus_error(self, data=None):
-        print "Error Reply: %s " % data
 
     def run(self):    
         self.init_ui()

@@ -144,6 +144,7 @@ class PackageManager(dbus.service.Object):
             lambda pkg_name, action_type, percent, speed: self.update_signal([("download-update", (pkg_name, action_type, percent, speed))]))
         global_event.register_event("download-finish", self.download_finish)
         global_event.register_event("download-stop", self.download_stop)
+        global_event.register_event("download-failed", self.download_failed)
         
         self.in_update_list = False
         global_event.register_event("update-list-start", self.update_list_start)
@@ -227,6 +228,7 @@ class PackageManager(dbus.service.Object):
     def add_download(self, pkg_name, action_type, simulate=False):
         self.update_signal([("ready-download-start", (pkg_name, action_type))])
         pkg_infos = get_pkg_download_info(self.pkg_cache, pkg_name)
+        self.update_signal([("ready-download-finish", (pkg_name, action_type))])
         if pkg_infos == DOWNLOAD_STATUS_NOTNEED:
             self.download_finish(pkg_name, action_type, simulate)
             print "Don't need download"
@@ -250,6 +252,11 @@ class PackageManager(dbus.service.Object):
         
     def download_stop(self, pkg_name, action_type):
         self.update_signal([("download-stop", (pkg_name, action_type))])
+        
+        self.exit_manager.check()    
+        
+    def download_failed(self, pkg_name, action_type):
+        self.update_signal([("download-failed", (pkg_name, action_type))])
         
         self.exit_manager.check()    
         

@@ -689,6 +689,12 @@ class UpgradePage(gtk.VBox):
                 item.download_ready()
                 break
 
+    def download_wait(self, pkg_name):
+        for item in self.upgrade_treeview.visible_items:
+            if item.pkg_name == pkg_name:
+                item.download_wait()
+                break
+
     def download_start(self, pkg_name):
         for item in self.upgrade_treeview.visible_items:
             if item.pkg_name == pkg_name:
@@ -807,12 +813,12 @@ class UpgradeItem(TreeItem):
         render_pkg_info(cr, rect, self.alias_name, self.pkg_name, self.icon_pixbuf, self.pkg_version, self.short_desc, -ITEM_PADDING_X)
         
     def render_no_notify(self, cr, rect):
-        if self.status == self.STATUS_NORMAL:
-            if self.row_index % 2 == 1:
-                cr.set_source_rgba(1, 1, 1, 0.5)
-                cr.rectangle(rect.x, rect.y, rect.width, rect.height)
-                cr.fill()
+        if self.row_index % 2 == 1:
+            cr.set_source_rgba(1, 1, 1, 0.5)
+            cr.rectangle(rect.x, rect.y, rect.width, rect.height)
+            cr.fill()
             
+        if self.status == self.STATUS_NORMAL:
             if self.notify_button_hover:
                 text_color = "#00AAFF"
             else:
@@ -1204,7 +1210,7 @@ class UpgradeItem(TreeItem):
     
     def download_ready(self):
         self.status = self.STATUS_READY_DOWNLOAD
-        self.status_text = "准备下载"
+        self.status_text = "分析依赖中"
     
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
