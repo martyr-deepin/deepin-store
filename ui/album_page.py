@@ -79,11 +79,13 @@ class AlbumPage(gtk.VBox):
         
         container_remove_all(self)
         container_remove_all(self.album_detail_align)
-        self.album_detail_align.add(AlbumDetailPage(self.data_manager, album_id))
+        album_detail_page = AlbumDetailPage(self.data_manager, album_id)
+        self.album_detail_align.add(album_detail_page)
         
         self.pack_start(self.album_detail_align, True, True)
         
         self.show_all()
+        global_event.emit("update-current-status-pkg-page", album_detail_page.treeview)
         
 gobject.type_register(AlbumPage)
 

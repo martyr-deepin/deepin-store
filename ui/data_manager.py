@@ -93,7 +93,7 @@ class DataManager(object):
             return -1
         else:
             return 1
-        
+
     def get_pkgs_install_status(self, pkg_names, reply_handler, error_handler):
         return self.bus_interface.request_pkgs_install_status(
             pkg_names,

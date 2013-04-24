@@ -360,7 +360,6 @@ class DetailPage(gtk.HBox):
         self.pkg_star_view.star_buffer.star_level = int(self.star)
         
         print "%s: #1# %s" % (pkg_name, time.time() - start_time)
-        container_remove_all(self.left_action_box)
         create_thread(self.fetch_pkg_status).start()
         
         container_remove_all(self.left_category_box)
@@ -411,6 +410,7 @@ class DetailPage(gtk.HBox):
         print "%s: end update_pkg_info, %s" % (pkg_name, time.time() - start_time)
         
     def handle_pkg_status(self, *reply):
+        container_remove_all(self.left_action_box)
         install_status = reply
         if install_status[0][0]:
             if self.category == None:
@@ -435,6 +435,7 @@ class DetailPage(gtk.HBox):
         self.left_action_box.show_all()
         
     def handle_dbus_error(self, *error):
+        container_remove_all(self.left_action_box)
         print "***** request_pkgs_install_status handle_dbus_error"
         print error
     

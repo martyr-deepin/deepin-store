@@ -417,6 +417,7 @@ class CategoryItem(TreeItem):
         
         self.page_box.pack_start(self.message_bar, False, False)
         self.page_box.pack_start(self.pkg_icon_scrolled_window, True, True)
+        global_event.emit("update-current-status-pkg-page", self.pkg_icon_view)
         
     def draw_row_mask(self, cr, rect, row):
         if row % 2 == 1:
@@ -595,6 +596,7 @@ class SecondCategoryItem(TreeItem):
         self.page_box.pack_start(self.pkg_icon_scrolled_window, True, True)
         
         global_event.emit("show-pkg-view", self.page_box)
+        global_event.emit("update-current-status-pkg-page", self.pkg_icon_view)
         
     def draw_row_mask(self, cr, rect, row):
         if row % 2 == 1:
@@ -802,7 +804,7 @@ class RecommendItem(TreeItem):
         if isinstance(self.active_page, AlbumPage):
             if self.active_page.in_detail_view:
                 self.active_page.switch_to_album_summary_view()
-                
+
         self.recommend_scrolled_window.show_all()
         
 gobject.type_register(RecommendItem)        
