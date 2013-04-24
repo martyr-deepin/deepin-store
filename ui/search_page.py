@@ -69,6 +69,7 @@ class SearchPage(gtk.VBox):
         
     def update_message_bar(self, treeview):
         self.message_bar.set_message("%s: 搜索到%s款软件" % (' '.join(self.keywords), len(treeview.visible_items)))
+        global_event.emit("update-current-status-pkg-page", treeview)
         
     def draw_mask(self, cr, x, y, w, h):
         '''

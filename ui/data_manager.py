@@ -65,7 +65,7 @@ class DataManager(object):
         self.slide_db_cursor = self.slide_db_connect.cursor()
         
         self.build_category_dict()
-        
+
     from deepin_utils.date_time import print_exec_time
     @print_exec_time    
     def get_pkgs_match_input(self, input_string):
