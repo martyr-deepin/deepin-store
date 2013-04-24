@@ -213,6 +213,13 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
             elif action_type == ACTION_UPGRADE:
                 upgrade_page.download_ready(pkg_name)
 
+        elif signal_type == 'ready-download-finish':
+            (pkg_name, action_type) = action_content
+            if action_type == ACTION_INSTALL:
+                install_page.download_wait(pkg_name)
+            elif action_type == ACTION_UPGRADE:
+                upgrade_page.download_wait(pkg_name)
+
         elif signal_type == "download-start":
             (pkg_name, action_type) = action_content
             if action_type == ACTION_INSTALL:

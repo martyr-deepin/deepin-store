@@ -201,6 +201,9 @@ class InstallPage(gtk.VBox):
     def download_ready(self, pkg_name):
         self.get_action_item(pkg_name).download_ready()
 
+    def download_wait(self, pkg_name):
+        self.get_action_item(pkg_name).download_wait()
+
     def download_start(self, pkg_name):
         self.get_action_item(pkg_name).download_start()
 
@@ -278,7 +281,7 @@ class InstallItem(TreeItem):
         self.grade_star = 0
         
         self.status = self.STATUS_READY_DOWNLOAD
-        self.status_text = "准备下载"
+        self.status_text = "分析依赖中"
         self.progress_buffer = ProgressBuffer()
         
     def render_pkg_info(self, cr, rect):
@@ -571,7 +574,7 @@ class InstallItem(TreeItem):
     
     def download_ready(self):
         self.status = self.STATUS_READY_DOWNLOAD
-        self.status_text = "准备下载"
+        self.status_text = "分析依赖中"
 
         if self.redraw_request_callback:
             self.redraw_request_callback(self)

@@ -124,13 +124,9 @@ class DataManager(object):
             "SELECT first_category_name, second_category_name FROM desktop WHERE pkg_name=?", [pkg_name])
         category_names = self.desktop_db_cursor.fetchone()
         recommend_pkgs = []
-        if category_names == None:
+        if category_names == None or category_names[0] == "" or category_names[1] == "":
             category = None
         else:
-            #(first_category_index, second_category_index) = category_indexes
-            #self.category_db_cursor.execute(
-                #"SELECT first_category_name, second_category_name FROM category_name WHERE first_category_index=? and second_category_index=?",
-                #[first_category_index, second_category_index])
             category = category_names
             first_category_name, second_category_name = category
             

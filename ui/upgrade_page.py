@@ -689,6 +689,12 @@ class UpgradePage(gtk.VBox):
                 item.download_ready()
                 break
 
+    def download_wait(self, pkg_name):
+        for item in self.upgrade_treeview.visible_items:
+            if item.pkg_name == pkg_name:
+                item.download_wait()
+                break
+
     def download_start(self, pkg_name):
         for item in self.upgrade_treeview.visible_items:
             if item.pkg_name == pkg_name:
@@ -1204,7 +1210,7 @@ class UpgradeItem(TreeItem):
     
     def download_ready(self):
         self.status = self.STATUS_READY_DOWNLOAD
-        self.status_text = "准备下载"
+        self.status_text = "分析依赖中"
     
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
