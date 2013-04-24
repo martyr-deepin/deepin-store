@@ -744,14 +744,8 @@ class DeepinSoftwareCenter(dbus.service.Object):
             pass
 
     def upgrade_pkg(self, pkg_names):
-        self.bus_interface.upgrade_pkg(pkg_names, reply_handler=self.handle_dbus_reply, error_handler=self.handle_dbus_error)
+        self.bus_interface.upgrade_pkg(pkg_names, reply_handler=handle_dbus_reply, error_handler=handle_dbus_error)
         return False
-
-    def handle_dbus_reply(self, data=None):
-        print "Normal Reply: %s " % data
-
-    def handle_dbus_error(self, data=None):
-        print "Error Reply: %s " % data
 
     def run(self):    
         self.init_ui()
