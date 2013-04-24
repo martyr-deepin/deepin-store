@@ -32,7 +32,7 @@ from dtk.ui.star_view import StarView
 from dtk.ui.browser import WebView
 from constant import CONFIG_DIR, SERVER_ADDRESS
 from skin import app_theme
-from deepin_utils.file import get_parent_dir, read_file, write_file, remove_file, format_file_size
+from deepin_utils.file import get_parent_dir, read_file, write_file, remove_file
 from deepin_utils.process import run_command
 from dtk.ui.utils import color_hex_to_cairo, container_remove_all, get_resize_pixbuf_with_height
 import zipfile
@@ -52,6 +52,7 @@ import urllib2
 import webbrowser
 from category_info import get_category_name
 from utils import log
+import time
 
 PKG_SCREENSHOT_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update_data", "pkg_screenshot", "zh_CN")
 
@@ -341,7 +342,6 @@ class DetailPage(gtk.HBox):
                           (int(event.x), int(event.y), pixbuf.get_width() / 2, 0))
             
     def update_pkg_info(self, pkg_name):
-        import time
         start_time = time.time()
         print "%s: start update_pkg_info" % pkg_name
         self.pkg_name = pkg_name
@@ -360,6 +360,7 @@ class DetailPage(gtk.HBox):
         self.pkg_star_view.star_buffer.star_level = int(self.star)
         
         print "%s: #1# %s" % (pkg_name, time.time() - start_time)
+        container_remove_all(self.left_action_box)
         create_thread(self.fetch_pkg_status).start()
         
         container_remove_all(self.left_category_box)
@@ -411,9 +412,9 @@ class DetailPage(gtk.HBox):
         
     def handle_pkg_status(self, *reply):
         install_status = reply
-        if install_status[0]:
+        if install_status[0][0]:
             if self.category == None:
-                status_label = Label("已安装")
+                status_label = Label("安装")
                 self.left_action_box.pack_start(status_label)
             else:
                 action_button = ImageButton(
@@ -431,14 +432,13 @@ class DetailPage(gtk.HBox):
                 )
             action_button.connect("clicked", lambda w: global_event.emit("install-pkg", [self.pkg_name]))
             self.left_action_box.pack_start(action_button)
+        self.left_action_box.show_all()
         
     def handle_dbus_error(self, *error):
-        print "******************* handle_dbus_error"
+        print "***** request_pkgs_install_status handle_dbus_error"
         print error
     
     def fetch_pkg_status(self):
-        container_remove_all(self.left_action_box)
-        import time
         start_time = time.time()
         self.data_manager.get_pkgs_install_status([self.pkg_name], self.handle_pkg_status, self.handle_dbus_error)
         print self.pkg_name, time.time() - start_time
