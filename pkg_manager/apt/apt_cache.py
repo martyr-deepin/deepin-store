@@ -73,10 +73,6 @@ class AptCache(apt.Cache):
                 pkg_infos.append(str((pkg.name, pkg_version)))
         return pkg_infos
     
-    def get_pkgs_install_version(self, pkg_names):
-        # FIXME: pkg is not in cache iter, it raise exception
-        return map(lambda pkg_name: self[pkg_name].versions[0].version, pkg_names)
-
     def get_pkgs_uninstall_version(self, pkg_names):
         pkg_infos = []
         for pkg_name in pkg_names:
@@ -103,8 +99,11 @@ class AptCache(apt.Cache):
         elif status == None:
             try:
                 return self[pkg_name].is_installed
-            except Exception:
-                return False
+            except:
+                try:
+                    return self[pkg_name+":i386"].is_installed
+                except:
+                    return False
 
     def is_pkg_upgradable(self, pkg_name):
         status = self.packages_status.get(pkg_name)
