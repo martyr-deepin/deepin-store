@@ -38,7 +38,46 @@ from item_render import (render_pkg_info, STAR_SIZE, get_star_level, get_icon_pi
 from skin import app_theme
 from events import global_event
 from constant import ACTION_UNINSTALL
-from message_bar import MessageBar
+from dtk.ui.entry import InputEntry
+from dtk.ui.button import ImageButton
+from dtk.ui.cycle_strip import CycleStrip
+from dtk.ui.label import Label
+
+
+class MessageBar(CycleStrip):
+    '''
+    class docs
+    '''
+	
+    def __init__(self, padding_left=0,):
+        '''
+        init docs
+        '''
+        # Init.
+        CycleStrip.__init__(self, app_theme.get_pixbuf("strip/background.png"))
+        
+        self.label = Label()
+        self.label_align = gtk.Alignment()
+        self.label_align.set(0.0, 0.5, 0, 0)
+        self.label_align.set_padding(0, 0, padding_left, 0)
+        self.label_align.add(self.label)
+
+        self.search_button = ImageButton(
+            app_theme.get_pixbuf("entry/search_normal.png"),
+            app_theme.get_pixbuf("entry/search_hover.png"),
+            app_theme.get_pixbuf("entry/search_press.png"),
+            )
+        self.search_entry = InputEntry(action_button=self.search_button)
+        self.search_entry.set_size(250, 24)
+        entry_align = gtk.Alignment(0.5, 0.5, 0, 0)
+        entry_align.set_padding(0, 0, 5, 5)
+        entry_align.add(self.search_entry)
+
+        self.pack_start(self.label_align, True, True)
+        self.pack_start(entry_align, False, False)
+        
+    def set_message(self, message):
+        self.label.set_text(message)
 
 class UninstallPage(gtk.VBox):
     '''
@@ -55,16 +94,35 @@ class UninstallPage(gtk.VBox):
         self.data_manager = data_manager
         
         self.message_bar = MessageBar(32)
+        self.message_bar.search_entry.entry.connect("changed", self.search_cb)
+        self.message_bar.search_button.connect("clicked", self.search_cb)
         self.treeview = TreeView(enable_drag_drop=False)
         self.treeview.set_expand_column(0)
-        self.pack_start(self.message_bar, False, False)
+
+        top_hbox = gtk.HBox()
+        top_hbox.pack_start(self.message_bar)
+
+        self.pack_start(top_hbox, False, False)
         self.pack_start(self.treeview, True, True)
         
         self.treeview.connect("items-change", self.update_message_bar)
         
         self.fetch_uninstall_info()
         
-        self.treeview.draw_mask = self.draw_mask    
+        self.treeview.draw_mask = self.draw_mask
+
+    def search_cb(self, widget, event=None):
+        results = []
+        keywords = self.message_bar.search_entry.get_text().strip()
+        if keywords:
+            for item in self.treeview.visible_items:
+                if keywords in item.pkg_name:
+                    results.append(item)
+        #self.treeview.hide_items(results)
+        #print len(results)
+
+    def normal_search_cb(self, keywords):
+        pass
         
     def update_message_bar(self, treeview):    
         self.message_bar.set_message("%s款软件可以卸载" % len(treeview.visible_items))
