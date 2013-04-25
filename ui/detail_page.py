@@ -32,7 +32,7 @@ from dtk.ui.star_view import StarView
 from dtk.ui.browser import WebView
 from constant import CONFIG_DIR, SERVER_ADDRESS
 from skin import app_theme
-from deepin_utils.file import get_parent_dir, read_file, write_file, remove_file, format_file_size
+from deepin_utils.file import get_parent_dir, read_file, write_file, remove_file
 from deepin_utils.process import run_command
 from dtk.ui.utils import color_hex_to_cairo, container_remove_all, get_resize_pixbuf_with_height
 import zipfile
@@ -52,6 +52,7 @@ import urllib2
 import webbrowser
 from category_info import get_category_name
 from utils import log
+import time
 
 PKG_SCREENSHOT_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update_data", "pkg_screenshot", "zh_CN")
 
@@ -152,7 +153,6 @@ class DetailPage(gtk.HBox):
         self.left_version_label = Label(label_width=136)
         show_label_tooltip(self.left_version_label)
         self.left_version_label.set_ellipsize(pango.ELLIPSIZE_MIDDLE)
-        self.left_size_label = Label()
         self.left_download_label = Label()
         
         self.left_homepage_box = gtk.HBox()
@@ -206,7 +206,6 @@ class DetailPage(gtk.HBox):
         self.left_view_box.pack_start(self.left_action_align, False, False)
         self.left_label_table.attach(self.left_category_box, 0, 1, 0, 1)
         self.left_label_table.attach(self.left_version_label, 0, 1, 1, 2)
-        self.left_label_table.attach(self.left_size_label, 0, 1, 2, 3)
         self.left_label_table.attach(self.left_download_label, 0, 1, 3, 4)
         self.left_label_table.attach(self.left_homepage_box_align, 0, 1, 4, 5)
         self.left_label_align.add(self.left_label_table)
@@ -343,13 +342,11 @@ class DetailPage(gtk.HBox):
                           (int(event.x), int(event.y), pixbuf.get_width() / 2, 0))
             
     def update_pkg_info(self, pkg_name):
-        import time
         start_time = time.time()
         print "%s: start update_pkg_info" % pkg_name
         self.pkg_name = pkg_name
         (self.category, self.long_desc, 
-         self.version, self.homepage, 
-         self.size, self.star, 
+         self.version, self.homepage, self.star, 
          self.download, self.alias_name,
          self.recommend_pkgs) = self.data_manager.get_pkg_detail_info(self.pkg_name)
         
@@ -371,7 +368,6 @@ class DetailPage(gtk.HBox):
             self.left_category_label.set_text(get_category_name(self.category[1]))
             self.left_category_box.add(self.left_category_label_box)
         self.left_version_label.set_text("版本：%s" % self.version)
-        self.left_size_label.set_text("大小：%s" % format_file_size(self.size))
         self.left_download_label.set_text("下载：%s" % self.download)
         
         print "%s: #2# %s" % (pkg_name, time.time() - start_time)
@@ -414,10 +410,11 @@ class DetailPage(gtk.HBox):
         print "%s: end update_pkg_info, %s" % (pkg_name, time.time() - start_time)
         
     def handle_pkg_status(self, *reply):
+        container_remove_all(self.left_action_box)
         install_status = reply
-        if install_status[0]:
+        if install_status[0][0]:
             if self.category == None:
-                status_label = Label("已安装")
+                status_label = Label("安装")
                 self.left_action_box.pack_start(status_label)
             else:
                 action_button = ImageButton(
@@ -435,14 +432,14 @@ class DetailPage(gtk.HBox):
                 )
             action_button.connect("clicked", lambda w: global_event.emit("install-pkg", [self.pkg_name]))
             self.left_action_box.pack_start(action_button)
+        self.left_action_box.show_all()
         
     def handle_dbus_error(self, *error):
-        print "******************* handle_dbus_error"
+        container_remove_all(self.left_action_box)
+        print "***** request_pkgs_install_status handle_dbus_error"
         print error
     
     def fetch_pkg_status(self):
-        container_remove_all(self.left_action_box)
-        import time
         start_time = time.time()
         self.data_manager.get_pkgs_install_status([self.pkg_name], self.handle_pkg_status, self.handle_dbus_error)
         print self.pkg_name, time.time() - start_time

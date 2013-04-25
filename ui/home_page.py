@@ -49,13 +49,16 @@ from skin import app_theme
 from data import DATA_ID
 from category_info import get_category_name
 from nls import _
-import dtk.ui.tooltip as Tooltip
 
 FIRST_CATEGORY_PADDING_X = 66
 SECOND_CATEGORY_PADDING_X = 46
 
 CATEGORY_VIEW_WIDTH = 155
 SLIDE_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "slide_picture", "zh_CN")
+
+def tooltip_aciton(view, item, x, y):
+    if item.is_in_name_area(x, y):
+        global_event.emit("show-pkg-name-tooltip", item.alias_name)
 
 class HomePage(gtk.HBox):
     '''
@@ -400,8 +403,7 @@ class CategoryItem(TreeItem):
                     ))
         
         self.pkg_icon_view = IconView() 
-        self.pkg_icon_view.connect("motion-notify-item", 
-                lambda view, item, x, y: Tooltip.text(view, item.pkg_name).show_delay(view, 500))
+        self.pkg_icon_view.connect("motion-notify-item", tooltip_aciton)
         if len(self.all_pkg_names) > LOAD_ITEMS_NUMBER:
             self.load_new_items(self.all_pkg_names[:LOAD_ITEMS_NUMBER])
         else:
@@ -415,6 +417,7 @@ class CategoryItem(TreeItem):
         
         self.page_box.pack_start(self.message_bar, False, False)
         self.page_box.pack_start(self.pkg_icon_scrolled_window, True, True)
+        global_event.emit("update-current-status-pkg-page", self.pkg_icon_view)
         
     def draw_row_mask(self, cr, rect, row):
         if row % 2 == 1:
@@ -577,8 +580,7 @@ class SecondCategoryItem(TreeItem):
                 ))
         
         self.pkg_icon_view = IconView() 
-        self.pkg_icon_view.connect("motion-notify-item", 
-                lambda view, item, x, y: Tooltip.text(view, item.pkg_name).show_delay(view, 500))
+        self.pkg_icon_view.connect("motion-notify-item", tooltip_aciton)
         if len(self.all_pkg_names) > LOAD_ITEMS_NUMBER:
             self.load_new_items(self.all_pkg_names[:LOAD_ITEMS_NUMBER])
         else:
@@ -594,6 +596,7 @@ class SecondCategoryItem(TreeItem):
         self.page_box.pack_start(self.pkg_icon_scrolled_window, True, True)
         
         global_event.emit("show-pkg-view", self.page_box)
+        global_event.emit("update-current-status-pkg-page", self.pkg_icon_view)
         
     def draw_row_mask(self, cr, rect, row):
         if row % 2 == 1:
@@ -629,6 +632,55 @@ class RecommendItem(TreeItem):
         TreeItem.__init__(self)
         self.name = _("Home Recommends")
         self.data_manager = data_manager
+        
+        self.init_recommend_page()
+        
+    def init_recommend_page(self):    
+        self.recommend_scrolled_window = ScrolledWindow()
+        
+        self.background_box = BackgroundBox()
+        self.background_box.draw_mask = self.draw_mask
+        
+        self.box = gtk.VBox()
+        
+        slide_pkg_names = self.data_manager.get_slide_info()
+        self.slider_switcher = SlideSwitcher(
+            map(lambda pkg_name: gtk.gdk.pixbuf_new_from_file(os.path.join(SLIDE_PICTURE_DIR, "%s.jpg" % pkg_name)),
+                slide_pkg_names))
+        self.slider_switcher.connect("motion-notify-index", lambda w, i: global_event.emit("set-cursor", gtk.gdk.HAND2))
+        self.slider_switcher.connect("button-press-index", lambda w, i: global_event.emit("switch-to-detail-page", slide_pkg_names[i]))
+        self.slider_switcher.connect("leave-notify-index", lambda w, i: global_event.emit("set-cursor", None))
+        self.box_align = gtk.Alignment()
+        self.box_align.set(0.5, 0.5, 1, 1)
+        self.box_align.set_padding(5, 0, 10, 11)
+        
+        self.page_box = gtk.VBox()
+        
+        self.tab_switcher = TabSwitcher(["热门推荐", "专题介绍", "下载排行"])
+        self.tab_switcher_align = gtk.Alignment()
+        self.tab_switcher_align.set(0.5, 0.5, 1, 1)
+        self.tab_switcher_align.set_padding(10, 0, 0, 9)
+        self.tab_switcher_align.add(self.tab_switcher)
+        self.tab_switcher_pages_callback = [
+                "get_pkg_icon_view_page",
+                "get_album_page",
+                "get_download_rank_page",
+                ]
+        
+        self.box.pack_start(self.slider_switcher, False, False)
+        self.box.pack_start(self.tab_switcher_align, False, False)
+        
+        self.box_align.add(self.box)
+        
+        self.background_box.pack_start(self.box_align)
+        self.background_box.pack_start(self.page_box)
+        
+        self.recommend_scrolled_window.add_child(self.background_box)
+        
+        self.switch_page(0)
+        
+        self.tab_switcher.connect("tab-switch-start", lambda switcher, page_index: self.switch_page(page_index))
+        self.tab_switcher.connect("click-current-tab", lambda switcher, page_index: self.click_page())
     
     def render_name(self, cr, rect):
         text_color = "#333333"
@@ -717,53 +769,9 @@ class RecommendItem(TreeItem):
         self.album_page = AlbumPage(self.data_manager)
         return self.album_page
         
+    # from deepin_utils.date_time import print_exec_time
+    # @print_exec_time
     def show_page(self):    
-        self.recommend_scrolled_window = ScrolledWindow()
-        
-        self.background_box = BackgroundBox()
-        self.background_box.draw_mask = self.draw_mask
-        
-        self.box = gtk.VBox()
-        
-        slide_pkg_names = self.data_manager.get_slide_info()
-        self.slider_switcher = SlideSwitcher(
-            map(lambda pkg_name: gtk.gdk.pixbuf_new_from_file(os.path.join(SLIDE_PICTURE_DIR, "%s.jpg" % pkg_name)),
-                slide_pkg_names))
-        self.slider_switcher.connect("motion-notify-index", lambda w, i: global_event.emit("set-cursor", gtk.gdk.HAND2))
-        self.slider_switcher.connect("button-press-index", lambda w, i: global_event.emit("switch-to-detail-page", slide_pkg_names[i]))
-        self.slider_switcher.connect("leave-notify-index", lambda w, i: global_event.emit("set-cursor", None))
-        self.box_align = gtk.Alignment()
-        self.box_align.set(0.5, 0.5, 1, 1)
-        self.box_align.set_padding(5, 0, 10, 11)
-        
-        self.page_box = gtk.VBox()
-        
-        self.tab_switcher = TabSwitcher(["热门推荐", "专题介绍", "下载排行"])
-        self.tab_switcher_align = gtk.Alignment()
-        self.tab_switcher_align.set(0.5, 0.5, 1, 1)
-        self.tab_switcher_align.set_padding(10, 0, 0, 9)
-        self.tab_switcher_align.add(self.tab_switcher)
-        self.tab_switcher_pages_callback = [
-                "get_pkg_icon_view_page",
-                "get_album_page",
-                "get_download_rank_page",
-                ]
-        
-        self.box.pack_start(self.slider_switcher, False, False)
-        self.box.pack_start(self.tab_switcher_align, False, False)
-        
-        self.box_align.add(self.box)
-        
-        self.background_box.pack_start(self.box_align)
-        self.background_box.pack_start(self.page_box)
-        
-        self.recommend_scrolled_window.add_child(self.background_box)
-        
-        self.switch_page(0)
-        
-        self.tab_switcher.connect("tab-switch-start", lambda switcher, page_index: self.switch_page(page_index))
-        self.tab_switcher.connect("click-current-tab", lambda switcher, page_index: self.click_page())
-        
         global_event.emit("show-pkg-view", self.recommend_scrolled_window)
         
     def draw_blank_mask(self, cr, x, y, w, h):
@@ -796,10 +804,24 @@ class RecommendItem(TreeItem):
         if isinstance(self.active_page, AlbumPage):
             if self.active_page.in_detail_view:
                 self.active_page.switch_to_album_summary_view()
-                
+
         self.recommend_scrolled_window.show_all()
         
 gobject.type_register(RecommendItem)        
+
+class PkgName(gobject.GObject):
+    def __init__(self):
+        gobject.GObject.__init__(self)
+
+    def render(self, cr, text, rect):
+        draw_text(
+            cr,
+            text,
+            rect.x,
+            rect.y,
+            rect.width,
+            rect.height,
+            text_size=NAME_SIZE)
 
 class PkgIconItem(IconItem):
     '''
@@ -843,6 +865,7 @@ class PkgIconItem(IconItem):
         self.star_level = get_star_level(mark)
         self.star_buffer = StarBuffer(self.star_level)
         self.grade_star = 0
+        self.pkg_name_area = PkgName()
         
         self.width = 240
         self.height = 114
@@ -897,15 +920,15 @@ class PkgIconItem(IconItem):
             rect.y + self.DRAW_PADDING_Y + self.DRAW_ICON_SIZE + self.DRAW_BUTTON_PADDING_Y)
         
         # Draw name.
-        text_width = rect.width - self.DRAW_PADDING_LEFT - self.DRAW_PADDING_RIGHT - self.DRAW_INFO_PADDING_X - self.pkg_icon_pixbuf.get_width()
-        draw_text(
+        self.text_width = rect.width - self.DRAW_PADDING_LEFT - self.DRAW_PADDING_RIGHT - self.DRAW_INFO_PADDING_X - self.pkg_icon_pixbuf.get_width()
+        self.pkg_name_area.render(
             cr,
             self.alias_name,
-            rect.x + self.DRAW_PADDING_LEFT + ICON_SIZE + self.DRAW_INFO_PADDING_X,
-            rect.y + self.DRAW_PADDING_Y,
-            text_width,
-            NAME_SIZE,
-            text_size=NAME_SIZE)
+            gtk.gdk.Rectangle(
+                rect.x + self.DRAW_PADDING_LEFT + ICON_SIZE + self.DRAW_INFO_PADDING_X,
+                rect.y + self.DRAW_PADDING_Y,
+                self.text_width,
+                NAME_SIZE))
 
         # Draw star.
         self.star_buffer.render(
@@ -925,7 +948,7 @@ class PkgIconItem(IconItem):
             cr.rectangle(
                 rect.x + self.DRAW_PADDING_LEFT + ICON_SIZE + self.DRAW_INFO_PADDING_X,
                 rect.y + self.DRAW_LONG_DESC_PADDING_Y,
-                text_width,
+                self.text_width,
                 long_desc_height,
                 )
             cr.clip()
@@ -934,9 +957,9 @@ class PkgIconItem(IconItem):
                 self.long_desc,
                 rect.x + self.DRAW_PADDING_LEFT + ICON_SIZE + self.DRAW_INFO_PADDING_X,
                 rect.y + self.DRAW_LONG_DESC_PADDING_Y,
-                text_width,
+                self.text_width,
                 long_desc_height,
-                wrap_width=text_width,
+                wrap_width=self.text_width,
                 )
         
     def is_in_star_area(self, x, y):

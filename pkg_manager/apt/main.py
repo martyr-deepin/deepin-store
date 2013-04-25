@@ -144,6 +144,7 @@ class PackageManager(dbus.service.Object):
             lambda pkg_name, action_type, percent, speed: self.update_signal([("download-update", (pkg_name, action_type, percent, speed))]))
         global_event.register_event("download-finish", self.download_finish)
         global_event.register_event("download-stop", self.download_stop)
+        global_event.register_event("download-failed", self.download_failed)
         
         self.in_update_list = False
         global_event.register_event("update-list-start", self.update_list_start)
@@ -227,6 +228,7 @@ class PackageManager(dbus.service.Object):
     def add_download(self, pkg_name, action_type, simulate=False):
         self.update_signal([("ready-download-start", (pkg_name, action_type))])
         pkg_infos = get_pkg_download_info(self.pkg_cache, pkg_name)
+        self.update_signal([("ready-download-finish", (pkg_name, action_type))])
         if pkg_infos == DOWNLOAD_STATUS_NOTNEED:
             self.download_finish(pkg_name, action_type, simulate)
             print "Don't need download"
@@ -237,7 +239,7 @@ class PackageManager(dbus.service.Object):
             (download_urls, download_hash_infos, pkg_sizes) = pkg_infos
             
             self.download_manager.add_download(pkg_name, action_type, simulate, download_urls, download_hash_infos, pkg_sizes)
-            
+           
     def download_finish(self, pkg_name, action_type, simulate, deb_file=""):
         self.update_signal([("download-finish", (pkg_name, action_type))])
         
@@ -250,6 +252,11 @@ class PackageManager(dbus.service.Object):
         
     def download_stop(self, pkg_name, action_type):
         self.update_signal([("download-stop", (pkg_name, action_type))])
+        
+        self.exit_manager.check()    
+        
+    def download_failed(self, pkg_name, action_type):
+        self.update_signal([("download-failed", (pkg_name, action_type))])
         
         self.exit_manager.check()    
         
@@ -284,7 +291,33 @@ class PackageManager(dbus.service.Object):
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="as")    
     def request_pkgs_install_version(self, pkg_names):
-        return self.pkg_cache.get_pkgs_install_version(pkg_names)
+        pkg_versions = []
+        for pkg_name in pkg_names:
+            try:
+                version = self.pkg_cache[pkg_name].versions[0].version
+                pkg_versions.append(version)
+            except:
+                try:
+                    version = self.pkg_cache[pkg_name+":i386"].versions[0].version
+                    pkg_versions.append(version)
+                except:
+                    self.update_signal([("pkg-not-in-cache", pkg_name)])
+        return pkg_versions
+
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="as")    
+    def is_pkg_in_cache(self, pkg_name):
+        result = []
+        try:
+            self.pkg_cache[pkg_name]
+            result.append(pkg_name)
+        except:
+            try:
+                pkg_name += ":i386"
+                self.pkg_cache[pkg_name]
+                result.append(pkg_name)
+            except:
+                pass
+        return result
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="as")    
     def request_pkgs_uninstall_version(self, pkg_names):
@@ -293,7 +326,15 @@ class PackageManager(dbus.service.Object):
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
     def install_pkg(self, pkg_names):
         for pkg_name in pkg_names:
-            ThreadMethod(self.add_download, (pkg_name, ACTION_INSTALL, self.simulate)).start()
+            try:
+                self.pkg_cache[pkg_name]
+                ThreadMethod(self.add_download, (pkg_name, ACTION_INSTALL, self.simulate)).start()
+            except:
+                try:
+                    self.pkg_cache[pkg_name+":i386"]
+                    ThreadMethod(self.add_download, (pkg_name+":i386", ACTION_INSTALL, self.simulate)).start()
+                except:
+                    self.update_signal([("pkg-not-in-cache", pkg_name)])
     
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
     def uninstall_pkg(self, pkg_names):
@@ -383,10 +424,10 @@ class PackageManager(dbus.service.Object):
     
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="ab")
     def request_pkgs_install_status(self, pkg_names):
-        status_dict = []
+        _status = []
         for pkg in pkg_names:
-            status_dict.append(self.pkg_cache.is_pkg_installed(pkg))
-        return status_dict
+            _status.append(self.pkg_cache.is_pkg_installed(pkg))
+        return _status
             
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="(si)", out_signature="")
     def set_pkg_status(self, pkg_status):

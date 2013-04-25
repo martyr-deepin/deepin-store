@@ -36,7 +36,7 @@ class DownloadManager(object):
         self.fetch_service_thread.start()
         self.verbose = verbose
         
-        join_glib_loop()
+        join_glib_loop(0.05)
         
         self.fetch_files_dict = {}
         
