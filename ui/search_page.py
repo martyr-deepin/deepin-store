@@ -143,7 +143,7 @@ class SearchItem(TreeItem):
         render_pkg_icon(cr, rect, self.pkg_name, self.icon_pixbuf)
 
         # Render name.
-        render_pkg_name(cr, rect, self.alias_name, rect.width)
+        render_pkg_name(cr, rect, get_match_context(self.alias_name, self.keywords), rect.width)
         
         # Render search result.
         with cairo_state(cr):
