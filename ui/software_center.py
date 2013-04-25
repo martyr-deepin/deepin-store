@@ -66,7 +66,7 @@ from dtk.ui.gio_utils import start_desktop_file
 from dtk.ui.iconview import IconView
 from dtk.ui.treeview import TreeView
 from start_desktop_window import StartDesktopWindow
-from utils import log
+from utils import log, is_64bit_system
 
 global current_status_pkg_page
 current_status_pkg_page = None
@@ -321,6 +321,14 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
         elif signal_type == "got-install-deb-pkg-name":
             pkg_name = action_content
             install_page.add_install_actions([pkg_name])
+
+        elif signal_type == "pkg-not-in-cache":
+            pkg_name = action_content
+            if is_64bit_system():
+                message = "%s在64位系统上不能被安装" % pkg_name
+            else:
+                message = "%s在32位系统上不能被安装，该包可能位64位系统特有的包" % pkg_name
+            global_event.emit("show-message", message)
     
     return True
 
@@ -369,16 +377,11 @@ def install_pkg(bus_interface, install_page, pkg_names, window):
     
     timeline = Timeline(500, CURVE_SINE)
     timeline.connect("update", lambda source, status: update(source, status, icon_window, (ax, ay), (bx, by), (cx, cy), (a, b, c)))
-    timeline.connect("completed", lambda source: finish(source, icon_window))
+    timeline.connect("completed", lambda source: finish(source, icon_window, bus_interface, pkg_names))
     timeline.run()
     
     # Add to install page.
-    install_page.add_install_actions(pkg_names)
-    
-    # Send install command.
-    bus_interface.install_pkg(pkg_names,
-                              reply_handler=handle_dbus_reply, 
-                              error_handler=handle_dbus_error)
+    #install_page.add_install_actions(pkg_names)
     
 def update(source, status, icon_window, (ax, ay), (bx, by), (cx, cy), (a, b, c)):
     move_x = ax + (cx - ax) * status
@@ -387,8 +390,12 @@ def update(source, status, icon_window, (ax, ay), (bx, by), (cx, cy), (a, b, c))
     icon_window.move(int(move_x), int(move_y))
     icon_window.show_all()
     
-def finish(source, icon_window):
+def finish(source, icon_window, bus_interface, pkg_names):
     icon_window.destroy()
+    # Send install command.
+    bus_interface.install_pkg(pkg_names,
+                              reply_handler=handle_dbus_reply, 
+                              error_handler=handle_dbus_error)
     
 clear_failed_action_dict = {
     ACTION_INSTALL : [],
@@ -471,6 +478,10 @@ def clear_action_pages(bus_interface, upgrade_page, uninstall_page, install_page
         upgrade_page.upgrade_treeview.delete_items(upgraded_items)
         
         # Add installed package in uninstall page.
+        for item in uninstall_page.treeview.visible_items:
+            if item.pkg_name in install_pkgs:
+                install_pkgs.remove(item.pkg_name)
+
         install_pkg_versions = bus_interface.request_pkgs_install_version(install_pkgs)
         install_pkg_infos = []
         for (pkg_name, pkg_version) in zip(install_pkgs, install_pkg_versions):
