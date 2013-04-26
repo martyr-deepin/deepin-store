@@ -42,7 +42,7 @@ from dtk.ui.entry import InputEntry
 from dtk.ui.button import ImageButton
 from dtk.ui.cycle_strip import CycleStrip
 from dtk.ui.label import Label
-
+from time import time
 
 class MessageBar(CycleStrip):
     '''
@@ -89,6 +89,7 @@ class UninstallPage(gtk.VBox):
         init docs
         '''
         # Init.
+        start = time()
         gtk.VBox.__init__(self)
         self.bus_interface = bus_interface        
         self.data_manager = data_manager
@@ -113,6 +114,7 @@ class UninstallPage(gtk.VBox):
         self.fetch_uninstall_info()
         
         self.treeview.draw_mask = self.draw_mask
+        print "Init Uninstall Page: %s" % (time()-start, )
 
     def search_cb(self, widget, event=None):
         if not self.search_flag:
@@ -132,16 +134,15 @@ class UninstallPage(gtk.VBox):
 
             # for add items
             if self.uninstall_change_items["add"] != []:
-                for items in self.uninstall_change_items["add"]:
-                    self.cache_items += items
+                for item in self.uninstall_change_items["add"]:
+                    self.cache_items.append(item)
                 self.uninstall_change_items["add"] = []
 
             # for delete items
             if self.uninstall_change_items["delete"] != []:
-                for items in self.uninstall_change_items["delete"]:
-                    for item in items:
-                        if item in self.cache_items:
-                            self.cache_items.remove(item)
+                for item in self.uninstall_change_items["delete"]:
+                    if item in self.cache_items:
+                        self.cache_items.remove(item)
                 self.uninstall_change_items["delete"] = []
 
             self.treeview.add_items(self.cache_items)
@@ -191,8 +192,9 @@ class UninstallPage(gtk.VBox):
         self.treeview.add_items(pkg_items)        
         
     def fetch_uninstall_info(self):
-        AnonymityThread(lambda : self.bus_interface.request_uninstall_pkgs(),
-                        self.render_uninstall_info).run()
+        gtk.timeout_add(10, lambda :AnonymityThread(
+                        self.bus_interface.request_uninstall_pkgs,
+                        self.render_uninstall_info).run())
     
     @post_gui
     def render_uninstall_info(self, pkg_infos):
@@ -206,13 +208,16 @@ class UninstallPage(gtk.VBox):
                 items.append(UninstallItem(pkg_name, pkg_version, self.data_manager))
             
         if self.search_flag:
-            self.uninstall_change_items["add"].append(items)
+            self.uninstall_change_items["add"] += items
         else:
             self.treeview.add_items(items)
 
     def delete_uninstall_items(self, items):
         if self.search_flag:
-            self.uninstall_change_items["delete"].append(items)
+            self.uninstall_change_items["delete"] += items
+            for item in items:
+                if item in self.treeview.visible_items:
+                    self.treeview.delete_items([item])
         else:
             self.treeview.delete_items(items)
         

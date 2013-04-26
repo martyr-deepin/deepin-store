@@ -38,7 +38,7 @@ from dtk.ui.timeline import Timeline, CURVE_SINE
 from deepin_utils.process import run_command
 from deepin_utils.math_lib import solve_parabola
 from deepin_utils.file import read_file, write_file, touch_file, end_with_suffixs
-#from deepin_utils.multithread import create_thread
+from deepin_utils.multithread import create_thread
 from dtk.ui.utils import container_remove_all, set_cursor, get_widget_root_coordinate, get_pixbuf_support_formats
 from dtk.ui.application import Application
 from dtk.ui.statusbar import Statusbar
@@ -66,8 +66,12 @@ from dtk.ui.gio_utils import start_desktop_file
 from dtk.ui.iconview import IconView
 from dtk.ui.treeview import TreeView
 from start_desktop_window import StartDesktopWindow
-from utils import log, is_64bit_system
-from deepin_utils.multithread import create_thread
+from utils import is_64bit_system
+
+def log(message):
+    global debug_flag
+    if debug_flag:
+        print message
 
 global current_status_pkg_page
 current_status_pkg_page = None
@@ -131,12 +135,10 @@ def show_message(statusbar, message_box, message):
     
 def hide_message(message_box):
     container_remove_all(message_box)
-    
     return False
 
-def request_status(bus_interface, install_page, upgrade_page, uninstall_page):
-    print "Refresh install upgrade uninstall status..."
-    (download_status, action_status) = map(eval, bus_interface.request_status())
+def request_status_reply_hander(result, install_page, upgrade_page, uninstall_page):
+    (download_status, action_status) = map(eval, result)
     
     install_page.update_download_status(download_status[ACTION_INSTALL])
     install_page.update_action_status(action_status[ACTION_INSTALL])
@@ -145,8 +147,6 @@ def request_status(bus_interface, install_page, upgrade_page, uninstall_page):
     upgrade_page.update_action_status(action_status[ACTION_UPGRADE])
     
     uninstall_page.update_action_status(action_status[ACTION_UNINSTALL])
-    
-    return False
 
 def grade_pkg(window, pkg_name, star):
     grade_config_path = os.path.join(CONFIG_DIR, "grade_pkgs")
@@ -195,6 +195,7 @@ def switch_to_detail_page(page_switcher, detail_page, pkg_name):
     global_event.emit("update-current-status-pkg-page", detail_page)
 
 def switch_page(page_switcher, page_box, page, detail_page):
+    start = time.time()
     log("slide to page")
     if page_switcher.active_widget == detail_page:
         page_switcher.slide_to_page(page_box, "left")
@@ -221,6 +222,7 @@ def switch_page(page_switcher, page_box, page, detail_page):
         page.fetch_upgrade_info()
         if page.in_no_notify_page:
             page.show_init_page()
+    print "Switch Page: %s" % (time.time()-start, )
 
 def handle_dbus_reply(*reply):
     print "handle_dbus_reply: ", reply
@@ -303,9 +305,9 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
             
             refresh_current_page_status(pkg_name, pkg_info_list, bus_interface)
 
-        elif signal_type == "update-list-finish":
-            upgrade_page.fetch_upgrade_info()
-            request_status(bus_interface, install_page, upgrade_page, uninstall_page)
+        #elif signal_type == "update-list-finish":
+            #upgrade_page.fetch_upgrade_info()
+            #request_status(bus_interface, install_page, upgrade_page, uninstall_page)
 
         elif signal_type == "update-list-update":
             upgrade_page.update_upgrade_progress(action_content)
@@ -645,8 +647,9 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.application.window.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_DROP, targets, gtk.gdk.ACTION_COPY)
         self.application.window.connect_after("drag-data-received", self.on_drag_data_received)        
         
+        start = time.time()
         self.init_home_page()
-        
+        print "Finish Init UI: %s" % (time.time()-start, )
         self.application.run()
         
     def init_home_page(self):
@@ -690,8 +693,8 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
         log("Init pages.")
         
-        start = time.time()
         # Init pages.
+        start = time.time()
         log("Init upgrade page.")
         self.upgrade_page = UpgradePage(self.bus_interface, self.data_manager)
         log("Init uninstall page.")
@@ -700,7 +703,10 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.install_page = InstallPage(self.bus_interface, self.data_manager)
         print "Init three pages time: %s" % (time.time()-start, )
         
-        request_status(self.bus_interface, self.install_page, self.upgrade_page, self.uninstall_page)
+        create_thread(lambda :self.bus_interface.request_status(
+                reply_handler=lambda reply: request_status_reply_hander(reply, self.install_page, self.upgrade_page, self.uninstall_page),
+                error_handler=handle_dbus_error
+                )).start()
         
         log("Handle global event.")
         

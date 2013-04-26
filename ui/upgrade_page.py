@@ -48,6 +48,7 @@ from dtk.ui.progressbar import ProgressBuffer
 from events import global_event
 from constant import ACTION_UPGRADE
 from dtk.ui.cycle_strip import CycleStrip
+from time import time
 
 class UpgradingBar(gtk.HBox):
     '''
@@ -252,6 +253,7 @@ class UpgradePage(gtk.VBox):
         init docs
         '''
         # Init.
+        start = time()
         gtk.VBox.__init__(self)
         self.bus_interface = bus_interface        
         self.data_manager = data_manager
@@ -320,6 +322,7 @@ class UpgradePage(gtk.VBox):
         
         global_event.emit("show-updating-view")
         self.fetch_upgrade_info()
+        print "Init Upgrade Page: %s" % (time()-start, )
         
     def click_upgrade_check_button(self):
         self.upgrade_bar.select_button.update_status(map(lambda item: item.check_button_buffer.active, self.upgrade_treeview.visible_items))
