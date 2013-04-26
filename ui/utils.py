@@ -22,6 +22,7 @@
 
 import threading as td
 from datetime import datetime
+import os
 
 LOG_PATH = "/tmp/dsc-frontend.log"
 
@@ -43,3 +44,9 @@ class ThreadMethod(td.Thread):
 
     def run(self):
         self.func(*self.args)
+
+def is_64bit_system():
+    if os.uname()[-1] == "x86_64":
+        return True
+    else:
+        return False
