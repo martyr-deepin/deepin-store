@@ -478,9 +478,14 @@ class DetailPage(gtk.HBox):
             create_thread(self.fetch_screenshot).start()
 
     def comment_load_finished_cb(self, webview, frame, web_view_align):
+        self.scrolled_window.connect("vscrollbar-state-changed", lambda w, p: self.load_more_comment(p, webview))
         container_remove_all(self.right_comment_box)
         self.right_comment_box.pack_start(web_view_align, True, True)
         self.right_comment_box.show_all()
+
+    def load_more_comment(self, postion, webview):
+        if postion == "bottom":
+            webview.execute_script('$("#nav_next").click();')
             
     def fetch_screenshot(self):
         screenshot_dir = os.path.join(SCREENSHOT_DOWNLOAD_DIR, self.pkg_name)
