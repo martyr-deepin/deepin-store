@@ -52,6 +52,7 @@ class DownloadManager(object):
             fetch_files.signal.register_event("finish", lambda : self.finish_download(pkg_name, action_type, simulate, deb_file))
             fetch_files.signal.register_event("pause", lambda : self.global_event.emit("download-stop", pkg_name, action_type))
             fetch_files.signal.register_event("stop", lambda : self.global_event.emit("download-stop", pkg_name, action_type))
+            fetch_files.signal.register_event("error", lambda e: self.global_event.emit("download-error", pkg_name, action_type, e))
             
         if self.verbose:    
             fetch_files.signal.register_event("start", self.print_signal)
