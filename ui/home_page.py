@@ -39,9 +39,9 @@ from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.iconview import IconItem
 from recommend_page import RecommendIconItem
 from dtk.ui.box import BackgroundBox
-from slide_switcher import SlideSwitcher
+from dtk.ui.slide_switcher import SlideSwitcher
 from album_page import AlbumPage
-from tab_switcher import TabSwitcher
+from dtk.ui.tab_switcher import TabSwitcher
 from download_rank_page import DownloadRankPage
 from completion_window import search_entry, completion_window, completion_grab_window
 from events import global_event
