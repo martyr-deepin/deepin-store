@@ -68,7 +68,7 @@ class MessageBar(CycleStrip):
             app_theme.get_pixbuf("entry/search_press.png"),
             )
         self.search_entry = InputEntry(action_button=self.search_button)
-        self.search_entry.set_size(250, 24)
+        self.search_entry.set_size(220, 24)
         entry_align = gtk.Alignment(0.5, 0.5, 0, 0)
         entry_align.set_padding(0, 0, 5, 5)
         entry_align.add(self.search_entry)
@@ -92,6 +92,9 @@ class UninstallPage(gtk.VBox):
         gtk.VBox.__init__(self)
         self.bus_interface = bus_interface        
         self.data_manager = data_manager
+
+        self.search_flag = False
+        self.uninstall_change_items = {"add": [], "delete": []}
         
         self.message_bar = MessageBar(32)
         self.message_bar.search_entry.entry.connect("changed", self.search_cb)
@@ -112,14 +115,36 @@ class UninstallPage(gtk.VBox):
         self.treeview.draw_mask = self.draw_mask
 
     def search_cb(self, widget, event=None):
+        if not self.search_flag:
+            self.cache_items = [item for item in self.treeview.visible_items]
         results = []
         keywords = self.message_bar.search_entry.get_text().strip()
-        if keywords:
-            for item in self.treeview.visible_items:
+        if keywords != "":
+            self.search_flag = True
+            for item in self.cache_items:
                 if keywords in item.pkg_name:
                     results.append(item)
-        #self.treeview.hide_items(results)
-        #print len(results)
+            self.treeview.clear()
+            self.treeview.add_items(results)
+        else:
+            self.treeview.clear()
+            self.search_flag = False
+
+            # for add items
+            if self.uninstall_change_items["add"] != []:
+                for items in self.uninstall_change_items["add"]:
+                    self.cache_items += items
+                self.uninstall_change_items["add"] = []
+
+            # for delete items
+            if self.uninstall_change_items["delete"] != []:
+                for items in self.uninstall_change_items["delete"]:
+                    for item in items:
+                        if item in self.cache_items:
+                            self.cache_items.remove(item)
+                self.uninstall_change_items["delete"] = []
+
+            self.treeview.add_items(self.cache_items)
 
     def normal_search_cb(self, keywords):
         pass
@@ -180,7 +205,16 @@ class UninstallPage(gtk.VBox):
             if self.data_manager.is_pkg_have_desktop_file(pkg_name) != None:
                 items.append(UninstallItem(pkg_name, pkg_version, self.data_manager))
             
-        self.treeview.add_items(items)    
+        if self.search_flag:
+            self.uninstall_change_items["add"].append(items)
+        else:
+            self.treeview.add_items(items)
+
+    def delete_uninstall_items(self, items):
+        if self.search_flag:
+            self.uninstall_change_items["delete"].append(items)
+        else:
+            self.treeview.delete_items(items)
         
     def action_start(self, pkg_name):
         for item in self.treeview.visible_items:

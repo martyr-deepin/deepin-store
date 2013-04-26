@@ -67,6 +67,7 @@ from dtk.ui.iconview import IconView
 from dtk.ui.treeview import TreeView
 from start_desktop_window import StartDesktopWindow
 from utils import log, is_64bit_system
+from deepin_utils.multithread import create_thread
 
 global current_status_pkg_page
 current_status_pkg_page = None
@@ -382,6 +383,7 @@ def install_pkg(bus_interface, install_page, pkg_names, window):
     
     # Add to install page.
     #install_page.add_install_actions(pkg_names)
+
     
 def update(source, status, icon_window, (ax, ay), (bx, by), (cx, cy), (a, b, c)):
     move_x = ax + (cx - ax) * status
@@ -392,10 +394,12 @@ def update(source, status, icon_window, (ax, ay), (bx, by), (cx, cy), (a, b, c))
     
 def finish(source, icon_window, bus_interface, pkg_names):
     icon_window.destroy()
+
     # Send install command.
-    bus_interface.install_pkg(pkg_names,
-                              reply_handler=handle_dbus_reply, 
-                              error_handler=handle_dbus_error)
+    create_thread(lambda : bus_interface.install_pkg(
+                                pkg_names, 
+                                reply_handler=handle_dbus_reply, 
+                                error_handler=handle_dbus_error)).start()
     
 clear_failed_action_dict = {
     ACTION_INSTALL : [],
@@ -473,7 +477,7 @@ def clear_action_pages(bus_interface, upgrade_page, uninstall_page, install_page
                         install_pkgs.append(pkg_name)
                         break
                     
-        uninstall_page.treeview.delete_items(uninstalled_items)
+        uninstall_page.delete_uninstall_items(uninstalled_items)
         install_page.treeview.delete_items(installed_items)
         upgrade_page.upgrade_treeview.delete_items(upgraded_items)
         
