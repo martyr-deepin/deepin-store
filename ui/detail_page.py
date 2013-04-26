@@ -51,7 +51,6 @@ from events import global_event
 import urllib2
 import webbrowser
 from category_info import get_category_name
-from utils import log
 import time
 
 PKG_SCREENSHOT_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update_data", "pkg_screenshot", "zh_CN")
@@ -109,7 +108,6 @@ class DetailPage(gtk.HBox):
         '''
         init docs
         '''
-        log("start init detail page")
         gtk.HBox.__init__(self)
         self.data_manager = data_manager
         self.pkg_name = None
@@ -225,7 +223,6 @@ class DetailPage(gtk.HBox):
         self.left_category_label.connect("button-press-event", lambda w, e: self.jump_to_category())
         
         global_event.register_event("download-screenshot-finish", self.download_screenshot_finish)
-        log("end init detail page")
         
     def hierarchy_change(self, widget, previous_toplevel):
         # When detail page remove from it's container, previous_toplevel is not None.
@@ -478,9 +475,14 @@ class DetailPage(gtk.HBox):
             create_thread(self.fetch_screenshot).start()
 
     def comment_load_finished_cb(self, webview, frame, web_view_align):
+        self.scrolled_window.connect("vscrollbar-state-changed", lambda w, p: self.load_more_comment(p, webview))
         container_remove_all(self.right_comment_box)
         self.right_comment_box.pack_start(web_view_align, True, True)
         self.right_comment_box.show_all()
+
+    def load_more_comment(self, postion, webview):
+        if postion == "bottom":
+            webview.execute_script('$("#nav_next").click();')
             
     def fetch_screenshot(self):
         screenshot_dir = os.path.join(SCREENSHOT_DOWNLOAD_DIR, self.pkg_name)

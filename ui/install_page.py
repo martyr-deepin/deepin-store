@@ -40,6 +40,7 @@ from item_render import (render_pkg_info, STAR_SIZE, get_star_level, get_icon_pi
                          )
 from constant import ACTION_INSTALL
 from message_bar import MessageBar
+from time import time
 
 class InstallPage(gtk.VBox):
     '''
@@ -51,6 +52,7 @@ class InstallPage(gtk.VBox):
         init docs
         '''
         # Init.
+        start = time()
         gtk.VBox.__init__(self)
         self.bus_interface = bus_interface
         self.data_manager = data_manager
@@ -74,6 +76,7 @@ class InstallPage(gtk.VBox):
         self.cute_message_image.connect("expose-event", self.expose_cute_message_image)
         self.treeview.connect("items-change", self.update_message_bar)
         self.treeview.connect("items-change", lambda treeview: global_event.emit("update-install-notify-number", len(treeview.visible_items)))
+        print "Init Install Page: %s" % (time()-start, )
         
     def expose_cute_message_image(self, widget, event):
         if self.cute_message_pixbuf:

@@ -9,5 +9,6 @@ Install:
 
 Run:
 ---
+    ln -s /usr/share/deepin-software-center/data ./data
     python ./ui/main.py
 
