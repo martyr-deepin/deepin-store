@@ -237,8 +237,8 @@ class HomePage(gtk.HBox):
             completion_grab_window.popup_grab_window_focus_out()
         
         search_page = SearchPage(self.data_manager)
-        search_page.update(map(lambda word: word.encode("utf8"), search_string.split(" ")))
         self.show_pkg_view(search_page)
+        search_page.update(map(lambda word: word.encode("utf8"), search_string.split(" ")))
         
     def show_pkg_view(self, widget):
         container_remove_all(self.page_box)
