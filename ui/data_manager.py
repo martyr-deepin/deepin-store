@@ -100,17 +100,13 @@ class DataManager(object):
             reply_handler=reply_handler,
             error_handler=error_handler)
         
-    def get_pkgs_info_match_keyword(self, keywords):
-        pkg_names = self.search_query(keywords)
-        
-        install_status = self.bus_interface.request_pkgs_install_status(pkg_names)
-        
+    def get_search_pkgs_info(self, pkg_names):
         pkg_infos = []
         for (index, pkg_name) in enumerate(pkg_names):
             self.desktop_db_cursor.execute(
                 "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
             desktop_infos = self.desktop_db_cursor.fetchall()
-            pkg_infos.append((pkg_name, desktop_infos, install_status[index]))
+            pkg_infos.append([pkg_name, desktop_infos])
         
         return pkg_infos
     
@@ -171,12 +167,10 @@ class DataManager(object):
             return (short_desc, 5.0, alias_name)
     
     def get_item_pkgs_info(self, pkg_names):
-        install_status = self.bus_interface.request_pkgs_install_status(pkg_names)
-        
         infos = []
         for (index, pkg_name) in enumerate(pkg_names):
             (short_desc, star, alias_name) = self.get_item_pkg_info(pkg_name)
-            infos.append((pkg_name, install_status[index], short_desc, star, alias_name))
+            infos.append([pkg_name, short_desc, star, alias_name])
             
         return infos    
     

@@ -49,12 +49,15 @@ from skin import app_theme
 from data import DATA_ID
 from category_info import get_category_name
 from nls import _
+from font import create_cairo_font_face_for_file, draw_font_img
 
 FIRST_CATEGORY_PADDING_X = 66
 SECOND_CATEGORY_PADDING_X = 46
 
 CATEGORY_VIEW_WIDTH = 155
 SLIDE_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "slide_picture", "zh_CN")
+
+category_face = create_cairo_font_face_for_file(os.path.join(get_parent_dir(__file__, 2), "image", "category_img.ttf"))
 
 def tooltip_aciton(view, item, x, y):
     if item.is_in_name_area(x, y):
@@ -237,8 +240,8 @@ class HomePage(gtk.HBox):
             completion_grab_window.popup_grab_window_focus_out()
         
         search_page = SearchPage(self.data_manager)
-        search_page.update(map(lambda word: word.encode("utf8"), search_string.split(" ")))
         self.show_pkg_view(search_page)
+        search_page.update(map(lambda word: word.encode("utf8"), search_string.split(" ")))
         
     def show_pkg_view(self, widget):
         container_remove_all(self.page_box)
@@ -258,6 +261,24 @@ CATEGORY_ITEM_EXPAND_PADDING_X = 30
 
 LOAD_ITEMS_NUMBER = 20
 
+category_font_dict = {
+        "recommend":"A",
+        "internet":"B",
+        "multimedia":"C",
+        "games":"D",
+        "graphics":"E",
+        "productivity":"F",
+        "industry":"G",
+        "education":"H",
+        "development":"I",
+        "system":"J",
+        "utilities":"K",
+        }
+
+def handle_dbus_error(*error):
+    print "handle_dbus_error: ", error
+    
+
 class CategoryItem(TreeItem):
     '''
     class docs
@@ -275,23 +296,35 @@ class CategoryItem(TreeItem):
     
     def render_name(self, cr, rect):
         text_color = "#333333"
+        font_image_color = app_theme.get_color("sidebar_select").get_color()
         if self.is_select:
             cr.set_source_rgba(*color_hex_to_cairo(app_theme.get_color("sidebar_select").get_color()))
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
             
             text_color = "#FFFFFF"
+            font_image_color = "#FFFFFF"
         elif self.is_hover:
             cr.set_source_rgba(*color_hex_to_cairo(app_theme.get_color("sidebar_hover").get_color()))
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
         
         pixbuf = app_theme.get_pixbuf("category/%s.png" % (self.index)).get_pixbuf()
-        draw_pixbuf(
-            cr,
-            pixbuf,
-            rect.x + 12,
-            rect.y + (rect.height - pixbuf.get_height()) / 2)
+        #draw_pixbuf(
+            #cr,
+            #pixbuf,
+            #rect.x + 12,
+            #rect.y + (rect.height - pixbuf.get_height()) / 2)
+
+        draw_font_img(
+                category_font_dict[self.first_category_name], 
+                cr, 
+                rect.x+14, 
+                rect.y+30, 
+                category_face, 
+                text_size=25, 
+                text_color=font_image_color,
+                )
         
         draw_text(cr, 
                   get_category_name(self.first_category_name),
@@ -380,9 +413,16 @@ class CategoryItem(TreeItem):
             self.load_new_items(self.all_pkg_names[start:end])
             
     def load_new_items(self, pkg_names):
+        pkg_infos = self.data_manager.get_item_pkgs_info(pkg_names)
+        self.data_manager.get_pkgs_install_status(
+            pkg_names, 
+            reply_handler=lambda status: self.load_items_reply_handler(status, pkg_infos),
+            error_handler=handle_dbus_error)
+
+    def load_items_reply_handler(self, status, pkg_infos):
         items = []
-        for (pkg_name, is_installed, long_desc, star, alias_name) in self.data_manager.get_item_pkgs_info(pkg_names):
-            items.append(PkgIconItem(is_installed, alias_name, pkg_name, long_desc, star, self.all_desktop_infos[pkg_name]))
+        for (index, (pkg_name, short_desc, star, alias_name)) in enumerate(pkg_infos):
+            items.append(PkgIconItem(status[index], alias_name, pkg_name, short_desc, star, self.all_desktop_infos[pkg_name]))
         self.pkg_icon_view.add_items(items)
 
     def single_click(self, column, offset_x, offset_y):
@@ -561,11 +601,18 @@ class SecondCategoryItem(TreeItem):
             else:
                 return
             self.load_new_items(self.all_pkg_names[start:end])
-            
+
     def load_new_items(self, pkg_names):
+        pkg_infos = self.data_manager.get_item_pkgs_info(pkg_names)
+        self.data_manager.get_pkgs_install_status(
+            pkg_names, 
+            reply_handler=lambda status: self.load_items_reply_handler(status, pkg_infos),
+            error_handler=handle_dbus_error)
+
+    def load_items_reply_handler(self, status, pkg_infos):
         items = []
-        for (pkg_name, is_installed, long_desc, star, alias_name) in self.data_manager.get_item_pkgs_info(pkg_names):
-            items.append(PkgIconItem(is_installed, alias_name, pkg_name, long_desc, star, self.all_desktop_infos[pkg_name]))
+        for (index, (pkg_name, short_desc, star, alias_name)) in enumerate(pkg_infos):
+            items.append(PkgIconItem(status[index], alias_name, pkg_name, short_desc, star, self.all_desktop_infos[pkg_name]))
         self.pkg_icon_view.add_items(items)
 
 
@@ -684,23 +731,35 @@ class RecommendItem(TreeItem):
     
     def render_name(self, cr, rect):
         text_color = "#333333"
+        font_image_color = app_theme.get_color("sidebar_select").get_color()
         if self.is_select:
             cr.set_source_rgba(*color_hex_to_cairo(app_theme.get_color("sidebar_select").get_color()))
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
             
             text_color = "#FFFFFF"
+            font_image_color = "#FFFFFF"
         elif self.is_hover:
             cr.set_source_rgba(*color_hex_to_cairo(app_theme.get_color("sidebar_hover").get_color()))
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
         
         pixbuf = app_theme.get_pixbuf("category/12.png").get_pixbuf()
-        draw_pixbuf(
-            cr,
-            pixbuf,
-            rect.x + 12,
-            rect.y + (rect.height - pixbuf.get_height()) / 2)
+        #draw_pixbuf(
+            #cr,
+            #pixbuf,
+            #rect.x + 12,
+            #rect.y + (rect.height - pixbuf.get_height()) / 2)
+
+        draw_font_img(
+                category_font_dict["recommend"], 
+                cr, 
+                rect.x+14, 
+                rect.y+30, 
+                category_face, 
+                text_size=25, 
+                text_color=font_image_color,
+                )
         
         draw_text(cr, 
                   self.name,

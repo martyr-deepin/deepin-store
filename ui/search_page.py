@@ -23,11 +23,14 @@
 import gtk
 import pango
 import gobject
+import os
 from skin import app_theme
 from message_bar import MessageBar
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from dtk.ui.constant import DEFAULT_FONT_SIZE
 from dtk.ui.utils import cairo_state, is_in_rect, get_content_size
+from deepin_utils.file import get_parent_dir
+from dtk.ui.utils import container_remove_all
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
 from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.star_view import StarBuffer
@@ -43,6 +46,9 @@ from item_render import (render_pkg_icon, render_pkg_name, STAR_SIZE, get_star_l
                          )
 from events import global_event
 
+def handle_dbus_error(*error):
+    print "handle_dbus_error: ", error
+    
 class SearchPage(gtk.VBox):
     '''
     class docs
@@ -59,17 +65,48 @@ class SearchPage(gtk.VBox):
         self.keywords = []
         self.message_bar = MessageBar(18)
         
+        self.content_box = gtk.VBox()
+
         self.treeview = TreeView(enable_drag_drop=False, expand_column=0)
-        self.pack_start(self.message_bar,False, False)
-        self.pack_start(self.treeview, True, True)
+
+        self.cute_message_image = gtk.VBox()
+        self.cute_message_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(get_parent_dir(__file__, 2), "image", "zh_CN", "noresult.png"))
+        self.cute_message_image.connect("expose-event", self.expose_cute_message_image)
+
+        self.content_box.pack_start(self.message_bar, False, False)
+        self.content_box.pack_start(self.treeview)
+
+        self.pack_start(self.cute_message_image, True, True)
         
         self.treeview.connect("items-change", self.update_message_bar)
         
         self.treeview.draw_mask = self.draw_mask
+
+    def expose_cute_message_image(self, widget, event):
+        if self.cute_message_pixbuf:
+            cr = widget.window.cairo_create()
+            rect = widget.allocation
+            
+            cr.set_source_rgb(1, 1, 1)
+            cr.rectangle(rect.x, rect.y, rect.width, rect.height)
+            cr.fill()
+            
+            draw_pixbuf(
+                cr,
+                self.cute_message_pixbuf,
+                rect.x + (rect.width - self.cute_message_pixbuf.get_width()) / 2,
+                rect.y + (rect.height - self.cute_message_pixbuf.get_height()) / 2,
+                )
         
     def update_message_bar(self, treeview):
-        self.message_bar.set_message("%s: 搜索到%s款软件" % (' '.join(self.keywords), len(treeview.visible_items)))
-        global_event.emit("update-current-status-pkg-page", treeview)
+        if len(treeview.visible_items) > 0:
+            self.message_bar.set_message("%s: 搜索到%s款软件" % (' '.join(self.keywords), len(treeview.visible_items)))
+            container_remove_all(self)
+            self.pack_start(self.content_box)
+            global_event.emit("update-current-status-pkg-page", treeview)
+        else:
+            container_remove_all(self)
+            self.pack_start(self.cute_message_image)
         
     def draw_mask(self, cr, x, y, w, h):
         '''
@@ -89,7 +126,17 @@ class SearchPage(gtk.VBox):
     def update(self, keywords):
         self.keywords = keywords
         self.treeview.delete_all_items()        
-        self.render_search_info(self.data_manager.get_pkgs_info_match_keyword(self.keywords), keywords)
+        pkg_names = self.data_manager.search_query(keywords)
+        results = self.data_manager.get_search_pkgs_info(pkg_names)
+        self.data_manager.get_pkgs_install_status(
+                            pkg_names, 
+                            reply_handler=lambda status: self.search_reply_handler(status, results, keywords),
+                            error_handler=handle_dbus_error)
+
+    def search_reply_handler(self, status, results, keywords):
+        for (i, result) in enumerate(results):
+            result.append(status[i])
+        self.render_search_info(results, keywords)
 
     def render_search_info(self, pkg_infos, keywords):
         self.keywords = keywords
