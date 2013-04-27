@@ -167,12 +167,10 @@ class DataManager(object):
             return (short_desc, 5.0, alias_name)
     
     def get_item_pkgs_info(self, pkg_names):
-        install_status = self.bus_interface.request_pkgs_install_status(pkg_names)
-        
         infos = []
         for (index, pkg_name) in enumerate(pkg_names):
             (short_desc, star, alias_name) = self.get_item_pkg_info(pkg_name)
-            infos.append((pkg_name, install_status[index], short_desc, star, alias_name))
+            infos.append([pkg_name, short_desc, star, alias_name])
             
         return infos    
     

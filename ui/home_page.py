@@ -258,6 +258,10 @@ CATEGORY_ITEM_EXPAND_PADDING_X = 30
 
 LOAD_ITEMS_NUMBER = 20
 
+def handle_dbus_error(*error):
+    print "handle_dbus_error: ", error
+    
+
 class CategoryItem(TreeItem):
     '''
     class docs
@@ -380,9 +384,16 @@ class CategoryItem(TreeItem):
             self.load_new_items(self.all_pkg_names[start:end])
             
     def load_new_items(self, pkg_names):
+        pkg_infos = self.data_manager.get_item_pkgs_info(pkg_names)
+        self.data_manager.get_pkgs_install_status(
+            pkg_names, 
+            reply_handler=lambda status: self.load_items_reply_handler(status, pkg_infos),
+            error_handler=handle_dbus_error)
+
+    def load_items_reply_handler(self, status, pkg_infos):
         items = []
-        for (pkg_name, is_installed, long_desc, star, alias_name) in self.data_manager.get_item_pkgs_info(pkg_names):
-            items.append(PkgIconItem(is_installed, alias_name, pkg_name, long_desc, star, self.all_desktop_infos[pkg_name]))
+        for (index, (pkg_name, short_desc, star, alias_name)) in enumerate(pkg_infos):
+            items.append(PkgIconItem(status[index], alias_name, pkg_name, short_desc, star, self.all_desktop_infos[pkg_name]))
         self.pkg_icon_view.add_items(items)
 
     def single_click(self, column, offset_x, offset_y):
@@ -561,11 +572,18 @@ class SecondCategoryItem(TreeItem):
             else:
                 return
             self.load_new_items(self.all_pkg_names[start:end])
-            
+
     def load_new_items(self, pkg_names):
+        pkg_infos = self.data_manager.get_item_pkgs_info(pkg_names)
+        self.data_manager.get_pkgs_install_status(
+            pkg_names, 
+            reply_handler=lambda status: self.load_items_reply_handler(status, pkg_infos),
+            error_handler=handle_dbus_error)
+
+    def load_items_reply_handler(self, status, pkg_infos):
         items = []
-        for (pkg_name, is_installed, long_desc, star, alias_name) in self.data_manager.get_item_pkgs_info(pkg_names):
-            items.append(PkgIconItem(is_installed, alias_name, pkg_name, long_desc, star, self.all_desktop_infos[pkg_name]))
+        for (index, (pkg_name, short_desc, star, alias_name)) in enumerate(pkg_infos):
+            items.append(PkgIconItem(status[index], alias_name, pkg_name, short_desc, star, self.all_desktop_infos[pkg_name]))
         self.pkg_icon_view.add_items(items)
 
 
