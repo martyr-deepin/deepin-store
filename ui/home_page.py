@@ -49,12 +49,15 @@ from skin import app_theme
 from data import DATA_ID
 from category_info import get_category_name
 from nls import _
+from font import create_cairo_font_face_for_file, draw_font_img
 
 FIRST_CATEGORY_PADDING_X = 66
 SECOND_CATEGORY_PADDING_X = 46
 
 CATEGORY_VIEW_WIDTH = 155
 SLIDE_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "slide_picture", "zh_CN")
+
+category_face = create_cairo_font_face_for_file(os.path.join(get_parent_dir(__file__, 2), "image", "category_img.ttf"))
 
 def tooltip_aciton(view, item, x, y):
     if item.is_in_name_area(x, y):
@@ -258,6 +261,20 @@ CATEGORY_ITEM_EXPAND_PADDING_X = 30
 
 LOAD_ITEMS_NUMBER = 20
 
+category_font_dict = {
+        "recommend":"A",
+        "internet":"B",
+        "multimedia":"C",
+        "games":"D",
+        "graphics":"E",
+        "productivity":"F",
+        "industry":"G",
+        "education":"H",
+        "development":"I",
+        "system":"J",
+        "utilities":"K",
+        }
+
 def handle_dbus_error(*error):
     print "handle_dbus_error: ", error
     
@@ -279,23 +296,35 @@ class CategoryItem(TreeItem):
     
     def render_name(self, cr, rect):
         text_color = "#333333"
+        font_image_color = app_theme.get_color("sidebar_select").get_color()
         if self.is_select:
             cr.set_source_rgba(*color_hex_to_cairo(app_theme.get_color("sidebar_select").get_color()))
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
             
             text_color = "#FFFFFF"
+            font_image_color = "#FFFFFF"
         elif self.is_hover:
             cr.set_source_rgba(*color_hex_to_cairo(app_theme.get_color("sidebar_hover").get_color()))
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
         
         pixbuf = app_theme.get_pixbuf("category/%s.png" % (self.index)).get_pixbuf()
-        draw_pixbuf(
-            cr,
-            pixbuf,
-            rect.x + 12,
-            rect.y + (rect.height - pixbuf.get_height()) / 2)
+        #draw_pixbuf(
+            #cr,
+            #pixbuf,
+            #rect.x + 12,
+            #rect.y + (rect.height - pixbuf.get_height()) / 2)
+
+        draw_font_img(
+                category_font_dict[self.first_category_name], 
+                cr, 
+                rect.x+14, 
+                rect.y+30, 
+                category_face, 
+                text_size=25, 
+                text_color=font_image_color,
+                )
         
         draw_text(cr, 
                   get_category_name(self.first_category_name),
@@ -702,23 +731,35 @@ class RecommendItem(TreeItem):
     
     def render_name(self, cr, rect):
         text_color = "#333333"
+        font_image_color = app_theme.get_color("sidebar_select").get_color()
         if self.is_select:
             cr.set_source_rgba(*color_hex_to_cairo(app_theme.get_color("sidebar_select").get_color()))
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
             
             text_color = "#FFFFFF"
+            font_image_color = "#FFFFFF"
         elif self.is_hover:
             cr.set_source_rgba(*color_hex_to_cairo(app_theme.get_color("sidebar_hover").get_color()))
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
         
         pixbuf = app_theme.get_pixbuf("category/12.png").get_pixbuf()
-        draw_pixbuf(
-            cr,
-            pixbuf,
-            rect.x + 12,
-            rect.y + (rect.height - pixbuf.get_height()) / 2)
+        #draw_pixbuf(
+            #cr,
+            #pixbuf,
+            #rect.x + 12,
+            #rect.y + (rect.height - pixbuf.get_height()) / 2)
+
+        draw_font_img(
+                category_font_dict["recommend"], 
+                cr, 
+                rect.x+14, 
+                rect.y+30, 
+                category_face, 
+                text_size=25, 
+                text_color=font_image_color,
+                )
         
         draw_text(cr, 
                   self.name,
