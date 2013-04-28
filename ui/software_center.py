@@ -33,11 +33,12 @@ from dtk.ui.dialog import OpenFileDialog
 from dtk.ui.menu import Menu
 from dtk.ui.constant import WIDGET_POS_BOTTOM_LEFT
 from dtk.ui.button import LinkButton
+from dtk.ui.slider import Wizard
 from dtk.ui.navigatebar import Navigatebar
 from dtk.ui.timeline import Timeline, CURVE_SINE
 from deepin_utils.process import run_command
 from deepin_utils.math_lib import solve_parabola
-from deepin_utils.file import read_file, write_file, touch_file, end_with_suffixs
+from deepin_utils.file import read_file, write_file, touch_file, end_with_suffixs, get_parent_dir
 from deepin_utils.multithread import create_thread
 from dtk.ui.utils import container_remove_all, set_cursor, get_widget_root_coordinate, get_pixbuf_support_formats
 from dtk.ui.application import Application
@@ -67,6 +68,7 @@ from dtk.ui.iconview import IconView
 from dtk.ui.treeview import TreeView
 from start_desktop_window import StartDesktopWindow
 from utils import is_64bit_system
+import utils
 
 def log(message):
     global debug_flag
@@ -629,7 +631,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
             [(None, "安装Deb文件", self.open_deb_file),
              (None, "打开下载目录", self.open_download_directory),
              (None, "智能清理下载文件", None),
-             (None, "显示新功能", None),
+             (None, "显示新功能", lambda : self.show_wizard_win()),
              (None, "选项", None),
              (None, "退出", self.exit),
              ],
@@ -650,7 +652,41 @@ class DeepinSoftwareCenter(dbus.service.Object):
         start = time.time()
         self.init_home_page()
         print "Finish Init UI: %s" % (time.time()-start, )
-        self.application.run()
+        
+        self.ready_show()
+        
+    def ready_show(self):    
+        if utils.is_first_started():
+            self.show_wizard_win(True, callback=lambda : self.application.window.show_all())
+            utils.set_first_started()
+        else:    
+            self.application.window.show_all()
+        gtk.main()    
+        
+    def show_wizard_win(self, show_button=False, callback=None):    
+        import locale
+        (lang, encode) = locale.getdefaultlocale()
+        program_dir = get_parent_dir(__file__, 2)
+        if lang == "zh_CN":
+            wizard_dir = os.path.join(program_dir, "wizard", "zh_CN")
+        elif lang in ["zh_HK", "zh_TW"]:
+            wizard_dir = os.path.join(program_dir, "wizard", "zh_HK")
+        else:    
+            wizard_dir = os.path.join(program_dir, "wizard", "en")
+        wizard_root_dir = os.path.dirname(wizard_dir)            
+            
+        Wizard(
+            [os.path.join(wizard_dir, "%d.jpg" % i) for i in range(3)],
+            (os.path.join(wizard_root_dir, "dot_normal.png"),
+             os.path.join(wizard_root_dir, "dot_active.png"),             
+             ),
+            (os.path.join(wizard_dir, "start_normal.png"),
+             os.path.join(wizard_dir, "start_press.png"),             
+             ),
+            show_button,
+            callback
+            ).show_all()
+        
         
     def init_home_page(self):
         

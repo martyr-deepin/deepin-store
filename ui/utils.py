@@ -79,3 +79,12 @@ def get_cache_info_config():
         cache_info_config.load()
 
     return cache_info_config
+
+def is_first_started():
+    config = get_cache_info_config()
+    return not config.has_option("settings" , "first_started")
+
+def set_first_started():
+    config = get_cache_info_config()
+    config.set("settings", "first_started", "false")    
+    config.write()
