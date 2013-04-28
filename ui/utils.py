@@ -23,6 +23,10 @@
 import threading as td
 from datetime import datetime
 import os
+from constant import CACHE_INFO_PATH
+from deepin_utils.config import Config
+from deepin_utils.file import touch_file
+from deepin_utils.date_time import get_current_time
 
 LOG_PATH = "/tmp/dsc-frontend.log"
 
@@ -50,3 +54,28 @@ def is_64bit_system():
         return True
     else:
         return False
+
+def set_last_upgrade_time():
+    cache_info_config = get_cache_info_config()
+    cache_info_config.set("upgrade", "last_upgrade_time", get_current_time())
+    cache_info_config.write()
+
+def get_last_upgrade_time():
+    cache_info_config = get_cache_info_config()
+    if cache_info_config.has_option("upgrade", "last_upgrade_time"):
+        return cache_info_config.get("upgrade", "last_upgrade_time")
+    else:
+        cache_info_config.set("upgrade", "last_upgrade_time", "")
+        cache_info_config.write()
+        return ""
+
+def get_cache_info_config():
+    cache_info_config = Config(CACHE_INFO_PATH)
+
+    if os.path.exists(CACHE_INFO_PATH):
+        cache_info_config.load()
+    else:
+        touch_file(CACHE_INFO_PATH)
+        cache_info_config.load()
+
+    return cache_info_config
