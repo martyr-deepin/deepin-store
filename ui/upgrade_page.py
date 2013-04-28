@@ -31,7 +31,6 @@ from dtk.ui.star_view import StarBuffer
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
 from deepin_utils.core import split_with
 from deepin_utils.net import is_network_connected
-from deepin_utils.date_time import get_current_time
 from deepin_utils.file import read_file, write_file, format_file_size, get_parent_dir
 from dtk.ui.utils import is_in_rect, container_remove_all, get_content_size
 from dtk.ui.label import Label
@@ -49,6 +48,7 @@ from events import global_event
 from constant import ACTION_UPGRADE
 from dtk.ui.cycle_strip import CycleStrip
 from time import time
+from utils import get_last_upgrade_time, set_last_upgrade_time
 
 class UpgradingBar(gtk.HBox):
     '''
@@ -103,7 +103,7 @@ class NewestBar(gtk.HBox):
         self.no_notify_label.connect("button-press-event", lambda w, e: global_event.emit("show-no-notify-page"))
         
     def set_update_time(self):
-        self.message_label.set_text("最后更新时间: %s" % get_current_time())
+        self.message_label.set_text("最后更新时间: %s" % get_last_upgrade_time())
         
     def set_no_notify_num(self, no_notify_num):
         
@@ -338,6 +338,7 @@ class UpgradePage(gtk.VBox):
         
     def monitor_upgrade_view(self, treeview):
         if len(treeview.visible_items) == 0:
+            set_last_upgrade_time()
             global_event.emit("show-newest-view")
         else:
             self.upgrade_bar.set_upgrade_info(len(treeview.visible_items), self.no_notify_pkg_num)
@@ -405,6 +406,7 @@ class UpgradePage(gtk.VBox):
         self.upgrade_treeview.queue_draw()
         
     def upgrade_selected_pkg(self):
+        set_last_upgrade_time()
         pkg_names = []
         for item in self.upgrade_treeview.visible_items:
             if item.check_button_buffer.active:
