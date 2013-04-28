@@ -31,6 +31,9 @@ class AptCache(apt.Cache):
     PKG_STATUS_INSTALLED = 1
     PKG_STATUS_UNINSTALLED = 2
     PKG_STATUS_UPGRADED = 3
+    PKG_STATUS_INSTALLING = 4
+    PKG_STATUS_UNINSTALLING = 5
+    PKG_STATUS_UPGRADING = 5
 	
     def __init__(self):
         '''

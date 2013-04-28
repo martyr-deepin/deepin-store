@@ -411,7 +411,7 @@ class DetailPage(gtk.HBox):
         install_status = reply
         if install_status[0][0]:
             if self.category == None:
-                status_label = Label("安装")
+                status_label = Label("已安装")
                 self.left_action_box.pack_start(status_label)
             else:
                 action_button = ImageButton(
