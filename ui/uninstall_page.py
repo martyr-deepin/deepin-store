@@ -42,10 +42,8 @@ from dtk.ui.button import ImageButton
 from dtk.ui.cycle_strip import CycleStrip
 from dtk.ui.label import Label
 from time import time
+from utils import handle_dbus_error
 
-def handle_dbus_error(*error):
-    print "handle_dbus_error: ", error
-    
 class MessageBar(CycleStrip):
     '''
     class docs

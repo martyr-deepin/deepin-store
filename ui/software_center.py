@@ -64,7 +64,7 @@ from dtk.ui.gio_utils import start_desktop_file
 from dtk.ui.iconview import IconView
 from dtk.ui.treeview import TreeView
 from start_desktop_window import StartDesktopWindow
-from utils import is_64bit_system
+from utils import is_64bit_system, handle_dbus_reply, handle_dbus_error
 import utils
 
 def log(message):
@@ -118,7 +118,7 @@ def start_desktop(pkg_name, desktop_path):
     if result != True:
         global_event.emit("show-message", result)
     
-def show_message(statusbar, message_box, message):
+def show_message(statusbar, message_box, message, hide_timeout=5000):
     hide_message(message_box)
     
     label = Label("%s" % message, enable_gaussian=True)
@@ -129,8 +129,9 @@ def show_message(statusbar, message_box, message):
     message_box.add(label_align)
     
     statusbar.show_all()
-    
-    gtk.timeout_add(5000, lambda : hide_message(message_box))
+
+    if hide_timeout:
+        gtk.timeout_add(5000, lambda : hide_message(message_box))
     
 def hide_message(message_box):
     container_remove_all(message_box)
@@ -223,12 +224,6 @@ def switch_page(page_switcher, page_box, page, detail_page):
             page.show_init_page()
     print "Switch Page: %s" % (time.time()-start, )
 
-def handle_dbus_reply(*reply):
-    print "handle_dbus_reply: ", reply
-    
-def handle_dbus_error(*error):
-    print "handle_dbus_error: ", error
-    
 def message_handler(messages, bus_interface, upgrade_page, uninstall_page, install_page, home_page):
     for message in messages:
         (signal_type, action_content) = message
@@ -306,10 +301,16 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
 
         elif signal_type == "update-list-finish":
             upgrade_page.fetch_upgrade_info()
-            #request_status(bus_interface, install_page, upgrade_page, uninstall_page)
+            bus_interface.request_status(
+                    reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
+                    error_handler=handle_dbus_error
+                    )
+            global_event.emit("show-message", "软件列表更新完成!", 0)
 
         elif signal_type == "update-list-update":
             upgrade_page.update_upgrade_progress(action_content)
+            percent = "%.2f%%" % float(action_content)
+            global_event.emit("show-message", "更新软件列表: %s" % percent)
 
         elif signal_type == "parse-download-error":
             (pkg_name, action_type) = action_content
@@ -724,10 +725,10 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.install_page = InstallPage(self.bus_interface, self.data_manager)
         print "Init three pages time: %s" % (time.time()-start, )
         
-        create_thread(lambda :self.bus_interface.request_status(
+        self.bus_interface.request_status(
                 reply_handler=lambda reply: request_status_reply_hander(reply, self.install_page, self.upgrade_page, self.uninstall_page),
                 error_handler=handle_dbus_error
-                )).start()
+                )
         
         log("Handle global event.")
         
@@ -755,7 +756,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
                                                      second_category_name))
         global_event.register_event("grade-pkg", lambda pkg_name, star: grade_pkg(self.application.window, pkg_name, star))
         global_event.register_event("set-cursor", lambda cursor: set_cursor(self.application.window, cursor))
-        global_event.register_event("show-message", lambda message: show_message(self.statusbar, self.message_box, message))
+        global_event.register_event("show-message", self.update_status_bar_message)
         global_event.register_event("start-pkg", lambda pkg_name, desktop_infos, offset: start_pkg(pkg_name, desktop_infos, offset, self.application.window))
         global_event.register_event("start-desktop", start_desktop)
         global_event.register_event("show-pkg-name-tooltip", lambda pkg_name: show_tooltip(self.application.window, pkg_name))
@@ -779,6 +780,12 @@ class DeepinSoftwareCenter(dbus.service.Object):
         log("finish")
         #for event in global_event.events:
             #print "%s: %s" % (event, global_event.events[event])
+
+    def update_status_bar_message(self, message, hide_timeout=5000):
+        if hide_timeout:
+            show_message(self.statusbar, self.message_box, message)
+        else:
+            show_message(self.statusbar, self.message_box, message, hide_timeout)
 
     def request_update_list(self):
         self.bus_interface.start_update_list(

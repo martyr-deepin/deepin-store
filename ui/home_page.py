@@ -49,7 +49,8 @@ from skin import app_theme
 from data import DATA_ID
 from category_info import get_category_name
 from nls import _
-from font import create_cairo_font_face_for_file, draw_font_img
+from deepin_font_icon import font_face_create
+from font import draw_font_img
 
 FIRST_CATEGORY_PADDING_X = 66
 SECOND_CATEGORY_PADDING_X = 46
@@ -57,7 +58,7 @@ SECOND_CATEGORY_PADDING_X = 46
 CATEGORY_VIEW_WIDTH = 155
 SLIDE_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "slide_picture", "zh_CN")
 
-category_face = create_cairo_font_face_for_file(os.path.join(get_parent_dir(__file__, 2), "image", "category_img.ttf"))
+category_face = font_face_create(os.path.join(get_parent_dir(__file__, 2), "image", "category_img.ttf"))
 
 def tooltip_aciton(view, item, x, y):
     if item.is_in_name_area(x, y):

@@ -35,6 +35,12 @@ def log(message):
         now = datetime.now().strftime("[%Y-%m-%d %H:%M:%S]")
         file_handler.write("%s %s\n" % (now, message))
 
+def handle_dbus_reply(*reply):
+    print "handle_dbus_reply: ", reply
+    
+def handle_dbus_error(*error):
+    print "handle_dbus_error: ", error
+
 class ThreadMethod(td.Thread):
     '''
     func: a method name

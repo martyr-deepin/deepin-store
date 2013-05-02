@@ -47,10 +47,7 @@ from events import global_event
 from constant import ACTION_UPGRADE
 from dtk.ui.cycle_strip import CycleStrip
 from time import time
-from utils import get_last_upgrade_time, set_last_upgrade_time
-
-def handle_dbus_error(*error):
-    print "handle_dbus_error: ", error
+from utils import get_last_upgrade_time, set_last_upgrade_time, handle_dbus_error
 
 class UpgradingBar(gtk.HBox):
     '''
