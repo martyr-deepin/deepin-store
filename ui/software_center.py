@@ -24,12 +24,9 @@ from skin import app_theme
 from nls import _
 
 import glib
-import urllib
 from data import data_exit
 from icon_window import IconWindow
 from detail_page import DetailPage
-from dtk.ui.skin import skin_config
-from dtk.ui.dialog import OpenFileDialog
 from dtk.ui.menu import Menu
 from dtk.ui.constant import WIDGET_POS_BOTTOM_LEFT
 from dtk.ui.button import LinkButton
@@ -38,9 +35,9 @@ from dtk.ui.navigatebar import Navigatebar
 from dtk.ui.timeline import Timeline, CURVE_SINE
 from deepin_utils.process import run_command
 from deepin_utils.math_lib import solve_parabola
-from deepin_utils.file import read_file, write_file, touch_file, end_with_suffixs, get_parent_dir
+from deepin_utils.file import read_file, write_file, touch_file, get_parent_dir
 from deepin_utils.multithread import create_thread
-from dtk.ui.utils import container_remove_all, set_cursor, get_widget_root_coordinate, get_pixbuf_support_formats
+from dtk.ui.utils import container_remove_all, set_cursor, get_widget_root_coordinate
 from dtk.ui.application import Application
 from dtk.ui.statusbar import Statusbar
 from home_page import HomePage
@@ -514,7 +511,6 @@ class DeepinSoftwareCenter(dbus.service.Object):
         dbus.service.Object.__init__(self, session_bus, DSC_FRONTEND_PATH)
         
         self.simulate = "--simulate" in arguments
-        self.deb_files = filter(self.is_deb_file, arguments)
         
         global debug_flag
         debug_flag = "--debug" in arguments
@@ -524,14 +520,6 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
     def open_download_directory(self):
         run_command("xdg-open /var/cache/apt/archives")
-        
-    def open_deb_file(self):
-        OpenFileDialog(
-            "打开Deb文件", 
-            self.application.window,
-            ok_callback=lambda filename: self.bus_interface.install_deb_files([filename]))
-        
-        global_event.emit("show-message", "可以直接拖拽Deb文件到软件中心窗口进行安装哟. :)")
         
     def switch_page(self, page):
         switch_page(self.page_switcher, self.page_box, page, self.detail_page)
@@ -564,7 +552,6 @@ class DeepinSoftwareCenter(dbus.service.Object):
                 show_title=False
                 )
         self.application.window.set_title(_("Deepin Software Center"))
-        self.application.window.connect("event", self.listen_redraw)
         
         # Init page box.
         self.page_box = gtk.VBox()
@@ -628,7 +615,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
         # Init menu.
         menu = Menu(
-            [(None, "安装Deb文件", self.open_deb_file),
+            [
              (None, "打开下载目录", self.open_download_directory),
              (None, "智能清理下载文件", None),
              (None, "显示新功能", lambda : self.show_wizard_win()),
@@ -647,7 +634,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         # Make window can received drop data.
         targets = [("text/uri-list", 0, 1)]        
         self.application.window.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_DROP, targets, gtk.gdk.ACTION_COPY)
-        self.application.window.connect_after("drag-data-received", self.on_drag_data_received)        
+        #self.application.window.connect_after("drag-data-received", self.on_drag_data_received)        
         
         start = time.time()
         self.init_home_page()
@@ -657,7 +644,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
     def ready_show(self):    
         if utils.is_first_started():
-            self.show_wizard_win(True, callback=lambda : self.application.window.show_all())
+            self.show_wizard_win(True, callback=self.wizard_callback)
             utils.set_first_started()
         else:    
             self.application.window.show_all()
@@ -687,6 +674,9 @@ class DeepinSoftwareCenter(dbus.service.Object):
             callback
             ).show_all()
         
+    def wizard_callback(self):
+        self.application.window.show_all()
+        gtk.timeout_add(100, self.application.raise_to_top)
         
     def init_home_page(self):
         
@@ -714,11 +704,6 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.init_backend()
         
     def init_backend(self):
-        log("Test deb files arguments")
-        
-        # Install deb file.
-        if len(self.deb_files) > 0:
-            self.bus_interface.install_deb_files(self.deb_files)
         
         log("Init detail view")
         
@@ -789,16 +774,16 @@ class DeepinSoftwareCenter(dbus.service.Object):
         glib.timeout_add(1000, lambda : clear_install_stop_list(self.install_page))
         glib.timeout_add(1000, lambda : clear_failed_action(self.install_page, self.upgrade_page))
 
-        #self.bus_interface.start_update_list()
         
+        self.request_update_list()
         log("finish")
         #for event in global_event.events:
             #print "%s: %s" % (event, global_event.events[event])
 
-    def listen_redraw(self, widget, event=None):
-        if event.type == gtk.gdk.EXPOSE:
-            #print event.area
-            pass
+    def request_update_list(self):
+        self.bus_interface.start_update_list(
+                reply_handler=handle_dbus_reply,
+                error_handler=handle_dbus_error,)
 
     def upgrade_pkg(self, pkg_names):
         self.bus_interface.upgrade_pkg(pkg_names, reply_handler=handle_dbus_reply, error_handler=handle_dbus_error)
@@ -815,35 +800,32 @@ class DeepinSoftwareCenter(dbus.service.Object):
         # Remove id from config file.
         data_exit()
 
-    def is_deb_file(self, path):
-        return path.endswith(".deb") and os.path.exists(path)
-        
-    def on_drag_data_received(self, widget, context, x, y, selection, info, timestamp):    
-        deb_files = []
-        if selection.target in ["text/uri-list", "text/plain", "text/deepin-songs"]:
-            if selection.target == "text/uri-list":    
-                selected_uris = selection.get_uris()
-                for selected_uri in selected_uris:
-                    if selected_uri.startswith("file://"):
-                        selected_uri = urllib.unquote(selected_uri.split("file://")[1])
+    #def on_drag_data_received(self, widget, context, x, y, selection, info, timestamp):    
+        #deb_files = []
+        #if selection.target in ["text/uri-list", "text/plain", "text/deepin-songs"]:
+            #if selection.target == "text/uri-list":    
+                #selected_uris = selection.get_uris()
+                #for selected_uri in selected_uris:
+                    #if selected_uri.startswith("file://"):
+                        #selected_uri = urllib.unquote(selected_uri.split("file://")[1])
                         
-                        if self.is_deb_file(selected_uri):
-                            deb_files.append(selected_uri)
-                        else:
-                            support_foramts = get_pixbuf_support_formats()
-                            if end_with_suffixs(selected_uri, support_foramts):
-                                skin_config.load_skin_from_image(selected_uri)
+                        #if self.is_deb_file(selected_uri):
+                            #deb_files.append(selected_uri)
+                        #else:
+                            #support_foramts = get_pixbuf_support_formats()
+                            #if end_with_suffixs(selected_uri, support_foramts):
+                                #skin_config.load_skin_from_image(selected_uri)
                         
-        if len(deb_files) > 0:                
-            self.bus_interface.install_deb_files(deb_files)
+        #if len(deb_files) > 0:                
+            #self.bus_interface.install_deb_files(deb_files)
 
     @dbus.service.method(DSC_FRONTEND_NAME, in_signature="as", out_signature="")    
     def hello(self, arguments):
         self.application.raise_to_top()
         
-        deb_files = filter(self.is_deb_file, arguments)        
-        if len(deb_files) > 0:
-            self.bus_interface.install_deb_files(deb_files)
+        #deb_files = filter(self.is_deb_file, arguments)        
+        #if len(deb_files) > 0:
+            #self.bus_interface.install_deb_files(deb_files)
         
     @dbus.service.signal(DSC_FRONTEND_NAME)
     def update_signal(self, message):

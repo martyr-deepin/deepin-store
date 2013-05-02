@@ -25,7 +25,6 @@ import gobject
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
 from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.progressbar import ProgressBuffer
-from dtk.ui.threads import post_gui, AnonymityThread
 from dtk.ui.star_view import StarBuffer
 from dtk.ui.utils import is_in_rect, get_content_size
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
@@ -44,6 +43,9 @@ from dtk.ui.cycle_strip import CycleStrip
 from dtk.ui.label import Label
 from time import time
 
+def handle_dbus_error(*error):
+    print "handle_dbus_error: ", error
+    
 class MessageBar(CycleStrip):
     '''
     class docs
@@ -192,11 +194,10 @@ class UninstallPage(gtk.VBox):
         self.treeview.add_items(pkg_items)        
         
     def fetch_uninstall_info(self):
-        gtk.timeout_add(10, lambda :AnonymityThread(
-                        self.bus_interface.request_uninstall_pkgs,
-                        self.render_uninstall_info).run())
+        self.bus_interface.request_uninstall_pkgs(
+                        reply_handler=self.render_uninstall_info,
+                        error_handler=handle_dbus_error)
     
-    @post_gui
     def render_uninstall_info(self, pkg_infos):
         self.add_uninstall_items(pkg_infos)
         

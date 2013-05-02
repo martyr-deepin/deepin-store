@@ -417,7 +417,7 @@ class PackageManager(dbus.service.Object):
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="b")
     def start_update_list(self):
         log("start update list...")
-        gobject.timeout_add(10, lambda : UpdateList(self.pkg_cache).start())
+        UpdateList(self.pkg_cache).start()
         log("start update list done")
         
         return True

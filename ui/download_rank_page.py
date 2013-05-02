@@ -22,9 +22,7 @@
 
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
 from skin import app_theme
-from dtk.ui.threads import post_gui
 from dtk.ui.utils import get_content_size, set_cursor, container_remove_all, is_in_rect
-from deepin_utils.multithread import create_thread
 import gobject
 import pango
 from dtk.ui.constant import DEFAULT_FONT_SIZE
