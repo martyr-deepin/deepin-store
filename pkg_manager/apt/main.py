@@ -414,14 +414,13 @@ class PackageManager(dbus.service.Object):
         
         return [str(download_status), str(action_status)]
     
-    @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="b")
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="")
     def start_update_list(self):
-        log("start update list...")
-        UpdateList(self.pkg_cache).start()
-        log("start update list done")
+        if not self.is_update_list_running():
+            log("start update list...")
+            UpdateList(self.pkg_cache).start()
+            log("start update list done")
         
-        return True
-    
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="ab")
     def request_pkgs_install_status(self, pkg_names):
         _status = []
