@@ -618,7 +618,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         menu = Menu(
             [
              (None, "打开下载目录", self.open_download_directory),
-             (None, "智能清理下载文件", None),
+             (None, "智能清理下载文件", self.clean_download_cache),
              (None, "显示新功能", lambda : self.show_wizard_win()),
              (None, "选项", None),
              (None, "退出", self.exit),
@@ -796,6 +796,27 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.bus_interface.upgrade_pkg(pkg_names, reply_handler=handle_dbus_reply, error_handler=handle_dbus_error)
         return False
 
+    def clean_download_cache(self):
+        self.bus_interface.clean_download_cache(
+                reply_handler=self.clean_download_cache_reply, 
+                error_handler=handle_dbus_error)
+
+    def clean_download_cache_reply(obj, result):
+        print result
+        num, size = result
+        if num != 0:
+            size = size/1024.0
+            if size >= 1024:
+                size = size/1024.0
+                size_info = "%.2fM" % size
+            else:
+                size_info = "%.2fKB" % size
+            message = "恭喜您清理了%s个软件包，共节约了%s空间" % (num, size_info)
+            print message
+        else:
+            message = "您的系统已经很干净了，不需要清理."
+        global_event.emit("show-message", message, 0)
+
     def run(self):    
         self.init_ui()
         
@@ -806,25 +827,6 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
         # Remove id from config file.
         data_exit()
-
-    #def on_drag_data_received(self, widget, context, x, y, selection, info, timestamp):    
-        #deb_files = []
-        #if selection.target in ["text/uri-list", "text/plain", "text/deepin-songs"]:
-            #if selection.target == "text/uri-list":    
-                #selected_uris = selection.get_uris()
-                #for selected_uri in selected_uris:
-                    #if selected_uri.startswith("file://"):
-                        #selected_uri = urllib.unquote(selected_uri.split("file://")[1])
-                        
-                        #if self.is_deb_file(selected_uri):
-                            #deb_files.append(selected_uri)
-                        #else:
-                            #support_foramts = get_pixbuf_support_formats()
-                            #if end_with_suffixs(selected_uri, support_foramts):
-                                #skin_config.load_skin_from_image(selected_uri)
-                        
-        #if len(deb_files) > 0:                
-            #self.bus_interface.install_deb_files(deb_files)
 
     @dbus.service.method(DSC_FRONTEND_NAME, in_signature="as", out_signature="")    
     def hello(self, arguments):

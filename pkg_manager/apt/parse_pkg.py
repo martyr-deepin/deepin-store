@@ -82,8 +82,13 @@ def get_deb_download_info(cache, deb_file):
         return DOWNLOAD_STATUS_ERROR
 
 def get_pkg_download_info(cache, pkg_name):
-    # Mark package in apt cache.
-    #cache.open(None)
+    dependence = get_pkg_dependence(cache, pkg_name)
+    if dependence == []:
+        return DOWNLOAD_STATUS_ERROR
+    else:
+        return check_pkg_download_info(dependence)
+
+def get_pkg_dependence(cache, pkg_name):
     if pkg_name in cache:
         try:
             pkg = cache[pkg_name]
@@ -95,13 +100,13 @@ def get_pkg_download_info(cache, pkg_name):
             # Get package information.
             pkgs = sorted(cache.get_changes(), key=lambda pkg: pkg.name)
             cache._depcache.init()
-            return check_pkg_download_info(pkgs)
+            return pkgs
         
         except Exception, e:
             print "get_pkg_download_info error: %s" % (e)
             log(str(traceback.format_exc()))
-            
-            return DOWNLOAD_STATUS_ERROR
+
+            return []
     else:
         raise Exception("%s is not found" % pkg_name)
     
@@ -182,9 +187,35 @@ def check_hash(path, hash_type, hash_value):
             hash_fun.update(bytes)
     return hash_fun.hexdigest() == hash_value
 
+def get_pkg_dependence_file_path(cache, pkg_name):
+    file_paths = []
+    if pkg_name in cache:
+        try:
+            pkg = cache[pkg_name]
+            if cache.is_pkg_upgradable(pkg_name):
+                pkg.mark_upgrade()
+            elif not cache.is_pkg_installed(pkg_name):
+                pkg.mark_install()
+                
+            # Get package information.
+            pkgs = sorted(cache.get_changes(), key=lambda pkg: pkg.name)
+            cache._depcache.init()
+            file_paths.append(os.path.join(ARCHIVE_DIR, get_filename(pkg.candidate)))
+            for pkg in pkgs:
+                file_paths.append(os.path.join(ARCHIVE_DIR, get_filename(pkg.candidate)))
+            return file_paths
+        
+        except Exception, e:
+            print "get_pkg_download_info error: %s" % (e)
+            log(str(traceback.format_exc()))
+
+            return []
+    else:
+        raise Exception("%s is not found" % pkg_name)
+
 if __name__ == "__main__":
-    apt_pkg.init()
-    cache = apt.Cache()
+    from apt_cache import AptCache
+    cache = AptCache()
     
     # deb_package = debfile.DebPackage("/test/Download/geany_1.22+dfsg-2_amd64.deb", cache)
     # print deb_package.VERSION_NONE, deb_package.VERSION_OUTDATED, deb_package.VERSION_SAME, deb_package.VERSION_NEWER
@@ -193,4 +224,5 @@ if __name__ == "__main__":
     # print deb_package.check_breaks_existing_packages()
     # print deb_package.check_conflicts()
 
-    print get_deb_download_info(cache, "/test/Download/geany_1.22+dfsg-2_amd64.deb")
+    for path in get_pkg_dependence_file_path(cache, "apache2"):
+        print path
