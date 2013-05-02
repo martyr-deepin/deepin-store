@@ -776,7 +776,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         glib.timeout_add(1000, lambda : clear_failed_action(self.install_page, self.upgrade_page))
 
         
-        self.request_update_list()
+        create_thread(self.request_update_list).start()
         log("finish")
         #for event in global_event.events:
             #print "%s: %s" % (event, global_event.events[event])

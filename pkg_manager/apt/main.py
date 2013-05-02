@@ -416,7 +416,7 @@ class PackageManager(dbus.service.Object):
     
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="")
     def start_update_list(self):
-        if not self.is_update_list_running():
+        if not self.is_update_list_running() and not self.is_apt_action_running():
             log("start update list...")
             UpdateList(self.pkg_cache).start()
             log("start update list done")

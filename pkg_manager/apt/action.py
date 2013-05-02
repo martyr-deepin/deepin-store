@@ -20,8 +20,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import apt.debfile as debfile
-import os
 from dtk.ui.thread_pool import MissionThread, MissionThreadPool
 import apt.progress.base as apb
 from events import global_event
@@ -79,11 +77,6 @@ class AptActionThread(MissionThread):
         
     def start_mission(self):
         log("start thread")
-        #if os.path.exists(self.deb_file):
-            #log("install: %s") % self.deb_file
-            #deb_package = debfile.DebPackage(self.deb_file, self.pkg_cache)
-            #deb_package.install(AptProcess(self.pkg_name, self.action_type))
-        
         start = time.time()
         self.pkg_cache.open(None)
         log("Reopen Cache Time: %s" % (time.time()-start,))
