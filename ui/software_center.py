@@ -304,8 +304,8 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
             
             refresh_current_page_status(pkg_name, pkg_info_list, bus_interface)
 
-        #elif signal_type == "update-list-finish":
-            #upgrade_page.fetch_upgrade_info()
+        elif signal_type == "update-list-finish":
+            upgrade_page.fetch_upgrade_info()
             #request_status(bus_interface, install_page, upgrade_page, uninstall_page)
 
         elif signal_type == "update-list-update":

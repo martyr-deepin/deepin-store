@@ -29,7 +29,6 @@ import apt
 from utils import log
 from constant import DOWNLOAD_STATUS_NOTNEED, DOWNLOAD_STATUS_ERROR
 import apt.debfile as debfile
-from time import sleep
 
 def get_deb_download_info(cache, deb_file):
     try:
@@ -85,7 +84,6 @@ def get_deb_download_info(cache, deb_file):
 def get_pkg_download_info(cache, pkg_name):
     # Mark package in apt cache.
     #cache.open(None)
-    sleep(2)
     if pkg_name in cache:
         try:
             pkg = cache[pkg_name]
