@@ -24,12 +24,9 @@ from skin import app_theme
 from nls import _
 
 import glib
-import urllib
 from data import data_exit
 from icon_window import IconWindow
 from detail_page import DetailPage
-from dtk.ui.skin import skin_config
-from dtk.ui.dialog import OpenFileDialog
 from dtk.ui.menu import Menu
 from dtk.ui.constant import WIDGET_POS_BOTTOM_LEFT
 from dtk.ui.button import LinkButton
@@ -38,9 +35,9 @@ from dtk.ui.navigatebar import Navigatebar
 from dtk.ui.timeline import Timeline, CURVE_SINE
 from deepin_utils.process import run_command
 from deepin_utils.math_lib import solve_parabola
-from deepin_utils.file import read_file, write_file, touch_file, end_with_suffixs, get_parent_dir
+from deepin_utils.file import read_file, write_file, touch_file, get_parent_dir
 from deepin_utils.multithread import create_thread
-from dtk.ui.utils import container_remove_all, set_cursor, get_widget_root_coordinate, get_pixbuf_support_formats
+from dtk.ui.utils import container_remove_all, set_cursor, get_widget_root_coordinate
 from dtk.ui.application import Application
 from dtk.ui.statusbar import Statusbar
 from home_page import HomePage
@@ -61,14 +58,17 @@ from constant import (
         )
 from dtk.ui.slider import HSlider
 from events import global_event
-import dtk.ui.tooltip as Tooltip
 from dtk.ui.label import Label
 from dtk.ui.gio_utils import start_desktop_file
 from dtk.ui.iconview import IconView
 from dtk.ui.treeview import TreeView
 from start_desktop_window import StartDesktopWindow
-from utils import is_64bit_system
+from utils import is_64bit_system, handle_dbus_reply, handle_dbus_error
 import utils
+from tooltip import ToolTip
+
+
+tool_tip = ToolTip()
 
 def log(message):
     global debug_flag
@@ -121,7 +121,7 @@ def start_desktop(pkg_name, desktop_path):
     if result != True:
         global_event.emit("show-message", result)
     
-def show_message(statusbar, message_box, message):
+def show_message(statusbar, message_box, message, hide_timeout=5000):
     hide_message(message_box)
     
     label = Label("%s" % message, enable_gaussian=True)
@@ -132,8 +132,9 @@ def show_message(statusbar, message_box, message):
     message_box.add(label_align)
     
     statusbar.show_all()
-    
-    gtk.timeout_add(5000, lambda : hide_message(message_box))
+
+    if hide_timeout:
+        gtk.timeout_add(5000, lambda : hide_message(message_box))
     
 def hide_message(message_box):
     container_remove_all(message_box)
@@ -180,10 +181,11 @@ def grade_pkg(window, pkg_name, star):
         show_tooltip(window, "您已经评过分了哟！ ;)")
 
 def show_tooltip(window, message):
-    Tooltip.text(window, message)
-    Tooltip.disable(window, False)
-    Tooltip.show_now()
-    Tooltip.disable(window, True)
+    tool_tip.set_text(message)
+    (screen, px, py, modifier_type) = window.get_display().get_pointer()
+    tool_tip.show_all()
+    tool_tip.move(px, py)
+    gtk.timeout_add(2000, tool_tip.hide_all)
     
 def switch_from_detail_page(page_switcher, detail_page, page_box):
     page_switcher.slide_to_page(page_box, "left")
@@ -226,12 +228,6 @@ def switch_page(page_switcher, page_box, page, detail_page):
             page.show_init_page()
     print "Switch Page: %s" % (time.time()-start, )
 
-def handle_dbus_reply(*reply):
-    print "handle_dbus_reply: ", reply
-    
-def handle_dbus_error(*error):
-    print "handle_dbus_error: ", error
-    
 def message_handler(messages, bus_interface, upgrade_page, uninstall_page, install_page, home_page):
     for message in messages:
         (signal_type, action_content) = message
@@ -307,12 +303,18 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
             
             refresh_current_page_status(pkg_name, pkg_info_list, bus_interface)
 
-        #elif signal_type == "update-list-finish":
-            #upgrade_page.fetch_upgrade_info()
-            #request_status(bus_interface, install_page, upgrade_page, uninstall_page)
+        elif signal_type == "update-list-finish":
+            upgrade_page.fetch_upgrade_info()
+            bus_interface.request_status(
+                    reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
+                    error_handler=handle_dbus_error
+                    )
+            global_event.emit("show-message", "软件列表更新完成!", 0)
 
         elif signal_type == "update-list-update":
             upgrade_page.update_upgrade_progress(action_content)
+            percent = "%.2f%%" % float(action_content)
+            global_event.emit("show-message", "更新软件列表: %s" % percent)
 
         elif signal_type == "parse-download-error":
             (pkg_name, action_type) = action_content
@@ -514,7 +516,6 @@ class DeepinSoftwareCenter(dbus.service.Object):
         dbus.service.Object.__init__(self, session_bus, DSC_FRONTEND_PATH)
         
         self.simulate = "--simulate" in arguments
-        self.deb_files = filter(self.is_deb_file, arguments)
         
         global debug_flag
         debug_flag = "--debug" in arguments
@@ -524,14 +525,6 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
     def open_download_directory(self):
         run_command("xdg-open /var/cache/apt/archives")
-        
-    def open_deb_file(self):
-        OpenFileDialog(
-            "打开Deb文件", 
-            self.application.window,
-            ok_callback=lambda filename: self.bus_interface.install_deb_files([filename]))
-        
-        global_event.emit("show-message", "可以直接拖拽Deb文件到软件中心窗口进行安装哟. :)")
         
     def switch_page(self, page):
         switch_page(self.page_switcher, self.page_box, page, self.detail_page)
@@ -564,7 +557,6 @@ class DeepinSoftwareCenter(dbus.service.Object):
                 show_title=False
                 )
         self.application.window.set_title(_("Deepin Software Center"))
-        self.application.window.connect("event", self.listen_redraw)
         
         # Init page box.
         self.page_box = gtk.VBox()
@@ -628,9 +620,9 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
         # Init menu.
         menu = Menu(
-            [(None, "安装Deb文件", self.open_deb_file),
+            [
              (None, "打开下载目录", self.open_download_directory),
-             (None, "智能清理下载文件", None),
+             (None, "智能清理下载文件", self.clean_download_cache),
              (None, "显示新功能", lambda : self.show_wizard_win()),
              (None, "选项", None),
              (None, "退出", self.exit),
@@ -647,7 +639,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         # Make window can received drop data.
         targets = [("text/uri-list", 0, 1)]        
         self.application.window.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_DROP, targets, gtk.gdk.ACTION_COPY)
-        self.application.window.connect_after("drag-data-received", self.on_drag_data_received)        
+        #self.application.window.connect_after("drag-data-received", self.on_drag_data_received)        
         
         start = time.time()
         self.init_home_page()
@@ -657,7 +649,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
     def ready_show(self):    
         if utils.is_first_started():
-            self.show_wizard_win(True, callback=lambda : self.application.window.show_all())
+            self.show_wizard_win(True, callback=self.wizard_callback)
             utils.set_first_started()
         else:    
             self.application.window.show_all()
@@ -687,6 +679,9 @@ class DeepinSoftwareCenter(dbus.service.Object):
             callback
             ).show_all()
         
+    def wizard_callback(self):
+        self.application.window.show_all()
+        gtk.timeout_add(100, self.application.raise_to_top)
         
     def init_home_page(self):
         
@@ -714,11 +709,6 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.init_backend()
         
     def init_backend(self):
-        log("Test deb files arguments")
-        
-        # Install deb file.
-        if len(self.deb_files) > 0:
-            self.bus_interface.install_deb_files(self.deb_files)
         
         log("Init detail view")
         
@@ -739,10 +729,10 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.install_page = InstallPage(self.bus_interface, self.data_manager)
         print "Init three pages time: %s" % (time.time()-start, )
         
-        create_thread(lambda :self.bus_interface.request_status(
+        self.bus_interface.request_status(
                 reply_handler=lambda reply: request_status_reply_hander(reply, self.install_page, self.upgrade_page, self.uninstall_page),
                 error_handler=handle_dbus_error
-                )).start()
+                )
         
         log("Handle global event.")
         
@@ -770,7 +760,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
                                                      second_category_name))
         global_event.register_event("grade-pkg", lambda pkg_name, star: grade_pkg(self.application.window, pkg_name, star))
         global_event.register_event("set-cursor", lambda cursor: set_cursor(self.application.window, cursor))
-        global_event.register_event("show-message", lambda message: show_message(self.statusbar, self.message_box, message))
+        global_event.register_event("show-message", self.update_status_bar_message)
         global_event.register_event("start-pkg", lambda pkg_name, desktop_infos, offset: start_pkg(pkg_name, desktop_infos, offset, self.application.window))
         global_event.register_event("start-desktop", start_desktop)
         global_event.register_event("show-pkg-name-tooltip", lambda pkg_name: show_tooltip(self.application.window, pkg_name))
@@ -789,20 +779,47 @@ class DeepinSoftwareCenter(dbus.service.Object):
         glib.timeout_add(1000, lambda : clear_install_stop_list(self.install_page))
         glib.timeout_add(1000, lambda : clear_failed_action(self.install_page, self.upgrade_page))
 
-        #self.bus_interface.start_update_list()
         
+        create_thread(self.request_update_list).start()
         log("finish")
         #for event in global_event.events:
             #print "%s: %s" % (event, global_event.events[event])
 
-    def listen_redraw(self, widget, event=None):
-        if event.type == gtk.gdk.EXPOSE:
-            #print event.area
-            pass
+    def update_status_bar_message(self, message, hide_timeout=5000):
+        if hide_timeout:
+            show_message(self.statusbar, self.message_box, message)
+        else:
+            show_message(self.statusbar, self.message_box, message, hide_timeout)
+
+    def request_update_list(self):
+        self.bus_interface.start_update_list(
+                reply_handler=handle_dbus_reply,
+                error_handler=handle_dbus_error,)
 
     def upgrade_pkg(self, pkg_names):
         self.bus_interface.upgrade_pkg(pkg_names, reply_handler=handle_dbus_reply, error_handler=handle_dbus_error)
         return False
+
+    def clean_download_cache(self):
+        self.bus_interface.clean_download_cache(
+                reply_handler=self.clean_download_cache_reply, 
+                error_handler=handle_dbus_error)
+
+    def clean_download_cache_reply(obj, result):
+        print result
+        num, size = result
+        if num != 0:
+            size = size/1024.0
+            if size >= 1024:
+                size = size/1024.0
+                size_info = "%.2fM" % size
+            else:
+                size_info = "%.2fKB" % size
+            message = "恭喜您清理了%s个软件包，共节约了%s空间" % (num, size_info)
+            print message
+        else:
+            message = "您的系统已经很干净了，不需要清理."
+        global_event.emit("show-message", message, 0)
 
     def run(self):    
         self.init_ui()
@@ -815,35 +832,13 @@ class DeepinSoftwareCenter(dbus.service.Object):
         # Remove id from config file.
         data_exit()
 
-    def is_deb_file(self, path):
-        return path.endswith(".deb") and os.path.exists(path)
-        
-    def on_drag_data_received(self, widget, context, x, y, selection, info, timestamp):    
-        deb_files = []
-        if selection.target in ["text/uri-list", "text/plain", "text/deepin-songs"]:
-            if selection.target == "text/uri-list":    
-                selected_uris = selection.get_uris()
-                for selected_uri in selected_uris:
-                    if selected_uri.startswith("file://"):
-                        selected_uri = urllib.unquote(selected_uri.split("file://")[1])
-                        
-                        if self.is_deb_file(selected_uri):
-                            deb_files.append(selected_uri)
-                        else:
-                            support_foramts = get_pixbuf_support_formats()
-                            if end_with_suffixs(selected_uri, support_foramts):
-                                skin_config.load_skin_from_image(selected_uri)
-                        
-        if len(deb_files) > 0:                
-            self.bus_interface.install_deb_files(deb_files)
-
     @dbus.service.method(DSC_FRONTEND_NAME, in_signature="as", out_signature="")    
     def hello(self, arguments):
         self.application.raise_to_top()
         
-        deb_files = filter(self.is_deb_file, arguments)        
-        if len(deb_files) > 0:
-            self.bus_interface.install_deb_files(deb_files)
+        #deb_files = filter(self.is_deb_file, arguments)        
+        #if len(deb_files) > 0:
+            #self.bus_interface.install_deb_files(deb_files)
         
     @dbus.service.signal(DSC_FRONTEND_NAME)
     def update_signal(self, message):

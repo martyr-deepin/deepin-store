@@ -21,13 +21,13 @@
 
 import sys
 import os
-from deepin_utils.file import get_parent_dir
+from deepin_utils.file import get_parent_dir, remove_file
 sys.path.append(os.path.join(get_parent_dir(__file__, 3), "download_manager", "deepin_storm"))
 
 import signal
 from download_manager import DownloadManager
 import apt.debfile as debfile
-from parse_pkg import get_pkg_download_info, get_deb_download_info
+from parse_pkg import get_pkg_download_info, get_deb_download_info, get_pkg_dependence_file_path, ARCHIVE_DIR, DEB_CACHE_DIR
 import gobject
 import dbus
 import dbus.service
@@ -259,6 +259,42 @@ class PackageManager(dbus.service.Object):
         self.update_signal([("download-failed", (pkg_name, action_type))])
         
         self.exit_manager.check()    
+
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="ai")
+    def clean_download_cache(self):
+        '''Clean download cache.'''
+        # get action packages.
+        remain_pkgs = []
+        for (pkg_name, info_dict) in self.download_manager.fetch_files_dict.items():
+            remain_pkgs.append(pkg_name)
+
+        for (pkg_name, info_dict) in self.apt_action_pool.install_action_dict.items():
+            remain_pkgs.append(pkg_name)
+        for (pkg_name, info_dict) in self.apt_action_pool.upgrade_action_dict.items():
+            remain_pkgs.append(pkg_name)
+        
+        # Get depend packages.
+        remain_pkgs_paths = []
+        for pkg_name in remain_pkgs:
+            result = get_pkg_dependence_file_path(self.pkg_cache, pkg_name)
+            if not result:
+                remain_pkgs_paths += result
+
+        # Init clean size.
+        packageNum = 0
+        cleanSize = 0
+                
+        # Delete cache directory.
+        if os.path.exists(ARCHIVE_DIR):
+            for root, folder, files in os.walk(ARCHIVE_DIR):
+                for file_name in files:
+                    path = os.path.join(root, file_name)
+                    if path.endswith(".deb") and (path not in remain_pkgs_paths):
+                        packageNum += 1
+                        cleanSize += os.path.getsize(path)
+                        remove_file(path)
+
+        return [packageNum, cleanSize]
         
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="b", out_signature="")    
     def say_hello(self, simulate):
@@ -414,14 +450,13 @@ class PackageManager(dbus.service.Object):
         
         return [str(download_status), str(action_status)]
     
-    @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="b")
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="")
     def start_update_list(self):
-        log("start update list...")
-        gobject.timeout_add(10, lambda : UpdateList(self.pkg_cache).start())
-        log("start update list done")
+        if not self.is_update_list_running() and not self.is_apt_action_running():
+            log("start update list...")
+            UpdateList(self.pkg_cache).start()
+            log("start update list done")
         
-        return True
-    
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="ab")
     def request_pkgs_install_status(self, pkg_names):
         _status = []

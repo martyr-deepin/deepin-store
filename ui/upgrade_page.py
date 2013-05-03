@@ -25,7 +25,6 @@ import gobject
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, CONFIG_DIR, CHECK_BUTTON_PADDING_X
 import os
 from dtk.ui.treeview import TreeView, TreeItem
-from dtk.ui.threads import post_gui, AnonymityThread
 from dtk.ui.button import CheckButtonBuffer, ImageButton, CheckAllButton
 from dtk.ui.star_view import StarBuffer
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
@@ -48,7 +47,7 @@ from events import global_event
 from constant import ACTION_UPGRADE
 from dtk.ui.cycle_strip import CycleStrip
 from time import time
-from utils import get_last_upgrade_time, set_last_upgrade_time
+from utils import get_last_upgrade_time, set_last_upgrade_time, handle_dbus_error
 
 class UpgradingBar(gtk.HBox):
     '''
@@ -288,7 +287,6 @@ class UpgradePage(gtk.VBox):
         self.upgrade_treeview.connect("items-change", self.monitor_upgrade_view)
         self.upgrade_treeview.connect("items-change", lambda treeview: global_event.emit("update-upgrade-notify-number", len(treeview.visible_items)))
         
-        #gtk.timeout_add(200, self.render_upgrade_progress)
         
         self.no_notify_treeview = TreeView(enable_drag_drop=False)
         self.no_notify_treeview.set_expand_column(1)
@@ -321,7 +319,6 @@ class UpgradePage(gtk.VBox):
         self.no_notify_treeview.draw_mask = self.draw_mask
         
         global_event.emit("show-updating-view")
-        self.fetch_upgrade_info()
         print "Init Upgrade Page: %s" % (time()-start, )
         
     def click_upgrade_check_button(self):
@@ -541,11 +538,13 @@ class UpgradePage(gtk.VBox):
             self.current_progress = self.upgrade_progress_status[0]
             self.upgrade_progress_status = self.upgrade_progress_status[1::]
             
+            self.current_progress = "%.2f" % float(self.current_progress)
             self.upgrading_bar.set_upgrading_message("更新软件列表 %s%%" % self.current_progress)
             
         return True    
         
     def update_upgrade_progress(self, percent):
+        gtk.timeout_add(500, self.render_upgrade_progress)
         self.upgrade_progress_status.append(percent)
         
     def expose_update_view(self, widget, event):
@@ -633,10 +632,10 @@ class UpgradePage(gtk.VBox):
             write_file(no_notify_config_path, str(filter(lambda config_pkg_name: config_pkg_name != pkg_name, no_notify_config)))
     
     def fetch_upgrade_info(self):
-        gobject.timeout_add(10, lambda : AnonymityThread(self.bus_interface.request_upgrade_pkgs,
-                                                    self.render_upgrade_info).run())
+        self.bus_interface.request_upgrade_pkgs(
+                reply_handler=self.render_upgrade_info, 
+                error_handler=handle_dbus_error)
         
-    @post_gui
     def render_upgrade_info(self, pkg_infos):
         if len(pkg_infos) > 0:
             if self.update_list_pixbuf:
