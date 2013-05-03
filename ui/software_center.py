@@ -58,7 +58,6 @@ from constant import (
         )
 from dtk.ui.slider import HSlider
 from events import global_event
-import dtk.ui.tooltip as Tooltip
 from dtk.ui.label import Label
 from dtk.ui.gio_utils import start_desktop_file
 from dtk.ui.iconview import IconView
@@ -66,6 +65,10 @@ from dtk.ui.treeview import TreeView
 from start_desktop_window import StartDesktopWindow
 from utils import is_64bit_system, handle_dbus_reply, handle_dbus_error
 import utils
+from tooltip import ToolTip
+
+
+tool_tip = ToolTip()
 
 def log(message):
     global debug_flag
@@ -178,10 +181,11 @@ def grade_pkg(window, pkg_name, star):
         show_tooltip(window, "您已经评过分了哟！ ;)")
 
 def show_tooltip(window, message):
-    Tooltip.text(window, message)
-    Tooltip.disable(window, False)
-    Tooltip.show_now()
-    Tooltip.disable(window, True)
+    tool_tip.set_text(message)
+    (screen, px, py, modifier_type) = window.get_display().get_pointer()
+    tool_tip.show_all()
+    tool_tip.move(px, py)
+    gtk.timeout_add(2000, tool_tip.hide_all)
     
 def switch_from_detail_page(page_switcher, detail_page, page_box):
     page_switcher.slide_to_page(page_box, "left")

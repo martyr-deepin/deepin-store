@@ -60,9 +60,25 @@ SLIDE_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", 
 
 category_face = font_face_create(os.path.join(get_parent_dir(__file__, 2), "image", "category_img.ttf"))
 
+global cursor_postion
+cursor_postion = None
+
+def cursor_postion_changed(item, new_cursor_postion):
+    global cursor_postion
+    if new_cursor_postion != cursor_postion and new_cursor_postion == "name":
+        global_event.emit("show-pkg-name-tooltip", item.alias_name)
+    cursor_postion = new_cursor_postion
+
+global_event.register_event("cursor-position-changed", cursor_postion_changed)
+
 def tooltip_aciton(view, item, x, y):
     if item.is_in_name_area(x, y):
-        global_event.emit("show-pkg-name-tooltip", item.alias_name)
+        new_cursor_postion = "name"
+    else:
+        new_cursor_postion = "other"
+
+    global_event.emit("cursor-position-changed", item, new_cursor_postion)
+
 
 class HomePage(gtk.HBox):
     '''
