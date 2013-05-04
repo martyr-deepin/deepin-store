@@ -548,10 +548,11 @@ class DeepinSoftwareCenter(dbus.service.Object):
     def init_ui(self):
         print "init ui"
         # Init application.
+        image_dir = os.path.join(get_parent_dir(__file__, 2), "image")
         self.application = Application(resizable=False)
         self.application.set_default_size(888, 634)
-        self.application.set_skin_preview(app_theme.get_pixbuf("frame.png"))
-        self.application.set_icon(app_theme.get_pixbuf("icon.png"))
+        self.application.set_skin_preview(os.path.join(image_dir, "frame.png"))
+        self.application.set_icon(os.path.join(image_dir, "icon.png"))
         self.application.add_titlebar(
                 ["theme", "menu", "min", "close"],
                 show_title=False
