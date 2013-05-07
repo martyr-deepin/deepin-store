@@ -99,6 +99,12 @@ class DataManager(object):
             pkg_names,
             reply_handler=reply_handler,
             error_handler=error_handler)
+
+    def get_pkg_download_size(self, pkg_name, reply_handler, error_handler):
+        return self.bus_interface.get_download_size(
+                pkg_name,
+                reply_handler=reply_handler,
+                error_handler=error_handler)
         
     def get_search_pkgs_info(self, pkg_names):
         pkg_infos = []

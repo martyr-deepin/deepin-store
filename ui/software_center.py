@@ -63,10 +63,10 @@ from dtk.ui.gio_utils import start_desktop_file
 from dtk.ui.iconview import IconView
 from dtk.ui.treeview import TreeView
 from start_desktop_window import StartDesktopWindow
-from utils import is_64bit_system, handle_dbus_reply, handle_dbus_error
+from utils import is_64bit_system, handle_dbus_reply, handle_dbus_error, bit_to_human_str
 import utils
 from tooltip import ToolTip
-
+from preference import preference_dialog
 
 tool_tip = ToolTip()
 
@@ -625,7 +625,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
              (None, "打开下载目录", self.open_download_directory),
              (None, "智能清理下载文件", self.clean_download_cache),
              (None, "显示新功能", lambda : self.show_wizard_win()),
-             (None, "选项", None),
+             (None, "选项", lambda : preference_dialog.show_all()),
              (None, "退出", self.exit),
              ],
             is_root_menu=True,
@@ -810,13 +810,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         print result
         num, size = result
         if num != 0:
-            size = size/1024.0
-            if size >= 1024:
-                size = size/1024.0
-                size_info = "%.2fM" % size
-            else:
-                size_info = "%.2fKB" % size
-            message = "恭喜您清理了%s个软件包，共节约了%s空间" % (num, size_info)
+            message = "恭喜您清理了%s个软件包，共节约了%s空间" % (num, bit_to_human_str(size))
             print message
         else:
             message = "您的系统已经很干净了，不需要清理."

@@ -30,6 +30,21 @@ from deepin_utils.date_time import get_current_time
 
 LOG_PATH = "/tmp/dsc-frontend.log"
 
+def bit_to_human_str(size):
+    if size < 1024:
+        return "%sB" % size
+    else:
+        size = size/1024.0
+        if size <= 1024:
+            return "%.2fKB" % size
+        else:
+            size = size/1024.0
+            if size <= 1024:
+                return "%.2fMB" % size
+            else:
+                size = size/1024.0
+                return "%.2fGB" % size
+
 def log(message):
     with open(LOG_PATH, "a") as file_handler:
         now = datetime.now().strftime("[%Y-%m-%d %H:%M:%S]")
