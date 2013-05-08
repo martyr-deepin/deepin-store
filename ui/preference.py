@@ -25,7 +25,7 @@ from skin import app_theme
 import gtk
 from dtk.ui.dialog import PreferenceDialog
 from dtk.ui.entry import InputEntry
-from dtk.ui.button import Button
+from dtk.ui.button import Button, CheckButton
 from dtk.ui.label import Label
 from dtk.ui.line import HSeparator
 from nls import _
@@ -36,17 +36,33 @@ def create_separator_box(padding_x=0, padding_y=0):
         padding_x, padding_y)
     return separator_box
 
+TABLE_ROW_SPACING = 25
 CONTENT_ROW_SPACING = 8
 
 class DscPreferenceDialog(PreferenceDialog):
     def __init__(self):
         PreferenceDialog.__init__(self)
 
-    def create_lyrics_dir_table(self):    
+        self.normal_settings = gtk.VBox()
+        self.normal_settings.set_spacing(TABLE_ROW_SPACING)
+        self.normal_settings.pack_start(self.create_uninstall_box(), False, True)
+        self.normal_settings.pack_start(self.create_download_dir_table(), False, True)
+
+        self.normal_settings_align = gtk.Alignment(0, 0, 1, 1)
+        self.normal_settings_align.set_padding(padding_left=5, padding_right=5, padding_top=25, padding_bottom=10)
+        self.normal_settings_align.add(self.normal_settings)
+
+        self.set_preference_items([
+            ("常规", self.normal_settings_align),
+            ("软件源", gtk.Label("热键设置")),
+            ("关于", gtk.Label("关于")),
+            ])
+
+    def create_download_dir_table(self):    
         main_table = gtk.Table(3, 2)
         main_table.set_row_spacings(CONTENT_ROW_SPACING)
         
-        dir_title_label = Label(_("Lyrics directory"))
+        dir_title_label = Label(_("Download directory"))
         dir_title_label.set_size_request(200, 12)
         label_align = gtk.Alignment()
         label_align.set_padding(0, 0, 0, 0)
@@ -58,7 +74,7 @@ class DscPreferenceDialog(PreferenceDialog):
         self.dir_entry.set_size(250, 25)
         
         modify_button = Button(_("Change"))
-        modify_button.connect("clicked", self.change_lyrics_save_dir)
+        modify_button.connect("clicked", self.change_download_save_dir)
         hbox = gtk.HBox(spacing=5)
         hbox.pack_start(self.dir_entry, False, False)
         hbox.pack_start(modify_button, False, False)
@@ -68,28 +84,26 @@ class DscPreferenceDialog(PreferenceDialog):
         main_table.attach(hbox, 0, 2, 2, 3, xpadding=10, xoptions=gtk.FILL)
         return main_table
 
+    def create_uninstall_box(self):
+        main_table = gtk.Table(2, 2)
+        main_table.set_row_spacings(CONTENT_ROW_SPACING)
+        uninstall_title_label = Label(_("On uninstall software"))
+        uninstall_title_label.set_size_request(350, 12)
+        
+        # mini_check_button
 
-normal_settings = gtk.VBox()
+        self.delete_check_button = CheckButton(_("Delete configuration files"))
+        
+        main_table.attach(uninstall_title_label, 0, 2, 0, 1, yoptions=gtk.FILL, xpadding=8)
+        main_table.attach(create_separator_box(), 0, 2, 1, 2, yoptions=gtk.FILL)
+        main_table.attach(self.delete_check_button, 0, 1, 2, 3, yoptions=gtk.FILL)
+        
+        return main_table
 
-choose_download_dir_hbox = gtk.HBox()
-choose_download_dir_entry = InputEntry()
-choose_download_dir_entry.set_size(250, 22)
-choose_download_dir_button = Button("Choose")
-choose_download_dir_hbox.pack_start(Label("选择下载目录:"), False, False)
-choose_download_dir_hbox.pack_start(choose_download_dir_entry, True, True)
-choose_download_dir_hbox.pack_start(choose_download_dir_button, False, False)
-choose_download_dir_align = gtk.Alignment(0, 0.5, 1, 1)
-choose_download_dir_align.set_padding(5, 5, 2, 2)
-choose_download_dir_align.add(choose_download_dir_hbox)
+    def change_download_save_dir(self, widget):
+        pass
 
-normal_settings.pack_start(choose_download_dir_align)
-
-preference_dialog = PreferenceDialog()
-preference_dialog.set_preference_items([
-    ("常规", normal_settings),
-    ("软件源", gtk.Label("热键设置")),
-    ("关于", gtk.Label("关于")),
-    ])
+preference_dialog = DscPreferenceDialog()
 
 if __name__ == "__main__":
     preference_dialog.show_all()
