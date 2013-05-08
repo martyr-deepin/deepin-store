@@ -102,7 +102,11 @@ class NewestBar(gtk.HBox):
         self.no_notify_label.connect("button-press-event", lambda w, e: global_event.emit("show-no-notify-page"))
         
     def set_update_time(self):
-        self.message_label.set_text("最后更新时间: %s" % get_last_upgrade_time())
+        last_upgrade_time = get_last_upgrade_time()
+        if last_upgrade_time != "":
+            self.message_label.set_text("最后更新时间: %s" % get_last_upgrade_time())
+        else:
+            self.message_label.set_text("您从未使用软件中心更新过系统！")
         
     def set_no_notify_num(self, no_notify_num):
         

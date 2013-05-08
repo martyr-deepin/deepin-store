@@ -52,6 +52,12 @@ import urllib2
 import webbrowser
 from category_info import get_category_name
 import time
+from utils import bit_to_human_str
+from constant import (
+        PKG_SIZE_OWN,
+        PKG_SIZE_DOWNLOAD,
+        PKG_SIZE_ERROR,
+        )
 
 PKG_SCREENSHOT_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update_data", "pkg_screenshot", "zh_CN")
 
@@ -152,6 +158,7 @@ class DetailPage(gtk.HBox):
         show_label_tooltip(self.left_version_label)
         self.left_version_label.set_ellipsize(pango.ELLIPSIZE_MIDDLE)
         self.left_download_label = Label()
+        self.left_size_label = Label()
         
         self.left_homepage_box = gtk.HBox()
         self.left_homepage_box_align = gtk.Alignment()
@@ -204,6 +211,7 @@ class DetailPage(gtk.HBox):
         self.left_view_box.pack_start(self.left_action_align, False, False)
         self.left_label_table.attach(self.left_category_box, 0, 1, 0, 1)
         self.left_label_table.attach(self.left_version_label, 0, 1, 1, 2)
+        self.left_label_table.attach(self.left_size_label, 0, 1, 2, 3)
         self.left_label_table.attach(self.left_download_label, 0, 1, 3, 4)
         self.left_label_table.attach(self.left_homepage_box_align, 0, 1, 4, 5)
         self.left_label_align.add(self.left_label_table)
@@ -366,6 +374,7 @@ class DetailPage(gtk.HBox):
             self.left_category_box.add(self.left_category_label_box)
         self.left_version_label.set_text("版本：%s" % self.version)
         self.left_download_label.set_text("下载：%s" % self.download)
+        self.left_size_label.set_text("大小：计算中...")
         
         print "%s: #2# %s" % (pkg_name, time.time() - start_time)
         container_remove_all(self.left_homepage_box)
@@ -430,6 +439,16 @@ class DetailPage(gtk.HBox):
             action_button.connect("clicked", lambda w: global_event.emit("install-pkg", [self.pkg_name]))
             self.left_action_box.pack_start(action_button)
         self.left_action_box.show_all()
+
+    def handle_pkg_download_size(self, reply):
+        # FIXME: download information display
+        if reply[0] == PKG_SIZE_OWN:
+            self.left_size_label.set_text("大小：%s" % bit_to_human_str(reply[1]))
+        elif reply[0] == PKG_SIZE_DOWNLOAD:
+            self.left_size_label.set_text("大小：%s" % bit_to_human_str(reply[1]))
+        else:
+            reply[0] == PKG_SIZE_ERROR
+
         
     def handle_dbus_error(self, *error):
         container_remove_all(self.left_action_box)
@@ -439,6 +458,7 @@ class DetailPage(gtk.HBox):
     def fetch_pkg_status(self):
         start_time = time.time()
         self.data_manager.get_pkgs_install_status([self.pkg_name], self.handle_pkg_status, self.handle_dbus_error)
+        self.data_manager.get_pkg_download_size(self.pkg_name, self.handle_pkg_download_size, self.handle_dbus_error)
         print self.pkg_name, time.time() - start_time
         
     def open_url(self, webview, frame, network_request, nav_action, policy_dec):

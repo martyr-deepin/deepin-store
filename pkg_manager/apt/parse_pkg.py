@@ -25,7 +25,6 @@ import errno
 import hashlib
 import traceback
 import apt_pkg
-import apt
 from utils import log
 from constant import DOWNLOAD_STATUS_NOTNEED, DOWNLOAD_STATUS_ERROR
 import apt.debfile as debfile
@@ -84,6 +83,8 @@ def get_deb_download_info(cache, deb_file):
 def get_pkg_download_info(cache, pkg_name):
     dependence = get_pkg_dependence(cache, pkg_name)
     if dependence == []:
+        return DOWNLOAD_STATUS_NOTNEED
+    elif dependence == -1:
         return DOWNLOAD_STATUS_ERROR
     else:
         return check_pkg_download_info(dependence)
@@ -106,9 +107,14 @@ def get_pkg_dependence(cache, pkg_name):
             print "get_pkg_download_info error: %s" % (e)
             log(str(traceback.format_exc()))
 
-            return []
+            return -1
     else:
         raise Exception("%s is not found" % pkg_name)
+
+def get_pkg_own_size(cache, pkg_name):
+    pkg = cache[pkg_name]
+    version = pkg.candidate
+    return int(version.size)
     
 def check_pkg_download_info(pkgs):
     if len(pkgs) >= 1:

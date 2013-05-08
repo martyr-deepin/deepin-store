@@ -27,13 +27,30 @@ sys.path.append(os.path.join(get_parent_dir(__file__, 3), "download_manager", "d
 import signal
 from download_manager import DownloadManager
 import apt.debfile as debfile
-from parse_pkg import get_pkg_download_info, get_deb_download_info, get_pkg_dependence_file_path, ARCHIVE_DIR, DEB_CACHE_DIR
+from parse_pkg import (
+        get_pkg_download_info, 
+        get_deb_download_info, 
+        get_pkg_dependence_file_path, 
+        get_pkg_own_size,
+        ARCHIVE_DIR,
+        )
 import gobject
 import dbus
 import dbus.service
 import dbus.mainloop.glib
 import os
-from constant import DSC_SERVICE_NAME, DSC_SERVICE_PATH, ACTION_INSTALL, ACTION_UPGRADE, ACTION_UNINSTALL, DOWNLOAD_STATUS_NOTNEED, DOWNLOAD_STATUS_ERROR
+from constant import (
+        DSC_SERVICE_NAME, 
+        DSC_SERVICE_PATH, 
+        ACTION_INSTALL, 
+        ACTION_UPGRADE, 
+        ACTION_UNINSTALL, 
+        DOWNLOAD_STATUS_NOTNEED, 
+        DOWNLOAD_STATUS_ERROR,
+        PKG_SIZE_OWN,
+        PKG_SIZE_DOWNLOAD,
+        PKG_SIZE_ERROR,
+        )
 from apt_cache import AptCache
 from action import AptActionPool
 from events import global_event
@@ -259,6 +276,23 @@ class PackageManager(dbus.service.Object):
         self.update_signal([("download-failed", (pkg_name, action_type))])
         
         self.exit_manager.check()    
+
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="ai")
+    def get_download_size(self, pkg_name):
+        total_size = 0
+        pkg_infos = get_pkg_download_info(self.pkg_cache, pkg_name)
+        if pkg_infos == DOWNLOAD_STATUS_NOTNEED:
+            total_size = get_pkg_own_size(self.pkg_cache, pkg_name)
+            size_flag = PKG_SIZE_OWN
+        elif pkg_infos == DOWNLOAD_STATUS_ERROR:
+            total_size = -1
+            size_flag = PKG_SIZE_ERROR
+        else:
+            (download_urls, download_hash_infos, pkg_sizes) = pkg_infos
+            for size in pkg_sizes:
+                total_size += size
+            size_flag = PKG_SIZE_DOWNLOAD
+        return [size_flag, total_size]
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="ai")
     def clean_download_cache(self):
