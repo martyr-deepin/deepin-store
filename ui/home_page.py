@@ -51,8 +51,6 @@ from data import DATA_ID
 from category_info import get_category_name
 from nls import _
 from deepin_font_icon import font_face_create
-from font import draw_font_img
-from ui_draw import draw_png_with_color
 
 FIRST_CATEGORY_PADDING_X = 66
 SECOND_CATEGORY_PADDING_X = 46
@@ -201,10 +199,17 @@ class HomePage(gtk.HBox):
         # Init.
         cr = widget.window.cairo_create()
         rect = widget.allocation
+        canopy_color = app_theme.get_color("sidebar_select").get_color()
         
+        canopy_img_blue_path = os.path.join(get_parent_dir(__file__, 2), "image", "canopy", "canopy-blue.png")
+        canopy_img_yellow_path = os.path.join(get_parent_dir(__file__, 2), "image", "canopy", "canopy-yellow.png")
+        surface = cairo.ImageSurface.create_from_png(canopy_img_blue_path)
+        cr.set_source_rgb(*color_hex_to_cairo(canopy_color))
+        cr.mask_surface(surface, rect.x, rect.y)
+
         draw_pixbuf(
             cr,
-            app_theme.get_pixbuf("category/canopy.png").get_pixbuf(),
+            gtk.gdk.pixbuf_new_from_file(canopy_img_yellow_path),
             rect.x,
             rect.y)
         

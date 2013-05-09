@@ -123,8 +123,9 @@ class UninstallPage(gtk.VBox):
         keywords = self.message_bar.search_entry.get_text().strip()
         if keywords != "":
             self.search_flag = True
+            pkg_names = self.data_manager.search_query(map(lambda word: word.encode("utf8"), keywords.split(" ")))
             for item in self.cache_items:
-                if keywords in item.pkg_name:
+                if item.pkg_name in pkg_names:
                     results.append(item)
             self.treeview.clear()
             self.treeview.add_items(results)

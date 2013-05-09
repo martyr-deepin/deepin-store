@@ -302,6 +302,10 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 install_page.action_finish(pkg_name, pkg_info_list)
             
             refresh_current_page_status(pkg_name, pkg_info_list, bus_interface)
+            bus_interface.request_status(
+                    reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
+                    error_handler=handle_dbus_error
+                    )
 
         elif signal_type == "update-list-finish":
             upgrade_page.fetch_upgrade_info()
