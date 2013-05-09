@@ -203,9 +203,6 @@ class HomePage(gtk.HBox):
         
         canopy_img_blue_path = os.path.join(get_parent_dir(__file__, 2), "image", "canopy", "canopy-blue.png")
         canopy_img_yellow_path = os.path.join(get_parent_dir(__file__, 2), "image", "canopy", "canopy-yellow.png")
-        surface = cairo.ImageSurface.create_from_png(canopy_img_blue_path)
-        cr.set_source_rgb(*color_hex_to_cairo(canopy_color))
-        cr.mask_surface(surface, rect.x, rect.y)
 
         draw_pixbuf(
             cr,
@@ -213,6 +210,10 @@ class HomePage(gtk.HBox):
             rect.x,
             rect.y)
         
+        surface = cairo.ImageSurface.create_from_png(canopy_img_blue_path)
+        cr.set_source_rgb(*color_hex_to_cairo(canopy_color))
+        cr.mask_surface(surface, rect.x, rect.y)
+
     def expose_split_line(self, widget, event):
         # Init.
         cr = widget.window.cairo_create()
