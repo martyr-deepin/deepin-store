@@ -199,7 +199,6 @@ def switch_to_detail_page(page_switcher, detail_page, pkg_name):
     global_event.emit("update-current-status-pkg-page", detail_page)
 
 def switch_page(page_switcher, page_box, page, detail_page):
-    start = time.time()
     log("slide to page")
     if page_switcher.active_widget == detail_page:
         page_switcher.slide_to_page(page_box, "left")
@@ -226,7 +225,6 @@ def switch_page(page_switcher, page_box, page, detail_page):
         page.fetch_upgrade_info()
         if page.in_no_notify_page:
             page.show_init_page()
-    print "Switch Page: %s" % (time.time()-start, )
 
 def message_handler(messages, bus_interface, upgrade_page, uninstall_page, install_page, home_page):
     for message in messages:

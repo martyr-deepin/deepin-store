@@ -79,14 +79,18 @@ class AptCache(apt.Cache):
     def get_pkgs_uninstall_version(self, pkg_names):
         pkg_infos = []
         for pkg_name in pkg_names:
-            pkg = self[pkg_name]
-            if pkg.is_installed:
-                pkg_version = pkg.installed.version
-            # This not just happended when simulate test.
-            else:
-                pkg_version = pkg.versions[0].version
+            try:
+                pkg = self[pkg_name]
+                if pkg.is_installed:
+                    pkg_version = pkg.installed.version
+                # This not just happended when simulate test.
+                else:
+                    pkg_version = pkg.versions[0].version
                 
-            pkg_infos.append(pkg_version)
+                pkg_infos.append(pkg_version)
+            except:
+                print "%s not in cache" % pkg_name
+                pkg_infos.append(None)
                 
         return pkg_infos
     

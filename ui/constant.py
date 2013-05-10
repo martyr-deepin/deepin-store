@@ -43,7 +43,7 @@ ACTION_UNINSTALL = 2
 ACTION_UPGRADE = 3
 
 CONFIG_DIR =  os.path.join(os.path.expanduser("~"), ".config", "deepin-software-center")
-CACHE_INFO_PATH = os.path.join(CONFIG_DIR, "cache_info.ini")
+CONFIG_INFO_PATH = os.path.join(CONFIG_DIR, "config_info.ini")
 ONE_DAY_SECONDS = 24 * 60 * 60
 
 SCREENSHOT_HOST = "http://package-screenshot.b0.upaiyun.com"

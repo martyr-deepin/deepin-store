@@ -42,7 +42,7 @@ from dtk.ui.button import ImageButton
 from dtk.ui.cycle_strip import CycleStrip
 from dtk.ui.label import Label
 from time import time
-from utils import handle_dbus_error
+from utils import handle_dbus_error, get_purg_flag
 
 class MessageBar(CycleStrip):
     '''
@@ -461,7 +461,8 @@ class UninstallItem(TreeItem):
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
                         
-                    global_event.emit("uninstall-pkg", [self.pkg_name])
+                    global_event.emit("uninstall-pkg", self.pkg_name, get_purg_flag())
+                    print "Uninstall >>", self.pkg_name
                 elif self.is_cancel_button_area(column, offset_x, offset_y):
                     self.status = self.STATUS_NORMAL
                     
@@ -475,7 +476,7 @@ class UninstallItem(TreeItem):
                     
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
-                
+
     def button_release(self, column, offset_x, offset_y):
         pass
                     

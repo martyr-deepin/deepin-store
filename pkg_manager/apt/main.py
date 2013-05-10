@@ -406,9 +406,10 @@ class PackageManager(dbus.service.Object):
                 except:
                     self.update_signal([("pkg-not-in-cache", pkg_name)])
     
-    @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
-    def uninstall_pkg(self, pkg_names):
-        self.apt_action_pool.add_uninstall_action(pkg_names, self.simulate)
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="sb", out_signature="")    
+    def uninstall_pkg(self, pkg_name, purge):
+        self.apt_action_pool.add_uninstall_action(pkg_name, self.simulate, purge)
+        print pkg_name
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
     def upgrade_pkg(self, pkg_names):

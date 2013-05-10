@@ -29,6 +29,7 @@ from dtk.ui.button import Button, CheckButton
 from dtk.ui.label import Label
 from dtk.ui.line import HSeparator
 from nls import _
+from utils import get_purg_flag, set_purge_flag
 
 def create_separator_box(padding_x=0, padding_y=0):    
     separator_box = HSeparator(
@@ -93,6 +94,8 @@ class DscPreferenceDialog(PreferenceDialog):
         # mini_check_button
 
         self.delete_check_button = CheckButton(_("Delete configuration files"))
+        self.delete_check_button.set_active(get_purg_flag())
+        self.delete_check_button.connect("toggled", lambda w: set_purge_flag(self.delete_check_button.get_active()))
         
         main_table.attach(uninstall_title_label, 0, 2, 0, 1, yoptions=gtk.FILL, xpadding=8)
         main_table.attach(create_separator_box(), 0, 2, 1, 2, yoptions=gtk.FILL)

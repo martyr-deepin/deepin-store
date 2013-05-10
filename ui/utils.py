@@ -23,7 +23,7 @@
 import threading as td
 from datetime import datetime
 import os
-from constant import CACHE_INFO_PATH
+from constant import CONFIG_INFO_PATH
 from deepin_utils.config import Config
 from deepin_utils.file import touch_file
 from deepin_utils.date_time import get_current_time
@@ -77,35 +77,66 @@ def is_64bit_system():
         return False
 
 def set_last_upgrade_time():
-    cache_info_config = get_cache_info_config()
-    cache_info_config.set("upgrade", "last_upgrade_time", get_current_time())
-    cache_info_config.write()
+    config_info_config = get_config_info_config()
+    config_info_config.set("upgrade", "last_upgrade_time", get_current_time())
+    config_info_config.write()
 
 def get_last_upgrade_time():
-    cache_info_config = get_cache_info_config()
-    if cache_info_config.has_option("upgrade", "last_upgrade_time"):
-        return cache_info_config.get("upgrade", "last_upgrade_time")
+    config_info_config = get_config_info_config()
+    if config_info_config.has_option("upgrade", "last_upgrade_time"):
+        return config_info_config.get("upgrade", "last_upgrade_time")
     else:
-        cache_info_config.set("upgrade", "last_upgrade_time", "")
-        cache_info_config.write()
+        config_info_config.set("upgrade", "last_upgrade_time", "")
+        config_info_config.write()
         return ""
 
-def get_cache_info_config():
-    cache_info_config = Config(CACHE_INFO_PATH)
+def get_config_info_config():
+    config_info_config = Config(CONFIG_INFO_PATH)
 
-    if os.path.exists(CACHE_INFO_PATH):
-        cache_info_config.load()
+    if os.path.exists(CONFIG_INFO_PATH):
+        config_info_config.load()
     else:
-        touch_file(CACHE_INFO_PATH)
-        cache_info_config.load()
+        touch_file(CONFIG_INFO_PATH)
+        config_info_config.load()
 
-    return cache_info_config
+    return config_info_config
 
 def is_first_started():
-    config = get_cache_info_config()
+    config = get_config_info_config()
     return not config.has_option("settings" , "first_started")
 
 def set_first_started():
-    config = get_cache_info_config()
+    config = get_config_info_config()
     config.set("settings", "first_started", "false")    
     config.write()
+
+def get_purg_flag():
+    config = get_config_info_config()
+    if config.has_option('uninstall', 'purge'):
+        flag = config.get('uninstall', 'purge')
+        if isinstance(flag, str):
+            return eval(flag)
+        else:
+            return flag
+    else:
+        config.set('uninstall', 'purge', False)
+        config.write()
+        return False
+
+def set_purge_flag(value):
+    config = get_config_info_config()
+    config.set('uninstall', 'purge', value)
+    config.write()
+
+def get_config_info(section, key):
+    config = get_config_info_config()
+    if config.has_option(section, key):
+        return config.get(section, key)
+    else:
+        return None
+
+def set_config_info(section, key, value):
+    config = get_config_info_config()
+    config.set(section, key, value)
+    config.write()
+
