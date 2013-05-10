@@ -826,7 +826,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         log("Send exit request to backend when frontend exit.")
         
         # Send exit request to backend when frontend exit.
-        self.bus_interface.request_quit()
+        self.bus_interface.request_quit(reply_handler=handle_dbus_reply, error_handler=handle_dbus_error)
         
         # Remove id from config file.
         data_exit()
