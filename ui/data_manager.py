@@ -213,10 +213,9 @@ class DataManager(object):
         
         return detail_infos
     
-    def get_download_rank_info(self):
+    def get_week_download_rank_info(self):
         week_infos = []
         week_pkg_names = []
-        week_pkg_infos = []
         self.download_rank_db_cursor.execute(
             "SELECT * FROM week_download_rank")
         for (pkg_name, ) in self.download_rank_db_cursor.fetchall():
@@ -228,16 +227,14 @@ class DataManager(object):
                 "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
             desktop_infos = self.desktop_db_cursor.fetchall()
             
-            week_infos.append((pkg_name, alias_name, 5.0, desktop_infos))
+            week_infos.append([pkg_name, alias_name, 5.0, desktop_infos])
             week_pkg_names.append(pkg_name)
             
-        week_install_status = self.bus_interface.request_pkgs_install_status(week_pkg_names)
-        for (index, (pkg_name, alias_name, star, desktop_infos)) in enumerate(week_infos):
-            week_pkg_infos.append((pkg_name, alias_name, star, desktop_infos, week_install_status[index]))
+        return (week_pkg_names, week_infos)
 
+    def get_month_download_rank_info(self):
         month_infos = []
         month_pkg_names = []
-        month_pkg_infos = []
         self.download_rank_db_cursor.execute(
             "SELECT * FROM month_download_rank")
         for (pkg_name, ) in self.download_rank_db_cursor.fetchall():
@@ -249,16 +246,14 @@ class DataManager(object):
                 "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
             desktop_infos = self.desktop_db_cursor.fetchall()
             
-            month_infos.append((pkg_name, alias_name, 5.0, desktop_infos))
+            month_infos.append([pkg_name, alias_name, 5.0, desktop_infos])
             month_pkg_names.append(pkg_name)
             
-        month_install_status = self.bus_interface.request_pkgs_install_status(month_pkg_names)
-        for (index, (pkg_name, alias_name, star, desktop_infos)) in enumerate(month_infos):
-            month_pkg_infos.append((pkg_name, alias_name, star, desktop_infos, month_install_status[index]))
+        return (month_pkg_names, month_infos)
             
+    def get_all_download_rank_info(self):
         all_infos = []
         all_pkg_names = []
-        all_pkg_infos = []
         self.download_rank_db_cursor.execute(
             "SELECT * FROM all_download_rank")
         for (pkg_name, ) in self.download_rank_db_cursor.fetchall():
@@ -270,14 +265,10 @@ class DataManager(object):
                 "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
             desktop_infos = self.desktop_db_cursor.fetchall()
             
-            all_infos.append((pkg_name, alias_name, 5.0, desktop_infos))
+            all_infos.append([pkg_name, alias_name, 5.0, desktop_infos])
             all_pkg_names.append(pkg_name)
 
-        all_install_status = self.bus_interface.request_pkgs_install_status(all_pkg_names)
-        for (index, (pkg_name, alias_name, star, desktop_infos)) in enumerate(all_infos):
-            all_pkg_infos.append((pkg_name, alias_name, star, desktop_infos, all_install_status[index]))
-            
-        return (week_pkg_infos, month_pkg_infos, all_pkg_infos)
+        return (all_pkg_names, all_infos)
 
     def get_recommend_info(self):
         self.recommend_db_cursor.execute(

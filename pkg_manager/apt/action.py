@@ -63,7 +63,7 @@ class AptActionThread(MissionThread):
     class docs
     '''
 	
-    def __init__(self, pkg_cache, pkg_name, action_type, simulate=False, deb_file=""):
+    def __init__(self, pkg_cache, pkg_name, action_type, simulate=False, deb_file="", purge_flag=False):
         '''
         init docs
         '''
@@ -74,6 +74,7 @@ class AptActionThread(MissionThread):
         self.action_type = action_type
         self.simulate = simulate
         self.deb_file = deb_file
+        self.purge_flag = purge_flag
         
     def start_mission(self):
         log("start thread")
@@ -86,7 +87,7 @@ class AptActionThread(MissionThread):
         elif self.action_type == ACTION_UPGRADE:
             self.pkg_cache[self.pkg_name].mark_upgrade()
         elif self.action_type == ACTION_UNINSTALL:
-            self.pkg_cache[self.pkg_name].mark_delete()
+            self.pkg_cache[self.pkg_name].mark_delete(purge=self.purge_flag)
             
         for pkg in self.pkg_cache:
             if pkg.is_auto_removable:
@@ -200,14 +201,13 @@ class AptActionPool(MissionThreadPool):
             
         self.add_missions(missions)
         
-    def add_uninstall_action(self, pkg_names, simulate=False):
+    def add_uninstall_action(self, pkg_name, simulate=False, purge=False):
         missions = []
-        for pkg_name in pkg_names:
-            thread = AptActionThread(self.pkg_cache, pkg_name, ACTION_UNINSTALL, simulate)
-            self.uninstall_action_dict[pkg_name] = {
-                "thread" : thread,
-                "status" : "wait"}
-            missions.append(thread)
+        thread = AptActionThread(self.pkg_cache, pkg_name, ACTION_UNINSTALL, simulate, purge)
+        self.uninstall_action_dict[pkg_name] = {
+            "thread" : thread,
+            "status" : "wait"}
+        missions.append(thread)
             
         self.add_missions(missions)
         

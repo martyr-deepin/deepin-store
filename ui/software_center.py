@@ -199,7 +199,6 @@ def switch_to_detail_page(page_switcher, detail_page, pkg_name):
     global_event.emit("update-current-status-pkg-page", detail_page)
 
 def switch_page(page_switcher, page_box, page, detail_page):
-    start = time.time()
     log("slide to page")
     if page_switcher.active_widget == detail_page:
         page_switcher.slide_to_page(page_box, "left")
@@ -226,7 +225,6 @@ def switch_page(page_switcher, page_box, page, detail_page):
         page.fetch_upgrade_info()
         if page.in_no_notify_page:
             page.show_init_page()
-    print "Switch Page: %s" % (time.time()-start, )
 
 def message_handler(messages, bus_interface, upgrade_page, uninstall_page, install_page, home_page):
     for message in messages:
@@ -302,6 +300,10 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 install_page.action_finish(pkg_name, pkg_info_list)
             
             refresh_current_page_status(pkg_name, pkg_info_list, bus_interface)
+            bus_interface.request_status(
+                    reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
+                    error_handler=handle_dbus_error
+                    )
 
         elif signal_type == "update-list-finish":
             upgrade_page.fetch_upgrade_info()
@@ -822,7 +824,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         log("Send exit request to backend when frontend exit.")
         
         # Send exit request to backend when frontend exit.
-        self.bus_interface.request_quit()
+        self.bus_interface.request_quit(reply_handler=handle_dbus_reply, error_handler=handle_dbus_error)
         
         # Remove id from config file.
         data_exit()

@@ -76,25 +76,38 @@ class DownloadRankPage(gtk.VBox):
         self.all_rank_icon_view_scrlledwindow.add_child(self.all_rank_icon_view)    
             
         self.tab_box_align.add(self.tab_box)
-        self.page_align.add(self.week_rank_icon_view_scrlledwindow)
         self.page_box.pack_start(self.page_align)
         self.pack_start(self.tab_box_align, False, False)    
         self.pack_start(self.page_box, True, True)    
-        
+
+        self.view_list =  [
+            (self.data_manager.get_week_download_rank_info, self.week_rank_icon_view), 
+            (self.data_manager.get_month_download_rank_info, self.month_rank_icon_view),
+            (self.data_manager.get_all_download_rank_info, self.all_rank_icon_view)]
+
         global_event.register_event("update-rank-page", self.update_rank_page)
-        global_event.emit("update-current-status-pkg-page", self.week_rank_icon_view)
-        
-        self.init_rank_info()
-        
-    def init_rank_info(self):
-        (self.week_rank_infos, self.month_rank_infos, self.all_rank_infos) = self.data_manager.get_download_rank_info()
-        self.render_rank_info()
-        
-    def render_rank_info(self):
-        for (rank_infos, icon_view) in [(self.week_rank_infos, self.week_rank_icon_view), 
-                                        (self.month_rank_infos, self.month_rank_icon_view),
-                                        (self.all_rank_infos, self.all_rank_icon_view)]:
-            icon_view.add_items(map(lambda info: PkgIconItem(info), rank_infos))
+        global_event.emit("update-rank-page", 0)
+
+    def update_view_infos(self):
+        get_info, view = self.view_list[self.current_page_index]
+        view.clear()
+        pkg_names, infos = get_info()
+        self.data_manager.get_pkgs_install_status(
+                pkg_names, 
+                lambda r: self.reply_handler(r, infos, view), 
+                lambda err: self.error_hander(err, self.data_manager.get_pkgs_install_status))
+
+    def reply_handler(self, reply, infos, view):
+        number = len(reply)
+        items = []
+        for i in range(number):
+            infos[i].append(reply[i])
+            items.append(PkgIconItem(*infos[i]))
+        view.add_items(items)
+
+    def error_hander(self, error, method):
+        print "DBUS ERROR:", method
+        print "ERROR INFO:", error
         
     def draw_mask(self, cr, x, y, w, h):
         '''
@@ -113,6 +126,7 @@ class DownloadRankPage(gtk.VBox):
         
     def update_rank_page(self, page_index):
         container_remove_all(self.page_align)
+        self.current_page_index = page_index
         
         if page_index == 0:
             self.page_align.add(self.week_rank_icon_view_scrlledwindow)
@@ -123,7 +137,8 @@ class DownloadRankPage(gtk.VBox):
         else:
             self.page_align.add(self.all_rank_icon_view_scrlledwindow)
             global_event.emit("update-current-status-pkg-page", self.all_rank_icon_view)
-            
+
+        self.update_view_infos()
         self.show_all()    
         
 gobject.type_register(DownloadRankPage)
@@ -216,7 +231,7 @@ class PkgIconItem(IconItem):
     BUTTON_PADDING_X = 44
     BUTTON_PADDING_BOTTOM = 18
     
-    def __init__(self, (pkg_name, alias_name, star, desktop_info, is_installed)):
+    def __init__(self, pkg_name, alias_name, star, desktop_info, is_installed):
         '''
         Initialize ItemIcon class.
         
