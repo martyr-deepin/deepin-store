@@ -67,6 +67,8 @@ def cursor_postion_changed(item, new_cursor_postion):
     global cursor_postion
     if new_cursor_postion != cursor_postion and new_cursor_postion == "name":
         global_event.emit("show-pkg-name-tooltip", item.alias_name)
+    else:
+        global_event.emit('hide-pkg-name-tooltip')
     cursor_postion = new_cursor_postion
 
 global_event.register_event("cursor-position-changed", cursor_postion_changed)

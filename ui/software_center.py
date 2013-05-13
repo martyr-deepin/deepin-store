@@ -185,7 +185,7 @@ def show_tooltip(window, message):
     (screen, px, py, modifier_type) = window.get_display().get_pointer()
     tool_tip.show_all()
     tool_tip.move(px, py)
-    gtk.timeout_add(2000, tool_tip.hide_all)
+    #show-pkg-name-tooltipgtk.timeout_add(2000, tool_tip.hide_all)
     
 def switch_from_detail_page(page_switcher, detail_page, page_box):
     page_switcher.slide_to_page(page_box, "left")
@@ -649,7 +649,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         print "Finish Init UI: %s" % (time.time()-start, )
         
         self.ready_show()
-        
+
     def ready_show(self):    
         if utils.is_first_started():
             self.show_wizard_win(True, callback=self.wizard_callback)
@@ -731,7 +731,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         log("Init install page.")
         self.install_page = InstallPage(self.bus_interface, self.data_manager)
         print "Init three pages time: %s" % (time.time()-start, )
-        
+
         self.bus_interface.request_status(
                 reply_handler=lambda reply: request_status_reply_hander(reply, self.install_page, self.upgrade_page, self.uninstall_page),
                 error_handler=handle_dbus_error
@@ -767,6 +767,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         global_event.register_event("start-pkg", lambda pkg_name, desktop_infos, offset: start_pkg(pkg_name, desktop_infos, offset, self.application.window))
         global_event.register_event("start-desktop", start_desktop)
         global_event.register_event("show-pkg-name-tooltip", lambda pkg_name: show_tooltip(self.application.window, pkg_name))
+        global_event.register_event("hide-pkg-name-tooltip", lambda :tool_tip.hide())
         global_event.register_event("update-current-status-pkg-page", update_current_status_pkg_page)
         self.system_bus.add_signal_receiver(
             lambda messages: message_handler(messages, 

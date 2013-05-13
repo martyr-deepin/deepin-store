@@ -114,7 +114,7 @@ def get_pkg_dependence(cache, pkg_name):
 def get_pkg_own_size(cache, pkg_name):
     pkg = cache[pkg_name]
     version = pkg.candidate
-    return int(version.size)
+    return int(version.installed_size)
     
 def check_pkg_download_info(pkgs):
     if len(pkgs) >= 1:

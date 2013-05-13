@@ -62,6 +62,28 @@ from Queue import Queue
 
 DATA_DIR = os.path.join(get_parent_dir(__file__, 3), "data")
 
+source_content_template = '''
+# This file was created by deepin software center, do not modify!
+
+deb http://%s/ubuntu precise main restricted universe multiverse
+deb http://%s/ubuntu precise-security main restricted universe multiverse
+deb http://%s/ubuntu precise-updates main restricted universe multiverse
+# deb http://%s/ubuntu precise-proposed main restricted universe multiverse
+# deb http://%s/ubuntu precise-backports main restricted universe multiverse
+
+deb-src http://%s/ubuntu precise main restricted universe multiverse
+deb-src http://%s/ubuntu precise-security main restricted universe multiverse
+deb-src http://%s/ubuntu precise-updates main restricted universe multiverse
+# deb-src http://%s/ubuntu precise-proposed main restricted universe multiverse
+# deb-src http://%s/ubuntu precise-backports main restricted universe multiverse
+
+deb http://%s/deepin quantal main non-free
+deb-src http://%s/deepin quantal main non-free
+
+deb http://%s/deepin quantal-updates main non-free
+deb-src http://%s/deepin quantal-updates main non-free
+'''
+
 class ExitManager(td.Thread):
     '''
     class docs
@@ -346,6 +368,12 @@ class PackageManager(dbus.service.Object):
         
         self.exit_manager.check()
         self.update_signal("frontend-quit")
+
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="")    
+    def change_source_list(self, hostname):
+        new_source_list_content = source_content_template.replace("%s", hostname)
+        with open('/etc/apt/sources.list', 'w') as fp:
+            fp.write(new_source_list_content)
         
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="as")    
     def request_upgrade_pkgs(self):

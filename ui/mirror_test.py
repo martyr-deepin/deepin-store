@@ -22,6 +22,10 @@ class Mirror(object):
     def hostname(self):
         return self._hostname
 
+    @property
+    def name(self):
+        return self.config.get('mirror', 'name')
+
     def get_repo_url(self):
         return self.config.get('mirror', 'url')
 
