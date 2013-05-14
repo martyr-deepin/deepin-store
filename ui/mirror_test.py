@@ -17,6 +17,7 @@ class Mirror(object):
         self.config = Config(ini_file)
         self.config.load()
         self._hostname = self.get_repo_url().split(":")[1].split("/")[2]
+        self._type = self.get_repo_url().split(":")[0]
     
     @property
     def hostname(self):
@@ -26,8 +27,15 @@ class Mirror(object):
     def name(self):
         return self.config.get('mirror', 'name')
 
+    @property
+    def protocol_type(self):
+        return self._type
+
     def get_repo_url(self):
         return self.config.get('mirror', 'url')
+
+    def get_change_uri(self):
+        return "%s://%s" % (self._type, self._hostname)
 
 class MirrorTest(threading.Thread):
     """Determines the best mirrors by perfoming ping and download test."""

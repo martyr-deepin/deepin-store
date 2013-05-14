@@ -65,23 +65,23 @@ DATA_DIR = os.path.join(get_parent_dir(__file__, 3), "data")
 source_content_template = '''\
 # This file was created by deepin software center, do not modify!
 
-deb http://%s/ubuntu precise main restricted universe multiverse
-deb http://%s/ubuntu precise-security main restricted universe multiverse
-deb http://%s/ubuntu precise-updates main restricted universe multiverse
-# deb http://%s/ubuntu precise-proposed main restricted universe multiverse
-# deb http://%s/ubuntu precise-backports main restricted universe multiverse
+deb %s/ubuntu precise main restricted universe multiverse
+deb %s/ubuntu precise-security main restricted universe multiverse
+deb %s/ubuntu precise-updates main restricted universe multiverse
+# deb %s/ubuntu precise-proposed main restricted universe multiverse
+# deb %s/ubuntu precise-backports main restricted universe multiverse
 
-deb-src http://%s/ubuntu precise main restricted universe multiverse
-deb-src http://%s/ubuntu precise-security main restricted universe multiverse
-deb-src http://%s/ubuntu precise-updates main restricted universe multiverse
-# deb-src http://%s/ubuntu precise-proposed main restricted universe multiverse
-# deb-src http://%s/ubuntu precise-backports main restricted universe multiverse
+deb-src %s/ubuntu precise main restricted universe multiverse
+deb-src %s/ubuntu precise-security main restricted universe multiverse
+deb-src %s/ubuntu precise-updates main restricted universe multiverse
+# deb-src %s/ubuntu precise-proposed main restricted universe multiverse
+# deb-src %s/ubuntu precise-backports main restricted universe multiverse
 
-deb http://%s/deepin quantal main non-free
-deb-src http://%s/deepin quantal main non-free
+deb %s/deepin quantal main non-free
+deb-src %s/deepin quantal main non-free
 
-deb http://%s/deepin quantal-updates main non-free
-deb-src http://%s/deepin quantal-updates main non-free
+deb %s/deepin quantal-updates main non-free
+deb-src %s/deepin quantal-updates main non-free
 '''
 
 class ExitManager(td.Thread):
