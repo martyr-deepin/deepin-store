@@ -25,21 +25,27 @@ import gtk
 import gobject
 import pango
 import os
-from dtk.ui.dialog import PreferenceDialog
+import threading
+import apt_pkg
+from dtk.ui.dialog import PreferenceDialog, DialogBox
 from dtk.ui.entry import InputEntry
 from dtk.ui.button import Button, CheckButton, RadioButtonBuffer
 from dtk.ui.label import Label
 from dtk.ui.line import HSeparator
 from dtk.ui.treeview import TreeItem, TreeView
-from dtk.ui.utils import get_content_size, color_hex_to_cairo
+from dtk.ui.utils import get_content_size, color_hex_to_cairo, container_remove_all
 from dtk.ui.draw import (draw_text, draw_vlinear)
 from dtk.ui.spin import SpinBox
+from dtk.ui.threads import AnonymityThread, post_gui
+from dtk.ui.progressbar import ProgressBar
 from deepin_utils.file import get_parent_dir
 from nls import _
 from utils import get_purg_flag, set_purge_flag, handle_dbus_reply, handle_dbus_error
-from mirror_test import Mirror, MirrorTest
+from mirror_test import Mirror, test_mirrors, MirrorTest
 from events import global_event
-from data_manager import DataManager
+import aptsources
+import aptsources.distro
+from aptsources.sourceslist import SourcesList
 
 class MirrorItem(TreeItem):
 
@@ -179,9 +185,37 @@ def create_separator_box(padding_x=0, padding_y=0):
 TABLE_ROW_SPACING = 25
 CONTENT_ROW_SPACING = 8
 
+from dtk.ui.dialog import DIALOG_MASK_SINGLE_PAGE
+
+class TestProgressDialog(object):
+
+    def __init__(self):
+        self.dialog = DialogBox("测试下载服务器", 376, 188, DIALOG_MASK_SINGLE_PAGE)
+
+        test_label = Label("正在测试中", text_color="#b4dded", text_size=20)
+        test_label_align = gtk.Alignment(0.5, 0.5, 0, 0)
+        test_label_align.set_padding(4, 4, 5, 5)
+        test_label_align.add(test_label)
+
+        message_label = Label("为了找到更好的镜像地址，将会执行一系列的测试。")
+        message_label_align = gtk.Alignment(0, 0.5, 1, 1)
+        message_label_align.set_padding(4, 4, 5, 5)
+        message_label_align.add(message_label)
+
+        self.progressbar = ProgressBar()
+        self.progressbar.set_size_request(350, 12)
+        progressbar_align = gtk.Alignment(0.5, 0.5, 0, 0)
+        message_label_align.set_padding(4, 4, 5, 5)
+        progressbar_align.add(self.progressbar)
+
+        self.dialog.body_box.pack_start(test_label_align, False, False)
+        self.dialog.body_box.pack_start(message_label_align, False, False)
+        self.dialog.body_box.pack_start(progressbar_align, False, False)
+
 class DscPreferenceDialog(PreferenceDialog):
     def __init__(self):
         PreferenceDialog.__init__(self)
+        self.set_size_request(566, 488)
 
         self.normal_settings = gtk.VBox()
         self.normal_settings.set_spacing(TABLE_ROW_SPACING)
@@ -221,6 +255,7 @@ class DscPreferenceDialog(PreferenceDialog):
         label_align.add(dir_title_label)
 
         self.mirrors_dir = os.path.join(get_parent_dir(__file__, 2), 'mirrors')
+        self.current_mirror_hostname = self.get_current_mirror_hostname()
         self.mirror_items = self.get_mirror_items()
         self.mirror_view = TreeView(self.mirror_items,
                                 enable_drag_drop=False,
@@ -231,16 +266,87 @@ class DscPreferenceDialog(PreferenceDialog):
         self.mirror_view.set_expand_column(2)
         self.mirror_view.set_size_request(385,  200)
         self.mirror_view.draw_mask = self.mirror_treeview_draw_mask
+        self.display_current_mirror()
 
-        mirror_test_button = Button("Select Best Mirror")
+        self.mirror_test_button = Button("Select Best Mirror")
+        self.mirror_test_button.connect('clicked', self.test_mirror_action)
         mirror_test_button_align = gtk.Alignment(0, 0.5, 0, 0)
-        mirror_test_button_align.add(mirror_test_button)
+        mirror_test_button_align.set_padding(0, 0, 7, 5)
+        mirror_test_button_align.add(self.mirror_test_button)
+
+        self.mirror_message_label = Label()
+        mirror_message_label_align = gtk.Alignment(0, 0.5, 1, 1)
+        mirror_message_label_align.set_padding(0, 0, 5, 5)
+        mirror_message_label_align.add(self.mirror_message_label)
+        self.mirror_message_hbox = gtk.HBox()
+        self.mirror_message_hbox.pack_start(mirror_message_label_align, False)
+
+        self.mirror_test_progressbar = ProgressBar()
 
         main_table.attach(label_align, 0, 2, 0, 1, yoptions=gtk.FILL, xpadding=8)
         main_table.attach(create_separator_box(), 0, 2, 1, 2, yoptions=gtk.FILL)
         main_table.attach(self.mirror_view, 0, 2, 2, 3, xpadding=10, xoptions=gtk.FILL)
         main_table.attach(mirror_test_button_align, 0, 1, 3, 4, xoptions=gtk.FILL)
+        main_table.attach(self.mirror_message_hbox, 1, 2, 3, 4, xoptions=gtk.FILL)
         return main_table
+
+    def display_current_mirror(self):
+        vadj = self.mirror_view.scrolled_window.get_vadjustment()
+        length = self.mirror_items.index(self.current_mirror_item) * 30
+        vadj.set_value(min(vadj.upper-vadj.page_size-1, length))
+
+    def test_mirror_action(self, widget):
+        widget.set_sensitive(False)
+
+        distro = aptsources.distro.get_distro()
+        distro.get_sources(SourcesList())
+        pipe = os.popen("dpkg --print-architecture")
+        arch = pipe.read().strip()
+        test_file = "dists/%s/%s/binary-%s/Packages.gz" % \
+                    (distro.source_template.name,
+                    distro.source_template.components[0].name,
+                    arch)
+
+        self.running = threading.Event()
+        self.running.set()
+        progress_update = threading.Event()
+        test = MirrorTest(self.mirrors_list,
+                        test_file,
+                        progress_update,
+                        self.running)
+        test.start()
+
+        # now run the tests in a background thread, and update the UI on each event
+        container_remove_all(self.mirror_message_hbox)
+        self.mirror_message_hbox.pack_start(self.mirror_test_progressbar)
+        self.mirror_message_hbox.show_all()
+        while self.running.is_set():
+            while gtk.events_pending():
+                gtk.main_iteration_do(False)
+
+            # don't spin the CPU until there's something to update; but update the
+            # UI at least every 100 ms
+            progress_update.wait(0.1)
+
+            if progress_update.is_set():
+                self.mirror_test_progressbar.progress_buffer.progress = test.progress[2]*100
+                progress_update.clear()
+
+        if test.best != None:
+            print test.best
+        else:
+            pass
+            #dialogs.show_error_dialog(self.dialog, 
+                                    #_("No suitable download server was found"),
+                                    #_("Please check your Internet connection."))
+
+    def get_current_mirror_hostname(self):
+        apt_pkg.init_config()
+        apt_pkg.init_system()
+        source_list_obj = apt_pkg.SourceList()
+        source_list_obj.read_main_list()
+        uri = source_list_obj.list[0].uri.split("/")[2]
+        return uri
 
     def mirror_treeview_draw_mask(self, cr, x, y, w, h):
         cr.set_source_rgba(1, 1, 1, 0.9)
@@ -249,21 +355,26 @@ class DscPreferenceDialog(PreferenceDialog):
 
     def get_mirror_items(self):
         items = []
+        self.mirrors_list = []
         for ini_file in os.listdir(self.mirrors_dir):
             m = Mirror(os.path.join(self.mirrors_dir, ini_file))
             item = MirrorItem(m, self.mirror_clicked_callback)
+            if m.hostname == self.current_mirror_hostname:
+                item.radio_button.active = True
+                self.current_mirror_item = item
+            self.mirrors_list.append(m)
             items.append(item)
         return items
 
     def mirror_clicked_callback(self, item):
-        #global_event.emit('select-mirror', item.mirror.hostname)
         for i in self.mirror_items:
             if i != item and i.radio_button.active == True:
                 i.radio_button.active = False
             elif i == item:
                 i.radio_button.active = True
-
-        print item.mirror.hostname
+        if item.mirror.hostname != self.current_mirror_hostname:
+            global_event.emit('mirror-changed', item.mirror.hostname)
+            self.current_mirror_hostname = item.mirror.hostname
 
     def create_source_update_frequency_table(self):
         main_table = gtk.Table(3, 2)
@@ -337,3 +448,8 @@ class DscPreferenceDialog(PreferenceDialog):
         pass
 
 preference_dialog = DscPreferenceDialog()
+
+if __name__ == '__main__':
+    d = TestProgressDialog()
+    d.dialog.show_all()
+    gtk.main()

@@ -62,7 +62,7 @@ from Queue import Queue
 
 DATA_DIR = os.path.join(get_parent_dir(__file__, 3), "data")
 
-source_content_template = '''
+source_content_template = '''\
 # This file was created by deepin software center, do not modify!
 
 deb http://%s/ubuntu precise main restricted universe multiverse

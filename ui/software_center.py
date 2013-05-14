@@ -769,6 +769,8 @@ class DeepinSoftwareCenter(dbus.service.Object):
         global_event.register_event("show-pkg-name-tooltip", lambda pkg_name: show_tooltip(self.application.window, pkg_name))
         global_event.register_event("hide-pkg-name-tooltip", lambda :tool_tip.hide())
         global_event.register_event("update-current-status-pkg-page", update_current_status_pkg_page)
+        global_event.register_event('mirror-changed', lambda hostname: self.bus_interface.change_source_list(
+            hostname, reply_handler=handle_dbus_reply, error_handler=handle_dbus_error))
         self.system_bus.add_signal_receiver(
             lambda messages: message_handler(messages, 
                                          self.bus_interface, 
@@ -784,7 +786,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         glib.timeout_add(1000, lambda : clear_failed_action(self.install_page, self.upgrade_page))
 
         
-        create_thread(self.request_update_list).start()
+        #create_thread(self.request_update_list).start()
         log("finish")
         #for event in global_event.events:
             #print "%s: %s" % (event, global_event.events[event])
