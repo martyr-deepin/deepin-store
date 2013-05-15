@@ -33,7 +33,10 @@ import traceback
 import sys, os
 import subprocess
 import apt_pkg
+from deepin_utils.file import get_parent_dir
 
+sys.path.insert(0, os.path.join(get_parent_dir(__file__, 3), 'ui'))
+from utils import get_update_interval
 
 DSC_SERVICE_NAME = "com.linuxdeepin.softwarecenter"
 DSC_SERVICE_PATH = "/com/linuxdeepin/softwarecenter"
@@ -49,7 +52,9 @@ DSC_UPDATER_PATH = "/com/linuxdeepin/softwarecenterupdater"
 
 LOG_PATH = "/tmp/dsc-update-list.log"
 
-UPDATE_INTERVAL = 3600*1
+CONFIG_DIR =  os.path.join(os.path.expanduser("~"), ".config", "deepin-software-center")
+CONFIG_INFO_PATH = os.path.join(CONFIG_DIR, "config_info.ini")
+
 DELAY_UPDATE_INTERVAL = 600
 
 def log(message):
@@ -138,7 +143,6 @@ class Update(dbus.service.Object):
         self.system_bus = None
         self.bus_interface = None
         self.delay_update_id = None
-        self.sleep_time = UPDATE_INTERVAL
 
         self.update_num = 0
 
@@ -187,7 +191,7 @@ class Update(dbus.service.Object):
                     self.show_notify("您的系统有%s个软件包需要升级，请打开软件中心进行升级！" % update_num)
                 self.update_num = update_num
                 self.bus_interface.request_quit()
-                self.set_delay_update(UPDATE_INTERVAL)
+                self.set_delay_update(get_update_interval()*3600)
                 log("Update List Finish")
                 print "update finished!"
                 log("Deepin Software Service Quit!")

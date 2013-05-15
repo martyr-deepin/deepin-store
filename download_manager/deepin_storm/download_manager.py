@@ -40,12 +40,12 @@ class DownloadManager(object):
         
         self.fetch_files_dict = {}
         
-    def add_download(self, pkg_name, action_type, simulate, download_urls, download_hash_infos, file_sizes, deb_file=""):
+    def add_download(self, pkg_name, action_type, simulate, download_urls, download_hash_infos, file_sizes, deb_file="", file_save_dir="/var/cache/apt/archives"):
         fetch_files = FetchFiles(
             download_urls,
             file_hash_infos=download_hash_infos,
             file_sizes=file_sizes,
-            file_save_dir="/var/cache/apt/archives")
+            file_save_dir=file_save_dir)
         if self.global_event:
             fetch_files.signal.register_event("start", lambda : self.start_download(pkg_name, action_type))
             fetch_files.signal.register_event("update", lambda percent, speed: self.update_download(pkg_name, action_type, percent, speed))

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-15 11:25+0800\n"
+"POT-Creation-Date: 2013-05-15 17:23+0800\n"
 "PO-Revision-Date: 2013-03-25 15:30+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,13 +17,66 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../ui/home_page.py:588
-msgid "Home Recommends"
-msgstr "首页推荐"
+#: ../ui/preference.py:106
+msgid "No name"
+msgstr "未命名"
 
-#: ../ui/software_center.py:514
+#: ../ui/preference.py:123
+msgid "No mirror url"
+msgstr "未知源地址"
+
+#: ../ui/preference.py:242 ../ui/software_center.py:564
 msgid "Deepin Software Center"
 msgstr "软件中心"
+
+#: ../ui/preference.py:247
+msgid "Version:"
+msgstr "版本："
+
+#: ../ui/preference.py:331
+msgid "Select software mirror"
+msgstr "选择软件下载源"
+
+#: ../ui/preference.py:351
+msgid "Select Best Mirror"
+msgstr "选择最快下载源"
+
+#: ../ui/preference.py:491
+msgid "Source update"
+msgstr "软件列表更新"
+
+#: ../ui/preference.py:497
+msgid "Interval time: "
+msgstr "间隔时间："
+
+#: ../ui/preference.py:500
+msgid " hour"
+msgstr " 小时"
+
+#: ../ui/preference.py:516
+msgid "Download directory"
+msgstr "下载目录"
+
+#: ../ui/preference.py:527
+msgid "Change"
+msgstr "更改"
+
+#: ../ui/preference.py:541
+msgid "On uninstall software"
+msgstr "当卸载软件的时候"
+
+#: ../ui/preference.py:546
+msgid "Delete configuration files"
+msgstr "删除系统配置文件"
+
+#: ../ui/preference.py:570
+#, fuzzy
+msgid "Select Directory"
+msgstr "选择最快下载源"
+
+#: ../ui/home_page.py:721
+msgid "Home Recommends"
+msgstr "首页推荐"
 
 #: ../ui/category_info.py:26
 msgid "Internet"

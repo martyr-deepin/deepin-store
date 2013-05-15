@@ -62,11 +62,23 @@ category_face = font_face_create(os.path.join(get_parent_dir(__file__, 2), "imag
 
 global cursor_postion
 cursor_postion = None
+global timeout_tooltip_action_id
+timeout_tooltip_action_id = None
 
 def cursor_postion_changed(item, new_cursor_postion):
     global cursor_postion
+    global timeout_tooltip_action_id
     if new_cursor_postion != cursor_postion and new_cursor_postion == "name":
-        global_event.emit("show-pkg-name-tooltip", item.alias_name)
+        if timeout_tooltip_action_id:
+            gobject.source_remove(timeout_tooltip_action_id)
+            timeout_tooltip_action_id = None
+        timeout_tooltip_action_id = gobject.timeout_add(1000, timeout_tooltip_action, item)
+    elif new_cursor_postion != cursor_postion and new_cursor_postion == 'other':
+        if timeout_tooltip_action_id:
+            gobject.source_remove(timeout_tooltip_action_id)
+            timeout_tooltip_action_id = None
+        global_event.emit('hide-pkg-name-tooltip')
+
     cursor_postion = new_cursor_postion
 
 global_event.register_event("cursor-position-changed", cursor_postion_changed)
@@ -79,6 +91,10 @@ def tooltip_aciton(view, item, x, y):
 
     global_event.emit("cursor-position-changed", item, new_cursor_postion)
 
+def timeout_tooltip_action(item):
+    global_event.emit("show-pkg-name-tooltip", item.alias_name)
+
+    return False
 
 class HomePage(gtk.HBox):
     '''
@@ -1119,6 +1135,7 @@ class PkgIconItem(IconItem):
         return (offset_x, offset_y, popup_x, popup_y)
     
     def icon_item_button_press(self, x, y):
+        global timeout_tooltip_action_id
         '''
         Handle button-press event.
         
@@ -1134,7 +1151,13 @@ class PkgIconItem(IconItem):
                 
             self.button_status = BUTTON_PRESS
             self.emit_redraw_request()
-        elif self.is_in_icon_area(x, y) or self.is_in_name_area(x, y):
+        elif self.is_in_icon_area(x, y):
+            global_event.emit("switch-to-detail-page", self.pkg_name)
+        elif self.is_in_name_area(x, y):
+            if timeout_tooltip_action_id:
+                gobject.source_remove(timeout_tooltip_action_id)
+                timeout_tooltip_action_id = None
+            global_event.emit('hide-pkg-name-tooltip')
             global_event.emit("switch-to-detail-page", self.pkg_name)
     
     def icon_item_button_release(self, x, y):

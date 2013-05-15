@@ -345,6 +345,11 @@ class DataManager(object):
         results = sconn.search(q, 0, sconn.get_doccount(), sortby="have_desktop_file")
         
         return map(lambda result: result.data["pkg_name"][0], results)
+
+    def change_source_list(self, hostname, reply_handler, error_handler):
+        self.bus_interface.change_source_list(hostname,
+                reply_handler=reply_handler, 
+                error_handler=error_handler)
         
 if __name__ == "__main__":
     import dbus

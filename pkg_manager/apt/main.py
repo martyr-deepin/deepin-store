@@ -32,7 +32,7 @@ from parse_pkg import (
         get_deb_download_info, 
         get_pkg_dependence_file_path, 
         get_pkg_own_size,
-        ARCHIVE_DIR,
+        get_cache_archive_dir,
         )
 import gobject
 import dbus
@@ -59,8 +59,31 @@ from utils import log
 from update_list import UpdateList
 import threading as td
 from Queue import Queue
+import apt_pkg
 
 DATA_DIR = os.path.join(get_parent_dir(__file__, 3), "data")
+
+source_content_template = '''\
+# This file was created by deepin software center, do not modify!
+
+deb %s/ubuntu precise main restricted universe multiverse
+deb %s/ubuntu precise-security main restricted universe multiverse
+deb %s/ubuntu precise-updates main restricted universe multiverse
+# deb %s/ubuntu precise-proposed main restricted universe multiverse
+# deb %s/ubuntu precise-backports main restricted universe multiverse
+
+deb-src %s/ubuntu precise main restricted universe multiverse
+deb-src %s/ubuntu precise-security main restricted universe multiverse
+deb-src %s/ubuntu precise-updates main restricted universe multiverse
+# deb-src %s/ubuntu precise-proposed main restricted universe multiverse
+# deb-src %s/ubuntu precise-backports main restricted universe multiverse
+
+deb %s/deepin quantal main non-free
+deb-src %s/deepin quantal main non-free
+
+deb %s/deepin quantal-updates main non-free
+deb-src %s/deepin quantal-updates main non-free
+'''
 
 class ExitManager(td.Thread):
     '''
@@ -123,6 +146,7 @@ class ThreadMethod(td.Thread):
         self.func = func
         self.args = args
         self.setDaemon(daemon)
+        self.download_dir = "/var/cache/apt/archives"
 
     def run(self):
         self.func(*self.args)
@@ -132,14 +156,14 @@ class PackageManager(dbus.service.Object):
     docs
     '''
 
-    def __init__(self, system_bus, mainloop, pkg_cache):
+    def __init__(self, system_bus, mainloop):
         log("init dbus")
         
         # Init dbus service.
         dbus.service.Object.__init__(self, system_bus, DSC_SERVICE_PATH)
         # Init.
         self.mainloop = mainloop
-        self.pkg_cache = pkg_cache
+        self.pkg_cache = AptCache()
         self.exit_flag = False
         self.simulate = False
         
@@ -221,6 +245,9 @@ class PackageManager(dbus.service.Object):
     def update_list_finish(self):
         self.in_update_list = False
         self.update_signal([("update-list-finish", "")])
+        
+        self.pkg_cache = AptCache()
+        self.apt_action_pool.pkg_cache = self.pkg_cache
         print "finish"
         
         self.exit_manager.check()
@@ -232,9 +259,8 @@ class PackageManager(dbus.service.Object):
         
         self.exit_manager.check()
         
-    def update_list_update(self, percent):
-        self.update_signal([("update-list-update", percent)])
-        print "update: %s" % percent
+    def update_list_update(self, percent, status_message):
+        self.update_signal([("update-list-update", (percent, status_message))])
 
     def handle_dbus_reply(self, *reply):
         log("%s (reply): %s" % (self.module_dbus_name, str(reply)))        
@@ -255,7 +281,7 @@ class PackageManager(dbus.service.Object):
         else:
             (download_urls, download_hash_infos, pkg_sizes) = pkg_infos
             
-            self.download_manager.add_download(pkg_name, action_type, simulate, download_urls, download_hash_infos, pkg_sizes)
+            self.download_manager.add_download(pkg_name, action_type, simulate, download_urls, download_hash_infos, pkg_sizes, file_save_dir=self.download_dir)
            
     def download_finish(self, pkg_name, action_type, simulate, deb_file=""):
         self.update_signal([("download-finish", (pkg_name, action_type))])
@@ -276,6 +302,11 @@ class PackageManager(dbus.service.Object):
         self.update_signal([("download-failed", (pkg_name, action_type))])
         
         self.exit_manager.check()    
+
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="")
+    def set_download_dir(self, local_dir):
+        apt_pkg.config.set("Dir::Cache::Archives", local_dir)
+        self.download_dir = local_dir
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="ai")
     def get_download_size(self, pkg_name):
@@ -319,8 +350,9 @@ class PackageManager(dbus.service.Object):
         cleanSize = 0
                 
         # Delete cache directory.
-        if os.path.exists(ARCHIVE_DIR):
-            for root, folder, files in os.walk(ARCHIVE_DIR):
+        cache_archive_dir = get_cache_archive_dir()
+        if os.path.exists(cache_archive_dir):
+            for root, folder, files in os.walk(cache_archive_dir):
                 for file_name in files:
                     path = os.path.join(root, file_name)
                     if path.endswith(".deb") and (path not in remain_pkgs_paths):
@@ -346,6 +378,12 @@ class PackageManager(dbus.service.Object):
         
         self.exit_manager.check()
         self.update_signal("frontend-quit")
+
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="")    
+    def change_source_list(self, hostname):
+        new_source_list_content = source_content_template.replace("%s", hostname)
+        with open('/etc/apt/sources.list', 'w') as fp:
+            fp.write(new_source_list_content)
         
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="as")    
     def request_upgrade_pkgs(self):
@@ -553,11 +591,8 @@ if __name__ == "__main__":
     system_bus = dbus.SystemBus()
     bus_name = dbus.service.BusName(DSC_SERVICE_NAME, system_bus)
     
-    # Init cache.
-    pkg_cache = AptCache()
-    
     # Init package manager.
-    PackageManager(system_bus, mainloop, pkg_cache)
+    PackageManager(system_bus, mainloop)
     
     # Run.
     mainloop.run()

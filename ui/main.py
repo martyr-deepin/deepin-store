@@ -29,7 +29,6 @@ from dbus.mainloop.glib import DBusGMainLoop
 from constant import DSC_FRONTEND_NAME, DSC_FRONTEND_PATH
 from deepin_utils.ipc import is_dbus_name_exists
 import gtk
-import os
 
 if __name__ == "__main__" :
     # Init.
@@ -37,9 +36,6 @@ if __name__ == "__main__" :
     gtk.gdk.threads_init()
     session_bus = dbus.SessionBus()
     arguments = sys.argv[1::]
-    
-    # start dsc daemon
-    os.system("dsc-daemon")
     
     # Send hello message if updater has running.
     if is_dbus_name_exists(DSC_FRONTEND_NAME, True):

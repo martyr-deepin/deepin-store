@@ -24,6 +24,8 @@ import os
 from deepin_utils.file import get_parent_dir
 from data import DATA_ID
 
+PROGRAM_VERSION = "3.0"
+
 DSC_SERVICE_NAME = "com.linuxdeepin.softwarecenter"
 DSC_SERVICE_PATH = "/com/linuxdeepin/softwarecenter"
 
@@ -44,7 +46,12 @@ ACTION_UPGRADE = 3
 
 CONFIG_DIR =  os.path.join(os.path.expanduser("~"), ".config", "deepin-software-center")
 CONFIG_INFO_PATH = os.path.join(CONFIG_DIR, "config_info.ini")
+
 ONE_DAY_SECONDS = 24 * 60 * 60
+
+DEFAULT_UPDATE_INTERVAL = 1 # hour
+
+DEFAULT_DOWNLOAD_DIRECTORY = '/var/cache/apt/archives'
 
 SCREENSHOT_HOST = "http://package-screenshot.b0.upaiyun.com"
 SCREENSHOT_DOWNLOAD_DIR = os.path.join(os.path.expanduser("~"), ".cache", "deepin-software-center", "screenshot")

@@ -63,7 +63,7 @@ from dtk.ui.gio_utils import start_desktop_file
 from dtk.ui.iconview import IconView
 from dtk.ui.treeview import TreeView
 from start_desktop_window import StartDesktopWindow
-from utils import is_64bit_system, handle_dbus_reply, handle_dbus_error, bit_to_human_str
+from utils import is_64bit_system, handle_dbus_reply, handle_dbus_error, bit_to_human_str, get_software_download_dir
 import utils
 from tooltip import ToolTip
 from preference import preference_dialog
@@ -185,7 +185,7 @@ def show_tooltip(window, message):
     (screen, px, py, modifier_type) = window.get_display().get_pointer()
     tool_tip.show_all()
     tool_tip.move(px, py)
-    gtk.timeout_add(2000, tool_tip.hide_all)
+    #show-pkg-name-tooltipgtk.timeout_add(2000, tool_tip.hide_all)
     
 def switch_from_detail_page(page_switcher, detail_page, page_box):
     page_switcher.slide_to_page(page_box, "left")
@@ -311,12 +311,14 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                     reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
                     error_handler=handle_dbus_error
                     )
-            global_event.emit("show-message", "软件列表更新完成!", 0)
+            #global_event.emit("show-message", "软件列表更新完成!", 0)
+            global_event.emit('update-progress-in-update-list-dialog', -1, "软件列表更新完成")
 
         elif signal_type == "update-list-update":
-            upgrade_page.update_upgrade_progress(action_content)
-            percent = "%.2f%%" % float(action_content)
-            global_event.emit("show-message", "更新软件列表: %s" % percent)
+            upgrade_page.update_upgrade_progress(action_content[0])
+            percent = "%.2f%%" % float(action_content[0])
+            #global_event.emit("show-message", "更新软件列表: %s" % percent)
+            global_event.emit('update-progress-in-update-list-dialog', float(action_content[0]), action_content[1])
 
         elif signal_type == "parse-download-error":
             (pkg_name, action_type) = action_content
@@ -526,7 +528,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         gtk.main_quit()
         
     def open_download_directory(self):
-        run_command("xdg-open /var/cache/apt/archives")
+        run_command("xdg-open %s" % get_software_download_dir())
         
     def switch_page(self, page):
         switch_page(self.page_switcher, self.page_box, page, self.detail_page)
@@ -554,7 +556,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.application = Application(resizable=False)
         self.application.set_default_size(888, 634)
         self.application.set_skin_preview(os.path.join(image_dir, "frame.png"))
-        self.application.set_icon(os.path.join(image_dir, "icon.png"))
+        self.application.set_icon(os.path.join(image_dir, "logo48.png"))
         self.application.add_titlebar(
                 ["theme", "menu", "min", "close"],
                 show_title=False
@@ -624,6 +626,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         # Init menu.
         menu = Menu(
             [
+             (None, "更新软件列表", self.handle_mirror_change_reply),
              (None, "打开下载目录", self.open_download_directory),
              (None, "智能清理下载文件", self.clean_download_cache),
              (None, "显示新功能", lambda : self.show_wizard_win()),
@@ -649,7 +652,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         print "Finish Init UI: %s" % (time.time()-start, )
         
         self.ready_show()
-        
+
     def ready_show(self):    
         if utils.is_first_started():
             self.show_wizard_win(True, callback=self.wizard_callback)
@@ -694,6 +697,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.bus_interface = dbus.Interface(bus_object, DSC_SERVICE_NAME)
         # Say hello to backend. 
         #self.bus_interface.say_hello(self.simulate)
+        self.set_software_download_dir()
         
         log("Init data manager")
         
@@ -731,7 +735,8 @@ class DeepinSoftwareCenter(dbus.service.Object):
         log("Init install page.")
         self.install_page = InstallPage(self.bus_interface, self.data_manager)
         print "Init three pages time: %s" % (time.time()-start, )
-        
+
+        self.upgrade_page.fetch_upgrade_info()
         self.bus_interface.request_status(
                 reply_handler=lambda reply: request_status_reply_hander(reply, self.install_page, self.upgrade_page, self.uninstall_page),
                 error_handler=handle_dbus_error
@@ -741,7 +746,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
         # Handle global event.
         global_event.register_event("install-pkg", lambda pkg_names: install_pkg(self.bus_interface, self.install_page, pkg_names, self.application.window))
-        global_event.register_event("upgrade-pkg", lambda pkg_names: gtk.timeout_add(10, self.upgrade_pkg, pkg_names))
+        global_event.register_event("upgrade-pkg", self.upgrade_pkg)
         global_event.register_event("uninstall-pkg", self.bus_interface.uninstall_pkg)
         global_event.register_event("stop-download-pkg", self.bus_interface.stop_download_pkg)
         global_event.register_event("switch-to-detail-page", lambda pkg_name : switch_to_detail_page(self.page_switcher, self.detail_page, pkg_name))
@@ -767,7 +772,11 @@ class DeepinSoftwareCenter(dbus.service.Object):
         global_event.register_event("start-pkg", lambda pkg_name, desktop_infos, offset: start_pkg(pkg_name, desktop_infos, offset, self.application.window))
         global_event.register_event("start-desktop", start_desktop)
         global_event.register_event("show-pkg-name-tooltip", lambda pkg_name: show_tooltip(self.application.window, pkg_name))
+        global_event.register_event("hide-pkg-name-tooltip", lambda :tool_tip.hide())
         global_event.register_event("update-current-status-pkg-page", update_current_status_pkg_page)
+        global_event.register_event('change-mirror', lambda hostname: self.bus_interface.change_source_list(
+            hostname, reply_handler=self.handle_mirror_change_reply, error_handler=handle_dbus_error))
+        global_event.register_event('download-directory-changed', self.set_software_download_dir)
         self.system_bus.add_signal_receiver(
             lambda messages: message_handler(messages, 
                                          self.bus_interface, 
@@ -783,10 +792,18 @@ class DeepinSoftwareCenter(dbus.service.Object):
         glib.timeout_add(1000, lambda : clear_failed_action(self.install_page, self.upgrade_page))
 
         
-        create_thread(self.request_update_list).start()
+        #create_thread(self.request_update_list).start()
         log("finish")
         #for event in global_event.events:
             #print "%s: %s" % (event, global_event.events[event])
+    def set_software_download_dir(self):
+        self.bus_interface.set_download_dir(get_software_download_dir(), reply_handler=handle_dbus_reply, error_handler=handle_dbus_error)
+
+    def handle_mirror_change_reply(self, reply=None):
+        global_event.emit("mirror-changed")
+        print "Start update list..."
+        create_thread(self.request_update_list).start()
+        #self.request_update_list()
 
     def update_status_bar_message(self, message, hide_timeout=5000):
         if hide_timeout:

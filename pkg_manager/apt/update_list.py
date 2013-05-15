@@ -31,7 +31,17 @@ class UpdateListProgress(FetchProgress):
 
     def __init__(self):
         super(UpdateListProgress, self).__init__()
+        self.status_message = ""
 
+    def updateStatus(self, uri, descr, short_descr, status):
+        """Called when the status of an item changes.
+
+        This happens eg. when the downloads fails or is completed.
+        """
+        if status != self.dlQueued:
+            self.status_message = "Update %s" % descr
+        self.items[uri] = status
+        
     def pulse(self):
         """Called periodically to update the user interface.
 
@@ -43,9 +53,7 @@ class UpdateListProgress(FetchProgress):
             if self.currentCPS > 0:
                 self.eta = ((self.totalBytes - self.currentBytes) /
                             float(self.currentCPS))
-                
-            global_event.emit("update-list-update", self.percent)
-            log(self.percent)
+            global_event.emit("update-list-update", self.percent, self.status_message)
         except Exception, e:
             print "UpdateListProgress.pulse(): %s" % (e)
         

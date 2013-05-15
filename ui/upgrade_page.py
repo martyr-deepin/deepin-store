@@ -106,7 +106,7 @@ class NewestBar(gtk.HBox):
         if last_upgrade_time != "":
             self.message_label.set_text("最后更新时间: %s" % get_last_upgrade_time())
         else:
-            self.message_label.set_text("您从未使用软件中心更新过系统！")
+            self.message_label.set_text("")
         
     def set_no_notify_num(self, no_notify_num):
         
@@ -1111,6 +1111,7 @@ class UpgradeItem(TreeItem):
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
                         
+                    set_last_upgrade_time()
                     global_event.emit("upgrade-pkg", [self.pkg_name])
                 elif self.is_in_star_area(column, offset_x, offset_y):
                     global_event.emit("grade-pkg", self.pkg_name, self.grade_star)

@@ -100,7 +100,7 @@ def get_pkg_dependence(cache, pkg_name):
                 
             # Get package information.
             pkgs = sorted(cache.get_changes(), key=lambda pkg: pkg.name)
-            cache._depcache.init()
+            cache.open(None)
             return pkgs
         
         except Exception, e:
@@ -114,7 +114,7 @@ def get_pkg_dependence(cache, pkg_name):
 def get_pkg_own_size(cache, pkg_name):
     pkg = cache[pkg_name]
     version = pkg.candidate
-    return int(version.size)
+    return int(version.installed_size)
     
 def check_pkg_download_info(pkgs):
     if len(pkgs) >= 1:
@@ -147,9 +147,9 @@ def check_pkg_download_info(pkgs):
     else:
         return DOWNLOAD_STATUS_NOTNEED
     
-ARCHIVE_DIR = apt_pkg.config.find_dir("Dir::Cache::Archives")    
-DEB_CACHE_DIR = os.path.join(ARCHIVE_DIR, "deepin-software-center-cache")
-    
+def get_cache_archive_dir():
+    return apt_pkg.config.find_dir("Dir::Cache::Archives")    
+
 def get_filename(version):
     '''Get file name.'''
     return os.path.basename(version.filename)
@@ -158,7 +158,7 @@ def pkg_file_has_exist(pkg):
     # Check whether file have downloaded complete.
     candidate = pkg.candidate
     pkg_name = get_filename(candidate)
-    pkg_path = os.path.join(ARCHIVE_DIR, pkg_name)
+    pkg_path = os.path.join(get_cache_archive_dir(), pkg_name)
     if not os.path.exists(pkg_path) or os.stat(pkg_path).st_size != candidate.size:
         return False
     
@@ -194,6 +194,7 @@ def check_hash(path, hash_type, hash_value):
     return hash_fun.hexdigest() == hash_value
 
 def get_pkg_dependence_file_path(cache, pkg_name):
+    cache_archive_dir = get_cache_archive_dir()
     file_paths = []
     if pkg_name in cache:
         try:
@@ -206,9 +207,9 @@ def get_pkg_dependence_file_path(cache, pkg_name):
             # Get package information.
             pkgs = sorted(cache.get_changes(), key=lambda pkg: pkg.name)
             cache._depcache.init()
-            file_paths.append(os.path.join(ARCHIVE_DIR, get_filename(pkg.candidate)))
+            file_paths.append(os.path.join(cache_archive_dir, get_filename(pkg.candidate)))
             for pkg in pkgs:
-                file_paths.append(os.path.join(ARCHIVE_DIR, get_filename(pkg.candidate)))
+                file_paths.append(os.path.join(cache_archive_dir, get_filename(pkg.candidate)))
             return file_paths
         
         except Exception, e:
