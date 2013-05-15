@@ -27,7 +27,7 @@ import pango
 import os
 import threading
 import apt_pkg
-from dtk.ui.dialog import PreferenceDialog, DialogBox
+from dtk.ui.dialog import PreferenceDialog, DialogBox, DIALOG_MASK_MULTIPLE_PAGE
 from dtk.ui.entry import InputEntry
 from dtk.ui.button import Button, CheckButton, RadioButtonBuffer
 from dtk.ui.label import Label
@@ -39,6 +39,7 @@ from dtk.ui.spin import SpinBox
 from dtk.ui.threads import AnonymityThread, post_gui
 from dtk.ui.progressbar import ProgressBar
 from dtk.ui.scrolled_window import ScrolledWindow
+from dtk.ui.theme import DynamicColor
 from deepin_utils.file import get_parent_dir
 from nls import _
 from utils import (
@@ -54,6 +55,8 @@ from events import global_event
 import aptsources
 import aptsources.distro
 from aptsources.sourceslist import SourcesList
+
+from constant import PROGRAM_VERSION
 
 class MirrorItem(TreeItem):
 
@@ -115,7 +118,7 @@ class MirrorItem(TreeItem):
             draw_text(cr, self.mirror_url, rect.x, rect.y, rect.width, rect.height,
                     alignment = pango.ALIGN_LEFT)
         else:
-            mirror_url = _("No mirror_url")
+            mirror_url = _("No mirror url")
             (text_width, text_height) = get_content_size(mirror_url)
             draw_text(cr, mirror_url, rect.x, rect.y, rect.width, rect.height,
                     alignment = pango.ALIGN_LEFT)
@@ -128,7 +131,7 @@ class MirrorItem(TreeItem):
         return [30, self.NAME_WIDTH, 300]
 
     def get_height(self):
-        return 30
+        return 22
 
     def select(self):
         self.is_select = True
@@ -193,15 +196,13 @@ def create_separator_box(padding_x=0, padding_y=0):
 TABLE_ROW_SPACING = 25
 CONTENT_ROW_SPACING = 8
 
-from dtk.ui.dialog import DIALOG_MASK_MULTIPLE_PAGE
-text_color="#b4dded",
 
 class TestProgressDialog(object):
 
     def __init__(self, title, short_desc, description):
         self.dialog = DialogBox(title, 376, 188, DIALOG_MASK_MULTIPLE_PAGE, self.dialog_close_action)
 
-        test_label = Label(short_desc, text_size=20)
+        test_label = Label(short_desc, text_size=20, text_color=DynamicColor('#b4dded'))
         test_label_align = gtk.Alignment(0.5, 0.5, 0, 0)
         test_label_align.set_padding(4, 4, 5, 5)
         test_label_align.add(test_label)
@@ -230,6 +231,47 @@ class TestProgressDialog(object):
     def dialog_close_action(self):
         pass
 
+class AboutBox(gtk.VBox):    
+    
+    def __init__(self):
+        gtk.VBox.__init__(self)
+        main_box = gtk.VBox(spacing=15)
+        logo_image = gtk.image_new_from_pixbuf(gtk.gdk.pixbuf_new_from_file(os.path.join(get_parent_dir(__file__, 2), "image", "logo16.png")))
+        logo_name = Label(_("Deepin Software Center"), text_size=10)
+        logo_box = gtk.HBox(spacing=2)
+        logo_box.pack_start(logo_image, False, False)
+        logo_box.pack_start(logo_name, False, False)
+        
+        version_label = Label(_("Version:"))
+        version_content = Label(PROGRAM_VERSION, DynamicColor('#4D5154'))
+        # publish_label = Label(_("Release date:"))
+        # publish_content = Label("2012.07.12", light_color)
+        info_box = gtk.HBox(spacing=5)
+        info_box.pack_start(version_label, False, False)
+        info_box.pack_start(version_content, False, False)
+        # info_box.pack_start(publish_label, False, False)
+        # info_box.pack_start(publish_content, False, False)
+        
+        title_box = gtk.HBox()
+        title_box.pack_start(logo_box, False, False)
+        align = gtk.Alignment()
+        align.set(0, 0, 0, 1)
+        title_box.pack_start(align, True, True)
+        title_box.pack_start(info_box, False, False)
+        
+        describe = _("        Deepin Music Player is a music application designed for Linux users.It features lyrics searching and downloading, desktop lyrics display,album cover downloading, resume playing, music management and skin selection.\n\nDeepin Music Player is free software licensed under GNU GPLv3.")
+        
+        describe_label = Label(describe, enable_select=False, wrap_width=400, text_size=10)
+        main_box.pack_start(title_box, False, False)
+        main_box.pack_start(create_separator_box(), False, True)
+        main_box.pack_start(describe_label, False, False)
+        
+        main_align = gtk.Alignment()
+        main_align.set_padding(25, 0, 15, 0)
+        main_align.set(0, 0, 1, 1)
+        main_align.add(main_box)
+        self.add(main_align)
+
 class DscPreferenceDialog(PreferenceDialog):
     def __init__(self):
         PreferenceDialog.__init__(self, 566, 488)
@@ -251,7 +293,7 @@ class DscPreferenceDialog(PreferenceDialog):
         self.mirror_settings.pack_start(self.create_source_update_frequency_table(), False, True)
 
         self.mirror_settings_inner_align = gtk.Alignment(0.5, 0.5, 1, 1)
-        self.mirror_settings_inner_align.set_padding(padding_top=25, padding_bottom=20, padding_left=5, padding_right=0)
+        self.mirror_settings_inner_align.set_padding(padding_top=25, padding_bottom=10, padding_left=5, padding_right=0)
         self.mirror_settings_inner_align.add(self.mirror_settings)
 
         self.mirror_settings_scrolled_win = ScrolledWindow()
@@ -264,7 +306,7 @@ class DscPreferenceDialog(PreferenceDialog):
         self.set_preference_items([
             ("常规", self.normal_settings_align),
             ("软件源", self.mirror_settings_align),
-            ("关于", gtk.Label("关于")),
+            ("关于", AboutBox()),
             ])
         
     def mirror_settings_align_expose(self, widget, event=None):

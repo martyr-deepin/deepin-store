@@ -24,6 +24,8 @@ import os
 from deepin_utils.file import get_parent_dir
 from data import DATA_ID
 
+PROGRAM_VERSION = "3.0"
+
 DSC_SERVICE_NAME = "com.linuxdeepin.softwarecenter"
 DSC_SERVICE_PATH = "/com/linuxdeepin/softwarecenter"
 

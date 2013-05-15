@@ -556,7 +556,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.application = Application(resizable=False)
         self.application.set_default_size(888, 634)
         self.application.set_skin_preview(os.path.join(image_dir, "frame.png"))
-        self.application.set_icon(os.path.join(image_dir, "icon.png"))
+        self.application.set_icon(os.path.join(image_dir, "logo48.png"))
         self.application.add_titlebar(
                 ["theme", "menu", "min", "close"],
                 show_title=False
