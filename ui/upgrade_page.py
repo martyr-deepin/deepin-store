@@ -106,7 +106,7 @@ class NewestBar(gtk.HBox):
         if last_upgrade_time != "":
             self.message_label.set_text("最后更新时间: %s" % get_last_upgrade_time())
         else:
-            self.message_label.set_text("您未使用软件中心更新过软件！")
+            self.message_label.set_text("")
         
     def set_no_notify_num(self, no_notify_num):
         

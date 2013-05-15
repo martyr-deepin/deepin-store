@@ -23,7 +23,7 @@
 import threading as td
 from datetime import datetime
 import os
-from constant import CONFIG_INFO_PATH, DEFAULT_UPDATE_INTERVAL
+from constant import CONFIG_INFO_PATH, DEFAULT_UPDATE_INTERVAL, DEFAULT_DOWNLOAD_DIRECTORY
 from deepin_utils.config import Config
 from deepin_utils.file import touch_file
 from deepin_utils.date_time import get_current_time
@@ -141,13 +141,26 @@ def set_config_info(section, key, value):
     config.write()
 
 def get_update_interval():
-    config_info_config = Config(CONFIG_INFO_PATH)
+    config_info_config = get_config_info_config()
     if config_info_config.has_option('update', 'interval'):
         return config_info_config.get('update', 'interval')
     else:
         return DEFAULT_UPDATE_INTERVAL
 
 def set_update_interval(hour):
-    config_info_config = Config(CONFIG_INFO_PATH)
-    config_info_config.set('update', 'interval')
+    config_info_config = get_config_info_config()
+    config_info_config.set('update', 'interval', hour)
     config_info_config.write()
+
+def get_software_download_dir():
+    config_info_config = get_config_info_config()
+    if config_info_config.has_option('download', 'directory'):
+        return config_info_config.get('download', 'directory')
+    else:
+        return DEFAULT_DOWNLOAD_DIRECTORY
+    
+def set_software_download_dir(local_dir):
+    config_info_config = get_config_info_config()
+    config_info_config.set('download', 'directory', local_dir)
+    config_info_config.write()
+

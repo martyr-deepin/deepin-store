@@ -49,6 +49,8 @@ from utils import (
         handle_dbus_error, 
         get_update_interval, 
         set_update_interval,
+        get_software_download_dir,
+        set_software_download_dir,
         )
 from mirror_test import Mirror, MirrorTest
 from events import global_event
@@ -259,7 +261,7 @@ class AboutBox(gtk.VBox):
         title_box.pack_start(align, True, True)
         title_box.pack_start(info_box, False, False)
         
-        describe = _("        Deepin Music Player is a music application designed for Linux users.It features lyrics searching and downloading, desktop lyrics display,album cover downloading, resume playing, music management and skin selection.\n\nDeepin Music Player is free software licensed under GNU GPLv3.")
+        describe = "       深度软件中心是Linux平台通用的软件管理中心，精选了2600多款优秀软件，集成了软件安装与卸载、软件仓库、热门软件推荐等多项功能。支持一键快速安装软件、多线程下载及智能清理下载缓存。提供专题介绍，分享好软件。\n\n深度软件中心是自由软件，遵循自由软件基金会发布的GNU通用公共许可证第三版。"
         
         describe_label = Label(describe, enable_select=False, wrap_width=400, text_size=10)
         main_box.pack_start(title_box, False, False)
@@ -267,7 +269,7 @@ class AboutBox(gtk.VBox):
         main_box.pack_start(describe_label, False, False)
         
         main_align = gtk.Alignment()
-        main_align.set_padding(25, 0, 15, 0)
+        main_align.set_padding(25, 0, 12, 0)
         main_align.set(0, 0, 1, 1)
         main_align.add(main_box)
         self.add(main_align)
@@ -493,8 +495,8 @@ class DscPreferenceDialog(PreferenceDialog):
         label_align.add(dir_title_label)
         
         update_label = Label(_("Interval time: "))
-        self.update_spin = SpinBox(get_update_interval(), 0, 48, 0.5)
-        self.update_spin.connect("value-changed", set_update_interval)
+        self.update_spin = SpinBox(int(get_update_interval()), 0, 168, 1)
+        self.update_spin.connect("value-changed", lambda w, v: set_update_interval(v))
         hour_lablel = Label(_(" hour"))        
         hour_lablel.set_size_request(50, 12)
         spin_hbox = gtk.HBox(spacing=3)
@@ -518,7 +520,7 @@ class DscPreferenceDialog(PreferenceDialog):
         label_align.add(dir_title_label)
         
         self.dir_entry = InputEntry()
-        self.dir_entry.set_text("/var/cache/apt/archives")
+        self.dir_entry.set_text(get_software_download_dir())
         self.dir_entry.set_editable(False)        
         self.dir_entry.set_size(250, 25)
         
@@ -552,7 +554,36 @@ class DscPreferenceDialog(PreferenceDialog):
         return main_table
 
     def change_download_save_dir(self, widget):
-        pass
+        local_dir = WinDir(False).run()
+        if local_dir:
+            local_dir = os.path.expanduser(local_dir)
+            if local_dir != get_software_download_dir():
+                self.dir_entry.set_editable(True)        
+                self.dir_entry.set_text(local_dir)
+                self.dir_entry.set_editable(False)
+                set_software_download_dir(local_dir)
+                global_event.emit('download-directory-changed')
+
+class WinDir(gtk.FileChooserDialog):
+    '''Open chooser dir dialog'''
+
+    def __init__(self, return_uri=True, title=_("Select Directory")):
+        gtk.FileChooserDialog.__init__(self, title, None, gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
+                                       (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                                        gtk.STOCK_OPEN, gtk.RESPONSE_OK))
+        self.return_uri = return_uri
+        self.set_modal(True)
+        
+    def run(self):    
+        response = gtk.FileChooserDialog.run(self)
+        folder = None
+        if response == gtk.RESPONSE_OK:
+            if self.return_uri:
+                folder = self.get_uri()
+            else:
+                folder = self.get_filename()
+        self.destroy()    
+        return folder
 
 gtk.gdk.threads_init()
 preference_dialog = DscPreferenceDialog()
