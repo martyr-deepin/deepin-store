@@ -735,6 +735,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.install_page = InstallPage(self.bus_interface, self.data_manager)
         print "Init three pages time: %s" % (time.time()-start, )
 
+        self.upgrade_page.fetch_upgrade_info()
         self.bus_interface.request_status(
                 reply_handler=lambda reply: request_status_reply_hander(reply, self.install_page, self.upgrade_page, self.uninstall_page),
                 error_handler=handle_dbus_error
@@ -744,7 +745,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
         # Handle global event.
         global_event.register_event("install-pkg", lambda pkg_names: install_pkg(self.bus_interface, self.install_page, pkg_names, self.application.window))
-        global_event.register_event("upgrade-pkg", lambda pkg_names: gtk.timeout_add(10, self.upgrade_pkg, pkg_names))
+        global_event.register_event("upgrade-pkg", self.upgrade_pkg)
         global_event.register_event("uninstall-pkg", self.bus_interface.uninstall_pkg)
         global_event.register_event("stop-download-pkg", self.bus_interface.stop_download_pkg)
         global_event.register_event("switch-to-detail-page", lambda pkg_name : switch_to_detail_page(self.page_switcher, self.detail_page, pkg_name))

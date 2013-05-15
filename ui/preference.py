@@ -193,7 +193,7 @@ text_color="#b4dded",
 class TestProgressDialog(object):
 
     def __init__(self, title, short_desc, description):
-        self.dialog = DialogBox(title, 376, 188, DIALOG_MASK_MULTIPLE_PAGE, lambda : self.dialog.hide())
+        self.dialog = DialogBox(title, 376, 188, DIALOG_MASK_MULTIPLE_PAGE, self.dialog_close_action)
 
         test_label = Label(short_desc, text_size=20)
         test_label_align = gtk.Alignment(0.5, 0.5, 0, 0)
@@ -220,6 +220,9 @@ class TestProgressDialog(object):
         self.dialog.body_box.pack_start(message_label_align, False, False)
         self.dialog.body_box.pack_start(progressbar_align, False, False)
         self.dialog.body_box.pack_start(self.action_message_label_align, False, False)
+
+    def dialog_close_action(self):
+        pass
 
 class DscPreferenceDialog(PreferenceDialog):
     def __init__(self):
