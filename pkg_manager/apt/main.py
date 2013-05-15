@@ -243,6 +243,8 @@ class PackageManager(dbus.service.Object):
     def update_list_finish(self):
         self.in_update_list = False
         self.update_signal([("update-list-finish", "")])
+        
+        self.pkg_cache = AptCache()
         print "finish"
         
         self.exit_manager.check()
@@ -254,9 +256,8 @@ class PackageManager(dbus.service.Object):
         
         self.exit_manager.check()
         
-    def update_list_update(self, percent):
-        self.update_signal([("update-list-update", percent)])
-        print "update: %s" % percent
+    def update_list_update(self, percent, status_message):
+        self.update_signal([("update-list-update", (percent, status_message))])
 
     def handle_dbus_reply(self, *reply):
         log("%s (reply): %s" % (self.module_dbus_name, str(reply)))        

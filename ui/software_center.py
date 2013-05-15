@@ -312,11 +312,13 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                     error_handler=handle_dbus_error
                     )
             global_event.emit("show-message", "软件列表更新完成!", 0)
+            global_event.emit('update-progress-in-update-list-dialog', -1, "软件列表更新完成")
 
         elif signal_type == "update-list-update":
-            upgrade_page.update_upgrade_progress(action_content)
-            percent = "%.2f%%" % float(action_content)
+            upgrade_page.update_upgrade_progress(action_content[0])
+            percent = "%.2f%%" % float(action_content[0])
             global_event.emit("show-message", "更新软件列表: %s" % percent)
+            global_event.emit('update-progress-in-update-list-dialog', float(action_content[0]), action_content[1])
 
         elif signal_type == "parse-download-error":
             (pkg_name, action_type) = action_content
@@ -624,6 +626,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         # Init menu.
         menu = Menu(
             [
+             (None, "更新软件列表", self.handle_mirror_change_reply),
              (None, "打开下载目录", self.open_download_directory),
              (None, "智能清理下载文件", self.clean_download_cache),
              (None, "显示新功能", lambda : self.show_wizard_win()),
@@ -769,8 +772,8 @@ class DeepinSoftwareCenter(dbus.service.Object):
         global_event.register_event("show-pkg-name-tooltip", lambda pkg_name: show_tooltip(self.application.window, pkg_name))
         global_event.register_event("hide-pkg-name-tooltip", lambda :tool_tip.hide())
         global_event.register_event("update-current-status-pkg-page", update_current_status_pkg_page)
-        global_event.register_event('mirror-changed', lambda hostname: self.bus_interface.change_source_list(
-            hostname, reply_handler=handle_dbus_reply, error_handler=handle_dbus_error))
+        global_event.register_event('change-mirror', lambda hostname: self.bus_interface.change_source_list(
+            hostname, reply_handler=self.handle_mirror_change_reply, error_handler=handle_dbus_error))
         self.system_bus.add_signal_receiver(
             lambda messages: message_handler(messages, 
                                          self.bus_interface, 
@@ -790,6 +793,12 @@ class DeepinSoftwareCenter(dbus.service.Object):
         log("finish")
         #for event in global_event.events:
             #print "%s: %s" % (event, global_event.events[event])
+
+    def handle_mirror_change_reply(self, reply=None):
+        global_event.emit("mirror-changed")
+        print "Start update list..."
+        create_thread(self.request_update_list).start()
+        #self.request_update_list()
 
     def update_status_bar_message(self, message, hide_timeout=5000):
         if hide_timeout:

@@ -192,16 +192,16 @@ text_color="#b4dded",
 
 class TestProgressDialog(object):
 
-    def __init__(self):
-        self.dialog = DialogBox("测试下载服务器", 376, 188, DIALOG_MASK_MULTIPLE_PAGE)
+    def __init__(self, title, short_desc, description):
+        self.dialog = DialogBox(title, 376, 188, DIALOG_MASK_MULTIPLE_PAGE, lambda : self.dialog.hide())
 
-        test_label = Label("正在测试中", text_size=20)
+        test_label = Label(short_desc, text_size=20)
         test_label_align = gtk.Alignment(0.5, 0.5, 0, 0)
         test_label_align.set_padding(4, 4, 5, 5)
         test_label_align.add(test_label)
 
-        message_label = Label("为了找到更好的镜像地址，将会执行一系列的测试。")
-        message_label_align = gtk.Alignment(0, 0.5, 0, 1)
+        message_label = Label(description)
+        message_label_align = gtk.Alignment(0, 0.5, 1, 1)
         message_label_align.set_padding(4, 4, 20, 5)
         message_label_align.add(message_label)
 
@@ -211,10 +211,15 @@ class TestProgressDialog(object):
         message_label_align.set_padding(4, 4, 5, 5)
         progressbar_align.add(self.progressbar)
 
+        self.action_message_label = Label()
+        self.action_message_label_align = gtk.Alignment(0, 0.5, 1, 1)
+        self.action_message_label_align.set_padding(4, 4, 7, 5)
+        self.action_message_label_align.add(self.action_message_label)
+
         self.dialog.body_box.pack_start(test_label_align, False, False)
         self.dialog.body_box.pack_start(message_label_align, False, False)
         self.dialog.body_box.pack_start(progressbar_align, False, False)
-
+        self.dialog.body_box.pack_start(self.action_message_label_align, False, False)
 
 class DscPreferenceDialog(PreferenceDialog):
     def __init__(self):
@@ -230,6 +235,8 @@ class DscPreferenceDialog(PreferenceDialog):
         self.normal_settings_align.add(self.normal_settings)
 
         self.mirror_settings = gtk.VBox()
+        self.mirror_settings.set_app_paintable(True)
+        self.mirror_settings.connect("expose-event", self.mirror_settings_align_expose)
         self.mirror_settings.set_spacing(TABLE_ROW_SPACING)
         self.mirror_settings.pack_start(self.create_mirror_select_table(), False, True)
         self.mirror_settings.pack_start(self.create_source_update_frequency_table(), False, True)
@@ -250,6 +257,16 @@ class DscPreferenceDialog(PreferenceDialog):
             ("软件源", self.mirror_settings_align),
             ("关于", gtk.Label("关于")),
             ])
+        
+    def mirror_settings_align_expose(self, widget, event=None):
+        cr = widget.window.cairo_create()
+        rect = widget.allocation
+
+        # draw backgound
+        cr.rectangle(*rect)
+        #cr.set_source_rgb(*color_hex_to_cairo("#ff0000"))
+        cr.set_source_rgba(1, 1, 1, 0)
+        cr.fill()
 
     def mirror_select_action(self, hostname):
         self.data_manager.change_source_list(hostname, reply_handler=handle_dbus_reply, error_handler=handle_dbus_error)
@@ -298,7 +315,30 @@ class DscPreferenceDialog(PreferenceDialog):
         main_table.attach(self.mirror_view, 0, 2, 2, 3, xpadding=10, xoptions=gtk.FILL)
         main_table.attach(mirror_test_button_align, 0, 1, 3, 4, xoptions=gtk.FILL)
         main_table.attach(self.mirror_message_hbox, 1, 2, 3, 4, xoptions=gtk.FILL)
+        
+        self.update_list_dialog = TestProgressDialog("正在更新", "更新软件列表中", " 您已经更改了软件下载源，现在正在更新软件列表...")
+        global_event.register_event("mirror-changed", lambda :self.update_list_dialog.dialog.show_all())
+        global_event.register_event('update-progress-in-update-list-dialog', self.show_update_list_dialog)
+
+        self.test_mirror_dialog = TestProgressDialog("测试下载服务器", "正在测试中", " 为了找到更好的镜像地址，将会执行一系列的测试。")
+        global_event.register_event("test-mirror-dialog-update-progress", self.show_test_mirror_dialog)
+
         return main_table
+    
+    def show_update_list_dialog(self, percent, status_message):
+        if percent != -1:
+            self.update_list_dialog.progressbar.progress_buffer.progress = percent
+            self.update_list_dialog.action_message_label.set_text(status_message)
+        else:
+            self.update_list_dialog.action_message_label.set_text(status_message)
+            self.update_list_dialog.dialog.hide()
+
+    def show_test_mirror_dialog(self, percent, action):
+        if percent != 100:
+            self.test_mirror_dialog.progressbar.progress_buffer.progress = percent
+            self.test_mirror_dialog.action_message_label.set_text(action)
+        else:
+            self.test_mirror_dialog.dialog.hide()
 
     def display_current_mirror(self):
         vadj = self.mirror_view.scrolled_window.get_vadjustment()
@@ -306,6 +346,7 @@ class DscPreferenceDialog(PreferenceDialog):
         vadj.set_value(min(vadj.upper-vadj.page_size-1, length))
 
     def test_mirror_action(self, widget):
+        self.test_mirror_dialog.dialog.show_all()
         distro = aptsources.distro.get_distro()
         distro.get_sources(SourcesList())
         pipe = os.popen("dpkg --print-architecture")
@@ -324,8 +365,6 @@ class DscPreferenceDialog(PreferenceDialog):
         self.mirror_test.start()
 
         # now run the tests in a background thread, and update the UI on each event
-        self.test_mirror_dialog = TestProgressDialog()
-        self.test_mirror_dialog.dialog.show_all()
         gtk.timeout_add(100, self.update_progress)
 
     def update_progress(self):
@@ -339,16 +378,16 @@ class DscPreferenceDialog(PreferenceDialog):
             self.mirror_test.event.wait(0.1)
 
             if self.mirror_test.event.is_set():
-                self.test_mirror_dialog.progressbar.progress_buffer.progress = self.mirror_test.progress[2]*100
-                self.test_mirror_dialog.progressbar.queue_draw()
+                global_event.emit('test-mirror-dialog-update-progress', self.mirror_test.progress[2]*100, self.mirror_test.action)
                 print self.mirror_test.progress[2]*100
                 self.mirror_test.event.clear()
             return True
         else:
-            self.test_mirror_dialog.dialog.hide()
-
             if self.mirror_test.best != None:
-                print self.mirror_test.best[1].hostname
+                for item in self.mirror_items:
+                    if item.mirror == self.mirror_test.best[1]:
+                        print item.mirror.get_repo_url()
+                        self.mirror_clicked_callback(item)
             else:
                 pass
                 #dialogs.show_error_dialog(self.dialog, 
@@ -389,7 +428,7 @@ class DscPreferenceDialog(PreferenceDialog):
             elif i == item:
                 i.radio_button.active = True
         if item != self.current_mirror_item:
-            global_event.emit('mirror-changed', item.mirror.get_change_uri())
+            global_event.emit('change-mirror', item.mirror.get_change_uri())
             self.current_mirror_item = item
 
     def create_source_update_frequency_table(self):
