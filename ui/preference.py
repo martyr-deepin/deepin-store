@@ -41,8 +41,15 @@ from dtk.ui.progressbar import ProgressBar
 from dtk.ui.scrolled_window import ScrolledWindow
 from deepin_utils.file import get_parent_dir
 from nls import _
-from utils import get_purg_flag, set_purge_flag, handle_dbus_reply, handle_dbus_error
-from mirror_test import Mirror, test_mirrors, MirrorTest
+from utils import (
+        get_purg_flag, 
+        set_purge_flag, 
+        handle_dbus_reply, 
+        handle_dbus_error, 
+        get_update_interval, 
+        set_update_interval,
+        )
+from mirror_test import Mirror, MirrorTest
 from events import global_event
 import aptsources
 import aptsources.distro
@@ -140,7 +147,6 @@ class MirrorItem(TreeItem):
         else:
             self.radio_button.set_active()
         self.emit('item-clicked')
-        print self.radio_button.get_active()
 
     def button_release(self, column, x, y):
         if column == 0:
@@ -298,7 +304,7 @@ class DscPreferenceDialog(PreferenceDialog):
         self.mirror_view.draw_mask = self.mirror_treeview_draw_mask
         #self.display_current_mirror()
 
-        self.mirror_test_button = Button("Select Best Mirror")
+        self.mirror_test_button = Button(_("Select Best Mirror"))
         self.mirror_test_button.connect('clicked', self.test_mirror_action)
         mirror_test_button_align = gtk.Alignment(0, 0.5, 0, 0)
         mirror_test_button_align.set_padding(0, 0, 7, 5)
@@ -445,7 +451,8 @@ class DscPreferenceDialog(PreferenceDialog):
         label_align.add(dir_title_label)
         
         update_label = Label(_("Interval time: "))
-        self.update_spin = SpinBox(2, 0, 48, 0.5)
+        self.update_spin = SpinBox(get_update_interval(), 0, 48, 0.5)
+        self.update_spin.connect("value-changed", set_update_interval)
         hour_lablel = Label(_(" hour"))        
         hour_lablel.set_size_request(50, 12)
         spin_hbox = gtk.HBox(spacing=3)

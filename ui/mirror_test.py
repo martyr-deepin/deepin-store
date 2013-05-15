@@ -137,7 +137,7 @@ class MirrorTest(threading.Thread):
         def test_download_speed(mirror):
             url = "%s/%s" % (mirror.get_repo_url(),
                              self.test_file)
-            self.report_action("正在测试 %s..." % mirror.get_repo_url())
+            self.report_action("正在测试: %s" % mirror.get_repo_url())
             start = time.time()
             try:
                 urllib2.urlopen(url, timeout=2).read(102400)

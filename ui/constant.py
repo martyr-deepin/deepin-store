@@ -44,7 +44,10 @@ ACTION_UPGRADE = 3
 
 CONFIG_DIR =  os.path.join(os.path.expanduser("~"), ".config", "deepin-software-center")
 CONFIG_INFO_PATH = os.path.join(CONFIG_DIR, "config_info.ini")
+
 ONE_DAY_SECONDS = 24 * 60 * 60
+
+DEFAULT_UPDATE_INTERVAL = 1 # hour
 
 SCREENSHOT_HOST = "http://package-screenshot.b0.upaiyun.com"
 SCREENSHOT_DOWNLOAD_DIR = os.path.join(os.path.expanduser("~"), ".cache", "deepin-software-center", "screenshot")
