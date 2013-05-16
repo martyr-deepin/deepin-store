@@ -131,7 +131,7 @@ class MirrorItem(TreeItem):
         return [30, self.NAME_WIDTH, 300]
 
     def get_height(self):
-        return 22
+        return 24
 
     def select(self):
         self.is_select = True
@@ -259,7 +259,7 @@ class AboutBox(gtk.VBox):
         title_box.pack_start(align, True, True)
         title_box.pack_start(info_box, False, False)
         
-        describe = "       深度软件中心是Linux平台通用的软件管理中心，精选了2600多款优秀软件，集成了软件安装与卸载、软件仓库、热门软件推荐等多项功能。支持一键快速安装软件、多线程下载及智能清理下载缓存。提供专题介绍，分享好软件。\n\n深度软件中心是自由软件，遵循自由软件基金会发布的GNU通用公共许可证第三版。"
+        describe = "深度软件中心是Linux平台通用的软件管理中心，精选了2600多款优秀软件，集成了软件安装与卸载、软件仓库、热门软件推荐等多项功能。支持一键快速安装软件、多线程下载及智能清理下载缓存。提供专题介绍，分享好软件。\n\n深度软件中心是自由软件，遵循自由软件基金会发布的GNU通用公共许可证第三版。"
         
         describe_label = Label(describe, enable_select=False, wrap_width=400, text_size=10)
         main_box.pack_start(title_box, False, False)
@@ -367,7 +367,8 @@ class DscPreferenceDialog(PreferenceDialog):
         main_table.attach(mirror_test_button_align, 0, 1, 3, 4, xoptions=gtk.FILL)
         main_table.attach(self.mirror_message_hbox, 1, 2, 3, 4, xoptions=gtk.FILL)
         
-        self.update_list_dialog = TestProgressDialog("正在更新", "更新软件列表中", " 您已经更改了软件下载源，现在正在更新软件列表...")
+        self.update_list_dialog = TestProgressDialog("正在更新", "更新软件列表中", " 正在更新软件列表...")
+        self.update_list_dialog.action_message_label.set_text("请等待...")
         global_event.register_event("mirror-changed", lambda :self.update_list_dialog.dialog.show_all())
         global_event.register_event('update-progress-in-update-list-dialog', self.show_update_list_dialog)
 
@@ -489,6 +490,7 @@ class DscPreferenceDialog(PreferenceDialog):
                 i.radio_button.active = False
             elif i == item:
                 i.radio_button.active = True
+        self.mirror_view.queue_draw()
         if item != self.current_mirror_item:
             global_event.emit('change-mirror', item.mirror.get_change_uri())
             self.current_mirror_item = item

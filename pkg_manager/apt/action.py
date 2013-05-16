@@ -28,6 +28,7 @@ import traceback
 from utils import log
 from constant import ACTION_INSTALL, ACTION_UPGRADE, ACTION_UNINSTALL
 import time
+from update_list import UpdateList
 
 class AptProcess(apb.InstallProgress):
     '''Install progress.'''
@@ -179,16 +180,18 @@ class AptActionPool(MissionThreadPool):
                 self.upgrade_action_dict[pkg_name]["status"] = "update"
         
     def clean_action(self, mission_result_list):
-        for (pkg_name, action_type) in mission_result_list:
-            if action_type == ACTION_INSTALL:
-                if self.install_action_dict.has_key(pkg_name):
-                    self.install_action_dict.pop(pkg_name)
-            elif action_type == ACTION_UNINSTALL:
-                if self.uninstall_action_dict.has_key(pkg_name):
-                    self.uninstall_action_dict.pop(pkg_name)
-            elif action_type == ACTION_UPGRADE:
-                if self.upgrade_action_dict.has_key(pkg_name):
-                    self.upgrade_action_dict.pop(pkg_name)
+        for result in mission_result_list:
+            if result:
+                pkg_name, action_type = result
+                if action_type == ACTION_INSTALL:
+                    if self.install_action_dict.has_key(pkg_name):
+                        self.install_action_dict.pop(pkg_name)
+                elif action_type == ACTION_UNINSTALL:
+                    if self.uninstall_action_dict.has_key(pkg_name):
+                        self.uninstall_action_dict.pop(pkg_name)
+                elif action_type == ACTION_UPGRADE:
+                    if self.upgrade_action_dict.has_key(pkg_name):
+                        self.upgrade_action_dict.pop(pkg_name)
         
     def add_install_action(self, pkg_names, simulate=False, deb_file=""):
         missions = []
@@ -219,6 +222,16 @@ class AptActionPool(MissionThreadPool):
                 "thread" : thread,
                 "status" : "wait"}
             missions.append(thread)
+            
+        self.add_missions(missions)
+
+    def add_update_list_mission(self):
+        missions = []
+        thread = UpdateList(self.pkg_cache)
+        #self.uninstall_action_dict[pkg_name] = {
+            #"thread" : thread,
+            #"status" : "wait"}
+        missions.append(thread)
             
         self.add_missions(missions)
 

@@ -117,7 +117,7 @@ def start_pkg(pkg_name, desktop_infos, (offset_x, offset_y, popup_x, popup_y), w
         
 def start_desktop(pkg_name, desktop_path):
     global_event.emit("show-message", "%s: 已经发送启动请求" % (pkg_name))
-    result = start_desktop_file(desktop_path)                    
+    result = start_desktop_file(desktop_path).strip()
     if result != True:
         global_event.emit("show-message", result)
     
@@ -132,6 +132,7 @@ def show_message(statusbar, message_box, message, hide_timeout=5000):
     message_box.add(label_align)
     
     statusbar.show_all()
+    print message
 
     if hide_timeout:
         gtk.timeout_add(5000, lambda : hide_message(message_box))
@@ -532,6 +533,10 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
     def switch_page(self, page):
         switch_page(self.page_switcher, self.page_box, page, self.detail_page)
+        self.bus_interface.request_status(
+                reply_handler=lambda reply: request_status_reply_hander(reply, self.install_page, self.upgrade_page, self.uninstall_page),
+                error_handler=handle_dbus_error
+                )
         
     def show_home_page(self):
         if self.detail_page and self.home_page:
@@ -826,14 +831,12 @@ class DeepinSoftwareCenter(dbus.service.Object):
                 error_handler=handle_dbus_error)
 
     def clean_download_cache_reply(obj, result):
-        print result
         num, size = result
         if num != 0:
             message = "恭喜您清理了%s个软件包，共节约了%s空间" % (num, bit_to_human_str(size))
-            print message
         else:
             message = "您的系统已经很干净了，不需要清理."
-        global_event.emit("show-message", message, 0)
+        global_event.emit("show-message", message, 5000)
 
     def run(self):    
         self.init_ui()

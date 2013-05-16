@@ -246,8 +246,7 @@ class PackageManager(dbus.service.Object):
         self.in_update_list = False
         self.update_signal([("update-list-finish", "")])
         
-        self.pkg_cache = AptCache()
-        self.apt_action_pool.pkg_cache = self.pkg_cache
+        self.pkg_cache.open(None)
         print "finish"
         
         self.exit_manager.check()
@@ -525,10 +524,10 @@ class PackageManager(dbus.service.Object):
     
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="")
     def start_update_list(self):
-        if not self.is_update_list_running() and not self.is_apt_action_running():
-            log("start update list...")
-            UpdateList(self.pkg_cache).start()
-            log("start update list done")
+        log("start update list...")
+        self.pkg_cache.open(None)
+        self.apt_action_pool.add_update_list_mission()
+        log("start update list done")
         
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="ab")
     def request_pkgs_install_status(self, pkg_names):
