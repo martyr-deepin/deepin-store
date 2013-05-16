@@ -55,7 +55,6 @@ from mirror_test import Mirror, MirrorTest
 from events import global_event
 import aptsources
 import aptsources.distro
-from aptsources.sourceslist import SourcesList
 
 from constant import PROGRAM_VERSION
 
@@ -145,10 +144,6 @@ class MirrorItem(TreeItem):
             self.redraw_request_callback(self)
 
     def button_press(self, column, x, y):
-        if column == 0:
-            self.radio_button.press_button(x, y)
-        else:
-            self.radio_button.set_active()
         self.emit('item-clicked')
 
     def button_release(self, column, x, y):
@@ -200,7 +195,8 @@ CONTENT_ROW_SPACING = 8
 class TestProgressDialog(object):
 
     def __init__(self, title, short_desc, description):
-        self.dialog = DialogBox(title, 376, 188, DIALOG_MASK_MULTIPLE_PAGE, self.dialog_close_action)
+        self.dialog = DialogBox(title, 376, 188, DIALOG_MASK_MULTIPLE_PAGE, self.dialog_close_action,
+                window_pos=gtk.WIN_POS_CENTER)
 
         test_label = Label(short_desc, text_size=20, text_color=DynamicColor('#b4dded'))
         test_label_align = gtk.Alignment(0.5, 0.5, 0, 0)
@@ -400,11 +396,11 @@ class DscPreferenceDialog(PreferenceDialog):
     def test_mirror_action(self, widget):
         self.test_mirror_dialog.dialog.show_all()
         distro = aptsources.distro.get_distro()
-        distro.get_sources(SourcesList())
+        #distro.get_sources(SourcesList())
         pipe = os.popen("dpkg --print-architecture")
         arch = pipe.read().strip()
         test_file = "dists/%s/Contents-%s.gz" % \
-                    (distro.source_template.name,
+                    (distro.codename,
                     arch)
 
         self.running = threading.Event()

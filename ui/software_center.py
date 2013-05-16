@@ -635,7 +635,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
              (None, "打开下载目录", self.open_download_directory),
              (None, "智能清理下载文件", self.clean_download_cache),
              (None, "显示新功能", lambda : self.show_wizard_win()),
-             (None, "选项", lambda : preference_dialog.show_all()),
+             (None, "选项", self.show_preference_dialog),
              (None, "退出", self.exit),
              ],
             is_root_menu=True,
@@ -657,6 +657,9 @@ class DeepinSoftwareCenter(dbus.service.Object):
         print "Finish Init UI: %s" % (time.time()-start, )
         
         self.ready_show()
+
+    def show_preference_dialog(self):
+        preference_dialog.show_all()
 
     def ready_show(self):    
         if utils.is_first_started():
