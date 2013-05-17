@@ -51,6 +51,7 @@ from data import DATA_ID
 from category_info import get_category_name
 from nls import _
 from deepin_font_icon import font_face_create
+from loading_widget import Loading
 
 FIRST_CATEGORY_PADDING_X = 66
 SECOND_CATEGORY_PADDING_X = 46
@@ -318,7 +319,8 @@ category_font_dict = {
 
 def handle_dbus_error(*error):
     print "handle_dbus_error: ", error
-    
+
+
 
 class CategoryItem(TreeItem):
     '''
@@ -465,10 +467,22 @@ class CategoryItem(TreeItem):
         for (index, (pkg_name, short_desc, star, alias_name)) in enumerate(pkg_infos):
             items.append(PkgIconItem(status[index], alias_name, pkg_name, short_desc, star, self.all_desktop_infos[pkg_name]))
         self.pkg_icon_view.add_items(items)
+        
+        global_event.emit("show-pkg-view", self.page_box)
 
     def single_click(self, column, offset_x, offset_y):
+
+        # init Loading widget
+        loading_box = gtk.VBox()
+        loading_widget = Loading(app_theme.get_color("sidebar_select").get_color()) 
+        loading_align = gtk.Alignment()
+        loading_align.set(0.5, 0.5, 0, 0)
+        loading_align.add(loading_widget)
+        loading_box.pack_start(loading_align)
+
+        global_event.emit("show-pkg-view", loading_box)
+
         self.page_box = gtk.VBox()    
-        global_event.emit("show-pkg-view", self.page_box)
 
         self.all_pkg_names = []
         self.all_desktop_infos = {}
@@ -655,9 +669,19 @@ class SecondCategoryItem(TreeItem):
         for (index, (pkg_name, short_desc, star, alias_name)) in enumerate(pkg_infos):
             items.append(PkgIconItem(status[index], alias_name, pkg_name, short_desc, star, self.all_desktop_infos[pkg_name]))
         self.pkg_icon_view.add_items(items)
-
+        global_event.emit("show-pkg-view", self.page_box)
 
     def button_press(self, column, offset_x, offset_y):
+        # init Loading widget
+        loading_box = gtk.VBox()
+        loading_widget = Loading(app_theme.get_color("sidebar_select").get_color()) 
+        loading_align = gtk.Alignment()
+        loading_align.set(0.5, 0.5, 0, 0)
+        loading_align.add(loading_widget)
+        loading_box.pack_start(loading_align)
+
+        global_event.emit("show-pkg-view", loading_box)
+
         self.page_box = gtk.VBox()    
             
         self.message_bar = MessageBar(18)
@@ -683,7 +707,6 @@ class SecondCategoryItem(TreeItem):
         self.page_box.pack_start(self.message_bar, False, False)
         self.page_box.pack_start(self.pkg_icon_scrolled_window, True, True)
         
-        global_event.emit("show-pkg-view", self.page_box)
         global_event.emit("update-current-status-pkg-page", self.pkg_icon_view)
         
     def draw_row_mask(self, cr, rect, row):

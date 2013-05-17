@@ -117,7 +117,7 @@ def start_pkg(pkg_name, desktop_infos, (offset_x, offset_y, popup_x, popup_y), w
         
 def start_desktop(pkg_name, desktop_path):
     global_event.emit("show-message", "%s: 已经发送启动请求" % (pkg_name))
-    result = start_desktop_file(desktop_path)                    
+    result = start_desktop_file(desktop_path).strip()
     if result != True:
         global_event.emit("show-message", result)
     
@@ -132,6 +132,7 @@ def show_message(statusbar, message_box, message, hide_timeout=5000):
     message_box.add(label_align)
     
     statusbar.show_all()
+    print message
 
     if hide_timeout:
         gtk.timeout_add(5000, lambda : hide_message(message_box))
@@ -185,7 +186,8 @@ def show_tooltip(window, message):
     (screen, px, py, modifier_type) = window.get_display().get_pointer()
     tool_tip.show_all()
     tool_tip.move(px, py)
-    #show-pkg-name-tooltipgtk.timeout_add(2000, tool_tip.hide_all)
+    #show-pkg-name-tooltip
+    gtk.timeout_add(2000, tool_tip.hide_all)
     
 def switch_from_detail_page(page_switcher, detail_page, page_box):
     page_switcher.slide_to_page(page_box, "left")
@@ -228,118 +230,122 @@ def switch_page(page_switcher, page_box, page, detail_page):
 
 def message_handler(messages, bus_interface, upgrade_page, uninstall_page, install_page, home_page):
     for message in messages:
-        (signal_type, action_content) = message
+        try:
+            (signal_type, action_content) = message
 
-        if signal_type == "ready-download-start":
-            (pkg_name, action_type) = action_content
-            if action_type == ACTION_INSTALL:
-                install_page.download_ready(pkg_name)
-            elif action_type == ACTION_UPGRADE:
-                upgrade_page.download_ready(pkg_name)
+            if signal_type == "ready-download-start":
+                (pkg_name, action_type) = action_content
+                if action_type == ACTION_INSTALL:
+                    install_page.download_ready(pkg_name)
+                elif action_type == ACTION_UPGRADE:
+                    upgrade_page.download_ready(pkg_name)
 
-        elif signal_type == 'ready-download-finish':
-            (pkg_name, action_type) = action_content
-            if action_type == ACTION_INSTALL:
-                install_page.download_wait(pkg_name)
-            elif action_type == ACTION_UPGRADE:
-                upgrade_page.download_wait(pkg_name)
+            elif signal_type == 'ready-download-finish':
+                (pkg_name, action_type) = action_content
+                if action_type == ACTION_INSTALL:
+                    install_page.download_wait(pkg_name)
+                elif action_type == ACTION_UPGRADE:
+                    upgrade_page.download_wait(pkg_name)
 
-        elif signal_type == "download-start":
-            (pkg_name, action_type) = action_content
-            if action_type == ACTION_INSTALL:
-                install_page.download_start(pkg_name)
-            elif action_type == ACTION_UPGRADE:
-                upgrade_page.download_start(pkg_name)
+            elif signal_type == "download-start":
+                (pkg_name, action_type) = action_content
+                if action_type == ACTION_INSTALL:
+                    install_page.download_start(pkg_name)
+                elif action_type == ACTION_UPGRADE:
+                    upgrade_page.download_start(pkg_name)
 
-        elif signal_type == "download-update":
-            (pkg_name, action_type, percent, speed) = action_content
-            if action_type == ACTION_INSTALL:
-                install_page.download_update(pkg_name, percent, speed)
-            elif action_type == ACTION_UPGRADE:
-                upgrade_page.download_update(pkg_name, percent, speed)
+            elif signal_type == "download-update":
+                (pkg_name, action_type, percent, speed) = action_content
+                if action_type == ACTION_INSTALL:
+                    install_page.download_update(pkg_name, percent, speed)
+                elif action_type == ACTION_UPGRADE:
+                    upgrade_page.download_update(pkg_name, percent, speed)
 
-        elif signal_type == "download-finish":
-            (pkg_name, action_type) = action_content
-            if action_type == ACTION_INSTALL:
-                install_page.download_finish(pkg_name)
-            elif action_type == ACTION_UPGRADE:
-                upgrade_page.download_finish(pkg_name)
+            elif signal_type == "download-finish":
+                (pkg_name, action_type) = action_content
+                if action_type == ACTION_INSTALL:
+                    install_page.download_finish(pkg_name)
+                elif action_type == ACTION_UPGRADE:
+                    upgrade_page.download_finish(pkg_name)
 
-        elif signal_type == "download-stop":
-            (pkg_name, action_type) = action_content
-            if action_type == ACTION_INSTALL:
-                install_page.download_stop(pkg_name)
-            elif action_type == ACTION_UPGRADE:
-                upgrade_page.download_stop(pkg_name)
+            elif signal_type == "download-stop":
+                (pkg_name, action_type) = action_content
+                if action_type == ACTION_INSTALL:
+                    install_page.download_stop(pkg_name)
+                elif action_type == ACTION_UPGRADE:
+                    upgrade_page.download_stop(pkg_name)
 
-        elif signal_type == "action-start":
-            (pkg_name, action_type) = action_content
-            if action_type == ACTION_UNINSTALL:
-                uninstall_page.action_start(pkg_name)
-            elif action_type == ACTION_UPGRADE:
-                upgrade_page.action_start(pkg_name)
-            elif action_type == ACTION_INSTALL:
-                install_page.action_start(pkg_name)
+            elif signal_type == "action-start":
+                (pkg_name, action_type) = action_content
+                if action_type == ACTION_UNINSTALL:
+                    uninstall_page.action_start(pkg_name)
+                elif action_type == ACTION_UPGRADE:
+                    upgrade_page.action_start(pkg_name)
+                elif action_type == ACTION_INSTALL:
+                    install_page.action_start(pkg_name)
 
-        elif signal_type == "action-update":
-            (pkg_name, action_type, percent, status) = action_content
-            if action_type == ACTION_UNINSTALL:
-                uninstall_page.action_update(pkg_name, percent)
-            elif action_type == ACTION_UPGRADE:
-                upgrade_page.action_update(pkg_name, percent)
-            elif action_type == ACTION_INSTALL:
-                install_page.action_update(pkg_name, percent)
+            elif signal_type == "action-update":
+                (pkg_name, action_type, percent, status) = action_content
+                if action_type == ACTION_UNINSTALL:
+                    uninstall_page.action_update(pkg_name, percent)
+                elif action_type == ACTION_UPGRADE:
+                    upgrade_page.action_update(pkg_name, percent)
+                elif action_type == ACTION_INSTALL:
+                    install_page.action_update(pkg_name, percent)
 
-        elif signal_type == "action-finish":
-            (pkg_name, action_type, pkg_info_list) = action_content
-            if action_type == ACTION_UNINSTALL:
-                uninstall_page.action_finish(pkg_name, pkg_info_list)
-            elif action_type == ACTION_UPGRADE:
-                upgrade_page.action_finish(pkg_name, pkg_info_list)
-            elif action_type == ACTION_INSTALL:
-                install_page.action_finish(pkg_name, pkg_info_list)
-            
-            refresh_current_page_status(pkg_name, pkg_info_list, bus_interface)
-            bus_interface.request_status(
-                    reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
-                    error_handler=handle_dbus_error
-                    )
+            elif signal_type == "action-finish":
+                (pkg_name, action_type, pkg_info_list) = action_content
+                if action_type == ACTION_UNINSTALL:
+                    uninstall_page.action_finish(pkg_name, pkg_info_list)
+                elif action_type == ACTION_UPGRADE:
+                    upgrade_page.action_finish(pkg_name, pkg_info_list)
+                elif action_type == ACTION_INSTALL:
+                    install_page.action_finish(pkg_name, pkg_info_list)
+                
+                refresh_current_page_status(pkg_name, pkg_info_list, bus_interface)
+                bus_interface.request_status(
+                        reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
+                        error_handler=handle_dbus_error
+                        )
 
-        elif signal_type == "update-list-finish":
-            upgrade_page.fetch_upgrade_info()
-            bus_interface.request_status(
-                    reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
-                    error_handler=handle_dbus_error
-                    )
-            #global_event.emit("show-message", "软件列表更新完成!", 0)
-            global_event.emit('update-progress-in-update-list-dialog', -1, "软件列表更新完成")
+            elif signal_type == "update-list-finish":
+                upgrade_page.fetch_upgrade_info()
+                bus_interface.request_status(
+                        reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
+                        error_handler=handle_dbus_error
+                        )
+                #global_event.emit("show-message", "软件列表更新完成!", 0)
+                global_event.emit('update-progress-in-update-list-dialog', -1, "软件列表更新完成")
 
-        elif signal_type == "update-list-update":
-            upgrade_page.update_upgrade_progress(action_content[0])
-            percent = "%.2f%%" % float(action_content[0])
-            #global_event.emit("show-message", "更新软件列表: %s" % percent)
-            global_event.emit('update-progress-in-update-list-dialog', float(action_content[0]), action_content[1])
+            elif signal_type == "update-list-update":
+                upgrade_page.update_upgrade_progress(action_content[0])
+                percent = "%.2f%%" % float(action_content[0])
+                #global_event.emit("show-message", "更新软件列表: %s" % percent)
+                global_event.emit('update-progress-in-update-list-dialog', float(action_content[0]), action_content[1])
 
-        elif signal_type == "parse-download-error":
-            (pkg_name, action_type) = action_content
-            if action_type == ACTION_INSTALL:
-                install_page.download_parse_failed(pkg_name)
-                global_event.emit("show-message", "分析%s依赖出现问题， 安装停止" % pkg_name)
-            elif action_type == ACTION_UPGRADE:
-                upgrade_page.download_parse_failed(pkg_name)
-                global_event.emit("show-message", "分析%s依赖出现问题， 升级停止" % pkg_name)
+            elif signal_type == "parse-download-error":
+                (pkg_name, action_type) = action_content
+                if action_type == ACTION_INSTALL:
+                    install_page.download_parse_failed(pkg_name)
+                    global_event.emit("show-message", "分析%s依赖出现问题， 安装停止" % pkg_name)
+                elif action_type == ACTION_UPGRADE:
+                    upgrade_page.download_parse_failed(pkg_name)
+                    global_event.emit("show-message", "分析%s依赖出现问题， 升级停止" % pkg_name)
 
-        elif signal_type == "got-install-deb-pkg-name":
-            pkg_name = action_content
-            install_page.add_install_actions([pkg_name])
+            elif signal_type == "got-install-deb-pkg-name":
+                pkg_name = action_content
+                install_page.add_install_actions([pkg_name])
 
-        elif signal_type == "pkg-not-in-cache":
-            pkg_name = action_content
-            if is_64bit_system():
-                message = "%s在64位系统上不能被安装" % pkg_name
-            else:
-                message = "%s在32位系统上不能被安装，该包可能位64位系统特有的包" % pkg_name
-            global_event.emit("show-message", message)
+            elif signal_type == "pkg-not-in-cache":
+                pkg_name = action_content
+                if is_64bit_system():
+                    message = "%s在64位系统上不能被安装" % pkg_name
+                else:
+                    message = "%s在32位系统上不能被安装，该包可能位64位系统特有的包" % pkg_name
+                global_event.emit("show-message", message)
+        except Exception, e:
+            print e
+            print message
     
     return True
 
@@ -532,6 +538,10 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
     def switch_page(self, page):
         switch_page(self.page_switcher, self.page_box, page, self.detail_page)
+        self.bus_interface.request_status(
+                reply_handler=lambda reply: request_status_reply_hander(reply, self.install_page, self.upgrade_page, self.uninstall_page),
+                error_handler=handle_dbus_error
+                )
         
     def show_home_page(self):
         if self.detail_page and self.home_page:
@@ -630,7 +640,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
              (None, "打开下载目录", self.open_download_directory),
              (None, "智能清理下载文件", self.clean_download_cache),
              (None, "显示新功能", lambda : self.show_wizard_win()),
-             (None, "选项", lambda : preference_dialog.show_all()),
+             (None, "选项", self.show_preference_dialog),
              (None, "退出", self.exit),
              ],
             is_root_menu=True,
@@ -652,6 +662,9 @@ class DeepinSoftwareCenter(dbus.service.Object):
         print "Finish Init UI: %s" % (time.time()-start, )
         
         self.ready_show()
+
+    def show_preference_dialog(self):
+        preference_dialog.show_all()
 
     def ready_show(self):    
         if utils.is_first_started():
@@ -697,6 +710,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.bus_interface = dbus.Interface(bus_object, DSC_SERVICE_NAME)
         # Say hello to backend. 
         #self.bus_interface.say_hello(self.simulate)
+        self.bus_interface.init_download_manager(2)
         self.set_software_download_dir()
         
         log("Init data manager")
@@ -777,6 +791,10 @@ class DeepinSoftwareCenter(dbus.service.Object):
         global_event.register_event('change-mirror', lambda hostname: self.bus_interface.change_source_list(
             hostname, reply_handler=self.handle_mirror_change_reply, error_handler=handle_dbus_error))
         global_event.register_event('download-directory-changed', self.set_software_download_dir)
+        global_event.register_event('max-download-number-changed', lambda v: self.bus_interface.init_download_manager(
+            v,
+            reply_handler=handle_dbus_reply,
+            error_handler=handle_dbus_error,))
         self.system_bus.add_signal_receiver(
             lambda messages: message_handler(messages, 
                                          self.bus_interface, 
@@ -826,14 +844,12 @@ class DeepinSoftwareCenter(dbus.service.Object):
                 error_handler=handle_dbus_error)
 
     def clean_download_cache_reply(obj, result):
-        print result
         num, size = result
         if num != 0:
             message = "恭喜您清理了%s个软件包，共节约了%s空间" % (num, bit_to_human_str(size))
-            print message
         else:
             message = "您的系统已经很干净了，不需要清理."
-        global_event.emit("show-message", message, 0)
+        global_event.emit("show-message", message, 5000)
 
     def run(self):    
         self.init_ui()

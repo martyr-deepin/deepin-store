@@ -25,6 +25,7 @@ import threading as td
 from events import global_event
 import time
 from utils import log
+from dtk.ui.thread_pool import MissionThread
 
 class UpdateListProgress(FetchProgress):
     """ Ready to use progress object for terminal windows """
@@ -40,7 +41,6 @@ class UpdateListProgress(FetchProgress):
         """
         if status != self.dlQueued:
             self.status_message = "Update %s" % descr
-        self.items[uri] = status
         
     def pulse(self):
         """Called periodically to update the user interface.
@@ -59,13 +59,12 @@ class UpdateListProgress(FetchProgress):
         
         return True
     
-class UpdateList(td.Thread):
+class UpdateList(MissionThread):
     '''Update package list.'''
 	
     def __init__(self, pkg_cache, simulate=False):
         '''Init for UpdateList.'''
-        td.Thread.__init__(self)
-        self.setDaemon(True) # make thread exit when main program exit
+        MissionThread.__init__(self)
         
         self.pkg_cache = pkg_cache
         self.simulate = simulate
@@ -74,7 +73,7 @@ class UpdateList(td.Thread):
         self.simulate_update_delay = 0.01 # milliseconds
         # self.simulate_update_delay = 0.1 # milliseconds
         
-    def run(self):
+    def start_mission(self):
         '''Update package list.'''
         try:
             global_event.emit("update-list-start")

@@ -39,6 +39,7 @@ from dtk.ui.spin import SpinBox
 from dtk.ui.progressbar import ProgressBar
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.theme import DynamicColor
+from dtk.ui.combo import ComboBox
 from deepin_utils.file import get_parent_dir
 from nls import _
 from utils import (
@@ -50,12 +51,13 @@ from utils import (
         set_update_interval,
         get_software_download_dir,
         set_software_download_dir,
+        get_download_number,
+        set_download_number,
         )
 from mirror_test import Mirror, MirrorTest
 from events import global_event
 import aptsources
 import aptsources.distro
-from aptsources.sourceslist import SourcesList
 
 from constant import PROGRAM_VERSION
 
@@ -131,7 +133,7 @@ class MirrorItem(TreeItem):
         return [30, self.NAME_WIDTH, 300]
 
     def get_height(self):
-        return 22
+        return 24
 
     def select(self):
         self.is_select = True
@@ -145,10 +147,6 @@ class MirrorItem(TreeItem):
             self.redraw_request_callback(self)
 
     def button_press(self, column, x, y):
-        if column == 0:
-            self.radio_button.press_button(x, y)
-        else:
-            self.radio_button.set_active()
         self.emit('item-clicked')
 
     def button_release(self, column, x, y):
@@ -200,7 +198,8 @@ CONTENT_ROW_SPACING = 8
 class TestProgressDialog(object):
 
     def __init__(self, title, short_desc, description):
-        self.dialog = DialogBox(title, 376, 188, DIALOG_MASK_MULTIPLE_PAGE, self.dialog_close_action)
+        self.dialog = DialogBox(title, 376, 188, DIALOG_MASK_MULTIPLE_PAGE, self.dialog_close_action,
+                window_pos=gtk.WIN_POS_CENTER)
 
         test_label = Label(short_desc, text_size=20, text_color=DynamicColor('#b4dded'))
         test_label_align = gtk.Alignment(0.5, 0.5, 0, 0)
@@ -259,7 +258,7 @@ class AboutBox(gtk.VBox):
         title_box.pack_start(align, True, True)
         title_box.pack_start(info_box, False, False)
         
-        describe = "       深度软件中心是Linux平台通用的软件管理中心，精选了2600多款优秀软件，集成了软件安装与卸载、软件仓库、热门软件推荐等多项功能。支持一键快速安装软件、多线程下载及智能清理下载缓存。提供专题介绍，分享好软件。\n\n深度软件中心是自由软件，遵循自由软件基金会发布的GNU通用公共许可证第三版。"
+        describe = "深度软件中心是Linux平台通用的软件管理中心，精选了2600多款优秀软件，集成了软件安装与卸载、软件仓库、热门软件推荐等多项功能。支持一键快速安装软件、多线程下载及智能清理下载缓存。提供专题介绍，分享好软件。\n\n深度软件中心是自由软件，遵循自由软件基金会发布的GNU通用公共许可证第三版。"
         
         describe_label = Label(describe, enable_select=False, wrap_width=400, text_size=10)
         main_box.pack_start(title_box, False, False)
@@ -367,7 +366,8 @@ class DscPreferenceDialog(PreferenceDialog):
         main_table.attach(mirror_test_button_align, 0, 1, 3, 4, xoptions=gtk.FILL)
         main_table.attach(self.mirror_message_hbox, 1, 2, 3, 4, xoptions=gtk.FILL)
         
-        self.update_list_dialog = TestProgressDialog("正在更新", "更新软件列表中", " 您已经更改了软件下载源，现在正在更新软件列表...")
+        self.update_list_dialog = TestProgressDialog("正在更新", "更新软件列表中", " 正在更新软件列表...")
+        self.update_list_dialog.action_message_label.set_text("请等待...")
         global_event.register_event("mirror-changed", lambda :self.update_list_dialog.dialog.show_all())
         global_event.register_event('update-progress-in-update-list-dialog', self.show_update_list_dialog)
 
@@ -399,11 +399,11 @@ class DscPreferenceDialog(PreferenceDialog):
     def test_mirror_action(self, widget):
         self.test_mirror_dialog.dialog.show_all()
         distro = aptsources.distro.get_distro()
-        distro.get_sources(SourcesList())
+        #distro.get_sources(SourcesList())
         pipe = os.popen("dpkg --print-architecture")
         arch = pipe.read().strip()
         test_file = "dists/%s/Contents-%s.gz" % \
-                    (distro.source_template.name,
+                    (distro.codename,
                     arch)
 
         self.running = threading.Event()
@@ -489,6 +489,7 @@ class DscPreferenceDialog(PreferenceDialog):
                 i.radio_button.active = False
             elif i == item:
                 i.radio_button.active = True
+        self.mirror_view.queue_draw()
         if item != self.current_mirror_item:
             global_event.emit('change-mirror', item.mirror.get_change_uri())
             self.current_mirror_item = item
@@ -519,29 +520,42 @@ class DscPreferenceDialog(PreferenceDialog):
         return main_table
 
     def create_download_dir_table(self):    
-        main_table = gtk.Table(3, 2)
+        main_table = gtk.Table(4, 2)
         main_table.set_row_spacings(CONTENT_ROW_SPACING)
         
-        dir_title_label = Label(_("Download directory"))
+        dir_title_label = Label(_("Download settings"))
         dir_title_label.set_size_request(200, 12)
         label_align = gtk.Alignment()
         label_align.set_padding(0, 0, 0, 0)
         label_align.add(dir_title_label)
+
+        download_number_label = Label(_('Max download task number: '))
+        self.download_number_comobox = ComboBox(
+                items = [(str(i+1), i+1) for i in range(10)],
+                select_index = int(get_download_number())-1,
+                )
+        self.download_number_comobox.connect("item-selected", self.download_number_comobox_changed)
+        download_number_hbox = gtk.HBox(spacing=5)
+        download_number_hbox.pack_start(download_number_label, False, False)
+        download_number_hbox.pack_start(self.download_number_comobox, False, False)
         
+        change_download_dir_label = Label(_("Donload directory: "))
         self.dir_entry = InputEntry()
         self.dir_entry.set_text(get_software_download_dir())
         self.dir_entry.set_editable(False)        
-        self.dir_entry.set_size(250, 25)
+        self.dir_entry.set_size(210, 25)
         
         modify_button = Button(_("Change"))
         modify_button.connect("clicked", self.change_download_save_dir)
-        hbox = gtk.HBox(spacing=5)
-        hbox.pack_start(self.dir_entry, False, False)
-        hbox.pack_start(modify_button, False, False)
+        download_dir_hbox = gtk.HBox(spacing=5)
+        download_dir_hbox.pack_start(change_download_dir_label, False, False)
+        download_dir_hbox.pack_start(self.dir_entry, False, False)
+        download_dir_hbox.pack_start(modify_button, False, False)
         
         main_table.attach(label_align, 0, 2, 0, 1, yoptions=gtk.FILL, xpadding=8)
         main_table.attach(create_separator_box(), 0, 2, 1, 2, yoptions=gtk.FILL)
-        main_table.attach(hbox, 0, 2, 2, 3, xpadding=10, xoptions=gtk.FILL)
+        main_table.attach(download_number_hbox, 0, 2, 2, 3, xpadding=10, xoptions=gtk.FILL)
+        main_table.attach(download_dir_hbox, 0, 2, 3, 4, xpadding=10, xoptions=gtk.FILL)
         return main_table
 
     def create_uninstall_box(self):
@@ -572,6 +586,10 @@ class DscPreferenceDialog(PreferenceDialog):
                 self.dir_entry.set_editable(False)
                 set_software_download_dir(local_dir)
                 global_event.emit('download-directory-changed')
+
+    def download_number_comobox_changed(self, widget, name, value, index):
+        set_download_number(value)
+        global_event.emit('max-download-number-changed', value)
 
 class WinDir(gtk.FileChooserDialog):
     '''Open chooser dir dialog'''
