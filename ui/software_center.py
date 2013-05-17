@@ -46,6 +46,7 @@ from install_page import InstallPage
 from upgrade_page import UpgradePage
 from data_manager import DataManager
 import gtk
+import gobject
 import dbus
 import dbus.service
 import time
@@ -67,8 +68,11 @@ from utils import is_64bit_system, handle_dbus_reply, handle_dbus_error, bit_to_
 import utils
 from tooltip import ToolTip
 from preference import preference_dialog
+from vote_action import SendVote
 
 tool_tip = ToolTip()
+global tooltip_timeout_id
+tooltip_timeout_id = None
 
 def log(message):
     global debug_flag
@@ -151,7 +155,7 @@ def request_status_reply_hander(result, install_page, upgrade_page, uninstall_pa
     
     uninstall_page.update_action_status(action_status[ACTION_UNINSTALL])
 
-def grade_pkg(window, pkg_name, star):
+def get_grade_config():
     grade_config_path = os.path.join(CONFIG_DIR, "grade_pkgs")
     if not os.path.exists(grade_config_path):
         touch_file(grade_config_path)
@@ -164,28 +168,44 @@ def grade_pkg(window, pkg_name, star):
             grade_config = {}
     except Exception:
         grade_config = {}
+    return (grade_config_path, grade_config)
+
+def grade_pkg(window, pkg_name, star):
+    grade_config = get_grade_config()[1]
         
     current_time = time.time()    
     if not grade_config.has_key(pkg_name) or (current_time - grade_config[pkg_name]) > ONE_DAY_SECONDS:
         show_tooltip(window, "发送评分...")
+        SendVote(pkg_name, star).start()
         
-        # Send grade to server.
-        result = True
-        
-        if result:
-            show_tooltip(window, "评分成功， 感谢您的参与！ :)")
-            
-            grade_config[pkg_name] = current_time
-            write_file(grade_config_path, str(grade_config))
     else:
         show_tooltip(window, "您已经评过分了哟！ ;)")
 
+def vote_send_success_callback(pkg_name, window):
+    grade_config_path, grade_config = get_grade_config()
+
+    global_event.emit("show-message", "评分成功， 感谢您的参与！ :)")
+    tool_tip.hide_all()
+    current_time = time.time()
+    
+    grade_config[pkg_name] = current_time
+    write_file(grade_config_path, str(grade_config))
+
+def vote_send_failed_callback(pkg_name, window):
+
+    global_event.emit('show-message', "评分失败，请检查您的网络连接！")
+    tool_tip.hide_all()
+
 def show_tooltip(window, message):
+    global tooltip_timeout_id
     tool_tip.set_text(message)
     (screen, px, py, modifier_type) = window.get_display().get_pointer()
     tool_tip.show_all()
     tool_tip.move(px, py)
-    #show-pkg-name-tooltipgtk.timeout_add(2000, tool_tip.hide_all)
+    #show-pkg-name-tooltip
+    if tooltip_timeout_id:
+        gobject.source_remove(tooltip_timeout_id)
+    tooltip_timeout_id = gtk.timeout_add(2000, tool_tip.hide_all)
     
 def switch_from_detail_page(page_switcher, detail_page, page_box):
     page_switcher.slide_to_page(page_box, "left")
@@ -777,6 +797,12 @@ class DeepinSoftwareCenter(dbus.service.Object):
         global_event.register_event('change-mirror', lambda hostname: self.bus_interface.change_source_list(
             hostname, reply_handler=self.handle_mirror_change_reply, error_handler=handle_dbus_error))
         global_event.register_event('download-directory-changed', self.set_software_download_dir)
+        global_event.register_event('max-download-number-changed', lambda v: self.bus_interface.init_download_manager(
+            v,
+            reply_handler=handle_dbus_reply,
+            error_handler=handle_dbus_error,))
+        global_event.register_event('vote-send-success', lambda p: vote_send_success_callback(p, self.application.window))
+        global_event.register_event('vote-send-failed', lambda p: vote_send_failed_callback(p, self.application.window))
         self.system_bus.add_signal_receiver(
             lambda messages: message_handler(messages, 
                                          self.bus_interface, 

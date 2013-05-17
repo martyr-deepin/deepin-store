@@ -53,6 +53,7 @@ import webbrowser
 from category_info import get_category_name
 import time
 from utils import bit_to_human_str
+from vote_action import FetchVoteInfo
 from constant import (
         PKG_SIZE_OWN,
         PKG_SIZE_DOWNLOAD,
@@ -244,22 +245,6 @@ class DetailPage(gtk.HBox):
         self.pkg_star_view.star_buffer.star_level = int(self.star)
         self.pkg_star_view.queue_draw()
         
-    def expose_star_mark(self, widget, event):
-        # Init.
-        cr = widget.window.cairo_create()
-        rect = widget.allocation
-        
-        draw_text(
-            cr, 
-            str(self.star),
-            rect.x + self.MARK_PADDING_X,
-            rect.y + self.MARK_PADDING_Y,
-            100,
-            self.MARK_SIZE,
-            text_size=self.MARK_SIZE,
-            text_color="#F07200"
-            )
-
     def jump_to_category(self):
         global_event.emit("jump-to-category", self.category[0], self.category[1])
         
@@ -345,9 +330,18 @@ class DetailPage(gtk.HBox):
                           self.alias_name, 
                           desktop_info, 
                           (int(event.x), int(event.y), pixbuf.get_width() / 2, 0))
+
+    def update_vote_info(self, vote_info):
+        print vote_info
+        self.star = float(vote_info[0].encode('utf-8').strip())
+        self.pkg_star_view.star_buffer.star_level = int(self.star)
+        self.pkg_star_view.queue_draw()
+        self.pkg_star_mark.update_star(self.star)
+        self.pkg_star_mark.queue_draw()
             
     def update_pkg_info(self, pkg_name):
         start_time = time.time()
+        FetchVoteInfo(pkg_name, self.update_vote_info).start()
         print "%s: start update_pkg_info" % pkg_name
         self.pkg_name = pkg_name
         (self.category, self.long_desc, 
@@ -357,12 +351,10 @@ class DetailPage(gtk.HBox):
         
         self.pkg_star_view = StarView()
         self.pkg_star_view.connect("clicked", lambda w: self.grade_pkg())
-        self.pkg_star_mark = gtk.VBox()
-        self.pkg_star_mark.connect("expose-event", self.expose_star_mark)
+        self.pkg_star_mark = StarMark(self.star, self.MARK_SIZE, self.MARK_PADDING_X, self.MARK_PADDING_Y)
         container_remove_all(self.star_box)
         self.star_box.pack_start(self.pkg_star_view, False, False)
         self.star_box.pack_start(self.pkg_star_mark, False, False)
-        self.pkg_star_view.star_buffer.star_level = int(self.star)
         
         print "%s: #1# %s" % (pkg_name, time.time() - start_time)
         create_thread(self.fetch_pkg_status).start()
@@ -609,6 +601,40 @@ class DetailPage(gtk.HBox):
         
 gobject.type_register(DetailPage)        
 
+class StarMark(gtk.VBox):
+    def __init__(self, star, size, padding_x, padding_y):
+        gtk.VBox.__init__(self)
+        self._star = star
+        self.size = size
+        self.padding_x = padding_x
+        self.padding_y = padding_y
+
+        self.connect("expose-event", self.expose_star_mark)
+
+    @property
+    def star(self):
+        return self._star
+
+    def update_star(self, star):
+        self._star = star
+        self.queue_draw()
+
+    def expose_star_mark(self, widget, event):
+        # Init.
+        cr = widget.window.cairo_create()
+        rect = widget.allocation
+        
+        draw_text(
+            cr, 
+            str(self._star),
+            rect.x + self.padding_x,
+            rect.y + self.padding_y,
+            100,
+            self.size,
+            text_size=self.size,
+            text_color="#F07200"
+            )
+
 class RecommendPkgItem(gtk.HBox):
     '''
     class docs
@@ -640,7 +666,7 @@ class RecommendPkgItem(gtk.HBox):
         self.pkg_star_view.star_buffer.star_level = int(star)
         self.pkg_star_view.connect("clicked", lambda w: self.grade_pkg())
         
-        self.pkg_star_mark = gtk.VBox()
+        self.pkg_star_mark = StarMark(self.star, self.MARK_SIZE, self.MARK_PADDING_X, self.MARK_PADDING_Y)
         
         self.pack_start(pkg_icon_image, False, False)
         self.pack_start(v_box, True, True, 8)
@@ -649,28 +675,10 @@ class RecommendPkgItem(gtk.HBox):
         self.pkg_star_box.pack_start(self.pkg_star_view, False, False)
         self.pkg_star_box.pack_start(self.pkg_star_mark, False, False)
         
-        self.pkg_star_mark.connect("expose-event", self.expose_star_mark)
-        
     def grade_pkg(self):
         global_event.emit("grade-pkg", self.pkg_name, self.pkg_star_view.star_buffer.star_level)
         
         self.pkg_star_view.star_buffer.star_level = int(self.star)
         self.pkg_star_view.queue_draw()
-        
-    def expose_star_mark(self, widget, event):
-        # Init.
-        cr = widget.window.cairo_create()
-        rect = widget.allocation
-        
-        draw_text(
-            cr, 
-            str(self.star),
-            rect.x + self.MARK_PADDING_X,
-            rect.y + self.MARK_PADDING_Y,
-            100,
-            self.MARK_SIZE,
-            text_size=self.MARK_SIZE,
-            text_color="#F07200"
-            )
         
 gobject.type_register(RecommendPkgItem)        
