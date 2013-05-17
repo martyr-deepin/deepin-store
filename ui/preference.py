@@ -39,6 +39,7 @@ from dtk.ui.spin import SpinBox
 from dtk.ui.progressbar import ProgressBar
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.theme import DynamicColor
+from dtk.ui.combo import ComboBox
 from deepin_utils.file import get_parent_dir
 from nls import _
 from utils import (
@@ -50,6 +51,8 @@ from utils import (
         set_update_interval,
         get_software_download_dir,
         set_software_download_dir,
+        get_download_number,
+        set_download_number,
         )
 from mirror_test import Mirror, MirrorTest
 from events import global_event
@@ -517,29 +520,42 @@ class DscPreferenceDialog(PreferenceDialog):
         return main_table
 
     def create_download_dir_table(self):    
-        main_table = gtk.Table(3, 2)
+        main_table = gtk.Table(4, 2)
         main_table.set_row_spacings(CONTENT_ROW_SPACING)
         
-        dir_title_label = Label(_("Download directory"))
+        dir_title_label = Label(_("Download settings"))
         dir_title_label.set_size_request(200, 12)
         label_align = gtk.Alignment()
         label_align.set_padding(0, 0, 0, 0)
         label_align.add(dir_title_label)
+
+        download_number_label = Label(_('Max download task number: '))
+        self.download_number_comobox = ComboBox(
+                items = [(str(i+1), i+1) for i in range(10)],
+                select_index = int(get_download_number())-1,
+                )
+        self.download_number_comobox.connect("item-selected", self.download_number_comobox_changed)
+        download_number_hbox = gtk.HBox(spacing=5)
+        download_number_hbox.pack_start(download_number_label, False, False)
+        download_number_hbox.pack_start(self.download_number_comobox, False, False)
         
+        change_download_dir_label = Label(_("Donload directory: "))
         self.dir_entry = InputEntry()
         self.dir_entry.set_text(get_software_download_dir())
         self.dir_entry.set_editable(False)        
-        self.dir_entry.set_size(250, 25)
+        self.dir_entry.set_size(210, 25)
         
         modify_button = Button(_("Change"))
         modify_button.connect("clicked", self.change_download_save_dir)
-        hbox = gtk.HBox(spacing=5)
-        hbox.pack_start(self.dir_entry, False, False)
-        hbox.pack_start(modify_button, False, False)
+        download_dir_hbox = gtk.HBox(spacing=5)
+        download_dir_hbox.pack_start(change_download_dir_label, False, False)
+        download_dir_hbox.pack_start(self.dir_entry, False, False)
+        download_dir_hbox.pack_start(modify_button, False, False)
         
         main_table.attach(label_align, 0, 2, 0, 1, yoptions=gtk.FILL, xpadding=8)
         main_table.attach(create_separator_box(), 0, 2, 1, 2, yoptions=gtk.FILL)
-        main_table.attach(hbox, 0, 2, 2, 3, xpadding=10, xoptions=gtk.FILL)
+        main_table.attach(download_number_hbox, 0, 2, 2, 3, xpadding=10, xoptions=gtk.FILL)
+        main_table.attach(download_dir_hbox, 0, 2, 3, 4, xpadding=10, xoptions=gtk.FILL)
         return main_table
 
     def create_uninstall_box(self):
@@ -570,6 +586,10 @@ class DscPreferenceDialog(PreferenceDialog):
                 self.dir_entry.set_editable(False)
                 set_software_download_dir(local_dir)
                 global_event.emit('download-directory-changed')
+
+    def download_number_comobox_changed(self, widget, name, value, index):
+        set_download_number(value)
+        global_event.emit('max-download-number-changed', value)
 
 class WinDir(gtk.FileChooserDialog):
     '''Open chooser dir dialog'''

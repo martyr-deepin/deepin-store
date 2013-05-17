@@ -52,6 +52,7 @@ ONE_DAY_SECONDS = 24 * 60 * 60
 DEFAULT_UPDATE_INTERVAL = 1 # hour
 
 DEFAULT_DOWNLOAD_DIRECTORY = '/var/cache/apt/archives'
+DEFAULT_DOWNLOAD_NUMBER = 5
 
 SCREENSHOT_HOST = "http://package-screenshot.b0.upaiyun.com"
 SCREENSHOT_DOWNLOAD_DIR = os.path.join(os.path.expanduser("~"), ".cache", "deepin-software-center", "screenshot")

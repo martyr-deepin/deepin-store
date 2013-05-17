@@ -27,12 +27,12 @@ class DownloadManager(object):
     class docs
     '''
 	
-    def __init__(self, global_event=None, verbose=False):
+    def __init__(self, global_event=None, number=5, verbose=False):
         '''
         init docs
         '''
         self.global_event = global_event
-        self.fetch_service_thread = FetchServiceThread(5)
+        self.fetch_service_thread = FetchServiceThread(number)
         self.fetch_service_thread.start()
         self.verbose = verbose
         
