@@ -186,7 +186,8 @@ def show_tooltip(window, message):
     (screen, px, py, modifier_type) = window.get_display().get_pointer()
     tool_tip.show_all()
     tool_tip.move(px, py)
-    #show-pkg-name-tooltipgtk.timeout_add(2000, tool_tip.hide_all)
+    #show-pkg-name-tooltip
+    gtk.timeout_add(2000, tool_tip.hide_all)
     
 def switch_from_detail_page(page_switcher, detail_page, page_box):
     page_switcher.slide_to_page(page_box, "left")
