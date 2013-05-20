@@ -33,7 +33,8 @@ from deepin_utils.file import get_parent_dir
 from dtk.ui.utils import container_remove_all
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
 from dtk.ui.treeview import TreeView, TreeItem
-from dtk.ui.star_view import StarBuffer
+#from dtk.ui.star_view import StarBuffer
+from star_buffer import DscStarBuffer
 from item_render import (render_pkg_icon, render_pkg_name, STAR_SIZE, get_star_level, get_icon_pixbuf_path,
                          ITEM_INFO_AREA_WIDTH, NAME_SIZE,
                          ITEM_STAR_AREA_WIDTH,
@@ -169,7 +170,7 @@ class SearchItem(TreeItem):
         (self.alias_name, self.short_desc, self.long_desc, star) = data_manager.get_pkg_search_info(self.pkg_name)
         self.is_have_desktop_file = data_manager.is_pkg_have_desktop_file(self.pkg_name)
         self.star_level = get_star_level(star)
-        self.star_buffer = StarBuffer(star)
+        self.star_buffer = DscStarBuffer(pkg_name)
         
         self.grade_star = 0
         

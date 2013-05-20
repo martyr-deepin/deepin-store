@@ -25,7 +25,8 @@ import gobject
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
 from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.progressbar import ProgressBuffer
-from dtk.ui.star_view import StarBuffer
+#from dtk.ui.star_view import StarBuffer
+from star_buffer import DscStarBuffer
 from dtk.ui.utils import is_in_rect, get_content_size
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
 from item_render import (render_pkg_info, STAR_SIZE, get_star_level, get_icon_pixbuf_path,
@@ -267,7 +268,7 @@ class UninstallItem(TreeItem):
         
         (self.short_desc, star, self.alias_name) = data_manager.get_item_pkg_info(self.pkg_name)
         self.star_level = get_star_level(star)
-        self.star_buffer = StarBuffer(self.star_level)
+        self.star_buffer = DscStarBuffer(pkg_name)
 
         self.grade_star = 0
         

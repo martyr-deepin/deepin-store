@@ -26,7 +26,8 @@ from dtk.ui.utils import get_content_size, set_cursor, container_remove_all, is_
 import gobject
 import pango
 from dtk.ui.constant import DEFAULT_FONT_SIZE
-from dtk.ui.star_view import StarBuffer
+#from dtk.ui.star_view import StarBuffer
+from star_buffer import DscStarBuffer
 from item_render import get_icon_pixbuf_path, render_star, STAR_SIZE, get_star_level
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.iconview import IconView, IconItem
@@ -242,7 +243,7 @@ class PkgIconItem(IconItem):
         self.alias_name = alias_name
         self.desktop_info = desktop_info
         self.star_level = get_star_level(star)
-        self.star_buffer = StarBuffer(self.star_level)
+        self.star_buffer = DscStarBuffer(pkg_name)
         self.is_installed = is_installed
         
         self.grade_star = 0
@@ -258,7 +259,7 @@ class PkgIconItem(IconItem):
         self.highlight_flag = False
         
         self.button_status = BUTTON_NORMAL
-        
+
     def get_width(self):
         '''
         Get item width.

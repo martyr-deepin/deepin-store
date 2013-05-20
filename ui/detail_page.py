@@ -332,7 +332,6 @@ class DetailPage(gtk.HBox):
                           (int(event.x), int(event.y), pixbuf.get_width() / 2, 0))
 
     def update_vote_info(self, vote_info):
-        print vote_info
         self.star = float(vote_info[0].encode('utf-8').strip())
         self.pkg_star_view.star_buffer.star_level = int(self.star)
         self.pkg_star_view.queue_draw()
