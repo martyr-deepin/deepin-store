@@ -53,7 +53,7 @@ import webbrowser
 from category_info import get_category_name
 import time
 from utils import bit_to_human_str
-from server_action import FetchVoteInfo
+from server_action import FetchVoteInfo, FetchPackageInfo
 from constant import (
         PKG_SIZE_OWN,
         PKG_SIZE_DOWNLOAD,
@@ -331,17 +331,20 @@ class DetailPage(gtk.HBox):
                           desktop_info, 
                           (int(event.x), int(event.y), pixbuf.get_width() / 2, 0))
 
-    def update_vote_info(self, vote_info):
-        self.star = float(vote_info[0].encode('utf-8').strip())
+    def update_some_info(self, info):
+        self.star = float(info[0]['mark'].encode('utf-8').strip())
         self.pkg_star_view.star_buffer.star_level = int(self.star)
         self.pkg_star_view.queue_draw()
         self.pkg_star_mark.update_star(self.star)
         self.pkg_star_mark.queue_draw()
+
+        self.downlad_number = info[0]['down_nums'].encode('utf-8').strip()
+        self.left_download_label.set_text('下载：%s' % self.downlad_number)
             
     def update_pkg_info(self, pkg_name):
-        start_time = time.time()
-        FetchVoteInfo(pkg_name, self.update_vote_info).start()
-        print "%s: start update_pkg_info" % pkg_name
+        #start_time = time.time()
+        FetchPackageInfo(pkg_name, self.update_some_info).start()
+        #print "%s: start update_pkg_info" % pkg_name
         self.pkg_name = pkg_name
         (self.category, self.long_desc, 
          self.version, self.homepage, self.star, 
@@ -355,7 +358,7 @@ class DetailPage(gtk.HBox):
         self.star_box.pack_start(self.pkg_star_view, False, False)
         self.star_box.pack_start(self.pkg_star_mark, False, False)
         
-        print "%s: #1# %s" % (pkg_name, time.time() - start_time)
+        #print "%s: #1# %s" % (pkg_name, time.time() - start_time)
         create_thread(self.fetch_pkg_status).start()
         
         container_remove_all(self.left_category_box)
@@ -364,10 +367,10 @@ class DetailPage(gtk.HBox):
             self.left_category_label.set_text(get_category_name(self.category[1]))
             self.left_category_box.add(self.left_category_label_box)
         self.left_version_label.set_text("版本：%s" % self.version)
-        self.left_download_label.set_text("下载：%s" % self.download)
+        self.left_download_label.set_text("下载：0")
         self.left_size_label.set_text("大小：计算中...")
         
-        print "%s: #2# %s" % (pkg_name, time.time() - start_time)
+        #print "%s: #2# %s" % (pkg_name, time.time() - start_time)
         container_remove_all(self.left_homepage_box)
         if self.homepage != "":
             homepage_label = Label("访问首页", 
@@ -377,7 +380,7 @@ class DetailPage(gtk.HBox):
             homepage_label.connect("button-press-event", lambda w, e: run_command("xdg-open %s" % self.homepage))
             self.left_homepage_box.pack_start(homepage_label)
             
-        print "%s: #3# %s" % (pkg_name, time.time() - start_time)
+        #print "%s: #3# %s" % (pkg_name, time.time() - start_time)
         container_remove_all(self.left_recommend_box)    
         if len(self.recommend_pkgs) > 0:
             self.left_recommend_box.pack_start(self.left_recommend_label, False, False, 8)
@@ -397,14 +400,14 @@ class DetailPage(gtk.HBox):
         resizable_align.connect("expose-event", self.expose_resizable_label_background)
         self.right_desc_box.pack_start(resizable_align, False, False)
         
-        print "%s: #4# %s" % (pkg_name, time.time() - start_time)
+        #print "%s: #4# %s" % (pkg_name, time.time() - start_time)
         self.show_screenshot()
         
         self.fetch_comment()
         # create_thread(self.fetch_comment).start()
         
         self.show_all()
-        print "%s: end update_pkg_info, %s" % (pkg_name, time.time() - start_time)
+        #print "%s: end update_pkg_info, %s" % (pkg_name, time.time() - start_time)
         
     def handle_pkg_status(self, *reply):
         container_remove_all(self.left_action_box)
