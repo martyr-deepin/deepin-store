@@ -638,7 +638,7 @@ class UpgradePage(gtk.VBox):
     def fetch_upgrade_info(self):
         self.bus_interface.request_upgrade_pkgs(
                 reply_handler=self.render_upgrade_info, 
-                error_handler=handle_dbus_error)
+                error_handler=lambda e:handle_dbus_error("request_upgrade_pkgs", e))
         
     def render_upgrade_info(self, pkg_infos):
         if len(pkg_infos) > 0:

@@ -20,12 +20,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import threading, Queue, time, re, subprocess
+import threading, time
 import aptsources
 import aptsources.distro
 from aptsources.sourceslist import SourcesList
 import urllib2
-import random
 import os
 from deepin_utils.file import get_parent_dir
 from deepin_utils.config import Config
@@ -61,79 +60,37 @@ class Mirror(object):
 class MirrorTest(threading.Thread):
     """Determines the best mirrors by perfoming ping and download test."""
 
-    def __init__(self, mirrors, test_file, event, running=None):
+    def __init__(self, mirrors, test_file):
         threading.Thread.__init__(self)
         self.action = ''
         self.progress = (0, 0, 0.0) # cur, max, %
-        self.event = event
         self.best = None
         self.test_file = test_file
-        self.threads = []
-        MirrorTest.completed = 0
-        MirrorTest.completed_lock = threading.Lock()
-        MirrorTest.todo = len(mirrors)
         self.mirrors = mirrors
-        if not running:
-            self.running = threading.Event()
-        else:
-            self.running = running
+        self.running = False
 
     def report_action(self, text):
         self.action = text
-        if self.event:
-            self.event.set()
 
-    def report_progress(self, current, max, borders=(0,100), mod=(0,0)):
-        """Subclasses should override this method to receive
-           progress status updates"""
+    def report_progress(self, current, max):
         self.progress = (current, 
                          max,
-                         borders[0] + (borders[1] - borders[0]) / max * current)
-        if self.event:
-            self.event.set()
+                         current*1.0/max)
 
     def run_full_test(self):
-        results = self.run_download_test(self.mirrors,
-                                         borders=(0.0, 1),
-                                         mod=(MirrorTest.todo,
-                                              MirrorTest.todo))
+        results = self.run_download_test(self.mirrors)
+
         if not results:
             return None
         else:
             for r in results:
                 print "mirror: %s - time: %s" % (r[1].hostname, r[0])
             print "winner:", results[0][1].hostname
+
             return results[0]
 
-    def run_ping_test(self, mirrors=None, max=None, borders=(0,1), mod=(0,0)):
-        """Performs ping tests of the given mirrors and returns the
-           best results (specified by max).
-           Mod and borders could be used to tweak the reported result if
-           the download test is only a part of a whole series of tests."""
-        if mirrors == None:
-            mirrors = self.mirrors
-        jobs = Queue.Queue()
-        for m in mirrors:
-            jobs.put(m)
-        results = []
-        #FIXME: Optimze the number of ping working threads LP#90379
-        for i in range(25):
-            t = MirrorTest.PingWorker(jobs, results, i, self, borders, mod)
-            self.threads.append(t)
-            t.start()
+    def run_download_test(self, mirrors=None):
 
-        for t in self.threads:
-            t.join()
-
-        results.sort()
-        return results[0:max]
-
-    def run_download_test(self, mirrors=None, max=None, borders=(0,1), 
-                          mod=(0,0)):
-        """Performs download tests of the given mirrors and returns the
-           best results (specified by max).
-           Mod and borders could be used to tweak the reported result if
-           the download test is only a part of a whole series of tests."""
         def test_download_speed(mirror):
             url = "%s/%s" % (mirror.get_repo_url(),
                              self.test_file)
@@ -144,25 +101,24 @@ class MirrorTest(threading.Thread):
                 return time.time() - start
             except:
                 return 0
+
         if mirrors == None:
             mirrors = self.mirrors
         results = []
 
         for m in mirrors:
-            if not self.running.isSet():
-                break
             download_time = test_download_speed(m)
             if download_time > 0:
                 results.append([download_time, m])
-                #print m.get_repo_url(), download_time
-            self.report_progress(mirrors.index(m) + 1, len(mirrors), (0.0,1), mod)
+            self.report_progress(mirrors.index(m) + 1, len(mirrors))
         results.sort()
-        return results[0:max]
+        return results
 
     def run(self):
         """Complete test exercise, set self.best when done"""
+        self.running = True
         self.best = self.run_full_test()
-        self.running.clear()
+        self.running = False
 
 def test_mirrors(mirrors_list):
     distro = aptsources.distro.get_distro()
@@ -176,12 +132,12 @@ def test_mirrors(mirrors_list):
 
     app = MirrorTest(mirrors_list,
                      test_file,
-                     threading.Event(),
-                     threading.Event())
+                     )
     results = app.run_download_test()
-    winner = [None, 100]
+    winner = [100, None]
+    print results
     for r in results:
-        if r[1] < winner[1]:
+        if r[0] < winner[0]:
             winner = r
     return winner
 

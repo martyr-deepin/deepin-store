@@ -24,12 +24,12 @@ import gtk
 import math
 from dtk.ui.utils import alpha_color_hex_to_cairo
 
-class Loading(gtk.DrawingArea):
+class Loading(gtk.Button):
     
     rate = 90.0
 
     def __init__(self, color, diameter=30, line_width=4):
-        gtk.DrawingArea.__init__(self)
+        gtk.Button.__init__(self)
         self.diameter = diameter
         self.color = color
         self.line_width = line_width
@@ -51,13 +51,14 @@ class Loading(gtk.DrawingArea):
         for i in range(int(self.rate)):
             cr.set_source_rgba(*alpha_color_hex_to_cairo((self.color, i/self.rate)))
             cr.arc(
-                rect.width / 2, 
-                rect.height / 2, 
+                rect.x + rect.width / 2, 
+                rect.y + rect.height / 2, 
                 (self.diameter-self.line_width)/2.0, 
                 self.tick_radian + i * self.radian_per_part, 
                 self.tick_radian + (i+1) * self.radian_per_part
             )
             cr.stroke()
+        return True
 
     def tick(self):
         self.tick_radian += self.radian_per_part

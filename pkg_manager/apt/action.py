@@ -80,7 +80,7 @@ class AptActionThread(MissionThread):
     def start_mission(self):
         log("start thread")
         start = time.time()
-        self.pkg_cache.open(None)
+        self.pkg_cache.open(apb.OpProgress())
         log("Reopen Cache Time: %s" % (time.time()-start,))
 
         if self.action_type == ACTION_INSTALL:
@@ -95,7 +95,7 @@ class AptActionThread(MissionThread):
                 pkg.mark_delete()
 
         pkg_info_list = map(lambda pkg: (pkg.name, pkg.marked_delete, pkg.marked_install, pkg.marked_upgrade), 
-                            sorted(self.pkg_cache.get_changes(), key=lambda p: p.name))
+                            self.pkg_cache.get_changes())
         
         if len(pkg_info_list) > 0:
             global_event.emit("action-start", (self.pkg_name, self.action_type))
