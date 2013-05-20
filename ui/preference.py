@@ -57,6 +57,7 @@ from mirror_test import Mirror, MirrorTest
 from events import global_event
 import aptsources
 import aptsources.distro
+from loading_widget import Loading
 
 from constant import PROGRAM_VERSION
 
@@ -192,44 +193,6 @@ def create_separator_box(padding_x=0, padding_y=0):
 
 TABLE_ROW_SPACING = 25
 CONTENT_ROW_SPACING = 8
-
-
-class TestProgressDialog(object):
-
-    def __init__(self, title, short_desc, description):
-        self.dialog = DialogBox(title, 376, -1, DIALOG_MASK_SINGLE_PAGE, self.dialog_close_action,
-                window_pos=gtk.WIN_POS_CENTER)
-
-        test_label = Label(short_desc, text_size=20, text_color=DynamicColor('#b4dded'))
-        test_label_align = gtk.Alignment(0.5, 0.5, 0, 0)
-        test_label_align.set_padding(4, 4, 5, 5)
-        test_label_align.add(test_label)
-
-        message_label = Label(description)
-        message_label_align = gtk.Alignment(0, 0.5, 1, 1)
-        message_label_align.set_padding(4, 4, 20, 5)
-        message_label_align.add(message_label)
-
-        self.progressbar = ProgressBar()
-        self.progressbar.set_size_request(350, 12)
-        progressbar_align = gtk.Alignment(0.5, 0.5, 0, 0)
-        message_label_align.set_padding(4, 4, 5, 5)
-        progressbar_align.add(self.progressbar)
-
-        self.action_message_label = Label()
-        self.action_message_label_align = gtk.Alignment(0, 0.5, 1, 1)
-        self.action_message_label_align.set_padding(4, 4, 7, 5)
-        self.action_message_label_align.add(self.action_message_label)
-
-        #self.dialog.body_box.pack_start(test_label_align, False, False)
-        self.dialog.body_box.pack_start(message_label_align, False, False)
-        self.dialog.body_box.pack_start(progressbar_align, False, False)
-        self.dialog.body_box.pack_start(self.action_message_label_align, False, False)
-
-    def dialog_close_action(self):
-        pass
-
-from loading_widget import Loading
 
 class WaitingDialog(DialogBox):
 
@@ -417,7 +380,7 @@ class DscPreferenceDialog(PreferenceDialog):
 
     def mirror_changed_handler(self):
         #self.select_best_mirror_dialog.titlebar.change_title('更新')
-        self.select_best_mirror_dialog.info_message_label.set_text("软件源已经更改，\n正在更新软件列表")
+        self.select_best_mirror_dialog.info_message_label.set_text("软件源已经更改，正在更新软件列表")
         self.select_best_mirror_dialog.show_all()
     
     def test_mirror_action(self, widget):
@@ -438,7 +401,6 @@ class DscPreferenceDialog(PreferenceDialog):
 
     def update_progress(self):
         if self.mirror_test.running:
-            print self.mirror_test.progress[2]
             return True
         else:
             if self.mirror_test.best != None:
