@@ -60,6 +60,7 @@ from utils import log
 import threading as td
 from Queue import Queue
 import apt_pkg
+import apt.progress.base as apb
 
 DATA_DIR = os.path.join(get_parent_dir(__file__, 3), "data")
 SOURCE_LIST = '/etc/apt/sources.list'
@@ -246,7 +247,7 @@ class PackageManager(dbus.service.Object):
         self.in_update_list = False
         self.update_signal([("update-list-finish", "")])
         
-        self.pkg_cache.open(None)
+        self.pkg_cache.open(apb.OpProgress())
         print "finish"
         
         self.exit_manager.check()
@@ -380,7 +381,7 @@ class PackageManager(dbus.service.Object):
         self.exit_flag = True
         
         self.exit_manager.check()
-        self.update_signal("frontend-quit")
+        self.update_signal([("frontend-quit", "")])
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="")    
     def change_source_list(self, hostname):

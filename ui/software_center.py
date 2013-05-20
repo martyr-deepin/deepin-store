@@ -46,6 +46,7 @@ from install_page import InstallPage
 from upgrade_page import UpgradePage
 from data_manager import DataManager
 import gtk
+import gobject
 import dbus
 import dbus.service
 import time
@@ -66,9 +67,12 @@ from start_desktop_window import StartDesktopWindow
 from utils import is_64bit_system, handle_dbus_reply, handle_dbus_error, bit_to_human_str, get_software_download_dir
 import utils
 from tooltip import ToolTip
-from preference import preference_dialog
+from server_action import SendVote, SendDownloadCount, SendUninstallCount
+from preference import preference_dialog, WaitingDialog
 
 tool_tip = ToolTip()
+global tooltip_timeout_id
+tooltip_timeout_id = None
 
 def log(message):
     global debug_flag
@@ -117,7 +121,7 @@ def start_pkg(pkg_name, desktop_infos, (offset_x, offset_y, popup_x, popup_y), w
         
 def start_desktop(pkg_name, desktop_path):
     global_event.emit("show-message", "%s: 已经发送启动请求" % (pkg_name))
-    result = start_desktop_file(desktop_path).strip()
+    result = start_desktop_file(desktop_path.strip())
     if result != True:
         global_event.emit("show-message", result)
     
@@ -152,7 +156,7 @@ def request_status_reply_hander(result, install_page, upgrade_page, uninstall_pa
     
     uninstall_page.update_action_status(action_status[ACTION_UNINSTALL])
 
-def grade_pkg(window, pkg_name, star):
+def get_grade_config():
     grade_config_path = os.path.join(CONFIG_DIR, "grade_pkgs")
     if not os.path.exists(grade_config_path):
         touch_file(grade_config_path)
@@ -165,28 +169,44 @@ def grade_pkg(window, pkg_name, star):
             grade_config = {}
     except Exception:
         grade_config = {}
+    return (grade_config_path, grade_config)
+
+def grade_pkg(window, pkg_name, star):
+    grade_config = get_grade_config()[1]
         
     current_time = time.time()    
     if not grade_config.has_key(pkg_name) or (current_time - grade_config[pkg_name]) > ONE_DAY_SECONDS:
         show_tooltip(window, "发送评分...")
+        SendVote(pkg_name, star).start()
         
-        # Send grade to server.
-        result = True
-        
-        if result:
-            show_tooltip(window, "评分成功， 感谢您的参与！ :)")
-            
-            grade_config[pkg_name] = current_time
-            write_file(grade_config_path, str(grade_config))
     else:
         show_tooltip(window, "您已经评过分了哟！ ;)")
 
+def vote_send_success_callback(pkg_name, window):
+    grade_config_path, grade_config = get_grade_config()
+
+    global_event.emit("show-message", "评分成功， 感谢您的参与！ :)")
+    tool_tip.hide_all()
+    current_time = time.time()
+    
+    grade_config[pkg_name] = current_time
+    write_file(grade_config_path, str(grade_config))
+
+def vote_send_failed_callback(pkg_name, window):
+
+    global_event.emit('show-message', "评分失败，请检查您的网络连接！")
+    tool_tip.hide_all()
+
 def show_tooltip(window, message):
+    global tooltip_timeout_id
     tool_tip.set_text(message)
     (screen, px, py, modifier_type) = window.get_display().get_pointer()
     tool_tip.show_all()
     tool_tip.move(px, py)
     #show-pkg-name-tooltip
+    if tooltip_timeout_id:
+        gobject.source_remove(tooltip_timeout_id)
+    tooltip_timeout_id = gtk.timeout_add(2000, tool_tip.hide_all)
     gtk.timeout_add(2000, tool_tip.hide_all)
     
 def switch_from_detail_page(page_switcher, detail_page, page_box):
@@ -305,17 +325,18 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 refresh_current_page_status(pkg_name, pkg_info_list, bus_interface)
                 bus_interface.request_status(
                         reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
-                        error_handler=handle_dbus_error
+                        error_handler=lambda e:handle_dbus_error("request_status", e),
                         )
 
             elif signal_type == "update-list-finish":
                 upgrade_page.fetch_upgrade_info()
                 bus_interface.request_status(
                         reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
-                        error_handler=handle_dbus_error
+                        error_handler=lambda e:handle_dbus_error("request_status", e),
                         )
                 #global_event.emit("show-message", "软件列表更新完成!", 0)
-                global_event.emit('update-progress-in-update-list-dialog', -1, "软件列表更新完成")
+                global_event.emit('update-list-finish')
+                global_event.emit("hide-update-list-dialog")
 
             elif signal_type == "update-list-update":
                 upgrade_page.update_upgrade_progress(action_content[0])
@@ -414,8 +435,10 @@ def finish(source, icon_window, bus_interface, pkg_names):
     # Send install command.
     create_thread(lambda : bus_interface.install_pkg(
                                 pkg_names, 
-                                reply_handler=handle_dbus_reply, 
-                                error_handler=handle_dbus_error)).start()
+                                reply_handler=lambda :handle_dbus_reply("install_pkg"), 
+                                error_handler=lambda e:handle_dbus_error("install_pkg", e))).start()
+    for pkg_name in pkg_names:
+        SendDownloadCount(pkg_name).start()
     
 clear_failed_action_dict = {
     ACTION_INSTALL : [],
@@ -538,10 +561,6 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
     def switch_page(self, page):
         switch_page(self.page_switcher, self.page_box, page, self.detail_page)
-        self.bus_interface.request_status(
-                reply_handler=lambda reply: request_status_reply_hander(reply, self.install_page, self.upgrade_page, self.uninstall_page),
-                error_handler=handle_dbus_error
-                )
         
     def show_home_page(self):
         if self.detail_page and self.home_page:
@@ -636,7 +655,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         # Init menu.
         menu = Menu(
             [
-             (None, "更新软件列表", self.handle_mirror_change_reply),
+             (None, "更新软件列表", self.update_list_handler),
              (None, "打开下载目录", self.open_download_directory),
              (None, "智能清理下载文件", self.clean_download_cache),
              (None, "显示新功能", lambda : self.show_wizard_win()),
@@ -710,7 +729,6 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.bus_interface = dbus.Interface(bus_object, DSC_SERVICE_NAME)
         # Say hello to backend. 
         #self.bus_interface.say_hello(self.simulate)
-        self.bus_interface.init_download_manager(2)
         self.set_software_download_dir()
         
         log("Init data manager")
@@ -750,18 +768,14 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.install_page = InstallPage(self.bus_interface, self.data_manager)
         print "Init three pages time: %s" % (time.time()-start, )
 
-        self.upgrade_page.fetch_upgrade_info()
-        self.bus_interface.request_status(
-                reply_handler=lambda reply: request_status_reply_hander(reply, self.install_page, self.upgrade_page, self.uninstall_page),
-                error_handler=handle_dbus_error
-                )
+        self.update_list_dialog = WaitingDialog("更新软件列表", "正在更新软件列表")
         
         log("Handle global event.")
         
         # Handle global event.
         global_event.register_event("install-pkg", lambda pkg_names: install_pkg(self.bus_interface, self.install_page, pkg_names, self.application.window))
         global_event.register_event("upgrade-pkg", self.upgrade_pkg)
-        global_event.register_event("uninstall-pkg", self.bus_interface.uninstall_pkg)
+        global_event.register_event("uninstall-pkg", self.uninstall_pkg)
         global_event.register_event("stop-download-pkg", self.bus_interface.stop_download_pkg)
         global_event.register_event("switch-to-detail-page", lambda pkg_name : switch_to_detail_page(self.page_switcher, self.detail_page, pkg_name))
         global_event.register_event("switch-from-detail-page", lambda : switch_from_detail_page(self.page_switcher, self.detail_page, self.page_box))
@@ -791,10 +805,10 @@ class DeepinSoftwareCenter(dbus.service.Object):
         global_event.register_event('change-mirror', lambda hostname: self.bus_interface.change_source_list(
             hostname, reply_handler=self.handle_mirror_change_reply, error_handler=handle_dbus_error))
         global_event.register_event('download-directory-changed', self.set_software_download_dir)
-        global_event.register_event('max-download-number-changed', lambda v: self.bus_interface.init_download_manager(
-            v,
-            reply_handler=handle_dbus_reply,
-            error_handler=handle_dbus_error,))
+        global_event.register_event('vote-send-success', lambda p: vote_send_success_callback(p, self.application.window))
+        global_event.register_event('vote-send-failed', lambda p: vote_send_failed_callback(p, self.application.window))
+        global_event.register_event('max-download-number-changed', self.init_download_manager)
+        global_event.register_event('hide-update-list-dialog', lambda :self.update_list_dialog.hide_all())
         self.system_bus.add_signal_receiver(
             lambda messages: message_handler(messages, 
                                          self.bus_interface, 
@@ -809,13 +823,43 @@ class DeepinSoftwareCenter(dbus.service.Object):
         glib.timeout_add(1000, lambda : clear_install_stop_list(self.install_page))
         glib.timeout_add(1000, lambda : clear_failed_action(self.install_page, self.upgrade_page))
 
+        self.init_download_manager()
+
+        self.upgrade_page.fetch_upgrade_info()
         
-        #create_thread(self.request_update_list).start()
         log("finish")
-        #for event in global_event.events:
-            #print "%s: %s" % (event, global_event.events[event])
+
+    def uninstall_pkg(self, pkg_name, purge_flag):
+        self.bus_interface.uninstall_pkg(pkg_name, purge_flag,
+                reply_handler=lambda :handle_dbus_reply("uninstall_pkg"),
+                error_handler=lambda e:handle_dbus_error("uninstall_pkg", e))
+        SendUninstallCount(pkg_name).start()
+
+    def init_download_manager(self, v=5):
+        self.bus_interface.init_download_manager(
+                v, 
+                reply_handler=lambda :self.init_download_manager_handler(),
+                error_handler=lambda e:handle_dbus_error("init_download_manager", e))
+
+    def init_download_manager_handler(self):
+        self.dbus_request_status()
+        print "Init download manager"
+
+    def dbus_request_status(self):
+        self.bus_interface.request_status(
+                reply_handler=lambda reply: request_status_reply_hander(reply, self.install_page, self.upgrade_page, self.uninstall_page),
+                error_handler=lambda e:handle_dbus_error("request_status", e),
+                )
+
     def set_software_download_dir(self):
-        self.bus_interface.set_download_dir(get_software_download_dir(), reply_handler=handle_dbus_reply, error_handler=handle_dbus_error)
+        self.bus_interface.set_download_dir(
+                get_software_download_dir(), 
+                reply_handler=lambda :handle_dbus_reply("set_download_dir"), 
+                error_handler=lambda e:handle_dbus_error("set_download_dir", e))
+
+    def update_list_handler(self):
+        self.update_list_dialog.show_all()
+        self.request_update_list()
 
     def handle_mirror_change_reply(self, reply=None):
         global_event.emit("mirror-changed")
@@ -831,17 +875,21 @@ class DeepinSoftwareCenter(dbus.service.Object):
 
     def request_update_list(self):
         self.bus_interface.start_update_list(
-                reply_handler=handle_dbus_reply,
-                error_handler=handle_dbus_error,)
+                reply_handler=lambda :handle_dbus_reply("start_update_list"),
+                error_handler=lambda e:handle_dbus_error("start_update_list", e),)
 
     def upgrade_pkg(self, pkg_names):
-        self.bus_interface.upgrade_pkg(pkg_names, reply_handler=handle_dbus_reply, error_handler=handle_dbus_error)
+        self.bus_interface.upgrade_pkg(
+                pkg_names, 
+                reply_handler=lambda :handle_dbus_reply("upgrade_pkg"), 
+                error_handler=lambda e:handle_dbus_error("upgrade_pkg", e))
         return False
 
     def clean_download_cache(self):
         self.bus_interface.clean_download_cache(
                 reply_handler=self.clean_download_cache_reply, 
-                error_handler=handle_dbus_error)
+                error_handler=lambda e:handle_dbus_error("clean_download_cache", e),
+                )
 
     def clean_download_cache_reply(obj, result):
         num, size = result
@@ -857,7 +905,9 @@ class DeepinSoftwareCenter(dbus.service.Object):
         log("Send exit request to backend when frontend exit.")
         
         # Send exit request to backend when frontend exit.
-        self.bus_interface.request_quit(reply_handler=handle_dbus_reply, error_handler=handle_dbus_error)
+        self.bus_interface.request_quit(
+                reply_handler=lambda :handle_dbus_reply("request_quit"), 
+                error_handler=lambda e:handle_dbus_error("request_quit", e))
         
         # Remove id from config file.
         data_exit()

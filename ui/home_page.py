@@ -34,7 +34,8 @@ from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from deepin_utils.file import get_parent_dir
 from dtk.ui.utils import color_hex_to_cairo, container_remove_all, is_in_rect
-from dtk.ui.star_view import StarBuffer
+#from dtk.ui.star_view import StarBuffer
+from star_buffer import DscStarBuffer
 from dtk.ui.iconview import IconView
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.iconview import IconItem
@@ -981,7 +982,7 @@ class PkgIconItem(IconItem):
         self.pkg_icon_pixbuf = None
         
         self.star_level = get_star_level(mark)
-        self.star_buffer = StarBuffer(self.star_level)
+        self.star_buffer = DscStarBuffer(pkg_name)
         self.grade_star = 0
         self.pkg_name_area = PkgName()
         
@@ -989,7 +990,7 @@ class PkgIconItem(IconItem):
         self.height = 114
         
         self.button_status = BUTTON_NORMAL
-        
+
     def get_width(self):
         '''
         Get item width.

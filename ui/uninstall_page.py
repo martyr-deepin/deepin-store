@@ -25,7 +25,8 @@ import gobject
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
 from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.progressbar import ProgressBuffer
-from dtk.ui.star_view import StarBuffer
+#from dtk.ui.star_view import StarBuffer
+from star_buffer import DscStarBuffer
 from dtk.ui.utils import is_in_rect, get_content_size
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
 from item_render import (render_pkg_info, STAR_SIZE, get_star_level, get_icon_pixbuf_path,
@@ -195,7 +196,7 @@ class UninstallPage(gtk.VBox):
     def fetch_uninstall_info(self):
         self.bus_interface.request_uninstall_pkgs(
                         reply_handler=self.render_uninstall_info,
-                        error_handler=handle_dbus_error)
+                        error_handler=lambda e:handle_dbus_error("request_uninstall_pkgs", e))
     
     def render_uninstall_info(self, pkg_infos):
         self.add_uninstall_items(pkg_infos)
@@ -267,7 +268,7 @@ class UninstallItem(TreeItem):
         
         (self.short_desc, star, self.alias_name) = data_manager.get_item_pkg_info(self.pkg_name)
         self.star_level = get_star_level(star)
-        self.star_buffer = StarBuffer(self.star_level)
+        self.star_buffer = DscStarBuffer(pkg_name)
 
         self.grade_star = 0
         
@@ -462,7 +463,6 @@ class UninstallItem(TreeItem):
                         self.redraw_request_callback(self)
                         
                     global_event.emit("uninstall-pkg", self.pkg_name, get_purg_flag())
-                    print "Uninstall >>", self.pkg_name
                 elif self.is_cancel_button_area(column, offset_x, offset_y):
                     self.status = self.STATUS_NORMAL
                     

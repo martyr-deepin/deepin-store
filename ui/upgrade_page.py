@@ -26,7 +26,8 @@ from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, CONFIG_DIR, CHEC
 import os
 from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.button import CheckButtonBuffer, ImageButton, CheckAllButton
-from dtk.ui.star_view import StarBuffer
+#from dtk.ui.star_view import StarBuffer
+from star_buffer import DscStarBuffer
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
 from deepin_utils.core import split_with
 from deepin_utils.net import is_network_connected
@@ -638,7 +639,7 @@ class UpgradePage(gtk.VBox):
     def fetch_upgrade_info(self):
         self.bus_interface.request_upgrade_pkgs(
                 reply_handler=self.render_upgrade_info, 
-                error_handler=handle_dbus_error)
+                error_handler=lambda e:handle_dbus_error("request_upgrade_pkgs", e))
         
     def render_upgrade_info(self, pkg_infos):
         if len(pkg_infos) > 0:
@@ -783,7 +784,7 @@ class UpgradeItem(TreeItem):
         
         (self.short_desc, star, self.alias_name) = data_manager.get_item_pkg_info(self.pkg_name)
         self.star_level = get_star_level(star)
-        self.star_buffer = StarBuffer(self.star_level)
+        self.star_buffer = DscStarBuffer(pkg_name)
         
         self.grade_star = 0
         
@@ -1341,7 +1342,7 @@ class NoNotifyItem(TreeItem):
         
         (self.short_desc, star, self.alias_name) = data_manager.get_item_pkg_info(self.pkg_name)
         self.star_level = get_star_level(star)
-        self.star_buffer = StarBuffer(self.star_level)
+        self.star_buffer = DscStarBuffer(pkg_name)
         
         self.grade_star = 0
         
