@@ -76,3 +76,53 @@ class SendVote(td.Thread):
             global_event.emit('vote-send-failed', self.name)
             print "Error: ", e
 
+class SendUninstallCount(td.Thread):
+    '''Send uninstall count.'''
+	
+    def __init__(self, pkgName):
+        '''Init for vote.'''
+        td.Thread.__init__(self)
+        self.setDaemon(True)
+        self.pkgName = pkgName
+
+    def run(self):
+        '''Run'''
+        try:
+            args = {'a' : 'u', 'n' : self.pkgName}
+            
+            urllib2.urlopen(
+                "%s/softcenter/v1/analytics" % (SERVER_ADDRESS),
+                data=urllib.urlencode(args),
+                timeout=POST_TIMEOUT
+                )
+            print "Send uninstall count (%s) successful." % (self.pkgName)
+        except Exception, e:
+            print "Send uninstall count (%s) failed." % (self.pkgName)
+            print "Error: ", e
+
+
+class SendDownloadCount(td.Thread):
+    '''Send download count.'''
+	
+    def __init__(self, pkgName):
+        '''Init for vote.'''
+        td.Thread.__init__(self)
+        self.setDaemon(True) # make thread exit when main program exit 
+        self.pkgName = pkgName
+
+    def run(self):
+        '''Run'''
+        try:
+            args = {
+                'a' : 'd', 
+                'n' : self.pkgName}
+            
+            urllib2.urlopen(
+                "%s/softcenter/v1/analytics" % (SERVER_ADDRESS),
+                data=urllib.urlencode(args),
+                timeout=POST_TIMEOUT
+                )
+            print "Send download count (%s) successful." % (self.pkgName)
+        except Exception, e:
+            print "Send download count (%s) failed." % (self.pkgName)
+            print "Error: ", e

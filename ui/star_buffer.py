@@ -21,7 +21,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from dtk.ui.star_view import StarBuffer
-from vote_action import FetchVoteInfo
+from server_action import FetchVoteInfo
 
 class DscStarBuffer(StarBuffer):
 

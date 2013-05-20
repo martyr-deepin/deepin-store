@@ -463,7 +463,6 @@ class UninstallItem(TreeItem):
                         self.redraw_request_callback(self)
                         
                     global_event.emit("uninstall-pkg", self.pkg_name, get_purg_flag())
-                    print "Uninstall >>", self.pkg_name
                 elif self.is_cancel_button_area(column, offset_x, offset_y):
                     self.status = self.STATUS_NORMAL
                     

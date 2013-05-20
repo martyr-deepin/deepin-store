@@ -35,6 +35,13 @@ import gtk
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from events import global_event
 
+import threading as td
+import urllib2
+import urllib
+import json
+from constant import SERVER_ADDRESS, POST_TIMEOUT
+
+
 class DownloadRankPage(gtk.VBox):
     '''
     class docs
@@ -88,6 +95,10 @@ class DownloadRankPage(gtk.VBox):
 
         global_event.register_event("update-rank-page", self.update_rank_page)
         global_event.emit("update-rank-page", 0)
+        FetchDownloadRank(self.get_download_rank).start()
+
+    def get_download_rank(self, info):
+        print len(info)
 
     def update_view_infos(self):
         get_info, view = self.view_list[self.current_page_index]
@@ -445,3 +456,29 @@ class PkgIconItem(IconItem):
         return True    
         
 gobject.type_register(PkgIconItem)
+
+class FetchDownloadRank(td.Thread):
+
+    def __init__(self, updateVoteCallback):
+        '''Init for fetch vote.'''
+        td.Thread.__init__(self)
+        self.setDaemon(True) # make thread exit when main program exit
+
+        self.updateVoteCallback = updateVoteCallback
+
+    def run(self):
+        '''Run.'''
+        try:
+            args = {'a' : "top", "r" : '*'}
+            print urllib.urlencode(args)
+            connection = urllib2.urlopen("http://apis.linuxdeepin.com/softcenter/v1/soft?a=top&r=*"
+                #"%s/softcenter/v1/soft" % (SERVER_ADDRESS),
+                #data=urllib.urlencode(args),
+                #timeout=POST_TIMEOUT
+                )
+            r = connection.read()
+            voteJson = json.loads(r)            
+            self.updateVoteCallback(voteJson)
+        except Exception, e:
+            print "Fetch vote data failed: %s." % (e)
+

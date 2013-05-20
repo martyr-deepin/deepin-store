@@ -53,7 +53,7 @@ import webbrowser
 from category_info import get_category_name
 import time
 from utils import bit_to_human_str
-from vote_action import FetchVoteInfo
+from server_action import FetchVoteInfo
 from constant import (
         PKG_SIZE_OWN,
         PKG_SIZE_DOWNLOAD,
