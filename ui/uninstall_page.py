@@ -195,7 +195,7 @@ class UninstallPage(gtk.VBox):
     def fetch_uninstall_info(self):
         self.bus_interface.request_uninstall_pkgs(
                         reply_handler=self.render_uninstall_info,
-                        error_handler=handle_dbus_error)
+                        error_handler=lambda e:handle_dbus_error("request_uninstall_pkgs", e))
     
     def render_uninstall_info(self, pkg_infos):
         self.add_uninstall_items(pkg_infos)
