@@ -61,31 +61,44 @@ import threading as td
 from Queue import Queue
 import apt_pkg
 import apt.progress.base as apb
+import aptsources.distro
 
 DATA_DIR = os.path.join(get_parent_dir(__file__, 3), "data")
 SOURCE_LIST = '/etc/apt/sources.list'
 
-source_content_template = '''\
-# This file was created by deepin software center, do not modify!
+source_content_template = [
+'# This file was created by deepin software center, do not modify!',
+'',
+"deb %s/ubuntu %s main restricted universe multiverse",
+"deb %s/ubuntu %s-security main restricted universe multiverse",
+"deb %s/ubuntu %s-updates main restricted universe multiverse",
+"# deb %s/ubuntu %s-proposed main restricted universe multiverse",
+"# deb %s/ubuntu %s-backports main restricted universe multiverse",
+"",
+"deb-src %s/ubuntu %s main restricted universe multiverse",
+"deb-src %s/ubuntu %s-security main restricted universe multiverse",
+"deb-src %s/ubuntu %s-updates main restricted universe multiverse",
+"# deb-src %s/ubuntu %s-proposed main restricted universe multiverse",
+"# deb-src %s/ubuntu %s-backports main restricted universe multiverse",
+"",
+"deb %s/deepin %s main universe non-free",
+"deb-src %s/deepin %s main universe non-free",
+"",
+"deb %s/deepin %s-updates main universe non-free",
+"deb-src %s/deepin %s-updates main universe non-free",
+]
 
-deb %s/ubuntu precise main restricted universe multiverse
-deb %s/ubuntu precise-security main restricted universe multiverse
-deb %s/ubuntu precise-updates main restricted universe multiverse
-# deb %s/ubuntu precise-proposed main restricted universe multiverse
-# deb %s/ubuntu precise-backports main restricted universe multiverse
-
-deb-src %s/ubuntu precise main restricted universe multiverse
-deb-src %s/ubuntu precise-security main restricted universe multiverse
-deb-src %s/ubuntu precise-updates main restricted universe multiverse
-# deb-src %s/ubuntu precise-proposed main restricted universe multiverse
-# deb-src %s/ubuntu precise-backports main restricted universe multiverse
-
-deb %s/deepin quantal main non-free
-deb-src %s/deepin quantal main non-free
-
-deb %s/deepin quantal-updates main non-free
-deb-src %s/deepin quantal-updates main non-free
-'''
+def get_source_list_contents(repo_url):
+    s = []
+    codename = aptsources.distro.get_distro().codename
+    for line in source_content_template:
+        try:
+            line = line % (repo_url, codename)
+        except:
+            pass
+        s.append(line)
+                    
+    return "\n".join(s)
 
 class ExitManager(td.Thread):
     '''
@@ -385,7 +398,7 @@ class PackageManager(dbus.service.Object):
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="")    
     def change_source_list(self, hostname):
-        new_source_list_content = source_content_template.replace("%s", hostname)
+        new_source_list_content = get_source_list_contents(hostname)
         os.system('cp %s %s.save' % (SOURCE_LIST, SOURCE_LIST))
         with open(SOURCE_LIST, 'w') as fp:
             fp.write(new_source_list_content)

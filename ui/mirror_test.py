@@ -20,7 +20,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import threading, time
+import time
+import threading
 import aptsources
 import aptsources.distro
 from aptsources.sourceslist import SourcesList
@@ -68,6 +69,7 @@ class MirrorTest(threading.Thread):
         self.test_file = test_file
         self.mirrors = mirrors
         self.running = False
+        self.terminated = False
 
     def report_action(self, text):
         self.action = text
@@ -107,6 +109,8 @@ class MirrorTest(threading.Thread):
         results = []
 
         for m in mirrors:
+            if self.terminated:
+                return []
             download_time = test_download_speed(m)
             if download_time > 0:
                 results.append([download_time, m])
@@ -126,9 +130,11 @@ def test_mirrors(mirrors_list):
     pipe = os.popen("dpkg --print-architecture")
     arch = pipe.read().strip()
     test_file = "dists/%s/%s/binary-%s/Packages.gz" % \
-                (distro.source_template.name,
-                 distro.source_template.components[0].name,
-                 arch)
+                (
+                #distro.source_template.name,
+                "quantal",
+                distro.source_template.components[0].name,
+                arch)
 
     app = MirrorTest(mirrors_list,
                      test_file,

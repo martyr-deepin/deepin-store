@@ -34,7 +34,6 @@ from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from deepin_utils.file import get_parent_dir
 from dtk.ui.utils import color_hex_to_cairo, container_remove_all, is_in_rect
-#from dtk.ui.star_view import StarBuffer
 from star_buffer import DscStarBuffer
 from dtk.ui.iconview import IconView
 from dtk.ui.scrolled_window import ScrolledWindow
@@ -51,7 +50,6 @@ from skin import app_theme
 from data import DATA_ID
 from category_info import get_category_name
 from nls import _
-from deepin_font_icon import font_face_create
 from loading_widget import Loading
 
 FIRST_CATEGORY_PADDING_X = 66
@@ -59,8 +57,6 @@ SECOND_CATEGORY_PADDING_X = 46
 
 CATEGORY_VIEW_WIDTH = 155
 SLIDE_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "slide_picture", "zh_CN")
-
-category_face = font_face_create(os.path.join(get_parent_dir(__file__, 2), "image", "category_img.ttf"))
 
 global cursor_postion
 cursor_postion = None

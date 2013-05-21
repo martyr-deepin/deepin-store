@@ -22,6 +22,7 @@
 
 from dtk.ui.star_view import StarBuffer
 from server_action import FetchVoteInfo
+from dtk.ui.threads import post_gui
 
 class DscStarBuffer(StarBuffer):
 
@@ -29,6 +30,7 @@ class DscStarBuffer(StarBuffer):
         StarBuffer.__init__(self)
         FetchVoteInfo(pkg_name, self.update_vote_info).start()
 
+    @post_gui
     def update_vote_info(self, vote_info):
         star = float(vote_info[0].encode('utf-8').strip())
         self.star_level = int(star)
