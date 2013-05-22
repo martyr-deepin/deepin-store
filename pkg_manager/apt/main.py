@@ -316,6 +316,15 @@ class PackageManager(dbus.service.Object):
         
         self.exit_manager.check()    
 
+    def del_source_list_d(self):
+        white_list_path = os.path.join(get_parent_dir(__file__), 'white_list.txt')
+        if os.path.exists(white_list_path):
+            with open(white_list_path) as fp:
+                for line in fp:
+                    line = line.strip()
+                    if os.path.exists(line):
+                        os.remove(line)
+
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="i", out_signature="")
     def init_download_manager(self, number):
         self.download_manager = DownloadManager(global_event, number)
@@ -324,7 +333,7 @@ class PackageManager(dbus.service.Object):
     def set_download_dir(self, local_dir):
         apt_pkg.config.set("Dir::Cache::Archives", local_dir)
         self.download_dir = local_dir
-
+    
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="ai")
     def get_download_size(self, pkg_name):
         total_size = 0
@@ -544,6 +553,7 @@ class PackageManager(dbus.service.Object):
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="")
     def start_update_list(self):
         log("start update list...")
+        self.del_source_list_d()
         self.pkg_cache.open(None)
         self.apt_action_pool.add_update_list_mission()
         log("start update list done")

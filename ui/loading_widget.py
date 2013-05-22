@@ -27,7 +27,7 @@ from skin import app_theme
 
 class Loading(gtk.Button):
     
-    rate = 90.0
+    rate = 60.0
 
     def __init__(self, diameter=30, line_width=4):
         gtk.Button.__init__(self)
