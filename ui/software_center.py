@@ -27,6 +27,7 @@ import glib
 from data import data_exit
 from icon_window import IconWindow
 from detail_page import DetailPage
+from dtk.ui.theme import DynamicPixbuf
 from dtk.ui.menu import Menu
 from dtk.ui.constant import WIDGET_POS_BOTTOM_LEFT
 from dtk.ui.button import LinkButton
@@ -136,7 +137,6 @@ def show_message(statusbar, message_box, message, hide_timeout=5000):
     message_box.add(label_align)
     
     statusbar.show_all()
-    print message
 
     if hide_timeout:
         gtk.timeout_add(5000, lambda : hide_message(message_box))
@@ -327,6 +327,27 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                         reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
                         error_handler=lambda e:handle_dbus_error("request_status", e),
                         )
+            elif signal_type == 'action-failed':
+                # FIXME: change failed action dealing
+                (pkg_name, action_type, pkg_info_list) = action_content
+                if action_type == ACTION_UNINSTALL:
+                    uninstall_page.action_finish(pkg_name, pkg_info_list)
+                elif action_type == ACTION_UPGRADE:
+                    upgrade_page.action_finish(pkg_name, pkg_info_list)
+                elif action_type == ACTION_INSTALL:
+                    install_page.action_finish(pkg_name, pkg_info_list)
+                
+                refresh_current_page_status(pkg_name, pkg_info_list, bus_interface)
+                bus_interface.request_status(
+                        reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
+                        error_handler=lambda e:handle_dbus_error("request_status", e),
+                        )
+
+            elif signal_type == "update-list-update":
+                upgrade_page.update_upgrade_progress(action_content[0])
+                percent = "%.2f%%" % float(action_content[0])
+                global_event.emit("show-message", "更新软件列表: %s" % percent)
+                global_event.emit('update-progress-in-update-list-dialog', float(action_content[0]), action_content[1])
 
             elif signal_type == "update-list-finish":
                 upgrade_page.fetch_upgrade_info()
@@ -334,15 +355,22 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                         reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
                         error_handler=lambda e:handle_dbus_error("request_status", e),
                         )
-                #global_event.emit("show-message", "软件列表更新完成!", 0)
+                global_event.emit("show-message", "软件列表更新完成!", 0)
                 global_event.emit('update-list-finish')
                 global_event.emit("hide-update-list-dialog")
+                print "update finish"
 
-            elif signal_type == "update-list-update":
-                upgrade_page.update_upgrade_progress(action_content[0])
-                percent = "%.2f%%" % float(action_content[0])
-                #global_event.emit("show-message", "更新软件列表: %s" % percent)
-                global_event.emit('update-progress-in-update-list-dialog', float(action_content[0]), action_content[1])
+            elif signal_type == 'update-list-failed':
+                # FIXME: change failed action dealing
+                upgrade_page.fetch_upgrade_info()
+                bus_interface.request_status(
+                        reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
+                        error_handler=lambda e:handle_dbus_error("request_status", e),
+                        )
+                global_event.emit("show-message", "软件列表更新失败!", 0)
+                global_event.emit('update-list-finish')
+                global_event.emit("hide-update-list-dialog")
+                print "update finish"
 
             elif signal_type == "parse-download-error":
                 (pkg_name, action_type) = action_content
@@ -362,7 +390,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 if is_64bit_system():
                     message = "%s在64位系统上不能被安装" % pkg_name
                 else:
-                    message = "%s在32位系统上不能被安装，该包可能位64位系统特有的包" % pkg_name
+                    message = "%s在32位系统上不能被安装，该包可能是64位系统特有的包" % pkg_name
                 global_event.emit("show-message", message)
         except Exception, e:
             print e
@@ -632,17 +660,17 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
         self.navigatebar = Navigatebar(
                 [
-                (app_theme.get_pixbuf("navigatebar/nav_recommend.png"), " 软件中心", self.show_home_page),
-                (app_theme.get_pixbuf("navigatebar/nav_update.png"), " 系统升级", self.show_upgrade_page),
-                (app_theme.get_pixbuf("navigatebar/nav_uninstall.png"), " 卸载软件", self.show_uninstall_page),
-                (app_theme.get_pixbuf("navigatebar/nav_download.png"), " 安装管理", self.show_install_page),
+                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_home.png')), " 软件中心", self.show_home_page),
+                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_update.png')), " 系统升级", self.show_upgrade_page),
+                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_uninstall.png')), " 卸载软件", self.show_uninstall_page),
+                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_download.png')), " 安装管理", self.show_install_page),
                 ],
                 font_size = 11,
                 padding_x = 2,
                 padding_y = 2,
                 vertical=False,
-                item_hover_pixbuf=app_theme.get_pixbuf("navigatebar/nav_hover.png"),
-                item_press_pixbuf=app_theme.get_pixbuf("navigatebar/nav_press.png"),
+                item_hover_pixbuf=DynamicPixbuf(os.path.join(image_dir, "navigatebar", "nav_hover.png")),
+                item_press_pixbuf=DynamicPixbuf(os.path.join(image_dir, "navigatebar", "nav_press.png")),
                 )
         self.navigatebar.set_size_request(-1, 56)
         self.navigatebar_align = gtk.Alignment(0, 0, 1, 1)
@@ -773,7 +801,8 @@ class DeepinSoftwareCenter(dbus.service.Object):
         log("Handle global event.")
         
         # Handle global event.
-        global_event.register_event("install-pkg", lambda pkg_names: install_pkg(self.bus_interface, self.install_page, pkg_names, self.application.window))
+        global_event.register_event("install-pkg", lambda pkg_names: install_pkg(
+            self.bus_interface, self.install_page, pkg_names, self.application.window))
         global_event.register_event("upgrade-pkg", self.upgrade_pkg)
         global_event.register_event("uninstall-pkg", self.uninstall_pkg)
         global_event.register_event("stop-download-pkg", self.bus_interface.stop_download_pkg)
@@ -797,13 +826,14 @@ class DeepinSoftwareCenter(dbus.service.Object):
         global_event.register_event("grade-pkg", lambda pkg_name, star: grade_pkg(self.application.window, pkg_name, star))
         global_event.register_event("set-cursor", lambda cursor: set_cursor(self.application.window, cursor))
         global_event.register_event("show-message", self.update_status_bar_message)
-        global_event.register_event("start-pkg", lambda pkg_name, desktop_infos, offset: start_pkg(pkg_name, desktop_infos, offset, self.application.window))
+        global_event.register_event("start-pkg", lambda pkg_name, desktop_infos, offset: start_pkg(
+            pkg_name, desktop_infos, offset, self.application.window))
         global_event.register_event("start-desktop", start_desktop)
         global_event.register_event("show-pkg-name-tooltip", lambda pkg_name: show_tooltip(self.application.window, pkg_name))
         global_event.register_event("hide-pkg-name-tooltip", lambda :tool_tip.hide())
         global_event.register_event("update-current-status-pkg-page", update_current_status_pkg_page)
         global_event.register_event('change-mirror', lambda hostname: self.bus_interface.change_source_list(
-            hostname, reply_handler=self.handle_mirror_change_reply, error_handler=handle_dbus_error))
+            hostname, reply_handler=self.handle_mirror_change_reply, error_handler=lambda e:handle_dbus_error("change_source_list", e)))
         global_event.register_event('download-directory-changed', self.set_software_download_dir)
         global_event.register_event('vote-send-success', lambda p: vote_send_success_callback(p, self.application.window))
         global_event.register_event('vote-send-failed', lambda p: vote_send_failed_callback(p, self.application.window))
@@ -858,7 +888,9 @@ class DeepinSoftwareCenter(dbus.service.Object):
                 error_handler=lambda e:handle_dbus_error("set_download_dir", e))
 
     def update_list_handler(self):
+        self.update_list_dialog.set_size_request(300, 120)
         self.update_list_dialog.show_all()
+        self.update_list_dialog.close_button.hide_all()
         self.request_update_list()
 
     def handle_mirror_change_reply(self, reply=None):

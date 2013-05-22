@@ -41,6 +41,7 @@ from dtk.ui.label_utils import show_label_tooltip
 from dtk.ui.draw import draw_pixbuf, draw_text
 from dtk.ui.resizable_label import ResizableLabel
 from dtk.ui.slide_switcher import SlideSwitcher
+from dtk.ui.threads import post_gui
 from constant import SCREENSHOT_HOST, SCREENSHOT_DOWNLOAD_DIR
 from deepin_utils.multithread import create_thread
 import gobject
@@ -53,7 +54,7 @@ import webbrowser
 from category_info import get_category_name
 import time
 from utils import bit_to_human_str
-from server_action import FetchVoteInfo, FetchPackageInfo
+from server_action import FetchPackageInfo
 from constant import (
         PKG_SIZE_OWN,
         PKG_SIZE_DOWNLOAD,
@@ -331,6 +332,7 @@ class DetailPage(gtk.HBox):
                           desktop_info, 
                           (int(event.x), int(event.y), pixbuf.get_width() / 2, 0))
 
+    @post_gui
     def update_some_info(self, info):
         self.star = float(info[0]['mark'].encode('utf-8').strip())
         self.pkg_star_view.star_buffer.star_level = int(self.star)
