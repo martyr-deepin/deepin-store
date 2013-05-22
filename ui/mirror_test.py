@@ -39,6 +39,7 @@ class Mirror(object):
         self.config.load()
         self._hostname = self.get_repo_url().split(":")[1].split("/")[2]
         self._type = self.get_repo_url().split(":")[0]
+        self._priority = int(self.config.get("mirror", "priority")) if self.config.has_option("mirror", "priority") else 100
     
     @property
     def hostname(self):
@@ -51,6 +52,10 @@ class Mirror(object):
     @property
     def protocol_type(self):
         return self._type
+
+    @property
+    def priority(self):
+        return self._priority
 
     def get_repo_url(self):
         return self.config.get('mirror', 'url')

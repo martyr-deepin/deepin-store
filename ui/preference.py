@@ -431,8 +431,6 @@ class DscPreferenceDialog(PreferenceDialog):
     def get_mirror_items(self):
         items = []
         self.mirrors_list = []
-        test_mirror = None
-        offical_mirror = None
         for ini_file in os.listdir(self.mirrors_dir):
             m = Mirror(os.path.join(self.mirrors_dir, ini_file))
             item = MirrorItem(m, self.mirror_clicked_callback)
@@ -440,16 +438,10 @@ class DscPreferenceDialog(PreferenceDialog):
                 item.radio_button.active = True
                 self.current_mirror_item = item
             self.mirrors_list.append(m)
-            if m.hostname == "packages.linuxdeepin.com":
-                offical_mirror = item
-            elif m.hostname == 'test.packages.linuxdeepin.com':
-                test_mirror = item
             items.append(item)
-            if test_mirror:
-                items.insert(0, items.pop(items.index(test_mirror)))
-            if offical_mirror:
-                items.insert(0, items.pop(items.index(offical_mirror)))
-
+        
+        items.sort(key=lambda x:x.mirror.priority)
+        
         return items
 
     def mirror_clicked_callback(self, item):
@@ -589,6 +581,6 @@ preference_dialog = DscPreferenceDialog()
 if __name__ == '__main__':
     #d = TestProgressDialog()
     #d.dialog.show_all()
-    #preference_dialog.show_all()
-    WaitingDialog("ceshi", "cececececececececeeedddddd").show_all()
+    preference_dialog.show_all()
+    #WaitingDialog("ceshi", "cececececececececeeedddddd").show_all()
     gtk.main()
