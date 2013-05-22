@@ -188,7 +188,7 @@ class WaitingDialog(DialogBox):
         self.set_size_request(-1, -1)
         self.set_position(gtk.WIN_POS_CENTER)
 
-        self.loading_widget = Loading(app_theme.get_color("sidebar_select").get_color()) 
+        self.loading_widget = Loading() 
         loading_widget_align = gtk.Alignment()
         loading_widget_align.set(0.5, 0.5, 0, 0)
         loading_widget_align.set_padding(padding_top=0, padding_bottom=0, padding_left=0, padding_right=8)
@@ -401,7 +401,6 @@ class DscPreferenceDialog(PreferenceDialog):
 
     def update_progress(self):
         if self.mirror_test.running:
-            print self.mirror_test.progress[2]
             return True
         else:
             time.sleep(1)

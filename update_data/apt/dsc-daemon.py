@@ -104,6 +104,7 @@ class NetworkDetector(gobject.GObject):
         source_list_obj = apt_pkg.SourceList()
         source_list_obj.read_main_list()
         uri = source_list_obj.list[0].uri.split("/")[2]
+        uri = 'www.baidu.com'
         gobject.timeout_add(1000, self.network_detect_loop, uri)
 
     def network_detect_loop(self, uri):

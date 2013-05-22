@@ -137,7 +137,6 @@ def show_message(statusbar, message_box, message, hide_timeout=5000):
     message_box.add(label_align)
     
     statusbar.show_all()
-    print message
 
     if hide_timeout:
         gtk.timeout_add(5000, lambda : hide_message(message_box))
@@ -347,7 +346,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
             elif signal_type == "update-list-update":
                 upgrade_page.update_upgrade_progress(action_content[0])
                 percent = "%.2f%%" % float(action_content[0])
-                #global_event.emit("show-message", "更新软件列表: %s" % percent)
+                global_event.emit("show-message", "更新软件列表: %s" % percent)
                 global_event.emit('update-progress-in-update-list-dialog', float(action_content[0]), action_content[1])
 
             elif signal_type == "update-list-finish":
@@ -889,6 +888,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
                 error_handler=lambda e:handle_dbus_error("set_download_dir", e))
 
     def update_list_handler(self):
+        self.update_list_dialog.set_size_request(300, 120)
         self.update_list_dialog.show_all()
         self.update_list_dialog.close_button.hide_all()
         self.request_update_list()

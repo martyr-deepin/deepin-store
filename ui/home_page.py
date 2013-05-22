@@ -471,7 +471,7 @@ class CategoryItem(TreeItem):
 
         # init Loading widget
         loading_box = gtk.VBox()
-        loading_widget = Loading(app_theme.get_color("sidebar_select").get_color()) 
+        loading_widget = Loading() 
         loading_align = gtk.Alignment()
         loading_align.set(0.5, 0.5, 0, 0)
         loading_align.add(loading_widget)
@@ -671,7 +671,7 @@ class SecondCategoryItem(TreeItem):
     def button_press(self, column, offset_x, offset_y):
         # init Loading widget
         loading_box = gtk.VBox()
-        loading_widget = Loading(app_theme.get_color("sidebar_select").get_color()) 
+        loading_widget = Loading() 
         loading_align = gtk.Alignment()
         loading_align.set(0.5, 0.5, 0, 0)
         loading_align.add(loading_widget)

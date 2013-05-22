@@ -23,15 +23,15 @@
 import gtk
 import math
 from dtk.ui.utils import alpha_color_hex_to_cairo
+from skin import app_theme
 
 class Loading(gtk.Button):
     
     rate = 90.0
 
-    def __init__(self, color, diameter=30, line_width=4):
+    def __init__(self, diameter=30, line_width=4):
         gtk.Button.__init__(self)
         self.diameter = diameter
-        self.color = color
         self.line_width = line_width
 
         self.set_size_request(diameter, diameter)
@@ -49,7 +49,7 @@ class Loading(gtk.Button):
 
         cr.set_line_width(self.line_width)
         for i in range(int(self.rate)):
-            cr.set_source_rgba(*alpha_color_hex_to_cairo((self.color, i/self.rate)))
+            cr.set_source_rgba(*alpha_color_hex_to_cairo((app_theme.get_color("sidebar_select").get_color(), i/self.rate)))
             cr.arc(
                 rect.x + rect.width / 2, 
                 rect.y + rect.height / 2, 
