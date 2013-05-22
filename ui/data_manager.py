@@ -43,7 +43,7 @@ class DataManager(object):
         self.software_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "software", "zh_CN", "software.db"))
         self.software_db_cursor = self.software_db_connect.cursor()
 
-        self.desktop_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "desktop", "zh_CN", "new_desktop.db"))
+        self.desktop_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "desktop", "zh_CN", "desktop.db"))
         self.desktop_db_cursor = self.desktop_db_connect.cursor()
         
         self.category_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "category", "category.db"))
@@ -166,8 +166,7 @@ class DataManager(object):
             "SELECT short_desc, alias_name FROM software WHERE pkg_name=?", [pkg_name])
         info = self.software_db_cursor.fetchone()
         if info == None:
-            short_desc = self.bus_interface.request_pkg_short_desc(pkg_name)
-            return (short_desc, 5.0, pkg_name)
+            return (None, 5.0, pkg_name)
         else:
             (short_desc, alias_name) = info
             return (short_desc, 5.0, alias_name)
@@ -183,6 +182,11 @@ class DataManager(object):
     def is_pkg_have_desktop_file(self, pkg_name):
         self.desktop_db_cursor.execute(
             "SELECT desktop_path FROM desktop WHERE pkg_name=?", [pkg_name])
+        return self.desktop_db_cursor.fetchone()
+
+    def is_pkg_display_in_uninstall_page(self, pkg_name):
+        self.desktop_db_cursor.execute(
+            "SELECT display_flag FROM desktop WHERE pkg_name=?", [pkg_name])
         return self.desktop_db_cursor.fetchone()
     
     def get_album_info(self):

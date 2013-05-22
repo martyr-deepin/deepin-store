@@ -462,7 +462,8 @@ class CategoryItem(TreeItem):
     def load_items_reply_handler(self, status, pkg_infos):
         items = []
         for (index, (pkg_name, short_desc, star, alias_name)) in enumerate(pkg_infos):
-            items.append(PkgIconItem(status[index], alias_name, pkg_name, short_desc, star, self.all_desktop_infos[pkg_name]))
+            if short_desc != None:
+                items.append(PkgIconItem(status[index], alias_name, pkg_name, short_desc, star, self.all_desktop_infos[pkg_name]))
         self.pkg_icon_view.add_items(items)
         
         global_event.emit("show-pkg-view", self.page_box)
