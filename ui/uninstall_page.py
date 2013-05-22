@@ -205,7 +205,7 @@ class UninstallPage(gtk.VBox):
         items = []
         for pkg_info in pkg_infos:
             (pkg_name, pkg_version) = eval(pkg_info)
-            if self.data_manager.is_pkg_have_desktop_file(pkg_name) != None:
+            if self.data_manager.is_pkg_have_desktop_file(pkg_name) != None and self.data_manager.is_pkg_display_in_uninstall_page(pkg_name)[0] == '1':
                 items.append(UninstallItem(pkg_name, pkg_version, self.data_manager))
             
         if self.search_flag:

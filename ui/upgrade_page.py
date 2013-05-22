@@ -1086,6 +1086,11 @@ class UpgradeItem(TreeItem):
                         
                         if self.redraw_request_callback:
                             self.redraw_request_callback(self)
+            elif self.status == self.STATUS_WAIT_UPGRADE:
+                if self.is_in_button_area(column, offset_x, offset_y):
+                    global_event.emit("set-cursor", gtk.gdk.HAND2)
+                else:
+                    global_event.emit("set-cursor", None)
     
     def button_press(self, column, offset_x, offset_y):
         if column == 0:

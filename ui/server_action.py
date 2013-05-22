@@ -126,3 +126,22 @@ class SendDownloadCount(td.Thread):
         except Exception, e:
             print "Send download count (%s) failed." % (self.pkgName)
             print "Error: ", e
+
+class FetchPackageInfo(td.Thread):
+    def __init__(self, pkg_name, callback_method):
+        td.Thread.__init__(self)
+        self.setDaemon(True)
+        self.pkg_name = pkg_name
+        self.callback_method = callback_method
+
+    def run(self):
+        try:
+            con = urllib2.urlopen(
+                    "%s/softcenter/v1/soft?a=info&r=%s" % (SERVER_ADDRESS, self.pkg_name),
+                    timeout=POST_TIMEOUT
+                    )
+            r = con.read()
+            self.callback_method(json.loads(r))
+        except Exception, e:
+            print 'Get %s info failed.' % self.pkg_name
+            print 'Error Info:', e

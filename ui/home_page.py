@@ -34,7 +34,6 @@ from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from deepin_utils.file import get_parent_dir
 from dtk.ui.utils import color_hex_to_cairo, container_remove_all, is_in_rect
-#from dtk.ui.star_view import StarBuffer
 from star_buffer import DscStarBuffer
 from dtk.ui.iconview import IconView
 from dtk.ui.scrolled_window import ScrolledWindow
@@ -51,7 +50,6 @@ from skin import app_theme
 from data import DATA_ID
 from category_info import get_category_name
 from nls import _
-from deepin_font_icon import font_face_create
 from loading_widget import Loading
 
 FIRST_CATEGORY_PADDING_X = 66
@@ -59,8 +57,6 @@ SECOND_CATEGORY_PADDING_X = 46
 
 CATEGORY_VIEW_WIDTH = 155
 SLIDE_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "slide_picture", "zh_CN")
-
-category_face = font_face_create(os.path.join(get_parent_dir(__file__, 2), "image", "category_img.ttf"))
 
 global cursor_postion
 cursor_postion = None
@@ -466,7 +462,8 @@ class CategoryItem(TreeItem):
     def load_items_reply_handler(self, status, pkg_infos):
         items = []
         for (index, (pkg_name, short_desc, star, alias_name)) in enumerate(pkg_infos):
-            items.append(PkgIconItem(status[index], alias_name, pkg_name, short_desc, star, self.all_desktop_infos[pkg_name]))
+            if short_desc != None:
+                items.append(PkgIconItem(status[index], alias_name, pkg_name, short_desc, star, self.all_desktop_infos[pkg_name]))
         self.pkg_icon_view.add_items(items)
         
         global_event.emit("show-pkg-view", self.page_box)
@@ -475,7 +472,7 @@ class CategoryItem(TreeItem):
 
         # init Loading widget
         loading_box = gtk.VBox()
-        loading_widget = Loading(app_theme.get_color("sidebar_select").get_color()) 
+        loading_widget = Loading() 
         loading_align = gtk.Alignment()
         loading_align.set(0.5, 0.5, 0, 0)
         loading_align.add(loading_widget)
@@ -675,7 +672,7 @@ class SecondCategoryItem(TreeItem):
     def button_press(self, column, offset_x, offset_y):
         # init Loading widget
         loading_box = gtk.VBox()
-        loading_widget = Loading(app_theme.get_color("sidebar_select").get_color()) 
+        loading_widget = Loading() 
         loading_align = gtk.Alignment()
         loading_align.set(0.5, 0.5, 0, 0)
         loading_align.add(loading_widget)

@@ -57,8 +57,9 @@ from mirror_test import Mirror, MirrorTest
 from events import global_event
 import aptsources
 import aptsources.distro
-
+from loading_widget import Loading
 from constant import PROGRAM_VERSION
+import time
 
 class MirrorItem(TreeItem):
 
@@ -160,28 +161,12 @@ class MirrorItem(TreeItem):
 
     def double_click(self, column, offset_x, offset_y):
         self.is_double_click = True
-        #self.set_autorun_state(not self.autorun)
-
 
     def redraw(self):
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
-    
 
     def render_background(self,  cr, rect):
-        #if self.is_highlight:
-            #background_color = app_theme.get_color("globalItemHighlight")
-        #else:
-        #if self.is_select:
-            #background_color = app_theme.get_color("globalItemSelect")
-        #else:
-            #if  self.is_hover:
-                #background_color = app_theme.get_color("globalItemHover")
-            #else:
-                #background_color = app_theme.get_color("tooltipText")
-        #cr.set_source_rgb(*color_hex_to_cairo(background_color.get_color()))
-        #cr.rectangle(rect.x, rect.y, rect.width, rect.height)
-        #cr.fill()
         pass
 
 def create_separator_box(padding_x=0, padding_y=0):    
@@ -193,56 +178,17 @@ def create_separator_box(padding_x=0, padding_y=0):
 TABLE_ROW_SPACING = 25
 CONTENT_ROW_SPACING = 8
 
-
-class TestProgressDialog(object):
-
-    def __init__(self, title, short_desc, description):
-        self.dialog = DialogBox(title, 376, -1, DIALOG_MASK_SINGLE_PAGE, self.dialog_close_action,
-                window_pos=gtk.WIN_POS_CENTER)
-
-        test_label = Label(short_desc, text_size=20, text_color=DynamicColor('#b4dded'))
-        test_label_align = gtk.Alignment(0.5, 0.5, 0, 0)
-        test_label_align.set_padding(4, 4, 5, 5)
-        test_label_align.add(test_label)
-
-        message_label = Label(description)
-        message_label_align = gtk.Alignment(0, 0.5, 1, 1)
-        message_label_align.set_padding(4, 4, 20, 5)
-        message_label_align.add(message_label)
-
-        self.progressbar = ProgressBar()
-        self.progressbar.set_size_request(350, 12)
-        progressbar_align = gtk.Alignment(0.5, 0.5, 0, 0)
-        message_label_align.set_padding(4, 4, 5, 5)
-        progressbar_align.add(self.progressbar)
-
-        self.action_message_label = Label()
-        self.action_message_label_align = gtk.Alignment(0, 0.5, 1, 1)
-        self.action_message_label_align.set_padding(4, 4, 7, 5)
-        self.action_message_label_align.add(self.action_message_label)
-
-        #self.dialog.body_box.pack_start(test_label_align, False, False)
-        self.dialog.body_box.pack_start(message_label_align, False, False)
-        self.dialog.body_box.pack_start(progressbar_align, False, False)
-        self.dialog.body_box.pack_start(self.action_message_label_align, False, False)
-
-    def dialog_close_action(self):
-        pass
-
-from loading_widget import Loading
-
 class WaitingDialog(DialogBox):
 
-    def __init__(self, title, info_message):
+    def __init__(self, title, info_message, cancel_callback=None):
         DialogBox.__init__(self, 
                 title, 
                 mask_type=DIALOG_MASK_SINGLE_PAGE, 
                 close_callback=self.dialog_close_action)
         self.set_size_request(-1, -1)
         self.set_position(gtk.WIN_POS_CENTER)
-        self.titlebar.hide()
 
-        self.loading_widget = Loading(app_theme.get_color("sidebar_select").get_color()) 
+        self.loading_widget = Loading() 
         loading_widget_align = gtk.Alignment()
         loading_widget_align.set(0.5, 0.5, 0, 0)
         loading_widget_align.set_padding(padding_top=0, padding_bottom=0, padding_left=0, padding_right=8)
@@ -262,7 +208,14 @@ class WaitingDialog(DialogBox):
         outer_hbox.pack_start(info_message_align, False, False)
         outer_align.add(outer_hbox)
 
+        self.close_button = Button(_("Cancel"))
+        if cancel_callback:
+            self.close_button.connect("clicked", cancel_callback)
+        else:
+            self.close_button.connect("clicked", lambda w: self.hide_all())
+
         self.body_box.pack_start(outer_align, False, False)
+        self.right_button_box.set_buttons([self.close_button])
 
     def dialog_close_action(self):
         pass
@@ -406,19 +359,26 @@ class DscPreferenceDialog(PreferenceDialog):
         
         title = "选择最佳源"
         info_message = "请等待，此过程根据网速不同会持续30秒或者更长时间"
-        self.select_best_mirror_dialog = WaitingDialog(title, info_message)
+        self.select_best_mirror_dialog = WaitingDialog(title, info_message, self.cancel_mirror_test)
         global_event.register_event("mirror-changed", self.mirror_changed_handler)
         global_event.register_event("update-list-finish", self.update_list_finish_handler)
 
         return main_table
+
+    def cancel_mirror_test(self, widget):
+        if self.mirror_test != None:
+            self.mirror_test.terminated = True
+            gobject.source_remove(self.update_status_id)
+        self.select_best_mirror_dialog.hide_all()
 
     def update_list_finish_handler(self):
         self.select_best_mirror_dialog.hide_all()
 
     def mirror_changed_handler(self):
         #self.select_best_mirror_dialog.titlebar.change_title('更新')
-        self.select_best_mirror_dialog.info_message_label.set_text("软件源已经更改，\n正在更新软件列表")
+        self.select_best_mirror_dialog.info_message_label.set_text("软件源已经更改，正在更新软件列表")
         self.select_best_mirror_dialog.show_all()
+        self.select_best_mirror_dialog.close_button.hide_all()
     
     def test_mirror_action(self, widget):
         self.select_best_mirror_dialog.show_all()
@@ -427,27 +387,32 @@ class DscPreferenceDialog(PreferenceDialog):
         pipe = os.popen("dpkg --print-architecture")
         arch = pipe.read().strip()
         test_file = "dists/%s/Contents-%s.gz" % \
-                    (distro.codename,
-                    arch)
+                    (
+                    distro.codename,
+                    #"quantal",
+                    arch,
+                    )
 
         self.mirror_test = MirrorTest(self.mirrors_list, test_file)
         self.mirror_test.start()
 
         # now run the tests in a background thread, and update the UI on each event
-        gtk.timeout_add(100, self.update_progress)
+        self.update_status_id = gtk.timeout_add(100, self.update_progress)
 
     def update_progress(self):
         if self.mirror_test.running:
-            print self.mirror_test.progress[2]
             return True
         else:
+            time.sleep(1)
             if self.mirror_test.best != None:
                 for item in self.mirror_items:
                     if item.mirror == self.mirror_test.best[1]:
                         print item.mirror.get_repo_url()
                         self.mirror_clicked_callback(item)
             else:
-                pass
+                self.select_best_mirror_dialog.loading_widget.hide_all()
+                self.select_best_mirror_dialog.info_message_label.set_text("测试下载源失败, 请检查您的网络连接！")
+                self.select_best_mirror_dialog.close_button.set_label(_("Close"))
             return False
 
     def get_current_mirror_uri(self):
@@ -466,8 +431,6 @@ class DscPreferenceDialog(PreferenceDialog):
     def get_mirror_items(self):
         items = []
         self.mirrors_list = []
-        test_mirror = None
-        offical_mirror = None
         for ini_file in os.listdir(self.mirrors_dir):
             m = Mirror(os.path.join(self.mirrors_dir, ini_file))
             item = MirrorItem(m, self.mirror_clicked_callback)
@@ -475,16 +438,10 @@ class DscPreferenceDialog(PreferenceDialog):
                 item.radio_button.active = True
                 self.current_mirror_item = item
             self.mirrors_list.append(m)
-            if m.hostname == "packages.linuxdeepin.com":
-                offical_mirror = item
-            elif m.hostname == 'test.packages.linuxdeepin.com':
-                test_mirror = item
             items.append(item)
-            if test_mirror:
-                items.insert(0, items.pop(items.index(test_mirror)))
-            if offical_mirror:
-                items.insert(0, items.pop(items.index(offical_mirror)))
-
+        
+        items.sort(key=lambda x:x.mirror.priority)
+        
         return items
 
     def mirror_clicked_callback(self, item):
@@ -624,6 +581,6 @@ preference_dialog = DscPreferenceDialog()
 if __name__ == '__main__':
     #d = TestProgressDialog()
     #d.dialog.show_all()
-    #preference_dialog.show_all()
-    WaitingDialog("ceshi", "cececececececececeeedddddd").show_all()
+    preference_dialog.show_all()
+    #WaitingDialog("ceshi", "cececececececececeeedddddd").show_all()
     gtk.main()
