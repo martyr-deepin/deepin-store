@@ -84,8 +84,8 @@ source_content_template = [
 "deb %s/deepin %s main universe non-free",
 "deb-src %s/deepin %s main universe non-free",
 "",
-"deb %s/deepin %s-updates main universe non-free",
-"deb-src %s/deepin %s-updates main universe non-free",
+"#deb %s/deepin %s-updates main universe non-free",
+"#deb-src %s/deepin %s-updates main universe non-free",
 ]
 
 def get_source_list_contents(repo_url):
