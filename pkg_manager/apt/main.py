@@ -218,6 +218,8 @@ class PackageManager(dbus.service.Object):
         self.exit_manager.start()
         
         log("init finish")
+        self.set_download_dir('/var/cache/apt/archives')
+        self.init_download_manager(5)
         
     def action_finish(self, signal_content):
         pkg_name, action_type, pkg_info_list = signal_content
