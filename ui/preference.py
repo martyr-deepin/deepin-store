@@ -218,8 +218,7 @@ class WaitingDialog(DialogBox):
         self.right_button_box.set_buttons([self.close_button])
 
     def dialog_close_action(self):
-        pass
-
+        self.hide_all()
 
 class AboutBox(gtk.VBox):    
     
@@ -366,9 +365,11 @@ class DscPreferenceDialog(PreferenceDialog):
         return main_table
 
     def cancel_mirror_test(self, widget):
-        if self.mirror_test != None:
+        try:
             self.mirror_test.terminated = True
             gobject.source_remove(self.update_status_id)
+        except:
+            pass
         self.select_best_mirror_dialog.hide_all()
 
     def update_list_finish_handler(self):
@@ -378,7 +379,7 @@ class DscPreferenceDialog(PreferenceDialog):
         #self.select_best_mirror_dialog.titlebar.change_title('更新')
         self.select_best_mirror_dialog.info_message_label.set_text("软件源已经更改，正在更新软件列表")
         self.select_best_mirror_dialog.show_all()
-        self.select_best_mirror_dialog.close_button.hide_all()
+        self.select_best_mirror_dialog.close_button.set_label("后台执行")
     
     def test_mirror_action(self, widget):
         self.select_best_mirror_dialog.show_all()

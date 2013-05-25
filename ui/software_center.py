@@ -772,6 +772,8 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
         log("Init switch page.")
         self.switch_page(self.home_page)
+
+        self.in_update_list = False
         
         self.init_backend()
         
@@ -796,7 +798,6 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.install_page = InstallPage(self.bus_interface, self.data_manager)
         print "Init three pages time: %s" % (time.time()-start, )
 
-        self.update_list_dialog = WaitingDialog("更新软件列表", "正在更新软件列表")
         
         log("Handle global event.")
         
@@ -838,7 +839,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         global_event.register_event('vote-send-success', lambda p: vote_send_success_callback(p, self.application.window))
         global_event.register_event('vote-send-failed', lambda p: vote_send_failed_callback(p, self.application.window))
         global_event.register_event('max-download-number-changed', self.init_download_manager)
-        global_event.register_event('hide-update-list-dialog', lambda :self.update_list_dialog.hide_all())
+        global_event.register_event('update-list-finish', self.update_list_finish)
         self.system_bus.add_signal_receiver(
             lambda messages: message_handler(messages, 
                                          self.bus_interface, 
@@ -888,10 +889,28 @@ class DeepinSoftwareCenter(dbus.service.Object):
                 error_handler=lambda e:handle_dbus_error("set_download_dir", e))
 
     def update_list_handler(self):
-        self.update_list_dialog.set_size_request(300, 120)
-        self.update_list_dialog.show_all()
-        self.update_list_dialog.close_button.hide_all()
-        self.request_update_list()
+        try:
+            self.show_dialog('update_list_dialog')
+        except:
+            self.update_list_dialog = WaitingDialog("更新软件列表", "正在更新软件列表")
+            self.update_list_dialog.set_size_request(300, 120)
+            self.update_list_dialog.close_button.set_label("后台执行")
+            self.update_list_dialog.show_all()
+        if not self.in_update_list:
+            self.request_update_list()
+
+    def update_list_finish(self):
+        try:
+            self.hide_dialog('update_list_dialog')
+        except:
+            pass
+        self.in_update_list = False
+
+    def hide_dialog(self, name):
+        getattr(self, name).hide_all()
+
+    def show_dialog(self, name):
+        getattr(self, name).show_all()
 
     def handle_mirror_change_reply(self, reply=None):
         global_event.emit("mirror-changed")
@@ -906,6 +925,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
             show_message(self.statusbar, self.message_box, message, hide_timeout)
 
     def request_update_list(self):
+        self.in_update_list = True
         self.bus_interface.start_update_list(
                 reply_handler=lambda :handle_dbus_reply("start_update_list"),
                 error_handler=lambda e:handle_dbus_error("start_update_list", e),)
