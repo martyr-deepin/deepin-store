@@ -27,7 +27,7 @@ from skin import app_theme
 
 class Loading(gtk.Button):
     
-    rate = 60.0
+    rate = 180.0
 
     def __init__(self, diameter=30, line_width=4):
         gtk.Button.__init__(self)
@@ -38,30 +38,37 @@ class Loading(gtk.Button):
         self.radian_per_part = 2*math.pi/self.rate
 
         self.tick_radian = 0
+        self.rotate_angle = 0
         
         self.connect("expose-event", self.expose)
 
-        gtk.timeout_add(10, self.tick)
+        gtk.timeout_add(50, self.tick)
 
     def expose(self, widget, event=None):
         cr = widget.window.cairo_create()
         rect = widget.get_allocation()
+        
+        cr.translate(rect.x+rect.width/2, rect.y+rect.height/2)
+        cr.rotate(self.rotate_angle)
 
         cr.set_line_width(self.line_width)
         for i in range(int(self.rate)):
             cr.set_source_rgba(*alpha_color_hex_to_cairo((app_theme.get_color("sidebar_select").get_color(), i/self.rate)))
             cr.arc(
-                rect.x + rect.width / 2, 
-                rect.y + rect.height / 2, 
+                #rect.x + rect.width / 2, 
+                #rect.y + rect.height / 2, 
+                0,
+                0,
                 (self.diameter-self.line_width)/2.0, 
-                self.tick_radian + i * self.radian_per_part, 
-                self.tick_radian + (i+1) * self.radian_per_part
+                i * self.radian_per_part, 
+                (i+1) * self.radian_per_part,
             )
             cr.stroke()
+
         return True
 
     def tick(self):
-        self.tick_radian += self.radian_per_part
+        self.rotate_angle += math.pi/6
         self.queue_draw()
         return True
 
@@ -71,7 +78,7 @@ if __name__ == '__main__':
     win.set_size_request(400, 300)
     win.connect("destroy", gtk.main_quit)
 
-    loading_widget = Loading("#00F")
+    loading_widget = Loading()
     loading_widget_align = gtk.Alignment()
     loading_widget_align.set(0.5, 0.5, 0, 0)
     loading_widget_align.add(loading_widget)
