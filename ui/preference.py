@@ -248,7 +248,7 @@ class AboutBox(gtk.VBox):
         title_box.pack_start(align, True, True)
         title_box.pack_start(info_box, False, False)
         
-        describe = "深度软件中心是Linux平台通用的软件管理中心，精选了2600多款优秀软件，集成了软件安装与卸载、软件仓库、热门软件推荐等多项功能。支持一键快速安装软件、多线程下载及智能清理下载缓存。提供专题介绍，分享好软件。\n\n深度软件中心是自由软件，遵循自由软件基金会发布的GNU通用公共许可证第三版。"
+        describe = _("深度软件中心是Linux平台通用的软件管理中心，精选了2600多款优秀软件，集成了软件安装与卸载、软件仓库、热门软件推荐等多项功能。支持一键快速安装软件、多线程下载及智能清理下载缓存。提供专题介绍，分享好软件。\n\n深度软件中心是自由软件，遵循自由软件基金会发布的GNU通用公共许可证第三版。")
         
         describe_label = Label(describe, enable_select=False, wrap_width=400, text_size=10)
         main_box.pack_start(title_box, False, False)
@@ -293,9 +293,9 @@ class DscPreferenceDialog(PreferenceDialog):
         self.mirror_settings_align.add(self.mirror_settings_scrolled_win)
 
         self.set_preference_items([
-            ("常规", self.normal_settings_align),
-            ("软件源", self.mirror_settings_align),
-            ("关于", AboutBox()),
+            (_("常规"), self.normal_settings_align),
+            (_("软件源"), self.mirror_settings_align),
+            (_("关于"), AboutBox()),
             ])
         
     def mirror_settings_align_expose(self, widget, event=None):
@@ -356,8 +356,8 @@ class DscPreferenceDialog(PreferenceDialog):
         main_table.attach(mirror_test_button_align, 0, 1, 3, 4, xoptions=gtk.FILL)
         main_table.attach(self.mirror_message_hbox, 1, 2, 3, 4, xoptions=gtk.FILL)
         
-        title = "选择最佳源"
-        info_message = "请等待，此过程根据网速不同会持续30秒或者更长时间"
+        title = _("选择最佳源")
+        info_message = _("请等待，此过程根据网速不同会持续30秒或者更长时间")
         self.select_best_mirror_dialog = WaitingDialog(title, info_message, self.cancel_mirror_test)
         global_event.register_event("mirror-changed", self.mirror_changed_handler)
         global_event.register_event("update-list-finish", self.update_list_finish_handler)
@@ -377,9 +377,9 @@ class DscPreferenceDialog(PreferenceDialog):
 
     def mirror_changed_handler(self):
         #self.select_best_mirror_dialog.titlebar.change_title('更新')
-        self.select_best_mirror_dialog.info_message_label.set_text("软件源已经更改，正在更新软件列表")
+        self.select_best_mirror_dialog.info_message_label.set_text(_("软件源已经更改，正在更新软件列表"))
         self.select_best_mirror_dialog.show_all()
-        self.select_best_mirror_dialog.close_button.set_label("后台执行")
+        self.select_best_mirror_dialog.close_button.set_label(_("后台执行"))
     
     def test_mirror_action(self, widget):
         self.select_best_mirror_dialog.show_all()
@@ -412,7 +412,7 @@ class DscPreferenceDialog(PreferenceDialog):
                         self.mirror_clicked_callback(item)
             else:
                 self.select_best_mirror_dialog.loading_widget.hide_all()
-                self.select_best_mirror_dialog.info_message_label.set_text("测试下载源失败, 请检查您的网络连接！")
+                self.select_best_mirror_dialog.info_message_label.set_text(_("测试下载源失败, 请检查您的网络连接！"))
                 self.select_best_mirror_dialog.close_button.set_label(_("Close"))
             return False
 

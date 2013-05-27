@@ -300,24 +300,8 @@ CATEGORY_ITEM_EXPAND_PADDING_X = 30
 
 LOAD_ITEMS_NUMBER = 20
 
-category_font_dict = {
-        "recommend":"A",
-        "internet":"B",
-        "multimedia":"C",
-        "games":"D",
-        "graphics":"E",
-        "productivity":"F",
-        "industry":"G",
-        "education":"H",
-        "development":"I",
-        "system":"J",
-        "utilities":"K",
-        }
-
 def handle_dbus_error(*error):
     print "handle_dbus_error: ", error
-
-
 
 class CategoryItem(TreeItem):
     '''
@@ -356,16 +340,6 @@ class CategoryItem(TreeItem):
         cr.set_source_rgb(*color_hex_to_cairo(font_image_color))
         cr.mask_surface(surface, rect.x+14, rect.y+(rect.height-24)/2)
 
-        #draw_font_img(
-                #category_font_dict[self.first_category_name], 
-                #cr, 
-                #rect.x+14, 
-                #rect.y+30, 
-                #category_face, 
-                #text_size=25, 
-                #text_color=font_image_color,
-                #)
-        
         draw_text(cr, 
                   get_category_name(self.first_category_name),
                   rect.x + pixbuf.get_width() + 22, 
@@ -490,7 +464,7 @@ class CategoryItem(TreeItem):
                 self.all_desktop_infos[pkg_name] = desktop_info
             
         self.message_bar = MessageBar(18)
-        self.message_bar.set_message("%s: %s款软件" % (
+        self.message_bar.set_message(_("%s: %s款软件") % (
                     get_category_name(self.first_category_name), 
                     len(self.all_pkg_names),
                     ))
@@ -683,7 +657,7 @@ class SecondCategoryItem(TreeItem):
         self.page_box = gtk.VBox()    
             
         self.message_bar = MessageBar(18)
-        self.message_bar.set_message("%s > %s: %s款软件" % (
+        self.message_bar.set_message(_("%s > %s: %s款软件") % (
                 get_category_name(self.first_category_name), 
                 get_category_name(self.second_category_name), 
                 len(self.all_pkg_names),
@@ -765,7 +739,7 @@ class RecommendItem(TreeItem):
         
         self.page_box = gtk.VBox()
         
-        self.tab_switcher = TabSwitcher(["热门推荐", "专题介绍", "下载排行"])
+        self.tab_switcher = TabSwitcher([_("热门推荐"), _("专题介绍"), _("下载排行")])
         self.tab_switcher_align = gtk.Alignment()
         self.tab_switcher_align.set(0.5, 0.5, 1, 1)
         self.tab_switcher_align.set_padding(10, 0, 0, 9)

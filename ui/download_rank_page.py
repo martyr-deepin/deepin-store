@@ -34,6 +34,7 @@ from dtk.ui.iconview import IconView, IconItem
 import gtk
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from events import global_event
+from nls import _
 
 class DownloadRankPage(gtk.VBox):
     '''
@@ -52,7 +53,7 @@ class DownloadRankPage(gtk.VBox):
         self.tab_box_align = gtk.Alignment()
         self.tab_box_align.set(1, 0, 0, 0)
         self.tab_box_align.set_padding(3, 9, 25, 48)
-        for (tab_index, tab_name) in enumerate(["周排行Top25", "月排行Top25", "总排行Top25"]):
+        for (tab_index, tab_name) in enumerate([_("周排行Top25"), _("月排行Top25"), _("总排行Top25")]):
             self.tab_box.pack_start(RankTab(tab_index, tab_name, tab_index == 0), False, False)
             
         self.page_box = gtk.VBox()    
