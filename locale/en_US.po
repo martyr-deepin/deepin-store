@@ -1,0 +1,738 @@
+# English translations for PACKAGE package.
+# Copyright (C) 2013 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Automatically generated, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-05-28 10:38+0800\n"
+"PO-Revision-Date: 2013-05-28 10:38+0800\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../ui/preference.py:106
+msgid "No name"
+msgstr "No name"
+
+#: ../ui/preference.py:123
+msgid "No mirror url"
+msgstr "No mirror url"
+
+#: ../ui/preference.py:211
+msgid "Cancel"
+msgstr "Cancel"
+
+#: ../ui/preference.py:229 ../ui/software_center.py:621
+msgid "Deepin Software Center"
+msgstr "Deepin Software Center"
+
+#: ../ui/preference.py:234
+msgid "Version:"
+msgstr "Version:"
+
+#: ../ui/preference.py:251
+msgid ""
+"深度软件中心是Linux平台通用的软件管理中心，精选了2600多款优秀软件，集成了软件"
+"安装与卸载、软件仓库、热门软件推荐等多项功能。支持一键快速安装软件、多线程下"
+"载及智能清理下载缓存。提供专题介绍，分享好软件。\n"
+"\n"
+"深度软件中心是自由软件，遵循自由软件基金会发布的GNU通用公共许可证第三版。"
+msgstr ""
+"深度软件中心是Linux平台通用的软件管理中心，精选了2600多款优秀软件，集成了软件"
+"安装与卸载、软件仓库、热门软件推荐等多项功能。支持一键快速安装软件、多线程下"
+"载及智能清理下载缓存。提供专题介绍，分享好软件。\n"
+"\n"
+"深度软件中心是自由软件，遵循自由软件基金会发布的GNU通用公共许可证第三版。"
+
+#: ../ui/preference.py:296
+msgid "常规"
+msgstr "常规"
+
+#: ../ui/preference.py:297
+msgid "软件源"
+msgstr "软件源"
+
+#: ../ui/preference.py:298
+msgid "关于"
+msgstr "关于"
+
+#: ../ui/preference.py:318
+msgid "Select software mirror"
+msgstr "Select software mirror"
+
+#: ../ui/preference.py:338
+msgid "Select Best Mirror"
+msgstr "Select Best Mirror"
+
+#: ../ui/preference.py:359
+msgid "选择最佳源"
+msgstr "选择最佳源"
+
+#: ../ui/preference.py:360
+msgid "请等待，此过程根据网速不同会持续30秒或者更长时间"
+msgstr "请等待，此过程根据网速不同会持续30秒或者更长时间"
+
+#: ../ui/preference.py:380
+msgid "软件源已经更改，正在更新软件列表"
+msgstr "软件源已经更改，正在更新软件列表"
+
+#: ../ui/preference.py:382 ../ui/software_center.py:897
+msgid "后台执行"
+msgstr "后台执行"
+
+#: ../ui/preference.py:415
+msgid "测试下载源失败, 请检查您的网络连接！"
+msgstr "测试下载源失败, 请检查您的网络连接！"
+
+#: ../ui/preference.py:416
+msgid "Close"
+msgstr "Close"
+
+#: ../ui/preference.py:466
+msgid "Source update"
+msgstr "Source update"
+
+#: ../ui/preference.py:472
+msgid "Interval time: "
+msgstr "Interval time: "
+
+#: ../ui/preference.py:475
+msgid " hour"
+msgstr " hour"
+
+#: ../ui/preference.py:491
+msgid "Download settings"
+msgstr "Download settings"
+
+#: ../ui/preference.py:497
+msgid "Max download task number: "
+msgstr "Max download task number: "
+
+#: ../ui/preference.py:507
+msgid "Donload directory: "
+msgstr "Donload directory: "
+
+#: ../ui/preference.py:513
+msgid "Change"
+msgstr "Change"
+
+#: ../ui/preference.py:529
+msgid "On uninstall software"
+msgstr "On uninstall software"
+
+#: ../ui/preference.py:534
+msgid "Delete configuration files"
+msgstr "Delete configuration files"
+
+#: ../ui/preference.py:562
+msgid "Select Directory"
+msgstr "Select Directory"
+
+#: ../ui/home_page.py:467
+#, python-format
+msgid "%s: %s款软件"
+msgstr "%s: %s款软件"
+
+#: ../ui/home_page.py:660
+#, python-format
+msgid "%s > %s: %s款软件"
+msgstr "%s > %s: %s款软件"
+
+#: ../ui/home_page.py:716
+msgid "Home Recommends"
+msgstr "Home Recommends"
+
+#: ../ui/home_page.py:742
+msgid "热门推荐"
+msgstr "热门推荐"
+
+#: ../ui/home_page.py:742
+msgid "专题介绍"
+msgstr "专题介绍"
+
+#: ../ui/home_page.py:742
+msgid "下载排行"
+msgstr "下载排行"
+
+#: ../ui/download_rank_page.py:56
+msgid "周排行Top25"
+msgstr "周排行Top25"
+
+#: ../ui/download_rank_page.py:56
+msgid "月排行Top25"
+msgstr "月排行Top25"
+
+#: ../ui/download_rank_page.py:56
+msgid "总排行Top25"
+msgstr "总排行Top25"
+
+#: ../ui/software_center.py:116
+#, python-format
+msgid "%s haven't any desktop file"
+msgstr "%s haven't any desktop file"
+
+#: ../ui/software_center.py:124
+#, python-format
+msgid "%s: 已经发送启动请求"
+msgstr "%s: 已经发送启动请求"
+
+#: ../ui/software_center.py:179
+msgid "发送评分..."
+msgstr "发送评分..."
+
+#: ../ui/software_center.py:183
+msgid "您已经评过分了哟！ ;)"
+msgstr "您已经评过分了哟！ ;)"
+
+#: ../ui/software_center.py:188
+msgid "评分成功， 感谢您的参与！ :)"
+msgstr "评分成功， 感谢您的参与！ :)"
+
+#: ../ui/software_center.py:197
+msgid "评分失败，请检查您的网络连接！"
+msgstr "评分失败，请检查您的网络连接！"
+
+#: ../ui/software_center.py:349
+#, python-format
+msgid "更新软件列表: %s"
+msgstr "更新软件列表: %s"
+
+#: ../ui/software_center.py:358
+msgid "软件列表更新完成!"
+msgstr "软件列表更新完成!"
+
+#: ../ui/software_center.py:370
+msgid "软件列表更新失败!"
+msgstr "软件列表更新失败!"
+
+#: ../ui/software_center.py:379
+#, python-format
+msgid "分析%s依赖出现问题， 安装停止"
+msgstr "分析%s依赖出现问题， 安装停止"
+
+#: ../ui/software_center.py:382
+#, python-format
+msgid "分析%s依赖出现问题， 升级停止"
+msgstr "分析%s依赖出现问题， 升级停止"
+
+#: ../ui/software_center.py:391
+#, python-format
+msgid "%s在64位系统上不能被安装"
+msgstr "%s在64位系统上不能被安装"
+
+#: ../ui/software_center.py:393
+#, python-format
+msgid "%s在32位系统上不能被安装，该包可能是64位系统特有的包"
+msgstr "%s在32位系统上不能被安装，该包可能是64位系统特有的包"
+
+#: ../ui/software_center.py:644
+msgid "加入我们"
+msgstr "加入我们"
+
+#: ../ui/software_center.py:663
+msgid " 软件中心"
+msgstr " 软件中心"
+
+#: ../ui/software_center.py:664
+msgid " 系统升级"
+msgstr " 系统升级"
+
+#: ../ui/software_center.py:665
+msgid " 卸载软件"
+msgstr " 卸载软件"
+
+#: ../ui/software_center.py:666
+msgid " 安装管理"
+msgstr " 安装管理"
+
+#: ../ui/software_center.py:686 ../ui/software_center.py:895
+msgid "更新软件列表"
+msgstr "更新软件列表"
+
+#: ../ui/software_center.py:687
+msgid "打开下载目录"
+msgstr "打开下载目录"
+
+#: ../ui/software_center.py:688
+msgid "智能清理下载文件"
+msgstr "智能清理下载文件"
+
+#: ../ui/software_center.py:689
+msgid "显示新功能"
+msgstr "显示新功能"
+
+#: ../ui/software_center.py:690
+msgid "选项"
+msgstr "选项"
+
+#: ../ui/software_center.py:691
+msgid "退出"
+msgstr "退出"
+
+#: ../ui/software_center.py:895
+msgid "正在更新软件列表"
+msgstr "正在更新软件列表"
+
+#: ../ui/software_center.py:949
+#, python-format
+msgid "恭喜您清理了%s个软件包，共节约了%s空间"
+msgstr "恭喜您清理了%s个软件包，共节约了%s空间"
+
+#: ../ui/software_center.py:951
+msgid "您的系统已经很干净了，不需要清理."
+msgstr "您的系统已经很干净了，不需要清理."
+
+#: ../ui/search_page.py:105
+#, python-format
+msgid "%s: 搜索到%s款软件"
+msgstr "%s: 搜索到%s款软件"
+
+#: ../ui/category_info.py:26
+msgid "Internet"
+msgstr "Internet"
+
+#: ../ui/category_info.py:27
+msgid "Browser"
+msgstr "Browser"
+
+#: ../ui/category_info.py:28
+msgid "Instant messaging"
+msgstr "Instant messaging"
+
+#: ../ui/category_info.py:29
+msgid "Email"
+msgstr "Email"
+
+#: ../ui/category_info.py:30
+msgid "File transfer"
+msgstr "File transfer"
+
+#: ../ui/category_info.py:31
+msgid "News"
+msgstr "News"
+
+#: ../ui/category_info.py:32
+msgid "Remote access"
+msgstr "Remote access"
+
+#: ../ui/category_info.py:33
+msgid "Security"
+msgstr "Security"
+
+#: ../ui/category_info.py:34
+msgid "Miscellaneous"
+msgstr "Miscellaneous"
+
+#: ../ui/category_info.py:35
+msgid "Multimedia"
+msgstr "Multimedia"
+
+#: ../ui/category_info.py:36
+msgid "Audiovideo"
+msgstr "Audiovideo"
+
+#: ../ui/category_info.py:37
+msgid "Audiovideo editing"
+msgstr "Audiovideo editing"
+
+#: ../ui/category_info.py:38
+msgid "Disc burner"
+msgstr "Disc burner"
+
+#: ../ui/category_info.py:39
+msgid "MIDI"
+msgstr "MIDI"
+
+#: ../ui/category_info.py:40
+msgid "Mixer"
+msgstr "Mixer"
+
+#: ../ui/category_info.py:41
+msgid "Player"
+msgstr "Player"
+
+#: ../ui/category_info.py:42
+msgid "Recorder"
+msgstr "Recorder"
+
+#: ../ui/category_info.py:43
+msgid "Sequencer"
+msgstr "Sequencer"
+
+#: ../ui/category_info.py:44
+msgid "Tuner"
+msgstr "Tuner"
+
+#: ../ui/category_info.py:45
+msgid "Games"
+msgstr "Games"
+
+#: ../ui/category_info.py:46
+msgid "Action games"
+msgstr "Action games"
+
+#: ../ui/category_info.py:47
+msgid "Advernture games"
+msgstr "Advernture games"
+
+#: ../ui/category_info.py:48
+msgid "Arcade games"
+msgstr "Arcade games"
+
+#: ../ui/category_info.py:49
+msgid "Board games"
+msgstr "Board games"
+
+#: ../ui/category_info.py:50
+msgid "Card games"
+msgstr "Card games"
+
+#: ../ui/category_info.py:51
+msgid "Emulator"
+msgstr "Emulator"
+
+#: ../ui/category_info.py:52
+msgid "Kids games"
+msgstr "Kids games"
+
+#: ../ui/category_info.py:53
+msgid "Logic games"
+msgstr "Logic games"
+
+#: ../ui/category_info.py:54
+msgid "Puzzle games"
+msgstr "Puzzle games"
+
+#: ../ui/category_info.py:55
+msgid "Role-playing games"
+msgstr "Role-playing games"
+
+#: ../ui/category_info.py:56
+msgid "Sports games"
+msgstr "Sports games"
+
+#: ../ui/category_info.py:57
+msgid "Strategy games"
+msgstr "Strategy games"
+
+#: ../ui/category_info.py:58
+msgid "Graphics"
+msgstr "Graphics"
+
+#: ../ui/category_info.py:59
+msgid "2D graphics"
+msgstr "2D graphics"
+
+#: ../ui/category_info.py:60
+msgid "3D graphics"
+msgstr "3D graphics"
+
+#: ../ui/category_info.py:61
+msgid "Image processing"
+msgstr "Image processing"
+
+#: ../ui/category_info.py:62
+msgid "Photography"
+msgstr "Photography"
+
+#: ../ui/category_info.py:63
+msgid "Vector graphics"
+msgstr "Vector graphics"
+
+#: ../ui/category_info.py:64
+msgid "Viewer"
+msgstr "Viewer"
+
+#: ../ui/category_info.py:65
+msgid "Productivity"
+msgstr "Productivity"
+
+#: ../ui/category_info.py:66
+msgid "Office"
+msgstr "Office"
+
+#: ../ui/category_info.py:67
+msgid "Scanning printing"
+msgstr "Scanning printing"
+
+#: ../ui/category_info.py:68
+msgid "Industry"
+msgstr "Industry"
+
+#: ../ui/category_info.py:69
+msgid "Engineering"
+msgstr "Engineering"
+
+#: ../ui/category_info.py:70
+msgid "Finance"
+msgstr "Finance"
+
+#: ../ui/category_info.py:71
+msgid "Ham radio"
+msgstr "Ham radio"
+
+#: ../ui/category_info.py:72
+msgid "Medical"
+msgstr "Medical"
+
+#: ../ui/category_info.py:73
+msgid "Publishing"
+msgstr "Publishing"
+
+#: ../ui/category_info.py:74
+msgid "Education"
+msgstr "Education"
+
+#: ../ui/category_info.py:75
+msgid "Languages"
+msgstr "Languages"
+
+#: ../ui/category_info.py:76
+msgid "Religion"
+msgstr "Religion"
+
+#: ../ui/category_info.py:77
+msgid "Science"
+msgstr "Science"
+
+#: ../ui/category_info.py:78
+msgid "Development"
+msgstr "Development"
+
+#: ../ui/category_info.py:79
+msgid "Database"
+msgstr "Database"
+
+#: ../ui/category_info.py:80
+msgid "Debugging"
+msgstr "Debugging"
+
+#: ../ui/category_info.py:81
+msgid "IDE"
+msgstr "IDE"
+
+#: ../ui/category_info.py:82
+msgid "Software development"
+msgstr "Software development"
+
+#: ../ui/category_info.py:83
+msgid "Version control"
+msgstr "Version control"
+
+#: ../ui/category_info.py:84
+msgid "Web development"
+msgstr "Web development"
+
+#: ../ui/category_info.py:85
+msgid "System"
+msgstr "System"
+
+#: ../ui/category_info.py:86
+msgid "Desktop environment"
+msgstr "Desktop environment"
+
+#: ../ui/category_info.py:87
+msgid "Monitor"
+msgstr "Monitor"
+
+#: ../ui/category_info.py:88
+msgid "Network"
+msgstr "Network"
+
+#: ../ui/category_info.py:89
+msgid "Package manager"
+msgstr "Package manager"
+
+#: ../ui/category_info.py:90
+msgid "Settings"
+msgstr "Settings"
+
+#: ../ui/category_info.py:91
+msgid "Virtualization"
+msgstr "Virtualization"
+
+#: ../ui/category_info.py:92
+msgid "Window manager"
+msgstr "Window manager"
+
+#: ../ui/category_info.py:93
+msgid "Utilities"
+msgstr "Utilities"
+
+#: ../ui/category_info.py:94
+msgid "Accessories"
+msgstr "Accessories"
+
+#: ../ui/category_info.py:95
+msgid "Archiving"
+msgstr "Archiving"
+
+#: ../ui/category_info.py:96
+msgid "Emulation"
+msgstr "Emulation"
+
+#: ../ui/category_info.py:97
+msgid "File manager"
+msgstr "File manager"
+
+#: ../ui/category_info.py:98
+msgid "Screensaver"
+msgstr "Screensaver"
+
+#: ../ui/category_info.py:99
+msgid "Terminal emulator"
+msgstr "Terminal emulator"
+
+#: ../ui/category_info.py:100
+msgid "Text editor"
+msgstr "Text editor"
+
+#: ../ui/install_page.py:115
+#, python-format
+msgid "%s款软件正在安装"
+msgstr "%s款软件正在安装"
+
+#: ../ui/install_page.py:289 ../ui/install_page.py:582
+#: ../ui/upgrade_page.py:1229
+msgid "分析依赖中"
+msgstr "分析依赖中"
+
+#: ../ui/install_page.py:524 ../ui/install_page.py:536
+msgid "下载被终止"
+msgstr "下载被终止"
+
+#: ../ui/install_page.py:546
+msgid "安装被终止"
+msgstr "安装被终止"
+
+#: ../ui/install_page.py:589 ../ui/upgrade_page.py:1116
+#: ../ui/upgrade_page.py:1236
+msgid "等待下载"
+msgstr "等待下载"
+
+#: ../ui/install_page.py:596 ../ui/upgrade_page.py:1243
+msgid "下载中"
+msgstr "下载中"
+
+#: ../ui/install_page.py:612
+msgid "等待安装"
+msgstr "等待安装"
+
+#: ../ui/install_page.py:622 ../ui/upgrade_page.py:1269
+msgid "分析依赖失败"
+msgstr "分析依赖失败"
+
+#: ../ui/install_page.py:631 ../ui/install_page.py:638
+msgid "安装中"
+msgstr "安装中"
+
+#: ../ui/install_page.py:647
+msgid "安装完成"
+msgstr "安装完成"
+
+#: ../ui/detail_page.py:177
+msgid "同类热门推荐"
+msgstr "同类热门推荐"
+
+#: ../ui/detail_page.py:345
+#, python-format
+msgid "下载：%s"
+msgstr "下载：%s"
+
+#: ../ui/detail_page.py:369
+msgid "类别："
+msgstr "类别："
+
+#: ../ui/detail_page.py:372
+#, python-format
+msgid "版本：%s"
+msgstr "版本：%s"
+
+#: ../ui/detail_page.py:373
+msgid "下载：0"
+msgstr "下载：0"
+
+#: ../ui/detail_page.py:374
+msgid "大小：计算中..."
+msgstr "大小：计算中..."
+
+#: ../ui/detail_page.py:379
+msgid "访问首页"
+msgstr "访问首页"
+
+#: ../ui/detail_page.py:420
+msgid "已安装"
+msgstr "已安装"
+
+#: ../ui/detail_page.py:465
+msgid "正在加载评论..."
+msgstr "正在加载评论..."
+
+#: ../ui/detail_page.py:588
+msgid "Powered by 又拍云存储"
+msgstr "Powered by 又拍云存储"
+
+#: ../ui/upgrade_page.py:109
+#, python-format
+msgid "最后更新时间: %s"
+msgstr "最后更新时间: %s"
+
+#: ../ui/upgrade_page.py:117 ../ui/upgrade_page.py:181
+#, python-format
+msgid "不再提醒升级(%s)"
+msgstr "不再提醒升级(%s)"
+
+#: ../ui/upgrade_page.py:177
+#, python-format
+msgid "当前可升级软件共 %s 款"
+msgstr "当前可升级软件共 %s 款"
+
+#: ../ui/upgrade_page.py:211
+msgid "重新提醒"
+msgstr "重新提醒"
+
+#: ../ui/upgrade_page.py:245
+#, python-format
+msgid "有%s款软件不再提醒"
+msgstr "有%s款软件不再提醒"
+
+#: ../ui/upgrade_page.py:548
+#, python-format
+msgid "更新软件列表 %s%%"
+msgstr "更新软件列表 %s%%"
+
+#: ../ui/upgrade_page.py:1259
+msgid "等待升级"
+msgstr "等待升级"
+
+#: ../ui/upgrade_page.py:1278 ../ui/upgrade_page.py:1285
+msgid "升级中"
+msgstr "升级中"
+
+#: ../ui/upgrade_page.py:1294
+msgid "升级完成"
+msgstr "升级完成"
+
+#: ../ui/uninstall_page.py:157
+#, python-format
+msgid "%s款软件可以卸载"
+msgstr "%s款软件可以卸载"
+
+#: ../ui/uninstall_page.py:461 ../ui/uninstall_page.py:544
+msgid "等待卸载"
+msgstr "等待卸载"
+
+#: ../ui/uninstall_page.py:551 ../ui/uninstall_page.py:558
+msgid "卸载中"
+msgstr "卸载中"
+
+#: ../ui/uninstall_page.py:565
+msgid "卸载完成"
+msgstr "卸载完成"
