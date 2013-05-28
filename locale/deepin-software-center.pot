@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-28 16:03+0800\n"
+"POT-Creation-Date: 2013-05-28 16:22+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -141,7 +141,7 @@ msgstr ""
 
 #: ../ui/home_page.py:660
 #, python-format
-msgid "%s > %s applications"
+msgid "%s > %s : %s applications"
 msgstr ""
 
 #: ../ui/home_page.py:716 ../ui/software_center.py:663

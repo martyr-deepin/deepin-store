@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-28 16:03+0800\n"
+"POT-Creation-Date: 2013-05-28 16:22+0800\n"
 "PO-Revision-Date: 2013-03-25 15:30+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -140,11 +140,13 @@ msgid "Select Directory"
 msgstr "选择目录"
 
 #: ../ui/home_page.py:467
+#, python-format
 msgid "%s: %s applications"
 msgstr "%s: %s款软件"
 
 #: ../ui/home_page.py:660
-msgid "%s > %s applications"
+#, python-format
+msgid "%s > %s : %s applications"
 msgstr "%s > %s: %s款软件"
 
 #: ../ui/home_page.py:716 ../ui/software_center.py:663
@@ -176,10 +178,12 @@ msgid "Top 25 of all time"
 msgstr "总排行Top25"
 
 #: ../ui/software_center.py:116
+#, python-format
 msgid "%s haven't any desktop file"
 msgstr "%s 没有桌面启动文件"
 
 #: ../ui/software_center.py:124
+#, python-format
 msgid "%s: request for starting applications sent"
 msgstr "%s: 已经发送启动请求"
 
@@ -200,6 +204,7 @@ msgid "Comment was failed. Please check your network connection!"
 msgstr "评分失败，请检查您的网络连接！"
 
 #: ../ui/software_center.py:349
+#, python-format
 msgid "Update applications lists: %s"
 msgstr "更新软件列表: %s"
 
@@ -212,19 +217,23 @@ msgid "Failed to refresh applications lists."
 msgstr "软件列表更新失败!"
 
 #: ../ui/software_center.py:379
+#, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted"
 msgstr "分析%s依赖出现问题， 安装停止"
 
 #: ../ui/software_center.py:382
+#, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
 msgstr "分析%s依赖出现问题， 升级停止"
 
 #: ../ui/software_center.py:391
+#, python-format
 msgid "%s cannot be installed on 64-bit system."
 msgstr "%s在64位系统上不能被安装"
 
 #: ../ui/software_center.py:393
+#, python-format
 msgid "%s cannot be installed. It might be a x86_64 specific package"
 msgstr "%s在32位系统上不能被安装，该包可能是64位系统特有的包"
 
@@ -273,6 +282,7 @@ msgid "Refreshing applications lists"
 msgstr "正在更新软件列表"
 
 #: ../ui/software_center.py:949
+#, python-format
 msgid "You have cleared up %s pakcages and saved %s of space"
 msgstr "恭喜您清理了%s个软件包，共节约了%s空间"
 
@@ -281,6 +291,7 @@ msgid "Your system is clean."
 msgstr "您的系统已经很干净了，不需要清理."
 
 #: ../ui/search_page.py:105
+#, python-format
 msgid "%s: %s matched applications"
 msgstr "%s: 搜索到%s款软件"
 
@@ -585,6 +596,7 @@ msgid "Text editor"
 msgstr "文本编辑器"
 
 #: ../ui/install_page.py:115
+#, python-format
 msgid "%s applications are being installed"
 msgstr "%s款软件正在安装"
 
@@ -631,6 +643,7 @@ msgid "Also in the category..."
 msgstr "同类热门推荐"
 
 #: ../ui/detail_page.py:345
+#, python-format
 msgid "Download: %s"
 msgstr "下载：%s"
 
@@ -639,6 +652,7 @@ msgid "Category: "
 msgstr "类别："
 
 #: ../ui/detail_page.py:372
+#, python-format
 msgid "Version: %s"
 msgstr "版本：%s"
 
@@ -667,14 +681,17 @@ msgid "Powered by 又拍云存储"
 msgstr "Powered by 又拍云存储"
 
 #: ../ui/upgrade_page.py:109
+#, python-format
 msgid "Last upgraded time: %s"
 msgstr "最后更新时间: %s"
 
 #: ../ui/upgrade_page.py:117 ../ui/upgrade_page.py:181
+#, python-format
 msgid "Unwatched (%s)"
 msgstr "不再提醒升级(%s)"
 
 #: ../ui/upgrade_page.py:177
+#, python-format
 msgid "%s applications are available for upgrade"
 msgstr "当前可升级软件共 %s 款"
 
@@ -683,10 +700,12 @@ msgid "Watch again"
 msgstr "重新提醒"
 
 #: ../ui/upgrade_page.py:245
+#, python-format
 msgid "%s applications are not being watched"
 msgstr "有%s款软件不再提醒"
 
 #: ../ui/upgrade_page.py:548
+#, python-format
 msgid "Refresh applications lists %s%%"
 msgstr "更新软件列表 %s%%"
 
@@ -703,6 +722,7 @@ msgid "Upgrade complete"
 msgstr "升级完成"
 
 #: ../ui/uninstall_page.py:157
+#, python-format
 msgid "%s applications can be uninstalled"
 msgstr "%s款软件可以卸载"
 
@@ -717,4 +737,3 @@ msgstr "卸载中"
 #: ../ui/uninstall_page.py:565
 msgid "Uninstall successful"
 msgstr "卸载完成"
-

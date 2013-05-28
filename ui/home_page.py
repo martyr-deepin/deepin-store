@@ -657,7 +657,7 @@ class SecondCategoryItem(TreeItem):
         self.page_box = gtk.VBox()    
             
         self.message_bar = MessageBar(18)
-        self.message_bar.set_message(_("%s > %s applications") % (
+        self.message_bar.set_message(_("%s > %s : %s applications") % (
                 get_category_name(self.first_category_name), 
                 get_category_name(self.second_category_name), 
                 len(self.all_pkg_names),
