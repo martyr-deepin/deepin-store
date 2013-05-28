@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-28 15:38+0800\n"
+"POT-Creation-Date: 2013-05-28 15:56+0800\n"
 "PO-Revision-Date: 2013-03-25 15:30+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,12 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-# msgid "No name"
 #: ../ui/preference.py:106
 msgid "Untitled"
 msgstr "未命名"
 
-# msgid "No mirror url"
 #: ../ui/preference.py:123
 msgid "Unknown mirror url"
 msgstr "未知源地址"
@@ -709,7 +707,7 @@ msgstr "升级完成"
 msgid "%s applications can be uninstalled"
 msgstr "%s款软件可以卸载"
 
-#: ../ui/uninstall_page.py:544
+#: ../ui/uninstall_page.py:461 ../ui/uninstall_page.py:544
 msgid "Waiting for uninstall"
 msgstr "等待卸载"
 
