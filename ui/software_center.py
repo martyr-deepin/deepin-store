@@ -660,10 +660,10 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
         self.navigatebar = Navigatebar(
                 [
-                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_home.png')), _("Deepin Software Center"), self.show_home_page),
-                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_update.png')), _("System Upgrade"), self.show_upgrade_page),
-                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_uninstall.png')), _("Remove packages"), self.show_uninstall_page),
-                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_download.png')), _("Manage installations"), self.show_install_page),
+                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_home.png')), _("Home"), self.show_home_page),
+                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_update.png')), _("Upgrade"), self.show_upgrade_page),
+                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_uninstall.png')), _("Uninstall"), self.show_uninstall_page),
+                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_download.png')), _("Install Manage"), self.show_install_page),
                 ],
                 font_size = 11,
                 padding_x = 2,

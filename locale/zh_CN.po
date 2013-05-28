@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-28 15:56+0800\n"
+"POT-Creation-Date: 2013-05-28 16:03+0800\n"
 "PO-Revision-Date: 2013-03-25 15:30+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -30,7 +30,6 @@ msgid "Cancel"
 msgstr "取消"
 
 #: ../ui/preference.py:229 ../ui/software_center.py:621
-#: ../ui/software_center.py:663
 msgid "Deepin Software Center"
 msgstr "软件中心"
 
@@ -148,7 +147,7 @@ msgstr "%s: %s款软件"
 msgid "%s > %s applications"
 msgstr "%s > %s: %s款软件"
 
-#: ../ui/home_page.py:716
+#: ../ui/home_page.py:716 ../ui/software_center.py:663
 msgid "Home"
 msgstr "首页推荐"
 
@@ -234,16 +233,16 @@ msgid "Join us"
 msgstr "加入我们"
 
 #: ../ui/software_center.py:664
-msgid "System Upgrade"
-msgstr " 系统升级"
+msgid "Upgrade"
+msgstr "系统升级"
 
 #: ../ui/software_center.py:665
-msgid "Remove packages"
-msgstr " 卸载软件"
+msgid "Uninstall"
+msgstr "卸载软件"
 
 #: ../ui/software_center.py:666
-msgid "Manage installations"
-msgstr " 安装管理"
+msgid "Install Manage"
+msgstr "安装管理"
 
 #: ../ui/software_center.py:686 ../ui/software_center.py:895
 msgid "Refresh applications lists"
@@ -718,3 +717,4 @@ msgstr "卸载中"
 #: ../ui/uninstall_page.py:565
 msgid "Uninstall successful"
 msgstr "卸载完成"
+

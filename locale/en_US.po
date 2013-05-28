@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-28 15:52+0800\n"
+"POT-Creation-Date: 2013-05-28 16:03+0800\n"
 "PO-Revision-Date: 2013-05-28 15:52+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -30,7 +30,6 @@ msgid "Cancel"
 msgstr "Cancel"
 
 #: ../ui/preference.py:229 ../ui/software_center.py:621
-#: ../ui/software_center.py:663
 msgid "Deepin Software Center"
 msgstr "Deepin Software Center"
 
@@ -60,7 +59,7 @@ msgstr "General"
 
 #: ../ui/preference.py:297
 msgid "Software repository"
-msgstr "Software repository"
+msgstr "Mirrors"
 
 #: ../ui/preference.py:298
 msgid "About"
@@ -145,22 +144,20 @@ msgid "Select Directory"
 msgstr "Select Directory"
 
 #: ../ui/home_page.py:467
-#, python-format
 msgid "%s: %s applications"
 msgstr "%s: %s applications"
 
 #: ../ui/home_page.py:660
-#, python-format
 msgid "%s > %s applications"
 msgstr "%s > %s applications"
 
-#: ../ui/home_page.py:716
+#: ../ui/home_page.py:716 ../ui/software_center.py:663
 msgid "Home"
 msgstr "Home"
 
 #: ../ui/home_page.py:742
 msgid "Hot applications"
-msgstr "Hot applications"
+msgstr "Hot apps"
 
 #: ../ui/home_page.py:742
 msgid "Topics"
@@ -183,12 +180,10 @@ msgid "Top 25 of all time"
 msgstr "Top 25 of all time"
 
 #: ../ui/software_center.py:116
-#, python-format
 msgid "%s haven't any desktop file"
 msgstr "%s haven't any desktop file"
 
 #: ../ui/software_center.py:124
-#, python-format
 msgid "%s: request for starting applications sent"
 msgstr "%s: request for starting applications sent"
 
@@ -209,7 +204,6 @@ msgid "Comment was failed. Please check your network connection!"
 msgstr "Comment was failed. Please check your network connection!"
 
 #: ../ui/software_center.py:349
-#, python-format
 msgid "Update applications lists: %s"
 msgstr "Update applications lists: %s"
 
@@ -222,24 +216,20 @@ msgid "Failed to refresh applications lists."
 msgstr "Failed to refresh applications lists."
 
 #: ../ui/software_center.py:379
-#, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted"
 msgstr ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted"
 
 #: ../ui/software_center.py:382
-#, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
 msgstr "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
 
 #: ../ui/software_center.py:391
-#, python-format
 msgid "%s cannot be installed on 64-bit system."
 msgstr "%s cannot be installed on 64-bit system."
 
 #: ../ui/software_center.py:393
-#, python-format
 msgid "%s cannot be installed. It might be a x86_64 specific package"
 msgstr "%s cannot be installed. It might be a x86_64 specific package"
 
@@ -248,16 +238,16 @@ msgid "Join us"
 msgstr "Join us"
 
 #: ../ui/software_center.py:664
-msgid "System Upgrade"
-msgstr "System Upgrade"
+msgid "Upgrade"
+msgstr "Upgrade"
 
 #: ../ui/software_center.py:665
-msgid "Remove packages"
-msgstr "Remove packages"
+msgid "Uninstall"
+msgstr "Uninstall"
 
 #: ../ui/software_center.py:666
-msgid "Manage installations"
-msgstr "Manage installations"
+msgid "Install Manage"
+msgstr "Installation"
 
 #: ../ui/software_center.py:686 ../ui/software_center.py:895
 msgid "Refresh applications lists"
@@ -288,7 +278,6 @@ msgid "Refreshing applications lists"
 msgstr "Refreshing applications lists"
 
 #: ../ui/software_center.py:949
-#, python-format
 msgid "You have cleared up %s pakcages and saved %s of space"
 msgstr "You have cleared up %s pakcages and saved %s of space"
 
@@ -297,7 +286,6 @@ msgid "Your system is clean."
 msgstr "Your system is clean."
 
 #: ../ui/search_page.py:105
-#, python-format
 msgid "%s: %s matched applications"
 msgstr "%s: %s matched applications"
 
@@ -602,7 +590,6 @@ msgid "Text editor"
 msgstr "Text editor"
 
 #: ../ui/install_page.py:115
-#, python-format
 msgid "%s applications are being installed"
 msgstr "%s applications are being installed"
 
@@ -649,7 +636,6 @@ msgid "Also in the category..."
 msgstr "Also in the category..."
 
 #: ../ui/detail_page.py:345
-#, python-format
 msgid "Download: %s"
 msgstr "Download: %s"
 
@@ -658,7 +644,6 @@ msgid "Category: "
 msgstr "Category: "
 
 #: ../ui/detail_page.py:372
-#, python-format
 msgid "Version: %s"
 msgstr "Version: %s"
 
@@ -687,17 +672,14 @@ msgid "Powered by 又拍云存储"
 msgstr "Powered by 又拍云存储"
 
 #: ../ui/upgrade_page.py:109
-#, python-format
 msgid "Last upgraded time: %s"
 msgstr "Last upgraded time: %s"
 
 #: ../ui/upgrade_page.py:117 ../ui/upgrade_page.py:181
-#, python-format
 msgid "Unwatched (%s)"
 msgstr "Unwatched (%s)"
 
 #: ../ui/upgrade_page.py:177
-#, python-format
 msgid "%s applications are available for upgrade"
 msgstr "%s applications are available for upgrade"
 
@@ -706,12 +688,10 @@ msgid "Watch again"
 msgstr "Watch again"
 
 #: ../ui/upgrade_page.py:245
-#, python-format
 msgid "%s applications are not being watched"
 msgstr "%s applications are not being watched"
 
 #: ../ui/upgrade_page.py:548
-#, python-format
 msgid "Refresh applications lists %s%%"
 msgstr "Refresh applications lists %s%%"
 
@@ -728,7 +708,6 @@ msgid "Upgrade complete"
 msgstr "Upgrade complete"
 
 #: ../ui/uninstall_page.py:157
-#, python-format
 msgid "%s applications can be uninstalled"
 msgstr "%s applications can be uninstalled"
 
