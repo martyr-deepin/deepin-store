@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-27 10:46+0800\n"
+"POT-Creation-Date: 2013-05-28 15:38+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../ui/preference.py:106
-msgid "No name"
+msgid "Untitled"
 msgstr ""
 
 #: ../ui/preference.py:123
-msgid "No mirror url"
+msgid "Unknown mirror url"
 msgstr ""
 
 #: ../ui/preference.py:211
@@ -30,6 +30,7 @@ msgid "Cancel"
 msgstr ""
 
 #: ../ui/preference.py:229 ../ui/software_center.py:621
+#: ../ui/software_center.py:663
 msgid "Deepin Software Center"
 msgstr ""
 
@@ -39,51 +40,55 @@ msgstr ""
 
 #: ../ui/preference.py:251
 msgid ""
-"深度软件中心是Linux平台通用的软件管理中心，精选了2600多款优秀软件，集成了软件"
-"安装与卸载、软件仓库、热门软件推荐等多项功能。支持一键快速安装软件、多线程下"
-"载及智能清理下载缓存。提供专题介绍，分享好软件。\n"
-"\n"
-"深度软件中心是自由软件，遵循自由软件基金会发布的GNU通用公共许可证第三版。"
+"Deepin Software Center is a commonly used software center on Linux. It "
+"selected more than 2,600 decent applications and features easy installation "
+"and uninstall, software repository and recommended applications. It supports "
+"1-click install, downloading packages with multi-thread and clearing up "
+"cached packages. It provides topics for software introduction and shares "
+"good applications. \n"
 msgstr ""
 
 #: ../ui/preference.py:296
-msgid "常规"
+msgid "General"
 msgstr ""
 
 #: ../ui/preference.py:297
-msgid "软件源"
+msgid "Software repository"
 msgstr ""
 
 #: ../ui/preference.py:298
-msgid "关于"
+msgid "About"
 msgstr ""
 
 #: ../ui/preference.py:318
-msgid "Select software mirror"
+msgid "Select mirror"
 msgstr ""
 
 #: ../ui/preference.py:338
-msgid "Select Best Mirror"
+msgid "Select fastest mirror"
 msgstr ""
 
 #: ../ui/preference.py:359
-msgid "选择最佳源"
+msgid "Select best mirror"
 msgstr ""
 
 #: ../ui/preference.py:360
-msgid "请等待，此过程根据网速不同会持续30秒或者更长时间"
+msgid ""
+"Please wait. The process will take 30 seconds or more depending on your "
+"network connection"
 msgstr ""
 
 #: ../ui/preference.py:380
-msgid "软件源已经更改，正在更新软件列表"
+msgid "The software repository has changed. Refreshing applications lists"
 msgstr ""
 
 #: ../ui/preference.py:382 ../ui/software_center.py:897
-msgid "后台执行"
+msgid "Run in background"
 msgstr ""
 
 #: ../ui/preference.py:415
-msgid "测试下载源失败, 请检查您的网络连接！"
+msgid ""
+"Test for downloading mirror failed. Please check your network connection."
 msgstr ""
 
 #: ../ui/preference.py:416
@@ -91,11 +96,11 @@ msgid "Close"
 msgstr ""
 
 #: ../ui/preference.py:466
-msgid "Source update"
+msgid "Update applications lists"
 msgstr ""
 
 #: ../ui/preference.py:472
-msgid "Interval time: "
+msgid "Time interval: "
 msgstr ""
 
 #: ../ui/preference.py:475
@@ -132,40 +137,40 @@ msgstr ""
 
 #: ../ui/home_page.py:467
 #, python-format
-msgid "%s: %s款软件"
+msgid "%s: %s applications"
 msgstr ""
 
 #: ../ui/home_page.py:660
 #, python-format
-msgid "%s > %s: %s款软件"
+msgid "%s > %s applications"
 msgstr ""
 
 #: ../ui/home_page.py:716
-msgid "Home Recommends"
+msgid "Home"
 msgstr ""
 
 #: ../ui/home_page.py:742
-msgid "热门推荐"
+msgid "Hot applications"
 msgstr ""
 
 #: ../ui/home_page.py:742
-msgid "专题介绍"
+msgid "Topics"
 msgstr ""
 
 #: ../ui/home_page.py:742
-msgid "下载排行"
+msgid "Download rank"
 msgstr ""
 
 #: ../ui/download_rank_page.py:56
-msgid "周排行Top25"
+msgid "Top 25 weekly"
 msgstr ""
 
 #: ../ui/download_rank_page.py:56
-msgid "月排行Top25"
+msgid "Top 25 monthly"
 msgstr ""
 
 #: ../ui/download_rank_page.py:56
-msgid "总排行Top25"
+msgid "Top 25 of all time"
 msgstr ""
 
 #: ../ui/software_center.py:116
@@ -175,118 +180,115 @@ msgstr ""
 
 #: ../ui/software_center.py:124
 #, python-format
-msgid "%s: 已经发送启动请求"
+msgid "%s: request for starting applications sent"
 msgstr ""
 
 #: ../ui/software_center.py:179
-msgid "发送评分..."
+msgid "Sending comment..."
 msgstr ""
 
 #: ../ui/software_center.py:183
-msgid "您已经评过分了哟！ ;)"
+msgid "You have already sent a comment ;)"
 msgstr ""
 
 #: ../ui/software_center.py:188
-msgid "评分成功， 感谢您的参与！ :)"
+msgid "Comment was successful. Thanks for your involvement. :)"
 msgstr ""
 
 #: ../ui/software_center.py:197
-msgid "评分失败，请检查您的网络连接！"
+msgid "Comment was failed. Please check your network connection!"
 msgstr ""
 
 #: ../ui/software_center.py:349
 #, python-format
-msgid "更新软件列表: %s"
+msgid "Update applications lists: %s"
 msgstr ""
 
 #: ../ui/software_center.py:358
-msgid "软件列表更新完成!"
+msgid "Successfully refreshed applications lists."
 msgstr ""
 
 #: ../ui/software_center.py:370
-msgid "软件列表更新失败!"
+msgid "Failed to refresh applications lists."
 msgstr ""
 
 #: ../ui/software_center.py:379
 #, python-format
-msgid "分析%s依赖出现问题， 安装停止"
+msgid ""
+"Problem occurred when analyzing dependencies for %s. Installation aborted"
 msgstr ""
 
 #: ../ui/software_center.py:382
 #, python-format
-msgid "分析%s依赖出现问题， 升级停止"
+msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
 msgstr ""
 
 #: ../ui/software_center.py:391
 #, python-format
-msgid "%s在64位系统上不能被安装"
+msgid "%s cannot be installed on 64-bit system."
 msgstr ""
 
 #: ../ui/software_center.py:393
 #, python-format
-msgid "%s在32位系统上不能被安装，该包可能是64位系统特有的包"
+msgid "%s cannot be installed. It might be a x86_64 specific package"
 msgstr ""
 
 #: ../ui/software_center.py:644
-msgid "加入我们"
-msgstr ""
-
-#: ../ui/software_center.py:663
-msgid " 软件中心"
+msgid "Join us"
 msgstr ""
 
 #: ../ui/software_center.py:664
-msgid " 系统升级"
+msgid "System Upgrade"
 msgstr ""
 
 #: ../ui/software_center.py:665
-msgid " 卸载软件"
+msgid "Remove packages"
 msgstr ""
 
 #: ../ui/software_center.py:666
-msgid " 安装管理"
+msgid "Manage installations"
 msgstr ""
 
 #: ../ui/software_center.py:686 ../ui/software_center.py:895
-msgid "更新软件列表"
+msgid "Refresh applications lists"
 msgstr ""
 
 #: ../ui/software_center.py:687
-msgid "打开下载目录"
+msgid "Open download directory"
 msgstr ""
 
 #: ../ui/software_center.py:688
-msgid "智能清理下载文件"
+msgid "Cleare up cached packages"
 msgstr ""
 
 #: ../ui/software_center.py:689
-msgid "显示新功能"
+msgid "View new features"
 msgstr ""
 
 #: ../ui/software_center.py:690
-msgid "选项"
+msgid "Option"
 msgstr ""
 
 #: ../ui/software_center.py:691
-msgid "退出"
+msgid "Quit"
 msgstr ""
 
 #: ../ui/software_center.py:895
-msgid "正在更新软件列表"
+msgid "Refreshing applications lists"
 msgstr ""
 
 #: ../ui/software_center.py:949
 #, python-format
-msgid "恭喜您清理了%s个软件包，共节约了%s空间"
+msgid "You have cleared up %s pakcages and saved %s of space"
 msgstr ""
 
 #: ../ui/software_center.py:951
-msgid "您的系统已经很干净了，不需要清理."
+msgid "Your system is clean."
 msgstr ""
 
 #: ../ui/search_page.py:105
 #, python-format
-msgid "%s: 搜索到%s款软件"
+msgid "%s: %s matched applications"
 msgstr ""
 
 #: ../ui/category_info.py:26
@@ -454,7 +456,7 @@ msgid "Office"
 msgstr ""
 
 #: ../ui/category_info.py:67
-msgid "Scanning printing"
+msgid "Scanning &. printing"
 msgstr ""
 
 #: ../ui/category_info.py:68
@@ -591,83 +593,83 @@ msgstr ""
 
 #: ../ui/install_page.py:115
 #, python-format
-msgid "%s款软件正在安装"
+msgid "%s applications are being installed"
 msgstr ""
 
 #: ../ui/install_page.py:289 ../ui/install_page.py:582
 #: ../ui/upgrade_page.py:1229
-msgid "分析依赖中"
+msgid "Analyzing dependencies"
 msgstr ""
 
 #: ../ui/install_page.py:524 ../ui/install_page.py:536
-msgid "下载被终止"
+msgid "Download was interrupted"
 msgstr ""
 
 #: ../ui/install_page.py:546
-msgid "安装被终止"
+msgid "Installation was interrupted"
 msgstr ""
 
 #: ../ui/install_page.py:589 ../ui/upgrade_page.py:1116
 #: ../ui/upgrade_page.py:1236
-msgid "等待下载"
+msgid "Waiting for download"
 msgstr ""
 
 #: ../ui/install_page.py:596 ../ui/upgrade_page.py:1243
-msgid "下载中"
+msgid "Downloading"
 msgstr ""
 
 #: ../ui/install_page.py:612
-msgid "等待安装"
+msgid "Waiting for installation"
 msgstr ""
 
 #: ../ui/install_page.py:622 ../ui/upgrade_page.py:1269
-msgid "分析依赖失败"
+msgid "Analyzing dependencies failed"
 msgstr ""
 
 #: ../ui/install_page.py:631 ../ui/install_page.py:638
-msgid "安装中"
+msgid "Installing"
 msgstr ""
 
 #: ../ui/install_page.py:647
-msgid "安装完成"
+msgid "Installation complete"
 msgstr ""
 
 #: ../ui/detail_page.py:177
-msgid "同类热门推荐"
+msgid "Also in the category..."
 msgstr ""
 
 #: ../ui/detail_page.py:345
 #, python-format
-msgid "下载：%s"
+msgid "Download: %s"
 msgstr ""
 
 #: ../ui/detail_page.py:369
-msgid "类别："
+msgid "Category: "
 msgstr ""
 
 #: ../ui/detail_page.py:372
 #, python-format
-msgid "版本：%s"
+msgid "Version: %s"
 msgstr ""
 
 #: ../ui/detail_page.py:373
-msgid "下载：0"
+msgid "Download: 0"
 msgstr ""
 
 #: ../ui/detail_page.py:374
-msgid "大小：计算中..."
+msgid "Size: calculating..."
 msgstr ""
 
 #: ../ui/detail_page.py:379
-msgid "访问首页"
+msgid "Visit Homepage"
 msgstr ""
 
 #: ../ui/detail_page.py:420
-msgid "已安装"
+msgid "Successfully installed"
 msgstr ""
 
 #: ../ui/detail_page.py:465
-msgid "正在加载评论..."
+msgid "Loading comments..."
 msgstr ""
 
 #: ../ui/detail_page.py:588
@@ -676,58 +678,62 @@ msgstr ""
 
 #: ../ui/upgrade_page.py:109
 #, python-format
-msgid "最后更新时间: %s"
+msgid "Last upgraded time: %s"
 msgstr ""
 
 #: ../ui/upgrade_page.py:117 ../ui/upgrade_page.py:181
 #, python-format
-msgid "不再提醒升级(%s)"
+msgid "Unwatched (%s)"
 msgstr ""
 
 #: ../ui/upgrade_page.py:177
 #, python-format
-msgid "当前可升级软件共 %s 款"
+msgid "%s applications are available for upgrade"
 msgstr ""
 
 #: ../ui/upgrade_page.py:211
-msgid "重新提醒"
+msgid "Watch again"
 msgstr ""
 
 #: ../ui/upgrade_page.py:245
 #, python-format
-msgid "有%s款软件不再提醒"
+msgid "%s applications are not being watched"
 msgstr ""
 
 #: ../ui/upgrade_page.py:548
 #, python-format
-msgid "更新软件列表 %s%%"
+msgid "Refresh applications lists %s%%"
 msgstr ""
 
 #: ../ui/upgrade_page.py:1259
-msgid "等待升级"
+msgid "Waiting for upgrade"
 msgstr ""
 
 #: ../ui/upgrade_page.py:1278 ../ui/upgrade_page.py:1285
-msgid "升级中"
+msgid "Upgrading"
 msgstr ""
 
 #: ../ui/upgrade_page.py:1294
-msgid "升级完成"
+msgid "Upgrade complete"
 msgstr ""
 
 #: ../ui/uninstall_page.py:157
 #, python-format
-msgid "%s款软件可以卸载"
+msgid "%s applications can be uninstalled"
 msgstr ""
 
-#: ../ui/uninstall_page.py:461 ../ui/uninstall_page.py:544
+#: ../ui/uninstall_page.py:461
 msgid "等待卸载"
 msgstr ""
 
+#: ../ui/uninstall_page.py:544
+msgid "Waiting for uninstall"
+msgstr ""
+
 #: ../ui/uninstall_page.py:551 ../ui/uninstall_page.py:558
-msgid "卸载中"
+msgid "Uninstalling"
 msgstr ""
 
 #: ../ui/uninstall_page.py:565
-msgid "卸载完成"
+msgid "Uninstall successful"
 msgstr ""

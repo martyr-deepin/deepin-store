@@ -64,7 +64,7 @@ category_info = {
     "viewer" : _("Viewer"),
     "productivity" : _("Productivity"),
     "office" : _("Office"),
-    "scanning_printing" : _("Scanning printing"),
+    "scanning_printing" : _("Scanning &. printing"),
     "industry" : _("Industry"),
     "engineering" : _("Engineering"),
     "finance" : _("Finance"),

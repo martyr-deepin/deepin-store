@@ -106,7 +106,7 @@ class NewestBar(gtk.HBox):
     def set_update_time(self):
         last_upgrade_time = get_last_upgrade_time()
         if last_upgrade_time != "":
-            self.message_label.set_text(_("最后更新时间: %s") % get_last_upgrade_time())
+            self.message_label.set_text(_("Last upgraded time: %s") % get_last_upgrade_time())
         else:
             self.message_label.set_text("")
         
@@ -114,7 +114,7 @@ class NewestBar(gtk.HBox):
         
         container_remove_all(self.no_notify_label_align)
         if no_notify_num > 0:
-            self.no_notify_label.set_text(_("不再提醒升级(%s)") % no_notify_num)
+            self.no_notify_label.set_text(_("Unwatched (%s)") % no_notify_num)
             self.no_notify_label_align.add(self.no_notify_label)
             
             self.show_all()
@@ -174,11 +174,11 @@ class UpgradeBar(gtk.HBox):
             global_event.emit("unselect-all-upgrade-pkg")
         
     def set_upgrade_info(self, upgrade_num, no_notify_num):
-        self.message_label.set_text(_("当前可升级软件共 %s 款") % upgrade_num)
+        self.message_label.set_text(_("%s applications are available for upgrade") % upgrade_num)
         
         container_remove_all(self.no_notify_label_align)
         if no_notify_num > 0:
-            self.no_notify_label.set_text(_("不再提醒升级(%s)") % no_notify_num)
+            self.no_notify_label.set_text(_("Unwatched (%s)") % no_notify_num)
             self.no_notify_label_align.add(self.no_notify_label)
             
             self.show_all()
@@ -208,7 +208,7 @@ class NoNotifyBar(gtk.HBox):
         self.message_label_align.set_padding(0, 0, 0, 0)
         self.message_label_align.add(self.message_label)
         self.notify_again_label = Label(
-            _("重新提醒"),
+            _("Watch again"),
             hover_color=app_theme.get_color("homepage_hover")
             )
         self.notify_again_label.set_clickable()
@@ -242,7 +242,7 @@ class NoNotifyBar(gtk.HBox):
             global_event.emit("unselect-all-notify-pkg")
         
     def set_notify_info(self, notify_again_num):
-        self.message_label.set_text(_("有%s款软件不再提醒") % notify_again_num)
+        self.message_label.set_text(_("%s applications are not being watched") % notify_again_num)
         
         self.message_label_align.show_all()
         
@@ -545,7 +545,7 @@ class UpgradePage(gtk.VBox):
             self.upgrade_progress_status = self.upgrade_progress_status[1::]
             
             self.current_progress = "%.2f" % float(self.current_progress)
-            self.upgrading_bar.set_upgrading_message(_("更新软件列表 %s%%") % self.current_progress)
+            self.upgrading_bar.set_upgrading_message(_("Refresh applications lists %s%%") % self.current_progress)
             
         return True    
         
@@ -1113,7 +1113,7 @@ class UpgradeItem(TreeItem):
             if self.status == self.STATUS_NORMAL:
                 if self.is_in_button_area(column, offset_x, offset_y):
                     self.status = self.STATUS_WAIT_DOWNLOAD
-                    self.status_text = _("等待下载")
+                    self.status_text = _("Waiting for download")
                     
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
@@ -1226,21 +1226,21 @@ class UpgradeItem(TreeItem):
     
     def download_ready(self):
         self.status = self.STATUS_READY_DOWNLOAD
-        self.status_text = _("分析依赖中")
+        self.status_text = _("Analyzing dependencies")
     
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
                 
     def download_wait(self):
         self.status = self.STATUS_WAIT_DOWNLOAD
-        self.status_text = _("等待下载")
+        self.status_text = _("Waiting for download")
 
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
     
     def download_start(self):
         self.status = self.STATUS_IN_DOWNLOAD
-        self.status_text = _("下载中")
+        self.status_text = _("Downloading")
     
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
@@ -1256,7 +1256,7 @@ class UpgradeItem(TreeItem):
     def download_finish(self):
         self.status = self.STATUS_WAIT_UPGRADE
         self.progress_buffer.progress = 0
-        self.status_text = _("等待升级")
+        self.status_text = _("Waiting for upgrade")
     
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
@@ -1266,7 +1266,7 @@ class UpgradeItem(TreeItem):
             
     def download_parse_failed(self):
         self.status = self.STATUS_PARSE_DOWNLOAD_FAILED
-        self.status_text = _("分析依赖失败")
+        self.status_text = _("Analyzing dependencies failed")
     
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
@@ -1275,14 +1275,14 @@ class UpgradeItem(TreeItem):
             
     def action_start(self):
         self.status = self.STATUS_IN_UPGRADE
-        self.status_text = _("升级中")
+        self.status_text = _("Upgrading")
     
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
                 
     def action_update(self, percent):
         self.status = self.STATUS_IN_UPGRADE
-        self.status_text = _("升级中")
+        self.status_text = _("Upgrading")
         self.progress_buffer.progress = percent
         
         if self.redraw_request_callback:
@@ -1291,7 +1291,7 @@ class UpgradeItem(TreeItem):
     def action_finish(self):
         self.status = self.STATUS_UPGRADE_FINISH
         self.progress_buffer.progress = 100
-        self.status_text = _("升级完成")
+        self.status_text = _("Upgrade complete")
         
         if self.redraw_request_callback:
             self.redraw_request_callback(self)

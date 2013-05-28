@@ -53,7 +53,7 @@ class DownloadRankPage(gtk.VBox):
         self.tab_box_align = gtk.Alignment()
         self.tab_box_align.set(1, 0, 0, 0)
         self.tab_box_align.set_padding(3, 9, 25, 48)
-        for (tab_index, tab_name) in enumerate([_("周排行Top25"), _("月排行Top25"), _("总排行Top25")]):
+        for (tab_index, tab_name) in enumerate([_("Top 25 weekly"), _("Top 25 monthly"), _("Top 25 of all time")]):
             self.tab_box.pack_start(RankTab(tab_index, tab_name, tab_index == 0), False, False)
             
         self.page_box = gtk.VBox()    

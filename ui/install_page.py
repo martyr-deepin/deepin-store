@@ -112,7 +112,7 @@ class InstallPage(gtk.VBox):
         else:
             container_remove_all(self.message_box)
             self.message_box.pack_start(self.message_bar, True, True)
-            self.message_bar.set_message(_("%s款软件正在安装") % len(treeview.visible_items))
+            self.message_bar.set_message(_("%s applications are being installed") % len(treeview.visible_items))
             
             children = self.content_box.get_children()
             if len(children) == 0 or children[0] == self.cute_message_image:
@@ -286,7 +286,7 @@ class InstallItem(TreeItem):
         self.grade_star = 0
         
         self.status = self.STATUS_READY_DOWNLOAD
-        self.status_text = _("分析依赖中")
+        self.status_text = _("Analyzing dependencies")
         self.progress_buffer = ProgressBuffer()
         
     def render_pkg_info(self, cr, rect):
@@ -521,7 +521,7 @@ class InstallItem(TreeItem):
             if self.status == self.STATUS_WAIT_DOWNLOAD:
                 if self.is_stop_button_can_click(column, offset_x, offset_y):
                     self.status = self.STATUS_STOP_DOWNLOAD
-                    self.status_text = _("下载被终止")
+                    self.status_text = _("Download was interrupted")
                     
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
@@ -533,7 +533,7 @@ class InstallItem(TreeItem):
             elif self.status == self.STATUS_IN_DOWNLOAD:
                 if self.is_stop_button_can_click(column, offset_x, offset_y):
                     self.status = self.STATUS_STOP_DOWNLOAD
-                    self.status_text = _("下载被终止")
+                    self.status_text = _("Download was interrupted")
                     
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
@@ -543,7 +543,7 @@ class InstallItem(TreeItem):
             elif self.status == self.STATUS_WAIT_INSTALL:
                 if self.is_stop_button_can_click(column, offset_x, offset_y):
                     self.status = self.STATUS_STOP_WAIT_INSTALL
-                    self.status_text = _("安装被终止")
+                    self.status_text = _("Installation was interrupted")
                     
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
@@ -579,21 +579,21 @@ class InstallItem(TreeItem):
     
     def download_ready(self):
         self.status = self.STATUS_READY_DOWNLOAD
-        self.status_text = _("分析依赖中")
+        self.status_text = _("Analyzing dependencies")
 
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
     
     def download_wait(self):
         self.status = self.STATUS_WAIT_DOWNLOAD
-        self.status_text = _("等待下载")
+        self.status_text = _("Waiting for download")
 
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
     
     def download_start(self):
         self.status = self.STATUS_IN_DOWNLOAD
-        self.status_text = _("下载中")
+        self.status_text = _("Downloading")
     
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
@@ -609,7 +609,7 @@ class InstallItem(TreeItem):
     def download_finish(self):
         self.status = self.STATUS_WAIT_INSTALL
         self.progress_buffer.progress = 0
-        self.status_text = _("等待安装")
+        self.status_text = _("Waiting for installation")
     
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
@@ -619,7 +619,7 @@ class InstallItem(TreeItem):
     
     def download_parse_failed(self):
         self.status = self.STATUS_PARSE_DOWNLOAD_FAILED
-        self.status_text = _("分析依赖失败")
+        self.status_text = _("Analyzing dependencies failed")
     
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
@@ -628,14 +628,14 @@ class InstallItem(TreeItem):
         
     def action_start(self):
         self.status = self.STATUS_IN_INSTALL
-        self.status_text = _("安装中")
+        self.status_text = _("Installing")
     
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
                 
     def action_update(self, percent):
         self.status = self.STATUS_IN_INSTALL
-        self.status_text = _("安装中")
+        self.status_text = _("Installing")
         self.progress_buffer.progress = percent
         
         if self.redraw_request_callback:
@@ -644,7 +644,7 @@ class InstallItem(TreeItem):
     def action_finish(self):
         self.status = self.STATUS_INSTALL_FINISH
         self.progress_buffer.progress = 100
-        self.status_text = _("安装完成")
+        self.status_text = _("Installation complete")
         
         if self.redraw_request_callback:
             self.redraw_request_callback(self)

@@ -174,7 +174,7 @@ class DetailPage(gtk.HBox):
         self.left_recommend_box_align.set_padding(30, 0, 14, 0)
         self.left_recommend_box_align.add(self.left_recommend_box)
         
-        self.left_recommend_label = Label(_("同类热门推荐"))
+        self.left_recommend_label = Label(_("Also in the category..."))
         
         self.right_info_box = gtk.VBox()
         self.scrolled_window = ScrolledWindow(0, 0)
@@ -342,7 +342,7 @@ class DetailPage(gtk.HBox):
         self.pkg_star_mark.queue_draw()
 
         self.downlad_number = info[0]['down_nums'].encode('utf-8').strip()
-        self.left_download_label.set_text(_('下载：%s') % self.downlad_number)
+        self.left_download_label.set_text(_('Download: %s') % self.downlad_number)
             
     def update_pkg_info(self, pkg_name):
         #start_time = time.time()
@@ -366,17 +366,17 @@ class DetailPage(gtk.HBox):
         
         container_remove_all(self.left_category_box)
         if self.category != None:
-            self.left_category_name_label.set_text(_("类别："))
+            self.left_category_name_label.set_text(_("Category: "))
             self.left_category_label.set_text(get_category_name(self.category[1]))
             self.left_category_box.add(self.left_category_label_box)
-        self.left_version_label.set_text(_("版本：%s") % self.version)
-        self.left_download_label.set_text(_("下载：0"))
-        self.left_size_label.set_text(_("大小：计算中..."))
+        self.left_version_label.set_text(_("Version: %s") % self.version)
+        self.left_download_label.set_text(_("Download: 0"))
+        self.left_size_label.set_text(_("Size: calculating..."))
         
         #print "%s: #2# %s" % (pkg_name, time.time() - start_time)
         container_remove_all(self.left_homepage_box)
         if self.homepage != "":
-            homepage_label = Label(_("访问首页"), 
+            homepage_label = Label(_("Visit Homepage"), 
                                    text_color=app_theme.get_color("homepage"),
                                    hover_color=app_theme.get_color("homepage_hover"))
             homepage_label.set_clickable()
@@ -417,7 +417,7 @@ class DetailPage(gtk.HBox):
         install_status = reply
         if install_status[0][0]:
             if self.category == None:
-                status_label = Label(_("已安装"))
+                status_label = Label(_("Successfully installed"))
                 self.left_action_box.pack_start(status_label)
             else:
                 action_button = ImageButton(
@@ -462,7 +462,7 @@ class DetailPage(gtk.HBox):
     def fetch_comment(self):
         if is_network_connected():
             container_remove_all(self.right_comment_box)    
-            loading_label = Label(_("正在加载评论..."))
+            loading_label = Label(_("Loading comments..."))
             loading_label_align = gtk.Alignment(0.5, 0, 0, 0)
             loading_label_align.add(loading_label)
             loading_label_align.set_padding(10, 0, 0, 0)

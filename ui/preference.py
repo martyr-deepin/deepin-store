@@ -103,7 +103,7 @@ class MirrorItem(TreeItem):
             draw_text(cr, self.name, rect.x, rect.y, rect.width, rect.height,
                     alignment = pango.ALIGN_LEFT)
         else:
-            name = _("No name")
+            name = _("Untitled")
             (text_width, text_height) = get_content_size(name)
             draw_text(cr, name, rect.x, rect.y, rect.width, rect.height,
                     alignment = pango.ALIGN_LEFT)
@@ -120,7 +120,7 @@ class MirrorItem(TreeItem):
             draw_text(cr, self.mirror_url, rect.x, rect.y, rect.width, rect.height,
                     alignment = pango.ALIGN_LEFT)
         else:
-            mirror_url = _("No mirror url")
+            mirror_url = _("Unknown mirror url")
             (text_width, text_height) = get_content_size(mirror_url)
             draw_text(cr, mirror_url, rect.x, rect.y, rect.width, rect.height,
                     alignment = pango.ALIGN_LEFT)
@@ -248,7 +248,7 @@ class AboutBox(gtk.VBox):
         title_box.pack_start(align, True, True)
         title_box.pack_start(info_box, False, False)
         
-        describe = _("深度软件中心是Linux平台通用的软件管理中心，精选了2600多款优秀软件，集成了软件安装与卸载、软件仓库、热门软件推荐等多项功能。支持一键快速安装软件、多线程下载及智能清理下载缓存。提供专题介绍，分享好软件。\n\n深度软件中心是自由软件，遵循自由软件基金会发布的GNU通用公共许可证第三版。")
+        describe = _("Deepin Software Center is a commonly used software center on Linux. It selected more than 2,600 decent applications and features easy installation and uninstall, software repository and recommended applications. It supports 1-click install, downloading packages with multi-thread and clearing up cached packages. It provides topics for software introduction and shares good applications. \n")
         
         describe_label = Label(describe, enable_select=False, wrap_width=400, text_size=10)
         main_box.pack_start(title_box, False, False)
@@ -293,9 +293,9 @@ class DscPreferenceDialog(PreferenceDialog):
         self.mirror_settings_align.add(self.mirror_settings_scrolled_win)
 
         self.set_preference_items([
-            (_("常规"), self.normal_settings_align),
-            (_("软件源"), self.mirror_settings_align),
-            (_("关于"), AboutBox()),
+            (_("General"), self.normal_settings_align),
+            (_("Software repository"), self.mirror_settings_align),
+            (_("About"), AboutBox()),
             ])
         
     def mirror_settings_align_expose(self, widget, event=None):
@@ -315,7 +315,7 @@ class DscPreferenceDialog(PreferenceDialog):
         main_table = gtk.Table(4, 2)
         main_table.set_row_spacings(CONTENT_ROW_SPACING)
         
-        dir_title_label = Label(_("Select software mirror"))
+        dir_title_label = Label(_("Select mirror"))
         dir_title_label.set_size_request(400, 12)
         label_align = gtk.Alignment()
         label_align.set_padding(0, 0, 0, 0)
@@ -335,7 +335,7 @@ class DscPreferenceDialog(PreferenceDialog):
         self.mirror_view.draw_mask = self.mirror_treeview_draw_mask
         #self.display_current_mirror()
 
-        self.mirror_test_button = Button(_("Select Best Mirror"))
+        self.mirror_test_button = Button(_("Select fastest mirror"))
         self.mirror_test_button.connect('clicked', self.test_mirror_action)
         mirror_test_button_align = gtk.Alignment(0, 0.5, 0, 0)
         mirror_test_button_align.set_padding(0, 0, 7, 5)
@@ -356,8 +356,8 @@ class DscPreferenceDialog(PreferenceDialog):
         main_table.attach(mirror_test_button_align, 0, 1, 3, 4, xoptions=gtk.FILL)
         main_table.attach(self.mirror_message_hbox, 1, 2, 3, 4, xoptions=gtk.FILL)
         
-        title = _("选择最佳源")
-        info_message = _("请等待，此过程根据网速不同会持续30秒或者更长时间")
+        title = _("Select best mirror")
+        info_message = _("Please wait. The process will take 30 seconds or more depending on your network connection")
         self.select_best_mirror_dialog = WaitingDialog(title, info_message, self.cancel_mirror_test)
         global_event.register_event("mirror-changed", self.mirror_changed_handler)
         global_event.register_event("update-list-finish", self.update_list_finish_handler)
@@ -377,9 +377,9 @@ class DscPreferenceDialog(PreferenceDialog):
 
     def mirror_changed_handler(self):
         #self.select_best_mirror_dialog.titlebar.change_title('更新')
-        self.select_best_mirror_dialog.info_message_label.set_text(_("软件源已经更改，正在更新软件列表"))
+        self.select_best_mirror_dialog.info_message_label.set_text(_("The software repository has changed. Refreshing applications lists"))
         self.select_best_mirror_dialog.show_all()
-        self.select_best_mirror_dialog.close_button.set_label(_("后台执行"))
+        self.select_best_mirror_dialog.close_button.set_label(_("Run in background"))
     
     def test_mirror_action(self, widget):
         self.select_best_mirror_dialog.show_all()
@@ -412,7 +412,7 @@ class DscPreferenceDialog(PreferenceDialog):
                         self.mirror_clicked_callback(item)
             else:
                 self.select_best_mirror_dialog.loading_widget.hide_all()
-                self.select_best_mirror_dialog.info_message_label.set_text(_("测试下载源失败, 请检查您的网络连接！"))
+                self.select_best_mirror_dialog.info_message_label.set_text(_("Test for downloading mirror failed. Please check your network connection."))
                 self.select_best_mirror_dialog.close_button.set_label(_("Close"))
             return False
 
@@ -463,13 +463,13 @@ class DscPreferenceDialog(PreferenceDialog):
         main_table = gtk.Table(3, 2)
         main_table.set_row_spacings(CONTENT_ROW_SPACING)
         
-        dir_title_label = Label(_("Source update"))
+        dir_title_label = Label(_("Update applications lists"))
         dir_title_label.set_size_request(200, 12)
         label_align = gtk.Alignment()
         label_align.set_padding(0, 0, 0, 0)
         label_align.add(dir_title_label)
         
-        update_label = Label(_("Interval time: "))
+        update_label = Label(_("Time interval: "))
         self.update_spin = SpinBox(int(get_update_interval()), 0, 168, 1)
         self.update_spin.connect("value-changed", lambda w, v: set_update_interval(v))
         hour_lablel = Label(_(" hour"))        

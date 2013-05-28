@@ -154,7 +154,7 @@ class UninstallPage(gtk.VBox):
         pass
         
     def update_message_bar(self, treeview):    
-        self.message_bar.set_message(_("%s款软件可以卸载") % len(treeview.visible_items))
+        self.message_bar.set_message(_("%s applications can be uninstalled") % len(treeview.visible_items))
         
     def draw_mask(self, cr, x, y, w, h):
         '''
@@ -458,7 +458,7 @@ class UninstallItem(TreeItem):
             elif self.status == self.STATUS_CONFIRM:
                 if self.is_confirm_button_area(column, offset_x, offset_y):
                     self.status = self.STATUS_WAIT_ACTION
-                    self.status_text = _("等待卸载")
+                    self.status_text = _("Waiting for uninstall")
                     
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
@@ -541,28 +541,28 @@ class UninstallItem(TreeItem):
     
     def action_wait(self):
         self.status = self.STATUS_WAIT_ACTION
-        self.status_text = _("等待卸载")
+        self.status_text = _("Waiting for uninstall")
 
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
     
     def action_start(self):
         self.status = self.STATUS_IN_ACTION
-        self.status_text = _("卸载中")
+        self.status_text = _("Uninstalling")
     
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
                 
     def action_update(self, percent):
         self.progress_buffer.progress = percent
-        self.status_text = _("卸载中")
+        self.status_text = _("Uninstalling")
         
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
             
     def action_finish(self):
         self.progress_buffer.progress = 100
-        self.status_text = _("卸载完成")
+        self.status_text = _("Uninstall successful")
         
         if self.redraw_request_callback:
             self.redraw_request_callback(self)

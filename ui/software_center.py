@@ -121,7 +121,7 @@ def start_pkg(pkg_name, desktop_infos, (offset_x, offset_y, popup_x, popup_y), w
         StartDesktopWindow().start(pkg_name, desktop_infos, (px - offset_x + popup_x, py - offset_y + popup_y))
         
 def start_desktop(pkg_name, desktop_path):
-    global_event.emit("show-message", _("%s: 已经发送启动请求") % (pkg_name))
+    global_event.emit("show-message", _("%s: request for starting applications sent") % (pkg_name))
     result = start_desktop_file(desktop_path.strip())
     if result != True:
         global_event.emit("show-message", result)
@@ -176,16 +176,16 @@ def grade_pkg(window, pkg_name, star):
         
     current_time = time.time()    
     if not grade_config.has_key(pkg_name) or (current_time - grade_config[pkg_name]) > ONE_DAY_SECONDS:
-        show_tooltip(window, _("发送评分..."))
+        show_tooltip(window, _("Sending comment..."))
         SendVote(pkg_name, star).start()
         
     else:
-        show_tooltip(window, _("您已经评过分了哟！ ;)"))
+        show_tooltip(window, _("You have already sent a comment ;)"))
 
 def vote_send_success_callback(pkg_name, window):
     grade_config_path, grade_config = get_grade_config()
 
-    global_event.emit("show-message", _("评分成功， 感谢您的参与！ :)"))
+    global_event.emit("show-message", _("Comment was successful. Thanks for your involvement. :)"))
     tool_tip.hide_all()
     current_time = time.time()
     
@@ -194,7 +194,7 @@ def vote_send_success_callback(pkg_name, window):
 
 def vote_send_failed_callback(pkg_name, window):
 
-    global_event.emit('show-message', _("评分失败，请检查您的网络连接！"))
+    global_event.emit('show-message', _("Comment was failed. Please check your network connection!"))
     tool_tip.hide_all()
 
 def show_tooltip(window, message):
@@ -346,7 +346,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
             elif signal_type == "update-list-update":
                 upgrade_page.update_upgrade_progress(action_content[0])
                 percent = "%.2f%%" % float(action_content[0])
-                global_event.emit("show-message", _("更新软件列表: %s") % percent)
+                global_event.emit("show-message", _("Update applications lists: %s") % percent)
                 global_event.emit('update-progress-in-update-list-dialog', float(action_content[0]), action_content[1])
 
             elif signal_type == "update-list-finish":
@@ -355,7 +355,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                         reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
                         error_handler=lambda e:handle_dbus_error("request_status", e),
                         )
-                global_event.emit("show-message", _("软件列表更新完成!"), 0)
+                global_event.emit("show-message", _("Successfully refreshed applications lists."), 0)
                 global_event.emit('update-list-finish')
                 global_event.emit("hide-update-list-dialog")
                 print "update finish"
@@ -367,7 +367,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                         reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
                         error_handler=lambda e:handle_dbus_error("request_status", e),
                         )
-                global_event.emit("show-message", _("软件列表更新失败!"), 0)
+                global_event.emit("show-message", _("Failed to refresh applications lists."), 0)
                 global_event.emit('update-list-finish')
                 global_event.emit("hide-update-list-dialog")
                 print "update finish"
@@ -376,10 +376,10 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 (pkg_name, action_type) = action_content
                 if action_type == ACTION_INSTALL:
                     install_page.download_parse_failed(pkg_name)
-                    global_event.emit("show-message", _("分析%s依赖出现问题， 安装停止") % pkg_name)
+                    global_event.emit("show-message", _("Problem occurred when analyzing dependencies for %s. Installation aborted") % pkg_name)
                 elif action_type == ACTION_UPGRADE:
                     upgrade_page.download_parse_failed(pkg_name)
-                    global_event.emit("show-message", _("分析%s依赖出现问题， 升级停止") % pkg_name)
+                    global_event.emit("show-message", _("Problem occurred when analyzing dependencies for %s. Upgrade aborted") % pkg_name)
 
             elif signal_type == "got-install-deb-pkg-name":
                 pkg_name = action_content
@@ -388,9 +388,9 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
             elif signal_type == "pkg-not-in-cache":
                 pkg_name = action_content
                 if is_64bit_system():
-                    message = _("%s在64位系统上不能被安装") % pkg_name
+                    message = _("%s cannot be installed on 64-bit system.") % pkg_name
                 else:
-                    message = _("%s在32位系统上不能被安装，该包可能是64位系统特有的包") % pkg_name
+                    message = _("%s cannot be installed. It might be a x86_64 specific package") % pkg_name
                 global_event.emit("show-message", message)
         except Exception, e:
             print e
@@ -641,7 +641,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.statusbar = Statusbar(24)
         status_box = gtk.HBox()
         self.message_box = gtk.HBox()
-        join_us_button = LinkButton(_("加入我们"), "http://www.linuxdeepin.com/joinus/job")
+        join_us_button = LinkButton(_("Join us"), "http://www.linuxdeepin.com/joinus/job")
         join_us_button_align = gtk.Alignment()
         join_us_button_align.set(0.5, 0.5, 0, 0)
         join_us_button_align.set_padding(0, 3, 0, 10)
@@ -660,10 +660,10 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
         self.navigatebar = Navigatebar(
                 [
-                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_home.png')), _(" 软件中心"), self.show_home_page),
-                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_update.png')), _(" 系统升级"), self.show_upgrade_page),
-                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_uninstall.png')), _(" 卸载软件"), self.show_uninstall_page),
-                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_download.png')), _(" 安装管理"), self.show_install_page),
+                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_home.png')), _("Deepin Software Center"), self.show_home_page),
+                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_update.png')), _("System Upgrade"), self.show_upgrade_page),
+                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_uninstall.png')), _("Remove packages"), self.show_uninstall_page),
+                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_download.png')), _("Manage installations"), self.show_install_page),
                 ],
                 font_size = 11,
                 padding_x = 2,
@@ -683,12 +683,12 @@ class DeepinSoftwareCenter(dbus.service.Object):
         # Init menu.
         menu = Menu(
             [
-             (None, _("更新软件列表"), self.update_list_handler),
-             (None, _("打开下载目录"), self.open_download_directory),
-             (None, _("智能清理下载文件"), self.clean_download_cache),
-             (None, _("显示新功能"), lambda : self.show_wizard_win()),
-             (None, _("选项"), self.show_preference_dialog),
-             (None, _("退出"), self.exit),
+             (None, _("Refresh applications lists"), self.update_list_handler),
+             (None, _("Open download directory"), self.open_download_directory),
+             (None, _("Cleare up cached packages"), self.clean_download_cache),
+             (None, _("View new features"), lambda : self.show_wizard_win()),
+             (None, _("Option"), self.show_preference_dialog),
+             (None, _("Quit"), self.exit),
              ],
             is_root_menu=True,
             menu_min_width=150,
@@ -892,9 +892,9 @@ class DeepinSoftwareCenter(dbus.service.Object):
         try:
             self.show_dialog('update_list_dialog')
         except:
-            self.update_list_dialog = WaitingDialog(_("更新软件列表"), _("正在更新软件列表"))
+            self.update_list_dialog = WaitingDialog(_("Refresh applications lists"), _("Refreshing applications lists"))
             self.update_list_dialog.set_size_request(300, 120)
-            self.update_list_dialog.close_button.set_label(_("后台执行"))
+            self.update_list_dialog.close_button.set_label(_("Run in background"))
             self.update_list_dialog.show_all()
         if not self.in_update_list:
             self.request_update_list()
@@ -946,9 +946,9 @@ class DeepinSoftwareCenter(dbus.service.Object):
     def clean_download_cache_reply(obj, result):
         num, size = result
         if num != 0:
-            message = _("恭喜您清理了%s个软件包，共节约了%s空间") % (num, bit_to_human_str(size))
+            message = _("You have cleared up %s pakcages and saved %s of space") % (num, bit_to_human_str(size))
         else:
-            message = _("您的系统已经很干净了，不需要清理.")
+            message = _("Your system is clean.")
         global_event.emit("show-message", message, 5000)
 
     def run(self):    
