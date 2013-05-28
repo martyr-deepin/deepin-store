@@ -35,4 +35,7 @@ _ = None
 try:
     _ = gettext.translation("deepin-software-center", LOCALE_DIR).gettext
 except Exception, e:
-    _ = lambda i : i
+    try:
+        _ = gettext.translation("deepin-software-center", LOCALE_DIR, ['en_US']).gettext
+    except Exception, e:
+        _ = lambda i : i
