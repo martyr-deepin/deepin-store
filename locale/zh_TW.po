@@ -45,6 +45,9 @@ msgid ""
 "cached packages. It provides topics for software introduction and shares "
 "good applications. \n"
 msgstr ""
+"深度軟體中心是 Linux Deepin 系統搭載的軟體管理服務中心。它為使用者提供了超過"
+" 2,600 多套應用程式。輕松安裝與解除安裝軟體、提供多線程加速下載，并可以輕松清理"
+"下載快取檔案。也創新性的提供軟件推薦和主題分享功能。\n"
 
 #: ../ui/preference.py:296
 msgid "General"
@@ -52,11 +55,11 @@ msgstr "一般"
 
 #: ../ui/preference.py:297
 msgid "Software repository"
-msgstr "軟件倉庫"
+msgstr "軟體檔案庫"
 
 #: ../ui/preference.py:298
 msgid "About"
-msgstr "關于"
+msgstr "關於"
 
 #: ../ui/preference.py:318
 msgid "Select mirror"
@@ -74,11 +77,11 @@ msgstr "選擇最佳鏡像"
 msgid ""
 "Please wait. The process will take 30 seconds or more depending on your "
 "network connection"
-msgstr "請稍等。該過程根據網路狀況不同可能會持續 30 秒或更長時間"
+msgstr "請稍等。該過程根據網路連線狀況不同可能會持續 30 秒或更長時間"
 
 #: ../ui/preference.py:380
 msgid "The software repository has changed. Refreshing applications lists"
-msgstr "軟件源已經更改，正在重新整理應用程式清單"
+msgstr "軟體檔案庫已經更改，正在重新整理應用程式清單"
 
 #: ../ui/preference.py:382 ../ui/software_center.py:897
 msgid "Run in background"
@@ -87,7 +90,7 @@ msgstr "後台運行"
 #: ../ui/preference.py:415
 msgid ""
 "Test for downloading mirror failed. Please check your network connection."
-msgstr "測試源下載失敗，請檢查您的網路連接。"
+msgstr "測試鏡像下載失敗，請檢查您的網路連線。"
 
 #: ../ui/preference.py:416
 msgid "Close"
@@ -99,7 +102,7 @@ msgstr "更新應用程式清單"
 
 #: ../ui/preference.py:472
 msgid "Time interval: "
-msgstr "時間間隔: "
+msgstr "相隔時間: "
 
 #: ../ui/preference.py:475
 msgid " hour"
@@ -111,23 +114,23 @@ msgstr "下載設定"
 
 #: ../ui/preference.py:497
 msgid "Max download task number: "
-msgstr "最大下載工作數目："
+msgstr "最大下載工作數量: "
 
 #: ../ui/preference.py:507
 msgid "Donload directory: "
-msgstr "下載目錄："
+msgstr "下載目錄: "
 
 #: ../ui/preference.py:513
 msgid "Change"
-msgstr "更改"
+msgstr "變更"
 
 #: ../ui/preference.py:529
 msgid "On uninstall software"
-msgstr "當卸載軟體時"
+msgstr "當解除安裝軟體時"
 
 #: ../ui/preference.py:534
 msgid "Delete configuration files"
-msgstr "刪除系統配置檔案"
+msgstr "刪除系統設定檔"
 
 #: ../ui/preference.py:562
 msgid "Select Directory"
@@ -141,7 +144,7 @@ msgstr "%s: %s 應用程式"
 #: ../ui/home_page.py:660
 #, python-format
 msgid "%s > %s : %s applications"
-msgstr "%s > %s : %s 款軟體"
+msgstr "%s > %s : %s 款應用程式"
 
 #: ../ui/home_page.py:716 ../ui/software_center.py:663
 msgid "Home"
@@ -153,7 +156,7 @@ msgstr "熱門程式"
 
 #: ../ui/home_page.py:742
 msgid "Topics"
-msgstr "專題介紹"
+msgstr "主題園地"
 
 #: ../ui/home_page.py:742
 msgid "Download rank"
@@ -161,25 +164,25 @@ msgstr "下載排名"
 
 #: ../ui/download_rank_page.py:56
 msgid "Top 25 weekly"
-msgstr "周排行 Top25"
+msgstr "週排行Top25"
 
 #: ../ui/download_rank_page.py:56
 msgid "Top 25 monthly"
-msgstr "月排行 Top25"
+msgstr "月排行Top25"
 
 #: ../ui/download_rank_page.py:56
 msgid "Top 25 of all time"
-msgstr "總排行 Top25"
+msgstr "總排行Top25"
 
 #: ../ui/software_center.py:116
 #, python-format
 msgid "%s haven't any desktop file"
-msgstr "%s 沒有桌面啟動文件"
+msgstr "%s 沒有桌面启动檔案"
 
 #: ../ui/software_center.py:124
 #, python-format
 msgid "%s: request for starting applications sent"
-msgstr "%s：已經發送程序啟動請求"
+msgstr "%s：已經發送应用程式啟動請求"
 
 #: ../ui/software_center.py:179
 msgid "Sending comment..."
@@ -191,45 +194,45 @@ msgstr "您已經評過分數了 ;)"
 
 #: ../ui/software_center.py:188
 msgid "Comment was successful. Thanks for your involvement. :)"
-msgstr "評分成功。感謝您的評論。:)"
+msgstr "評分成功。感謝您的參與。:)"
 
 #: ../ui/software_center.py:197
 msgid "Comment was failed. Please check your network connection!"
-msgstr "評分失敗。請檢查您的網路連接！"
+msgstr "評分失敗。請檢查您的網路連線！"
 
 #: ../ui/software_center.py:349
 #, python-format
 msgid "Update applications lists: %s"
-msgstr "升級應用程序清單：%s"
+msgstr "更新應用程式清單：%s"
 
 #: ../ui/software_center.py:358
 msgid "Successfully refreshed applications lists."
-msgstr "已成功重新整理了應用程序清單。"
+msgstr "已成功重新整理了應用程式清單。"
 
 #: ../ui/software_center.py:370
 msgid "Failed to refresh applications lists."
-msgstr "無法重新整理應用程序清單。"
+msgstr "無法重新整理應用程式清單。"
 
 #: ../ui/software_center.py:379
 #, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted"
-msgstr "分析 %s 依賴時發生問題。安裝停止"
+msgstr "分析 %s 相依關係時發生問題。安裝停止"
 
 #: ../ui/software_center.py:382
 #, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
-msgstr "分析 %s 依賴時發生問題。升級停止"
+msgstr "分析 %s 相依關係時發生問題。升級停止"
 
 #: ../ui/software_center.py:391
 #, python-format
 msgid "%s cannot be installed on 64-bit system."
-msgstr "無法將 %s 安裝在 64 位系統上。"
+msgstr "無法將 %s 安裝在 64 位元系統上。"
 
 #: ../ui/software_center.py:393
 #, python-format
 msgid "%s cannot be installed. It might be a x86_64 specific package"
-msgstr "無法安裝 %s。它可能是 64 位系統特有的軟件包"
+msgstr "無法安裝 %s。它可能是 64 位元系統特有的套件"
 
 #: ../ui/software_center.py:644
 msgid "Join us"
@@ -241,7 +244,7 @@ msgstr "系統升級"
 
 #: ../ui/software_center.py:665
 msgid "Uninstall"
-msgstr "卸載軟件"
+msgstr "解除安裝"
 
 #: ../ui/software_center.py:666
 msgid "Install Manage"
@@ -249,19 +252,19 @@ msgstr "安裝管理"
 
 #: ../ui/software_center.py:686 ../ui/software_center.py:895
 msgid "Refresh applications lists"
-msgstr "刷新軟件列表"
+msgstr "重新整理應用程式清單"
 
 #: ../ui/software_center.py:687
 msgid "Open download directory"
-msgstr "打開下載目錄"
+msgstr "開啟下載目錄"
 
 #: ../ui/software_center.py:688
 msgid "Cleare up cached packages"
-msgstr "清理緩存軟件包"
+msgstr "清理快取套件"
 
 #: ../ui/software_center.py:689
 msgid "View new features"
-msgstr "查看新特性"
+msgstr "檢視新特性"
 
 #: ../ui/software_center.py:690
 msgid "Option"
@@ -273,12 +276,12 @@ msgstr "退出"
 
 #: ../ui/software_center.py:895
 msgid "Refreshing applications lists"
-msgstr "正在更新軟體列表"
+msgstr "正在重新整理應用程式清單"
 
 #: ../ui/software_center.py:949
 #, python-format
 msgid "You have cleared up %s pakcages and saved %s of space"
-msgstr "恭喜您清理了 %s 個軟件包，共節約了 %s 磁盤空間"
+msgstr "恭喜您清理了 %s 個套件，共節約了 %s 磁碟空間"
 
 #: ../ui/software_center.py:951
 msgid "Your system is clean."
@@ -287,11 +290,11 @@ msgstr "您的系統已經很幹淨了，無需進行清理。"
 #: ../ui/search_page.py:105
 #, python-format
 msgid "%s: %s matched applications"
-msgstr "%s：搜索到 %s 款應用軟體"
+msgstr "%s：搜尋到 %s 款應用程式"
 
 #: ../ui/category_info.py:26
 msgid "Internet"
-msgstr "網路應用"
+msgstr "網際網路"
 
 #: ../ui/category_info.py:27
 msgid "Browser"
@@ -307,7 +310,7 @@ msgstr "電子郵件"
 
 #: ../ui/category_info.py:30
 msgid "File transfer"
-msgstr "文件傳輸"
+msgstr "檔案傳輸程式"
 
 #: ../ui/category_info.py:31
 msgid "News"
@@ -315,7 +318,7 @@ msgstr "新聞"
 
 #: ../ui/category_info.py:32
 msgid "Remote access"
-msgstr "遠端訪問"
+msgstr "遠端存取"
 
 #: ../ui/category_info.py:33
 msgid "Security"
