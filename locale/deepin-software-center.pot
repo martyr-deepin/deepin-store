@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-29 09:30+0800\n"
+"POT-Creation-Date: 2013-05-29 14:26+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -115,7 +115,7 @@ msgid "Max download task number: "
 msgstr ""
 
 #: ../ui/preference.py:507
-msgid "Donload directory: "
+msgid "Download directory: "
 msgstr ""
 
 #: ../ui/preference.py:513
@@ -132,6 +132,14 @@ msgstr ""
 
 #: ../ui/preference.py:562
 msgid "Select Directory"
+msgstr ""
+
+#: ../ui/home_page.py:295
+msgid "11"
+msgstr ""
+
+#: ../ui/home_page.py:296
+msgid "10"
 msgstr ""
 
 #: ../ui/home_page.py:467
@@ -257,7 +265,7 @@ msgid "Open download directory"
 msgstr ""
 
 #: ../ui/software_center.py:688
-msgid "Cleare up cached packages"
+msgid "Clear up cached packages"
 msgstr ""
 
 #: ../ui/software_center.py:689
@@ -288,6 +296,14 @@ msgstr ""
 #: ../ui/search_page.py:105
 #, python-format
 msgid "%s: %s matched applications"
+msgstr ""
+
+#: ../ui/item_render.py:45
+msgid "Unwatch"
+msgstr ""
+
+#: ../ui/item_render.py:47 ../ui/upgrade_page.py:211
+msgid "Watch again"
 msgstr ""
 
 #: ../ui/category_info.py:26
@@ -688,10 +704,6 @@ msgstr ""
 #: ../ui/upgrade_page.py:177
 #, python-format
 msgid "%s applications are available for upgrade"
-msgstr ""
-
-#: ../ui/upgrade_page.py:211
-msgid "Watch again"
 msgstr ""
 
 #: ../ui/upgrade_page.py:245

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-29 09:28+0800\n"
+"POT-Creation-Date: 2013-05-29 14:26+0800\n"
 "PO-Revision-Date: 2013-05-28 15:52+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -47,7 +47,7 @@ msgid ""
 "good applications. \n"
 msgstr ""
 "Deepin Software Center is a commonly used software center on Linux. It "
-"selected more than 2,600 decent applications and features easy installation "
+"provides more than 2,600 decent applications and features easy installation "
 "and uninstall, software repository and recommended applications. It supports "
 "1-click install, downloading packages with multi-thread and clearing up "
 "cached packages. It provides topics for software introduction and shares "
@@ -87,7 +87,7 @@ msgstr ""
 
 #: ../ui/preference.py:380
 msgid "The software repository has changed. Refreshing applications lists"
-msgstr "The software repository has changed. Refreshing applications lists"
+msgstr "The software repository has changed. Refreshing application list"
 
 #: ../ui/preference.py:382 ../ui/software_center.py:897
 msgid "Run in background"
@@ -105,7 +105,7 @@ msgstr "Close"
 
 #: ../ui/preference.py:466
 msgid "Update applications lists"
-msgstr "Update applications lists"
+msgstr "Update application list"
 
 #: ../ui/preference.py:472
 msgid "Time interval: "
@@ -124,8 +124,8 @@ msgid "Max download task number: "
 msgstr "Max download task number: "
 
 #: ../ui/preference.py:507
-msgid "Donload directory: "
-msgstr "Donload directory: "
+msgid "Download directory: "
+msgstr "Download directory: "
 
 #: ../ui/preference.py:513
 msgid "Change"
@@ -143,15 +143,25 @@ msgstr "Delete configuration files"
 msgid "Select Directory"
 msgstr "Select Directory"
 
+# first category name size
+#: ../ui/home_page.py:295
+msgid "11"
+msgstr "9"
+
+# second category name size
+#: ../ui/home_page.py:296
+msgid "10"
+msgstr "8"
+
 #: ../ui/home_page.py:467
 #, python-format
 msgid "%s: %s applications"
 msgstr "%s: %s applications"
 
 #: ../ui/home_page.py:660
-#, fuzzy, python-format
+#, python-format
 msgid "%s > %s : %s applications"
-msgstr "%s > %s applications"
+msgstr "%s > %s : %s applications"
 
 #: ../ui/home_page.py:716 ../ui/software_center.py:663
 msgid "Home"
@@ -205,20 +215,20 @@ msgstr "Comment was successful. Thanks for your involvement. :)"
 
 #: ../ui/software_center.py:197
 msgid "Comment was failed. Please check your network connection!"
-msgstr "Comment was failed. Please check your network connection!"
+msgstr "Comment failed. Please check your network connection!"
 
 #: ../ui/software_center.py:349
 #, python-format
 msgid "Update applications lists: %s"
-msgstr "Update applications lists: %s"
+msgstr "Update application lists: %s"
 
 #: ../ui/software_center.py:358
 msgid "Successfully refreshed applications lists."
-msgstr "Successfully refreshed applications lists."
+msgstr "Successfully refreshed application list."
 
 #: ../ui/software_center.py:370
 msgid "Failed to refresh applications lists."
-msgstr "Failed to refresh applications lists."
+msgstr "Failed to refresh application list."
 
 #: ../ui/software_center.py:379
 #, python-format
@@ -260,15 +270,15 @@ msgstr "Installation"
 
 #: ../ui/software_center.py:686 ../ui/software_center.py:895
 msgid "Refresh applications lists"
-msgstr "Refresh applications lists"
+msgstr "Refresh application list"
 
 #: ../ui/software_center.py:687
 msgid "Open download directory"
 msgstr "Open download directory"
 
 #: ../ui/software_center.py:688
-msgid "Cleare up cached packages"
-msgstr "Cleare up cached packages"
+msgid "Clear up cached packages"
+msgstr "Clear up cached packages"
 
 #: ../ui/software_center.py:689
 msgid "View new features"
@@ -284,12 +294,12 @@ msgstr "Quit"
 
 #: ../ui/software_center.py:895
 msgid "Refreshing applications lists"
-msgstr "Refreshing applications lists"
+msgstr "Refreshing application list"
 
 #: ../ui/software_center.py:949
 #, python-format
 msgid "You have cleared up %s pakcages and saved %s of space"
-msgstr "You have cleared up %s pakcages and saved %s of space"
+msgstr "You have cleared up %s pakcages and freed %s of space"
 
 #: ../ui/software_center.py:951
 msgid "Your system is clean."
@@ -299,6 +309,14 @@ msgstr "Your system is clean."
 #, python-format
 msgid "%s: %s matched applications"
 msgstr "%s: %s matched applications"
+
+#: ../ui/item_render.py:45
+msgid "Unwatch"
+msgstr "Unwatch"
+
+#: ../ui/item_render.py:47 ../ui/upgrade_page.py:211
+msgid "Watch again"
+msgstr "Watch again"
 
 #: ../ui/category_info.py:26
 msgid "Internet"
@@ -312,6 +330,7 @@ msgstr "Browser"
 msgid "Instant messaging"
 msgstr "Instant messaging"
 
+# 需调整宽度
 #: ../ui/category_info.py:29
 msgid "Email"
 msgstr "Email"
@@ -342,11 +361,11 @@ msgstr "Multimedia"
 
 #: ../ui/category_info.py:36
 msgid "Audiovideo"
-msgstr "Audiovideo"
+msgstr "Audio/video"
 
 #: ../ui/category_info.py:37
 msgid "Audiovideo editing"
-msgstr "Audiovideo editing"
+msgstr "Audio/video editing"
 
 #: ../ui/category_info.py:38
 msgid "Disc burner"
@@ -382,23 +401,23 @@ msgstr "Games"
 
 #: ../ui/category_info.py:46
 msgid "Action games"
-msgstr "Action games"
+msgstr "Action game"
 
 #: ../ui/category_info.py:47
 msgid "Advernture games"
-msgstr "Advernture games"
+msgstr "Advernture game"
 
 #: ../ui/category_info.py:48
 msgid "Arcade games"
-msgstr "Arcade games"
+msgstr "Arcade game"
 
 #: ../ui/category_info.py:49
 msgid "Board games"
-msgstr "Board games"
+msgstr "Board game"
 
 #: ../ui/category_info.py:50
 msgid "Card games"
-msgstr "Card games"
+msgstr "Card game"
 
 #: ../ui/category_info.py:51
 msgid "Emulator"
@@ -406,27 +425,27 @@ msgstr "Emulator"
 
 #: ../ui/category_info.py:52
 msgid "Kids games"
-msgstr "Kids games"
+msgstr "Kids game"
 
 #: ../ui/category_info.py:53
 msgid "Logic games"
-msgstr "Logic games"
+msgstr "Logic game"
 
 #: ../ui/category_info.py:54
 msgid "Puzzle games"
-msgstr "Puzzle games"
+msgstr "Puzzle game"
 
 #: ../ui/category_info.py:55
 msgid "Role-playing games"
-msgstr "Role-playing games"
+msgstr "Role-playing game"
 
 #: ../ui/category_info.py:56
 msgid "Sports games"
-msgstr "Sports games"
+msgstr "Sports game"
 
 #: ../ui/category_info.py:57
 msgid "Strategy games"
-msgstr "Strategy games"
+msgstr "Strategy game"
 
 #: ../ui/category_info.py:58
 msgid "Graphics"
@@ -444,6 +463,7 @@ msgstr "3D graphics"
 msgid "Image processing"
 msgstr "Image processing"
 
+# 调整宽度
 #: ../ui/category_info.py:62
 msgid "Photography"
 msgstr "Photography"
@@ -528,6 +548,7 @@ msgstr "IDE"
 msgid "Software development"
 msgstr "Software development"
 
+# 调整宽度
 #: ../ui/category_info.py:83
 msgid "Version control"
 msgstr "Version control"
@@ -536,6 +557,7 @@ msgstr "Version control"
 msgid "Web development"
 msgstr "Web development"
 
+# 调整宽度
 #: ../ui/category_info.py:85
 msgid "System"
 msgstr "System"
@@ -544,6 +566,7 @@ msgstr "System"
 msgid "Desktop environment"
 msgstr "Desktop environment"
 
+# 调整宽度
 #: ../ui/category_info.py:87
 msgid "Monitor"
 msgstr "Monitor"
@@ -568,6 +591,7 @@ msgstr "Virtualization"
 msgid "Window manager"
 msgstr "Window manager"
 
+# 调整宽度
 #: ../ui/category_info.py:93
 msgid "Utilities"
 msgstr "Utilities"
@@ -596,6 +620,7 @@ msgstr "Screensaver"
 msgid "Terminal emulator"
 msgstr "Terminal emulator"
 
+# 调整宽度
 #: ../ui/category_info.py:100
 msgid "Text editor"
 msgstr "Text editor"
@@ -688,7 +713,7 @@ msgstr "Powered by 又拍云存储"
 #: ../ui/upgrade_page.py:109
 #, python-format
 msgid "Last upgraded time: %s"
-msgstr "Last upgraded time: %s"
+msgstr "Last time upgraded: %s"
 
 #: ../ui/upgrade_page.py:117 ../ui/upgrade_page.py:181
 #, python-format
@@ -700,10 +725,6 @@ msgstr "Unwatched (%s)"
 msgid "%s applications are available for upgrade"
 msgstr "%s applications are available for upgrade"
 
-#: ../ui/upgrade_page.py:211
-msgid "Watch again"
-msgstr "Watch again"
-
 #: ../ui/upgrade_page.py:245
 #, python-format
 msgid "%s applications are not being watched"
@@ -712,7 +733,7 @@ msgstr "%s applications are not being watched"
 #: ../ui/upgrade_page.py:548
 #, python-format
 msgid "Refresh applications lists %s%%"
-msgstr "Refresh applications lists %s%%"
+msgstr "Refresh application lists %s%%"
 
 #: ../ui/upgrade_page.py:1259
 msgid "Waiting for upgrade"

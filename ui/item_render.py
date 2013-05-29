@@ -25,10 +25,11 @@ from dtk.ui.draw import draw_pixbuf, draw_text
 from dtk.ui.constant import DEFAULT_FONT_SIZE
 from dtk.ui.utils import get_content_size
 from constant import ICON_DIR
+from nls import _
 
 ICON_SIZE = 48
 STAR_SIZE = 13
-NAME_SIZE = 10
+NAME_SIZE = int(_("10"))
 
 ITEM_PKG_OFFSET_X = 22
 ITEM_CHECKBUTTON_WIDTH = 32
@@ -41,9 +42,9 @@ ITEM_BUTTON_PADDING_RIGHT = 40
 ITEM_NO_NOTIFY_AREA_WIDTH = 100
 ITEM_NOTIFY_AGAIN_AREA_WIDTH = 100
 
-ITEM_NO_NOTIFY_STRING = "不再提醒"
+ITEM_NO_NOTIFY_STRING = _("Unwatch")
 (ITEM_NO_NOTIFY_WIDTH, ITEM_NO_NOTIFY_HEIGHT) = get_content_size(ITEM_NO_NOTIFY_STRING)
-ITEM_NOTIFY_AGAIN_STRING = "重新提醒"
+ITEM_NOTIFY_AGAIN_STRING = _("Watch again")
 (ITEM_NOTIFY_AGAIN_WIDTH, ITEM_NOTIFY_AGAIN_HEIGHT) = get_content_size(ITEM_NOTIFY_AGAIN_STRING)
 
 ITEM_STATUS_TEXT_PADDING_RIGHT = 130

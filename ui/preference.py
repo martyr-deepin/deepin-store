@@ -504,7 +504,7 @@ class DscPreferenceDialog(PreferenceDialog):
         download_number_hbox.pack_start(download_number_label, False, False)
         download_number_hbox.pack_start(self.download_number_comobox, False, False)
         
-        change_download_dir_label = Label(_("Donload directory: "))
+        change_download_dir_label = Label(_("Download directory: "))
         self.dir_entry = InputEntry()
         self.dir_entry.set_text(get_software_download_dir())
         self.dir_entry.set_editable(False)        

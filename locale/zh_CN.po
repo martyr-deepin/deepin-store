@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-29 09:28+0800\n"
+"POT-Creation-Date: 2013-05-29 14:26+0800\n"
 "PO-Revision-Date: 2013-03-25 15:30+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -120,7 +120,7 @@ msgid "Max download task number: "
 msgstr "最大下载任务数："
 
 #: ../ui/preference.py:507
-msgid "Donload directory: "
+msgid "Download directory: "
 msgstr "下载目录："
 
 #: ../ui/preference.py:513
@@ -138,6 +138,14 @@ msgstr "删除系统配置文件"
 #: ../ui/preference.py:562
 msgid "Select Directory"
 msgstr "选择目录"
+
+#: ../ui/home_page.py:295
+msgid "11"
+msgstr "11"
+
+#: ../ui/home_page.py:296
+msgid "10"
+msgstr "10"
 
 #: ../ui/home_page.py:467
 #, python-format
@@ -262,7 +270,7 @@ msgid "Open download directory"
 msgstr "打开下载目录"
 
 #: ../ui/software_center.py:688
-msgid "Cleare up cached packages"
+msgid "Clear up cached packages"
 msgstr "智能清理下载文件"
 
 #: ../ui/software_center.py:689
@@ -294,6 +302,14 @@ msgstr "您的系统已经很干净了，不需要清理."
 #, python-format
 msgid "%s: %s matched applications"
 msgstr "%s: 搜索到%s款软件"
+
+#: ../ui/item_render.py:45
+msgid "Unwatch"
+msgstr "不再提醒"
+
+#: ../ui/item_render.py:47 ../ui/upgrade_page.py:211
+msgid "Watch again"
+msgstr "重新提醒"
 
 #: ../ui/category_info.py:26
 msgid "Internet"
@@ -694,10 +710,6 @@ msgstr "不再提醒升级(%s)"
 #, python-format
 msgid "%s applications are available for upgrade"
 msgstr "当前可升级软件共 %s 款"
-
-#: ../ui/upgrade_page.py:211
-msgid "Watch again"
-msgstr "重新提醒"
 
 #: ../ui/upgrade_page.py:245
 #, python-format
