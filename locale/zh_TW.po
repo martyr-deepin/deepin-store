@@ -542,7 +542,7 @@ msgstr "監視器"
 
 #: ../ui/category_info.py:88
 msgid "Network"
-msgstr "網絡"
+msgstr "網路"
 
 #: ../ui/category_info.py:89
 msgid "Package manager"
