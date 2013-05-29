@@ -330,7 +330,7 @@ msgstr "雜項"
 
 #: ../ui/category_info.py:35
 msgid "Multimedia"
-msgstr "影音播放"
+msgstr "多媒體"
 
 #: ../ui/category_info.py:36
 msgid "Audiovideo"
@@ -338,19 +338,19 @@ msgstr "音頻視頻"
 
 #: ../ui/category_info.py:37
 msgid "Audiovideo editing"
-msgstr "媒體編輯"
+msgstr "聲像編輯"
 
 #: ../ui/category_info.py:38
 msgid "Disc burner"
-msgstr "光盤刻錄"
+msgstr "光碟燒錄"
 
 #: ../ui/category_info.py:39
 msgid "MIDI"
-msgstr "樂器數字接口"
+msgstr "MIDI"
 
 #: ../ui/category_info.py:40
 msgid "Mixer"
-msgstr "混音器"
+msgstr "混頻器"
 
 #: ../ui/category_info.py:41
 msgid "Player"
@@ -358,7 +358,7 @@ msgstr "播放器"
 
 #: ../ui/category_info.py:42
 msgid "Recorder"
-msgstr "錄音機"
+msgstr "錄製程式"
 
 #: ../ui/category_info.py:43
 msgid "Sequencer"
@@ -378,7 +378,7 @@ msgstr "動作游戲"
 
 #: ../ui/category_info.py:47
 msgid "Advernture games"
-msgstr "探險游戲"
+msgstr "冒險遊戲"
 
 #: ../ui/category_info.py:48
 msgid "Arcade games"
@@ -422,7 +422,7 @@ msgstr "策略游戲"
 
 #: ../ui/category_info.py:58
 msgid "Graphics"
-msgstr "圖形圖像"
+msgstr "美工繪圖"
 
 #: ../ui/category_info.py:59
 msgid "2D graphics"
@@ -434,7 +434,7 @@ msgstr "三維圖形"
 
 #: ../ui/category_info.py:61
 msgid "Image processing"
-msgstr "圖像處理"
+msgstr "影像處理"
 
 #: ../ui/category_info.py:62
 msgid "Photography"
@@ -442,11 +442,11 @@ msgstr "攝影藝術"
 
 #: ../ui/category_info.py:63
 msgid "Vector graphics"
-msgstr "適量圖形"
+msgstr "矢量圖形"
 
 #: ../ui/category_info.py:64
 msgid "Viewer"
-msgstr "圖片查看"
+msgstr "檢視器"
 
 #: ../ui/category_info.py:65
 msgid "Productivity"
@@ -458,7 +458,7 @@ msgstr "辦公套件"
 
 #: ../ui/category_info.py:67
 msgid "Scanning printing"
-msgstr "掃描打印"
+msgstr "掃描列印"
 
 #: ../ui/category_info.py:68
 msgid "Industry"
@@ -474,7 +474,7 @@ msgstr "金融"
 
 #: ../ui/category_info.py:71
 msgid "Ham radio"
-msgstr "業餘電台"
+msgstr "業餘無線電"
 
 #: ../ui/category_info.py:72
 msgid "Medical"
@@ -506,11 +506,11 @@ msgstr "開發"
 
 #: ../ui/category_info.py:79
 msgid "Database"
-msgstr "數據庫"
+msgstr "資料庫"
 
 #: ../ui/category_info.py:80
 msgid "Debugging"
-msgstr "調試"
+msgstr "除錯"
 
 #: ../ui/category_info.py:81
 msgid "IDE"
@@ -526,7 +526,7 @@ msgstr "版本控制"
 
 #: ../ui/category_info.py:84
 msgid "Web development"
-msgstr "網路開發"
+msgstr "Web 開發"
 
 #: ../ui/category_info.py:85
 msgid "System"
@@ -546,7 +546,7 @@ msgstr "網絡"
 
 #: ../ui/category_info.py:89
 msgid "Package manager"
-msgstr "軟件包管理器"
+msgstr "套件管理員"
 
 #: ../ui/category_info.py:90
 msgid "Settings"
@@ -558,19 +558,19 @@ msgstr "虛擬化"
 
 #: ../ui/category_info.py:92
 msgid "Window manager"
-msgstr "窗口管理器"
+msgstr "視窗管理員"
 
 #: ../ui/category_info.py:93
 msgid "Utilities"
-msgstr "公用工具"
+msgstr "公用程式"
 
 #: ../ui/category_info.py:94
 msgid "Accessories"
-msgstr "附件"
+msgstr "附屬應用程式"
 
 #: ../ui/category_info.py:95
 msgid "Archiving"
-msgstr "歸檔"
+msgstr "壓縮檔"
 
 #: ../ui/category_info.py:96
 msgid "Emulation"
@@ -578,15 +578,15 @@ msgstr "模擬"
 
 #: ../ui/category_info.py:97
 msgid "File manager"
-msgstr "文件管理器"
+msgstr "檔案管理程式"
 
 #: ../ui/category_info.py:98
 msgid "Screensaver"
-msgstr "屏幕保護"
+msgstr "螢幕保護程式"
 
 #: ../ui/category_info.py:99
 msgid "Terminal emulator"
-msgstr "終端模擬"
+msgstr "終端機模擬"
 
 #: ../ui/category_info.py:100
 msgid "Text editor"
@@ -595,12 +595,12 @@ msgstr "文字編輯器"
 #: ../ui/install_page.py:115
 #, python-format
 msgid "%s applications are being installed"
-msgstr "正在安裝 %s 款應用程序"
+msgstr "正在安裝 %s 款應用程式"
 
 #: ../ui/install_page.py:289 ../ui/install_page.py:582
 #: ../ui/upgrade_page.py:1229
 msgid "Analyzing dependencies"
-msgstr "正在分析依賴"
+msgstr "正在分析相依關係"
 
 #: ../ui/install_page.py:524 ../ui/install_page.py:536
 msgid "Download was interrupted"
@@ -625,7 +625,7 @@ msgstr "等待安裝"
 
 #: ../ui/install_page.py:622 ../ui/upgrade_page.py:1269
 msgid "Analyzing dependencies failed"
-msgstr "分析依賴失敗"
+msgstr "分析相依關係失敗"
 
 #: ../ui/install_page.py:631 ../ui/install_page.py:638
 msgid "Installing"
@@ -646,7 +646,7 @@ msgstr "下載：%s"
 
 #: ../ui/detail_page.py:369
 msgid "Category: "
-msgstr "類別："
+msgstr "分類："
 
 #: ../ui/detail_page.py:372
 #, python-format
@@ -663,7 +663,7 @@ msgstr "大小：正在計算..."
 
 #: ../ui/detail_page.py:379
 msgid "Visit Homepage"
-msgstr "訪問主頁"
+msgstr "訪問首頁"
 
 #: ../ui/detail_page.py:420
 msgid "Successfully installed"
@@ -690,7 +690,7 @@ msgstr "不再提醒(%s)"
 #: ../ui/upgrade_page.py:177
 #, python-format
 msgid "%s applications are available for upgrade"
-msgstr "當前共有 %s 款應用程序可獲得升級"
+msgstr "當前共有 %s 款應用程式有可用的升級"
 
 #: ../ui/upgrade_page.py:211
 msgid "Watch again"
@@ -699,12 +699,12 @@ msgstr "重新提醒"
 #: ../ui/upgrade_page.py:245
 #, python-format
 msgid "%s applications are not being watched"
-msgstr "%s 款應用程序將不再提醒"
+msgstr "%s 款應用程式將不再提醒"
 
 #: ../ui/upgrade_page.py:548
 #, python-format
 msgid "Refresh applications lists %s%%"
-msgstr "更新應用程序列表 %s%%"
+msgstr "重新整理應用程式清單 %s%%"
 
 #: ../ui/upgrade_page.py:1259
 msgid "Waiting for upgrade"
@@ -721,16 +721,16 @@ msgstr "升級完成"
 #: ../ui/uninstall_page.py:157
 #, python-format
 msgid "%s applications can be uninstalled"
-msgstr "可以卸載 %s 款應用程序"
+msgstr "有 %s 款應用程式可以解除安裝"
 
 #: ../ui/uninstall_page.py:461 ../ui/uninstall_page.py:544
 msgid "Waiting for uninstall"
-msgstr "正在等待卸載"
+msgstr "正在等待解除安裝"
 
 #: ../ui/uninstall_page.py:551 ../ui/uninstall_page.py:558
 msgid "Uninstalling"
-msgstr "正在卸載"
+msgstr "正在解除安裝"
 
 #: ../ui/uninstall_page.py:565
 msgid "Uninstall successful"
-msgstr "卸載完成"
+msgstr "解除安裝完成"
