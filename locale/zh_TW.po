@@ -1,13 +1,13 @@
 # Chinese translations for PACKAGE package.
 # Copyright (C) 2013 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Automatically generated, 2013.
+# Wang Dianjin <wangdianjin@linuxdeepin.com>, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-29 14:26+0800\n"
+"POT-Creation-Date: 2013-05-29 17:12+0800\n"
 "PO-Revision-Date: 2013-05-28 15:52+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -18,23 +18,23 @@ msgstr ""
 
 #: ../ui/preference.py:106
 msgid "Untitled"
-msgstr ""
+msgstr "無標題"
 
 #: ../ui/preference.py:123
 msgid "Unknown mirror url"
-msgstr ""
+msgstr "未知鏡像 url"
 
 #: ../ui/preference.py:211
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #: ../ui/preference.py:229 ../ui/software_center.py:621
 msgid "Deepin Software Center"
-msgstr ""
+msgstr "深度軟體中心"
 
 #: ../ui/preference.py:234
 msgid "Version:"
-msgstr ""
+msgstr "版本："
 
 #: ../ui/preference.py:251
 msgid ""
@@ -45,701 +45,704 @@ msgid ""
 "cached packages. It provides topics for software introduction and shares "
 "good applications. \n"
 msgstr ""
+"深度軟體中心是 Linux Deepin 系統搭載的軟體管理服務中心。它為使用者提供了超過 "
+"2,600 多套應用程式。輕松安裝與解除安裝軟體、提供多線程加速下載，并可以輕松清"
+"理下載快取檔案。也創新性的提供軟件推薦和主題分享功能。\n"
 
 #: ../ui/preference.py:296
 msgid "General"
-msgstr ""
+msgstr "一般"
 
 #: ../ui/preference.py:297
 msgid "Software repository"
-msgstr ""
+msgstr "軟體檔案庫"
 
 #: ../ui/preference.py:298
 msgid "About"
-msgstr ""
+msgstr "關於"
 
 #: ../ui/preference.py:318
 msgid "Select mirror"
-msgstr ""
+msgstr "選擇鏡像"
 
 #: ../ui/preference.py:338
 msgid "Select fastest mirror"
-msgstr ""
+msgstr "選擇最快鏡像"
 
 #: ../ui/preference.py:359
 msgid "Select best mirror"
-msgstr ""
+msgstr "選擇最佳鏡像"
 
 #: ../ui/preference.py:360
 msgid ""
 "Please wait. The process will take 30 seconds or more depending on your "
 "network connection"
-msgstr ""
+msgstr "請稍等。該過程根據網路連線狀況不同可能會持續 30 秒或更長時間"
 
 #: ../ui/preference.py:380
 msgid "The software repository has changed. Refreshing applications lists"
-msgstr ""
+msgstr "軟體檔案庫已經更改，正在重新整理應用程式清單"
 
 #: ../ui/preference.py:382 ../ui/software_center.py:897
 msgid "Run in background"
-msgstr ""
+msgstr "後台運行"
 
 #: ../ui/preference.py:415
 msgid ""
 "Test for downloading mirror failed. Please check your network connection."
-msgstr ""
+msgstr "測試鏡像下載失敗，請檢查您的網路連線。"
 
 #: ../ui/preference.py:416
 msgid "Close"
-msgstr ""
+msgstr "關閉"
 
 #: ../ui/preference.py:466
 msgid "Update applications lists"
-msgstr ""
+msgstr "更新應用程式清單"
 
 #: ../ui/preference.py:472
 msgid "Time interval: "
-msgstr ""
+msgstr "相隔時間: "
 
 #: ../ui/preference.py:475
 msgid " hour"
-msgstr ""
+msgstr " 小時"
 
 #: ../ui/preference.py:491
 msgid "Download settings"
-msgstr ""
+msgstr "下載設定"
 
 #: ../ui/preference.py:497
 msgid "Max download task number: "
-msgstr ""
+msgstr "最大下載工作數量: "
 
 #: ../ui/preference.py:507
 msgid "Download directory: "
-msgstr ""
+msgstr "下載目錄: "
 
 #: ../ui/preference.py:513
 msgid "Change"
-msgstr ""
+msgstr "變更"
 
 #: ../ui/preference.py:529
 msgid "On uninstall software"
-msgstr ""
+msgstr "當解除安裝軟體時"
 
 #: ../ui/preference.py:534
 msgid "Delete configuration files"
-msgstr ""
+msgstr "刪除系統設定檔"
 
 #: ../ui/preference.py:562
 msgid "Select Directory"
-msgstr ""
+msgstr "選擇目錄"
 
 #: ../ui/home_page.py:295
 msgid "11"
 msgstr ""
 
-#: ../ui/home_page.py:296
+#: ../ui/home_page.py:296 ../ui/item_render.py:32
 msgid "10"
 msgstr ""
 
 #: ../ui/home_page.py:467
 #, python-format
 msgid "%s: %s applications"
-msgstr ""
+msgstr "%s: %s 應用程式"
 
 #: ../ui/home_page.py:660
 #, python-format
 msgid "%s > %s : %s applications"
-msgstr ""
+msgstr "%s > %s : %s 款應用程式"
 
 #: ../ui/home_page.py:716 ../ui/software_center.py:663
 msgid "Home"
-msgstr ""
+msgstr "首頁推薦"
 
 #: ../ui/home_page.py:742
 msgid "Hot applications"
-msgstr ""
+msgstr "熱門程式"
 
 #: ../ui/home_page.py:742
 msgid "Topics"
-msgstr ""
+msgstr "主題園地"
 
 #: ../ui/home_page.py:742
 msgid "Download rank"
-msgstr ""
+msgstr "下載排名"
 
 #: ../ui/download_rank_page.py:56
 msgid "Top 25 weekly"
-msgstr ""
+msgstr "週排行Top25"
 
 #: ../ui/download_rank_page.py:56
 msgid "Top 25 monthly"
-msgstr ""
+msgstr "月排行Top25"
 
 #: ../ui/download_rank_page.py:56
 msgid "Top 25 of all time"
-msgstr ""
+msgstr "總排行Top25"
 
 #: ../ui/software_center.py:116
 #, python-format
 msgid "%s haven't any desktop file"
-msgstr ""
+msgstr "%s 沒有桌面启动檔案"
 
 #: ../ui/software_center.py:124
 #, python-format
 msgid "%s: request for starting applications sent"
-msgstr ""
+msgstr "%s：已經發送应用程式啟動請求"
 
 #: ../ui/software_center.py:179
 msgid "Sending comment..."
-msgstr ""
+msgstr "正在發送評分..."
 
 #: ../ui/software_center.py:183
 msgid "You have already sent a comment ;)"
-msgstr ""
+msgstr "您已經評過分數了 ;)"
 
 #: ../ui/software_center.py:188
 msgid "Comment was successful. Thanks for your involvement. :)"
-msgstr ""
+msgstr "評分成功。感謝您的參與。:)"
 
 #: ../ui/software_center.py:197
 msgid "Comment was failed. Please check your network connection!"
-msgstr ""
+msgstr "評分失敗。請檢查您的網路連線！"
 
 #: ../ui/software_center.py:349
 #, python-format
 msgid "Update applications lists: %s"
-msgstr ""
+msgstr "更新應用程式清單：%s"
 
 #: ../ui/software_center.py:358
 msgid "Successfully refreshed applications lists."
-msgstr ""
+msgstr "已成功重新整理了應用程式清單。"
 
 #: ../ui/software_center.py:370
 msgid "Failed to refresh applications lists."
-msgstr ""
+msgstr "無法重新整理應用程式清單。"
 
 #: ../ui/software_center.py:379
 #, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted"
-msgstr ""
+msgstr "分析 %s 相依關係時發生問題。安裝停止"
 
 #: ../ui/software_center.py:382
 #, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
-msgstr ""
+msgstr "分析 %s 相依關係時發生問題。升級停止"
 
 #: ../ui/software_center.py:391
 #, python-format
 msgid "%s cannot be installed on 64-bit system."
-msgstr ""
+msgstr "無法將 %s 安裝在 64 位元系統上。"
 
 #: ../ui/software_center.py:393
 #, python-format
 msgid "%s cannot be installed. It might be a x86_64 specific package"
-msgstr ""
+msgstr "無法安裝 %s。它可能是 64 位元系統特有的套件"
 
 #: ../ui/software_center.py:644
 msgid "Join us"
-msgstr ""
+msgstr "加入我們"
 
 #: ../ui/software_center.py:664
 msgid "Upgrade"
-msgstr ""
+msgstr "系統升級"
 
 #: ../ui/software_center.py:665
 msgid "Uninstall"
-msgstr ""
+msgstr "解除安裝"
 
 #: ../ui/software_center.py:666
 msgid "Install Manage"
-msgstr ""
+msgstr "安裝管理"
 
 #: ../ui/software_center.py:686 ../ui/software_center.py:895
 msgid "Refresh applications lists"
-msgstr ""
+msgstr "重新整理應用程式清單"
 
 #: ../ui/software_center.py:687
 msgid "Open download directory"
-msgstr ""
+msgstr "開啟下載目錄"
 
 #: ../ui/software_center.py:688
 msgid "Clear up cached packages"
-msgstr ""
+msgstr "清理快取套件"
 
 #: ../ui/software_center.py:689
 msgid "View new features"
-msgstr ""
+msgstr "檢視新特性"
 
 #: ../ui/software_center.py:690
 msgid "Option"
-msgstr ""
+msgstr "選項"
 
 #: ../ui/software_center.py:691
 msgid "Quit"
-msgstr ""
+msgstr "退出"
 
 #: ../ui/software_center.py:895
 msgid "Refreshing applications lists"
-msgstr ""
+msgstr "正在重新整理應用程式清單"
 
 #: ../ui/software_center.py:949
 #, python-format
 msgid "You have cleared up %s pakcages and saved %s of space"
-msgstr ""
+msgstr "恭喜您清理了 %s 個套件，共節約了 %s 磁碟空間"
 
 #: ../ui/software_center.py:951
 msgid "Your system is clean."
-msgstr ""
+msgstr "您的系統已經很幹淨了，無需進行清理。"
 
 #: ../ui/search_page.py:105
 #, python-format
 msgid "%s: %s matched applications"
-msgstr ""
+msgstr "%s：搜尋到 %s 款應用程式"
 
 #: ../ui/item_render.py:45
 msgid "Unwatch"
-msgstr ""
+msgstr "不再提醒"
 
 #: ../ui/item_render.py:47 ../ui/upgrade_page.py:211
 msgid "Watch again"
-msgstr ""
+msgstr "重新提醒"
 
 #: ../ui/category_info.py:26
 msgid "Internet"
-msgstr ""
+msgstr "網際網路"
 
 #: ../ui/category_info.py:27
 msgid "Browser"
-msgstr ""
+msgstr "瀏覽器"
 
 #: ../ui/category_info.py:28
 msgid "Instant messaging"
-msgstr ""
+msgstr "即時通訊"
 
 #: ../ui/category_info.py:29
 msgid "Email"
-msgstr ""
+msgstr "電子郵件"
 
 #: ../ui/category_info.py:30
 msgid "File transfer"
-msgstr ""
+msgstr "檔案傳輸程式"
 
 #: ../ui/category_info.py:31
 msgid "News"
-msgstr ""
+msgstr "新聞"
 
 #: ../ui/category_info.py:32
 msgid "Remote access"
-msgstr ""
+msgstr "遠端存取"
 
 #: ../ui/category_info.py:33
 msgid "Security"
-msgstr ""
+msgstr "安全"
 
 #: ../ui/category_info.py:34
 msgid "Miscellaneous"
-msgstr ""
+msgstr "雜項"
 
 #: ../ui/category_info.py:35
 msgid "Multimedia"
-msgstr ""
+msgstr "多媒體"
 
 #: ../ui/category_info.py:36
 msgid "Audiovideo"
-msgstr ""
+msgstr "音頻視頻"
 
 #: ../ui/category_info.py:37
 msgid "Audiovideo editing"
-msgstr ""
+msgstr "聲像編輯"
 
 #: ../ui/category_info.py:38
 msgid "Disc burner"
-msgstr ""
+msgstr "光碟燒錄"
 
 #: ../ui/category_info.py:39
 msgid "MIDI"
-msgstr ""
+msgstr "MIDI"
 
 #: ../ui/category_info.py:40
 msgid "Mixer"
-msgstr ""
+msgstr "混頻器"
 
 #: ../ui/category_info.py:41
 msgid "Player"
-msgstr ""
+msgstr "播放器"
 
 #: ../ui/category_info.py:42
 msgid "Recorder"
-msgstr ""
+msgstr "錄製程式"
 
 #: ../ui/category_info.py:43
 msgid "Sequencer"
-msgstr ""
+msgstr "音序器"
 
 #: ../ui/category_info.py:44
 msgid "Tuner"
-msgstr ""
+msgstr "調諧器"
 
 #: ../ui/category_info.py:45
 msgid "Games"
-msgstr ""
+msgstr "游戲娛樂"
 
 #: ../ui/category_info.py:46
 msgid "Action games"
-msgstr ""
+msgstr "動作游戲"
 
 #: ../ui/category_info.py:47
 msgid "Advernture games"
-msgstr ""
+msgstr "冒險遊戲"
 
 #: ../ui/category_info.py:48
 msgid "Arcade games"
-msgstr ""
+msgstr "街機游戲"
 
 #: ../ui/category_info.py:49
 msgid "Board games"
-msgstr ""
+msgstr "棋盤游戲"
 
 #: ../ui/category_info.py:50
 msgid "Card games"
-msgstr ""
+msgstr "紙牌游戲"
 
 #: ../ui/category_info.py:51
 msgid "Emulator"
-msgstr ""
+msgstr "模擬器"
 
 #: ../ui/category_info.py:52
 msgid "Kids games"
-msgstr ""
+msgstr "兒童游戲"
 
 #: ../ui/category_info.py:53
 msgid "Logic games"
-msgstr ""
+msgstr "邏輯游戲"
 
 #: ../ui/category_info.py:54
 msgid "Puzzle games"
-msgstr ""
+msgstr "益智游戲"
 
 #: ../ui/category_info.py:55
 msgid "Role-playing games"
-msgstr ""
+msgstr "角色扮演游戲"
 
 #: ../ui/category_info.py:56
 msgid "Sports games"
-msgstr ""
+msgstr "體育游戲"
 
 #: ../ui/category_info.py:57
 msgid "Strategy games"
-msgstr ""
+msgstr "策略游戲"
 
 #: ../ui/category_info.py:58
 msgid "Graphics"
-msgstr ""
+msgstr "美工繪圖"
 
 #: ../ui/category_info.py:59
 msgid "2D graphics"
-msgstr ""
+msgstr "二維圖形"
 
 #: ../ui/category_info.py:60
 msgid "3D graphics"
-msgstr ""
+msgstr "三維圖形"
 
 #: ../ui/category_info.py:61
 msgid "Image processing"
-msgstr ""
+msgstr "影像處理"
 
 #: ../ui/category_info.py:62
 msgid "Photography"
-msgstr ""
+msgstr "攝影藝術"
 
 #: ../ui/category_info.py:63
 msgid "Vector graphics"
-msgstr ""
+msgstr "矢量圖形"
 
 #: ../ui/category_info.py:64
 msgid "Viewer"
-msgstr ""
+msgstr "檢視器"
 
 #: ../ui/category_info.py:65
 msgid "Productivity"
-msgstr ""
+msgstr "辦公軟體"
 
 #: ../ui/category_info.py:66
 msgid "Office"
-msgstr ""
+msgstr "辦公套件"
 
 #: ../ui/category_info.py:67
 msgid "Scanning printing"
-msgstr ""
+msgstr "掃描列印"
 
 #: ../ui/category_info.py:68
 msgid "Industry"
-msgstr ""
+msgstr "行業軟體"
 
 #: ../ui/category_info.py:69
 msgid "Engineering"
-msgstr ""
+msgstr "工程"
 
 #: ../ui/category_info.py:70
 msgid "Finance"
-msgstr ""
+msgstr "金融"
 
 #: ../ui/category_info.py:71
 msgid "Ham radio"
-msgstr ""
+msgstr "業餘無線電"
 
 #: ../ui/category_info.py:72
 msgid "Medical"
-msgstr ""
+msgstr "醫療"
 
 #: ../ui/category_info.py:73
 msgid "Publishing"
-msgstr ""
+msgstr "出版"
 
 #: ../ui/category_info.py:74
 msgid "Education"
-msgstr ""
+msgstr "教育"
 
 #: ../ui/category_info.py:75
 msgid "Languages"
-msgstr ""
+msgstr "語言"
 
 #: ../ui/category_info.py:76
 msgid "Religion"
-msgstr ""
+msgstr "宗教"
 
 #: ../ui/category_info.py:77
 msgid "Science"
-msgstr ""
+msgstr "科學"
 
 #: ../ui/category_info.py:78
 msgid "Development"
-msgstr ""
+msgstr "開發"
 
 #: ../ui/category_info.py:79
 msgid "Database"
-msgstr ""
+msgstr "資料庫"
 
 #: ../ui/category_info.py:80
 msgid "Debugging"
-msgstr ""
+msgstr "除錯"
 
 #: ../ui/category_info.py:81
 msgid "IDE"
-msgstr ""
+msgstr "集成開發環境"
 
 #: ../ui/category_info.py:82
 msgid "Software development"
-msgstr ""
+msgstr "軟體開發"
 
 #: ../ui/category_info.py:83
 msgid "Version control"
-msgstr ""
+msgstr "版本控制"
 
 #: ../ui/category_info.py:84
 msgid "Web development"
-msgstr ""
+msgstr "Web 開發"
 
 #: ../ui/category_info.py:85
 msgid "System"
-msgstr ""
+msgstr "系統"
 
 #: ../ui/category_info.py:86
 msgid "Desktop environment"
-msgstr ""
+msgstr "桌面環境"
 
 #: ../ui/category_info.py:87
 msgid "Monitor"
-msgstr ""
+msgstr "監視器"
 
 #: ../ui/category_info.py:88
 msgid "Network"
-msgstr ""
+msgstr "網路"
 
 #: ../ui/category_info.py:89
 msgid "Package manager"
-msgstr ""
+msgstr "套件管理員"
 
 #: ../ui/category_info.py:90
 msgid "Settings"
-msgstr ""
+msgstr "設定"
 
 #: ../ui/category_info.py:91
 msgid "Virtualization"
-msgstr ""
+msgstr "虛擬化"
 
 #: ../ui/category_info.py:92
 msgid "Window manager"
-msgstr ""
+msgstr "視窗管理員"
 
 #: ../ui/category_info.py:93
 msgid "Utilities"
-msgstr ""
+msgstr "公用程式"
 
 #: ../ui/category_info.py:94
 msgid "Accessories"
-msgstr ""
+msgstr "附屬應用程式"
 
 #: ../ui/category_info.py:95
 msgid "Archiving"
-msgstr ""
+msgstr "壓縮檔"
 
 #: ../ui/category_info.py:96
 msgid "Emulation"
-msgstr ""
+msgstr "模擬"
 
 #: ../ui/category_info.py:97
 msgid "File manager"
-msgstr ""
+msgstr "檔案管理程式"
 
 #: ../ui/category_info.py:98
 msgid "Screensaver"
-msgstr ""
+msgstr "螢幕保護程式"
 
 #: ../ui/category_info.py:99
 msgid "Terminal emulator"
-msgstr ""
+msgstr "終端機模擬"
 
 #: ../ui/category_info.py:100
 msgid "Text editor"
-msgstr ""
+msgstr "文字編輯器"
 
 #: ../ui/install_page.py:115
 #, python-format
 msgid "%s applications are being installed"
-msgstr ""
+msgstr "正在安裝 %s 款應用程式"
 
 #: ../ui/install_page.py:289 ../ui/install_page.py:582
 #: ../ui/upgrade_page.py:1229
 msgid "Analyzing dependencies"
-msgstr ""
+msgstr "正在分析相依關係"
 
 #: ../ui/install_page.py:524 ../ui/install_page.py:536
 msgid "Download was interrupted"
-msgstr ""
+msgstr "下載被中斷"
 
 #: ../ui/install_page.py:546
 msgid "Installation was interrupted"
-msgstr ""
+msgstr "安裝被中斷"
 
 #: ../ui/install_page.py:589 ../ui/upgrade_page.py:1116
 #: ../ui/upgrade_page.py:1236
 msgid "Waiting for download"
-msgstr ""
+msgstr "等待下載"
 
 #: ../ui/install_page.py:596 ../ui/upgrade_page.py:1243
 msgid "Downloading"
-msgstr ""
+msgstr "正在下載"
 
 #: ../ui/install_page.py:612
 msgid "Waiting for installation"
-msgstr ""
+msgstr "等待安裝"
 
 #: ../ui/install_page.py:622 ../ui/upgrade_page.py:1269
 msgid "Analyzing dependencies failed"
-msgstr ""
+msgstr "分析相依關係失敗"
 
 #: ../ui/install_page.py:631 ../ui/install_page.py:638
 msgid "Installing"
-msgstr ""
+msgstr "正在安裝"
 
 #: ../ui/install_page.py:647
 msgid "Installation complete"
-msgstr ""
+msgstr "安裝完成"
 
 #: ../ui/detail_page.py:177
 msgid "Also in the category..."
-msgstr ""
+msgstr "同類熱門推薦..."
 
 #: ../ui/detail_page.py:345
 #, python-format
 msgid "Download: %s"
-msgstr ""
+msgstr "下載：%s"
 
 #: ../ui/detail_page.py:369
 msgid "Category: "
-msgstr ""
+msgstr "分類："
 
 #: ../ui/detail_page.py:372
 #, python-format
 msgid "Version: %s"
-msgstr ""
+msgstr "版本：%s"
 
 #: ../ui/detail_page.py:373
 msgid "Download: 0"
-msgstr ""
+msgstr "下載：0"
 
 #: ../ui/detail_page.py:374
 msgid "Size: calculating..."
-msgstr ""
+msgstr "大小：正在計算..."
 
 #: ../ui/detail_page.py:379
 msgid "Visit Homepage"
-msgstr ""
+msgstr "訪問首頁"
 
 #: ../ui/detail_page.py:420
 msgid "Successfully installed"
-msgstr ""
+msgstr "已成功安裝"
 
 #: ../ui/detail_page.py:465
 msgid "Loading comments..."
-msgstr ""
+msgstr "正在載入評論..."
 
 #: ../ui/detail_page.py:588
 msgid "Powered by 又拍云存储"
-msgstr ""
+msgstr "Powered by 又拍云存储"
 
 #: ../ui/upgrade_page.py:109
 #, python-format
 msgid "Last upgraded time: %s"
-msgstr ""
+msgstr "最後更新時間：%s"
 
 #: ../ui/upgrade_page.py:117 ../ui/upgrade_page.py:181
 #, python-format
 msgid "Unwatched (%s)"
-msgstr ""
+msgstr "不再提醒(%s)"
 
 #: ../ui/upgrade_page.py:177
 #, python-format
 msgid "%s applications are available for upgrade"
-msgstr ""
+msgstr "當前共有 %s 款應用程式有可用的升級"
 
 #: ../ui/upgrade_page.py:245
 #, python-format
 msgid "%s applications are not being watched"
-msgstr ""
+msgstr "%s 款應用程式將不再提醒"
 
 #: ../ui/upgrade_page.py:548
 #, python-format
 msgid "Refresh applications lists %s%%"
-msgstr ""
+msgstr "重新整理應用程式清單 %s%%"
 
 #: ../ui/upgrade_page.py:1259
 msgid "Waiting for upgrade"
-msgstr ""
+msgstr "正在等待升級"
 
 #: ../ui/upgrade_page.py:1278 ../ui/upgrade_page.py:1285
 msgid "Upgrading"
-msgstr ""
+msgstr "正在升級"
 
 #: ../ui/upgrade_page.py:1294
 msgid "Upgrade complete"
-msgstr ""
+msgstr "升級完成"
 
 #: ../ui/uninstall_page.py:157
 #, python-format
 msgid "%s applications can be uninstalled"
-msgstr ""
+msgstr "有 %s 款應用程式可以解除安裝"
 
 #: ../ui/uninstall_page.py:461 ../ui/uninstall_page.py:544
 msgid "Waiting for uninstall"
-msgstr ""
+msgstr "正在等待解除安裝"
 
 #: ../ui/uninstall_page.py:551 ../ui/uninstall_page.py:558
 msgid "Uninstalling"
-msgstr ""
+msgstr "正在解除安裝"
 
 #: ../ui/uninstall_page.py:565
 msgid "Uninstall successful"
-msgstr ""
+msgstr "解除安裝完成"
