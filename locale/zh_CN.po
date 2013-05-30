@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-29 17:12+0800\n"
+"POT-Creation-Date: 2013-05-30 18:01+0800\n"
 "PO-Revision-Date: 2013-03-25 15:30+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -139,37 +139,29 @@ msgstr "删除系统配置文件"
 msgid "Select Directory"
 msgstr "选择目录"
 
-#: ../ui/home_page.py:295
-msgid "11"
-msgstr "11"
-
-#: ../ui/home_page.py:296 ../ui/item_render.py:32
-msgid "10"
-msgstr "10"
-
-#: ../ui/home_page.py:467
+#: ../ui/home_page.py:475
 #, python-format
 msgid "%s: %s applications"
 msgstr "%s: %s款软件"
 
-#: ../ui/home_page.py:660
+#: ../ui/home_page.py:668
 #, python-format
 msgid "%s > %s : %s applications"
 msgstr "%s > %s: %s款软件"
 
-#: ../ui/home_page.py:716 ../ui/software_center.py:663
+#: ../ui/home_page.py:724 ../ui/software_center.py:663
 msgid "Home"
 msgstr "首页推荐"
 
-#: ../ui/home_page.py:742
+#: ../ui/home_page.py:750
 msgid "Hot applications"
 msgstr "热门推荐"
 
-#: ../ui/home_page.py:742
+#: ../ui/home_page.py:750
 msgid "Topics"
 msgstr "专题介绍"
 
-#: ../ui/home_page.py:742
+#: ../ui/home_page.py:750
 msgid "Download rank"
 msgstr "下载排行"
 
@@ -302,6 +294,10 @@ msgstr "您的系统已经很干净了，不需要清理."
 #, python-format
 msgid "%s: %s matched applications"
 msgstr "%s: 搜索到%s款软件"
+
+#: ../ui/item_render.py:32
+msgid "10"
+msgstr "10"
 
 #: ../ui/item_render.py:45
 msgid "Unwatch"
@@ -749,3 +745,6 @@ msgstr "卸载中"
 #: ../ui/uninstall_page.py:565
 msgid "Uninstall successful"
 msgstr "卸载完成"
+
+#~ msgid "11"
+#~ msgstr "11"

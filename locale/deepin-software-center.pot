@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-29 17:12+0800\n"
+"POT-Creation-Date: 2013-05-30 18:01+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -134,37 +134,29 @@ msgstr ""
 msgid "Select Directory"
 msgstr ""
 
-#: ../ui/home_page.py:295
-msgid "11"
-msgstr ""
-
-#: ../ui/home_page.py:296 ../ui/item_render.py:32
-msgid "10"
-msgstr ""
-
-#: ../ui/home_page.py:467
+#: ../ui/home_page.py:475
 #, python-format
 msgid "%s: %s applications"
 msgstr ""
 
-#: ../ui/home_page.py:660
+#: ../ui/home_page.py:668
 #, python-format
 msgid "%s > %s : %s applications"
 msgstr ""
 
-#: ../ui/home_page.py:716 ../ui/software_center.py:663
+#: ../ui/home_page.py:724 ../ui/software_center.py:663
 msgid "Home"
 msgstr ""
 
-#: ../ui/home_page.py:742
+#: ../ui/home_page.py:750
 msgid "Hot applications"
 msgstr ""
 
-#: ../ui/home_page.py:742
+#: ../ui/home_page.py:750
 msgid "Topics"
 msgstr ""
 
-#: ../ui/home_page.py:742
+#: ../ui/home_page.py:750
 msgid "Download rank"
 msgstr ""
 
@@ -296,6 +288,10 @@ msgstr ""
 #: ../ui/search_page.py:105
 #, python-format
 msgid "%s: %s matched applications"
+msgstr ""
+
+#: ../ui/item_render.py:32
+msgid "10"
 msgstr ""
 
 #: ../ui/item_render.py:45

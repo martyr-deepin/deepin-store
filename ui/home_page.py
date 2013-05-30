@@ -49,11 +49,28 @@ from events import global_event
 from skin import app_theme
 from data import DATA_ID
 from category_info import get_category_name
-from nls import _
+from nls import _, get_locale_code
 from loading_widget import Loading
 
 FIRST_CATEGORY_PADDING_X = 66
-SECOND_CATEGORY_PADDING_X = 46
+
+CATEGORY_ITEM_NAME_WIDTH = -1
+CATEGORY_ITEM_HEIGHT = 42
+
+if get_locale_code() == 'en_US':
+    CATEGORY_ITEM_NAME_SIZE = 9
+    SECOND_CATEGORY_ITEM_NAME_SIZE = 8
+    SECOND_CATEGORY_PADDING_X = 26
+else:
+    CATEGORY_ITEM_NAME_SIZE = 11
+    SECOND_CATEGORY_ITEM_NAME_SIZE = 10
+    SECOND_CATEGORY_PADDING_X = 46
+
+SECOND_CATEGORY_ITEM_HEIGHT = 30
+
+CATEGORY_ITEM_EXPAND_PADDING_X = 30
+
+LOAD_ITEMS_NUMBER = 20
 
 CATEGORY_VIEW_WIDTH = 155
 SLIDE_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "slide_picture", "zh_CN")
@@ -290,15 +307,6 @@ class HomePage(gtk.HBox):
         
 gobject.type_register(HomePage)
 
-CATEGORY_ITEM_NAME_WIDTH = -1
-CATEGORY_ITEM_HEIGHT = 42
-CATEGORY_ITEM_NAME_SIZE = int(_("11"))
-SECOND_CATEGORY_ITEM_NAME_SIZE = int(_("10"))
-SECOND_CATEGORY_ITEM_HEIGHT = 35
-
-CATEGORY_ITEM_EXPAND_PADDING_X = 30
-
-LOAD_ITEMS_NUMBER = 20
 
 def handle_dbus_error(*error):
     print "handle_dbus_error: ", error

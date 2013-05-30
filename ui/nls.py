@@ -39,3 +39,9 @@ except Exception, e:
         _ = gettext.translation("deepin-software-center", LOCALE_DIR, ['en_US']).gettext
     except Exception, e:
         _ = lambda i : i
+
+def get_locale_code():
+    try:
+        return gettext.find("deepin-software-center", LOCALE_DIR).split(LOCALE_DIR)[1].split('/')[1]
+    except:
+        return "en_US"
