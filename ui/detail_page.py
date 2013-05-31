@@ -60,7 +60,7 @@ from constant import (
         PKG_SIZE_DOWNLOAD,
         PKG_SIZE_ERROR,
         )
-from nls import _
+from nls import _, get_locale_code
 
 PKG_SCREENSHOT_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update_data", "pkg_screenshot", "zh_CN")
 
@@ -440,7 +440,7 @@ class DetailPage(gtk.HBox):
     def handle_pkg_download_size(self, reply):
         # FIXME: download information display
         if reply[0] == PKG_SIZE_OWN or reply[0] == PKG_SIZE_DOWNLOAD:
-            self.left_size_label.set_text("大小：%s" % bit_to_human_str(reply[1]))
+            self.left_size_label.set_text(_("Size: %s") % bit_to_human_str(reply[1]))
         elif reply[0] == PKG_SIZE_ERROR:
             self.left_size_label.set_text("")
             print "Error for calculate pkg size!"
@@ -480,7 +480,7 @@ class DetailPage(gtk.HBox):
             web_view.open("%s/softcenter/v1/comment?n=%s&hl=%s" % (
                     SERVER_ADDRESS, 
                     self.pkg_name, 
-                    "zh_CN"
+                    get_locale_code()
                     ))
             #self.right_comment_box.pack_start(web_view_align, True, True)
             web_view.connect("load-finished", self.comment_load_finished_cb, web_view_align)

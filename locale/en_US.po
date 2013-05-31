@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-30 18:01+0800\n"
+"POT-Creation-Date: 2013-05-31 13:51+0800\n"
 "PO-Revision-Date: 2013-05-28 15:52+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -305,11 +305,11 @@ msgstr "%s: %s matched applications"
 msgid "10"
 msgstr "8"
 
-#: ../ui/item_render.py:45
+#: ../ui/item_render.py:44
 msgid "Unwatch"
 msgstr "Unwatch"
 
-#: ../ui/item_render.py:47 ../ui/upgrade_page.py:211
+#: ../ui/item_render.py:46 ../ui/upgrade_page.py:211
 msgid "Watch again"
 msgstr "Watch again"
 
@@ -696,6 +696,11 @@ msgstr "Visit Homepage"
 #: ../ui/detail_page.py:420
 msgid "Successfully installed"
 msgstr "Successfully installed"
+
+#: ../ui/detail_page.py:443
+#, fuzzy, python-format
+msgid "Size: %s"
+msgstr "Size: %s"
 
 #: ../ui/detail_page.py:465
 msgid "Loading comments..."

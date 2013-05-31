@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-30 18:01+0800\n"
+"POT-Creation-Date: 2013-05-31 14:06+0800\n"
 "PO-Revision-Date: 2013-03-25 15:30+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -299,11 +299,11 @@ msgstr "%s: 搜索到%s款软件"
 msgid "10"
 msgstr "10"
 
-#: ../ui/item_render.py:45
+#: ../ui/item_render.py:44
 msgid "Unwatch"
 msgstr "不再提醒"
 
-#: ../ui/item_render.py:47 ../ui/upgrade_page.py:211
+#: ../ui/item_render.py:46 ../ui/upgrade_page.py:211
 msgid "Watch again"
 msgstr "重新提醒"
 
@@ -683,6 +683,11 @@ msgstr "访问首页"
 #: ../ui/detail_page.py:420
 msgid "Successfully installed"
 msgstr "已安装"
+
+#: ../ui/detail_page.py:443
+#, python-format
+msgid "Size: %s"
+msgstr "大小：%s"
 
 #: ../ui/detail_page.py:465
 msgid "Loading comments..."
