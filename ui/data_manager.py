@@ -26,6 +26,7 @@ import sqlite3
 from collections import OrderedDict
 import xappy
 from data import DATA_ID
+from nls import get_locale_code
 
 UPDATE_DATA_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID)
 
@@ -39,11 +40,12 @@ class DataManager(object):
         init docs
         '''
         self.bus_interface = bus_interface
+        self.lang = get_locale_code()
         
-        self.software_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "software", "zh_CN", "software.db"))
+        self.software_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "software", self.lang, "software.db"))
         self.software_db_cursor = self.software_db_connect.cursor()
 
-        self.desktop_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "desktop", "zh_CN", "desktop.db"))
+        self.desktop_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "desktop", self.lang, "desktop.db"))
         self.desktop_db_cursor = self.desktop_db_connect.cursor()
         
         self.category_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "category", "category.db"))
