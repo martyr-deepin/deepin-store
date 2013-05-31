@@ -155,7 +155,7 @@ class UpgradeBar(gtk.HBox):
             )
         self.upgrade_selected_button_align = gtk.Alignment()
         self.upgrade_selected_button_align.set(0.0, 0.5, 0, 0)
-        self.upgrade_selected_button_align.set_padding(0, 0, 40, 40)
+        self.upgrade_selected_button_align.set_padding(0, 0, 40, ITEM_BUTTON_PADDING_RIGHT)
         self.upgrade_selected_button_align.add(self.upgrade_selected_button)
         
         self.pack_start(self.select_button_align, False, False)
