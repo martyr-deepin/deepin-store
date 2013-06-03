@@ -47,6 +47,7 @@ from dtk.ui.progressbar import ProgressBuffer
 from events import global_event
 from constant import ACTION_UPGRADE
 from dtk.ui.cycle_strip import CycleStrip
+import dtk.ui.tooltip as Tooltip
 from time import time
 from utils import get_last_upgrade_time, set_last_upgrade_time, handle_dbus_error
 from nls import _
@@ -153,6 +154,7 @@ class UpgradeBar(gtk.HBox):
             app_theme.get_pixbuf("button/upgrade_all_hover.png"),
             app_theme.get_pixbuf("button/upgrade_all_press.png"),
             )
+        Tooltip.text(self.upgrade_selected_button, _("Upgrade select items"))
         self.upgrade_selected_button_align = gtk.Alignment()
         self.upgrade_selected_button_align.set(0.0, 0.5, 0, 0)
         self.upgrade_selected_button_align.set_padding(0, 0, 40, ITEM_BUTTON_PADDING_RIGHT)
