@@ -54,7 +54,7 @@ class DataManager(object):
         self.category_dict = {}
         self.category_name_dict = {}
         
-        self.album_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "home", "album", "zh_CN", "album.db"))
+        self.album_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "home", "album", self.lang, "album.db"))
         self.album_db_cursor = self.album_db_connect.cursor()
 
         self.download_rank_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "home", "download_rank", "zh_CN", "download_rank.db"))
