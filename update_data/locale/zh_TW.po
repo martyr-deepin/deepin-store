@@ -21,11 +21,11 @@ msgstr ""
 msgid ""
 "There are %s packages need to upgrade in your system, please open the "
 "software center to upgrade!"
-msgstr ""
+msgstr "您的系統%s個軟體有可用更新，煩請開啟軟體中心執行更新！"
 
 #: ../apt/dsc-daemon.py:197
 #, python-format
 msgid ""
 "There is %s package need to upgrade in your system, please open the software "
 "center to upgrade!"
-msgstr ""
+msgstr "您的系統%s個軟體有可用更新，煩請開啟軟體中心執行更新！"
