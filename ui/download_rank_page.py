@@ -108,7 +108,7 @@ class DownloadRankPage(gtk.VBox):
         for i in range(number):
             infos[i].append(reply[i])
             items.append(PkgIconItem(*infos[i]))
-        #view.add_items(items)
+        view.add_items(items)
 
     def error_hander(self, error, method):
         print "DBUS ERROR:", method
