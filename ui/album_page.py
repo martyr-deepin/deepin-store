@@ -142,10 +142,10 @@ class AlbumSummaryItem(IconItem):
     
     TITLE_PADDING_LEFT = 20
     TITLE_PADDING_RIGHT = 10
-    TITLE_SIZE = 11
+    TITLE_SIZE = 10
     
     SUMMARY_PADDING_Y = 5
-    SUMMARY_SIZE = 10
+    SUMMARY_SIZE = 9
 	
     def __init__(self, (album_id, album_name, album_summary)):
         '''
@@ -303,11 +303,18 @@ class AlbumDetailItem(TreeItem):
     PICTURE_PADDING_X = 10
     PICTURE_PADDING_Y = 15
     
-    TITLE_PADDING_LEFT = 20
-    TITLE_SIZE = 11
-    
-    SUMMARY_PADDING_Y = 30
-    SUMMARY_SIZE = 10
+    if LANGUAGE == 'en_US':
+        TITLE_PADDING_LEFT = 20
+        TITLE_SIZE = 9
+        
+        SUMMARY_PADDING_Y = 30
+        SUMMARY_SIZE = 8
+    else:
+        TITLE_PADDING_LEFT = 20
+        TITLE_SIZE = 10
+        
+        SUMMARY_PADDING_Y = 30
+        SUMMARY_SIZE = 9
     
     SUMMARY_WIDTH = 440
     

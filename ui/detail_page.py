@@ -30,7 +30,7 @@ from deepin_utils.net import is_network_connected
 from dtk.ui.button import ImageButton
 from dtk.ui.star_view import StarView
 from dtk.ui.browser import WebView
-from constant import CONFIG_DIR, SERVER_ADDRESS
+from constant import CONFIG_DIR, SERVER_ADDRESS, LANGUAGE
 from skin import app_theme
 from deepin_utils.file import get_parent_dir, read_file, write_file, remove_file
 from deepin_utils.process import run_command
@@ -60,7 +60,7 @@ from constant import (
         PKG_SIZE_DOWNLOAD,
         PKG_SIZE_ERROR,
         )
-from nls import _, get_locale_code
+from nls import _
 
 PKG_SCREENSHOT_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update_data", "pkg_screenshot", "zh_CN")
 
@@ -480,7 +480,7 @@ class DetailPage(gtk.HBox):
             web_view.open("%s/softcenter/v1/comment?n=%s&hl=%s" % (
                     SERVER_ADDRESS, 
                     self.pkg_name, 
-                    get_locale_code()
+                    LANGUAGE,
                     ))
             #self.right_comment_box.pack_start(web_view_align, True, True)
             web_view.connect("load-finished", self.comment_load_finished_cb, web_view_align)

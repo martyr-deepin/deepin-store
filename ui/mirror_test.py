@@ -29,6 +29,7 @@ import urllib2
 import os
 from deepin_utils.file import get_parent_dir
 from deepin_utils.config import Config
+from constant import LANGUAGE
 
 root_dir = get_parent_dir(__file__, 2)
 mirrors_dir = os.path.join(root_dir, 'mirrors')
@@ -47,7 +48,10 @@ class Mirror(object):
 
     @property
     def name(self):
-        return self.config.get('mirror', 'name')
+        if self.config.has_option('mirror', 'name[%s]' % LANGUAGE):
+            return self.config.get('mirror', 'name[%s]' % LANGUAGE)
+        else:
+            return self.config.get('mirror', 'name[%s]' % LANGUAGE)
 
     @property
     def protocol_type(self):

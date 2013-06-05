@@ -22,14 +22,13 @@
 
 import os
 from dtk.ui.draw import draw_pixbuf, draw_text
-from dtk.ui.constant import DEFAULT_FONT_SIZE
 from dtk.ui.utils import get_content_size
 from constant import ICON_DIR
-from nls import _, get_locale_code
+from nls import _
+from constant import LANGUAGE
 
 ICON_SIZE = 48
 STAR_SIZE = 13
-NAME_SIZE = int(_("10"))
 
 ITEM_PKG_OFFSET_X = 22
 ITEM_CHECKBUTTON_WIDTH = 32
@@ -46,14 +45,18 @@ ITEM_NO_NOTIFY_STRING = _("Unwatch")
 ITEM_NOTIFY_AGAIN_STRING = _("Watch again")
 (ITEM_NOTIFY_AGAIN_WIDTH, ITEM_NOTIFY_AGAIN_HEIGHT) = get_content_size(ITEM_NOTIFY_AGAIN_STRING)
 
-if get_locale_code() == 'en_US':
+if LANGUAGE == 'en_US':
+    NAME_SIZE = 9
     ITEM_STATUS_TEXT_PADDING_RIGHT = 175
     ITEM_BUTTON_AREA_WIDTH = 190
     ITEM_BUTTON_PADDING_RIGHT = 70
+    DEFAULT_FONT_SIZE = 9
 else:
+    NAME_SIZE = 10
     ITEM_STATUS_TEXT_PADDING_RIGHT = 130
     ITEM_BUTTON_AREA_WIDTH = 160
     ITEM_BUTTON_PADDING_RIGHT = 40
+    DEFAULT_FONT_SIZE = 10
 
 ITEM_CONFIRM_BUTTON_PADDING_RIGHT = 100
 ITEM_CANCEL_BUTTON_PADDING_RIGHT = 50

@@ -26,7 +26,7 @@ import sqlite3
 from collections import OrderedDict
 import xappy
 from data import DATA_ID
-from nls import get_locale_code
+from constant import LANGUAGE
 
 UPDATE_DATA_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID)
 
@@ -40,12 +40,11 @@ class DataManager(object):
         init docs
         '''
         self.bus_interface = bus_interface
-        self.lang = get_locale_code()
         
-        self.software_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "software", self.lang, "software.db"))
+        self.software_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "software", LANGUAGE, "software.db"))
         self.software_db_cursor = self.software_db_connect.cursor()
 
-        self.desktop_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "desktop", self.lang, "desktop.db"))
+        self.desktop_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "desktop", LANGUAGE, "desktop.db"))
         self.desktop_db_cursor = self.desktop_db_connect.cursor()
         
         self.category_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "category", "category.db"))
@@ -54,7 +53,7 @@ class DataManager(object):
         self.category_dict = {}
         self.category_name_dict = {}
         
-        self.album_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "home", "album", self.lang, "album.db"))
+        self.album_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "home", "album", LANGUAGE, "album.db"))
         self.album_db_cursor = self.album_db_connect.cursor()
 
         self.download_rank_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "home", "download_rank", "zh_CN", "download_rank.db"))
