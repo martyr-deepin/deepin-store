@@ -253,7 +253,8 @@ class Update(dbus.service.Object):
 
     def show_notify(self, message=None, timeout=None):
         notification = DbusNotify("deepin-software-center")
-        notification.set_summary("更新提示")
+        #notification.set_summary(_("更新提示"))
+        notification.set_summary(_("Upgrade Info"))
         notification.set_body(message)
         notification.notify()
 

@@ -103,7 +103,7 @@ class InstallPage(gtk.VBox):
             children = self.content_box.get_children()
             if len(children) == 0 or children[0] == self.treeview:
                 if self.cute_message_pixbuf == None:
-                    self.cute_message_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(get_parent_dir(__file__, 2), "image", "zh_CN", "no_download.png"))
+                    self.cute_message_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(cute_info_dir, "no_download.png"))
                 
                 container_remove_all(self.content_box)
                 self.content_box.pack_start(self.cute_message_image, True, True)
