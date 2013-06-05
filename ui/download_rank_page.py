@@ -56,7 +56,7 @@ class DownloadRankPage(gtk.VBox):
         for (tab_index, tab_name) in enumerate([_("Top 25 weekly"), _("Top 25 monthly"), _("Top 25 of all time")]):
             self.tab_box.pack_start(RankTab(tab_index, tab_name, tab_index == 0), False, False)
             
-        self.page_box = gtk.VBox()    
+        self.page_box = gtk.VBox() 
         self.page_align = gtk.Alignment()
         self.page_align.set(0.5, 0.5, 1, 1)
         self.page_align.set_padding(0, 0, 15, 15)
@@ -108,7 +108,7 @@ class DownloadRankPage(gtk.VBox):
         for i in range(number):
             infos[i].append(reply[i])
             items.append(PkgIconItem(*infos[i]))
-        view.add_items(items)
+        #view.add_items(items)
 
     def error_hander(self, error, method):
         print "DBUS ERROR:", method

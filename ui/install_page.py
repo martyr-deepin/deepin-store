@@ -39,7 +39,7 @@ from item_render import (render_pkg_info, STAR_SIZE, get_star_level, get_icon_pi
                          ITEM_HEIGHT, ITEM_PKG_OFFSET_X,
                          PROGRESSBAR_HEIGHT
                          )
-from constant import ACTION_INSTALL
+from constant import ACTION_INSTALL, cute_info_dir
 from message_bar import MessageBar
 from time import time
 from nls import _
@@ -70,7 +70,7 @@ class InstallPage(gtk.VBox):
         self.pack_start(self.message_box, False, False)
         self.pack_start(self.content_box, True, True)
         
-        self.cute_message_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(get_parent_dir(__file__, 2), "image", "zh_CN", "no_download.png"))
+        self.cute_message_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(cute_info_dir, "no_download.png"))
         self.content_box.pack_start(self.cute_message_image, True, True)
         
         self.treeview.draw_mask = self.draw_mask

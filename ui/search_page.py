@@ -29,9 +29,8 @@ from message_bar import MessageBar
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from dtk.ui.constant import DEFAULT_FONT_SIZE
 from dtk.ui.utils import cairo_state, is_in_rect, get_content_size
-from deepin_utils.file import get_parent_dir
 from dtk.ui.utils import container_remove_all
-from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
+from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, cute_info_dir
 from dtk.ui.treeview import TreeView, TreeItem
 #from dtk.ui.star_view import StarBuffer
 from star_buffer import DscStarBuffer
@@ -72,7 +71,7 @@ class SearchPage(gtk.VBox):
         self.treeview = TreeView(enable_drag_drop=False, expand_column=0)
 
         self.cute_message_image = gtk.VBox()
-        self.cute_message_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(get_parent_dir(__file__, 2), "image", "zh_CN", "noresult.png"))
+        self.cute_message_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(cute_info_dir, "noresult.png"))
         self.cute_message_image.connect("expose-event", self.expose_cute_message_image)
 
         self.content_box.pack_start(self.message_bar, False, False)

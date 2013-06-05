@@ -21,12 +21,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from skin import app_theme
-from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
+from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, LANGUAGE
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.iconview import IconView, IconItem
 from deepin_utils.file import get_parent_dir
-from dtk.ui.utils import container_remove_all, is_in_rect, get_content_size, cairo_state
+from dtk.ui.utils import container_remove_all, is_in_rect, get_content_size
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear, TEXT_ALIGN_TOP
 from events import global_event
 import gtk
@@ -34,7 +34,9 @@ import gobject
 import os
 from data import DATA_ID
 
-ALBUM_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "album_picture", "zh_CN")
+ALBUM_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "album_picture", LANGUAGE)
+if not os.path.exists(ALBUM_PICTURE_DIR):
+    ALBUM_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "album_picture", 'en_US')
 
 class AlbumPage(gtk.VBox):
     '''

@@ -34,6 +34,7 @@ import sys, os
 import subprocess
 import apt_pkg
 from deepin_utils.file import get_parent_dir
+from nls import _
 
 sys.path.insert(0, os.path.join(get_parent_dir(__file__, 3), 'ui'))
 from utils import get_update_interval
@@ -189,7 +190,11 @@ class Update(dbus.service.Object):
                         path=DSC_SERVICE_PATH)
                 update_num = len(self.bus_interface.request_upgrade_pkgs())
                 if update_num != 0 and update_num != self.update_num:
-                    self.show_notify("您的系统有%s个软件包需要升级，请打开软件中心进行升级！" % update_num)
+                    #self.show_notify(_("您的系统有%s个软件包需要升级，请打开软件中心进行升级！") % update_num)
+                    if update_num != 1:
+                        self.show_notify(_("There are %s packages need to upgrade in your system, please open the software center to upgrade!") % update_num)
+                    else:
+                        self.show_notify(_("There is %s package need to upgrade in your system, please open the software center to upgrade!") % update_num)
                 self.update_num = update_num
                 self.bus_interface.request_quit()
                 self.set_delay_update(get_update_interval()*3600)

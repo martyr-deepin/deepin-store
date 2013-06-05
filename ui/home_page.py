@@ -27,7 +27,7 @@ import gobject
 import cairo
 from message_bar import MessageBar
 from dtk.ui.utils import remove_timeout_id, cairo_state, get_content_size
-from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
+from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, LANGUAGE
 from item_render import STAR_SIZE, get_star_level, get_icon_pixbuf_path, NAME_SIZE, ITEM_PADDING_X, ICON_SIZE
 from search_page import SearchPage
 from dtk.ui.treeview import TreeView, TreeItem
@@ -49,7 +49,7 @@ from events import global_event
 from skin import app_theme
 from data import DATA_ID
 from category_info import get_category_name
-from nls import _, get_locale_code
+from nls import _
 from loading_widget import Loading
 
 FIRST_CATEGORY_PADDING_X = 66
@@ -57,7 +57,7 @@ FIRST_CATEGORY_PADDING_X = 66
 CATEGORY_ITEM_NAME_WIDTH = -1
 CATEGORY_ITEM_HEIGHT = 42
 
-if get_locale_code() == 'en_US':
+if LANGUAGE == 'en_US':
     CATEGORY_ITEM_NAME_SIZE = 9
     SECOND_CATEGORY_ITEM_NAME_SIZE = 8
     SECOND_CATEGORY_PADDING_X = 26
@@ -73,7 +73,10 @@ CATEGORY_ITEM_EXPAND_PADDING_X = 30
 LOAD_ITEMS_NUMBER = 20
 
 CATEGORY_VIEW_WIDTH = 155
-SLIDE_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "slide_picture", "zh_CN")
+
+SLIDE_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "slide_picture", LANGUAGE)
+if not os.path.exists(SLIDE_PICTURE_DIR):
+    SLIDE_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "slide_picture", "en_US")
 
 global cursor_postion
 cursor_postion = None

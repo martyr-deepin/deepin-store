@@ -23,6 +23,9 @@
 import os
 from deepin_utils.file import get_parent_dir
 from data import DATA_ID
+from nls import get_locale_code
+
+LANGUAGE = get_locale_code()
 
 PROGRAM_VERSION = "3.0"
 
@@ -70,3 +73,8 @@ PKG_STATUS_UPGRADED = 3
 PKG_SIZE_OWN = 0
 PKG_SIZE_DOWNLOAD = 1
 PKG_SIZE_ERROR = 2
+
+cute_info_dir = os.path.join(get_parent_dir(__file__, 2), "image", "info", LANGUAGE)
+if not os.path.exists(cute_info_dir):
+    cute_info_dir = os.path.join(get_parent_dir(__file__, 2), "image", "info")
+

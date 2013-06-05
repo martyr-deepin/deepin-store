@@ -22,7 +22,7 @@
 
 import gtk
 import gobject
-from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, CONFIG_DIR, CHECK_BUTTON_PADDING_X
+from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, CONFIG_DIR, CHECK_BUTTON_PADDING_X, cute_info_dir
 import os
 from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.button import CheckButtonBuffer, ImageButton, CheckAllButton
@@ -31,7 +31,7 @@ from star_buffer import DscStarBuffer
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
 from deepin_utils.core import split_with
 from deepin_utils.net import is_network_connected
-from deepin_utils.file import read_file, write_file, format_file_size, get_parent_dir
+from deepin_utils.file import read_file, write_file, format_file_size
 from dtk.ui.utils import is_in_rect, container_remove_all, get_content_size
 from dtk.ui.label import Label
 from item_render import (render_pkg_info, STAR_SIZE, get_star_level, ITEM_PADDING_Y, get_icon_pixbuf_path,
@@ -561,7 +561,7 @@ class UpgradePage(gtk.VBox):
         rect = widget.allocation
         
         if self.update_list_pixbuf == None:
-            self.update_list_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(get_parent_dir(__file__, 2), "image", "zh_CN", "upgrading.png"))
+            self.update_list_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(cute_info_dir, "upgrading.png"))
         
         cr.set_source_rgb(1, 1, 1)
         cr.rectangle(rect.x, rect.y, rect.width, rect.height)
@@ -579,7 +579,7 @@ class UpgradePage(gtk.VBox):
         rect = widget.allocation
         
         if self.newest_pixbuf == None:
-            self.newest_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(get_parent_dir(__file__, 2), "image", "zh_CN", "newest.png"))
+            self.newest_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(cute_info_dir, "newest.png"))
         
         cr.set_source_rgb(1, 1, 1)
         cr.rectangle(rect.x, rect.y, rect.width, rect.height)
@@ -597,7 +597,7 @@ class UpgradePage(gtk.VBox):
         rect = widget.allocation
         
         if self.network_disable_pixbuf == None:
-            self.network_disable_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(get_parent_dir(__file__, 2), "image", "zh_CN", "network_disable.png"))
+            self.network_disable_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(cute_info_dir, "network_disable.png"))
         
         cr.set_source_rgb(1, 1, 1)
         cr.rectangle(rect.x, rect.y, rect.width, rect.height)
