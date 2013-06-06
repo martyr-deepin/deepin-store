@@ -204,6 +204,7 @@ class AlbumSummaryItem(IconItem):
                   text_size=self.TITLE_SIZE,
                   text_color="#000000",
                   vertical_alignment=TEXT_ALIGN_TOP,
+                  wrap_width=text_width,
                   )
         
         # Draw album summary.
@@ -212,7 +213,7 @@ class AlbumSummaryItem(IconItem):
         draw_text(cr,
                   self.album_summary,
                   rect.x + self.PICTURE_PADDING_X + self.pixbuf.get_width() + self.TITLE_PADDING_LEFT,
-                  rect.y + self.PICTURE_PADDING_Y * 2 + self.TITLE_SIZE,
+                  rect.y + self.PICTURE_PADDING_Y * 2 + self.TITLE_SIZE + 8,
                   text_width,
                   text_height,
                   text_size=self.SUMMARY_SIZE,

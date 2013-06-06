@@ -95,6 +95,7 @@ class DownloadRankPage(gtk.VBox):
 
         global_event.register_event("update-rank-page", self.update_rank_page)
         global_event.emit("update-rank-page", 0)
+        global_event.register_event('get-rank-pkgs-finish', self.get_pkgs_status)
 
     def get_download_rank(self, info):
         print len(info)
@@ -104,6 +105,9 @@ class DownloadRankPage(gtk.VBox):
         view = self.view_list[page_index][1]
         view.clear()
         pkg_names, infos = get_info()
+        global_event.emit('get-rank-pkgs-finish', pkg_names, infos, view)
+
+    def get_pkgs_status(self, pkg_names, infos, view):
         self.data_manager.get_pkgs_install_status(
                 pkg_names, 
                 lambda r: self.reply_handler(r, infos, view), 
