@@ -35,6 +35,8 @@ import gtk
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from events import global_event
 from nls import _
+from loading_widget import Loading
+from deepin_utils.multithread import create_thread
 
 class DownloadRankPage(gtk.VBox):
     '''
@@ -72,20 +74,24 @@ class DownloadRankPage(gtk.VBox):
         self.all_rank_icon_view = IconView()
         self.all_rank_icon_view_scrlledwindow = ScrolledWindow()
         self.all_rank_icon_view.draw_mask = self.draw_mask
-        
+
         self.week_rank_icon_view_scrlledwindow.add_child(self.week_rank_icon_view)    
         self.month_rank_icon_view_scrlledwindow.add_child(self.month_rank_icon_view)    
         self.all_rank_icon_view_scrlledwindow.add_child(self.all_rank_icon_view)    
             
         self.tab_box_align.add(self.tab_box)
         self.page_box.pack_start(self.page_align)
+
         self.pack_start(self.tab_box_align, False, False)    
         self.pack_start(self.page_box, True, True)    
 
+        self.loading = Loading()
+        self.loading.set_size_request(-1, 300)
+
         self.view_list =  [
-            (self.data_manager.get_week_download_rank_info, self.week_rank_icon_view), 
-            (self.data_manager.get_month_download_rank_info, self.month_rank_icon_view),
-            (self.data_manager.get_all_download_rank_info, self.all_rank_icon_view)]
+            (self.data_manager.get_week_download_rank_info, self.week_rank_icon_view, self.week_rank_icon_view_scrlledwindow), 
+            (self.data_manager.get_month_download_rank_info, self.month_rank_icon_view, self.month_rank_icon_view_scrlledwindow),
+            (self.data_manager.get_all_download_rank_info, self.all_rank_icon_view, self.all_rank_icon_view_scrlledwindow)]
 
         global_event.register_event("update-rank-page", self.update_rank_page)
         global_event.emit("update-rank-page", 0)
@@ -93,8 +99,9 @@ class DownloadRankPage(gtk.VBox):
     def get_download_rank(self, info):
         print len(info)
 
-    def update_view_infos(self):
-        get_info, view = self.view_list[self.current_page_index]
+    def update_view_infos(self, page_index):
+        get_info = self.view_list[page_index][0]
+        view = self.view_list[page_index][1]
         view.clear()
         pkg_names, infos = get_info()
         self.data_manager.get_pkgs_install_status(
@@ -109,6 +116,10 @@ class DownloadRankPage(gtk.VBox):
             infos[i].append(reply[i])
             items.append(PkgIconItem(*infos[i]))
         view.add_items(items)
+        container_remove_all(self.page_align)
+        self.page_align.add(self.view_list[self.current_page_index][2])
+        self.show_all()
+        global_event.emit("update-current-status-pkg-page", view)
 
     def error_hander(self, error, method):
         print "DBUS ERROR:", method
@@ -132,18 +143,10 @@ class DownloadRankPage(gtk.VBox):
     def update_rank_page(self, page_index):
         container_remove_all(self.page_align)
         self.current_page_index = page_index
-        
-        if page_index == 0:
-            self.page_align.add(self.week_rank_icon_view_scrlledwindow)
-            global_event.emit("update-current-status-pkg-page", self.week_rank_icon_view)
-        elif page_index == 1:
-            self.page_align.add(self.month_rank_icon_view_scrlledwindow)
-            global_event.emit("update-current-status-pkg-page", self.month_rank_icon_view)
-        else:
-            self.page_align.add(self.all_rank_icon_view_scrlledwindow)
-            global_event.emit("update-current-status-pkg-page", self.all_rank_icon_view)
 
-        self.update_view_infos()
+        self.page_align.add(self.loading)
+
+        create_thread(self.update_view_infos(page_index)).start()
         self.show_all()    
         
 gobject.type_register(DownloadRankPage)

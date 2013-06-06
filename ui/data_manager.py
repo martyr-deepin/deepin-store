@@ -26,7 +26,9 @@ import sqlite3
 from collections import OrderedDict
 import xappy
 from data import DATA_ID
-from constant import LANGUAGE
+from constant import LANGUAGE, SERVER_ADDRESS
+import urllib2
+import json
 
 UPDATE_DATA_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID)
 
@@ -221,9 +223,26 @@ class DataManager(object):
     def get_week_download_rank_info(self):
         week_infos = []
         week_pkg_names = []
-        self.download_rank_db_cursor.execute(
-            "SELECT * FROM week_download_rank")
-        for (pkg_name, ) in self.download_rank_db_cursor.fetchall():
+
+        try:
+            result = urllib2.urlopen(
+                "%s/softcenter/v1/soft?a=top&r=week" % SERVER_ADDRESS, 
+                    ).read()
+            week_rank = json.loads(result)[0]
+            week_rank = eval(week_rank["rank_packages"].encode("utf-8"))
+            for info in week_rank:
+                week_pkg_names.append(info[0])
+
+        except Exception, e:
+            print "Get week rank error:", e
+
+            self.download_rank_db_cursor.execute(
+                "SELECT * FROM week_download_rank")
+            week_pkgs = self.download_rank_db_cursor.fetchall()
+            for (pkg_name, ) in week_pkgs:
+                week_pkg_names.append(pkg_name)
+
+        for pkg_name in week_pkg_names:
             self.software_db_cursor.execute(
                 "SELECT alias_name FROM software WHERE pkg_name=?", [pkg_name])
             (alias_name,) = self.software_db_cursor.fetchone()
@@ -233,16 +252,30 @@ class DataManager(object):
             desktop_infos = self.desktop_db_cursor.fetchall()
             
             week_infos.append([pkg_name, alias_name, 5.0, desktop_infos])
-            week_pkg_names.append(pkg_name)
             
         return (week_pkg_names, week_infos)
 
     def get_month_download_rank_info(self):
         month_infos = []
         month_pkg_names = []
-        self.download_rank_db_cursor.execute(
-            "SELECT * FROM month_download_rank")
-        for (pkg_name, ) in self.download_rank_db_cursor.fetchall():
+        try:
+            result = urllib2.urlopen(
+                "%s/softcenter/v1/soft?a=top&r=month" % SERVER_ADDRESS, 
+                    ).read()
+            month_rank = json.loads(result)[0]
+            month_rank = eval(month_rank["rank_packages"].encode("utf-8"))
+            for info in month_rank:
+                month_pkg_names.append(info[0])
+
+        except Exception, e:
+            print "Get month rank error:", e
+            self.download_rank_db_cursor.execute(
+                "SELECT * FROM month_download_rank")
+            month_pkgs = self.download_rank_db_cursor.fetchall()
+            for (pkg_name, ) in month_pkgs:
+                month_pkg_names.append(pkg_name)
+
+        for pkg_name in month_pkg_names:
             self.software_db_cursor.execute(
                 "SELECT alias_name FROM software WHERE pkg_name=?", [pkg_name])
             (alias_name,) = self.software_db_cursor.fetchone()
@@ -252,26 +285,51 @@ class DataManager(object):
             desktop_infos = self.desktop_db_cursor.fetchall()
             
             month_infos.append([pkg_name, alias_name, 5.0, desktop_infos])
-            month_pkg_names.append(pkg_name)
             
         return (month_pkg_names, month_infos)
             
     def get_all_download_rank_info(self):
         all_infos = []
         all_pkg_names = []
-        self.download_rank_db_cursor.execute(
-            "SELECT * FROM all_download_rank")
-        for (pkg_name, ) in self.download_rank_db_cursor.fetchall():
-            self.software_db_cursor.execute(
-                "SELECT alias_name FROM software WHERE pkg_name=?", [pkg_name])
-            (alias_name,) = self.software_db_cursor.fetchone()
+        alias_names = []
+
+        try:
+            result = urllib2.urlopen(
+                "%s/softcenter/v1/soft?a=top&r=all" % SERVER_ADDRESS, 
+                    ).read()
+            all_rank = json.loads(result)
+            for info in all_rank:
+                name = info['name'].encode('utf-8')
+                if name not in all_pkg_names:
+
+                    self.software_db_cursor.execute(
+                        "SELECT alias_name FROM software WHERE pkg_name=?", [name])
+
+                    r = self.software_db_cursor.fetchall()
+                    if r != []:
+                        all_pkg_names.append(name)
+                        alias_names.append(r[0][0].encode('utf-8'))
+
+            if len(all_pkg_names) > 25:
+                all_pkg_names = all_pkg_names[0:25]
+
+        except Exception, e:
+            print "Get all rank error:", e
+            self.download_rank_db_cursor.execute(
+                "SELECT * FROM all_download_rank")
+            all_pkgs = self.download_rank_db_cursor.fetchall()
+            for (pkg_name, ) in all_pkgs:
+                all_pkg_names.append(pkg_name)
+
+        for index in range(len(all_pkg_names)):
+            pkg_name = all_pkg_names[index]
+            alias_name = alias_names[index]
             
             self.desktop_db_cursor.execute(
                 "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
             desktop_infos = self.desktop_db_cursor.fetchall()
             
             all_infos.append([pkg_name, alias_name, 5.0, desktop_infos])
-            all_pkg_names.append(pkg_name)
 
         return (all_pkg_names, all_infos)
 
@@ -364,4 +422,6 @@ if __name__ == "__main__":
     bus_interface = dbus.Interface(bus_object, DSC_SERVICE_NAME)
 
     data_manager = DataManager(bus_interface)
-    print data_manager.get_category_pkg_info().keys()
+    print data_manager.get_all_download_rank_info()
+    #print data_manager.get_month_download_rank_info()
+    #print data_manager.get_week_download_rank_info()
