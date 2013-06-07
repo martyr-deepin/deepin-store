@@ -727,6 +727,9 @@ class RecommendItem(TreeItem):
         self.name = _("Home")
         self.data_manager = data_manager
         
+        self.page_cache = {}
+        self.page_name = ['recommend', 'album', 'download_rank']
+        
         self.init_recommend_page()
         
     def init_recommend_page(self):    
@@ -899,7 +902,12 @@ class RecommendItem(TreeItem):
         
     def switch_page(self, page_index):
         container_remove_all(self.page_box)
-        self.active_page = getattr(self, self.tab_switcher_pages_callback[page_index])()
+        page_name = self.page_name[page_index]
+
+        if not self.page_cache.has_key(self.page_name[page_index]):
+            self.page_cache[page_name] = getattr(self, self.tab_switcher_pages_callback[page_index])()
+
+        self.active_page = self.page_cache[page_name]
         self.page_box.pack_start(self.active_page, True, True)
         
         if isinstance(self.active_page, AlbumPage):
