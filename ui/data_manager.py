@@ -236,12 +236,6 @@ class DataManager(object):
         except Exception, e:
             print "Get week rank error:", e
 
-            self.download_rank_db_cursor.execute(
-                "SELECT * FROM week_download_rank")
-            week_pkgs = self.download_rank_db_cursor.fetchall()
-            for (pkg_name, ) in week_pkgs:
-                week_pkg_names.append(pkg_name)
-
         for pkg_name in week_pkg_names:
             self.software_db_cursor.execute(
                 "SELECT alias_name FROM software WHERE pkg_name=?", [pkg_name])
@@ -269,11 +263,6 @@ class DataManager(object):
 
         except Exception, e:
             print "Get month rank error:", e
-            self.download_rank_db_cursor.execute(
-                "SELECT * FROM month_download_rank")
-            month_pkgs = self.download_rank_db_cursor.fetchall()
-            for (pkg_name, ) in month_pkgs:
-                month_pkg_names.append(pkg_name)
 
         for pkg_name in month_pkg_names:
             self.software_db_cursor.execute(
@@ -315,11 +304,6 @@ class DataManager(object):
 
         except Exception, e:
             print "Get all rank error:", e
-            self.download_rank_db_cursor.execute(
-                "SELECT * FROM all_download_rank")
-            all_pkgs = self.download_rank_db_cursor.fetchall()
-            for (pkg_name, ) in all_pkgs:
-                all_pkg_names.append(pkg_name)
 
         for index in range(len(all_pkg_names)):
             pkg_name = all_pkg_names[index]

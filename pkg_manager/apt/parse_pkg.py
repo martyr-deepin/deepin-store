@@ -28,7 +28,6 @@ import apt_pkg
 from utils import log
 from constant import DOWNLOAD_STATUS_NOTNEED, DOWNLOAD_STATUS_ERROR
 import apt.debfile as debfile
-import apt.progress.base as apb
 
 def get_deb_download_info(cache, deb_file):
     try:
@@ -101,7 +100,7 @@ def get_pkg_dependence(cache, pkg_name):
                 
             # Get package information.
             pkgs = sorted(cache.get_changes(), key=lambda pkg: pkg.name)
-            cache.open(apb.OpProgress())
+            cache._depcache.init()
             return pkgs
         
         except Exception, e:

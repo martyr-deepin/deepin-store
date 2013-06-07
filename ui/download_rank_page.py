@@ -20,7 +20,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
+import os
+from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, cute_info_dir
 from skin import app_theme
 from dtk.ui.utils import get_content_size, set_cursor, container_remove_all, is_in_rect
 import gobject
@@ -52,6 +53,7 @@ class DownloadRankPage(gtk.VBox):
         self.data_manager = data_manager
         
         self.tab_box = gtk.HBox()
+        self.tab_box.set_spacing(1)
         self.tab_box_align = gtk.Alignment()
         self.tab_box_align.set(1, 0, 0, 0)
         self.tab_box_align.set_padding(3, 9, 25, 48)
@@ -62,6 +64,7 @@ class DownloadRankPage(gtk.VBox):
         self.page_align = gtk.Alignment()
         self.page_align.set(0.5, 0.5, 1, 1)
         self.page_align.set_padding(0, 0, 15, 15)
+        self.page_align.set_size_request(-1, 310)
         
         self.week_rank_icon_view = IconView()
         self.week_rank_icon_view_scrlledwindow = ScrolledWindow()
@@ -85,8 +88,12 @@ class DownloadRankPage(gtk.VBox):
         self.pack_start(self.tab_box_align, False, False)    
         self.pack_start(self.page_box, True, True)    
 
+        self.cute_message_image = gtk.VBox()
+        self.cute_message_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(cute_info_dir, "network_disable.png"))
+        self.cute_message_image.connect("expose-event", self.expose_cute_message_image)
+
         self.loading = Loading()
-        self.loading.set_size_request(-1, 300)
+        self.loading.set_size_request(-1, 310)
 
         self.view_list =  [
             (self.data_manager.get_week_download_rank_info, self.week_rank_icon_view, self.week_rank_icon_view_scrlledwindow), 
@@ -94,8 +101,25 @@ class DownloadRankPage(gtk.VBox):
             (self.data_manager.get_all_download_rank_info, self.all_rank_icon_view, self.all_rank_icon_view_scrlledwindow)]
 
         global_event.register_event("update-rank-page", self.update_rank_page)
-        global_event.emit("update-rank-page", 0)
         global_event.register_event('get-rank-pkgs-finish', self.get_pkgs_status)
+
+        global_event.emit("update-rank-page", 0)
+
+    def expose_cute_message_image(self, widget, event):
+        if self.cute_message_pixbuf:
+            cr = widget.window.cairo_create()
+            rect = widget.allocation
+            
+            cr.set_source_rgba(1, 1, 1, 0)
+            cr.rectangle(rect.x, rect.y, rect.width, rect.height)
+            cr.fill()
+            
+            draw_pixbuf(
+                cr,
+                self.cute_message_pixbuf,
+                rect.x + (rect.width - self.cute_message_pixbuf.get_width()) / 2,
+                rect.y + (rect.height - self.cute_message_pixbuf.get_height()) / 2,
+                )
 
     def get_download_rank(self, info):
         print len(info)
@@ -114,16 +138,20 @@ class DownloadRankPage(gtk.VBox):
                 lambda err: self.error_hander(err, self.data_manager.get_pkgs_install_status))
 
     def reply_handler(self, reply, infos, view):
-        number = len(reply)
-        items = []
-        for i in range(number):
-            infos[i].append(reply[i])
-            items.append(PkgIconItem(*infos[i]))
-        view.add_items(items)
         container_remove_all(self.page_align)
-        self.page_align.add(self.view_list[self.current_page_index][2])
+
+        number = len(reply)
+        if number > 0:
+            items = []
+            for i in range(number):
+                infos[i].append(reply[i])
+                items.append(PkgIconItem(*infos[i]))
+            view.add_items(items)
+            self.page_align.add(self.view_list[self.current_page_index][2])
+            global_event.emit("update-current-status-pkg-page", view)
+        else:
+            self.page_align.add(self.cute_message_image)
         self.show_all()
-        global_event.emit("update-current-status-pkg-page", view)
 
     def error_hander(self, error, method):
         print "DBUS ERROR:", method

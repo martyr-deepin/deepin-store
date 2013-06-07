@@ -88,7 +88,7 @@ class SearchPage(gtk.VBox):
             cr = widget.window.cairo_create()
             rect = widget.allocation
             
-            cr.set_source_rgb(1, 1, 1)
+            cr.set_source_rgba(1, 1, 1, 0)
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
             
