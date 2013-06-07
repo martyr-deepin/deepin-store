@@ -39,6 +39,8 @@ from nls import _
 from loading_widget import Loading
 from deepin_utils.multithread import create_thread
 
+RANK_TAB_HEIGHT = 20
+
 class DownloadRankPage(gtk.VBox):
     '''
     class docs
@@ -53,6 +55,7 @@ class DownloadRankPage(gtk.VBox):
         self.data_manager = data_manager
         
         self.tab_box = gtk.HBox()
+        self.tab_box.set_size_request(-1, RANK_TAB_HEIGHT)
         self.tab_box.set_spacing(1)
         self.tab_box_align = gtk.Alignment()
         self.tab_box_align.set(1, 0, 0, 0)
@@ -64,7 +67,7 @@ class DownloadRankPage(gtk.VBox):
         self.page_align = gtk.Alignment()
         self.page_align.set(0.5, 0.5, 1, 1)
         self.page_align.set_padding(0, 0, 15, 15)
-        self.page_align.set_size_request(-1, 310)
+        #self.page_align.set_size_request(-1, 310)
         
         self.week_rank_icon_view = IconView()
         self.week_rank_icon_view_scrlledwindow = ScrolledWindow()
@@ -204,7 +207,7 @@ class RankTab(gtk.Button):
         self.tab_height = self.tab_name_height + self.tab_padding_y * 2
         self.active_flag = active_flag
         
-        self.set_size_request(self.tab_width, self.tab_height)
+        self.set_size_request(self.tab_width, RANK_TAB_HEIGHT)
         
         self.connect("expose-event", self.expose_rank_tab)
         self.connect("motion-notify-event", self.motion_rank_tab)
