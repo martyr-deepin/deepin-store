@@ -68,7 +68,7 @@ class MirrorItem(TreeItem):
     }
 
     PADDING_X = 5
-    NAME_WIDTH = 90
+    NAME_WIDTH = 95
 
     def __init__(self, mirror, item_clicked_callback=None):
 
