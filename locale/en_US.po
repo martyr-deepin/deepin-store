@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-31 13:51+0800\n"
+"POT-Creation-Date: 2013-06-08 09:35+0800\n"
 "PO-Revision-Date: 2013-05-28 15:52+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -143,41 +143,41 @@ msgstr "Delete configuration files"
 msgid "Select Directory"
 msgstr "Select Directory"
 
-#: ../ui/home_page.py:475
+#: ../ui/home_page.py:478
 #, python-format
 msgid "%s: %s applications"
 msgstr "%s: %s applications"
 
-#: ../ui/home_page.py:668
+#: ../ui/home_page.py:671
 #, python-format
 msgid "%s > %s : %s applications"
 msgstr "%s > %s : %s applications"
 
-#: ../ui/home_page.py:724 ../ui/software_center.py:663
+#: ../ui/home_page.py:727 ../ui/software_center.py:663
 msgid "Home"
 msgstr "Home"
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Hot applications"
 msgstr "Hot apps"
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Topics"
 msgstr "Topics"
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Download rank"
 msgstr "Download rank"
 
-#: ../ui/download_rank_page.py:56
+#: ../ui/download_rank_page.py:63
 msgid "Top 25 weekly"
 msgstr "Top 25 weekly"
 
-#: ../ui/download_rank_page.py:56
+#: ../ui/download_rank_page.py:63
 msgid "Top 25 monthly"
 msgstr "Top 25 monthly"
 
-#: ../ui/download_rank_page.py:56
+#: ../ui/download_rank_page.py:63
 msgid "Top 25 of all time"
 msgstr "Top 25 of all time"
 
@@ -275,8 +275,8 @@ msgid "View new features"
 msgstr "View new features"
 
 #: ../ui/software_center.py:690
-msgid "Option"
-msgstr "Option"
+msgid "Preferences"
+msgstr "Preferences"
 
 #: ../ui/software_center.py:691
 msgid "Quit"
@@ -295,21 +295,16 @@ msgstr "You have cleared up %s pakcages and freed %s of space"
 msgid "Your system is clean."
 msgstr "Your system is clean."
 
-#: ../ui/search_page.py:105
+#: ../ui/search_page.py:104
 #, python-format
 msgid "%s: %s matched applications"
 msgstr "%s: %s matched applications"
 
-# second category name size
-#: ../ui/item_render.py:32
-msgid "10"
-msgstr "8"
-
-#: ../ui/item_render.py:44
+#: ../ui/item_render.py:43
 msgid "Unwatch"
 msgstr "Unwatch"
 
-#: ../ui/item_render.py:46 ../ui/upgrade_page.py:211
+#: ../ui/item_render.py:45 ../ui/upgrade_page.py:213
 msgid "Watch again"
 msgstr "Watch again"
 
@@ -626,7 +621,7 @@ msgid "%s applications are being installed"
 msgstr "%s applications are being installed"
 
 #: ../ui/install_page.py:289 ../ui/install_page.py:582
-#: ../ui/upgrade_page.py:1229
+#: ../ui/upgrade_page.py:1231
 msgid "Analyzing dependencies"
 msgstr "Analyzing dependencies"
 
@@ -638,12 +633,12 @@ msgstr "Download was interrupted"
 msgid "Installation was interrupted"
 msgstr "Installation was interrupted"
 
-#: ../ui/install_page.py:589 ../ui/upgrade_page.py:1116
-#: ../ui/upgrade_page.py:1236
+#: ../ui/install_page.py:589 ../ui/upgrade_page.py:1118
+#: ../ui/upgrade_page.py:1238
 msgid "Waiting for download"
 msgstr "Waiting for download"
 
-#: ../ui/install_page.py:596 ../ui/upgrade_page.py:1243
+#: ../ui/install_page.py:596 ../ui/upgrade_page.py:1245
 msgid "Downloading"
 msgstr "Downloading"
 
@@ -651,7 +646,7 @@ msgstr "Downloading"
 msgid "Waiting for installation"
 msgstr "Waiting for installation"
 
-#: ../ui/install_page.py:622 ../ui/upgrade_page.py:1269
+#: ../ui/install_page.py:622 ../ui/upgrade_page.py:1271
 msgid "Analyzing dependencies failed"
 msgstr "Analyzing dependencies failed"
 
@@ -698,7 +693,7 @@ msgid "Successfully installed"
 msgstr "Successfully installed"
 
 #: ../ui/detail_page.py:443
-#, fuzzy, python-format
+#, python-format
 msgid "Size: %s"
 msgstr "Size: %s"
 
@@ -710,40 +705,44 @@ msgstr "Loading comments..."
 msgid "Powered by 又拍云存储"
 msgstr "Powered by 又拍云存储"
 
-#: ../ui/upgrade_page.py:109
+#: ../ui/upgrade_page.py:110
 #, python-format
 msgid "Last upgraded time: %s"
 msgstr "Last time upgraded: %s"
 
-#: ../ui/upgrade_page.py:117 ../ui/upgrade_page.py:181
+#: ../ui/upgrade_page.py:118 ../ui/upgrade_page.py:183
 #, python-format
 msgid "Unwatched (%s)"
 msgstr "Unwatched (%s)"
 
-#: ../ui/upgrade_page.py:177
+#: ../ui/upgrade_page.py:157
+msgid "Upgrade select items"
+msgstr "Upgrade select items"
+
+#: ../ui/upgrade_page.py:179
 #, python-format
 msgid "%s applications are available for upgrade"
 msgstr "%s applications are available for upgrade"
 
-#: ../ui/upgrade_page.py:245
+#: ../ui/upgrade_page.py:247
 #, python-format
 msgid "%s applications are not being watched"
 msgstr "%s applications are not being watched"
 
-#: ../ui/upgrade_page.py:548
+#: ../ui/upgrade_page.py:550
 #, python-format
 msgid "Refresh applications lists %s%%"
 msgstr "Refresh application lists %s%%"
 
-#: ../ui/upgrade_page.py:1259
+#: ../ui/upgrade_page.py:1261
 msgid "Waiting for upgrade"
 msgstr "Waiting for upgrade"
 
-#: ../ui/upgrade_page.py:1278 ../ui/upgrade_page.py:1285
+#: ../ui/upgrade_page.py:1280 ../ui/upgrade_page.py:1287
 msgid "Upgrading"
 msgstr "Upgrading"
 
-#: ../ui/upgrade_page.py:1294
+#: ../ui/upgrade_page.py:1296
 msgid "Upgrade complete"
 msgstr "Upgrade complete"
 
@@ -763,6 +762,13 @@ msgstr "Uninstalling"
 #: ../ui/uninstall_page.py:565
 msgid "Uninstall successful"
 msgstr "Uninstall successful"
+
+#~ msgid "Option"
+#~ msgstr "Option"
+
+# second category name size
+#~ msgid "10"
+#~ msgstr "8"
 
 # first category name size
 #~ msgid "11"

@@ -687,7 +687,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
              (None, _("Open download directory"), self.open_download_directory),
              (None, _("Clear up cached packages"), self.clean_download_cache),
              (None, _("View new features"), lambda : self.show_wizard_win()),
-             (None, _("Option"), self.show_preference_dialog),
+             (None, _("Preferences"), self.show_preference_dialog),
              (None, _("Quit"), self.exit),
              ],
             is_root_menu=True,

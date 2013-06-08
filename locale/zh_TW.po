@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-31 14:06+0800\n"
+"POT-Creation-Date: 2013-06-08 09:35+0800\n"
 "PO-Revision-Date: 2013-05-28 15:52+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -136,41 +136,41 @@ msgstr "刪除系統設定檔"
 msgid "Select Directory"
 msgstr "選擇目錄"
 
-#: ../ui/home_page.py:475
+#: ../ui/home_page.py:478
 #, python-format
 msgid "%s: %s applications"
 msgstr "%s: %s 應用程式"
 
-#: ../ui/home_page.py:668
+#: ../ui/home_page.py:671
 #, python-format
 msgid "%s > %s : %s applications"
 msgstr "%s > %s : %s 款應用程式"
 
-#: ../ui/home_page.py:724 ../ui/software_center.py:663
+#: ../ui/home_page.py:727 ../ui/software_center.py:663
 msgid "Home"
 msgstr "首頁推薦"
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Hot applications"
 msgstr "熱門程式"
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Topics"
 msgstr "主題園地"
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Download rank"
 msgstr "下載排名"
 
-#: ../ui/download_rank_page.py:56
+#: ../ui/download_rank_page.py:63
 msgid "Top 25 weekly"
 msgstr "週排行Top25"
 
-#: ../ui/download_rank_page.py:56
+#: ../ui/download_rank_page.py:63
 msgid "Top 25 monthly"
 msgstr "月排行Top25"
 
-#: ../ui/download_rank_page.py:56
+#: ../ui/download_rank_page.py:63
 msgid "Top 25 of all time"
 msgstr "總排行Top25"
 
@@ -267,8 +267,8 @@ msgid "View new features"
 msgstr "檢視新特性"
 
 #: ../ui/software_center.py:690
-msgid "Option"
-msgstr "偏好設定"
+msgid "Preferences"
+msgstr "首選項"
 
 #: ../ui/software_center.py:691
 msgid "Quit"
@@ -287,20 +287,16 @@ msgstr "恭喜您清理了 %s 個套件，共節約了 %s 磁碟空間"
 msgid "Your system is clean."
 msgstr "您的系統已經很幹淨了，無需進行清理。"
 
-#: ../ui/search_page.py:105
+#: ../ui/search_page.py:104
 #, python-format
 msgid "%s: %s matched applications"
 msgstr "%s：搜尋到 %s 款應用程式"
 
-#: ../ui/item_render.py:32
-msgid "10"
-msgstr "10"
-
-#: ../ui/item_render.py:44
+#: ../ui/item_render.py:43
 msgid "Unwatch"
 msgstr "不再提醒"
 
-#: ../ui/item_render.py:46 ../ui/upgrade_page.py:211
+#: ../ui/item_render.py:45 ../ui/upgrade_page.py:213
 msgid "Watch again"
 msgstr "重新提醒"
 
@@ -610,7 +606,7 @@ msgid "%s applications are being installed"
 msgstr "正在安裝 %s 款應用程式"
 
 #: ../ui/install_page.py:289 ../ui/install_page.py:582
-#: ../ui/upgrade_page.py:1229
+#: ../ui/upgrade_page.py:1231
 msgid "Analyzing dependencies"
 msgstr "正在分析相依關係"
 
@@ -622,12 +618,12 @@ msgstr "下載被中斷"
 msgid "Installation was interrupted"
 msgstr "安裝被中斷"
 
-#: ../ui/install_page.py:589 ../ui/upgrade_page.py:1116
-#: ../ui/upgrade_page.py:1236
+#: ../ui/install_page.py:589 ../ui/upgrade_page.py:1118
+#: ../ui/upgrade_page.py:1238
 msgid "Waiting for download"
 msgstr "等待下載"
 
-#: ../ui/install_page.py:596 ../ui/upgrade_page.py:1243
+#: ../ui/install_page.py:596 ../ui/upgrade_page.py:1245
 msgid "Downloading"
 msgstr "正在下載"
 
@@ -635,7 +631,7 @@ msgstr "正在下載"
 msgid "Waiting for installation"
 msgstr "等待安裝"
 
-#: ../ui/install_page.py:622 ../ui/upgrade_page.py:1269
+#: ../ui/install_page.py:622 ../ui/upgrade_page.py:1271
 msgid "Analyzing dependencies failed"
 msgstr "分析相依關係失敗"
 
@@ -694,40 +690,44 @@ msgstr "正在載入評論..."
 msgid "Powered by 又拍云存储"
 msgstr "Powered by 又拍云存储"
 
-#: ../ui/upgrade_page.py:109
+#: ../ui/upgrade_page.py:110
 #, python-format
 msgid "Last upgraded time: %s"
 msgstr "最後更新時間：%s"
 
-#: ../ui/upgrade_page.py:117 ../ui/upgrade_page.py:181
+#: ../ui/upgrade_page.py:118 ../ui/upgrade_page.py:183
 #, python-format
 msgid "Unwatched (%s)"
 msgstr "不再提醒(%s)"
 
-#: ../ui/upgrade_page.py:177
+#: ../ui/upgrade_page.py:157
+msgid "Upgrade select items"
+msgstr "升級所選軟體"
+
+#: ../ui/upgrade_page.py:179
 #, python-format
 msgid "%s applications are available for upgrade"
 msgstr "當前共有 %s 款應用程式有可用的升級"
 
-#: ../ui/upgrade_page.py:245
+#: ../ui/upgrade_page.py:247
 #, python-format
 msgid "%s applications are not being watched"
 msgstr "%s 款應用程式將不再提醒"
 
-#: ../ui/upgrade_page.py:548
+#: ../ui/upgrade_page.py:550
 #, python-format
 msgid "Refresh applications lists %s%%"
 msgstr "重新整理應用程式清單 %s%%"
 
-#: ../ui/upgrade_page.py:1259
+#: ../ui/upgrade_page.py:1261
 msgid "Waiting for upgrade"
 msgstr "正在等待升級"
 
-#: ../ui/upgrade_page.py:1278 ../ui/upgrade_page.py:1285
+#: ../ui/upgrade_page.py:1280 ../ui/upgrade_page.py:1287
 msgid "Upgrading"
 msgstr "正在升級"
 
-#: ../ui/upgrade_page.py:1294
+#: ../ui/upgrade_page.py:1296
 msgid "Upgrade complete"
 msgstr "升級完成"
 
@@ -747,6 +747,3 @@ msgstr "正在解除安裝"
 #: ../ui/uninstall_page.py:565
 msgid "Uninstall successful"
 msgstr "解除安裝完成"
-
-#~ msgid "11"
-#~ msgstr "11"

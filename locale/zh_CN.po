@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-31 14:06+0800\n"
+"POT-Creation-Date: 2013-06-08 09:35+0800\n"
 "PO-Revision-Date: 2013-03-25 15:30+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -139,41 +139,41 @@ msgstr "删除系统配置文件"
 msgid "Select Directory"
 msgstr "选择目录"
 
-#: ../ui/home_page.py:475
+#: ../ui/home_page.py:478
 #, python-format
 msgid "%s: %s applications"
 msgstr "%s: %s款软件"
 
-#: ../ui/home_page.py:668
+#: ../ui/home_page.py:671
 #, python-format
 msgid "%s > %s : %s applications"
 msgstr "%s > %s: %s款软件"
 
-#: ../ui/home_page.py:724 ../ui/software_center.py:663
+#: ../ui/home_page.py:727 ../ui/software_center.py:663
 msgid "Home"
 msgstr "首页推荐"
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Hot applications"
 msgstr "热门推荐"
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Topics"
 msgstr "专题介绍"
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Download rank"
 msgstr "下载排行"
 
-#: ../ui/download_rank_page.py:56
+#: ../ui/download_rank_page.py:63
 msgid "Top 25 weekly"
 msgstr "周排行Top25"
 
-#: ../ui/download_rank_page.py:56
+#: ../ui/download_rank_page.py:63
 msgid "Top 25 monthly"
 msgstr "月排行Top25"
 
-#: ../ui/download_rank_page.py:56
+#: ../ui/download_rank_page.py:63
 msgid "Top 25 of all time"
 msgstr "总排行Top25"
 
@@ -270,8 +270,8 @@ msgid "View new features"
 msgstr "显示新功能"
 
 #: ../ui/software_center.py:690
-msgid "Option"
-msgstr "选项"
+msgid "Preferences"
+msgstr "首选项"
 
 #: ../ui/software_center.py:691
 msgid "Quit"
@@ -290,20 +290,16 @@ msgstr "恭喜您清理了%s个软件包，共节约了%s空间"
 msgid "Your system is clean."
 msgstr "您的系统已经很干净了，不需要清理."
 
-#: ../ui/search_page.py:105
+#: ../ui/search_page.py:104
 #, python-format
 msgid "%s: %s matched applications"
 msgstr "%s: 搜索到%s款软件"
 
-#: ../ui/item_render.py:32
-msgid "10"
-msgstr "10"
-
-#: ../ui/item_render.py:44
+#: ../ui/item_render.py:43
 msgid "Unwatch"
 msgstr "不再提醒"
 
-#: ../ui/item_render.py:46 ../ui/upgrade_page.py:211
+#: ../ui/item_render.py:45 ../ui/upgrade_page.py:213
 msgid "Watch again"
 msgstr "重新提醒"
 
@@ -613,7 +609,7 @@ msgid "%s applications are being installed"
 msgstr "%s款软件正在安装"
 
 #: ../ui/install_page.py:289 ../ui/install_page.py:582
-#: ../ui/upgrade_page.py:1229
+#: ../ui/upgrade_page.py:1231
 msgid "Analyzing dependencies"
 msgstr "分析依赖中"
 
@@ -625,12 +621,12 @@ msgstr "下载被终止"
 msgid "Installation was interrupted"
 msgstr "安装被终止"
 
-#: ../ui/install_page.py:589 ../ui/upgrade_page.py:1116
-#: ../ui/upgrade_page.py:1236
+#: ../ui/install_page.py:589 ../ui/upgrade_page.py:1118
+#: ../ui/upgrade_page.py:1238
 msgid "Waiting for download"
 msgstr "等待下载"
 
-#: ../ui/install_page.py:596 ../ui/upgrade_page.py:1243
+#: ../ui/install_page.py:596 ../ui/upgrade_page.py:1245
 msgid "Downloading"
 msgstr "下载中"
 
@@ -638,7 +634,7 @@ msgstr "下载中"
 msgid "Waiting for installation"
 msgstr "等待安装"
 
-#: ../ui/install_page.py:622 ../ui/upgrade_page.py:1269
+#: ../ui/install_page.py:622 ../ui/upgrade_page.py:1271
 msgid "Analyzing dependencies failed"
 msgstr "分析依赖失败"
 
@@ -697,40 +693,44 @@ msgstr "正在加载评论..."
 msgid "Powered by 又拍云存储"
 msgstr "Powered by 又拍云存储"
 
-#: ../ui/upgrade_page.py:109
+#: ../ui/upgrade_page.py:110
 #, python-format
 msgid "Last upgraded time: %s"
 msgstr "最后更新时间: %s"
 
-#: ../ui/upgrade_page.py:117 ../ui/upgrade_page.py:181
+#: ../ui/upgrade_page.py:118 ../ui/upgrade_page.py:183
 #, python-format
 msgid "Unwatched (%s)"
 msgstr "不再提醒升级(%s)"
 
-#: ../ui/upgrade_page.py:177
+#: ../ui/upgrade_page.py:157
+msgid "Upgrade select items"
+msgstr "升级所选软件"
+
+#: ../ui/upgrade_page.py:179
 #, python-format
 msgid "%s applications are available for upgrade"
 msgstr "当前可升级软件共 %s 款"
 
-#: ../ui/upgrade_page.py:245
+#: ../ui/upgrade_page.py:247
 #, python-format
 msgid "%s applications are not being watched"
 msgstr "有%s款软件不再提醒"
 
-#: ../ui/upgrade_page.py:548
+#: ../ui/upgrade_page.py:550
 #, python-format
 msgid "Refresh applications lists %s%%"
 msgstr "更新软件列表 %s%%"
 
-#: ../ui/upgrade_page.py:1259
+#: ../ui/upgrade_page.py:1261
 msgid "Waiting for upgrade"
 msgstr "等待升级"
 
-#: ../ui/upgrade_page.py:1278 ../ui/upgrade_page.py:1285
+#: ../ui/upgrade_page.py:1280 ../ui/upgrade_page.py:1287
 msgid "Upgrading"
 msgstr "升级中"
 
-#: ../ui/upgrade_page.py:1294
+#: ../ui/upgrade_page.py:1296
 msgid "Upgrade complete"
 msgstr "升级完成"
 
@@ -750,6 +750,3 @@ msgstr "卸载中"
 #: ../ui/uninstall_page.py:565
 msgid "Uninstall successful"
 msgstr "卸载完成"
-
-#~ msgid "11"
-#~ msgstr "11"
