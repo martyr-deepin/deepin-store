@@ -57,6 +57,7 @@ from constant import (
             ACTION_INSTALL, ACTION_UNINSTALL, ACTION_UPGRADE,
             #PKG_STATUS_INSTALLED, PKG_STATUS_UNINSTALLED, PKG_STATUS_UPGRADED,
             CONFIG_DIR, ONE_DAY_SECONDS,
+            LANGUAGE,
         )
 from dtk.ui.slider import HSlider
 from events import global_event
@@ -681,6 +682,10 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.application.window.add_move_event(self.navigatebar)
         
         # Init menu.
+        if LANGUAGE == 'en_US':
+            menu_min_width = 185
+        else:
+            menu_min_width = 150
         menu = Menu(
             [
              (None, _("Refresh applications lists"), self.update_list_handler),
@@ -691,7 +696,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
              (None, _("Quit"), self.exit),
              ],
             is_root_menu=True,
-            menu_min_width=150,
+            menu_min_width=menu_min_width,
             )
         self.application.set_menu_callback(
             lambda button:
@@ -722,19 +727,14 @@ class DeepinSoftwareCenter(dbus.service.Object):
         gtk.main()    
         
     def show_wizard_win(self, show_button=False, callback=None):    
-        import locale
-        (lang, encode) = locale.getdefaultlocale()
         program_dir = get_parent_dir(__file__, 2)
-        if lang == "zh_CN":
-            wizard_dir = os.path.join(program_dir, "wizard", "zh_CN")
-        elif lang in ["zh_HK", "zh_TW"]:
-            wizard_dir = os.path.join(program_dir, "wizard", "zh_HK")
-        else:    
-            wizard_dir = os.path.join(program_dir, "wizard", "en")
+        wizard_dir = os.path.join(program_dir, 'wizard', LANGUAGE)
+        if not os.path.exists(wizard_dir):
+            wizard_dir = os.path.join(program_dir, 'wizard', 'en_US')
         wizard_root_dir = os.path.dirname(wizard_dir)            
             
         Wizard(
-            [os.path.join(wizard_dir, "%d.jpg" % i) for i in range(3)],
+            [os.path.join(wizard_dir, "%d.png" % i) for i in range(3)],
             (os.path.join(wizard_root_dir, "dot_normal.png"),
              os.path.join(wizard_root_dir, "dot_active.png"),             
              ),

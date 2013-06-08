@@ -271,7 +271,7 @@ msgstr "显示新功能"
 
 #: ../ui/software_center.py:690
 msgid "Preferences"
-msgstr "首选项"
+msgstr "选项"
 
 #: ../ui/software_center.py:691
 msgid "Quit"

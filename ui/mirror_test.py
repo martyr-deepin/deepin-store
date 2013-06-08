@@ -51,7 +51,7 @@ class Mirror(object):
         if self.config.has_option('mirror', 'name[%s]' % LANGUAGE):
             return self.config.get('mirror', 'name[%s]' % LANGUAGE)
         else:
-            return self.config.get('mirror', 'name[%s]' % LANGUAGE)
+            return self.config.get('mirror', 'name[%s]' % 'en_US')
 
     @property
     def protocol_type(self):
