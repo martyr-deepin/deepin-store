@@ -39,9 +39,6 @@ from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from events import global_event
 from nls import _
 from loading_widget import Loading
-#from dtk.ui.threads import AnonymityThread, post_gui
-#from deepin_utils.multithread import create_thread
-from utils import ThreadMethod
 
 RANK_TAB_HEIGHT = 20
 
@@ -140,7 +137,6 @@ class DownloadRankPage(gtk.VBox):
         try:
             url = "%s/softcenter/v1/soft?a=top&r=%s" % (SERVER_ADDRESS, data_type)
             result = urllib2.urlopen(url, timeout=POST_TIMEOUT).read()
-            print url
             if data_type == 'week' or data_type == 'month':
                 rank = json.loads(result)[0]
                 rank = eval(rank["rank_packages"].encode("utf-8"))
