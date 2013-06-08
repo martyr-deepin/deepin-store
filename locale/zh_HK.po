@@ -268,7 +268,7 @@ msgstr "檢視新特性"
 
 #: ../ui/software_center.py:690
 msgid "Preferences"
-msgstr ""
+msgstr "首選項"
 
 #: ../ui/software_center.py:691
 msgid "Quit"
@@ -701,9 +701,8 @@ msgid "Unwatched (%s)"
 msgstr "不再提醒(%s)"
 
 #: ../ui/upgrade_page.py:157
-#, fuzzy
 msgid "Upgrade select items"
-msgstr "升級完成"
+msgstr "升級所選軟體"
 
 #: ../ui/upgrade_page.py:179
 #, python-format
@@ -748,12 +747,3 @@ msgstr "正在解除安裝"
 #: ../ui/uninstall_page.py:565
 msgid "Uninstall successful"
 msgstr "解除安裝完成"
-
-#~ msgid "Option"
-#~ msgstr "選項"
-
-#~ msgid "10"
-#~ msgstr "10"
-
-#~ msgid "11"
-#~ msgstr "11"
