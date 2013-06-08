@@ -508,7 +508,7 @@ class DscPreferenceDialog(PreferenceDialog):
         self.dir_entry = InputEntry()
         self.dir_entry.set_text(get_software_download_dir())
         self.dir_entry.set_editable(False)        
-        self.dir_entry.set_size(210, 25)
+        self.dir_entry.set_size(200, 25)
         
         modify_button = Button(_("Change"))
         modify_button.connect("clicked", self.change_download_save_dir)

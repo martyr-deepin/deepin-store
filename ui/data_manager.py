@@ -26,7 +26,7 @@ import sqlite3
 from collections import OrderedDict
 import xappy
 from data import DATA_ID
-from constant import LANGUAGE, SERVER_ADDRESS
+from constant import LANGUAGE, SERVER_ADDRESS, POST_TIMEOUT
 import urllib2
 import json
 
@@ -227,7 +227,7 @@ class DataManager(object):
         try:
             result = urllib2.urlopen(
                 "%s/softcenter/v1/soft?a=top&r=week" % SERVER_ADDRESS, 
-                    ).read()
+                    timeout=POST_TIMEOUT).read()
             week_rank = json.loads(result)[0]
             week_rank = eval(week_rank["rank_packages"].encode("utf-8"))
             for info in week_rank:
