@@ -26,9 +26,7 @@ import sqlite3
 from collections import OrderedDict
 import xappy
 from data import DATA_ID
-from constant import LANGUAGE, SERVER_ADDRESS, POST_TIMEOUT
-import urllib2
-import json
+from constant import LANGUAGE
 
 UPDATE_DATA_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID)
 
@@ -220,102 +218,24 @@ class DataManager(object):
         
         return detail_infos
     
-    def get_week_download_rank_info(self):
-        week_infos = []
-        week_pkg_names = []
+    def get_download_rank_info(self, pkg_names):
+        infos = []
 
-        try:
-            result = urllib2.urlopen(
-                "%s/softcenter/v1/soft?a=top&r=week" % SERVER_ADDRESS, 
-                    timeout=POST_TIMEOUT).read()
-            week_rank = json.loads(result)[0]
-            week_rank = eval(week_rank["rank_packages"].encode("utf-8"))
-            for info in week_rank:
-                week_pkg_names.append(info[0])
+        for pkg_name in pkg_names:
 
-        except Exception, e:
-            print "Get week rank error:", e
-
-        for pkg_name in week_pkg_names:
             self.software_db_cursor.execute(
                 "SELECT alias_name FROM software WHERE pkg_name=?", [pkg_name])
-            (alias_name,) = self.software_db_cursor.fetchone()
+            r = self.software_db_cursor.fetchone()
+            if r != [] and r != None:
+                alias_name = r[0]
             
-            self.desktop_db_cursor.execute(
-                "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
-            desktop_infos = self.desktop_db_cursor.fetchall()
+                self.desktop_db_cursor.execute(
+                    "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
+                desktop_infos = self.desktop_db_cursor.fetchall()
+                
+                infos.append([pkg_name, alias_name, 5.0, desktop_infos])
             
-            week_infos.append([pkg_name, alias_name, 5.0, desktop_infos])
-            
-        return (week_pkg_names, week_infos)
-
-    def get_month_download_rank_info(self):
-        month_infos = []
-        month_pkg_names = []
-        try:
-            result = urllib2.urlopen(
-                "%s/softcenter/v1/soft?a=top&r=month" % SERVER_ADDRESS, 
-                    ).read()
-            month_rank = json.loads(result)[0]
-            month_rank = eval(month_rank["rank_packages"].encode("utf-8"))
-            for info in month_rank:
-                month_pkg_names.append(info[0])
-
-        except Exception, e:
-            print "Get month rank error:", e
-
-        for pkg_name in month_pkg_names:
-            self.software_db_cursor.execute(
-                "SELECT alias_name FROM software WHERE pkg_name=?", [pkg_name])
-            (alias_name,) = self.software_db_cursor.fetchone()
-            
-            self.desktop_db_cursor.execute(
-                "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
-            desktop_infos = self.desktop_db_cursor.fetchall()
-            
-            month_infos.append([pkg_name, alias_name, 5.0, desktop_infos])
-            
-        return (month_pkg_names, month_infos)
-            
-    def get_all_download_rank_info(self):
-        all_infos = []
-        all_pkg_names = []
-        alias_names = []
-
-        try:
-            result = urllib2.urlopen(
-                "%s/softcenter/v1/soft?a=top&r=all" % SERVER_ADDRESS, 
-                    ).read()
-            all_rank = json.loads(result)
-            for info in all_rank:
-                name = info['name'].encode('utf-8')
-                if name not in all_pkg_names:
-
-                    self.software_db_cursor.execute(
-                        "SELECT alias_name FROM software WHERE pkg_name=?", [name])
-
-                    r = self.software_db_cursor.fetchall()
-                    if r != []:
-                        all_pkg_names.append(name)
-                        alias_names.append(r[0][0].encode('utf-8'))
-
-            if len(all_pkg_names) > 25:
-                all_pkg_names = all_pkg_names[0:25]
-
-        except Exception, e:
-            print "Get all rank error:", e
-
-        for index in range(len(all_pkg_names)):
-            pkg_name = all_pkg_names[index]
-            alias_name = alias_names[index]
-            
-            self.desktop_db_cursor.execute(
-                "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
-            desktop_infos = self.desktop_db_cursor.fetchall()
-            
-            all_infos.append([pkg_name, alias_name, 5.0, desktop_infos])
-
-        return (all_pkg_names, all_infos)
+        return infos
 
     def get_recommend_info(self):
         self.recommend_db_cursor.execute(

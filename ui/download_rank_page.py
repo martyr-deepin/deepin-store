@@ -21,7 +21,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, cute_info_dir
+import urllib2
+import json
+from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, cute_info_dir, SERVER_ADDRESS, POST_TIMEOUT
 from skin import app_theme
 from dtk.ui.utils import get_content_size, set_cursor, container_remove_all, is_in_rect
 import gobject
@@ -37,7 +39,9 @@ from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from events import global_event
 from nls import _
 from loading_widget import Loading
-from deepin_utils.multithread import create_thread
+#from dtk.ui.threads import AnonymityThread, post_gui
+#from deepin_utils.multithread import create_thread
+from utils import ThreadMethod
 
 RANK_TAB_HEIGHT = 20
 
@@ -45,6 +49,10 @@ class DownloadRankPage(gtk.VBox):
     '''
     class docs
     '''
+
+    __gsignals__ = {
+        "get-rank-pkg-names-finish" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+        }
 	
     def __init__(self, data_manager):
         '''
@@ -100,12 +108,13 @@ class DownloadRankPage(gtk.VBox):
         self.loading.set_size_request(-1, 310)
 
         self.view_list =  [
-            (self.data_manager.get_week_download_rank_info, self.week_rank_icon_view, self.week_rank_icon_view_scrlledwindow), 
-            (self.data_manager.get_month_download_rank_info, self.month_rank_icon_view, self.month_rank_icon_view_scrlledwindow),
-            (self.data_manager.get_all_download_rank_info, self.all_rank_icon_view, self.all_rank_icon_view_scrlledwindow)]
+            ('week', self.week_rank_icon_view, self.week_rank_icon_view_scrlledwindow), 
+            ('month', self.month_rank_icon_view, self.month_rank_icon_view_scrlledwindow),
+            ('all', self.all_rank_icon_view, self.all_rank_icon_view_scrlledwindow)]
 
         global_event.register_event("update-rank-page", self.update_rank_page)
-        global_event.register_event('get-rank-pkgs-finish', self.get_pkgs_status)
+        #global_event.register_event('get-rank-pkgs-finish', self.get_pkgs_status)
+        self.connect('get-rank-pkg-names-finish', self.get_pkgs_status)
 
         global_event.emit("update-rank-page", 0)
 
@@ -125,23 +134,48 @@ class DownloadRankPage(gtk.VBox):
                 rect.y + (rect.height - self.cute_message_pixbuf.get_height()) / 2,
                 )
 
-    def get_download_rank(self, info):
-        print len(info)
+    def get_rank_pkg_names(self, data_type):
+        pkg_names = []
 
-    def update_view_infos(self, page_index):
-        get_info = self.view_list[page_index][0]
-        view = self.view_list[page_index][1]
-        view.clear()
-        pkg_names, infos = get_info()
-        global_event.emit('get-rank-pkgs-finish', pkg_names, infos, view)
+        try:
+            url = "%s/softcenter/v1/soft?a=top&r=%s" % (SERVER_ADDRESS, data_type)
+            result = urllib2.urlopen(url, timeout=POST_TIMEOUT).read()
+            print url
+            if data_type == 'week' or data_type == 'month':
+                rank = json.loads(result)[0]
+                rank = eval(rank["rank_packages"].encode("utf-8"))
+                for info in rank:
+                    pkg_names.append(info[0])
+            else:
+                rank = json.loads(result)
+                for info in rank:
+                    name = info['name'].encode('utf-8')
+                    if name not in pkg_names:
+                        pkg_names.append(name)
 
-    def get_pkgs_status(self, pkg_names, infos, view):
+        except Exception, e:
+            print "Get %s rank error: %s" % (data_type, e)
+        #global_event.emit('get-rank-pkgs-finish', pkg_names)
+        self.emit('get-rank-pkg-names-finish', pkg_names)
+
+    def get_pkgs_status(self, widget, pkg_names):
+        infos = self.data_manager.get_download_rank_info(pkg_names)
+
+        if len(infos) > 25:
+            infos = infos[:25]
+
+        valid_pkg_names = []
+        for info in infos:
+            valid_pkg_names.append(info[0])
+
         self.data_manager.get_pkgs_install_status(
-                pkg_names, 
-                lambda r: self.reply_handler(r, infos, view), 
+                valid_pkg_names, 
+                lambda reply: self.reply_handler(reply, infos), 
                 lambda err: self.error_hander(err, self.data_manager.get_pkgs_install_status))
 
-    def reply_handler(self, reply, infos, view):
+    def reply_handler(self, reply, infos):
+        view = self.view_list[self.current_page_index][1]
+        view.clear()
         container_remove_all(self.page_align)
 
         number = len(reply)
@@ -182,7 +216,7 @@ class DownloadRankPage(gtk.VBox):
 
         self.page_align.add(self.loading)
 
-        create_thread(self.update_view_infos(page_index)).start()
+        gtk.timeout_add(10, self.get_rank_pkg_names, self.view_list[page_index][0])
         self.show_all()    
         
 gobject.type_register(DownloadRankPage)
