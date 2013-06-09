@@ -39,6 +39,7 @@ from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from events import global_event
 from nls import _
 from loading_widget import Loading
+from utils import ThreadMethod
 
 RANK_TAB_HEIGHT = 20
 
@@ -109,9 +110,16 @@ class DownloadRankPage(gtk.VBox):
             ('month', self.month_rank_icon_view, self.month_rank_icon_view_scrlledwindow),
             ('all', self.all_rank_icon_view, self.all_rank_icon_view_scrlledwindow)]
 
+        self.pkg_names = []
+
+        self.show_flag = None
+        self.all_show_flag = ['week', 'month', 'all']
+
         global_event.register_event("update-rank-page", self.update_rank_page)
         #global_event.register_event('get-rank-pkgs-finish', self.get_pkgs_status)
-        self.connect('get-rank-pkg-names-finish', self.get_pkgs_status)
+        #self.connect('get-rank-pkg-names-finish', self.get_pkgs_status)
+        
+        gtk.timeout_add(100, self.get_pkgs_status)
 
         global_event.emit("update-rank-page", 0)
 
@@ -151,23 +159,27 @@ class DownloadRankPage(gtk.VBox):
 
         except Exception, e:
             print "Get %s rank error: %s" % (data_type, e)
-        #global_event.emit('get-rank-pkgs-finish', pkg_names)
-        self.emit('get-rank-pkg-names-finish', pkg_names)
+        self.pkg_names = pkg_names
+        self.show_flag = data_type
 
-    def get_pkgs_status(self, widget, pkg_names):
-        infos = self.data_manager.get_download_rank_info(pkg_names)
+    def get_pkgs_status(self):
+        if self.show_flag:
+            infos = self.data_manager.get_download_rank_info(self.pkg_names)
 
-        if len(infos) > 25:
-            infos = infos[:25]
+            if len(infos) > 25:
+                infos = infos[:25]
 
-        valid_pkg_names = []
-        for info in infos:
-            valid_pkg_names.append(info[0])
+            valid_pkg_names = []
+            for info in infos:
+                valid_pkg_names.append(info[0])
 
-        self.data_manager.get_pkgs_install_status(
-                valid_pkg_names, 
-                lambda reply: self.reply_handler(reply, infos), 
-                lambda err: self.error_hander(err, self.data_manager.get_pkgs_install_status))
+            self.data_manager.get_pkgs_install_status(
+                    valid_pkg_names, 
+                    lambda reply: self.reply_handler(reply, infos), 
+                    lambda err: self.error_hander(err, self.data_manager.get_pkgs_install_status))
+            self.show_flag = None
+
+        return True
 
     def reply_handler(self, reply, infos):
         view = self.view_list[self.current_page_index][1]
@@ -212,7 +224,7 @@ class DownloadRankPage(gtk.VBox):
 
         self.page_align.add(self.loading)
 
-        gtk.timeout_add(10, self.get_rank_pkg_names, self.view_list[page_index][0])
+        ThreadMethod(self.get_rank_pkg_names, (self.view_list[page_index][0],)).start()
         self.show_all()    
         
 gobject.type_register(DownloadRankPage)
