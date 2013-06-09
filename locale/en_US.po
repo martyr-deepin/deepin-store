@@ -159,7 +159,7 @@ msgstr "Home"
 
 #: ../ui/home_page.py:756
 msgid "Hot applications"
-msgstr "Hot apps"
+msgstr "Hot APP"
 
 #: ../ui/home_page.py:756
 msgid "Topics"

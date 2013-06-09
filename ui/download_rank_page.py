@@ -98,12 +98,12 @@ class DownloadRankPage(gtk.VBox):
         self.pack_start(self.page_box, True, True)    
 
         self.cute_message_image = gtk.VBox()
-        self.cute_message_image.set_size_request(-1, 310)
+        self.cute_message_image.set_size_request(-1, 312)
         self.cute_message_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(cute_info_dir, "network_disable.png"))
         self.cute_message_image.connect("expose-event", self.expose_cute_message_image)
 
         self.loading = Loading()
-        self.loading.set_size_request(-1, 310)
+        self.loading.set_size_request(-1, 312)
 
         self.view_list =  [
             ('week', self.week_rank_icon_view, self.week_rank_icon_view_scrlledwindow), 
