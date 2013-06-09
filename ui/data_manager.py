@@ -22,6 +22,7 @@
 
 from deepin_utils.file import get_parent_dir
 import os
+import sys
 import sqlite3
 from collections import OrderedDict
 import xappy
@@ -29,6 +30,11 @@ from data import DATA_ID
 from constant import LANGUAGE
 
 UPDATE_DATA_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID)
+
+def db_path_exists(path):
+    if not os.path.exists(path):
+        print "Database not exist:", path
+        sys.exit(1)
 
 class DataManager(object):
     '''
@@ -41,28 +47,42 @@ class DataManager(object):
         '''
         self.bus_interface = bus_interface
         
-        self.software_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "software", LANGUAGE, "software.db"))
+        software_db_path = os.path.join(UPDATE_DATA_DIR, "software", LANGUAGE, "software.db")
+        db_path_exists(software_db_path)
+        self.software_db_connect = sqlite3.connect(software_db_path)
         self.software_db_cursor = self.software_db_connect.cursor()
 
-        self.desktop_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "desktop", LANGUAGE, "desktop.db"))
+        desktop_db_path = os.path.join(UPDATE_DATA_DIR, "desktop", LANGUAGE, "desktop.db")
+        db_path_exists(desktop_db_path)
+        self.desktop_db_connect = sqlite3.connect(desktop_db_path)
         self.desktop_db_cursor = self.desktop_db_connect.cursor()
         
-        self.category_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "category", "category.db"))
+        category_db_path = os.path.join(UPDATE_DATA_DIR, "category", "category.db")
+        db_path_exists(category_db_path)
+        self.category_db_connect = sqlite3.connect(category_db_path)
         self.category_db_cursor = self.category_db_connect.cursor()
         
         self.category_dict = {}
         self.category_name_dict = {}
         
-        self.album_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "home", "album", LANGUAGE, "album.db"))
+        album_db_path = os.path.join(UPDATE_DATA_DIR, "home", "album", LANGUAGE, "album.db")
+        db_path_exists(album_db_path)
+        self.album_db_connect = sqlite3.connect(album_db_path)
         self.album_db_cursor = self.album_db_connect.cursor()
 
-        self.download_rank_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "home", "download_rank", "zh_CN", "download_rank.db"))
+        download_rank_db_path = os.path.join(UPDATE_DATA_DIR, "home", "download_rank", "zh_CN", "download_rank.db")
+        db_path_exists(download_rank_db_path)
+        self.download_rank_db_connect = sqlite3.connect(download_rank_db_path)
         self.download_rank_db_cursor = self.download_rank_db_connect.cursor()
 
-        self.recommend_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "home", "recommend", "zh_CN", "recommend.db"))
+        recommend_db_path = os.path.join(UPDATE_DATA_DIR, "home", "recommend", "zh_CN", "recommend.db")
+        db_path_exists(recommend_db_path)
+        self.recommend_db_connect = sqlite3.connect(recommend_db_path)
         self.recommend_db_cursor = self.recommend_db_connect.cursor()
 
-        self.slide_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "home", "slide", "zh_CN", "slide.db"))
+        slide_db_path = os.path.join(UPDATE_DATA_DIR, "home", "slide", "zh_CN", "slide.db")
+        db_path_exists(slide_db_path)
+        self.slide_db_connect = sqlite3.connect(slide_db_path)
         self.slide_db_cursor = self.slide_db_connect.cursor()
         
         self.build_category_dict()

@@ -51,6 +51,7 @@ import gobject
 import dbus
 import dbus.service
 import time
+import traceback
 from constant import (
             DSC_SERVICE_NAME, DSC_SERVICE_PATH, 
             DSC_FRONTEND_NAME, DSC_FRONTEND_PATH, 
@@ -126,24 +127,26 @@ def start_desktop(pkg_name, desktop_path):
     result = start_desktop_file(desktop_path.strip())
     if result != True:
         global_event.emit("show-message", result)
-    
-def show_message(statusbar, message_box, message, hide_timeout=5000):
-    hide_message(message_box)
-    
-    label = Label("%s" % message, enable_gaussian=True)
-    label_align = gtk.Alignment()
-    label_align.set(0.0, 0.5, 0, 0)
-    label_align.set_padding(0, 0, 10, 0)
-    label_align.add(label)
-    message_box.add(label_align)
-    
+
+global hide_timeout_id
+hide_timeout_id = None
+
+def show_message(statusbar, message_label, message, hide_timeout=0):
+    global hide_timeout_id
+    if hide_timeout_id:
+        gobject.source_remove(hide_timeout_id)
+        hide_timeout_id = None
+
+    hide_message(message_label)
+
+    message_label.set_text(message) 
     statusbar.show_all()
 
     if hide_timeout:
-        gtk.timeout_add(5000, lambda : hide_message(message_box))
+        hide_timeout_id = gtk.timeout_add(hide_timeout, lambda : hide_message(message_label))
     
-def hide_message(message_box):
-    container_remove_all(message_box)
+def hide_message(message_label):
+    message_label.set_text("")
     return False
 
 def request_status_reply_hander(result, install_page, upgrade_page, uninstall_page):
@@ -630,18 +633,26 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.page_switcher.set_to_page(self.page_box)
         
         # Init page align.
-        page_align = gtk.Alignment()
-        page_align.set(0.5, 0.5, 1, 1)
-        page_align.set_padding(0, 0, 2, 2)
+        self.page_align = gtk.Alignment()
+        self.page_align.set(0.5, 0.5, 1, 1)
+        self.page_align.set_padding(0, 0, 2, 2)
         
         # Append page to switcher.
-        page_align.add(self.page_switcher)
-        self.application.main_box.pack_start(page_align, True, True)
+        self.page_align.add(self.page_switcher)
+        self.application.main_box.pack_start(self.page_align, True, True)
         
         # Init status bar.
         self.statusbar = Statusbar(24)
         status_box = gtk.HBox()
         self.message_box = gtk.HBox()
+
+        self.message_label = Label("", enable_gaussian=True)
+        label_align = gtk.Alignment()
+        label_align.set(0.0, 0.5, 0, 0)
+        label_align.set_padding(0, 0, 10, 0)
+        label_align.add(self.message_label)
+        self.message_box.pack_start(label_align)
+
         join_us_button = LinkButton(_("Join us"), "http://www.linuxdeepin.com/joinus/job")
         join_us_button_align = gtk.Alignment()
         join_us_button_align.set(0.5, 0.5, 0, 0)
@@ -705,8 +716,8 @@ class DeepinSoftwareCenter(dbus.service.Object):
                 (button.get_allocation().width, 0)))
         
         # Make window can received drop data.
-        targets = [("text/uri-list", 0, 1)]        
-        self.application.window.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_DROP, targets, gtk.gdk.ACTION_COPY)
+        #targets = [("text/uri-list", 0, 1)]        
+        #self.application.window.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_DROP, targets, gtk.gdk.ACTION_COPY)
         #self.application.window.connect_after("drag-data-received", self.on_drag_data_received)        
         
         start = time.time()
@@ -918,11 +929,12 @@ class DeepinSoftwareCenter(dbus.service.Object):
         create_thread(self.request_update_list).start()
         #self.request_update_list()
 
-    def update_status_bar_message(self, message, hide_timeout=5000):
-        if hide_timeout:
-            show_message(self.statusbar, self.message_box, message)
+    def update_status_bar_message(self, message, hide_timeout=0):
+        if hide_timeout == 0:
+            show_message(self.statusbar, self.message_label, message)
         else:
-            show_message(self.statusbar, self.message_box, message, hide_timeout)
+            print hide_timeout
+            show_message(self.statusbar, self.message_label, message, hide_timeout)
 
     def request_update_list(self):
         self.in_update_list = True
