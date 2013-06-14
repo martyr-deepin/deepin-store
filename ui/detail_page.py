@@ -234,6 +234,23 @@ class DetailPage(gtk.HBox):
         self.left_category_label.connect("button-press-event", lambda w, e: self.jump_to_category())
         
         global_event.register_event("download-screenshot-finish", self.download_screenshot_finish)
+
+        self.loading_label = Label(_("Loading comments..."))
+        self.loading_label_align = gtk.Alignment(0.5, 0, 0, 0)
+        self.loading_label_align.add(self.loading_label)
+        self.loading_label_align.set_padding(10, 0, 0, 0)
+
+        self.web_view = WebView(os.path.join(CONFIG_DIR, "cookie.txt"))
+        #web_view.enable_inspector()
+        self.web_view.connect("new-window-policy-decision-requested", self.open_url)
+        self.web_view_align = gtk.Alignment()
+        self.web_view_align.set(0.5, 0, 0, 0)
+        self.web_view_align.set_padding(33, 33, 33, 33)
+        self.web_view_align.add(self.web_view)
+        self.web_settings = self.web_view.get_settings()
+        self.web_settings.set_property("enable-plugins", True)
+        self.web_settings.set_property("enable-scripts", True)    
+        self.web_view.connect("load-finished", self.comment_load_finished_cb)
         
     def hierarchy_change(self, widget, previous_toplevel):
         # When detail page remove from it's container, previous_toplevel is not None.
@@ -462,37 +479,20 @@ class DetailPage(gtk.HBox):
     def fetch_comment(self):
         if is_network_connected():
             container_remove_all(self.right_comment_box)    
-            loading_label = Label(_("Loading comments..."))
-            loading_label_align = gtk.Alignment(0.5, 0, 0, 0)
-            loading_label_align.add(loading_label)
-            loading_label_align.set_padding(10, 0, 0, 0)
-            self.right_comment_box.pack_start(loading_label_align, False, False)
-            web_view = WebView(os.path.join(CONFIG_DIR, "cookie.txt"))
-            #web_view.enable_inspector()
-            web_view.connect("new-window-policy-decision-requested", self.open_url)
-            web_view_align = gtk.Alignment()
-            web_view_align.set(0.5, 0, 0, 0)
-            web_view_align.set_padding(33, 33, 33, 33)
-            web_view_align.add(web_view)
-            web_settings = web_view.get_settings()
-            web_settings.set_property("enable-plugins", True)
-            web_settings.set_property("enable-scripts", True)    
-            web_view.open("%s/softcenter/v1/comment?n=%s&hl=%s" % (
+            self.right_comment_box.pack_start(self.loading_label_align, False, False)
+            self.web_view.stop_loading()
+            self.web_view.open("%s/softcenter/v1/comment?n=%s&hl=%s" % (
                     SERVER_ADDRESS, 
                     self.pkg_name, 
                     LANGUAGE,
                     ))
-            #self.right_comment_box.pack_start(web_view_align, True, True)
-            web_view.connect("load-finished", self.comment_load_finished_cb, web_view_align)
-            
-            # self.fetch_screenshot()
             
             create_thread(self.fetch_screenshot).start()
 
-    def comment_load_finished_cb(self, webview, frame, web_view_align):
+    def comment_load_finished_cb(self, webview, frame):
         self.scrolled_window.connect("vscrollbar-state-changed", lambda w, p: self.load_more_comment(p, webview))
         container_remove_all(self.right_comment_box)
-        self.right_comment_box.pack_start(web_view_align, True, True)
+        self.right_comment_box.pack_start(self.web_view_align, True, True)
         self.right_comment_box.show_all()
 
     def load_more_comment(self, postion, webview):
