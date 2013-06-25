@@ -115,7 +115,14 @@ def get_pkg_own_size(cache, pkg_name):
         version = pkg.candidate
         return int(version.installed_size)
     except:
-        return 0
+        try:
+            pkg_name = pkg_name+":i386"
+            pkg = cache[pkg_name]
+            version = pkg.candidate
+            return int(version.installed_size)
+        except:
+            return 0
+
     
 def check_pkg_download_info(pkgs):
     if len(pkgs) >= 1:
