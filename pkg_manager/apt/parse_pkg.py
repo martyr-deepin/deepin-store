@@ -90,26 +90,24 @@ def get_pkg_download_info(cache, pkg_name):
         return check_pkg_download_info(dependence)
 
 def get_pkg_dependence(cache, pkg_name):
-    if pkg_name in cache:
+    try:
+        pkg = cache[pkg_name]
+    except:
         try:
+            pkg_name = pkg_name+":i386"
             pkg = cache[pkg_name]
-            if cache.is_pkg_upgradable(pkg_name):
-                pkg.mark_upgrade()
-            elif not cache.is_pkg_installed(pkg_name):
-                pkg.mark_install()
-                
-            # Get package information.
-            pkgs = sorted(cache.get_changes(), key=lambda pkg: pkg.name)
-            cache._depcache.init()
-            return pkgs
-        
-        except Exception, e:
-            print "get_pkg_download_info error: %s" % (e)
-            log(str(traceback.format_exc()))
-
+        except:
             return -1
-    else:
-        raise Exception("%s is not found" % pkg_name)
+
+    if cache.is_pkg_upgradable(pkg_name):
+        pkg.mark_upgrade()
+    elif not cache.is_pkg_installed(pkg_name):
+        pkg.mark_install()
+        
+    # Get package information.
+    pkgs = sorted(cache.get_changes(), key=lambda pkg: pkg.name)
+    cache._depcache.init()
+    return pkgs
 
 def get_pkg_own_size(cache, pkg_name):
     pkg = cache[pkg_name]
