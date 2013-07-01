@@ -111,7 +111,7 @@ class MirrorItem(TreeItem):
     def render_url(self, cr, rect):
         self.render_odd_line_bg(cr, rect)
 
-        self.mirror_url = self.mirror.get_repo_url()
+        self.mirror_url = self.mirror.hostname
         self.render_background(cr, rect)
         #rect.x += self.NAME_WIDTH
         rect.width -= self.PADDING_X * 2
@@ -308,8 +308,8 @@ class DscPreferenceDialog(PreferenceDialog):
         cr.set_source_rgba(1, 1, 1, 0)
         cr.fill()
 
-    def mirror_select_action(self, hostname):
-        self.data_manager.change_source_list(hostname, reply_handler=handle_dbus_reply, error_handler=handle_dbus_error)
+    def mirror_select_action(self, repo_urls):
+        self.data_manager.change_source_list(repo_urls, reply_handler=handle_dbus_reply, error_handler=handle_dbus_error)
 
     def create_mirror_select_table(self):
         main_table = gtk.Table(4, 2)
@@ -322,7 +322,7 @@ class DscPreferenceDialog(PreferenceDialog):
         label_align.add(dir_title_label)
 
         self.mirrors_dir = os.path.join(get_parent_dir(__file__, 2), 'mirrors')
-        self.current_mirror_uri = self.get_current_mirror_uri()
+        self.current_mirror_hostname = self.get_current_mirror_hostname()
         self.mirror_items = self.get_mirror_items()
         self.mirror_view = TreeView(self.mirror_items,
                                 enable_drag_drop=False,
@@ -408,7 +408,7 @@ class DscPreferenceDialog(PreferenceDialog):
             if self.mirror_test.best != None:
                 for item in self.mirror_items:
                     if item.mirror == self.mirror_test.best[1]:
-                        print item.mirror.get_repo_url()
+                        print item.mirror.get_repo_urls()
                         self.mirror_clicked_callback(item)
             else:
                 self.select_best_mirror_dialog.loading_widget.hide_all()
@@ -416,13 +416,14 @@ class DscPreferenceDialog(PreferenceDialog):
                 self.select_best_mirror_dialog.close_button.set_label(_("Close"))
             return False
 
-    def get_current_mirror_uri(self):
+    def get_current_mirror_hostname(self):
         apt_pkg.init_config()
         apt_pkg.init_system()
         source_list_obj = apt_pkg.SourceList()
         source_list_obj.read_main_list()
-        uri = source_list_obj.list[0].uri.split(":")[0] + "://" + source_list_obj.list[0].uri.split("/")[2]
-        return uri
+        url = source_list_obj.list[0].uri
+        hostname = url.split(":")[0] + "://" + url.split("/")[2]
+        return hostname
 
     def mirror_treeview_draw_mask(self, cr, x, y, w, h):
         cr.set_source_rgba(1, 1, 1, 0.9)
@@ -435,7 +436,7 @@ class DscPreferenceDialog(PreferenceDialog):
         for ini_file in os.listdir(self.mirrors_dir):
             m = Mirror(os.path.join(self.mirrors_dir, ini_file))
             item = MirrorItem(m, self.mirror_clicked_callback)
-            if m.get_change_uri() == self.current_mirror_uri:
+            if m.hostname == self.current_mirror_hostname:
                 item.radio_button.active = True
                 self.current_mirror_item = item
             self.mirrors_list.append(m)
@@ -453,7 +454,7 @@ class DscPreferenceDialog(PreferenceDialog):
                 i.radio_button.active = True
         self.mirror_view.queue_draw()
         if item != self.current_mirror_item:
-            global_event.emit('change-mirror', item.mirror.get_change_uri())
+            global_event.emit('change-mirror', item.mirror.get_repo_urls())
             self.current_mirror_item = item
         else:
             self.select_best_mirror_dialog.hide_all()

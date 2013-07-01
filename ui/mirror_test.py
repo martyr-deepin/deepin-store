@@ -38,8 +38,8 @@ class Mirror(object):
     def __init__(self, ini_file):
         self.config = Config(ini_file)
         self.config.load()
-        self._hostname = self.get_repo_url().split(":")[1].split("/")[2]
-        self._type = self.get_repo_url().split(":")[0]
+        ubuntu_url = self.get_repo_urls()[0]
+        self._hostname = ubuntu_url.split(":")[0] + "://" + ubuntu_url.split(":")[1].split("/")[2]
         self._priority = int(self.config.get("mirror", "priority")) if self.config.has_option("mirror", "priority") else 100
     
     @property
@@ -54,18 +54,11 @@ class Mirror(object):
             return self.config.get('mirror', 'name[%s]' % 'en_US')
 
     @property
-    def protocol_type(self):
-        return self._type
-
-    @property
     def priority(self):
         return self._priority
 
-    def get_repo_url(self):
-        return self.config.get('mirror', 'url')
-
-    def get_change_uri(self):
-        return "%s://%s" % (self._type, self._hostname)
+    def get_repo_urls(self):
+        return (self.config.get('mirror', 'ubuntu_url'), self.config.get('mirror', 'deepin_url'))
 
 class MirrorTest(threading.Thread):
     """Determines the best mirrors by perfoming ping and download test."""

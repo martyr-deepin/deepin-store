@@ -333,8 +333,8 @@ class DataManager(object):
         
         return map(lambda result: result.data["pkg_name"][0], results)
 
-    def change_source_list(self, hostname, reply_handler, error_handler):
-        self.bus_interface.change_source_list(hostname,
+    def change_source_list(self, repo_urls, reply_handler, error_handler):
+        self.bus_interface.change_source_list(repo_urls,
                 reply_handler=reply_handler, 
                 error_handler=error_handler)
         

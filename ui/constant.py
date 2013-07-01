@@ -52,7 +52,7 @@ CONFIG_INFO_PATH = os.path.join(CONFIG_DIR, "config_info.ini")
 
 ONE_DAY_SECONDS = 24 * 60 * 60
 
-DEFAULT_UPDATE_INTERVAL = 1 # hour
+DEFAULT_UPDATE_INTERVAL = 3 # hour
 
 DEFAULT_DOWNLOAD_DIRECTORY = '/var/cache/apt/archives'
 DEFAULT_DOWNLOAD_NUMBER = 5

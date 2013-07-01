@@ -844,8 +844,8 @@ class DeepinSoftwareCenter(dbus.service.Object):
         global_event.register_event("show-pkg-name-tooltip", lambda pkg_name: show_tooltip(self.application.window, pkg_name))
         global_event.register_event("hide-pkg-name-tooltip", lambda :tool_tip.hide())
         global_event.register_event("update-current-status-pkg-page", update_current_status_pkg_page)
-        global_event.register_event('change-mirror', lambda hostname: self.bus_interface.change_source_list(
-            hostname, reply_handler=self.handle_mirror_change_reply, error_handler=lambda e:handle_dbus_error("change_source_list", e)))
+        global_event.register_event('change-mirror', lambda repo_urls: self.bus_interface.change_source_list(
+            repo_urls, reply_handler=self.handle_mirror_change_reply, error_handler=lambda e:handle_dbus_error("change_source_list", e)))
         global_event.register_event('download-directory-changed', self.set_software_download_dir)
         global_event.register_event('vote-send-success', lambda p: vote_send_success_callback(p, self.application.window))
         global_event.register_event('vote-send-failed', lambda p: vote_send_failed_callback(p, self.application.window))
