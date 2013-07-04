@@ -68,7 +68,7 @@ class MirrorItem(TreeItem):
     }
 
     PADDING_X = 5
-    NAME_WIDTH = 95
+    NAME_WIDTH = 130
 
     def __init__(self, mirror, item_clicked_callback=None):
 
@@ -89,6 +89,7 @@ class MirrorItem(TreeItem):
         self.render_odd_line_bg(cr, rect)
         
         rect.x -= 2
+        rect.width = rect.width - self.PADDING_X
         self.radio_button.render(cr, rect)
 
     def render_name(self, cr, rect):
@@ -96,7 +97,7 @@ class MirrorItem(TreeItem):
 
         self.name = self.mirror.name
         self.render_background(cr, rect)
-        #rect.x += self.PADDING_X
+        #rect.x -= self.PADDING_X
         rect.width -= self.PADDING_X * 2        
         if self.name:
             (text_width, text_height) = get_content_size(self.name)
