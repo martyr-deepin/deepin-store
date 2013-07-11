@@ -742,7 +742,7 @@ class RecommendItem(TreeItem):
         
         slide_pkg_names = self.data_manager.get_slide_info()
         self.slider_switcher = SlideSwitcher(
-            map(lambda pkg_name: gtk.gdk.pixbuf_new_from_file(os.path.join(SLIDE_PICTURE_DIR, "%s.jpg" % pkg_name)),
+            map(lambda pkg_name: gtk.gdk.pixbuf_new_from_file(os.path.join(SLIDE_PICTURE_DIR, "%s.png" % pkg_name)),
                 slide_pkg_names))
         self.slider_switcher.connect("motion-notify-index", lambda w, i: global_event.emit("set-cursor", gtk.gdk.HAND2))
         self.slider_switcher.connect("button-press-index", lambda w, i: global_event.emit("switch-to-detail-page", slide_pkg_names[i]))

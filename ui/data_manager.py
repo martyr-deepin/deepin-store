@@ -70,20 +70,11 @@ class DataManager(object):
         self.album_db_connect = sqlite3.connect(album_db_path)
         self.album_db_cursor = self.album_db_connect.cursor()
 
-        download_rank_db_path = os.path.join(UPDATE_DATA_DIR, "home", "download_rank", "zh_CN", "download_rank.db")
-        db_path_exists(download_rank_db_path)
-        self.download_rank_db_connect = sqlite3.connect(download_rank_db_path)
-        self.download_rank_db_cursor = self.download_rank_db_connect.cursor()
+        self.recommend_db_path = os.path.join(UPDATE_DATA_DIR, "home", "recommend", '%s.txt' % LANGUAGE)
+        db_path_exists(self.recommend_db_path)
 
-        recommend_db_path = os.path.join(UPDATE_DATA_DIR, "home", "recommend", "zh_CN", "recommend.db")
-        db_path_exists(recommend_db_path)
-        self.recommend_db_connect = sqlite3.connect(recommend_db_path)
-        self.recommend_db_cursor = self.recommend_db_connect.cursor()
-
-        slide_db_path = os.path.join(UPDATE_DATA_DIR, "home", "slide", "zh_CN", "slide.db")
-        db_path_exists(slide_db_path)
-        self.slide_db_connect = sqlite3.connect(slide_db_path)
-        self.slide_db_cursor = self.slide_db_connect.cursor()
+        self.slide_db_path = os.path.join(UPDATE_DATA_DIR, "home", "slide", '%s.txt' % LANGUAGE)
+        db_path_exists(self.slide_db_path)
         
         self.build_category_dict()
 
@@ -258,14 +249,18 @@ class DataManager(object):
         return infos
 
     def get_recommend_info(self):
-        self.recommend_db_cursor.execute(
-            "SELECT * FROM recommend")
-        return map(lambda (pkg_name, ): pkg_name, self.recommend_db_cursor.fetchall())
+        pkgs = []
+        with open(self.recommend_db_path) as fp:
+            for line in fp:
+                pkgs.append(line.strip())
+        return pkgs
 
     def get_slide_info(self):
-        self.slide_db_cursor.execute(
-            "SELECT * FROM slide")
-        return map(lambda (pkg_name, ): pkg_name, self.slide_db_cursor.fetchall())
+        pkgs = []
+        with open(self.slide_db_path) as fp:
+            for line in fp:
+                pkgs.append(line.strip())
+        return pkgs
     
     def build_category_dict(self):
         # Build OrderedDict of first category.

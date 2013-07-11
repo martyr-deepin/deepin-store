@@ -67,7 +67,7 @@ class RecommendIconItem(IconItem):
     
     def render(self, cr, rect):
         if self.pkg_picture_pixbuf == None:
-            self.pkg_picture_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(PKG_PICTURE_DIR, "%s.jpg" % self.pkg_name))
+            self.pkg_picture_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(PKG_PICTURE_DIR, "%s.png" % self.pkg_name))
             
         padding_x = (rect.width - self.pkg_picture_pixbuf.get_width()) / 2
         padding_y = (rect.height - self.pkg_picture_pixbuf.get_height()) / 2
@@ -78,7 +78,7 @@ class RecommendIconItem(IconItem):
         
     def is_in_icon_area(self, x, y):    
         if self.pkg_picture_pixbuf == None:
-            self.pkg_picture_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(PKG_PICTURE_DIR, "%s.jpg" % self.pkg_name))
+            self.pkg_picture_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(PKG_PICTURE_DIR, "%s.png" % self.pkg_name))
             
         padding_x = (self.get_width() - self.pkg_picture_pixbuf.get_width()) / 2
         padding_y = (self.get_height() - self.pkg_picture_pixbuf.get_height()) / 2

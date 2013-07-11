@@ -479,20 +479,37 @@ class DetailPage(gtk.HBox):
     def fetch_comment(self):
         if is_network_connected():
             container_remove_all(self.right_comment_box)    
-            self.right_comment_box.pack_start(self.loading_label_align, False, False)
-            self.web_view.stop_loading()
-            self.web_view.open("%s/softcenter/v1/comment?n=%s&hl=%s" % (
+            loading_label = Label(_("Loading comments..."))
+            loading_label_align = gtk.Alignment(0.5, 0, 0, 0)
+            loading_label_align.add(loading_label)
+            loading_label_align.set_padding(10, 0, 0, 0)
+            self.right_comment_box.pack_start(loading_label_align, False, False)
+            web_view = WebView(os.path.join(CONFIG_DIR, "cookie.txt"))
+            #web_view.enable_inspector()
+            web_view.connect("new-window-policy-decision-requested", self.open_url)
+            web_view_align = gtk.Alignment()
+            web_view_align.set(0.5, 0, 0, 0)
+            web_view_align.set_padding(33, 33, 33, 33)
+            web_view_align.add(web_view)
+            web_settings = web_view.get_settings()
+            web_settings.set_property("enable-plugins", True)
+            web_settings.set_property("enable-scripts", True)    
+            web_view.open("%s/softcenter/v1/comment?n=%s&hl=%s" % (
                     SERVER_ADDRESS, 
                     self.pkg_name, 
                     LANGUAGE,
                     ))
+
+            web_view.connect("load-finished", self.comment_load_finished_cb, web_view_align)
+            
+            # self.fetch_screenshot()
             
             create_thread(self.fetch_screenshot).start()
 
-    def comment_load_finished_cb(self, webview, frame):
+    def comment_load_finished_cb(self, webview, frame, web_view_align):
         self.scrolled_window.connect("vscrollbar-state-changed", lambda w, p: self.load_more_comment(p, webview))
         container_remove_all(self.right_comment_box)
-        self.right_comment_box.pack_start(self.web_view_align, True, True)
+        self.right_comment_box.pack_start(web_view_align, True, True)
         self.right_comment_box.show_all()
 
     def load_more_comment(self, postion, webview):
