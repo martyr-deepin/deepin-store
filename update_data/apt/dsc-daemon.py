@@ -34,6 +34,7 @@ import sys, os
 import subprocess
 import apt_pkg
 from deepin_utils.file import get_parent_dir
+from deepin_utils.config import Config
 from nls import _
 
 sys.path.insert(0, os.path.join(get_parent_dir(__file__, 3), 'ui'))
@@ -45,13 +46,14 @@ DSC_SERVICE_PATH = "/com/linuxdeepin/softwarecenter"
 DSC_FRONTEND_NAME = "com.linuxdeepin.softwarecenter_frontend"
 DSC_FRONTEND_PATH = "/com/linuxdeepin/softwarecenter_frontend"
 
-DSC_UPDATELIST_NAME = "com.linuxdeepin.softwarecenter_updatelist"
-DSC_UPDATELIST_PATH = "/com/linuxdeepin/softwarecenter_updatelist"
+DSC_UPDATE_DAEMON_NAME = "com.linuxdeepin.softwarecenter.update.daemon"
+DSC_UPDATE_DAEMON_PATH = "/com/linuxdeepin/softwarecenter/update/daemon"
 
 DSC_UPDATER_NAME = "com.linuxdeepin.softwarecenterupdater"
 DSC_UPDATER_PATH = "/com/linuxdeepin/softwarecenterupdater"
 
-LOG_PATH = "/tmp/dsc-update-list.log"
+LOG_PATH = "/tmp/dsc-update-daemon.log"
+DATA_CURRENT_ID_CONFIG_PATH = '/tmp/deepin-software-center/data_current_id.ini'
 
 CONFIG_DIR =  os.path.join(os.path.expanduser("~"), ".config", "deepin-software-center")
 CONFIG_INFO_PATH = os.path.join(CONFIG_DIR, "config_info.ini")
@@ -135,7 +137,7 @@ class NetworkDetector(gobject.GObject):
 
 class Update(dbus.service.Object):
     def __init__(self, session_bus, mainloop):
-        dbus.service.Object.__init__(self, session_bus, DSC_UPDATELIST_PATH)
+        dbus.service.Object.__init__(self, session_bus, DSC_UPDATE_DAEMON_PATH)
         self.mainloop = mainloop
 
         self.exit_flag = False
@@ -242,18 +244,26 @@ class Update(dbus.service.Object):
         return False
 
     def is_fontend_running(self):
-        return is_dbus_name_exists(DSC_FRONTEND_NAME, True)
+        if os.path.exists(DATA_CURRENT_ID_CONFIG_PATH):
+            config = Config(DATA_CURRENT_ID_CONFIG_PATH)
+            config.load()
+            data_id = config.get('current', 'data_id')
+            if data_id:
+                return True
+            else:
+                return False
+        else:
+            False
 
     def exit_loop(self):
         self.exit_flag = True
 
-    @dbus.service.method(DSC_UPDATELIST_NAME, in_signature="", out_signature="b")    
+    @dbus.service.method(DSC_UPDATE_DAEMON_NAME, in_signature="", out_signature="b")    
     def get_update_list_status(self):
         return self.is_in_update_list
 
     def show_notify(self, message=None, timeout=None):
         notification = DbusNotify("deepin-software-center")
-        #notification.set_summary(_("更新提示"))
         notification.set_summary(_("Upgrade Info"))
         notification.set_body(message)
         notification.notify()
@@ -270,10 +280,10 @@ if __name__ == "__main__" :
     mainloop = gobject.MainLoop()
     signal.signal(signal.SIGINT, lambda : mainloop.quit()) # capture "Ctrl + c" signal
 
-    if is_dbus_name_exists(DSC_UPDATELIST_NAME, True):
+    if is_dbus_name_exists(DSC_UPDATE_DAEMON_NAME, True):
         print "Daemon is running"
     else:
-        bus_name = dbus.service.BusName(DSC_UPDATELIST_NAME, session_bus)
+        bus_name = dbus.service.BusName(DSC_UPDATE_DAEMON_NAME, session_bus)
             
         update = Update(session_bus, mainloop)
         try:
