@@ -20,25 +20,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import sys, os
+import subprocess
+import apt_pkg
 import gobject
 import signal
 import dbus
 import dbus.service
 import dbus.mainloop.glib
 from dbus.mainloop.glib import DBusGMainLoop
-from deepin_utils.ipc import is_dbus_name_exists
-from dtk.ui.dbus_notify import DbusNotify
 from datetime import datetime
 import traceback
-import sys, os
-import subprocess
-import apt_pkg
+from deepin_utils.ipc import is_dbus_name_exists
 from deepin_utils.file import get_parent_dir
 from deepin_utils.config import Config
+from dtk.ui.dbus_notify import DbusNotify
 from nls import _
-
-sys.path.insert(0, os.path.join(get_parent_dir(__file__, 3), 'ui'))
-from utils import get_update_interval
 
 DSC_SERVICE_NAME = "com.linuxdeepin.softwarecenter"
 DSC_SERVICE_PATH = "/com/linuxdeepin/softwarecenter"
@@ -60,6 +57,9 @@ CONFIG_INFO_PATH = os.path.join(CONFIG_DIR, "config_info.ini")
 
 DELAY_UPDATE_INTERVAL = 600
 
+sys.path.insert(0, os.path.join(get_parent_dir(__file__, 3), 'ui'))
+from utils import get_update_interval
+
 def log(message):
     if not os.path.exists(LOG_PATH):
         open(LOG_PATH, "w").close()
@@ -77,8 +77,8 @@ def start_updater(loop=True):
             system_bus = dbus.SystemBus()
             bus_object = system_bus.get_object(DSC_UPDATER_NAME, DSC_UPDATER_PATH)
             dbus.Interface(bus_object, DSC_UPDATER_NAME)
-            log("Start updater finish.")
-            print "Start updater finish."
+            log("Start dsc data update service.")
+            print "Start dsc data update service."
     except Exception, e:
         log("got error: %s" % (e))
         print "got error: %s" % (e)
@@ -164,7 +164,7 @@ class Update(dbus.service.Object):
         self.delay_update_id = gobject.timeout_add_seconds(seconds, self.update_handler)
 
     def start_dsc_backend(self):
-        print "start dsc dbus service"
+        print "Start dsc backend service"
         self.system_bus = dbus.SystemBus()
         bus_object = self.system_bus.get_object(DSC_SERVICE_NAME, DSC_SERVICE_PATH)
         self.bus_interface = dbus.Interface(bus_object, DSC_SERVICE_NAME)
@@ -173,7 +173,6 @@ class Update(dbus.service.Object):
                 signal_name="update_signal", 
                 dbus_interface=DSC_SERVICE_NAME, 
                 path=DSC_SERVICE_PATH)
-        print "finish, ready for action"
 
     def signal_receiver(self, messages):
         for message in messages:
@@ -198,11 +197,12 @@ class Update(dbus.service.Object):
                     else:
                         self.show_notify(_("There is %s package need to upgrade in your system, please open the software center to upgrade!") % update_num)
                 self.update_num = update_num
+                print "Finish update list."
+                log("Finish update list.")
                 self.bus_interface.request_quit()
+                print "Quit dsc backend service."
+                log("Quit dsc backend service.")
                 self.set_delay_update(get_update_interval()*3600)
-                log("Update List Finish")
-                print "update finished!"
-                log("Deepin Software Service Quit!")
             elif signal_type == "update-list-failed":
                 self.is_in_update_list = False
                 self.update_status = "failed"
@@ -227,6 +227,8 @@ class Update(dbus.service.Object):
 
     def update_handler(self):
         if self.is_fontend_running():
+            print "Fontend is running, waite 10 minutes to try again!"
+            log("Fontend is running, waite 10 minutes to try again!")
             self.set_delay_update(DELAY_UPDATE_INTERVAL)
         else:
             self.start_dsc_backend()
@@ -236,8 +238,8 @@ class Update(dbus.service.Object):
 
     def start_update_list(self, bus_interface):
         if not self.is_in_update_list:
-            print "start updating"
-            log("start updating")
+            print "Start update list..."
+            log("Start update list...")
             bus_interface.start_update_list()
         else:
             log("other app is running update list")
@@ -287,7 +289,7 @@ if __name__ == "__main__" :
             
         update = Update(session_bus, mainloop)
         try:
-            gobject.timeout_add_seconds(60, update.run)
+            gobject.timeout_add_seconds(1, update.run)
             mainloop.run()
         except KeyboardInterrupt:
             update.exit_loop()
