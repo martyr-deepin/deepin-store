@@ -22,7 +22,9 @@
 
 import os
 from deepin_utils.file import get_parent_dir
-from data import DATA_ID
+from nls import get_locale_code
+
+LANGUAGE = get_locale_code()
 
 PROGRAM_VERSION = "3.0"
 
@@ -32,7 +34,6 @@ DSC_SERVICE_PATH = "/com/linuxdeepin/softwarecenter"
 DSC_FRONTEND_NAME = "com.linuxdeepin.softwarecenter_frontend"
 DSC_FRONTEND_PATH = "/com/linuxdeepin/softwarecenter_frontend"
 
-ICON_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "app_icon")
 VIEW_PADDING_X = 10
 VIEW_PADDING_Y = 10
 
@@ -49,7 +50,7 @@ CONFIG_INFO_PATH = os.path.join(CONFIG_DIR, "config_info.ini")
 
 ONE_DAY_SECONDS = 24 * 60 * 60
 
-DEFAULT_UPDATE_INTERVAL = 1 # hour
+DEFAULT_UPDATE_INTERVAL = 3 # hour
 
 DEFAULT_DOWNLOAD_DIRECTORY = '/var/cache/apt/archives'
 DEFAULT_DOWNLOAD_NUMBER = 5
@@ -70,3 +71,8 @@ PKG_STATUS_UPGRADED = 3
 PKG_SIZE_OWN = 0
 PKG_SIZE_DOWNLOAD = 1
 PKG_SIZE_ERROR = 2
+
+cute_info_dir = os.path.join(get_parent_dir(__file__, 2), "image", "info", LANGUAGE)
+if not os.path.exists(cute_info_dir):
+    cute_info_dir = os.path.join(get_parent_dir(__file__, 2), "image", "info")
+

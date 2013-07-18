@@ -66,34 +66,45 @@ import aptsources.distro
 DATA_DIR = os.path.join(get_parent_dir(__file__, 3), "data")
 SOURCE_LIST = '/etc/apt/sources.list'
 
-source_content_template = [
-'# This file was created by deepin software center, do not modify!',
-'',
-"deb %s/ubuntu %s main restricted universe multiverse",
-"deb %s/ubuntu %s-security main restricted universe multiverse",
-"deb %s/ubuntu %s-updates main restricted universe multiverse",
-"# deb %s/ubuntu %s-proposed main restricted universe multiverse",
-"# deb %s/ubuntu %s-backports main restricted universe multiverse",
-"",
-"deb-src %s/ubuntu %s main restricted universe multiverse",
-"deb-src %s/ubuntu %s-security main restricted universe multiverse",
-"deb-src %s/ubuntu %s-updates main restricted universe multiverse",
-"# deb-src %s/ubuntu %s-proposed main restricted universe multiverse",
-"# deb-src %s/ubuntu %s-backports main restricted universe multiverse",
-"",
-"deb %s/deepin %s main universe non-free",
-"deb-src %s/deepin %s main universe non-free",
-"",
-"deb %s/deepin %s-updates main universe non-free",
-"deb-src %s/deepin %s-updates main universe non-free",
+ubuntu_source_content_template = [
+"deb %s %s main restricted universe multiverse",
+"deb %s %s-security main restricted universe multiverse",
+"deb %s %s-updates main restricted universe multiverse",
+"# deb %s %s-proposed main restricted universe multiverse",
+"# deb %s %s-backports main restricted universe multiverse",
+"deb-src %s %s main restricted universe multiverse",
+"deb-src %s %s-security main restricted universe multiverse",
+"deb-src %s %s-updates main restricted universe multiverse",
+"# deb-src %s %s-proposed main restricted universe multiverse",
+"# deb-src %s %s-backports main restricted universe multiverse",
 ]
 
-def get_source_list_contents(repo_url):
-    s = []
+deepin_source_content_template = [
+"deb %s %s main universe non-free",
+"deb-src %s %s main universe non-free",
+"#deb %s %s-updates main universe non-free",
+"#deb-src %s %s-updates main universe non-free",
+]
+
+def get_source_list_contents(ubuntu_repo_url, deepin_repo_url):
+    head = '# This file was created by deepin software center, please do not modify manually!'
     codename = aptsources.distro.get_distro().codename
-    for line in source_content_template:
+    
+    s = []
+    s.append(head)
+    s.append("")
+
+    for line in ubuntu_source_content_template:
         try:
-            line = line % (repo_url, codename)
+            line = line % (ubuntu_repo_url, codename)
+        except:
+            pass
+        s.append(line)
+    s.append("")
+
+    for line in deepin_source_content_template:
+        try:
+            line = line % (deepin_repo_url, codename)
         except:
             pass
         s.append(line)
@@ -218,6 +229,8 @@ class PackageManager(dbus.service.Object):
         self.exit_manager.start()
         
         log("init finish")
+        self.set_download_dir('/var/cache/apt/archives')
+        self.init_download_manager(5)
         
     def action_finish(self, signal_content):
         pkg_name, action_type, pkg_info_list = signal_content
@@ -405,9 +418,10 @@ class PackageManager(dbus.service.Object):
         self.exit_manager.check()
         self.update_signal([("frontend-quit", "")])
 
-    @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="")    
-    def change_source_list(self, hostname):
-        new_source_list_content = get_source_list_contents(hostname)
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")
+    def change_source_list(self, repo_urls):
+        ubuntu_repo_url, deepin_repo_url = repo_urls
+        new_source_list_content = get_source_list_contents(ubuntu_repo_url, deepin_repo_url)
         os.system('cp %s %s.save' % (SOURCE_LIST, SOURCE_LIST))
         with open(SOURCE_LIST, 'w') as fp:
             fp.write(new_source_list_content)

@@ -22,12 +22,19 @@
 
 from deepin_utils.file import get_parent_dir
 import os
+import sys
 import sqlite3
 from collections import OrderedDict
 import xappy
 from data import DATA_ID
+from constant import LANGUAGE
 
 UPDATE_DATA_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID)
+
+def db_path_exists(path):
+    if not os.path.exists(path):
+        print "Database not exist:", path
+        sys.exit(1)
 
 class DataManager(object):
     '''
@@ -40,29 +47,34 @@ class DataManager(object):
         '''
         self.bus_interface = bus_interface
         
-        self.software_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "software", "zh_CN", "software.db"))
+        software_db_path = os.path.join(UPDATE_DATA_DIR, "software", LANGUAGE, "software.db")
+        db_path_exists(software_db_path)
+        self.software_db_connect = sqlite3.connect(software_db_path)
         self.software_db_cursor = self.software_db_connect.cursor()
 
-        self.desktop_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "desktop", "zh_CN", "desktop.db"))
+        desktop_db_path = os.path.join(UPDATE_DATA_DIR, "desktop", LANGUAGE, "desktop.db")
+        db_path_exists(desktop_db_path)
+        self.desktop_db_connect = sqlite3.connect(desktop_db_path)
         self.desktop_db_cursor = self.desktop_db_connect.cursor()
         
-        self.category_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "category", "category.db"))
+        category_db_path = os.path.join(UPDATE_DATA_DIR, "category", "category.db")
+        db_path_exists(category_db_path)
+        self.category_db_connect = sqlite3.connect(category_db_path)
         self.category_db_cursor = self.category_db_connect.cursor()
         
         self.category_dict = {}
         self.category_name_dict = {}
         
-        self.album_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "home", "album", "zh_CN", "album.db"))
+        album_db_path = os.path.join(UPDATE_DATA_DIR, "home", "album", LANGUAGE, "album.db")
+        db_path_exists(album_db_path)
+        self.album_db_connect = sqlite3.connect(album_db_path)
         self.album_db_cursor = self.album_db_connect.cursor()
 
-        self.download_rank_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "home", "download_rank", "zh_CN", "download_rank.db"))
-        self.download_rank_db_cursor = self.download_rank_db_connect.cursor()
+        self.recommend_db_path = os.path.join(UPDATE_DATA_DIR, "home", "recommend", '%s.txt' % LANGUAGE)
+        db_path_exists(self.recommend_db_path)
 
-        self.recommend_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "home", "recommend", "zh_CN", "recommend.db"))
-        self.recommend_db_cursor = self.recommend_db_connect.cursor()
-
-        self.slide_db_connect = sqlite3.connect(os.path.join(UPDATE_DATA_DIR, "home", "slide", "zh_CN", "slide.db"))
-        self.slide_db_cursor = self.slide_db_connect.cursor()
+        self.slide_db_path = os.path.join(UPDATE_DATA_DIR, "home", "slide", '%s.txt' % LANGUAGE)
+        db_path_exists(self.slide_db_path)
         
         self.build_category_dict()
 
@@ -217,72 +229,38 @@ class DataManager(object):
         
         return detail_infos
     
-    def get_week_download_rank_info(self):
-        week_infos = []
-        week_pkg_names = []
-        self.download_rank_db_cursor.execute(
-            "SELECT * FROM week_download_rank")
-        for (pkg_name, ) in self.download_rank_db_cursor.fetchall():
-            self.software_db_cursor.execute(
-                "SELECT alias_name FROM software WHERE pkg_name=?", [pkg_name])
-            (alias_name,) = self.software_db_cursor.fetchone()
-            
-            self.desktop_db_cursor.execute(
-                "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
-            desktop_infos = self.desktop_db_cursor.fetchall()
-            
-            week_infos.append([pkg_name, alias_name, 5.0, desktop_infos])
-            week_pkg_names.append(pkg_name)
-            
-        return (week_pkg_names, week_infos)
+    def get_download_rank_info(self, pkg_names):
+        infos = []
 
-    def get_month_download_rank_info(self):
-        month_infos = []
-        month_pkg_names = []
-        self.download_rank_db_cursor.execute(
-            "SELECT * FROM month_download_rank")
-        for (pkg_name, ) in self.download_rank_db_cursor.fetchall():
-            self.software_db_cursor.execute(
-                "SELECT alias_name FROM software WHERE pkg_name=?", [pkg_name])
-            (alias_name,) = self.software_db_cursor.fetchone()
-            
-            self.desktop_db_cursor.execute(
-                "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
-            desktop_infos = self.desktop_db_cursor.fetchall()
-            
-            month_infos.append([pkg_name, alias_name, 5.0, desktop_infos])
-            month_pkg_names.append(pkg_name)
-            
-        return (month_pkg_names, month_infos)
-            
-    def get_all_download_rank_info(self):
-        all_infos = []
-        all_pkg_names = []
-        self.download_rank_db_cursor.execute(
-            "SELECT * FROM all_download_rank")
-        for (pkg_name, ) in self.download_rank_db_cursor.fetchall():
-            self.software_db_cursor.execute(
-                "SELECT alias_name FROM software WHERE pkg_name=?", [pkg_name])
-            (alias_name,) = self.software_db_cursor.fetchone()
-            
-            self.desktop_db_cursor.execute(
-                "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
-            desktop_infos = self.desktop_db_cursor.fetchall()
-            
-            all_infos.append([pkg_name, alias_name, 5.0, desktop_infos])
-            all_pkg_names.append(pkg_name)
+        for pkg_name in pkg_names:
 
-        return (all_pkg_names, all_infos)
+            self.software_db_cursor.execute(
+                "SELECT alias_name FROM software WHERE pkg_name=?", [pkg_name])
+            r = self.software_db_cursor.fetchone()
+            if r != [] and r != None:
+                alias_name = r[0]
+            
+                self.desktop_db_cursor.execute(
+                    "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
+                desktop_infos = self.desktop_db_cursor.fetchall()
+                
+                infos.append([pkg_name, alias_name, 5.0, desktop_infos])
+            
+        return infos
 
     def get_recommend_info(self):
-        self.recommend_db_cursor.execute(
-            "SELECT * FROM recommend")
-        return map(lambda (pkg_name, ): pkg_name, self.recommend_db_cursor.fetchall())
+        pkgs = []
+        with open(self.recommend_db_path) as fp:
+            for line in fp:
+                pkgs.append(line.strip())
+        return pkgs
 
     def get_slide_info(self):
-        self.slide_db_cursor.execute(
-            "SELECT * FROM slide")
-        return map(lambda (pkg_name, ): pkg_name, self.slide_db_cursor.fetchall())
+        pkgs = []
+        with open(self.slide_db_path) as fp:
+            for line in fp:
+                pkgs.append(line.strip())
+        return pkgs
     
     def build_category_dict(self):
         # Build OrderedDict of first category.
@@ -350,8 +328,8 @@ class DataManager(object):
         
         return map(lambda result: result.data["pkg_name"][0], results)
 
-    def change_source_list(self, hostname, reply_handler, error_handler):
-        self.bus_interface.change_source_list(hostname,
+    def change_source_list(self, repo_urls, reply_handler, error_handler):
+        self.bus_interface.change_source_list(repo_urls,
                 reply_handler=reply_handler, 
                 error_handler=error_handler)
         
@@ -363,4 +341,6 @@ if __name__ == "__main__":
     bus_interface = dbus.Interface(bus_object, DSC_SERVICE_NAME)
 
     data_manager = DataManager(bus_interface)
-    print data_manager.get_category_pkg_info().keys()
+    print data_manager.get_all_download_rank_info()
+    #print data_manager.get_month_download_rank_info()
+    #print data_manager.get_week_download_rank_info()

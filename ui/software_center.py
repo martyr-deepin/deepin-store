@@ -51,12 +51,14 @@ import gobject
 import dbus
 import dbus.service
 import time
+import traceback
 from constant import (
             DSC_SERVICE_NAME, DSC_SERVICE_PATH, 
             DSC_FRONTEND_NAME, DSC_FRONTEND_PATH, 
             ACTION_INSTALL, ACTION_UNINSTALL, ACTION_UPGRADE,
             #PKG_STATUS_INSTALLED, PKG_STATUS_UNINSTALLED, PKG_STATUS_UPGRADED,
             CONFIG_DIR, ONE_DAY_SECONDS,
+            LANGUAGE,
         )
 from dtk.ui.slider import HSlider
 from events import global_event
@@ -113,7 +115,7 @@ def start_pkg(pkg_name, desktop_infos, (offset_x, offset_y, popup_x, popup_y), w
     desktop_infos = filter(lambda desktop_info: os.path.exists(desktop_info[0]) != None, desktop_infos)
     desktop_infos_num = len(desktop_infos)
     if desktop_infos_num == 0:
-        global_event.emit("show-message", "%s haven't any desktop file" % (pkg_name))
+        global_event.emit("show-message", _("%s haven't any desktop file") % (pkg_name))
     elif desktop_infos_num == 1:
         start_desktop(pkg_name, desktop_infos[0][0])
     else:
@@ -121,28 +123,30 @@ def start_pkg(pkg_name, desktop_infos, (offset_x, offset_y, popup_x, popup_y), w
         StartDesktopWindow().start(pkg_name, desktop_infos, (px - offset_x + popup_x, py - offset_y + popup_y))
         
 def start_desktop(pkg_name, desktop_path):
-    global_event.emit("show-message", "%s: 已经发送启动请求" % (pkg_name))
+    global_event.emit("show-message", _("%s: request for starting applications sent") % (pkg_name))
     result = start_desktop_file(desktop_path.strip())
     if result != True:
         global_event.emit("show-message", result)
-    
-def show_message(statusbar, message_box, message, hide_timeout=5000):
-    hide_message(message_box)
-    
-    label = Label("%s" % message, enable_gaussian=True)
-    label_align = gtk.Alignment()
-    label_align.set(0.0, 0.5, 0, 0)
-    label_align.set_padding(0, 0, 10, 0)
-    label_align.add(label)
-    message_box.add(label_align)
-    
+
+global hide_timeout_id
+hide_timeout_id = None
+
+def show_message(statusbar, message_label, message, hide_timeout=0):
+    global hide_timeout_id
+    if hide_timeout_id:
+        gobject.source_remove(hide_timeout_id)
+        hide_timeout_id = None
+
+    hide_message(message_label)
+
+    message_label.set_text(message) 
     statusbar.show_all()
 
     if hide_timeout:
-        gtk.timeout_add(5000, lambda : hide_message(message_box))
+        hide_timeout_id = gtk.timeout_add(hide_timeout, lambda : hide_message(message_label))
     
-def hide_message(message_box):
-    container_remove_all(message_box)
+def hide_message(message_label):
+    message_label.set_text("")
     return False
 
 def request_status_reply_hander(result, install_page, upgrade_page, uninstall_page):
@@ -176,16 +180,16 @@ def grade_pkg(window, pkg_name, star):
         
     current_time = time.time()    
     if not grade_config.has_key(pkg_name) or (current_time - grade_config[pkg_name]) > ONE_DAY_SECONDS:
-        show_tooltip(window, "发送评分...")
+        show_tooltip(window, _("Sending comment..."))
         SendVote(pkg_name, star).start()
         
     else:
-        show_tooltip(window, "您已经评过分了哟！ ;)")
+        show_tooltip(window, _("You have already sent a comment ;)"))
 
 def vote_send_success_callback(pkg_name, window):
     grade_config_path, grade_config = get_grade_config()
 
-    global_event.emit("show-message", "评分成功， 感谢您的参与！ :)")
+    global_event.emit("show-message", _("Comment was successful. Thanks for your involvement. :)"))
     tool_tip.hide_all()
     current_time = time.time()
     
@@ -194,7 +198,7 @@ def vote_send_success_callback(pkg_name, window):
 
 def vote_send_failed_callback(pkg_name, window):
 
-    global_event.emit('show-message', "评分失败，请检查您的网络连接！")
+    global_event.emit('show-message', _("Comment was failed. Please check your network connection!"))
     tool_tip.hide_all()
 
 def show_tooltip(window, message):
@@ -346,7 +350,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
             elif signal_type == "update-list-update":
                 upgrade_page.update_upgrade_progress(action_content[0])
                 percent = "%.2f%%" % float(action_content[0])
-                global_event.emit("show-message", "更新软件列表: %s" % percent)
+                global_event.emit("show-message", _("Update applications lists: %s") % percent)
                 global_event.emit('update-progress-in-update-list-dialog', float(action_content[0]), action_content[1])
 
             elif signal_type == "update-list-finish":
@@ -355,7 +359,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                         reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
                         error_handler=lambda e:handle_dbus_error("request_status", e),
                         )
-                global_event.emit("show-message", "软件列表更新完成!", 0)
+                global_event.emit("show-message", _("Successfully refreshed applications lists."), 0)
                 global_event.emit('update-list-finish')
                 global_event.emit("hide-update-list-dialog")
                 print "update finish"
@@ -367,7 +371,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                         reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
                         error_handler=lambda e:handle_dbus_error("request_status", e),
                         )
-                global_event.emit("show-message", "软件列表更新失败!", 0)
+                global_event.emit("show-message", _("Failed to refresh applications lists."), 0)
                 global_event.emit('update-list-finish')
                 global_event.emit("hide-update-list-dialog")
                 print "update finish"
@@ -376,10 +380,10 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 (pkg_name, action_type) = action_content
                 if action_type == ACTION_INSTALL:
                     install_page.download_parse_failed(pkg_name)
-                    global_event.emit("show-message", "分析%s依赖出现问题， 安装停止" % pkg_name)
+                    global_event.emit("show-message", _("Problem occurred when analyzing dependencies for %s. Installation aborted") % pkg_name)
                 elif action_type == ACTION_UPGRADE:
                     upgrade_page.download_parse_failed(pkg_name)
-                    global_event.emit("show-message", "分析%s依赖出现问题， 升级停止" % pkg_name)
+                    global_event.emit("show-message", _("Problem occurred when analyzing dependencies for %s. Upgrade aborted") % pkg_name)
 
             elif signal_type == "got-install-deb-pkg-name":
                 pkg_name = action_content
@@ -388,9 +392,9 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
             elif signal_type == "pkg-not-in-cache":
                 pkg_name = action_content
                 if is_64bit_system():
-                    message = "%s在64位系统上不能被安装" % pkg_name
+                    message = _("%s cannot be installed on 64-bit system.") % pkg_name
                 else:
-                    message = "%s在32位系统上不能被安装，该包可能是64位系统特有的包" % pkg_name
+                    message = _("%s cannot be installed. It might be a x86_64 specific package") % pkg_name
                 global_event.emit("show-message", message)
         except Exception, e:
             print e
@@ -629,19 +633,27 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.page_switcher.set_to_page(self.page_box)
         
         # Init page align.
-        page_align = gtk.Alignment()
-        page_align.set(0.5, 0.5, 1, 1)
-        page_align.set_padding(0, 0, 2, 2)
+        self.page_align = gtk.Alignment()
+        self.page_align.set(0.5, 0.5, 1, 1)
+        self.page_align.set_padding(0, 0, 2, 2)
         
         # Append page to switcher.
-        page_align.add(self.page_switcher)
-        self.application.main_box.pack_start(page_align, True, True)
+        self.page_align.add(self.page_switcher)
+        self.application.main_box.pack_start(self.page_align, True, True)
         
         # Init status bar.
         self.statusbar = Statusbar(24)
         status_box = gtk.HBox()
         self.message_box = gtk.HBox()
-        join_us_button = LinkButton("加入我们", "http://www.linuxdeepin.com/joinus/job")
+
+        self.message_label = Label("", enable_gaussian=True)
+        label_align = gtk.Alignment()
+        label_align.set(0.0, 0.5, 0, 0)
+        label_align.set_padding(0, 0, 10, 0)
+        label_align.add(self.message_label)
+        self.message_box.pack_start(label_align)
+
+        join_us_button = LinkButton(_("Join us"), "http://www.linuxdeepin.com/joinus/job")
         join_us_button_align = gtk.Alignment()
         join_us_button_align.set(0.5, 0.5, 0, 0)
         join_us_button_align.set_padding(0, 3, 0, 10)
@@ -660,10 +672,10 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
         self.navigatebar = Navigatebar(
                 [
-                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_home.png')), " 软件中心", self.show_home_page),
-                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_update.png')), " 系统升级", self.show_upgrade_page),
-                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_uninstall.png')), " 卸载软件", self.show_uninstall_page),
-                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_download.png')), " 安装管理", self.show_install_page),
+                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_home.png')), _("Home"), self.show_home_page),
+                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_update.png')), _("Upgrade"), self.show_upgrade_page),
+                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_uninstall.png')), _("Uninstall"), self.show_uninstall_page),
+                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_download.png')), _("Install Manage"), self.show_install_page),
                 ],
                 font_size = 11,
                 padding_x = 2,
@@ -681,17 +693,21 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.application.window.add_move_event(self.navigatebar)
         
         # Init menu.
+        if LANGUAGE == 'en_US':
+            menu_min_width = 185
+        else:
+            menu_min_width = 150
         menu = Menu(
             [
-             (None, "更新软件列表", self.update_list_handler),
-             (None, "打开下载目录", self.open_download_directory),
-             (None, "智能清理下载文件", self.clean_download_cache),
-             (None, "显示新功能", lambda : self.show_wizard_win()),
-             (None, "选项", self.show_preference_dialog),
-             (None, "退出", self.exit),
+             (None, _("Refresh applications lists"), self.update_list_handler),
+             (None, _("Open download directory"), self.open_download_directory),
+             (None, _("Clear up cached packages"), self.clean_download_cache),
+             (None, _("View new features"), lambda : self.show_wizard_win()),
+             (None, _("Preferences"), self.show_preference_dialog),
+             (None, _("Quit"), self.exit),
              ],
             is_root_menu=True,
-            menu_min_width=150,
+            menu_min_width=menu_min_width,
             )
         self.application.set_menu_callback(
             lambda button:
@@ -700,8 +716,8 @@ class DeepinSoftwareCenter(dbus.service.Object):
                 (button.get_allocation().width, 0)))
         
         # Make window can received drop data.
-        targets = [("text/uri-list", 0, 1)]        
-        self.application.window.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_DROP, targets, gtk.gdk.ACTION_COPY)
+        #targets = [("text/uri-list", 0, 1)]        
+        #self.application.window.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_DROP, targets, gtk.gdk.ACTION_COPY)
         #self.application.window.connect_after("drag-data-received", self.on_drag_data_received)        
         
         start = time.time()
@@ -722,19 +738,14 @@ class DeepinSoftwareCenter(dbus.service.Object):
         gtk.main()    
         
     def show_wizard_win(self, show_button=False, callback=None):    
-        import locale
-        (lang, encode) = locale.getdefaultlocale()
         program_dir = get_parent_dir(__file__, 2)
-        if lang == "zh_CN":
-            wizard_dir = os.path.join(program_dir, "wizard", "zh_CN")
-        elif lang in ["zh_HK", "zh_TW"]:
-            wizard_dir = os.path.join(program_dir, "wizard", "zh_HK")
-        else:    
-            wizard_dir = os.path.join(program_dir, "wizard", "en")
+        wizard_dir = os.path.join(program_dir, 'wizard', LANGUAGE)
+        if not os.path.exists(wizard_dir):
+            wizard_dir = os.path.join(program_dir, 'wizard', 'en_US')
         wizard_root_dir = os.path.dirname(wizard_dir)            
             
         Wizard(
-            [os.path.join(wizard_dir, "%d.jpg" % i) for i in range(3)],
+            [os.path.join(wizard_dir, "%d.png" % i) for i in range(3)],
             (os.path.join(wizard_root_dir, "dot_normal.png"),
              os.path.join(wizard_root_dir, "dot_active.png"),             
              ),
@@ -772,6 +783,8 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
         log("Init switch page.")
         self.switch_page(self.home_page)
+
+        self.in_update_list = False
         
         self.init_backend()
         
@@ -796,7 +809,6 @@ class DeepinSoftwareCenter(dbus.service.Object):
         self.install_page = InstallPage(self.bus_interface, self.data_manager)
         print "Init three pages time: %s" % (time.time()-start, )
 
-        self.update_list_dialog = WaitingDialog("更新软件列表", "正在更新软件列表")
         
         log("Handle global event.")
         
@@ -832,13 +844,13 @@ class DeepinSoftwareCenter(dbus.service.Object):
         global_event.register_event("show-pkg-name-tooltip", lambda pkg_name: show_tooltip(self.application.window, pkg_name))
         global_event.register_event("hide-pkg-name-tooltip", lambda :tool_tip.hide())
         global_event.register_event("update-current-status-pkg-page", update_current_status_pkg_page)
-        global_event.register_event('change-mirror', lambda hostname: self.bus_interface.change_source_list(
-            hostname, reply_handler=self.handle_mirror_change_reply, error_handler=lambda e:handle_dbus_error("change_source_list", e)))
+        global_event.register_event('change-mirror', lambda repo_urls: self.bus_interface.change_source_list(
+            repo_urls, reply_handler=self.handle_mirror_change_reply, error_handler=lambda e:handle_dbus_error("change_source_list", e)))
         global_event.register_event('download-directory-changed', self.set_software_download_dir)
         global_event.register_event('vote-send-success', lambda p: vote_send_success_callback(p, self.application.window))
         global_event.register_event('vote-send-failed', lambda p: vote_send_failed_callback(p, self.application.window))
         global_event.register_event('max-download-number-changed', self.init_download_manager)
-        global_event.register_event('hide-update-list-dialog', lambda :self.update_list_dialog.hide_all())
+        global_event.register_event('update-list-finish', self.update_list_finish)
         self.system_bus.add_signal_receiver(
             lambda messages: message_handler(messages, 
                                          self.bus_interface, 
@@ -888,10 +900,28 @@ class DeepinSoftwareCenter(dbus.service.Object):
                 error_handler=lambda e:handle_dbus_error("set_download_dir", e))
 
     def update_list_handler(self):
-        self.update_list_dialog.set_size_request(300, 120)
-        self.update_list_dialog.show_all()
-        self.update_list_dialog.close_button.hide_all()
-        self.request_update_list()
+        try:
+            self.show_dialog('update_list_dialog')
+        except:
+            self.update_list_dialog = WaitingDialog(_("Refresh applications lists"), _("Refreshing applications lists"))
+            self.update_list_dialog.set_size_request(300, 120)
+            self.update_list_dialog.close_button.set_label(_("Run in background"))
+            self.update_list_dialog.show_all()
+        if not self.in_update_list:
+            self.request_update_list()
+
+    def update_list_finish(self):
+        try:
+            self.hide_dialog('update_list_dialog')
+        except:
+            pass
+        self.in_update_list = False
+
+    def hide_dialog(self, name):
+        getattr(self, name).hide_all()
+
+    def show_dialog(self, name):
+        getattr(self, name).show_all()
 
     def handle_mirror_change_reply(self, reply=None):
         global_event.emit("mirror-changed")
@@ -899,13 +929,15 @@ class DeepinSoftwareCenter(dbus.service.Object):
         create_thread(self.request_update_list).start()
         #self.request_update_list()
 
-    def update_status_bar_message(self, message, hide_timeout=5000):
-        if hide_timeout:
-            show_message(self.statusbar, self.message_box, message)
+    def update_status_bar_message(self, message, hide_timeout=0):
+        if hide_timeout == 0:
+            show_message(self.statusbar, self.message_label, message)
         else:
-            show_message(self.statusbar, self.message_box, message, hide_timeout)
+            print hide_timeout
+            show_message(self.statusbar, self.message_label, message, hide_timeout)
 
     def request_update_list(self):
+        self.in_update_list = True
         self.bus_interface.start_update_list(
                 reply_handler=lambda :handle_dbus_reply("start_update_list"),
                 error_handler=lambda e:handle_dbus_error("start_update_list", e),)
@@ -926,9 +958,9 @@ class DeepinSoftwareCenter(dbus.service.Object):
     def clean_download_cache_reply(obj, result):
         num, size = result
         if num != 0:
-            message = "恭喜您清理了%s个软件包，共节约了%s空间" % (num, bit_to_human_str(size))
+            message = _("You have cleared up %s pakcages and saved %s of space") % (num, bit_to_human_str(size))
         else:
-            message = "您的系统已经很干净了，不需要清理."
+            message = _("Your system is clean.")
         global_event.emit("show-message", message, 5000)
 
     def run(self):    

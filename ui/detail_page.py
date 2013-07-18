@@ -30,7 +30,7 @@ from deepin_utils.net import is_network_connected
 from dtk.ui.button import ImageButton
 from dtk.ui.star_view import StarView
 from dtk.ui.browser import WebView
-from constant import CONFIG_DIR, SERVER_ADDRESS
+from constant import CONFIG_DIR, SERVER_ADDRESS, LANGUAGE
 from skin import app_theme
 from deepin_utils.file import get_parent_dir, read_file, write_file, remove_file
 from deepin_utils.process import run_command
@@ -60,6 +60,7 @@ from constant import (
         PKG_SIZE_DOWNLOAD,
         PKG_SIZE_ERROR,
         )
+from nls import _
 
 PKG_SCREENSHOT_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update_data", "pkg_screenshot", "zh_CN")
 
@@ -173,7 +174,7 @@ class DetailPage(gtk.HBox):
         self.left_recommend_box_align.set_padding(30, 0, 14, 0)
         self.left_recommend_box_align.add(self.left_recommend_box)
         
-        self.left_recommend_label = Label("同类热门推荐")
+        self.left_recommend_label = Label(_("Also in the category..."))
         
         self.right_info_box = gtk.VBox()
         self.scrolled_window = ScrolledWindow(0, 0)
@@ -233,6 +234,23 @@ class DetailPage(gtk.HBox):
         self.left_category_label.connect("button-press-event", lambda w, e: self.jump_to_category())
         
         global_event.register_event("download-screenshot-finish", self.download_screenshot_finish)
+
+        self.loading_label = Label(_("Loading comments..."))
+        self.loading_label_align = gtk.Alignment(0.5, 0, 0, 0)
+        self.loading_label_align.add(self.loading_label)
+        self.loading_label_align.set_padding(10, 0, 0, 0)
+
+        self.web_view = WebView(os.path.join(CONFIG_DIR, "cookie.txt"))
+        #web_view.enable_inspector()
+        self.web_view.connect("new-window-policy-decision-requested", self.open_url)
+        self.web_view_align = gtk.Alignment()
+        self.web_view_align.set(0.5, 0, 0, 0)
+        self.web_view_align.set_padding(33, 33, 33, 33)
+        self.web_view_align.add(self.web_view)
+        self.web_settings = self.web_view.get_settings()
+        self.web_settings.set_property("enable-plugins", True)
+        self.web_settings.set_property("enable-scripts", True)    
+        self.web_view.connect("load-finished", self.comment_load_finished_cb)
         
     def hierarchy_change(self, widget, previous_toplevel):
         # When detail page remove from it's container, previous_toplevel is not None.
@@ -341,7 +359,7 @@ class DetailPage(gtk.HBox):
         self.pkg_star_mark.queue_draw()
 
         self.downlad_number = info[0]['down_nums'].encode('utf-8').strip()
-        self.left_download_label.set_text('下载：%s' % self.downlad_number)
+        self.left_download_label.set_text(_('Download: %s') % self.downlad_number)
             
     def update_pkg_info(self, pkg_name):
         #start_time = time.time()
@@ -365,17 +383,17 @@ class DetailPage(gtk.HBox):
         
         container_remove_all(self.left_category_box)
         if self.category != None:
-            self.left_category_name_label.set_text("类别：")
+            self.left_category_name_label.set_text(_("Category: "))
             self.left_category_label.set_text(get_category_name(self.category[1]))
             self.left_category_box.add(self.left_category_label_box)
-        self.left_version_label.set_text("版本：%s" % self.version)
-        self.left_download_label.set_text("下载：0")
-        self.left_size_label.set_text("大小：计算中...")
+        self.left_version_label.set_text(_("Version: %s") % self.version)
+        self.left_download_label.set_text(_("Download: 0"))
+        self.left_size_label.set_text(_("Size: calculating..."))
         
         #print "%s: #2# %s" % (pkg_name, time.time() - start_time)
         container_remove_all(self.left_homepage_box)
         if self.homepage != "":
-            homepage_label = Label("访问首页", 
+            homepage_label = Label(_("Visit Homepage"), 
                                    text_color=app_theme.get_color("homepage"),
                                    hover_color=app_theme.get_color("homepage_hover"))
             homepage_label.set_clickable()
@@ -416,7 +434,7 @@ class DetailPage(gtk.HBox):
         install_status = reply
         if install_status[0][0]:
             if self.category == None:
-                status_label = Label("已安装")
+                status_label = Label(_("Successfully installed"))
                 self.left_action_box.pack_start(status_label)
             else:
                 action_button = ImageButton(
@@ -438,13 +456,11 @@ class DetailPage(gtk.HBox):
 
     def handle_pkg_download_size(self, reply):
         # FIXME: download information display
-        if reply[0] == PKG_SIZE_OWN:
-            self.left_size_label.set_text("大小：%s" % bit_to_human_str(reply[1]))
-        elif reply[0] == PKG_SIZE_DOWNLOAD:
-            self.left_size_label.set_text("大小：%s" % bit_to_human_str(reply[1]))
-        else:
-            reply[0] == PKG_SIZE_ERROR
-
+        if reply[0] == PKG_SIZE_OWN or reply[0] == PKG_SIZE_DOWNLOAD:
+            self.left_size_label.set_text(_("Size: %s") % bit_to_human_str(reply[1]))
+        elif reply[0] == PKG_SIZE_ERROR:
+            self.left_size_label.set_text("")
+            print "Error for calculate pkg size!"
         
     def handle_dbus_error(self, *error):
         container_remove_all(self.left_action_box)
@@ -463,7 +479,7 @@ class DetailPage(gtk.HBox):
     def fetch_comment(self):
         if is_network_connected():
             container_remove_all(self.right_comment_box)    
-            loading_label = gtk.Label("正在加载评论...")
+            loading_label = Label(_("Loading comments..."))
             loading_label_align = gtk.Alignment(0.5, 0, 0, 0)
             loading_label_align.add(loading_label)
             loading_label_align.set_padding(10, 0, 0, 0)
@@ -481,9 +497,9 @@ class DetailPage(gtk.HBox):
             web_view.open("%s/softcenter/v1/comment?n=%s&hl=%s" % (
                     SERVER_ADDRESS, 
                     self.pkg_name, 
-                    "zh_CN"
+                    LANGUAGE,
                     ))
-            #self.right_comment_box.pack_start(web_view_align, True, True)
+
             web_view.connect("load-finished", self.comment_load_finished_cb, web_view_align)
             
             # self.fetch_screenshot()
@@ -533,9 +549,8 @@ class DetailPage(gtk.HBox):
                     traceback.print_exc(file=sys.stdout)
                     print "Download screenshot error: %s" % e
         except Exception, e:
-            # traceback.print_exc(file=sys.stdout)
-            # print "fetch_screenshot got error: %s" % e
-            pass
+            #traceback.print_exc(file=sys.stdout)
+            print "fetch_screenshot got error: %s" % e
             
     def download_screenshot_finish(self, pkg_name):
         if self.pkg_name == pkg_name:
@@ -587,7 +602,7 @@ class DetailPage(gtk.HBox):
                 self.right_slide_box.pack_start(slide_align, True, True)
                 
                 powered_link = Label(
-                    "Powered by 又拍云存储",
+                    _("Powered by 又拍云存储"),
                     text_color=app_theme.get_color("homepage"),
                     hover_color=app_theme.get_color("homepage_hover"),
                     )
@@ -685,4 +700,4 @@ class RecommendPkgItem(gtk.HBox):
         self.pkg_star_view.star_buffer.star_level = int(self.star)
         self.pkg_star_view.queue_draw()
         
-gobject.type_register(RecommendPkgItem)        
+gobject.type_register(RecommendPkgItem)

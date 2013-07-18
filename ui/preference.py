@@ -68,7 +68,7 @@ class MirrorItem(TreeItem):
     }
 
     PADDING_X = 5
-    NAME_WIDTH = 90
+    NAME_WIDTH = 130
 
     def __init__(self, mirror, item_clicked_callback=None):
 
@@ -89,6 +89,7 @@ class MirrorItem(TreeItem):
         self.render_odd_line_bg(cr, rect)
         
         rect.x -= 2
+        rect.width = rect.width - self.PADDING_X
         self.radio_button.render(cr, rect)
 
     def render_name(self, cr, rect):
@@ -96,14 +97,14 @@ class MirrorItem(TreeItem):
 
         self.name = self.mirror.name
         self.render_background(cr, rect)
-        #rect.x += self.PADDING_X
+        #rect.x -= self.PADDING_X
         rect.width -= self.PADDING_X * 2        
         if self.name:
             (text_width, text_height) = get_content_size(self.name)
             draw_text(cr, self.name, rect.x, rect.y, rect.width, rect.height,
                     alignment = pango.ALIGN_LEFT)
         else:
-            name = _("No name")
+            name = _("Untitled")
             (text_width, text_height) = get_content_size(name)
             draw_text(cr, name, rect.x, rect.y, rect.width, rect.height,
                     alignment = pango.ALIGN_LEFT)
@@ -111,7 +112,7 @@ class MirrorItem(TreeItem):
     def render_url(self, cr, rect):
         self.render_odd_line_bg(cr, rect)
 
-        self.mirror_url = self.mirror.get_repo_url()
+        self.mirror_url = self.mirror.hostname
         self.render_background(cr, rect)
         #rect.x += self.NAME_WIDTH
         rect.width -= self.PADDING_X * 2
@@ -120,7 +121,7 @@ class MirrorItem(TreeItem):
             draw_text(cr, self.mirror_url, rect.x, rect.y, rect.width, rect.height,
                     alignment = pango.ALIGN_LEFT)
         else:
-            mirror_url = _("No mirror url")
+            mirror_url = _("Unknown mirror url")
             (text_width, text_height) = get_content_size(mirror_url)
             draw_text(cr, mirror_url, rect.x, rect.y, rect.width, rect.height,
                     alignment = pango.ALIGN_LEFT)
@@ -218,8 +219,7 @@ class WaitingDialog(DialogBox):
         self.right_button_box.set_buttons([self.close_button])
 
     def dialog_close_action(self):
-        pass
-
+        self.hide_all()
 
 class AboutBox(gtk.VBox):    
     
@@ -249,7 +249,7 @@ class AboutBox(gtk.VBox):
         title_box.pack_start(align, True, True)
         title_box.pack_start(info_box, False, False)
         
-        describe = "深度软件中心是Linux平台通用的软件管理中心，精选了2600多款优秀软件，集成了软件安装与卸载、软件仓库、热门软件推荐等多项功能。支持一键快速安装软件、多线程下载及智能清理下载缓存。提供专题介绍，分享好软件。\n\n深度软件中心是自由软件，遵循自由软件基金会发布的GNU通用公共许可证第三版。"
+        describe = _("Deepin Software Center is a commonly used software center on Linux. It selected more than 2,600 decent applications and features easy installation and uninstall, software repository and recommended applications. It supports 1-click install, downloading packages with multi-thread and clearing up cached packages. It provides topics for software introduction and shares good applications. \n")
         
         describe_label = Label(describe, enable_select=False, wrap_width=400, text_size=10)
         main_box.pack_start(title_box, False, False)
@@ -294,9 +294,9 @@ class DscPreferenceDialog(PreferenceDialog):
         self.mirror_settings_align.add(self.mirror_settings_scrolled_win)
 
         self.set_preference_items([
-            ("常规", self.normal_settings_align),
-            ("软件源", self.mirror_settings_align),
-            ("关于", AboutBox()),
+            (_("General"), self.normal_settings_align),
+            (_("Software repository"), self.mirror_settings_align),
+            (_("About"), AboutBox()),
             ])
         
     def mirror_settings_align_expose(self, widget, event=None):
@@ -309,21 +309,21 @@ class DscPreferenceDialog(PreferenceDialog):
         cr.set_source_rgba(1, 1, 1, 0)
         cr.fill()
 
-    def mirror_select_action(self, hostname):
-        self.data_manager.change_source_list(hostname, reply_handler=handle_dbus_reply, error_handler=handle_dbus_error)
+    def mirror_select_action(self, repo_urls):
+        self.data_manager.change_source_list(repo_urls, reply_handler=handle_dbus_reply, error_handler=handle_dbus_error)
 
     def create_mirror_select_table(self):
         main_table = gtk.Table(4, 2)
         main_table.set_row_spacings(CONTENT_ROW_SPACING)
         
-        dir_title_label = Label(_("Select software mirror"))
+        dir_title_label = Label(_("Select mirror"))
         dir_title_label.set_size_request(400, 12)
         label_align = gtk.Alignment()
         label_align.set_padding(0, 0, 0, 0)
         label_align.add(dir_title_label)
 
         self.mirrors_dir = os.path.join(get_parent_dir(__file__, 2), 'mirrors')
-        self.current_mirror_uri = self.get_current_mirror_uri()
+        self.current_mirror_hostname = self.get_current_mirror_hostname()
         self.mirror_items = self.get_mirror_items()
         self.mirror_view = TreeView(self.mirror_items,
                                 enable_drag_drop=False,
@@ -336,7 +336,7 @@ class DscPreferenceDialog(PreferenceDialog):
         self.mirror_view.draw_mask = self.mirror_treeview_draw_mask
         #self.display_current_mirror()
 
-        self.mirror_test_button = Button(_("Select Best Mirror"))
+        self.mirror_test_button = Button(_("Select fastest mirror"))
         self.mirror_test_button.connect('clicked', self.test_mirror_action)
         mirror_test_button_align = gtk.Alignment(0, 0.5, 0, 0)
         mirror_test_button_align.set_padding(0, 0, 7, 5)
@@ -357,8 +357,8 @@ class DscPreferenceDialog(PreferenceDialog):
         main_table.attach(mirror_test_button_align, 0, 1, 3, 4, xoptions=gtk.FILL)
         main_table.attach(self.mirror_message_hbox, 1, 2, 3, 4, xoptions=gtk.FILL)
         
-        title = "选择最佳源"
-        info_message = "请等待，此过程根据网速不同会持续30秒或者更长时间"
+        title = _("Select best mirror")
+        info_message = _("Please wait. The process will take 30 seconds or more depending on your network connection")
         self.select_best_mirror_dialog = WaitingDialog(title, info_message, self.cancel_mirror_test)
         global_event.register_event("mirror-changed", self.mirror_changed_handler)
         global_event.register_event("update-list-finish", self.update_list_finish_handler)
@@ -366,9 +366,11 @@ class DscPreferenceDialog(PreferenceDialog):
         return main_table
 
     def cancel_mirror_test(self, widget):
-        if self.mirror_test != None:
+        try:
             self.mirror_test.terminated = True
             gobject.source_remove(self.update_status_id)
+        except:
+            pass
         self.select_best_mirror_dialog.hide_all()
 
     def update_list_finish_handler(self):
@@ -376,9 +378,9 @@ class DscPreferenceDialog(PreferenceDialog):
 
     def mirror_changed_handler(self):
         #self.select_best_mirror_dialog.titlebar.change_title('更新')
-        self.select_best_mirror_dialog.info_message_label.set_text("软件源已经更改，正在更新软件列表")
+        self.select_best_mirror_dialog.info_message_label.set_text(_("The software repository has changed. Refreshing applications lists"))
         self.select_best_mirror_dialog.show_all()
-        self.select_best_mirror_dialog.close_button.hide_all()
+        self.select_best_mirror_dialog.close_button.set_label(_("Run in background"))
     
     def test_mirror_action(self, widget):
         self.select_best_mirror_dialog.show_all()
@@ -407,21 +409,22 @@ class DscPreferenceDialog(PreferenceDialog):
             if self.mirror_test.best != None:
                 for item in self.mirror_items:
                     if item.mirror == self.mirror_test.best[1]:
-                        print item.mirror.get_repo_url()
+                        print item.mirror.get_repo_urls()
                         self.mirror_clicked_callback(item)
             else:
                 self.select_best_mirror_dialog.loading_widget.hide_all()
-                self.select_best_mirror_dialog.info_message_label.set_text("测试下载源失败, 请检查您的网络连接！")
+                self.select_best_mirror_dialog.info_message_label.set_text(_("Test for downloading mirror failed. Please check your network connection."))
                 self.select_best_mirror_dialog.close_button.set_label(_("Close"))
             return False
 
-    def get_current_mirror_uri(self):
+    def get_current_mirror_hostname(self):
         apt_pkg.init_config()
         apt_pkg.init_system()
         source_list_obj = apt_pkg.SourceList()
         source_list_obj.read_main_list()
-        uri = source_list_obj.list[0].uri.split(":")[0] + "://" + source_list_obj.list[0].uri.split("/")[2]
-        return uri
+        url = source_list_obj.list[0].uri
+        hostname = url.split(":")[0] + "://" + url.split("/")[2]
+        return hostname
 
     def mirror_treeview_draw_mask(self, cr, x, y, w, h):
         cr.set_source_rgba(1, 1, 1, 0.9)
@@ -434,7 +437,7 @@ class DscPreferenceDialog(PreferenceDialog):
         for ini_file in os.listdir(self.mirrors_dir):
             m = Mirror(os.path.join(self.mirrors_dir, ini_file))
             item = MirrorItem(m, self.mirror_clicked_callback)
-            if m.get_change_uri() == self.current_mirror_uri:
+            if m.hostname == self.current_mirror_hostname:
                 item.radio_button.active = True
                 self.current_mirror_item = item
             self.mirrors_list.append(m)
@@ -452,7 +455,7 @@ class DscPreferenceDialog(PreferenceDialog):
                 i.radio_button.active = True
         self.mirror_view.queue_draw()
         if item != self.current_mirror_item:
-            global_event.emit('change-mirror', item.mirror.get_change_uri())
+            global_event.emit('change-mirror', item.mirror.get_repo_urls())
             self.current_mirror_item = item
         else:
             self.select_best_mirror_dialog.hide_all()
@@ -462,13 +465,13 @@ class DscPreferenceDialog(PreferenceDialog):
         main_table = gtk.Table(3, 2)
         main_table.set_row_spacings(CONTENT_ROW_SPACING)
         
-        dir_title_label = Label(_("Source update"))
+        dir_title_label = Label(_("Update applications lists"))
         dir_title_label.set_size_request(200, 12)
         label_align = gtk.Alignment()
         label_align.set_padding(0, 0, 0, 0)
         label_align.add(dir_title_label)
         
-        update_label = Label(_("Interval time: "))
+        update_label = Label(_("Time interval: "))
         self.update_spin = SpinBox(int(get_update_interval()), 0, 168, 1)
         self.update_spin.connect("value-changed", lambda w, v: set_update_interval(v))
         hour_lablel = Label(_(" hour"))        
@@ -503,11 +506,11 @@ class DscPreferenceDialog(PreferenceDialog):
         download_number_hbox.pack_start(download_number_label, False, False)
         download_number_hbox.pack_start(self.download_number_comobox, False, False)
         
-        change_download_dir_label = Label(_("Donload directory: "))
+        change_download_dir_label = Label(_("Download directory: "))
         self.dir_entry = InputEntry()
         self.dir_entry.set_text(get_software_download_dir())
         self.dir_entry.set_editable(False)        
-        self.dir_entry.set_size(210, 25)
+        self.dir_entry.set_size(200, 25)
         
         modify_button = Button(_("Change"))
         modify_button.connect("clicked", self.change_download_save_dir)

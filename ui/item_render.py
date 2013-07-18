@@ -22,13 +22,14 @@
 
 import os
 from dtk.ui.draw import draw_pixbuf, draw_text
-from dtk.ui.constant import DEFAULT_FONT_SIZE
 from dtk.ui.utils import get_content_size
-from constant import ICON_DIR
+from deepin_utils.file import get_parent_dir
+from data import DATA_ID
+from nls import _
+from constant import LANGUAGE
 
 ICON_SIZE = 48
 STAR_SIZE = 13
-NAME_SIZE = 10
 
 ITEM_PKG_OFFSET_X = 22
 ITEM_CHECKBUTTON_WIDTH = 32
@@ -36,17 +37,28 @@ ITEM_CHECKBUTTON_PADDING_X = 8
 ITEM_CHECKBUTTON_PADDING_Y = 29
 ITEM_INFO_AREA_WIDTH = -1
 ITEM_STAR_AREA_WIDTH = STAR_SIZE * 5
-ITEM_BUTTON_AREA_WIDTH = 160
 ITEM_BUTTON_PADDING_RIGHT = 40
 ITEM_NO_NOTIFY_AREA_WIDTH = 100
 ITEM_NOTIFY_AGAIN_AREA_WIDTH = 100
 
-ITEM_NO_NOTIFY_STRING = "不再提醒"
+ITEM_NO_NOTIFY_STRING = _("Unwatch")
 (ITEM_NO_NOTIFY_WIDTH, ITEM_NO_NOTIFY_HEIGHT) = get_content_size(ITEM_NO_NOTIFY_STRING)
-ITEM_NOTIFY_AGAIN_STRING = "重新提醒"
+ITEM_NOTIFY_AGAIN_STRING = _("Watch again")
 (ITEM_NOTIFY_AGAIN_WIDTH, ITEM_NOTIFY_AGAIN_HEIGHT) = get_content_size(ITEM_NOTIFY_AGAIN_STRING)
 
-ITEM_STATUS_TEXT_PADDING_RIGHT = 130
+if LANGUAGE == 'en_US':
+    NAME_SIZE = 9
+    ITEM_STATUS_TEXT_PADDING_RIGHT = 175
+    ITEM_BUTTON_AREA_WIDTH = 190
+    ITEM_BUTTON_PADDING_RIGHT = 70
+    DEFAULT_FONT_SIZE = 9
+else:
+    NAME_SIZE = 10
+    ITEM_STATUS_TEXT_PADDING_RIGHT = 130
+    ITEM_BUTTON_AREA_WIDTH = 160
+    ITEM_BUTTON_PADDING_RIGHT = 40
+    DEFAULT_FONT_SIZE = 10
+
 ITEM_CONFIRM_BUTTON_PADDING_RIGHT = 100
 ITEM_CANCEL_BUTTON_PADDING_RIGHT = 50
 
@@ -57,6 +69,8 @@ ITEM_PADDING_MIDDLE = 10
 SHORT_DESC_PADDING_Y = 4
 
 PROGRESSBAR_HEIGHT = 12
+
+ICON_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "app_icon")
 
 def get_icon_pixbuf_path(pkg_name):
     if os.path.exists(os.path.join(ICON_DIR, "%s.png" % pkg_name)):

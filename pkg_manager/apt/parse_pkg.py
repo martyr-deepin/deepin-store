@@ -28,7 +28,6 @@ import apt_pkg
 from utils import log
 from constant import DOWNLOAD_STATUS_NOTNEED, DOWNLOAD_STATUS_ERROR
 import apt.debfile as debfile
-import apt.progress.base as apb
 
 def get_deb_download_info(cache, deb_file):
     try:
@@ -91,31 +90,39 @@ def get_pkg_download_info(cache, pkg_name):
         return check_pkg_download_info(dependence)
 
 def get_pkg_dependence(cache, pkg_name):
-    if pkg_name in cache:
+    try:
+        pkg = cache[pkg_name]
+    except:
         try:
+            pkg_name = pkg_name+":i386"
             pkg = cache[pkg_name]
-            if cache.is_pkg_upgradable(pkg_name):
-                pkg.mark_upgrade()
-            elif not cache.is_pkg_installed(pkg_name):
-                pkg.mark_install()
-                
-            # Get package information.
-            pkgs = sorted(cache.get_changes(), key=lambda pkg: pkg.name)
-            cache.open(apb.OpProgress())
-            return pkgs
-        
-        except Exception, e:
-            print "get_pkg_download_info error: %s" % (e)
-            log(str(traceback.format_exc()))
-
+        except:
             return -1
-    else:
-        raise Exception("%s is not found" % pkg_name)
+
+    if cache.is_pkg_upgradable(pkg_name):
+        pkg.mark_upgrade()
+    elif not cache.is_pkg_installed(pkg_name):
+        pkg.mark_install()
+        
+    # Get package information.
+    pkgs = sorted(cache.get_changes(), key=lambda pkg: pkg.name)
+    cache._depcache.init()
+    return pkgs
 
 def get_pkg_own_size(cache, pkg_name):
-    pkg = cache[pkg_name]
-    version = pkg.candidate
-    return int(version.installed_size)
+    try:
+        pkg = cache[pkg_name]
+        version = pkg.candidate
+        return int(version.installed_size)
+    except:
+        try:
+            pkg_name = pkg_name+":i386"
+            pkg = cache[pkg_name]
+            version = pkg.candidate
+            return int(version.installed_size)
+        except:
+            return 0
+
     
 def check_pkg_download_info(pkgs):
     if len(pkgs) >= 1:
@@ -195,31 +202,30 @@ def check_hash(path, hash_type, hash_value):
     return hash_fun.hexdigest() == hash_value
 
 def get_pkg_dependence_file_path(cache, pkg_name):
+
     cache_archive_dir = get_cache_archive_dir()
     file_paths = []
-    if pkg_name in cache:
+    try:
+        pkg = cache[pkg_name]
+    except:
         try:
+            pkg_name = pkg_name + ":i386"
             pkg = cache[pkg_name]
-            if cache.is_pkg_upgradable(pkg_name):
-                pkg.mark_upgrade()
-            elif not cache.is_pkg_installed(pkg_name):
-                pkg.mark_install()
-                
-            # Get package information.
-            pkgs = sorted(cache.get_changes(), key=lambda pkg: pkg.name)
-            cache._depcache.init()
-            file_paths.append(os.path.join(cache_archive_dir, get_filename(pkg.candidate)))
-            for pkg in pkgs:
-                file_paths.append(os.path.join(cache_archive_dir, get_filename(pkg.candidate)))
+        except:
             return file_paths
-        
-        except Exception, e:
-            print "get_pkg_download_info error: %s" % (e)
-            log(str(traceback.format_exc()))
 
-            return []
-    else:
-        raise Exception("%s is not found" % pkg_name)
+    if cache.is_pkg_upgradable(pkg_name):
+        pkg.mark_upgrade()
+    elif not cache.is_pkg_installed(pkg_name):
+        pkg.mark_install()
+        
+    # Get package information.
+    pkgs = sorted(cache.get_changes(), key=lambda pkg: pkg.name)
+    cache._depcache.init()
+    file_paths.append(os.path.join(cache_archive_dir, get_filename(pkg.candidate)))
+    for pkg in pkgs:
+        file_paths.append(os.path.join(cache_archive_dir, get_filename(pkg.candidate)))
+    return file_paths
 
 if __name__ == "__main__":
     from apt_cache import AptCache
@@ -232,5 +238,5 @@ if __name__ == "__main__":
     # print deb_package.check_breaks_existing_packages()
     # print deb_package.check_conflicts()
 
-    for path in get_pkg_dependence_file_path(cache, "apache2"):
+    for path in get_pkg_dependence_file_path(cache, "kingsoft-office"):
         print path

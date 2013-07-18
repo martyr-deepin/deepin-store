@@ -21,12 +21,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from skin import app_theme
-from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
+from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, LANGUAGE
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.iconview import IconView, IconItem
 from deepin_utils.file import get_parent_dir
-from dtk.ui.utils import container_remove_all, is_in_rect, get_content_size, cairo_state
+from dtk.ui.utils import container_remove_all, is_in_rect, get_content_size
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear, TEXT_ALIGN_TOP
 from events import global_event
 import gtk
@@ -34,7 +34,9 @@ import gobject
 import os
 from data import DATA_ID
 
-ALBUM_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "album_picture", "zh_CN")
+ALBUM_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "album_picture", LANGUAGE)
+if not os.path.exists(ALBUM_PICTURE_DIR):
+    ALBUM_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "album_picture", 'en_US')
 
 class AlbumPage(gtk.VBox):
     '''
@@ -140,10 +142,10 @@ class AlbumSummaryItem(IconItem):
     
     TITLE_PADDING_LEFT = 20
     TITLE_PADDING_RIGHT = 10
-    TITLE_SIZE = 11
+    TITLE_SIZE = 10
     
     SUMMARY_PADDING_Y = 5
-    SUMMARY_SIZE = 10
+    SUMMARY_SIZE = 9
 	
     def __init__(self, (album_id, album_name, album_summary)):
         '''
@@ -202,6 +204,7 @@ class AlbumSummaryItem(IconItem):
                   text_size=self.TITLE_SIZE,
                   text_color="#000000",
                   vertical_alignment=TEXT_ALIGN_TOP,
+                  wrap_width=text_width,
                   )
         
         # Draw album summary.
@@ -210,7 +213,7 @@ class AlbumSummaryItem(IconItem):
         draw_text(cr,
                   self.album_summary,
                   rect.x + self.PICTURE_PADDING_X + self.pixbuf.get_width() + self.TITLE_PADDING_LEFT,
-                  rect.y + self.PICTURE_PADDING_Y * 2 + self.TITLE_SIZE,
+                  rect.y + self.PICTURE_PADDING_Y * 2 + self.TITLE_SIZE + 8,
                   text_width,
                   text_height,
                   text_size=self.SUMMARY_SIZE,
@@ -301,11 +304,18 @@ class AlbumDetailItem(TreeItem):
     PICTURE_PADDING_X = 10
     PICTURE_PADDING_Y = 15
     
-    TITLE_PADDING_LEFT = 20
-    TITLE_SIZE = 11
-    
-    SUMMARY_PADDING_Y = 30
-    SUMMARY_SIZE = 10
+    if LANGUAGE == 'en_US':
+        TITLE_PADDING_LEFT = 20
+        TITLE_SIZE = 9
+        
+        SUMMARY_PADDING_Y = 30
+        SUMMARY_SIZE = 8
+    else:
+        TITLE_PADDING_LEFT = 20
+        TITLE_SIZE = 10
+        
+        SUMMARY_PADDING_Y = 30
+        SUMMARY_SIZE = 9
     
     SUMMARY_WIDTH = 440
     

@@ -117,12 +117,13 @@ class SendDownloadCount(td.Thread):
                 'a' : 'd', 
                 'n' : self.pkgName}
             
-            urllib2.urlopen(
+            result = urllib2.urlopen(
                 "%s/softcenter/v1/analytics" % (SERVER_ADDRESS),
                 data=urllib.urlencode(args),
                 timeout=POST_TIMEOUT
                 )
             print "Send download count (%s) successful." % (self.pkgName)
+            print "Result:", result.read()
         except Exception, e:
             print "Send download count (%s) failed." % (self.pkgName)
             print "Error: ", e

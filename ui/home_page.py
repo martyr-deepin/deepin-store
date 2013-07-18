@@ -27,7 +27,7 @@ import gobject
 import cairo
 from message_bar import MessageBar
 from dtk.ui.utils import remove_timeout_id, cairo_state, get_content_size
-from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
+from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, LANGUAGE
 from item_render import STAR_SIZE, get_star_level, get_icon_pixbuf_path, NAME_SIZE, ITEM_PADDING_X, ICON_SIZE
 from search_page import SearchPage
 from dtk.ui.treeview import TreeView, TreeItem
@@ -53,10 +53,30 @@ from nls import _
 from loading_widget import Loading
 
 FIRST_CATEGORY_PADDING_X = 66
-SECOND_CATEGORY_PADDING_X = 46
+
+CATEGORY_ITEM_NAME_WIDTH = -1
+CATEGORY_ITEM_HEIGHT = 42
+
+if LANGUAGE == 'en_US':
+    CATEGORY_ITEM_NAME_SIZE = 9
+    SECOND_CATEGORY_ITEM_NAME_SIZE = 8
+    SECOND_CATEGORY_PADDING_X = 26
+else:
+    CATEGORY_ITEM_NAME_SIZE = 11
+    SECOND_CATEGORY_ITEM_NAME_SIZE = 10
+    SECOND_CATEGORY_PADDING_X = 46
+
+SECOND_CATEGORY_ITEM_HEIGHT = 30
+
+CATEGORY_ITEM_EXPAND_PADDING_X = 30
+
+LOAD_ITEMS_NUMBER = 20
 
 CATEGORY_VIEW_WIDTH = 155
-SLIDE_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "slide_picture", "zh_CN")
+
+SLIDE_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "slide_picture", LANGUAGE)
+if not os.path.exists(SLIDE_PICTURE_DIR):
+    SLIDE_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "slide_picture", "en_US")
 
 global cursor_postion
 cursor_postion = None
@@ -290,34 +310,9 @@ class HomePage(gtk.HBox):
         
 gobject.type_register(HomePage)
 
-CATEGORY_ITEM_NAME_WIDTH = -1
-CATEGORY_ITEM_HEIGHT = 42
-CATEGORY_ITEM_NAME_SIZE = 11
-SECOND_CATEGORY_ITEM_NAME_SIZE = 10
-SECOND_CATEGORY_ITEM_HEIGHT = 35
-
-CATEGORY_ITEM_EXPAND_PADDING_X = 30
-
-LOAD_ITEMS_NUMBER = 20
-
-category_font_dict = {
-        "recommend":"A",
-        "internet":"B",
-        "multimedia":"C",
-        "games":"D",
-        "graphics":"E",
-        "productivity":"F",
-        "industry":"G",
-        "education":"H",
-        "development":"I",
-        "system":"J",
-        "utilities":"K",
-        }
 
 def handle_dbus_error(*error):
     print "handle_dbus_error: ", error
-
-
 
 class CategoryItem(TreeItem):
     '''
@@ -356,16 +351,6 @@ class CategoryItem(TreeItem):
         cr.set_source_rgb(*color_hex_to_cairo(font_image_color))
         cr.mask_surface(surface, rect.x+14, rect.y+(rect.height-24)/2)
 
-        #draw_font_img(
-                #category_font_dict[self.first_category_name], 
-                #cr, 
-                #rect.x+14, 
-                #rect.y+30, 
-                #category_face, 
-                #text_size=25, 
-                #text_color=font_image_color,
-                #)
-        
         draw_text(cr, 
                   get_category_name(self.first_category_name),
                   rect.x + pixbuf.get_width() + 22, 
@@ -490,7 +475,7 @@ class CategoryItem(TreeItem):
                 self.all_desktop_infos[pkg_name] = desktop_info
             
         self.message_bar = MessageBar(18)
-        self.message_bar.set_message("%s: %s款软件" % (
+        self.message_bar.set_message(_("%s: %s applications") % (
                     get_category_name(self.first_category_name), 
                     len(self.all_pkg_names),
                     ))
@@ -683,7 +668,7 @@ class SecondCategoryItem(TreeItem):
         self.page_box = gtk.VBox()    
             
         self.message_bar = MessageBar(18)
-        self.message_bar.set_message("%s > %s: %s款软件" % (
+        self.message_bar.set_message(_("%s > %s : %s applications") % (
                 get_category_name(self.first_category_name), 
                 get_category_name(self.second_category_name), 
                 len(self.all_pkg_names),
@@ -739,8 +724,11 @@ class RecommendItem(TreeItem):
         init docs
         '''
         TreeItem.__init__(self)
-        self.name = _("Home Recommends")
+        self.name = _("Home")
         self.data_manager = data_manager
+        
+        self.page_cache = {}
+        self.page_name = ['recommend', 'album', 'download_rank']
         
         self.init_recommend_page()
         
@@ -754,7 +742,7 @@ class RecommendItem(TreeItem):
         
         slide_pkg_names = self.data_manager.get_slide_info()
         self.slider_switcher = SlideSwitcher(
-            map(lambda pkg_name: gtk.gdk.pixbuf_new_from_file(os.path.join(SLIDE_PICTURE_DIR, "%s.jpg" % pkg_name)),
+            map(lambda pkg_name: gtk.gdk.pixbuf_new_from_file(os.path.join(SLIDE_PICTURE_DIR, "%s.png" % pkg_name)),
                 slide_pkg_names))
         self.slider_switcher.connect("motion-notify-index", lambda w, i: global_event.emit("set-cursor", gtk.gdk.HAND2))
         self.slider_switcher.connect("button-press-index", lambda w, i: global_event.emit("switch-to-detail-page", slide_pkg_names[i]))
@@ -765,7 +753,7 @@ class RecommendItem(TreeItem):
         
         self.page_box = gtk.VBox()
         
-        self.tab_switcher = TabSwitcher(["热门推荐", "专题介绍", "下载排行"])
+        self.tab_switcher = TabSwitcher([_("Hot applications"), _("Topics"), _("Download rank")])
         self.tab_switcher_align = gtk.Alignment()
         self.tab_switcher_align.set(0.5, 0.5, 1, 1)
         self.tab_switcher_align.set_padding(10, 0, 0, 9)
@@ -914,7 +902,12 @@ class RecommendItem(TreeItem):
         
     def switch_page(self, page_index):
         container_remove_all(self.page_box)
-        self.active_page = getattr(self, self.tab_switcher_pages_callback[page_index])()
+        page_name = self.page_name[page_index]
+
+        if not self.page_cache.has_key(self.page_name[page_index]):
+            self.page_cache[page_name] = getattr(self, self.tab_switcher_pages_callback[page_index])()
+
+        self.active_page = self.page_cache[page_name]
         self.page_box.pack_start(self.active_page, True, True)
         
         if isinstance(self.active_page, AlbumPage):

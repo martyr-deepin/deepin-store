@@ -22,7 +22,7 @@
 
 import gtk
 import gobject
-from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, CONFIG_DIR, CHECK_BUTTON_PADDING_X
+from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, CONFIG_DIR, CHECK_BUTTON_PADDING_X, cute_info_dir
 import os
 from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.button import CheckButtonBuffer, ImageButton, CheckAllButton
@@ -31,7 +31,7 @@ from star_buffer import DscStarBuffer
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
 from deepin_utils.core import split_with
 from deepin_utils.net import is_network_connected
-from deepin_utils.file import read_file, write_file, format_file_size, get_parent_dir
+from deepin_utils.file import read_file, write_file, format_file_size
 from dtk.ui.utils import is_in_rect, container_remove_all, get_content_size
 from dtk.ui.label import Label
 from item_render import (render_pkg_info, STAR_SIZE, get_star_level, ITEM_PADDING_Y, get_icon_pixbuf_path,
@@ -47,8 +47,10 @@ from dtk.ui.progressbar import ProgressBuffer
 from events import global_event
 from constant import ACTION_UPGRADE
 from dtk.ui.cycle_strip import CycleStrip
+import dtk.ui.tooltip as Tooltip
 from time import time
 from utils import get_last_upgrade_time, set_last_upgrade_time, handle_dbus_error
+from nls import _
 
 class UpgradingBar(gtk.HBox):
     '''
@@ -105,7 +107,7 @@ class NewestBar(gtk.HBox):
     def set_update_time(self):
         last_upgrade_time = get_last_upgrade_time()
         if last_upgrade_time != "":
-            self.message_label.set_text("最后更新时间: %s" % get_last_upgrade_time())
+            self.message_label.set_text(_("Last upgraded time: %s") % get_last_upgrade_time())
         else:
             self.message_label.set_text("")
         
@@ -113,7 +115,7 @@ class NewestBar(gtk.HBox):
         
         container_remove_all(self.no_notify_label_align)
         if no_notify_num > 0:
-            self.no_notify_label.set_text("不再提醒升级(%s)" % no_notify_num)
+            self.no_notify_label.set_text(_("Unwatched (%s)") % no_notify_num)
             self.no_notify_label_align.add(self.no_notify_label)
             
             self.show_all()
@@ -152,9 +154,10 @@ class UpgradeBar(gtk.HBox):
             app_theme.get_pixbuf("button/upgrade_all_hover.png"),
             app_theme.get_pixbuf("button/upgrade_all_press.png"),
             )
+        Tooltip.text(self.upgrade_selected_button, _("Upgrade select items"))
         self.upgrade_selected_button_align = gtk.Alignment()
         self.upgrade_selected_button_align.set(0.0, 0.5, 0, 0)
-        self.upgrade_selected_button_align.set_padding(0, 0, 40, 40)
+        self.upgrade_selected_button_align.set_padding(0, 0, 40, ITEM_BUTTON_PADDING_RIGHT)
         self.upgrade_selected_button_align.add(self.upgrade_selected_button)
         
         self.pack_start(self.select_button_align, False, False)
@@ -173,11 +176,11 @@ class UpgradeBar(gtk.HBox):
             global_event.emit("unselect-all-upgrade-pkg")
         
     def set_upgrade_info(self, upgrade_num, no_notify_num):
-        self.message_label.set_text("当前可升级软件共 %s 款" % upgrade_num)
+        self.message_label.set_text(_("%s applications are available for upgrade") % upgrade_num)
         
         container_remove_all(self.no_notify_label_align)
         if no_notify_num > 0:
-            self.no_notify_label.set_text("不再提醒升级(%s)" % no_notify_num)
+            self.no_notify_label.set_text(_("Unwatched (%s)") % no_notify_num)
             self.no_notify_label_align.add(self.no_notify_label)
             
             self.show_all()
@@ -207,7 +210,7 @@ class NoNotifyBar(gtk.HBox):
         self.message_label_align.set_padding(0, 0, 0, 0)
         self.message_label_align.add(self.message_label)
         self.notify_again_label = Label(
-            "重新提醒",
+            _("Watch again"),
             hover_color=app_theme.get_color("homepage_hover")
             )
         self.notify_again_label.set_clickable()
@@ -241,7 +244,7 @@ class NoNotifyBar(gtk.HBox):
             global_event.emit("unselect-all-notify-pkg")
         
     def set_notify_info(self, notify_again_num):
-        self.message_label.set_text("有%s款软件不再提醒" % notify_again_num)
+        self.message_label.set_text(_("%s applications are not being watched") % notify_again_num)
         
         self.message_label_align.show_all()
         
@@ -544,7 +547,7 @@ class UpgradePage(gtk.VBox):
             self.upgrade_progress_status = self.upgrade_progress_status[1::]
             
             self.current_progress = "%.2f" % float(self.current_progress)
-            self.upgrading_bar.set_upgrading_message("更新软件列表 %s%%" % self.current_progress)
+            self.upgrading_bar.set_upgrading_message(_("Refresh applications lists %s%%") % self.current_progress)
             
         return True    
         
@@ -558,7 +561,7 @@ class UpgradePage(gtk.VBox):
         rect = widget.allocation
         
         if self.update_list_pixbuf == None:
-            self.update_list_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(get_parent_dir(__file__, 2), "image", "zh_CN", "upgrading.png"))
+            self.update_list_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(cute_info_dir, "upgrading.png"))
         
         cr.set_source_rgb(1, 1, 1)
         cr.rectangle(rect.x, rect.y, rect.width, rect.height)
@@ -576,7 +579,7 @@ class UpgradePage(gtk.VBox):
         rect = widget.allocation
         
         if self.newest_pixbuf == None:
-            self.newest_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(get_parent_dir(__file__, 2), "image", "zh_CN", "newest.png"))
+            self.newest_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(cute_info_dir, "newest.png"))
         
         cr.set_source_rgb(1, 1, 1)
         cr.rectangle(rect.x, rect.y, rect.width, rect.height)
@@ -594,7 +597,7 @@ class UpgradePage(gtk.VBox):
         rect = widget.allocation
         
         if self.network_disable_pixbuf == None:
-            self.network_disable_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(get_parent_dir(__file__, 2), "image", "zh_CN", "network_disable.png"))
+            self.network_disable_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(cute_info_dir, "network_disable.png"))
         
         cr.set_source_rgb(1, 1, 1)
         cr.rectangle(rect.x, rect.y, rect.width, rect.height)
@@ -1112,7 +1115,7 @@ class UpgradeItem(TreeItem):
             if self.status == self.STATUS_NORMAL:
                 if self.is_in_button_area(column, offset_x, offset_y):
                     self.status = self.STATUS_WAIT_DOWNLOAD
-                    self.status_text = "等待下载"
+                    self.status_text = _("Waiting for download")
                     
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
@@ -1225,21 +1228,21 @@ class UpgradeItem(TreeItem):
     
     def download_ready(self):
         self.status = self.STATUS_READY_DOWNLOAD
-        self.status_text = "分析依赖中"
+        self.status_text = _("Analyzing dependencies")
     
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
                 
     def download_wait(self):
         self.status = self.STATUS_WAIT_DOWNLOAD
-        self.status_text = "等待下载"
+        self.status_text = _("Waiting for download")
 
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
     
     def download_start(self):
         self.status = self.STATUS_IN_DOWNLOAD
-        self.status_text = "下载中"
+        self.status_text = _("Downloading")
     
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
@@ -1255,7 +1258,7 @@ class UpgradeItem(TreeItem):
     def download_finish(self):
         self.status = self.STATUS_WAIT_UPGRADE
         self.progress_buffer.progress = 0
-        self.status_text = "等待升级"
+        self.status_text = _("Waiting for upgrade")
     
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
@@ -1265,7 +1268,7 @@ class UpgradeItem(TreeItem):
             
     def download_parse_failed(self):
         self.status = self.STATUS_PARSE_DOWNLOAD_FAILED
-        self.status_text = "分析依赖失败"
+        self.status_text = _("Analyzing dependencies failed")
     
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
@@ -1274,14 +1277,14 @@ class UpgradeItem(TreeItem):
             
     def action_start(self):
         self.status = self.STATUS_IN_UPGRADE
-        self.status_text = "升级中"
+        self.status_text = _("Upgrading")
     
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
                 
     def action_update(self, percent):
         self.status = self.STATUS_IN_UPGRADE
-        self.status_text = "升级中"
+        self.status_text = _("Upgrading")
         self.progress_buffer.progress = percent
         
         if self.redraw_request_callback:
@@ -1290,7 +1293,7 @@ class UpgradeItem(TreeItem):
     def action_finish(self):
         self.status = self.STATUS_UPGRADE_FINISH
         self.progress_buffer.progress = 100
-        self.status_text = "升级完成"
+        self.status_text = _("Upgrade complete")
         
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
@@ -1596,4 +1599,4 @@ class NoNotifyItem(TreeItem):
 
         return True    
     
-gobject.type_register(NoNotifyItem)        
+gobject.type_register(NoNotifyItem)

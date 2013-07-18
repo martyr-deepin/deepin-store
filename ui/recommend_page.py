@@ -29,8 +29,11 @@ from dtk.ui.iconview import IconItem
 from dtk.ui.utils import is_in_rect
 from events import global_event
 from data import DATA_ID
+from constant import LANGUAGE
 
-PKG_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "recommend_picture", "zh_CN")
+PKG_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "recommend_picture", LANGUAGE)
+if not os.path.exists(PKG_PICTURE_DIR):
+    PKG_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "recommend_picture", 'en_US')
 
 class RecommendIconItem(IconItem):
     '''
@@ -64,7 +67,7 @@ class RecommendIconItem(IconItem):
     
     def render(self, cr, rect):
         if self.pkg_picture_pixbuf == None:
-            self.pkg_picture_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(PKG_PICTURE_DIR, "%s.jpg" % self.pkg_name))
+            self.pkg_picture_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(PKG_PICTURE_DIR, "%s.png" % self.pkg_name))
             
         padding_x = (rect.width - self.pkg_picture_pixbuf.get_width()) / 2
         padding_y = (rect.height - self.pkg_picture_pixbuf.get_height()) / 2
@@ -75,7 +78,7 @@ class RecommendIconItem(IconItem):
         
     def is_in_icon_area(self, x, y):    
         if self.pkg_picture_pixbuf == None:
-            self.pkg_picture_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(PKG_PICTURE_DIR, "%s.jpg" % self.pkg_name))
+            self.pkg_picture_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(PKG_PICTURE_DIR, "%s.png" % self.pkg_name))
             
         padding_x = (self.get_width() - self.pkg_picture_pixbuf.get_width()) / 2
         padding_y = (self.get_height() - self.pkg_picture_pixbuf.get_height()) / 2
