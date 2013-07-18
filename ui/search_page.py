@@ -249,7 +249,7 @@ class SearchItem(TreeItem):
         else:
             draw_text(
                 cr,
-                "已安装",
+                _("Successfully installed"),
                 rect.x + rect.width - ITEM_BUTTON_PADDING_RIGHT - pixbuf.get_width(),
                 rect.y + (rect.height - pixbuf.get_height()) / 2,
                 pixbuf.get_width(),
