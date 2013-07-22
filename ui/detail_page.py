@@ -645,7 +645,7 @@ class StarMark(gtk.VBox):
         
         draw_text(
             cr, 
-            str(self._star),
+            str(round(self._star, 1)),
             rect.x + self.padding_x,
             rect.y + self.padding_y,
             100,
