@@ -30,6 +30,24 @@ from deepin_utils.date_time import get_current_time
 
 LOG_PATH = "/tmp/dsc-frontend.log"
 
+def get_recommend_mode():
+
+    recommend_modes = {
+            'test' : '2',
+            'publish' : '3',
+            'archive' : '4',
+            }
+
+    config = get_config_info_config()
+    if config.has_option("recommend", "mode"):
+        mode = recommend_modes.get(config.get('recommend', 'mode'))
+        if mode:
+            return mode
+        else:
+            return '3'
+    else:
+        return '3'
+
 def bit_to_human_str(size):
     if size < 1024:
         return "%sB" % size

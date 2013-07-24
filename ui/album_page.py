@@ -35,6 +35,7 @@ import os
 from data import DATA_ID
 from server_action import FetchAlbumData, FetchImageFromUpyun
 from dtk.ui.threads import post_gui
+from utils import handle_dbus_error
 
 from operator import attrgetter
 
@@ -59,7 +60,7 @@ class AlbumPage(gtk.VBox):
         self.data_manager = data_manager
 
         self.album_summary_align = gtk.Alignment()
-        self.album_summary_align.set(0.5, 0.5, 0, 0)
+        self.album_summary_align.set(0.5, 0.5, 1, 1)
         self.album_summary_align.set_padding(0, 0, 0, 10)
         
         self.album_detail_align = gtk.Alignment()
@@ -84,12 +85,12 @@ class AlbumPage(gtk.VBox):
         
         self.show_all()
 
-    def switch_to_album_detail_view(self, album_id):
+    def switch_to_album_detail_view(self, album_info):
         self.in_detail_view = True
         
         container_remove_all(self)
         container_remove_all(self.album_detail_align)
-        album_detail_page = AlbumDetailPage(self.data_manager, album_id)
+        album_detail_page = AlbumDetailPage(self.data_manager, album_info)
         self.album_detail_align.add(album_detail_page)
         
         self.pack_start(self.album_detail_align, True, True)
@@ -132,7 +133,6 @@ class AlbumSummaryView(gtk.VBox):
             
             sorted(items, key=attrgetter('album_order'), reverse=True)
             self.iconview.add_items(items)
-            print "Summary Item Number:", len(items)
         
     def draw_mask(self, cr, x, y, w, h):
         '''
@@ -177,11 +177,11 @@ class AlbumSummaryItem(IconItem):
         self.album_name = album_info['name']
         self.album_summary = album_info['summary']
         self.album_cover_path = album_info['cover_pic']
-        #FetchImageFromUpyun(self.album_cover_path, self.update_cover_pic).start()
+        self.album_info = album_info
+        FetchImageFromUpyun(self.album_cover_path, self.update_cover_pic).start()
         self.pixbuf = None
         self.hover_flag = False
         self.highlight_flag = False
-        print "Initialize Summary Item:", self.album_name
 
     @post_gui
     def update_cover_pic(self, local_path):
@@ -197,7 +197,6 @@ class AlbumSummaryItem(IconItem):
         self.emit("redraw-request")
         
     def get_width(self):
-        print "get_width %s" % self.album_name
         '''
         Get item width.
         
@@ -206,7 +205,6 @@ class AlbumSummaryItem(IconItem):
         return 355
         
     def get_height(self):
-        print "get_height %s" % self.album_name
         '''
         Get item height.
         
@@ -215,7 +213,6 @@ class AlbumSummaryItem(IconItem):
         return 110
     
     def render(self, cr, rect):
-        print "render %s" % self.album_name
         '''
         Render item.
         
@@ -267,7 +264,7 @@ class AlbumSummaryItem(IconItem):
         
         This is IconView interface, you should implement it.
         '''
-        global_event.emit("switch-to-album-detail-view", self.album_id)
+        global_event.emit("switch-to-album-detail-view", self.album_info)
     
     def icon_item_release_resource(self):
         '''
@@ -300,19 +297,17 @@ class AlbumDetailPage(gtk.VBox):
     class docs
     '''
 	
-    def __init__(self, data_manager, album_id):
+    def __init__(self, data_manager, album_info):
         '''
         init docs
         '''
         gtk.VBox.__init__(self)
-        self.treeview = TreeView(
-            enable_drag_drop=False,
-            expand_column=1)
+        self.treeview = TreeView(enable_drag_drop=False, expand_column=1)
         
         items = []
-        for (pkg_name, pkg_title, pkg_summary, alias_name, desktop_info, is_installed) in data_manager.get_album_detail_info(album_id):
-            items.append(AlbumDetailItem(pkg_name, pkg_title, pkg_summary, alias_name, desktop_info, is_installed))
-        self.treeview.add_items(items)    
+        for software_info in album_info['softwares']:
+            items.append(AlbumDetailItem(software_info, data_manager))
+        self.treeview.add_items(items)
         self.treeview.draw_mask = self.draw_mask
                 
         self.pack_start(self.treeview, True, True)
@@ -359,22 +354,38 @@ class AlbumDetailItem(TreeItem):
     
     BUTTON_PADDING_X = 30
 	
-    def __init__(self, pkg_name, pkg_title, pkg_summary, alias_name, desktop_info, is_installed):
+    def __init__(self, software_info, data_manager):
         '''
         init docs
         '''
         TreeItem.__init__(self)
-        self.pkg_name = pkg_name
-        self.pkg_title = pkg_title
-        self.pkg_summary = pkg_summary
-        self.alias_name = alias_name
-        self.desktop_info = desktop_info
-        self.is_installed = is_installed
+        self.pkg_name = software_info['pkg_name']
+        self.pkg_title = software_info['short_desc']
+        self.pkg_summary = software_info['long_desc']
+        self.alias_name = software_info['display_name']
+        self.software_pic = software_info['software_pic']
+        self.desktop_info = data_manager.get_pkg_desktop_info(self.pkg_name)
+        self.install_status = False
+        data_manager.get_pkgs_install_status(
+                [self.pkg_name,], 
+                self.update_install_status, 
+                lambda :handle_dbus_error("get_pkgs_install_status", self.pkg_name))
+        FetchImageFromUpyun(self.software_pic, self.update_software_pic).start()
         self.pixbuf = None
         
         self.height = 100
         
         self.button_status = BUTTON_NORMAL
+
+    @post_gui
+    def update_software_pic(self, local_path):
+        self.pixbuf = gtk.gdk.pixbuf_new_from_file(local_path)
+        self.emit_redraw_request()
+
+    def update_install_status(self, is_installed):
+        self.install_status = True
+        self.is_installed = is_installed[0]
+        self.emit_redraw_request()
         
     def render_pkg_picture(self, cr, rect):
         if self.pixbuf == None:
@@ -416,28 +427,32 @@ class AlbumDetailItem(TreeItem):
         
     def render_pkg_action(self, cr, rect):
         # Render button.
-        if self.is_installed:
-            name = "button/start"
-        else:
-            name = "button/install"
-        
-        if self.button_status == BUTTON_NORMAL:
-            status = "normal"
-        elif self.button_status == BUTTON_HOVER:
-            status = "hover"
-        elif self.button_status == BUTTON_PRESS:
-            status = "press"
+        if self.install_status:
+            if self.is_installed:
+                name = "button/start"
+            else:
+                name = "button/install"
             
-        pixbuf = app_theme.get_pixbuf("%s_%s.png" % (name, status)).get_pixbuf()
-        draw_pixbuf(
-            cr,
-            pixbuf,
-            rect.x + self.BUTTON_PADDING_X,
-            rect.y + (rect.height - pixbuf.get_height()) / 2)
+            if self.button_status == BUTTON_NORMAL:
+                status = "normal"
+            elif self.button_status == BUTTON_HOVER:
+                status = "hover"
+            elif self.button_status == BUTTON_PRESS:
+                status = "press"
+                
+            pixbuf = app_theme.get_pixbuf("%s_%s.png" % (name, status)).get_pixbuf()
+            draw_pixbuf(
+                cr,
+                pixbuf,
+                rect.x + self.BUTTON_PADDING_X,
+                rect.y + (rect.height - pixbuf.get_height()) / 2)
+        else:
+            pass
         
     def is_in_button_area(self, column, offset_x, offset_y):
+
         pixbuf = app_theme.get_pixbuf("button/start_normal.png").get_pixbuf()
-        return (column == 2
+        return (self.install_status and column == 2
                 and is_in_rect((offset_x, offset_y),
                                (self.BUTTON_PADDING_X,
                                 (self.height - pixbuf.get_height()) / 2,

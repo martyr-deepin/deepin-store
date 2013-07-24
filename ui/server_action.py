@@ -30,14 +30,17 @@ from constant import SERVER_ADDRESS, POST_TIMEOUT
 from events import global_event
 import traceback
 from deepin_utils.file import create_directory
+from utils import get_recommend_mode
 
-DEBUG = True
+DEBUG = False
 
-BAIDU_SERVER_ADDRESS = 'http://dschomedata.duapp.com/' if not DEBUG else 'http://10.0.0.176:8000/'
+BAIDU_SERVER_ADDRESS = 'http://dschomedata.duapp.com/' if not DEBUG else 'http://127.0.0.1:8000/'
 UPYUN_SERVER_ADDRESS = 'http://dsc-home-data.b0.upaiyun.com/'
 
 CACHE_DIR = os.path.join(os.path.expanduser("~"), '.cache', 'deepin-software-center')
 create_directory(CACHE_DIR)
+
+status = get_recommend_mode()
 
 class FetchAlbumData(td.Thread):
 
@@ -48,7 +51,7 @@ class FetchAlbumData(td.Thread):
         self.album_data_url = BAIDU_SERVER_ADDRESS + "album/"
         self.data = {
                 'hl': language,
-                'status': '2',
+                'status': status,
                 }
         self.setDaemon(True)
 
@@ -86,7 +89,6 @@ class FetchImageFromUpyun(td.Thread):
             return
         try:
             urllib.urlretrieve(self.remote_url, self.local_path)
-            print "Download finish: %s" % self.local_path
             self.callback_method(self.local_path)
 
         except Exception, e:
