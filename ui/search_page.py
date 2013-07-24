@@ -46,6 +46,7 @@ from item_render import (render_pkg_icon, render_pkg_name, STAR_SIZE, get_star_l
                          )
 from events import global_event
 from nls import _
+from widgets import LoadingBox
 
 def handle_dbus_error(*error):
     print "handle_dbus_error: ", error
@@ -77,10 +78,11 @@ class SearchPage(gtk.VBox):
         self.content_box.pack_start(self.message_bar, False, False)
         self.content_box.pack_start(self.treeview)
 
-        self.pack_start(self.cute_message_image, True, True)
+        self.loading_box = LoadingBox()
+
+        self.pack_start(self.loading_box, True, True)
         
         self.treeview.connect("items-change", self.update_message_bar)
-        
         self.treeview.draw_mask = self.draw_mask
 
     def expose_cute_message_image(self, widget, event):
@@ -128,11 +130,14 @@ class SearchPage(gtk.VBox):
         self.keywords = keywords
         self.treeview.delete_all_items()        
         pkg_names = self.data_manager.search_query(keywords)
-        results = self.data_manager.get_search_pkgs_info(pkg_names)
-        self.data_manager.get_pkgs_install_status(
-                            pkg_names, 
-                            reply_handler=lambda status: self.search_reply_handler(status, results, keywords),
-                            error_handler=handle_dbus_error)
+        if pkg_names:
+            results = self.data_manager.get_search_pkgs_info(pkg_names)
+            self.data_manager.get_pkgs_install_status(
+                                pkg_names, 
+                                reply_handler=lambda status: self.search_reply_handler(status, results, keywords),
+                                error_handler=handle_dbus_error)
+        else:
+            self.update_message_bar(self.treeview)
 
     def search_reply_handler(self, status, results, keywords):
         for (i, result) in enumerate(results):

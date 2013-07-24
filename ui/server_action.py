@@ -50,12 +50,13 @@ class FetchAlbumData(td.Thread):
         self.language = language
         self.album_data_url = BAIDU_SERVER_ADDRESS + "album/"
         self.data = {
-                'hl': language,
+                'hl': language if language != 'zh_HK' else 'zh_TW',
                 'status': status,
                 }
         self.setDaemon(True)
 
     def run(self):
+        json_data = None
         try:
             query = urllib.urlencode(self.data)
             request_url = ("%s?%s") % (self.album_data_url, query)
@@ -66,12 +67,12 @@ class FetchAlbumData(td.Thread):
             json_data = json.loads(connection.read())            
             if self.callback_method:
                 self.callback_method(json_data)
-            global_event.emit("download-album-infos-finish", json_data)
         except Exception, e:
             if self.callback_method:
                 self.callback_method(None)
             traceback.print_exc(file=sys.stdout)
             print "Fetch album data failed: %s." % (e)
+        global_event.emit("download-album-infos-finish", json_data)
 
 class FetchImageFromUpyun(td.Thread):
     

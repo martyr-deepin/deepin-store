@@ -40,6 +40,7 @@ from events import global_event
 from nls import _
 from loading_widget import Loading
 from utils import ThreadMethod
+from widgets import LoadingBox
 
 RANK_TAB_HEIGHT = 20
 
@@ -102,8 +103,7 @@ class DownloadRankPage(gtk.VBox):
         self.cute_message_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(cute_info_dir, "network_disable.png"))
         self.cute_message_image.connect("expose-event", self.expose_cute_message_image)
 
-        self.loading = Loading()
-        self.loading.set_size_request(-1, 312)
+        self.loading = LoadingBox()
 
         self.view_list =  [
             ('week', self.week_rank_icon_view, self.week_rank_icon_view_scrlledwindow), 

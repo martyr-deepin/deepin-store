@@ -50,7 +50,7 @@ from skin import app_theme
 from data import DATA_ID
 from category_info import get_category_name
 from nls import _
-from loading_widget import Loading
+from widgets import LoadingBox
 
 FIRST_CATEGORY_PADDING_X = 66
 
@@ -456,12 +456,7 @@ class CategoryItem(TreeItem):
     def single_click(self, column, offset_x, offset_y):
 
         # init Loading widget
-        loading_box = gtk.VBox()
-        loading_widget = Loading() 
-        loading_align = gtk.Alignment()
-        loading_align.set(0.5, 0.5, 0, 0)
-        loading_align.add(loading_widget)
-        loading_box.pack_start(loading_align)
+        loading_box = LoadingBox()
 
         global_event.emit("show-pkg-view", loading_box)
 
@@ -656,12 +651,7 @@ class SecondCategoryItem(TreeItem):
 
     def button_press(self, column, offset_x, offset_y):
         # init Loading widget
-        loading_box = gtk.VBox()
-        loading_widget = Loading() 
-        loading_align = gtk.Alignment()
-        loading_align.set(0.5, 0.5, 0, 0)
-        loading_align.add(loading_widget)
-        loading_box.pack_start(loading_align)
+        loading_box = LoadingBox()
 
         global_event.emit("show-pkg-view", loading_box)
 

@@ -72,7 +72,9 @@ PKG_SIZE_OWN = 0
 PKG_SIZE_DOWNLOAD = 1
 PKG_SIZE_ERROR = 2
 
-cute_info_dir = os.path.join(get_parent_dir(__file__, 2), "image", "info", LANGUAGE)
+dsc_root_dir = os.path.realpath(get_parent_dir(__file__, 2))
+
+cute_info_dir = os.path.join(dsc_root_dir, "image", "info", LANGUAGE)
 if not os.path.exists(cute_info_dir):
-    cute_info_dir = os.path.join(get_parent_dir(__file__, 2), "image", "info")
+    cute_info_dir = os.path.join(dsc_root_dir, "image", "info")
 

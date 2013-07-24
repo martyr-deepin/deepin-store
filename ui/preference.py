@@ -376,13 +376,14 @@ class DscPreferenceDialog(PreferenceDialog):
     def update_list_finish_handler(self):
         self.select_best_mirror_dialog.hide_all()
 
-    def mirror_changed_handler(self):
-        #self.select_best_mirror_dialog.titlebar.change_title('更新')
+    def mirror_changed_handler(self, parent=None):
+        self.select_best_mirror_dialog.set_transient_for(self)
         self.select_best_mirror_dialog.info_message_label.set_text(_("The software repository has changed. Refreshing applications lists"))
         self.select_best_mirror_dialog.show_all()
         self.select_best_mirror_dialog.close_button.set_label(_("Run in background"))
     
     def test_mirror_action(self, widget):
+        self.select_best_mirror_dialog.set_transient_for(self)
         self.select_best_mirror_dialog.show_all()
         distro = aptsources.distro.get_distro()
         #distro.get_sources(SourcesList())

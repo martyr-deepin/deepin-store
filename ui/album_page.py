@@ -25,9 +25,11 @@ from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, LANGUAGE
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.iconview import IconView, IconItem
-from deepin_utils.file import get_parent_dir
 from dtk.ui.utils import container_remove_all, is_in_rect, get_content_size
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear, TEXT_ALIGN_TOP
+from deepin_utils.file import get_parent_dir
+from deepin_utils.net import is_network_connected
+
 from events import global_event
 import gtk
 import gobject
@@ -36,6 +38,7 @@ from data import DATA_ID
 from server_action import FetchAlbumData, FetchImageFromUpyun
 from dtk.ui.threads import post_gui
 from utils import handle_dbus_error
+from widgets import LoadingBox, NetworkConnectFailed
 
 from operator import attrgetter
 
@@ -67,12 +70,38 @@ class AlbumPage(gtk.VBox):
         self.album_detail_align.set(0.5, 0.5, 1, 1)
         self.album_detail_align.set_padding(5, 0, 0, 10)
 
+        self.album_summary_view = AlbumSummaryView()
+        self.loading_box = LoadingBox()
+        self.network_failed_box = NetworkConnectFailed(self.check_network_connection)
+
         self.update_album_summary_view()
+        container_remove_all(self)
+        self.add(self.loading_box)
+
+        self.check_network_connection()
+        global_event.register_event("switch-to-album-detail-view", self.switch_to_album_detail_view)
+        global_event.register_event('switch-to-album-summary-view', self.switch_to_album_summary_view)
+        global_event.register_event('switch-to-network-problem-view', self.switch_to_network_problem_view)
+
+    def check_network_connection(self):
+        if is_network_connected():
+            self.network_connected_flag = True
+            self.switch_page_view(self.loading_box)
+            self.album_summary_view.try_fetch_data()
+        else:    
+            self.network_connected_flag = False
+            self.switch_page_view(self.network_failed_box)
+
+    def switch_page_view(self, view):
+        container_remove_all(self)
+        self.add(view)
+        self.show_all()
 
     def update_album_summary_view(self):
-        self.album_summary_view = AlbumSummaryView()
-        self.switch_to_album_summary_view()
-        global_event.register_event("switch-to-album-detail-view", self.switch_to_album_detail_view)
+        self.album_summary_view.try_fetch_data()
+
+    def switch_to_network_problem_view(self):
+        self.switch_page_view(self.network_failed_box)
         
     def switch_to_album_summary_view(self):
         self.in_detail_view = False
@@ -120,9 +149,8 @@ class AlbumSummaryView(gtk.VBox):
 
         global_event.register_event('download-album-infos-finish', self.update_item)
 
-        f = FetchAlbumData(LANGUAGE)
-        f.daemon = True
-        f.start()
+    def try_fetch_data(self):
+        FetchAlbumData(LANGUAGE).start()
 
     @post_gui
     def update_item(self, data):
@@ -133,6 +161,9 @@ class AlbumSummaryView(gtk.VBox):
             
             sorted(items, key=attrgetter('album_order'), reverse=True)
             self.iconview.add_items(items)
+            global_event.emit('switch-to-album-summary-view')
+        else:
+            global_event.emit('switch-to-network-problem-view')
         
     def draw_mask(self, cr, x, y, w, h):
         '''

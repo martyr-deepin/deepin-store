@@ -25,10 +25,22 @@ from datetime import datetime
 import os
 from constant import CONFIG_INFO_PATH, DEFAULT_UPDATE_INTERVAL, DEFAULT_DOWNLOAD_DIRECTORY, DEFAULT_DOWNLOAD_NUMBER
 from deepin_utils.config import Config
-from deepin_utils.file import touch_file
+from deepin_utils.file import touch_file, get_parent_dir
 from deepin_utils.date_time import get_current_time
+import gtk
 
 LOG_PATH = "/tmp/dsc-frontend.log"
+
+dsc_root_dir = os.path.realpath(get_parent_dir(__file__, 2))
+
+def get_common_image(name):
+    return os.path.join(dsc_root_dir, "image", name)
+
+def get_common_image_pixbuf(name):
+    if os.path.exists(get_common_image(name)):
+        return gtk.gdk.pixbuf_new_from_file(get_common_image(name))
+    else:
+        return None
 
 def get_recommend_mode():
 
