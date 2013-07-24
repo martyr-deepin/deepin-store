@@ -33,10 +33,16 @@ import gtk
 import gobject
 import os
 from data import DATA_ID
+from server_action import FetchAlbumData, FetchImageFromUpyun
+from dtk.ui.threads import post_gui
+
+from operator import attrgetter
 
 ALBUM_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "album_picture", LANGUAGE)
 if not os.path.exists(ALBUM_PICTURE_DIR):
     ALBUM_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "album_picture", 'en_US')
+
+DEFAULT_CACHE_IMAGE_PATH = os.path.join(get_parent_dir(__file__, 2), 'image', 'album', 'default_cache.png')
 
 class AlbumPage(gtk.VBox):
     '''
@@ -51,18 +57,20 @@ class AlbumPage(gtk.VBox):
         gtk.VBox.__init__(self)
         self.in_detail_view = False
         self.data_manager = data_manager
-        self.album_summary_view = AlbumSummaryView(data_manager)
-        
+
         self.album_summary_align = gtk.Alignment()
-        self.album_summary_align.set(0.5, 0.5, 1, 1)
+        self.album_summary_align.set(0.5, 0.5, 0, 0)
         self.album_summary_align.set_padding(0, 0, 0, 10)
         
         self.album_detail_align = gtk.Alignment()
         self.album_detail_align.set(0.5, 0.5, 1, 1)
         self.album_detail_align.set_padding(5, 0, 0, 10)
-        
+
+        self.update_album_summary_view()
+
+    def update_album_summary_view(self):
+        self.album_summary_view = AlbumSummaryView()
         self.switch_to_album_summary_view()
-        
         global_event.register_event("switch-to-album-detail-view", self.switch_to_album_detail_view)
         
     def switch_to_album_summary_view(self):
@@ -75,7 +83,7 @@ class AlbumPage(gtk.VBox):
         self.pack_start(self.album_summary_align, True, True)
         
         self.show_all()
-        
+
     def switch_to_album_detail_view(self, album_id):
         self.in_detail_view = True
         
@@ -95,25 +103,36 @@ class AlbumSummaryView(gtk.VBox):
     '''
     class docs
     '''
-	
-    def __init__(self, data_manager):
+
+    def __init__(self):
         '''
         init docs
         '''
         gtk.VBox.__init__(self)
         self.scrolled_window = ScrolledWindow()
-        self.data_manager = data_manager
         
         self.iconview = IconView()
         self.iconview.draw_mask = self.draw_mask
         
-        items = []
-        for album_info in self.data_manager.get_album_info():
-            items.append(AlbumSummaryItem(album_info))
-        self.iconview.add_items(items)    
-        
         self.scrolled_window.add_child(self.iconview)
         self.pack_start(self.scrolled_window, True, True)
+
+        global_event.register_event('download-album-infos-finish', self.update_item)
+
+        f = FetchAlbumData(LANGUAGE)
+        f.daemon = True
+        f.start()
+
+    @post_gui
+    def update_item(self, data):
+        items = []
+        if data:
+            for album_info in data:
+                items.append(AlbumSummaryItem(album_info))
+            
+            sorted(items, key=attrgetter('album_order'), reverse=True)
+            self.iconview.add_items(items)
+            print "Summary Item Number:", len(items)
         
     def draw_mask(self, cr, x, y, w, h):
         '''
@@ -147,21 +166,38 @@ class AlbumSummaryItem(IconItem):
     SUMMARY_PADDING_Y = 5
     SUMMARY_SIZE = 9
 	
-    def __init__(self, (album_id, album_name, album_summary)):
+    def __init__(self, album_info):
         '''
         Initialize ItemIcon class.
         
         @param pixbuf: Icon pixbuf.
         '''
-        gobject.GObject.__init__(self)
-        self.album_id = album_id
-        self.album_name = album_name
-        self.album_summary = album_summary
+        super(AlbumSummaryItem, self).__init__()
+        self.album_order = int(album_info['order']) if album_info['order'] else 0
+        self.album_name = album_info['name']
+        self.album_summary = album_info['summary']
+        self.album_cover_path = album_info['cover_pic']
+        #FetchImageFromUpyun(self.album_cover_path, self.update_cover_pic).start()
         self.pixbuf = None
         self.hover_flag = False
         self.highlight_flag = False
+        print "Initialize Summary Item:", self.album_name
+
+    @post_gui
+    def update_cover_pic(self, local_path):
+        self.pixbuf = gtk.gdk.pixbuf_new_from_file(local_path)
+        self.emit_redraw_request()
+
+    def emit_redraw_request(self):
+        '''
+        Emit `redraw-request` signal.
+        
+        This is IconView interface, you should implement it.
+        '''
+        self.emit("redraw-request")
         
     def get_width(self):
+        print "get_width %s" % self.album_name
         '''
         Get item width.
         
@@ -170,6 +206,7 @@ class AlbumSummaryItem(IconItem):
         return 355
         
     def get_height(self):
+        print "get_height %s" % self.album_name
         '''
         Get item height.
         
@@ -178,6 +215,7 @@ class AlbumSummaryItem(IconItem):
         return 110
     
     def render(self, cr, rect):
+        print "render %s" % self.album_name
         '''
         Render item.
         
@@ -185,7 +223,7 @@ class AlbumSummaryItem(IconItem):
         '''
         # Draw album picture.
         if self.pixbuf == None:
-            self.pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(ALBUM_PICTURE_DIR, "%s.jpg" % self.album_id))
+            self.pixbuf = gtk.gdk.pixbuf_new_from_file(DEFAULT_CACHE_IMAGE_PATH)
             
         draw_pixbuf(cr,
                     self.pixbuf,
@@ -340,7 +378,7 @@ class AlbumDetailItem(TreeItem):
         
     def render_pkg_picture(self, cr, rect):
         if self.pixbuf == None:
-            self.pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(ALBUM_PICTURE_DIR, "%s.jpg" % self.pkg_name))
+            self.pixbuf = gtk.gdk.pixbuf_new_from_file(DEFAULT_CACHE_IMAGE_PATH)
             
         draw_pixbuf(cr,
                     self.pixbuf,

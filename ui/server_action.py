@@ -20,12 +20,78 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
+import sys
 import threading as td
 import urllib2
 import urllib
 import json
 from constant import SERVER_ADDRESS, POST_TIMEOUT
 from events import global_event
+import traceback
+from deepin_utils.file import create_directory
+
+DEBUG = True
+
+BAIDU_SERVER_ADDRESS = 'http://dschomedata.duapp.com/' if not DEBUG else 'http://10.0.0.176:8000/'
+UPYUN_SERVER_ADDRESS = 'http://dsc-home-data.b0.upaiyun.com/'
+
+CACHE_DIR = os.path.join(os.path.expanduser("~"), '.cache', 'deepin-software-center')
+create_directory(CACHE_DIR)
+
+class FetchAlbumData(td.Thread):
+
+    def __init__(self, language, callback_method=None):
+        td.Thread.__init__(self)
+        self.callback_method = callback_method
+        self.language = language
+        self.album_data_url = BAIDU_SERVER_ADDRESS + "album/"
+        self.data = {
+                'hl': language,
+                'status': '2',
+                }
+        self.setDaemon(True)
+
+    def run(self):
+        try:
+            query = urllib.urlencode(self.data)
+            request_url = ("%s?%s") % (self.album_data_url, query)
+            connection = urllib2.urlopen(
+                request_url,
+                timeout=POST_TIMEOUT,
+            )
+            json_data = json.loads(connection.read())            
+            if self.callback_method:
+                self.callback_method(json_data)
+            global_event.emit("download-album-infos-finish", json_data)
+        except Exception, e:
+            if self.callback_method:
+                self.callback_method(None)
+            traceback.print_exc(file=sys.stdout)
+            print "Fetch album data failed: %s." % (e)
+
+class FetchImageFromUpyun(td.Thread):
+    
+    def __init__(self, image_path, callback_method=None):
+        td.Thread.__init__(self)
+        self.callback_method = callback_method
+        self.remote_url = UPYUN_SERVER_ADDRESS + image_path
+        self.local_path = os.path.join(CACHE_DIR, image_path)
+        create_directory(os.path.dirname(self.local_path))
+        self.setDaemon(True)
+
+    def run(self):
+        if os.path.exists(self.local_path):
+            self.callback_method(self.local_path)
+            return
+        try:
+            urllib.urlretrieve(self.remote_url, self.local_path)
+            print "Download finish: %s" % self.local_path
+            self.callback_method(self.local_path)
+
+        except Exception, e:
+            traceback.print_exc(file=sys.stdout)
+            print "Download image error: %s" % e
 
 class FetchVoteInfo(td.Thread):
     '''Fetch vote.'''

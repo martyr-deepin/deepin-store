@@ -341,6 +341,9 @@ if __name__ == "__main__":
     bus_interface = dbus.Interface(bus_object, DSC_SERVICE_NAME)
 
     data_manager = DataManager(bus_interface)
-    print data_manager.get_all_download_rank_info()
+    #print data_manager.get_all_download_rank_info()
     #print data_manager.get_month_download_rank_info()
     #print data_manager.get_week_download_rank_info()
+    for info in  data_manager.get_album_detail_info(0):
+        print info
+
