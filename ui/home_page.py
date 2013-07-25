@@ -756,11 +756,14 @@ class RecommendItem(TreeItem):
         
         self.box.pack_start(self.slider_switcher, False, False)
         self.box.pack_start(self.tab_switcher_align, False, False)
-        
         self.box_align.add(self.box)
-        
-        self.background_box.pack_start(self.box_align)
-        self.background_box.pack_start(self.page_box)
+
+        self.page_box_align = gtk.Alignment()
+        self.page_box_align.set(0.5, 0, 1, 1)
+        self.page_box_align.add(self.page_box)
+
+        self.background_box.pack_start(self.box_align, False, False)
+        self.background_box.pack_start(self.page_box_align)
         
         self.recommend_scrolled_window.add_child(self.background_box)
         

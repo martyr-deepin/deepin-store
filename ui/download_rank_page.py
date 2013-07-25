@@ -38,7 +38,6 @@ import gtk
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from events import global_event
 from nls import _
-from loading_widget import Loading
 from utils import ThreadMethod
 from widgets import LoadingBox
 
