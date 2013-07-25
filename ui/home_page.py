@@ -791,7 +791,7 @@ class RecommendItem(TreeItem):
         self.recommend_scrolled_window_initial = True
     
     def try_fetch_data(self):
-        FetchHomeData(LANGUAGE).start()
+        FetchHomeData(LANGUAGE, self.data_manager.debug_flag).start()
 
     def check_network_connection(self):
         if is_network_connected():

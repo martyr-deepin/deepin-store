@@ -780,7 +780,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         log("Init data manager")
         
         # Init data manager.
-        self.data_manager = DataManager(self.bus_interface)
+        self.data_manager = DataManager(self.bus_interface, debug_flag)
 
         # Init packages status
         self.packages_status = {}

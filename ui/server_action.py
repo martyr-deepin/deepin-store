@@ -44,9 +44,8 @@ status = get_recommend_mode()
 
 class FetchAlbumData(td.Thread):
 
-    def __init__(self, language, callback_method=None):
+    def __init__(self, language, debug_flag=False):
         td.Thread.__init__(self)
-        self.callback_method = callback_method
         self.language = language
         self.album_data_url = BAIDU_SERVER_ADDRESS + "album/"
         self.data = {
@@ -65,11 +64,7 @@ class FetchAlbumData(td.Thread):
                 timeout=POST_TIMEOUT,
             )
             json_data = json.loads(connection.read())            
-            if self.callback_method:
-                self.callback_method(json_data)
         except Exception, e:
-            if self.callback_method:
-                self.callback_method(None)
             traceback.print_exc(file=sys.stdout)
             print "Fetch album data failed: %s." % (e)
         global_event.emit("download-album-infos-finish", json_data)

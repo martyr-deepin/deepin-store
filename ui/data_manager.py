@@ -41,11 +41,12 @@ class DataManager(object):
     class docs
     '''
 	
-    def __init__(self, bus_interface):
+    def __init__(self, bus_interface, debug_flag=False):
         '''
         init docs
         '''
         self.bus_interface = bus_interface
+        self.debug_flag = debug_flag
         
         software_db_path = os.path.join(UPDATE_DATA_DIR, "software", LANGUAGE, "software.db")
         db_path_exists(software_db_path)
