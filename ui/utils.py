@@ -28,10 +28,20 @@ from deepin_utils.config import Config
 from deepin_utils.file import touch_file, get_parent_dir
 from deepin_utils.date_time import get_current_time
 import gtk
+from operator import itemgetter
 
 LOG_PATH = "/tmp/dsc-frontend.log"
 
 dsc_root_dir = os.path.realpath(get_parent_dir(__file__, 2))
+
+def sort_for_home_page_data(infos):
+    new_infos = []
+    new_infos.append(tuple(infos[0]))
+    for i in xrange(len(infos)-1):
+        new_infos.insert(0, tuple(infos[i+1]))
+
+    sorted(new_infos, key=itemgetter(1), reverse=True)
+    return new_infos
 
 def get_common_image(name):
     return os.path.join(dsc_root_dir, "image", name)

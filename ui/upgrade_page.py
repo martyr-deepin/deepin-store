@@ -1109,6 +1109,7 @@ class UpgradeItem(TreeItem):
         elif column == 2:
             if self.status == self.STATUS_NORMAL:
                 if self.is_in_no_notify_area(column, offset_x, offset_y):
+                    print "################ no notify"
                     global_event.emit("no-notify-pkg", self.pkg_name)
         elif column == 3:
             if self.status == self.STATUS_NORMAL:

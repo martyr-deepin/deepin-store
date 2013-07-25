@@ -54,7 +54,7 @@ from category_info import get_category_name
 from nls import _
 from widgets import LoadingBox, NetworkConnectFailed
 from server_action import FetchHomeData
-from operator import itemgetter
+from utils import sort_for_home_page_data
 
 FIRST_CATEGORY_PADDING_X = 66
 
@@ -746,8 +746,7 @@ class RecommendItem(TreeItem):
             self.check_network_connection()
             return
 
-        slide_infos = data['slide']
-        #sorted(slide_infos, key=itemgetter(1), reverse=True)
+        slide_infos = sort_for_home_page_data(data['slide'])
         self.slider_switcher = SlideSwitcher(slide_infos)
         self.slider_switcher.connect("motion-notify-index", 
                 lambda w, i: global_event.emit("set-cursor", gtk.gdk.HAND2))
@@ -755,7 +754,7 @@ class RecommendItem(TreeItem):
                 lambda w, i: global_event.emit("switch-to-detail-page", slide_infos[i][0]))
         self.slider_switcher.connect("leave-notify-index", lambda w, i: global_event.emit("set-cursor", None))
 
-        self.recommend_infos = data['recommend']
+        self.recommend_infos = sort_for_home_page_data(data['recommend'])
         self.tab_switcher = TabSwitcher([_("Hot applications"), _("Topics"), _("Download rank")])
         self.tab_switcher_align = gtk.Alignment()
         self.tab_switcher_align.set(0.5, 0.5, 1, 1)
