@@ -55,6 +55,7 @@ from apt_cache import AptCache
 from action import AptActionPool
 from events import global_event
 from deepin_utils.ipc import auth_with_policykit
+from deepin_utils.file import read_file, write_file
 from utils import log
 #from update_list import UpdateList
 import threading as td
@@ -337,6 +338,42 @@ class PackageManager(dbus.service.Object):
                     line = line.strip()
                     if os.path.exists(line):
                         os.remove(line)
+
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature='', out_signature='as')
+    def read_no_notify_config(self, no_notify_config_path):
+        if os.path.exists(no_notify_config_path):
+           no_notify_config_str = read_file(no_notify_config_path)
+           try:
+               no_notify_config = eval(no_notify_config_str)
+               
+               if type(no_notify_config).__name__ != "list":
+                   no_notify_config = []
+           except Exception:
+               no_notify_config = []
+               
+           return no_notify_config
+        else:
+            return []
+
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")
+    def add_no_notify_pkg(self, info):
+        pkg_name, path = info
+        no_notify_config = self.read_no_notify_config(path)
+        
+        if pkg_name not in no_notify_config:
+            pkg_name = str(pkg_name)
+            no_notify_config.append(pkg_name)
+            write_file(path, str(no_notify_config))
+
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")
+    def remove_no_notify_pkg(self, info):
+        pkg_name, path = info
+        pkg_name = str(pkg_name)
+        path = str(path)
+        no_notify_config = self.read_no_notify_config(path)
+        
+        if pkg_name in no_notify_config:
+            write_file(path, str(filter(lambda config_pkg_name: config_pkg_name != pkg_name, no_notify_config)))
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="i", out_signature="")
     def init_download_manager(self, number):

@@ -22,7 +22,7 @@
 
 import gtk
 import gobject
-from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, CONFIG_DIR, CHECK_BUTTON_PADDING_X, cute_info_dir
+from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, NO_NOTIFY_FILE, CHECK_BUTTON_PADDING_X, cute_info_dir
 import os
 from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.button import CheckButtonBuffer, ImageButton, CheckAllButton
@@ -30,7 +30,7 @@ from star_buffer import DscStarBuffer
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
 from deepin_utils.core import split_with
 from deepin_utils.net import is_network_connected
-from deepin_utils.file import read_file, write_file, format_file_size
+from deepin_utils.file import read_file, format_file_size
 from dtk.ui.utils import is_in_rect, container_remove_all, get_content_size
 from dtk.ui.label import Label
 from item_render import (render_pkg_info, STAR_SIZE, get_star_level, ITEM_PADDING_Y, get_icon_pixbuf_path,
@@ -48,7 +48,7 @@ from constant import ACTION_UPGRADE
 from dtk.ui.cycle_strip import CycleStrip
 import dtk.ui.tooltip as Tooltip
 from time import time
-from utils import get_last_upgrade_time, set_last_upgrade_time, handle_dbus_error
+from utils import get_last_upgrade_time, set_last_upgrade_time, handle_dbus_error, handle_dbus_reply
 from nls import _
 
 class UpgradingBar(gtk.HBox):
@@ -609,7 +609,7 @@ class UpgradePage(gtk.VBox):
             rect.y + (rect.height - self.network_disable_pixbuf.get_height()) / 2)
         
     def read_no_notify_config(self):
-        no_notify_config_path = os.path.join(CONFIG_DIR, "no_notify_pkgs")
+        no_notify_config_path = NO_NOTIFY_FILE
         if os.path.exists(no_notify_config_path):
            no_notify_config_str = read_file(no_notify_config_path)
            try:
@@ -625,18 +625,14 @@ class UpgradePage(gtk.VBox):
             return []
         
     def add_no_notify_pkg(self, pkg_name):
-        no_notify_config = self.read_no_notify_config()
-        
-        if pkg_name not in no_notify_config:
-            no_notify_config.append(pkg_name)
-            write_file(os.path.join(CONFIG_DIR, "no_notify_pkgs"), str(no_notify_config))
+        self.bus_interface.add_no_notify_pkg((pkg_name, NO_NOTIFY_FILE),
+                reply_handler=lambda :handle_dbus_reply("add_no_notify_pkg-> %s" % pkg_name),
+                error_handler=lambda :handle_dbus_error('add_no_notify_pkg-> %s' % pkg_name))
     
     def remove_no_notify_pkg(self, pkg_name):
-        no_notify_config = self.read_no_notify_config()
-        
-        if pkg_name in no_notify_config:
-            no_notify_config_path = os.path.join(CONFIG_DIR, "no_notify_pkgs")
-            write_file(no_notify_config_path, str(filter(lambda config_pkg_name: config_pkg_name != pkg_name, no_notify_config)))
+        self.bus_interface.remove_no_notify_pkg((pkg_name, NO_NOTIFY_FILE),
+                reply_handler=lambda :handle_dbus_reply("remove_no_notify_pkg-> %s" % pkg_name),
+                error_handler=lambda :handle_dbus_error('remove_no_notify_pkg-> %s' % pkg_name))
     
     def fetch_upgrade_info(self):
         self.bus_interface.request_upgrade_pkgs(
@@ -1109,7 +1105,6 @@ class UpgradeItem(TreeItem):
         elif column == 2:
             if self.status == self.STATUS_NORMAL:
                 if self.is_in_no_notify_area(column, offset_x, offset_y):
-                    print "################ no notify"
                     global_event.emit("no-notify-pkg", self.pkg_name)
         elif column == 3:
             if self.status == self.STATUS_NORMAL:

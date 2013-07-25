@@ -47,6 +47,7 @@ ACTION_UPGRADE = 3
 
 CONFIG_DIR =  os.path.join(os.path.expanduser("~"), ".config", "deepin-software-center")
 CONFIG_INFO_PATH = os.path.join(CONFIG_DIR, "config_info.ini")
+NO_NOTIFY_FILE = '/var/cache/no_notify_pkgs'
 
 ONE_DAY_SECONDS = 24 * 60 * 60
 

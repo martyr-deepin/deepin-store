@@ -59,6 +59,7 @@ DELAY_UPDATE_INTERVAL = 600
 
 sys.path.insert(0, os.path.join(get_parent_dir(__file__, 3), 'ui'))
 from utils import get_update_interval
+from constant import NO_NOTIFY_FILE
 
 def log(message):
     if not os.path.exists(LOG_PATH):
@@ -190,13 +191,21 @@ class Update(dbus.service.Object):
                         dbus_interface=DSC_SERVICE_NAME, 
                         path=DSC_SERVICE_PATH)
                 update_num = len(self.bus_interface.request_upgrade_pkgs())
-                if update_num != 0 and update_num != self.update_num:
-                    #self.show_notify(_("您的系统有%s个软件包需要升级，请打开软件中心进行升级！") % update_num)
-                    if update_num != 1:
-                        self.show_notify(_("There are %s packages need to upgrade in your system, please open the software center to upgrade!") % update_num)
+                remind_num = update_num - len(self.bus_interface.read_no_notify_config(NO_NOTIFY_FILE))
+                self.remind_num = remind_num
+                print self.remind_num
+                if remind_num < 0: 
+                    log("Error for no notify function\nUpdate number: %s\nNo notify number: %s" % 
+                            (update_num, update_num-remind_num))
+                elif remind_num != 0 and remind_num != self.remind_num:
+                    if remind_num != 1:
+                        self.show_notify(_("There are %s packages need to upgrade in your system, \
+                                please open the software center to upgrade!")
+                                % remind_num)
                     else:
-                        self.show_notify(_("There is %s package need to upgrade in your system, please open the software center to upgrade!") % update_num)
-                self.update_num = update_num
+                        self.show_notify(_("There is %s package need to upgrade in your system, \
+                                please open the software center to upgrade!") 
+                                % remind_num)
                 print "Finish update list."
                 log("Finish update list.")
                 self.bus_interface.request_quit()
@@ -276,6 +285,8 @@ if __name__ == "__main__" :
     if uid == 0:
         sys.exit(0)
 
+    arguments = sys.argv[1::]
+
     DBusGMainLoop(set_as_default=True)
     session_bus = dbus.SessionBus()
     
@@ -289,7 +300,10 @@ if __name__ == "__main__" :
             
         update = Update(session_bus, mainloop)
         try:
-            gobject.timeout_add_seconds(1, update.run)
+            if '--debug' in arguments:
+                gobject.timeout_add_seconds(1, update.run)
+            else:
+                gobject.timeout_add_seconds(120, update.run)
             mainloop.run()
         except KeyboardInterrupt:
             update.exit_loop()
