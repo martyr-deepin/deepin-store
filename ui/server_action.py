@@ -74,6 +74,38 @@ class FetchAlbumData(td.Thread):
             print "Fetch album data failed: %s." % (e)
         global_event.emit("download-album-infos-finish", json_data)
 
+class FetchHomeData(td.Thread):
+
+    def __init__(self, language, callback_method=None):
+        td.Thread.__init__(self)
+        self.callback_method = callback_method
+        self.language = language
+        self.home_data_url = BAIDU_SERVER_ADDRESS + "home/"
+        self.data = {
+                'hl': language if language != 'zh_HK' else 'zh_TW',
+                'status': status,
+                }
+        self.setDaemon(True)
+
+    def run(self):
+        json_data = None
+        try:
+            query = urllib.urlencode(self.data)
+            request_url = ("%s?%s") % (self.home_data_url, query)
+            connection = urllib2.urlopen(
+                request_url,
+                timeout=POST_TIMEOUT,
+            )
+            json_data = json.loads(connection.read())            
+            if self.callback_method:
+                self.callback_method(json_data)
+        except Exception, e:
+            if self.callback_method:
+                self.callback_method(None)
+            traceback.print_exc(file=sys.stdout)
+            print "Fetch home data failed: %s." % (e)
+        global_event.emit("download-home-infos-finish", json_data)
+
 class FetchImageFromUpyun(td.Thread):
     
     def __init__(self, image_path, callback_method=None):

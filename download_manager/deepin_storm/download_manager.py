@@ -46,6 +46,7 @@ class DownloadManager(object):
             file_hash_infos=download_hash_infos,
             file_sizes=file_sizes,
             file_save_dir=file_save_dir)
+
         if self.global_event:
             fetch_files.signal.register_event("start", lambda : self.start_download(pkg_name, action_type))
             fetch_files.signal.register_event("update", lambda percent, speed: self.update_download(pkg_name, action_type, percent, speed))

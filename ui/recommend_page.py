@@ -27,9 +27,12 @@ from deepin_utils.file import get_parent_dir
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.iconview import IconItem
 from dtk.ui.utils import is_in_rect
+from dtk.ui.threads import post_gui
 from events import global_event
 from data import DATA_ID
 from constant import LANGUAGE
+from utils import get_common_image_pixbuf
+from server_action import FetchImageFromUpyun
 
 PKG_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "recommend_picture", LANGUAGE)
 if not os.path.exists(PKG_PICTURE_DIR):
@@ -40,14 +43,31 @@ class RecommendIconItem(IconItem):
     class docs
     '''
     
-    def __init__(self, pkg_name):
+    def __init__(self, info):
         '''
         init docs
         '''
         IconItem.__init__(self)
-        self.pkg_name = pkg_name
+        self.info = info
         self.pkg_picture_pixbuf = None
         self.hover_flag = False
+        FetchImageFromUpyun(info[2], self.update_image).start()
+
+    @post_gui
+    def update_image(self, local_path):
+        try:
+            self.pkg_picture_pixbuf = gtk.gdk.pixbuf_new_from_file(local_path)
+            self.emit_redraw_request()
+        except:
+            print "Render Recommend Iamge Error: %s -> %s", (self.info[0], local_path)
+
+    def emit_redraw_request(self):
+        '''
+        Emit `redraw-request` signal.
+        
+        This is IconView interface, you should implement it.
+        '''
+        self.emit("redraw-request")
         
     def get_width(self):
         '''
@@ -67,7 +87,7 @@ class RecommendIconItem(IconItem):
     
     def render(self, cr, rect):
         if self.pkg_picture_pixbuf == None:
-            self.pkg_picture_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(PKG_PICTURE_DIR, "%s.png" % self.pkg_name))
+            self.pkg_picture_pixbuf = get_common_image_pixbuf('recommend/default_cache.png')
             
         padding_x = (rect.width - self.pkg_picture_pixbuf.get_width()) / 2
         padding_y = (rect.height - self.pkg_picture_pixbuf.get_height()) / 2
@@ -78,7 +98,7 @@ class RecommendIconItem(IconItem):
         
     def is_in_icon_area(self, x, y):    
         if self.pkg_picture_pixbuf == None:
-            self.pkg_picture_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(PKG_PICTURE_DIR, "%s.png" % self.pkg_name))
+            self.pkg_picture_pixbuf = get_common_image_pixbuf('recommend/default_cache.png')
             
         padding_x = (self.get_width() - self.pkg_picture_pixbuf.get_width()) / 2
         padding_y = (self.get_height() - self.pkg_picture_pixbuf.get_height()) / 2
@@ -92,7 +112,7 @@ class RecommendIconItem(IconItem):
             
     def icon_item_button_press(self, x, y):
         if self.is_in_icon_area(x, y):
-            global_event.emit("switch-to-detail-page", self.pkg_name)
+            global_event.emit("switch-to-detail-page", self.info[0])
             global_event.emit("set-cursor", None)    
         
     def icon_item_double_click(self, x, y):
@@ -101,7 +121,7 @@ class RecommendIconItem(IconItem):
         
         This is IconView interface, you should implement it.
         '''
-        global_event.emit("switch-to-detail-page", self.pkg_name)
+        global_event.emit("switch-to-detail-page", self.info[0])
     
     def icon_item_release_resource(self):
         '''
@@ -125,5 +145,3 @@ class RecommendIconItem(IconItem):
         return True
         
 gobject.type_register(RecommendIconItem)
-        
-

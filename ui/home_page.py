@@ -27,6 +27,7 @@ import gobject
 import cairo
 from message_bar import MessageBar
 from dtk.ui.utils import remove_timeout_id, cairo_state, get_content_size
+from deepin_utils.net import is_network_connected
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, LANGUAGE
 from item_render import STAR_SIZE, get_star_level, get_icon_pixbuf_path, NAME_SIZE, ITEM_PADDING_X, ICON_SIZE
 from search_page import SearchPage
@@ -40,9 +41,10 @@ from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.iconview import IconItem
 from recommend_page import RecommendIconItem
 from dtk.ui.box import BackgroundBox
-from dtk.ui.slide_switcher import SlideSwitcher
+from slide_switcher import SlideSwitcher
 from album_page import AlbumPage
 from dtk.ui.tab_switcher import TabSwitcher
+from dtk.ui.threads import post_gui
 from download_rank_page import DownloadRankPage
 from completion_window import search_entry, completion_window, completion_grab_window
 from events import global_event
@@ -50,7 +52,9 @@ from skin import app_theme
 from data import DATA_ID
 from category_info import get_category_name
 from nls import _
-from widgets import LoadingBox
+from widgets import LoadingBox, NetworkConnectFailed
+from server_action import FetchHomeData
+from operator import itemgetter
 
 FIRST_CATEGORY_PADDING_X = 66
 
@@ -721,6 +725,7 @@ class RecommendItem(TreeItem):
         self.page_name = ['recommend', 'album', 'download_rank']
         
         self.init_recommend_page()
+        global_event.register_event('download-home-infos-finish', self.update_home_page)
         
     def init_recommend_page(self):    
         self.recommend_scrolled_window = ScrolledWindow()
@@ -729,20 +734,28 @@ class RecommendItem(TreeItem):
         self.background_box.draw_mask = self.draw_mask
         
         self.box = gtk.VBox()
-        
-        slide_pkg_names = self.data_manager.get_slide_info()
-        self.slider_switcher = SlideSwitcher(
-            map(lambda pkg_name: gtk.gdk.pixbuf_new_from_file(os.path.join(SLIDE_PICTURE_DIR, "%s.png" % pkg_name)),
-                slide_pkg_names))
-        self.slider_switcher.connect("motion-notify-index", lambda w, i: global_event.emit("set-cursor", gtk.gdk.HAND2))
-        self.slider_switcher.connect("button-press-index", lambda w, i: global_event.emit("switch-to-detail-page", slide_pkg_names[i]))
+
+        self.loading_box = LoadingBox()
+        self.network_failed_box = NetworkConnectFailed(self.check_network_connection)
+        self.recommend_scrolled_window_initial = False
+
+    @post_gui
+    def update_home_page(self, data):
+
+        if not data:
+            self.check_network_connection()
+            return
+
+        slide_infos = data['slide']
+        #sorted(slide_infos, key=itemgetter(1), reverse=True)
+        self.slider_switcher = SlideSwitcher(slide_infos)
+        self.slider_switcher.connect("motion-notify-index", 
+                lambda w, i: global_event.emit("set-cursor", gtk.gdk.HAND2))
+        self.slider_switcher.connect("button-press-index", 
+                lambda w, i: global_event.emit("switch-to-detail-page", slide_infos[i][0]))
         self.slider_switcher.connect("leave-notify-index", lambda w, i: global_event.emit("set-cursor", None))
-        self.box_align = gtk.Alignment()
-        self.box_align.set(0.5, 0.5, 1, 1)
-        self.box_align.set_padding(5, 0, 10, 11)
-        
-        self.page_box = gtk.VBox()
-        
+
+        self.recommend_infos = data['recommend']
         self.tab_switcher = TabSwitcher([_("Hot applications"), _("Topics"), _("Download rank")])
         self.tab_switcher_align = gtk.Alignment()
         self.tab_switcher_align.set(0.5, 0.5, 1, 1)
@@ -754,8 +767,13 @@ class RecommendItem(TreeItem):
                 "get_download_rank_page",
                 ]
         
+        self.page_box = gtk.VBox()
         self.box.pack_start(self.slider_switcher, False, False)
         self.box.pack_start(self.tab_switcher_align, False, False)
+        
+        self.box_align = gtk.Alignment()
+        self.box_align.set(0.5, 0.5, 1, 1)
+        self.box_align.set_padding(5, 0, 10, 11)
         self.box_align.add(self.box)
 
         self.page_box_align = gtk.Alignment()
@@ -766,11 +784,27 @@ class RecommendItem(TreeItem):
         self.background_box.pack_start(self.page_box_align)
         
         self.recommend_scrolled_window.add_child(self.background_box)
-        
         self.switch_page(0)
         
         self.tab_switcher.connect("tab-switch-start", lambda switcher, page_index: self.switch_page(page_index))
         self.tab_switcher.connect("click-current-tab", lambda switcher, page_index: self.click_page())
+        self.switch_page_view(self.recommend_scrolled_window)
+        self.recommend_scrolled_window_initial = True
+    
+    def try_fetch_data(self):
+        FetchHomeData(LANGUAGE).start()
+
+    def check_network_connection(self):
+        if is_network_connected():
+            self.network_connected_flag = True
+            self.switch_page_view(self.loading_box)
+            self.try_fetch_data()
+        else:    
+            self.network_connected_flag = False
+            self.switch_page_view(self.network_failed_box)
+
+    def switch_page_view(self, view):
+        global_event.emit('show-pkg-view', view)
     
     def render_name(self, cr, rect):
         text_color = "#333333"
@@ -843,8 +877,8 @@ class RecommendItem(TreeItem):
 
     def get_pkg_icon_view_page(self):
         items = []
-        for pkg_name in self.data_manager.get_recommend_info():
-            items.append(RecommendIconItem(pkg_name))
+        for info in self.recommend_infos:
+            items.append(RecommendIconItem(info))
         
         self.pkg_icon_view = IconView() 
         self.pkg_icon_view.add_items(items)
@@ -868,8 +902,11 @@ class RecommendItem(TreeItem):
         
     # from deepin_utils.date_time import print_exec_time
     # @print_exec_time
-    def show_page(self):    
-        global_event.emit("show-pkg-view", self.recommend_scrolled_window)
+    def show_page(self):
+        if self.recommend_scrolled_window_initial:        
+            global_event.emit("show-pkg-view", self.recommend_scrolled_window)
+        else:
+            self.check_network_connection()
         
     def draw_blank_mask(self, cr, x, y, w, h):
         pass

@@ -331,6 +331,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                         reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
                         error_handler=lambda e:handle_dbus_error("request_status", e),
                         )
+
             elif signal_type == 'action-failed':
                 # FIXME: change failed action dealing
                 (pkg_name, action_type, pkg_info_list) = action_content
