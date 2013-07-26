@@ -158,7 +158,7 @@ class AlbumSummaryView(gtk.VBox):
             for album_info in data:
                 items.append(AlbumSummaryItem(album_info))
             
-            sorted(items, key=attrgetter('album_order'), reverse=True)
+            items.sort(key=attrgetter('album_order'), reverse=True)
             self.iconview.add_items(items)
             global_event.emit('switch-to-album-summary-view')
         else:
