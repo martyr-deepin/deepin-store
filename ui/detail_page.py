@@ -21,8 +21,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import urllib
-import traceback
-import sys
 import pango
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.constant import ALIGN_MIDDLE
@@ -52,8 +50,7 @@ from events import global_event
 import urllib2
 import webbrowser
 from category_info import get_category_name
-import time
-from utils import bit_to_human_str
+from utils import bit_to_human_str, global_logger
 from server_action import FetchPackageInfo
 from constant import (
         PKG_SIZE_OWN,
@@ -364,7 +361,6 @@ class DetailPage(gtk.HBox):
     def update_pkg_info(self, pkg_name):
         #start_time = time.time()
         FetchPackageInfo(pkg_name, self.update_some_info).start()
-        #print "%s: start update_pkg_info" % pkg_name
         self.pkg_name = pkg_name
         (self.category, self.long_desc, 
          self.version, self.homepage, self.star, 
@@ -378,7 +374,6 @@ class DetailPage(gtk.HBox):
         self.star_box.pack_start(self.pkg_star_view, False, False)
         self.star_box.pack_start(self.pkg_star_mark, False, False)
         
-        #print "%s: #1# %s" % (pkg_name, time.time() - start_time)
         create_thread(self.fetch_pkg_status).start()
         
         container_remove_all(self.left_category_box)
@@ -390,7 +385,6 @@ class DetailPage(gtk.HBox):
         self.left_download_label.set_text(_("Download: 0"))
         self.left_size_label.set_text(_("Size: calculating..."))
         
-        #print "%s: #2# %s" % (pkg_name, time.time() - start_time)
         container_remove_all(self.left_homepage_box)
         if self.homepage != "":
             homepage_label = Label(_("Visit Homepage"), 
@@ -400,7 +394,6 @@ class DetailPage(gtk.HBox):
             homepage_label.connect("button-press-event", lambda w, e: run_command("xdg-open %s" % self.homepage))
             self.left_homepage_box.pack_start(homepage_label)
             
-        #print "%s: #3# %s" % (pkg_name, time.time() - start_time)
         container_remove_all(self.left_recommend_box)    
         if len(self.recommend_pkgs) > 0:
             self.left_recommend_box.pack_start(self.left_recommend_label, False, False, 8)
@@ -420,14 +413,12 @@ class DetailPage(gtk.HBox):
         resizable_align.connect("expose-event", self.expose_resizable_label_background)
         self.right_desc_box.pack_start(resizable_align, False, False)
         
-        #print "%s: #4# %s" % (pkg_name, time.time() - start_time)
         self.show_screenshot()
         
         self.fetch_comment()
         # create_thread(self.fetch_comment).start()
         
         self.show_all()
-        #print "%s: end update_pkg_info, %s" % (pkg_name, time.time() - start_time)
         
     def handle_pkg_status(self, *reply):
         container_remove_all(self.left_action_box)
@@ -460,18 +451,16 @@ class DetailPage(gtk.HBox):
             self.left_size_label.set_text(_("Size: %s") % bit_to_human_str(reply[1]))
         elif reply[0] == PKG_SIZE_ERROR:
             self.left_size_label.set_text("")
-            print "Error for calculate pkg size!"
+            global_logger.logerror("Error for calculate pkg size!")
         
     def handle_dbus_error(self, *error):
         container_remove_all(self.left_action_box)
-        print "***** request_pkgs_install_status handle_dbus_error"
-        print error
+        global_logger.logerror("request_pkgs_install_status handle_dbus_error")
+        global_logger.logerror(error)
     
     def fetch_pkg_status(self):
-        start_time = time.time()
         self.data_manager.get_pkgs_install_status([self.pkg_name], self.handle_pkg_status, self.handle_dbus_error)
         self.data_manager.get_pkg_download_size(self.pkg_name, self.handle_pkg_download_size, self.handle_dbus_error)
-        print self.pkg_name, time.time() - start_time
         
     def open_url(self, webview, frame, network_request, nav_action, policy_dec):
         webbrowser.open(network_request.get_uri())
@@ -538,19 +527,15 @@ class DetailPage(gtk.HBox):
             if need_download:    
                 write_file(screenshot_md5_path, remote_md5, True)
                 
-                print "Download start"
                 try:
                     urllib.urlretrieve(remote_screenshot_zip_url, 
                                        os.path.join(SCREENSHOT_DOWNLOAD_DIR, self.pkg_name, "screenshot.zip")
                                        )
                     global_event.emit("download-screenshot-finish", self.pkg_name)
-                    print "Download finish"
                 except Exception, e:
-                    traceback.print_exc(file=sys.stdout)
-                    print "Download screenshot error: %s" % e
+                    global_logger.logerror("Download screenshot error: %s" % e)
         except Exception, e:
-            #traceback.print_exc(file=sys.stdout)
-            print "fetch_screenshot got error: %s" % e
+            global_logger.logerror("fetch_screenshot got error: %s" % e)
             
     def download_screenshot_finish(self, pkg_name):
         if self.pkg_name == pkg_name:
@@ -616,7 +601,7 @@ class DetailPage(gtk.HBox):
                     
                 self.show_all()
             else:
-                print "%s haven't any screenshot from zip file" % self.pkg_name
+                global_logger.logerror("%s haven't any screenshot from zip file" % self.pkg_name)
         
 gobject.type_register(DetailPage)        
 

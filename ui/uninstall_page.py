@@ -41,7 +41,6 @@ from dtk.ui.entry import InputEntry
 from dtk.ui.button import ImageButton
 from dtk.ui.cycle_strip import CycleStrip
 from dtk.ui.label import Label
-from time import time
 from utils import handle_dbus_error, get_purg_flag
 from nls import _
 
@@ -90,7 +89,6 @@ class UninstallPage(gtk.VBox):
         init docs
         '''
         # Init.
-        start = time()
         gtk.VBox.__init__(self)
         self.bus_interface = bus_interface        
         self.data_manager = data_manager
@@ -115,7 +113,6 @@ class UninstallPage(gtk.VBox):
         self.fetch_uninstall_info()
         
         self.treeview.draw_mask = self.draw_mask
-        print "Init Uninstall Page: %s" % (time()-start, )
 
     def search_cb(self, widget, event=None):
         if not self.search_flag:

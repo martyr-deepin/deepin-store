@@ -29,10 +29,13 @@ from deepin_utils.file import touch_file, get_parent_dir
 from deepin_utils.date_time import get_current_time
 import gtk
 from operator import itemgetter
+from logger import newLogger
 
 LOG_PATH = "/tmp/dsc-frontend.log"
 
 dsc_root_dir = os.path.realpath(get_parent_dir(__file__, 2))
+
+global_logger = newLogger('global')
 
 def sort_for_home_page_data(infos):
     new_infos = []
@@ -91,11 +94,11 @@ def log(message):
         file_handler.write("%s %s\n" % (now, message))
 
 def handle_dbus_reply(obj=None):
-    print "handle_dbus_reply: ", obj
+    global_logger.loginfo("Dbus Reply OK: %s", obj)
     
-def handle_dbus_error(obj, error):
-    print "handle_dbus_error: ", obj
-    print "ERROR MESSAGE:", error
+def handle_dbus_error(obj, error=None):
+    global_logger.logerror("Dbus Reply Error: %s", obj)
+    global_logger.logerror("ERROR MESSAGE: %s", error)
 
 class ThreadMethod(td.Thread):
     '''

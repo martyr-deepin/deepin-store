@@ -47,7 +47,6 @@ from events import global_event
 from constant import ACTION_UPGRADE
 from dtk.ui.cycle_strip import CycleStrip
 import dtk.ui.tooltip as Tooltip
-from time import time
 from utils import get_last_upgrade_time, set_last_upgrade_time, handle_dbus_error, handle_dbus_reply
 from nls import _
 
@@ -259,7 +258,6 @@ class UpgradePage(gtk.VBox):
         init docs
         '''
         # Init.
-        start = time()
         gtk.VBox.__init__(self)
         self.bus_interface = bus_interface        
         self.data_manager = data_manager
@@ -326,7 +324,6 @@ class UpgradePage(gtk.VBox):
         self.no_notify_treeview.draw_mask = self.draw_mask
         
         global_event.emit("show-updating-view")
-        print "Init Upgrade Page: %s" % (time()-start, )
         
     def click_upgrade_check_button(self):
         self.upgrade_bar.select_button.update_status(map(lambda item: item.check_button_buffer.active, self.upgrade_treeview.visible_items))
@@ -627,12 +624,12 @@ class UpgradePage(gtk.VBox):
     def add_no_notify_pkg(self, pkg_name):
         self.bus_interface.add_no_notify_pkg((pkg_name, NO_NOTIFY_FILE),
                 reply_handler=lambda :handle_dbus_reply("add_no_notify_pkg-> %s" % pkg_name),
-                error_handler=lambda :handle_dbus_error('add_no_notify_pkg-> %s' % pkg_name))
+                error_handler=lambda e:handle_dbus_error('add_no_notify_pkg-> %s' % pkg_name, e))
     
     def remove_no_notify_pkg(self, pkg_name):
         self.bus_interface.remove_no_notify_pkg((pkg_name, NO_NOTIFY_FILE),
                 reply_handler=lambda :handle_dbus_reply("remove_no_notify_pkg-> %s" % pkg_name),
-                error_handler=lambda :handle_dbus_error('remove_no_notify_pkg-> %s' % pkg_name))
+                error_handler=lambda e:handle_dbus_error('remove_no_notify_pkg-> %s' % pkg_name, e))
     
     def fetch_upgrade_info(self):
         self.bus_interface.request_upgrade_pkgs(

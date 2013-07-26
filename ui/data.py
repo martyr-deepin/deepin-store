@@ -36,7 +36,6 @@ def data_init():
     global DATA_ID
     
     if not data_init_flag:
-        print "data init"
         data_init_flag = True
         
         data_newest_id_config = Config(DATA_NEWEST_ID_CONFIG_FILE)
@@ -51,9 +50,9 @@ def data_init():
         data_current_id_config.load()
         data_current_id_config.set("current", "data_id", DATA_ID)
         data_current_id_config.write()
-    
-data_init()    
 
+data_init()
+    
 def data_exit():
     data_current_id_config = Config(DATA_CURRENT_ID_CONFIG_FILE)
     data_current_id_config.load()

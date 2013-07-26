@@ -24,7 +24,7 @@ from skin import app_theme
 from nls import _
 
 import glib
-from data import data_exit
+from data import data_init, data_exit
 from icon_window import IconWindow
 from detail_page import DetailPage
 from dtk.ui.theme import DynamicPixbuf
@@ -51,7 +51,6 @@ import gobject
 import dbus
 import dbus.service
 import time
-import traceback
 from constant import (
             DSC_SERVICE_NAME, DSC_SERVICE_PATH, 
             DSC_FRONTEND_NAME, DSC_FRONTEND_PATH, 
@@ -72,6 +71,7 @@ import utils
 from tooltip import ToolTip
 from server_action import SendVote, SendDownloadCount, SendUninstallCount
 from preference import preference_dialog, WaitingDialog
+from logger import Logger
 
 tool_tip = ToolTip()
 global tooltip_timeout_id
@@ -576,7 +576,7 @@ def clear_action_pages(bus_interface, upgrade_page, uninstall_page, install_page
     
 debug_flag = False                
 
-class DeepinSoftwareCenter(dbus.service.Object):
+class DeepinSoftwareCenter(dbus.service.Object, Logger):
     '''
     class docs
     '''
@@ -586,6 +586,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         init docs
         '''
         dbus.service.Object.__init__(self, session_bus, DSC_FRONTEND_PATH)
+        Logger.__init__(self)
         
         self.simulate = "--simulate" in arguments
         
@@ -618,7 +619,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
             self.switch_page(self.install_page)
         
     def init_ui(self):
-        print "init ui"
+        self.loginfo("Init ui")
         # Init application.
         image_dir = os.path.join(get_parent_dir(__file__, 2), "image")
         self.application = Application(resizable=False)
@@ -729,7 +730,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
         start = time.time()
         self.init_home_page()
-        print "Finish Init UI: %s" % (time.time()-start, )
+        self.loginfo("Finish Init UI: %s" % (time.time()-start, ))
         
         self.ready_show()
 
@@ -777,7 +778,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         #self.bus_interface.say_hello(self.simulate)
         self.set_software_download_dir()
         
-        log("Init data manager")
+        self.loginfo("Init data manager")
         
         # Init data manager.
         self.data_manager = DataManager(self.bus_interface, debug_flag)
@@ -785,10 +786,10 @@ class DeepinSoftwareCenter(dbus.service.Object):
         # Init packages status
         self.packages_status = {}
         
-        log("Init home page.")
+        # Init home page.
         self.home_page = HomePage(self.data_manager)
         
-        log("Init switch page.")
+        # Init switch page.
         self.switch_page(self.home_page)
 
         self.in_update_list = False
@@ -797,8 +798,6 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
     def init_backend(self):
         
-        log("Init detail view")
-        
         # Init detail view.
         self.detail_page = DetailPage(self.data_manager)
         
@@ -806,15 +805,12 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
         log("Init pages.")
         
-        # Init pages.
+        self.loginfo("Init pages")
         start = time.time()
-        log("Init upgrade page.")
         self.upgrade_page = UpgradePage(self.bus_interface, self.data_manager)
-        log("Init uninstall page.")
         self.uninstall_page = UninstallPage(self.bus_interface, self.data_manager)
-        log("Init install page.")
         self.install_page = InstallPage(self.bus_interface, self.data_manager)
-        print "Init three pages time: %s" % (time.time()-start, )
+        self.loginfo("Init three pages time: %s" % (time.time()-start, ))
 
         
         log("Handle global event.")
@@ -894,7 +890,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
 
     def init_download_manager_handler(self):
         self.dbus_request_status()
-        print "Init download manager"
+        self.loginfo("Init download manager")
 
     def dbus_request_status(self):
         self.bus_interface.request_status(
@@ -975,8 +971,6 @@ class DeepinSoftwareCenter(dbus.service.Object):
     def run(self):    
         self.init_ui()
         
-        log("Send exit request to backend when frontend exit.")
-        
         # Send exit request to backend when frontend exit.
         self.bus_interface.request_quit(
                 reply_handler=lambda :handle_dbus_reply("request_quit"), 
@@ -984,6 +978,7 @@ class DeepinSoftwareCenter(dbus.service.Object):
         
         # Remove id from config file.
         data_exit()
+        self.loginfo('Data id removed')
 
     @dbus.service.method(DSC_FRONTEND_NAME, in_signature="as", out_signature="")    
     def hello(self, arguments):
