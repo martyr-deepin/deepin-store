@@ -430,7 +430,7 @@ class AlbumDetailItem(TreeItem):
         # Draw album title.
         text_width = self.SUMMARY_WIDTH
         draw_text(cr,
-                  self.pkg_title,
+                  "%s: %s" % (self.alias_name, self.pkg_title),
                   rect.x,
                   rect.y + self.PICTURE_PADDING_Y,
                   text_width,
