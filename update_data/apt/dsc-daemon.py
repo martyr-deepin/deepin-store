@@ -150,6 +150,7 @@ class Update(dbus.service.Object):
         self.delay_update_id = None
 
         self.update_num = 0
+        self.remind_num = 0
 
         self.net_detector = NetworkDetector()
 
@@ -192,12 +193,11 @@ class Update(dbus.service.Object):
                         path=DSC_SERVICE_PATH)
                 update_num = len(self.bus_interface.request_upgrade_pkgs())
                 remind_num = update_num - len(self.bus_interface.read_no_notify_config(NO_NOTIFY_FILE))
-                self.remind_num = remind_num
-                print self.remind_num
+                print "Remind update number:", remind_num
                 if remind_num < 0: 
                     log("Error for no notify function\nUpdate number: %s\nNo notify number: %s" % 
                             (update_num, update_num-remind_num))
-                elif remind_num != 0 and remind_num != self.remind_num:
+                elif remind_num > 0 and remind_num != self.remind_num:
                     if remind_num != 1:
                         self.show_notify(_("There are %s packages need to upgrade in your system, \
                                 please open the software center to upgrade!")
@@ -206,6 +206,7 @@ class Update(dbus.service.Object):
                         self.show_notify(_("There is %s package need to upgrade in your system, \
                                 please open the software center to upgrade!") 
                                 % remind_num)
+                self.remind_num = remind_num
                 print "Finish update list."
                 log("Finish update list.")
                 self.bus_interface.request_quit()
