@@ -74,7 +74,6 @@ class AlbumPage(gtk.VBox):
         self.loading_box = LoadingBox()
         self.network_failed_box = NetworkConnectFailed(self.check_network_connection)
 
-        self.update_album_summary_view()
         container_remove_all(self)
         self.add(self.loading_box)
 
