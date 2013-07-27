@@ -38,7 +38,7 @@ import gtk
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from events import global_event
 from nls import _
-from utils import ThreadMethod
+from utils import ThreadMethod, handle_dbus_error
 from widgets import LoadingBox
 
 RANK_TAB_HEIGHT = 20
@@ -73,7 +73,6 @@ class DownloadRankPage(gtk.VBox):
         self.page_align = gtk.Alignment()
         self.page_align.set(0.5, 0.5, 1, 1)
         self.page_align.set_padding(0, 0, 15, 15)
-        #self.page_align.set_size_request(-1, 310)
         
         self.week_rank_icon_view = IconView()
         self.week_rank_icon_view_scrlledwindow = ScrolledWindow()
@@ -115,10 +114,8 @@ class DownloadRankPage(gtk.VBox):
         self.all_show_flag = ['week', 'month', 'all']
 
         global_event.register_event("update-rank-page", self.update_rank_page)
-        #global_event.register_event('get-rank-pkgs-finish', self.get_pkgs_status)
-        #self.connect('get-rank-pkg-names-finish', self.get_pkgs_status)
         
-        gtk.timeout_add(100, self.get_pkgs_status)
+        gtk.timeout_add(300, self.get_pkgs_status)
 
         global_event.emit("update-rank-page", 0)
 
@@ -172,36 +169,21 @@ class DownloadRankPage(gtk.VBox):
             for info in infos:
                 valid_pkg_names.append(info[0])
 
-            self.data_manager.get_pkgs_install_status(
-                    valid_pkg_names, 
-                    lambda reply: self.reply_handler(reply, infos), 
-                    lambda err: self.error_hander(err, self.data_manager.get_pkgs_install_status))
-            self.show_flag = None
+            view = self.view_list[self.current_page_index][1]
+            view.clear()
+            container_remove_all(self.page_align)
 
-        return True
-
-    def reply_handler(self, reply, infos):
-        view = self.view_list[self.current_page_index][1]
-        view.clear()
-        container_remove_all(self.page_align)
-
-        number = len(reply)
-        if number > 0:
             items = []
-            for i in range(number):
-                infos[i].append(reply[i])
-                items.append(PkgIconItem(*infos[i]))
+            for i in range(len(infos)):
+                items.append(PkgIconItem(self.data_manager, *infos[i]))
             view.add_items(items)
             self.page_align.add(self.view_list[self.current_page_index][2])
             global_event.emit("update-current-status-pkg-page", view)
-        else:
-            self.page_align.add(self.cute_message_image)
-        self.show_all()
+            self.show_all()
 
-    def error_hander(self, error, method):
-        print "DBUS ERROR:", method
-        print "ERROR INFO:", error
-        
+            self.show_flag = None
+        return True
+
     def draw_mask(self, cr, x, y, w, h):
         '''
         Draw mask interface.
@@ -316,7 +298,7 @@ class PkgIconItem(IconItem):
     BUTTON_PADDING_X = 44
     BUTTON_PADDING_BOTTOM = 18
     
-    def __init__(self, pkg_name, alias_name, star, desktop_info, is_installed):
+    def __init__(self, data_manager, pkg_name, alias_name, star, desktop_info, is_installed=None):
         '''
         Initialize ItemIcon class.
         
@@ -343,6 +325,14 @@ class PkgIconItem(IconItem):
         self.highlight_flag = False
         
         self.button_status = BUTTON_NORMAL
+        data_manager.get_pkgs_install_status(
+                [self.pkg_name,], 
+                self.update_install_status, 
+                lambda e:handle_dbus_error("get_pkgs_install_status", e))
+
+    def update_install_status(self, is_installed):
+        self.is_installed = is_installed[0]
+        self.emit_redraw_request()
 
     def get_width(self):
         '''
@@ -389,33 +379,36 @@ class PkgIconItem(IconItem):
                                       STAR_SIZE
                                       ),
                     self.star_buffer)
-        
-        if self.is_installed:
-            name = "button/start_small"
-        else:
-            name = "button/install_small"
-        
-        if self.button_status == BUTTON_NORMAL:
-            status = "normal"
-        elif self.button_status == BUTTON_HOVER:
-            status = "hover"
-        elif self.button_status == BUTTON_PRESS:
-            status = "press"
+        if self.is_installed != None:
+            if self.is_installed:
+                name = "button/start_small"
+            else:
+                name = "button/install_small"
             
-        pixbuf = app_theme.get_pixbuf("%s_%s.png" % (name, status)).get_pixbuf()
-        draw_pixbuf(
-            cr,
-            pixbuf,
-            rect.x + self.BUTTON_PADDING_X,
-            rect.y + rect.height - self.BUTTON_PADDING_BOTTOM - pixbuf.get_height())
+            if self.button_status == BUTTON_NORMAL:
+                status = "normal"
+            elif self.button_status == BUTTON_HOVER:
+                status = "hover"
+            elif self.button_status == BUTTON_PRESS:
+                status = "press"
+                
+            pixbuf = app_theme.get_pixbuf("%s_%s.png" % (name, status)).get_pixbuf()
+            draw_pixbuf(
+                cr,
+                pixbuf,
+                rect.x + self.BUTTON_PADDING_X,
+                rect.y + rect.height - self.BUTTON_PADDING_BOTTOM - pixbuf.get_height())
         
     def is_in_button_area(self, x, y):
-        pixbuf = app_theme.get_pixbuf("button/start_small_normal.png").get_pixbuf()
-        return is_in_rect((x, y),
-                          (self.BUTTON_PADDING_X,
-                           self.height - self.BUTTON_PADDING_BOTTOM - pixbuf.get_height(),
-                           pixbuf.get_width(),
-                           pixbuf.get_height()))
+        if self.is_installed != None:
+            pixbuf = app_theme.get_pixbuf("button/start_small_normal.png").get_pixbuf()
+            return is_in_rect((x, y),
+                            (self.BUTTON_PADDING_X,
+                            self.height - self.BUTTON_PADDING_BOTTOM - pixbuf.get_height(),
+                            pixbuf.get_width(),
+                            pixbuf.get_height()))
+        else:
+            return False
         
     def is_in_star_area(self, x, y):
         return is_in_rect((x, y),
