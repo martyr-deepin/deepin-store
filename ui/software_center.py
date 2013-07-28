@@ -24,7 +24,7 @@ from skin import app_theme
 from nls import _
 
 import glib
-from data import data_init, data_exit
+from data import data_exit
 from icon_window import IconWindow
 from detail_page import DetailPage
 from dtk.ui.theme import DynamicPixbuf
@@ -322,14 +322,18 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 if action_type == ACTION_UNINSTALL:
                     uninstall_page.action_finish(pkg_name, pkg_info_list)
                 elif action_type == ACTION_UPGRADE:
+                    utils.write_log("Upgrade %s => %s" % (pkg_name, 
+                        ", ".join([str(info[0]) for info in pkg_info_list])))
                     upgrade_page.action_finish(pkg_name, pkg_info_list)
                 elif action_type == ACTION_INSTALL:
                     install_page.action_finish(pkg_name, pkg_info_list)
                 
                 refresh_current_page_status(pkg_name, pkg_info_list, bus_interface)
                 bus_interface.request_status(
-                        reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
-                        error_handler=lambda e:handle_dbus_error("request_status", e),
+                        reply_handler=lambda reply: request_status_reply_hander(
+                            reply, install_page, upgrade_page, uninstall_page),
+                        error_handler=lambda e:handle_dbus_error(
+                            "request_status", e),
                         )
 
             elif signal_type == 'action-failed':
@@ -344,7 +348,8 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 
                 refresh_current_page_status(pkg_name, pkg_info_list, bus_interface)
                 bus_interface.request_status(
-                        reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
+                        reply_handler=lambda reply: request_status_reply_hander(
+                            reply, install_page, upgrade_page, uninstall_page),
                         error_handler=lambda e:handle_dbus_error("request_status", e),
                         )
 
@@ -363,7 +368,6 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 global_event.emit("show-message", _("Successfully refreshed applications lists."), 0)
                 global_event.emit('update-list-finish')
                 global_event.emit("hide-update-list-dialog")
-                print "update finish"
 
             elif signal_type == 'update-list-failed':
                 # FIXME: change failed action dealing
@@ -375,7 +379,6 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 global_event.emit("show-message", _("Failed to refresh applications lists."), 0)
                 global_event.emit('update-list-finish')
                 global_event.emit("hide-update-list-dialog")
-                print "update finish"
 
             elif signal_type == "parse-download-error":
                 (pkg_name, action_type) = action_content

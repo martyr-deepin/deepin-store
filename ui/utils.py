@@ -88,7 +88,10 @@ def bit_to_human_str(size):
                 size = size/1024.0
                 return "%.2fGB" % size
 
-def log(message):
+def write_log(message):
+    if not os.path.exists(LOG_PATH):
+        open(LOG_PATH, "w").close()
+        os.chmod(LOG_PATH, 0777)
     with open(LOG_PATH, "a") as file_handler:
         now = datetime.now().strftime("[%Y-%m-%d %H:%M:%S]")
         file_handler.write("%s %s\n" % (now, message))
