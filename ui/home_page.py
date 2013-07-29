@@ -41,7 +41,7 @@ from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.iconview import IconItem
 from recommend_page import RecommendIconItem
 from dtk.ui.box import BackgroundBox
-from slide_switcher import SlideSwitcher
+from slide_switcher import IndexSlideSwitcher
 from album_page import AlbumPage
 from dtk.ui.tab_switcher import TabSwitcher
 from dtk.ui.threads import post_gui
@@ -747,7 +747,7 @@ class RecommendItem(TreeItem):
             return
 
         slide_infos = sort_for_home_page_data(data['slide'])
-        self.slider_switcher = SlideSwitcher(slide_infos)
+        self.slider_switcher = IndexSlideSwitcher(slide_infos)
         self.slider_switcher.connect("motion-notify-index", 
                 lambda w, i: global_event.emit("set-cursor", gtk.gdk.HAND2))
         self.slider_switcher.connect("button-press-index", 

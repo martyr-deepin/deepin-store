@@ -38,7 +38,7 @@ from dtk.ui.label import Label
 from dtk.ui.label_utils import show_label_tooltip
 from dtk.ui.draw import draw_pixbuf, draw_text
 from dtk.ui.resizable_label import ResizableLabel
-from dtk.ui.slide_switcher import SlideSwitcher
+from slide_switcher import SlideSwitcher
 from dtk.ui.threads import post_gui
 from constant import SCREENSHOT_HOST, SCREENSHOT_DOWNLOAD_DIR
 from deepin_utils.multithread import create_thread
