@@ -51,6 +51,8 @@ from widgets import LoadingBox
 def handle_dbus_error(*error):
     print "handle_dbus_error: ", error
     
+LOAD_ITEMS_NUMBER = 20
+
 class SearchPage(gtk.VBox):
     '''
     class docs
@@ -65,6 +67,7 @@ class SearchPage(gtk.VBox):
         self.data_manager = data_manager
         
         self.keywords = []
+        self.all_pkg_names = []
         self.message_bar = MessageBar(18)
         
         self.content_box = gtk.VBox()
@@ -103,7 +106,7 @@ class SearchPage(gtk.VBox):
         
     def update_message_bar(self, treeview):
         if len(treeview.visible_items) > 0:
-            self.message_bar.set_message(_("%s: %s matched applications") % (' '.join(self.keywords), len(treeview.visible_items)))
+            self.message_bar.set_message(_("%s: %s matched applications") % (' '.join(self.keywords), len(self.all_pkg_names)))
             container_remove_all(self)
             self.pack_start(self.content_box)
             global_event.emit("update-current-status-pkg-page", treeview)
@@ -128,21 +131,46 @@ class SearchPage(gtk.VBox):
         
     def update(self, keywords):
         self.keywords = keywords
-        self.treeview.delete_all_items()        
-        pkg_names = self.data_manager.search_query(keywords)
+        self.treeview.delete_all_items()
+        self.all_pkg_names = self.data_manager.search_query(keywords)
+
+        if self.all_pkg_names:
+            if len(self.all_pkg_names) > LOAD_ITEMS_NUMBER:
+                self.load_new_items(self.all_pkg_names[:LOAD_ITEMS_NUMBER])
+            else:
+                self.load_new_items(self.all_pkg_names)
+        else:
+            self.update_message_bar(self.treeview)
+
+        self.treeview.scrolled_window.connect('vscrollbar-state-changed', self.scrolled_window_vscrollbar_handler)
+
+    def scrolled_window_vscrollbar_handler(self, widget, state):
+        if state == "bottom":
+            current_item_number = len(self.treeview.visible_items)
+            all_pkgs_number = len(self.all_pkg_names)
+            start = current_item_number
+            if current_item_number < all_pkgs_number and (current_item_number+LOAD_ITEMS_NUMBER) < all_pkgs_number:
+                end = current_item_number+LOAD_ITEMS_NUMBER
+            elif current_item_number < all_pkgs_number and (current_item_number+LOAD_ITEMS_NUMBER) >= all_pkgs_number:
+                end = all_pkgs_number
+            else:
+                return
+            self.load_new_items(self.all_pkg_names[start:end])
+
+    def load_new_items(self, pkg_names):
         if pkg_names:
             results = self.data_manager.get_search_pkgs_info(pkg_names)
             self.data_manager.get_pkgs_install_status(
                                 pkg_names, 
-                                reply_handler=lambda status: self.search_reply_handler(status, results, keywords),
+                                reply_handler=lambda status: self.search_reply_handler(status, results),
                                 error_handler=handle_dbus_error)
         else:
             self.update_message_bar(self.treeview)
 
-    def search_reply_handler(self, status, results, keywords):
+    def search_reply_handler(self, status, results):
         for (i, result) in enumerate(results):
             result.append(status[i])
-        self.render_search_info(results, keywords)
+        self.render_search_info(results, self.keywords)
 
     def render_search_info(self, pkg_infos, keywords):
         self.keywords = keywords
@@ -151,7 +179,7 @@ class SearchPage(gtk.VBox):
         for pkg_info in pkg_infos:
             items.append(SearchItem(pkg_info, self.data_manager, keywords))
             
-        self.treeview.add_items(items)    
+        self.treeview.add_items(items)
         
 gobject.type_register(SearchPage)
 
