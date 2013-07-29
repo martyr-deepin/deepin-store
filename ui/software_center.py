@@ -87,6 +87,7 @@ current_status_pkg_page = None
 def update_current_status_pkg_page(obj):
     global current_status_pkg_page
     current_status_pkg_page = obj
+    print current_status_pkg_page.__class__
 
 def refresh_current_page_status(pkg_name, pkg_info_list, bus_interface):
     change_pkgs = [info[0] for info in pkg_info_list]
@@ -102,7 +103,7 @@ def refresh_current_page_status(pkg_name, pkg_info_list, bus_interface):
         for item in current_status_pkg_page.visible_items:
             if item.pkg_name in change_pkgs:
                 item.is_installed = bus_interface.request_pkgs_install_status([pkg_name])[0]
-                current_status_pkg_page.redraw_request(item, True)
+                item.emit_redraw_request()
 
 def update_navigatebar_number(navigatebar, page_index, notify_number):
     navigatebar.update_notify_num(navigatebar.nav_items[page_index], notify_number)

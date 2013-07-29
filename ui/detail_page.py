@@ -444,6 +444,7 @@ class DetailPage(gtk.HBox):
             action_button.connect("clicked", lambda w: global_event.emit("install-pkg", [self.pkg_name]))
             self.left_action_box.pack_start(action_button)
         self.left_action_box.show_all()
+        global_event.emit('update-current-status-pkg-page', self)
 
     def handle_pkg_download_size(self, reply):
         # FIXME: download information display
