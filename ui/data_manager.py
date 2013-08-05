@@ -83,6 +83,7 @@ class DataManager(object):
     @print_exec_time    
     def get_pkgs_match_input(self, input_string):
         # Select package name match input string.
+        input_string = input_string.lower()
         self.software_db_cursor.execute(
             "SELECT pkg_name FROM software WHERE pkg_name LIKE ?", ("%" + unicode(input_string) + "%",))
         pkg_names = []
@@ -323,7 +324,7 @@ class DataManager(object):
         sconn = xappy.SearchConnection(search_db_path)
         
         # Do search.
-        search = ' '.join(keywords)
+        search = ' '.join(keywords).lower()
         q = sconn.query_parse(search, default_op=sconn.OP_AND)
         results = sconn.search(q, 0, sconn.get_doccount(), sortby="have_desktop_file")
         

@@ -240,8 +240,8 @@ class TextItem(TreeItem):
             font_color = ui_theme.get_color("menu_font").get_color()
             
             # Highilght match string.
-            (text_pre, text_post) = self.text.split(self.search_string, 1)
-            text = "%s<span foreground=\"#00AAFF\">%s</span>%s" % (text_pre, self.search_string, text_post)
+            r = self.text.partition(self.search_string.lower())
+            text = "%s<span foreground=\"#00AAFF\">%s</span>%s" % (r[0], r[1], r[2])
             
         draw_text(cr, 
                   text,
