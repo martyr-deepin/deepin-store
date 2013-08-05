@@ -424,7 +424,7 @@ class DetailPage(gtk.HBox):
         container_remove_all(self.left_action_box)
         install_status = reply
         if install_status[0][0]:
-            if self.category == None:
+            if not self.data_manager.get_pkg_desktop_info(self.pkg_name):
                 status_label = Label(_("Successfully installed"))
                 self.left_action_box.pack_start(status_label)
             else:
@@ -482,7 +482,7 @@ class DetailPage(gtk.HBox):
             web_view_align.set_padding(33, 33, 33, 33)
             web_view_align.add(web_view)
             web_settings = web_view.get_settings()
-            web_settings.set_property("enable-plugins", True)
+            web_settings.set_property("enable-plugins", False)
             web_settings.set_property("enable-scripts", True)    
             web_view.open("%s/softcenter/v1/comment?n=%s&hl=%s" % (
                     SERVER_ADDRESS, 
