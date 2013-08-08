@@ -66,16 +66,16 @@ class DataManager(object):
         self.category_dict = {}
         self.category_name_dict = {}
         
-        album_db_path = os.path.join(UPDATE_DATA_DIR, "home", "album", LANGUAGE, "album.db")
-        db_path_exists(album_db_path)
-        self.album_db_connect = sqlite3.connect(album_db_path)
-        self.album_db_cursor = self.album_db_connect.cursor()
+        #album_db_path = os.path.join(UPDATE_DATA_DIR, "home", "album", LANGUAGE, "album.db")
+        #db_path_exists(album_db_path)
+        #self.album_db_connect = sqlite3.connect(album_db_path)
+        #self.album_db_cursor = self.album_db_connect.cursor()
 
-        self.recommend_db_path = os.path.join(UPDATE_DATA_DIR, "home", "recommend", '%s.txt' % LANGUAGE)
-        db_path_exists(self.recommend_db_path)
+        #self.recommend_db_path = os.path.join(UPDATE_DATA_DIR, "home", "recommend", '%s.txt' % LANGUAGE)
+        #db_path_exists(self.recommend_db_path)
 
-        self.slide_db_path = os.path.join(UPDATE_DATA_DIR, "home", "slide", '%s.txt' % LANGUAGE)
-        db_path_exists(self.slide_db_path)
+        #self.slide_db_path = os.path.join(UPDATE_DATA_DIR, "home", "slide", '%s.txt' % LANGUAGE)
+        #db_path_exists(self.slide_db_path)
         
         self.build_category_dict()
 
