@@ -72,6 +72,9 @@ from tooltip import ToolTip
 from server_action import SendVote, SendDownloadCount, SendUninstallCount
 from preference import preference_dialog, WaitingDialog
 from logger import Logger
+from Queue import Queue
+from threading import Lock
+import copy
 
 tool_tip = ToolTip()
 global tooltip_timeout_id
@@ -522,16 +525,24 @@ def clear_failed_action(install_page, upgrade_page):
     return True
     
 clear_action_list = []
+clear_action_lock = Lock()
 def request_clear_action_pages(pkg_info_list):
     global clear_action_list
-    
+
+    global clear_action_lock
+    clear_action_lock.acquire()
     clear_action_list += pkg_info_list
+    clear_action_lock.release()
 
 def clear_action_pages(bus_interface, upgrade_page, uninstall_page, install_page):
     global clear_action_list
-    
-    if len(clear_action_list) > 0:
-        
+    global clear_action_lock
+
+    clear_action_lock.acquire()
+    new_clear_action_list = copy.deepcopy(clear_action_list)
+    clear_action_lock.release()
+
+    if len(new_clear_action_list) > 0:
         # Delete items from treeview.
         installed_items = []
         uninstalled_items = []
@@ -558,6 +569,7 @@ def clear_action_pages(bus_interface, upgrade_page, uninstall_page, install_page
                         
                         install_pkgs.append(pkg_name)
                         break
+        del new_clear_action_list
                     
         uninstall_page.delete_uninstall_items(uninstalled_items)
         install_page.update_install_status()
@@ -573,8 +585,6 @@ def clear_action_pages(bus_interface, upgrade_page, uninstall_page, install_page
         for (pkg_name, pkg_version) in zip(install_pkgs, install_pkg_versions):
             install_pkg_infos.append(str((str(pkg_name), str(pkg_version))))
         uninstall_page.add_uninstall_items(install_pkg_infos)
-        
-        clear_action_list = []
         
     return True    
     
