@@ -494,6 +494,8 @@ class UpgradePage(gtk.VBox):
     def update_download_status(self, pkg_infos):
         pkg_items = []
         for (pkg_name, download_status) in pkg_infos:
+            pkg_name = str(pkg_name)
+            download_status = str(download_status)
             pkg_item = None
             for item in self.upgrade_treeview.visible_items:
                 if item.pkg_name == pkg_name:
@@ -517,6 +519,8 @@ class UpgradePage(gtk.VBox):
     def update_action_status(self, pkg_infos):
         pkg_items = []
         for (pkg_name, action_status) in pkg_infos:
+            pkg_name = str(pkg_name)
+            action_status = str(action_status)
             pkg_item = None
             for item in self.upgrade_treeview.visible_items:
                 if item.pkg_name == pkg_name:
@@ -745,8 +749,6 @@ class UpgradePage(gtk.VBox):
         for item in self.upgrade_treeview.visible_items:
             if item.pkg_name == pkg_name:
                 item.action_finish()
-                
-                global_event.emit("request-clear-action-pages", pkg_info_list)
                 break
         
 gobject.type_register(UpgradePage)

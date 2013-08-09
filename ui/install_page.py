@@ -265,8 +265,6 @@ class InstallPage(gtk.VBox):
         for item in self.treeview.visible_items:
             if item.pkg_name == pkg_name:
                 item.action_finish()
-                
-                global_event.emit("request-clear-action-pages", pkg_info_list)
                 break
             
 gobject.type_register(InstallPage)

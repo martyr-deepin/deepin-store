@@ -72,9 +72,6 @@ from tooltip import ToolTip
 from server_action import SendVote, SendDownloadCount, SendUninstallCount
 from preference import preference_dialog, WaitingDialog
 from logger import Logger
-from Queue import Queue
-from threading import Lock
-import copy
 
 tool_tip = ToolTip()
 global tooltip_timeout_id
@@ -90,7 +87,6 @@ current_status_pkg_page = None
 def update_current_status_pkg_page(obj):
     global current_status_pkg_page
     current_status_pkg_page = obj
-    print current_status_pkg_page.__class__
 
 def refresh_current_page_status(pkg_name, pkg_info_list, bus_interface):
     change_pkgs = [info[0] for info in pkg_info_list]
@@ -153,7 +149,7 @@ def hide_message(message_label):
     message_label.set_text("")
     return False
 
-def request_status_reply_hander(result, install_page, upgrade_page, uninstall_page):
+def request_status_reply_hander(result, install_page, upgrade_page, uninstall_page, pkg_info_list=None):
     (download_status, action_status) = map(eval, result)
     
     install_page.update_download_status(download_status[ACTION_INSTALL])
@@ -163,6 +159,9 @@ def request_status_reply_hander(result, install_page, upgrade_page, uninstall_pa
     upgrade_page.update_action_status(action_status[ACTION_UPGRADE])
     
     uninstall_page.update_action_status(action_status[ACTION_UNINSTALL])
+
+    if pkg_info_list:
+        global_event.emit("request-clear-action-pages", pkg_info_list)
 
 def get_grade_config():
     grade_config_path = os.path.join(CONFIG_DIR, "grade_pkgs")
@@ -326,8 +325,6 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 if action_type == ACTION_UNINSTALL:
                     uninstall_page.action_finish(pkg_name, pkg_info_list)
                 elif action_type == ACTION_UPGRADE:
-                    utils.write_log("Upgrade %s => %s" % (pkg_name, 
-                        ", ".join([str(info[0]) for info in pkg_info_list])))
                     upgrade_page.action_finish(pkg_name, pkg_info_list)
                 elif action_type == ACTION_INSTALL:
                     install_page.action_finish(pkg_name, pkg_info_list)
@@ -335,7 +332,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 refresh_current_page_status(pkg_name, pkg_info_list, bus_interface)
                 bus_interface.request_status(
                         reply_handler=lambda reply: request_status_reply_hander(
-                            reply, install_page, upgrade_page, uninstall_page),
+                            reply, install_page, upgrade_page, uninstall_page, pkg_info_list),
                         error_handler=lambda e:handle_dbus_error(
                             "request_status", e),
                         )
@@ -525,24 +522,15 @@ def clear_failed_action(install_page, upgrade_page):
     return True
     
 clear_action_list = []
-clear_action_lock = Lock()
 def request_clear_action_pages(pkg_info_list):
     global clear_action_list
 
-    global clear_action_lock
-    clear_action_lock.acquire()
     clear_action_list += pkg_info_list
-    clear_action_lock.release()
 
 def clear_action_pages(bus_interface, upgrade_page, uninstall_page, install_page):
     global clear_action_list
-    global clear_action_lock
 
-    clear_action_lock.acquire()
-    new_clear_action_list = copy.deepcopy(clear_action_list)
-    clear_action_lock.release()
-
-    if len(new_clear_action_list) > 0:
+    if len(clear_action_list) > 0:
         # Delete items from treeview.
         installed_items = []
         uninstalled_items = []
@@ -569,7 +557,7 @@ def clear_action_pages(bus_interface, upgrade_page, uninstall_page, install_page
                         
                         install_pkgs.append(pkg_name)
                         break
-        del new_clear_action_list
+        clear_action_list = []
                     
         uninstall_page.delete_uninstall_items(uninstalled_items)
         install_page.update_install_status()

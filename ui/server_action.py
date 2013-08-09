@@ -84,9 +84,9 @@ class FetchHomeData(td.Thread):
 
     def run(self):
         json_data = None
+        query = urllib.urlencode(self.data)
+        request_url = ("%s?%s") % (self.home_data_url, query)
         try:
-            query = urllib.urlencode(self.data)
-            request_url = ("%s?%s") % (self.home_data_url, query)
             connection = urllib2.urlopen(
                 request_url,
                 timeout=POST_TIMEOUT,
@@ -99,6 +99,7 @@ class FetchHomeData(td.Thread):
                 self.callback_method(None)
             traceback.print_exc(file=sys.stdout)
             print "Fetch home data failed: %s." % (e)
+            print "url:", request_url
         global_event.emit("download-home-infos-finish", json_data)
 
 class FetchImageFromUpyun(td.Thread):
