@@ -333,8 +333,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 bus_interface.request_status(
                         reply_handler=lambda reply: request_status_reply_hander(
                             reply, install_page, upgrade_page, uninstall_page, pkg_info_list),
-                        error_handler=lambda e:handle_dbus_error(
-                            "request_status", e),
+                        error_handler=lambda e: action_finish_handle_dbus_error(pkg_info_list),
                         )
 
             elif signal_type == 'action-failed':
@@ -575,6 +574,10 @@ def clear_action_pages(bus_interface, upgrade_page, uninstall_page, install_page
         uninstall_page.add_uninstall_items(install_pkg_infos)
         
     return True    
+
+def action_finish_handle_dbus_error(pkg_info_list):
+    if pkg_info_list:
+        global_event.emit("request-clear-action-pages", pkg_info_list)
     
 debug_flag = False                
 
