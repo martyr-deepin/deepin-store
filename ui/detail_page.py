@@ -237,18 +237,6 @@ class DetailPage(gtk.HBox):
         self.loading_label_align.add(self.loading_label)
         self.loading_label_align.set_padding(10, 0, 0, 0)
 
-        self.web_view = WebView(os.path.join(CONFIG_DIR, "cookie.txt"))
-        #web_view.enable_inspector()
-        self.web_view.connect("new-window-policy-decision-requested", self.open_url)
-        self.web_view_align = gtk.Alignment()
-        self.web_view_align.set(0.5, 0, 0, 0)
-        self.web_view_align.set_padding(33, 33, 33, 33)
-        self.web_view_align.add(self.web_view)
-        self.web_settings = self.web_view.get_settings()
-        self.web_settings.set_property("enable-plugins", True)
-        self.web_settings.set_property("enable-scripts", True)    
-        self.web_view.connect("load-finished", self.comment_load_finished_cb)
-        
     def hierarchy_change(self, widget, previous_toplevel):
         # When detail page remove from it's container, previous_toplevel is not None.
         if previous_toplevel != None:
@@ -416,7 +404,6 @@ class DetailPage(gtk.HBox):
         self.show_screenshot()
         
         self.fetch_comment()
-        # create_thread(self.fetch_comment).start()
         
         self.show_all()
         
@@ -475,7 +462,6 @@ class DetailPage(gtk.HBox):
             loading_label_align.set_padding(10, 0, 0, 0)
             self.right_comment_box.pack_start(loading_label_align, False, False)
             web_view = WebView(os.path.join(CONFIG_DIR, "cookie.txt"))
-            #web_view.enable_inspector()
             web_view.connect("new-window-policy-decision-requested", self.open_url)
             web_view_align = gtk.Alignment()
             web_view_align.set(0.5, 0, 0, 0)
@@ -491,8 +477,6 @@ class DetailPage(gtk.HBox):
                     ))
 
             web_view.connect("load-finished", self.comment_load_finished_cb, web_view_align)
-            
-            # self.fetch_screenshot()
             
             create_thread(self.fetch_screenshot).start()
 
