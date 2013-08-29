@@ -42,6 +42,9 @@ class DscStarBuffer(StarBuffer):
     @post_gui
     def update_vote_info(self, vote_info):
         star = float(vote_info[0].encode('utf-8').strip())
+        self.update_star(star)
+
+    def update_star(self, star):
         self.star_level = int(star)
         if isinstance(self.obj, IconItem) or isinstance(self.obj, TreeItem):
             if getattr(self.obj, 'star_level'):
