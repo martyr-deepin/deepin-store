@@ -74,6 +74,7 @@ from preference import preference_dialog, WaitingDialog
 from logger import Logger
 from paned_box import PanedBox
 from widgets import BottomTipBar
+from star_buffer import StarView, DscStarBuffer
 
 tool_tip = ToolTip()
 global tooltip_timeout_id
@@ -180,18 +181,20 @@ def get_grade_config():
         grade_config = {}
     return (grade_config_path, grade_config)
 
-def grade_pkg(window, pkg_name, star):
+def grade_pkg(window, pkg, star):
+    pkg_name = pkg[0]
     grade_config = get_grade_config()[1]
         
     current_time = time.time()    
     if not grade_config.has_key(pkg_name) or (current_time - grade_config[pkg_name]) > ONE_DAY_SECONDS:
         show_tooltip(window, _("Sending comment..."))
-        SendVote(pkg_name, star).start()
+        SendVote(pkg_name, star, pkg[1]).start()
         
     else:
         show_tooltip(window, _("You have already sent a comment ;)"))
 
-def vote_send_success_callback(pkg_name, window):
+def vote_send_success_callback(infos, window):
+    pkg_name = infos[0]
     grade_config_path, grade_config = get_grade_config()
 
     global_event.emit("show-message", _("Comment was successful. Thanks for your involvement. :)"), 5000)
@@ -200,6 +203,13 @@ def vote_send_success_callback(pkg_name, window):
     
     grade_config[pkg_name] = current_time
     write_file(grade_config_path, str(grade_config))
+    if infos[1] != None:
+        obj = infos[1]
+        star = float(infos[2][pkg_name][0])
+        if isinstance(obj, StarView):
+            obj.set_star_level(int(star))
+        elif isinstance(obj, DscStarBuffer):
+            obj.update_star(star)
 
 def vote_send_failed_callback(pkg_name, window):
 
@@ -855,7 +865,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
                                                      self.detail_page, 
                                                      first_category_name, 
                                                      second_category_name))
-        global_event.register_event("grade-pkg", lambda pkg_name, star: grade_pkg(self.application.window, pkg_name, star))
+        global_event.register_event("grade-pkg", lambda pkg, star: grade_pkg(self.application.window, pkg, star))
         global_event.register_event("set-cursor", lambda cursor: set_cursor(self.application.window, cursor))
         global_event.register_event("show-message", self.update_status_bar_message)
         global_event.register_event("start-pkg", lambda pkg_name, desktop_infos, offset: start_pkg(

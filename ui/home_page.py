@@ -1185,7 +1185,7 @@ class PkgIconItem(IconItem):
         This is IconView interface, you should implement it.
         '''
         if self.is_in_star_area(x, y):
-            global_event.emit("grade-pkg", self.pkg_name, self.grade_star)
+            global_event.emit("grade-pkg", (self.pkg_name, self.star_buffer), self.grade_star)
         elif self.is_in_button_area(x, y):
             if self.is_installed:
                 global_event.emit("start-pkg", self.alias_name, self.desktop_info, self.get_offset_with_button(x, y))

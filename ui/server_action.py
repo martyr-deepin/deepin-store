@@ -152,26 +152,28 @@ class FetchVoteInfo(td.Thread):
 class SendVote(td.Thread):
     '''Vote'''
 
-    def __init__(self, name, vote):
+    def __init__(self, name, vote, obj=None):
         '''Init for vote.'''
         td.Thread.__init__(self)
         self.setDaemon(True) # make thread exit when main program exit
         self.name = name
         self.vote = vote
+        self.obj = obj
 
     def run(self):
         '''Run'''
         try:
             args = {'n' : self.name, 'm' : self.vote}
-            urllib2.urlopen(
-                "%s/softcenter/v1/mark" % (SERVER_ADDRESS),
-                data=urllib.urlencode(args),
+            js = urllib2.urlopen(
+                "%s/softcenter/v1/mark?%s" % (SERVER_ADDRESS, urllib.urlencode(args)),
                 timeout=POST_TIMEOUT
-                )
-            global_event.emit('vote-send-success', self.name)
+                ).read()
+            js = json.loads(js)
+            global_event.emit('vote-send-success', (self.name, self.obj, js))
         except Exception, e:
             global_event.emit('vote-send-failed', self.name)
-            print "Error: ", e
+            traceback.print_exc(file=sys.stdout)
+            print "SendVote Error: ", e
 
 class SendUninstallCount(td.Thread):
     '''Send uninstall count.'''

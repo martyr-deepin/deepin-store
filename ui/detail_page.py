@@ -248,7 +248,7 @@ class DetailPage(gtk.HBox):
             container_remove_all(self.right_comment_box) # remove comment box first, to avoid comment area flash
         
     def grade_pkg(self):
-        global_event.emit("grade-pkg", self.pkg_name, self.pkg_star_view.star_buffer.star_level)
+        global_event.emit("grade-pkg", (self.pkg_name, self.pkg_star_view), self.pkg_star_view.star_buffer.star_level)
         self.pkg_star_view.set_star_level(int(self.star))
         self.pkg_star_view.queue_draw()
         
@@ -675,7 +675,7 @@ class RecommendPkgItem(gtk.HBox):
         self.pkg_star_box.pack_start(self.pkg_star_mark, False, False)
         
     def grade_pkg(self):
-        global_event.emit("grade-pkg", self.pkg_name, self.pkg_star_view.star_buffer.star_level)
+        global_event.emit("grade-pkg", (self.pkg_name, self.pkg_star_view), self.pkg_star_view.star_buffer.star_level)
         
         self.pkg_star_view.star_buffer.star_level = int(self.star)
         self.pkg_star_view.queue_draw()
