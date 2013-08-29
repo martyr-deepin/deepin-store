@@ -58,6 +58,7 @@ from constant import (
         PKG_SIZE_ERROR,
         )
 from nls import _
+import time
 
 PKG_SCREENSHOT_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update_data", "pkg_screenshot", "zh_CN")
 
@@ -236,6 +237,9 @@ class DetailPage(gtk.HBox):
         self.loading_label_align = gtk.Alignment(0.5, 0, 0, 0)
         self.loading_label_align.add(self.loading_label)
         self.loading_label_align.set_padding(10, 0, 0, 0)
+        
+        self.update_pkg_time = 0
+        self.update_pkg_interval = 200
 
     def hierarchy_change(self, widget, previous_toplevel):
         # When detail page remove from it's container, previous_toplevel is not None.
@@ -346,9 +350,16 @@ class DetailPage(gtk.HBox):
         self.left_download_label.set_text(_('Download: %s') % self.downlad_number)
             
     def update_pkg_info(self, pkg_name):
-        #start_time = time.time()
+        current_time = time.time()
+        if current_time - self.update_pkg_time < self.update_pkg_interval:
+            return False
+        else:
+            self.update_pkg_time = current_time
+        
         FetchPackageInfo(pkg_name, self.update_some_info).start()
         self.pkg_name = pkg_name
+        
+        print self.pkg_name
         (self.category, self.long_desc, 
          self.version, self.homepage, self.star, 
          self.download, self.alias_name,
