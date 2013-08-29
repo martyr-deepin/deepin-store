@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-18 18:51+0800\n"
+"POT-Creation-Date: 2013-08-29 14:46+0800\n"
 "PO-Revision-Date: 2013-05-28 15:52+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,97 +16,271 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../ui/upgrade_page.py:109
+#: ../ui/home_page.py:477
+#, python-format
+msgid "%s: %s applications"
+msgstr "%s: %s 應用程式"
+
+#: ../ui/home_page.py:665
+#, python-format
+msgid "%s > %s : %s applications"
+msgstr "%s > %s : %s 款應用程式"
+
+#: ../ui/home_page.py:721 ../ui/software_center.py:699
+msgid "Home"
+msgstr "首頁推薦"
+
+#: ../ui/home_page.py:758
+msgid "Hot applications"
+msgstr "熱門程式"
+
+#: ../ui/home_page.py:758
+msgid "Topics"
+msgstr "主題園地"
+
+#: ../ui/home_page.py:758
+msgid "Download rank"
+msgstr "下載排名"
+
+#: ../ui/software_center.py:120
+#, python-format
+msgid "%s haven't any desktop file"
+msgstr "%s 沒有桌面启动檔案"
+
+#: ../ui/software_center.py:128
+#, python-format
+msgid "%s: request for starting applications sent"
+msgstr "%s：已經發送应用程式啟動請求"
+
+#: ../ui/software_center.py:188
+msgid "Sending comment..."
+msgstr "正在發送評分..."
+
+#: ../ui/software_center.py:192
+msgid "You have already sent a comment ;)"
+msgstr "您已經評過分數了 ;)"
+
+#: ../ui/software_center.py:197
+msgid "Comment was successful. Thanks for your involvement. :)"
+msgstr "評分成功。感謝您的參與。:)"
+
+#: ../ui/software_center.py:206
+msgid "Comment was failed. Please check your network connection!"
+msgstr "評分失敗。請檢查您的網路連線！"
+
+#: ../ui/software_center.py:361
+#, python-format
+msgid "Update applications lists: %s"
+msgstr "更新應用程式清單：%s"
+
+#: ../ui/software_center.py:370
+msgid "Successfully refreshed applications lists."
+msgstr "已成功重新整理了應用程式清單。"
+
+#: ../ui/software_center.py:382
+msgid "Failed to refresh applications lists."
+msgstr "無法重新整理應用程式清單。"
+
+#: ../ui/software_center.py:383
+msgid "Try again"
+msgstr "重試"
+
+#: ../ui/software_center.py:393
+#, python-format
+msgid ""
+"Problem occurred when analyzing dependencies for %s. Installation aborted"
+msgstr "分析 %s 相依關係時發生問題。安裝停止"
+
+#: ../ui/software_center.py:396
+#, python-format
+msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
+msgstr "分析 %s 相依關係時發生問題。升級停止"
+
+#: ../ui/software_center.py:405
+#, python-format
+msgid "%s cannot be installed on 64-bit system."
+msgstr "無法將 %s 安裝在 64 位元系統上。"
+
+#: ../ui/software_center.py:407
+#, python-format
+msgid "%s cannot be installed. It might be a x86_64 specific package"
+msgstr "無法安裝 %s。它可能是 64 位元系統特有的套件"
+
+#: ../ui/software_center.py:644 ../ui/preference.py:230
+msgid "Deepin Software Center"
+msgstr "深度軟體中心"
+
+#: ../ui/software_center.py:680
+msgid "Join us"
+msgstr "加入我們"
+
+#: ../ui/software_center.py:700
+msgid "Upgrade"
+msgstr "系統升級"
+
+#: ../ui/software_center.py:701
+msgid "Uninstall"
+msgstr "解除安裝"
+
+#: ../ui/software_center.py:702
+msgid "Install Manage"
+msgstr "安裝管理"
+
+#: ../ui/software_center.py:726 ../ui/software_center.py:929
+msgid "Refresh applications lists"
+msgstr "重新整理應用程式清單"
+
+#: ../ui/software_center.py:727
+msgid "Open download directory"
+msgstr "開啟下載目錄"
+
+#: ../ui/software_center.py:728
+msgid "Clear up cached packages"
+msgstr "清理快取套件"
+
+#: ../ui/software_center.py:729
+msgid "View new features"
+msgstr "檢視新特性"
+
+#: ../ui/software_center.py:730
+msgid "Preferences"
+msgstr "偏好設定"
+
+#: ../ui/software_center.py:731
+msgid "Quit"
+msgstr "退出"
+
+#: ../ui/software_center.py:929
+msgid "Refreshing applications lists"
+msgstr "正在重新整理應用程式清單"
+
+#: ../ui/software_center.py:931 ../ui/preference.py:383
+msgid "Run in background"
+msgstr "後台運行"
+
+#: ../ui/software_center.py:989
+#, python-format
+msgid "You have cleared up %s pakcages and saved %s of space"
+msgstr "恭喜您清理了 %s 個套件，共節約了 %s 磁碟空間"
+
+#: ../ui/software_center.py:991
+msgid "Your system is clean."
+msgstr "您的系統已經很幹淨了，無需進行清理。"
+
+#: ../ui/search_page.py:109
+#, python-format
+msgid "%s: %s matched applications"
+msgstr "%s：搜尋到 %s 款應用程式"
+
+#: ../ui/search_page.py:285 ../ui/detail_page.py:428 ../ui/install_page.py:474
+msgid "Successfully installed"
+msgstr "已成功安裝"
+
+#: ../ui/upgrade_page.py:108
 #, python-format
 msgid "Last upgraded time: %s"
 msgstr "最後更新時間：%s"
 
-#: ../ui/upgrade_page.py:117 ../ui/upgrade_page.py:182
+#: ../ui/upgrade_page.py:116 ../ui/upgrade_page.py:181
 #, python-format
 msgid "Unwatched (%s)"
 msgstr "不再提醒(%s)"
 
-#: ../ui/upgrade_page.py:156
+#: ../ui/upgrade_page.py:155
 msgid "Upgrade select items"
 msgstr "升級所選軟體"
 
-#: ../ui/upgrade_page.py:178
+#: ../ui/upgrade_page.py:177
 #, python-format
 msgid "%s applications are available for upgrade"
 msgstr "當前共有 %s 款應用程式有可用的升級"
 
-#: ../ui/upgrade_page.py:212 ../ui/item_render.py:46
+#: ../ui/upgrade_page.py:211 ../ui/item_render.py:46
 msgid "Watch again"
 msgstr "重新提醒"
 
-#: ../ui/upgrade_page.py:246
+#: ../ui/upgrade_page.py:245
 #, python-format
 msgid "%s applications are not being watched"
 msgstr "%s 款應用程式將不再提醒"
 
-#: ../ui/upgrade_page.py:549
+#: ../ui/upgrade_page.py:550
 #, python-format
 msgid "Refresh applications lists %s%%"
 msgstr "重新整理應用程式清單 %s%%"
 
-#: ../ui/upgrade_page.py:1117 ../ui/upgrade_page.py:1237
-#: ../ui/install_page.py:688
+#: ../ui/upgrade_page.py:1112 ../ui/upgrade_page.py:1232
+#: ../ui/install_page.py:683
 msgid "Waiting for download"
 msgstr "等待下載"
 
-#: ../ui/upgrade_page.py:1230 ../ui/install_page.py:311
-#: ../ui/install_page.py:681
+#: ../ui/upgrade_page.py:1225 ../ui/install_page.py:306
+#: ../ui/install_page.py:676
 msgid "Analyzing dependencies"
 msgstr "正在分析相依關係"
 
-#: ../ui/upgrade_page.py:1244 ../ui/install_page.py:695
+#: ../ui/upgrade_page.py:1239 ../ui/install_page.py:690
 msgid "Downloading"
 msgstr "正在下載"
 
-#: ../ui/upgrade_page.py:1260
+#: ../ui/upgrade_page.py:1255
 msgid "Waiting for upgrade"
 msgstr "正在等待升級"
 
-#: ../ui/upgrade_page.py:1270 ../ui/install_page.py:721
+#: ../ui/upgrade_page.py:1265 ../ui/install_page.py:716
 msgid "Analyzing dependencies failed"
 msgstr "分析相依關係失敗"
 
-#: ../ui/upgrade_page.py:1279 ../ui/upgrade_page.py:1286
+#: ../ui/upgrade_page.py:1274 ../ui/upgrade_page.py:1281
 msgid "Upgrading"
 msgstr "正在升級"
 
-#: ../ui/upgrade_page.py:1295
+#: ../ui/upgrade_page.py:1290
 msgid "Upgrade complete"
 msgstr "升級完成"
 
-#: ../ui/install_page.py:137
+#: ../ui/detail_page.py:174
+msgid "Also in the category..."
+msgstr "同類熱門推薦..."
+
+#: ../ui/detail_page.py:235 ../ui/detail_page.py:472
+msgid "Loading comments..."
+msgstr "正在載入評論..."
+
+#: ../ui/detail_page.py:359
 #, python-format
-msgid "%s applications are being installed"
-msgstr "正在安裝 %s 款應用程式"
+msgid "Download: %s"
+msgstr "下載：%s"
 
-#: ../ui/install_page.py:479 ../ui/search_page.py:252 ../ui/detail_page.py:437
-msgid "Successfully installed"
-msgstr "已成功安裝"
+#: ../ui/detail_page.py:381
+msgid "Category: "
+msgstr "分類："
 
-#: ../ui/install_page.py:597 ../ui/install_page.py:609
-msgid "Download was interrupted"
-msgstr "下載被中斷"
+#: ../ui/detail_page.py:384
+#, python-format
+msgid "Version: %s"
+msgstr "版本：%s"
 
-#: ../ui/install_page.py:619
-msgid "Installation was interrupted"
-msgstr "安裝被中斷"
+#: ../ui/detail_page.py:385
+msgid "Download: 0"
+msgstr "下載：0"
 
-#: ../ui/install_page.py:711
-msgid "Waiting for installation"
-msgstr "等待安裝"
+#: ../ui/detail_page.py:386
+msgid "Size: calculating..."
+msgstr "大小：正在計算..."
 
-#: ../ui/install_page.py:730 ../ui/install_page.py:737
-msgid "Installing"
-msgstr "正在安裝"
+#: ../ui/detail_page.py:390
+msgid "Visit Homepage"
+msgstr "訪問首頁"
 
-#: ../ui/install_page.py:746
-msgid "Installation complete"
-msgstr "安裝完成"
+#: ../ui/detail_page.py:452
+#, python-format
+msgid "Size: %s"
+msgstr "大小：%s"
+
+#: ../ui/detail_page.py:591
+msgid "Powered by 又拍云存储"
+msgstr "Powered by 又拍云存储"
 
 #: ../ui/category_info.py:26
 msgid "Internet"
@@ -408,156 +582,17 @@ msgstr "終端機模擬"
 msgid "Text editor"
 msgstr "文字編輯器"
 
-#: ../ui/search_page.py:104
-#, python-format
-msgid "%s: %s matched applications"
-msgstr "%s：搜尋到 %s 款應用程式"
+#: ../ui/download_rank_page.py:69
+msgid "Top 25 weekly"
+msgstr "週排行Top25"
 
-#: ../ui/item_render.py:44
-msgid "Unwatch"
-msgstr "不再提醒"
+#: ../ui/download_rank_page.py:69
+msgid "Top 25 monthly"
+msgstr "月排行Top25"
 
-#: ../ui/uninstall_page.py:163
-#, python-format
-msgid "%s applications can be uninstalled"
-msgstr "有 %s 款應用程式可以解除安裝"
-
-#: ../ui/uninstall_page.py:467 ../ui/uninstall_page.py:550
-msgid "Waiting for uninstall"
-msgstr "正在等待解除安裝"
-
-#: ../ui/uninstall_page.py:557 ../ui/uninstall_page.py:564
-msgid "Uninstalling"
-msgstr "正在解除安裝"
-
-#: ../ui/uninstall_page.py:571
-msgid "Uninstall successful"
-msgstr "解除安裝完成"
-
-#: ../ui/software_center.py:118
-#, python-format
-msgid "%s haven't any desktop file"
-msgstr "%s 沒有桌面启动檔案"
-
-#: ../ui/software_center.py:126
-#, python-format
-msgid "%s: request for starting applications sent"
-msgstr "%s：已經發送应用程式啟動請求"
-
-#: ../ui/software_center.py:183
-msgid "Sending comment..."
-msgstr "正在發送評分..."
-
-#: ../ui/software_center.py:187
-msgid "You have already sent a comment ;)"
-msgstr "您已經評過分數了 ;)"
-
-#: ../ui/software_center.py:192
-msgid "Comment was successful. Thanks for your involvement. :)"
-msgstr "評分成功。感謝您的參與。:)"
-
-#: ../ui/software_center.py:201
-msgid "Comment was failed. Please check your network connection!"
-msgstr "評分失敗。請檢查您的網路連線！"
-
-#: ../ui/software_center.py:353
-#, python-format
-msgid "Update applications lists: %s"
-msgstr "更新應用程式清單：%s"
-
-#: ../ui/software_center.py:362
-msgid "Successfully refreshed applications lists."
-msgstr "已成功重新整理了應用程式清單。"
-
-#: ../ui/software_center.py:374
-msgid "Failed to refresh applications lists."
-msgstr "無法重新整理應用程式清單。"
-
-#: ../ui/software_center.py:383
-#, python-format
-msgid ""
-"Problem occurred when analyzing dependencies for %s. Installation aborted"
-msgstr "分析 %s 相依關係時發生問題。安裝停止"
-
-#: ../ui/software_center.py:386
-#, python-format
-msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
-msgstr "分析 %s 相依關係時發生問題。升級停止"
-
-#: ../ui/software_center.py:395
-#, python-format
-msgid "%s cannot be installed on 64-bit system."
-msgstr "無法將 %s 安裝在 64 位元系統上。"
-
-#: ../ui/software_center.py:397
-#, python-format
-msgid "%s cannot be installed. It might be a x86_64 specific package"
-msgstr "無法安裝 %s。它可能是 64 位元系統特有的套件"
-
-#: ../ui/software_center.py:625 ../ui/preference.py:230
-msgid "Deepin Software Center"
-msgstr "深度軟體中心"
-
-#: ../ui/software_center.py:656
-msgid "Join us"
-msgstr "加入我們"
-
-#: ../ui/software_center.py:675 ../ui/home_page.py:727
-msgid "Home"
-msgstr "首頁推薦"
-
-#: ../ui/software_center.py:676
-msgid "Upgrade"
-msgstr "系統升級"
-
-#: ../ui/software_center.py:677
-msgid "Uninstall"
-msgstr "解除安裝"
-
-#: ../ui/software_center.py:678
-msgid "Install Manage"
-msgstr "安裝管理"
-
-#: ../ui/software_center.py:702 ../ui/software_center.py:908
-msgid "Refresh applications lists"
-msgstr "重新整理應用程式清單"
-
-#: ../ui/software_center.py:703
-msgid "Open download directory"
-msgstr "開啟下載目錄"
-
-#: ../ui/software_center.py:704
-msgid "Clear up cached packages"
-msgstr "清理快取套件"
-
-#: ../ui/software_center.py:705
-msgid "View new features"
-msgstr "檢視新特性"
-
-#: ../ui/software_center.py:706
-msgid "Preferences"
-msgstr "偏好設定"
-
-#: ../ui/software_center.py:707
-msgid "Quit"
-msgstr "退出"
-
-#: ../ui/software_center.py:908
-msgid "Refreshing applications lists"
-msgstr "正在重新整理應用程式清單"
-
-#: ../ui/software_center.py:910 ../ui/preference.py:383
-msgid "Run in background"
-msgstr "後台運行"
-
-#: ../ui/software_center.py:963
-#, python-format
-msgid "You have cleared up %s pakcages and saved %s of space"
-msgstr "恭喜您清理了 %s 個套件，共節約了 %s 磁碟空間"
-
-#: ../ui/software_center.py:965
-msgid "Your system is clean."
-msgstr "您的系統已經很幹淨了，無需進行清理。"
+#: ../ui/download_rank_page.py:69
+msgid "Top 25 of all time"
+msgstr "總排行Top25"
 
 #: ../ui/preference.py:107
 msgid "Untitled"
@@ -622,128 +657,97 @@ msgstr "請稍等。該過程根據網路連線狀況不同可能會持續 30 �
 msgid "The software repository has changed. Refreshing applications lists"
 msgstr "軟體檔案庫已經更改，正在重新整理應用程式清單"
 
-#: ../ui/preference.py:416
+#: ../ui/preference.py:418
 msgid ""
 "Test for downloading mirror failed. Please check your network connection."
 msgstr "測試鏡像下載失敗，請檢查您的網路連線。"
 
-#: ../ui/preference.py:417
+#: ../ui/preference.py:419
 msgid "Close"
 msgstr "關閉"
 
-#: ../ui/preference.py:468
+#: ../ui/preference.py:470
 msgid "Update applications lists"
 msgstr "更新應用程式清單"
 
-#: ../ui/preference.py:474
+#: ../ui/preference.py:476
 msgid "Time interval: "
 msgstr "相隔時間: "
 
-#: ../ui/preference.py:477
+#: ../ui/preference.py:479
 msgid " hour"
 msgstr " 小時"
 
-#: ../ui/preference.py:493
+#: ../ui/preference.py:495
 msgid "Download settings"
 msgstr "下載設定"
 
-#: ../ui/preference.py:499
+#: ../ui/preference.py:501
 msgid "Max download task number: "
 msgstr "最大下載工作數量: "
 
-#: ../ui/preference.py:509
+#: ../ui/preference.py:511
 msgid "Download directory: "
 msgstr "下載目錄: "
 
-#: ../ui/preference.py:515
+#: ../ui/preference.py:517
 msgid "Change"
 msgstr "變更"
 
-#: ../ui/preference.py:531
+#: ../ui/preference.py:533
 msgid "On uninstall software"
 msgstr "當解除安裝軟體時"
 
-#: ../ui/preference.py:536
+#: ../ui/preference.py:538
 msgid "Delete configuration files"
 msgstr "刪除系統設定檔"
 
-#: ../ui/preference.py:564
+#: ../ui/preference.py:566
 msgid "Select Directory"
 msgstr "選擇目錄"
 
-#: ../ui/download_rank_page.py:69
-msgid "Top 25 weekly"
-msgstr "週排行Top25"
+#: ../ui/item_render.py:44
+msgid "Unwatch"
+msgstr "不再提醒"
 
-#: ../ui/download_rank_page.py:69
-msgid "Top 25 monthly"
-msgstr "月排行Top25"
-
-#: ../ui/download_rank_page.py:69
-msgid "Top 25 of all time"
-msgstr "總排行Top25"
-
-#: ../ui/detail_page.py:177
-msgid "Also in the category..."
-msgstr "同類熱門推薦..."
-
-#: ../ui/detail_page.py:238 ../ui/detail_page.py:482
-msgid "Loading comments..."
-msgstr "正在載入評論..."
-
-#: ../ui/detail_page.py:362
+#: ../ui/uninstall_page.py:160
 #, python-format
-msgid "Download: %s"
-msgstr "下載：%s"
+msgid "%s applications can be uninstalled"
+msgstr "有 %s 款應用程式可以解除安裝"
 
-#: ../ui/detail_page.py:386
-msgid "Category: "
-msgstr "分類："
+#: ../ui/uninstall_page.py:462 ../ui/uninstall_page.py:545
+msgid "Waiting for uninstall"
+msgstr "正在等待解除安裝"
 
-#: ../ui/detail_page.py:389
+#: ../ui/uninstall_page.py:552 ../ui/uninstall_page.py:559
+msgid "Uninstalling"
+msgstr "正在解除安裝"
+
+#: ../ui/uninstall_page.py:566
+msgid "Uninstall successful"
+msgstr "解除安裝完成"
+
+#: ../ui/install_page.py:134
 #, python-format
-msgid "Version: %s"
-msgstr "版本：%s"
+msgid "%s applications are being installed"
+msgstr "正在安裝 %s 款應用程式"
 
-#: ../ui/detail_page.py:390
-msgid "Download: 0"
-msgstr "下載：0"
+#: ../ui/install_page.py:592 ../ui/install_page.py:604
+msgid "Download was interrupted"
+msgstr "下載被中斷"
 
-#: ../ui/detail_page.py:391
-msgid "Size: calculating..."
-msgstr "大小：正在計算..."
+#: ../ui/install_page.py:614
+msgid "Installation was interrupted"
+msgstr "安裝被中斷"
 
-#: ../ui/detail_page.py:396
-msgid "Visit Homepage"
-msgstr "訪問首頁"
+#: ../ui/install_page.py:706
+msgid "Waiting for installation"
+msgstr "等待安裝"
 
-#: ../ui/detail_page.py:460
-#, python-format
-msgid "Size: %s"
-msgstr "大小：%s"
+#: ../ui/install_page.py:725 ../ui/install_page.py:732
+msgid "Installing"
+msgstr "正在安裝"
 
-#: ../ui/detail_page.py:605
-msgid "Powered by 又拍云存储"
-msgstr "Powered by 又拍云存储"
-
-#: ../ui/home_page.py:478
-#, python-format
-msgid "%s: %s applications"
-msgstr "%s: %s 應用程式"
-
-#: ../ui/home_page.py:671
-#, python-format
-msgid "%s > %s : %s applications"
-msgstr "%s > %s : %s 款應用程式"
-
-#: ../ui/home_page.py:756
-msgid "Hot applications"
-msgstr "熱門程式"
-
-#: ../ui/home_page.py:756
-msgid "Topics"
-msgstr "主題園地"
-
-#: ../ui/home_page.py:756
-msgid "Download rank"
-msgstr "下載排名"
+#: ../ui/install_page.py:741
+msgid "Installation complete"
+msgstr "安裝完成"
