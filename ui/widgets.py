@@ -29,6 +29,79 @@ from skin import app_theme
 #from ui_utils import draw_alpha_mask
 from dtk.ui.draw import draw_pixbuf, draw_text
 from dtk.ui.utils import get_content_size, is_in_rect
+from dtk.ui.label import Label
+from dtk.ui.button import CloseButton
+from dtk.ui.utils import color_hex_to_cairo, set_clickable_cursor
+from dtk.ui.theme import ui_theme
+
+class ActionButton(Label):
+    def __init__(self, 
+                 text, 
+                 enable_gaussian=False, 
+                 text_color=ui_theme.get_color("link_text"),
+                 ):
+        '''
+        Initialize LinkButton class.
+        
+        @param text: Link content.
+        @param link: Link address.
+        @param enable_gaussian: To enable gaussian effect on link, default is True.
+        @param text_color: Link color, just use when option enable_gaussian is False.
+        '''
+        Label.__init__(self, text, text_color, enable_gaussian=enable_gaussian, text_size=9,
+                       gaussian_radious=1, border_radious=0, underline=True)
+        self.callback_action = None
+
+        set_clickable_cursor(self)
+        self.connect('button-press-event', self.button_press_action)
+
+    def button_press_action(self, widget, e):
+        if self.callback_action:
+            self.callback_action()
+
+class BottomTipBar(gtk.HBox):
+    def __init__(self):
+        gtk.HBox.__init__(self)
+        
+        self.info_image_box = gtk.VBox()
+        self.info_image_box.set_size_request(24, 24)
+        self.info_image_box.connect('expose-event', self.expose_info_image_box)
+
+        self.info_label = Label("")
+        self.info_callback_button = ActionButton('')
+
+        self.close_button = CloseButton()
+
+        self.pack_start(self.info_image_box, False, False)
+        self.pack_start(self.info_label)
+        self.pack_start(self.info_callback_button, False, False)
+        self.pack_start(self.close_button, False, False)
+
+        self.connect('expose-event', self.expose)
+
+    def expose(self, widget, event):
+        cr = widget.window.cairo_create()
+        rect = widget.allocation
+        cr.set_source_rgb(*color_hex_to_cairo('#fff9c9'))
+        cr.rectangle(*rect)
+        cr.fill()
+
+    def expose_info_image_box(self, widget, event):
+        cr = widget.window.cairo_create()
+        rect = widget.allocation
+        msg_pixbuf = get_common_image_pixbuf("msg/msg1.png")
+        pix_width = msg_pixbuf.get_width()
+        pix_height = msg_pixbuf.get_height()
+        draw_pixbuf(cr,
+                    msg_pixbuf,
+                    rect.x + (rect.width-pix_width)/2,
+                    rect.y + (rect.height-pix_height)/2,
+                    )
+
+    def update_info(self, info, callback_name='', callback_action=None):
+        self.info_label.set_text(info)
+        self.info_callback_button.set_text(callback_name)
+        self.info_callback_button.callback_action = callback_action
 
 class LoadingBox(gtk.VBox):
     

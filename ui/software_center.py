@@ -72,6 +72,8 @@ from tooltip import ToolTip
 from server_action import SendVote, SendDownloadCount, SendUninstallCount
 from preference import preference_dialog, WaitingDialog
 from logger import Logger
+from paned_box import PanedBox
+from widgets import BottomTipBar
 
 tool_tip = ToolTip()
 global tooltip_timeout_id
@@ -192,7 +194,7 @@ def grade_pkg(window, pkg_name, star):
 def vote_send_success_callback(pkg_name, window):
     grade_config_path, grade_config = get_grade_config()
 
-    global_event.emit("show-message", _("Comment was successful. Thanks for your involvement. :)"))
+    global_event.emit("show-message", _("Comment was successful. Thanks for your involvement. :)"), 5000)
     tool_tip.hide_all()
     current_time = time.time()
     
@@ -365,7 +367,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                         reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
                         error_handler=lambda e:handle_dbus_error("request_status", e),
                         )
-                global_event.emit("show-message", _("Successfully refreshed applications lists."), 0)
+                global_event.emit("show-message", _("Successfully refreshed applications lists."), 5000)
                 global_event.emit('update-list-finish')
                 global_event.emit("hide-update-list-dialog")
 
@@ -376,7 +378,11 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                         reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
                         error_handler=lambda e:handle_dbus_error("request_status", e),
                         )
-                global_event.emit("show-message", _("Failed to refresh applications lists."), 0)
+                list_message = []
+                list_message.append(_("Failed to refresh applications lists."))
+                list_message.append(_('Try again'))
+                list_message.append(lambda:global_event.emit('start-update-list'))
+                global_event.emit("show-message", list_message, 0)
                 global_event.emit('update-list-finish')
                 global_event.emit("hide-update-list-dialog")
 
@@ -651,7 +657,12 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         self.page_align.set_padding(0, 0, 2, 2)
         
         # Append page to switcher.
-        self.page_align.add(self.page_switcher)
+        self.paned_box = PanedBox(24)
+        self.paned_box.add_content_widget(self.page_switcher)
+        self.bottom_tip_bar = BottomTipBar()
+        self.bottom_tip_bar.close_button.connect('clicked', lambda w: self.paned_box.bottom_window.hide())
+        self.paned_box.add_bottom_widget(self.bottom_tip_bar)
+        self.page_align.add(self.paned_box)
         self.application.main_box.pack_start(self.page_align, True, True)
         
         # Init status bar.
@@ -712,7 +723,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
             menu_min_width = 150
         menu = Menu(
             [
-             (None, _("Refresh applications lists"), self.update_list_handler),
+                (None, _("Refresh applications lists"), lambda:global_event.emit('start-update-list')),
              (None, _("Open download directory"), self.open_download_directory),
              (None, _("Clear up cached packages"), self.clean_download_cache),
              (None, _("View new features"), lambda : self.show_wizard_win()),
@@ -748,6 +759,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
             utils.set_first_started()
         else:    
             self.application.window.show_all()
+        #self.paned_box.bottom_window.set_composited(True)
         gtk.main()    
         
     def show_wizard_win(self, show_button=False, callback=None):    
@@ -859,6 +871,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         global_event.register_event('vote-send-failed', lambda p: vote_send_failed_callback(p, self.application.window))
         global_event.register_event('max-download-number-changed', self.init_download_manager)
         global_event.register_event('update-list-finish', self.update_list_finish)
+        global_event.register_event('start-update-list', self.update_list_handler)
         self.system_bus.add_signal_receiver(
             lambda messages: message_handler(messages, 
                                          self.bus_interface, 
@@ -942,12 +955,15 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         #self.request_update_list()
 
     def update_status_bar_message(self, message, hide_timeout=0):
-        if hide_timeout == 0:
-            show_message(self.statusbar, self.message_label, message)
+        if not self.paned_box.bottom_window.is_visible():
+            self.paned_box.bottom_window.show()
+        if isinstance(message, list) and len(message) == 3:
+            self.bottom_tip_bar.update_info(*message)
         else:
-            print hide_timeout
-            show_message(self.statusbar, self.message_label, message, hide_timeout)
-
+            self.bottom_tip_bar.update_info(message)
+        if hide_timeout != 0:
+            gtk.timeout_add(hide_timeout, lambda:self.paned_box.bottom_window.hide())
+    
     def request_update_list(self):
         self.in_update_list = True
         self.bus_interface.start_update_list(

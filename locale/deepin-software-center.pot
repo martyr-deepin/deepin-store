@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-18 18:51+0800\n"
+"POT-Creation-Date: 2013-08-29 14:46+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,96 +17,270 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../ui/upgrade_page.py:109
+#: ../ui/home_page.py:477
+#, python-format
+msgid "%s: %s applications"
+msgstr ""
+
+#: ../ui/home_page.py:665
+#, python-format
+msgid "%s > %s : %s applications"
+msgstr ""
+
+#: ../ui/home_page.py:721 ../ui/software_center.py:699
+msgid "Home"
+msgstr ""
+
+#: ../ui/home_page.py:758
+msgid "Hot applications"
+msgstr ""
+
+#: ../ui/home_page.py:758
+msgid "Topics"
+msgstr ""
+
+#: ../ui/home_page.py:758
+msgid "Download rank"
+msgstr ""
+
+#: ../ui/software_center.py:120
+#, python-format
+msgid "%s haven't any desktop file"
+msgstr ""
+
+#: ../ui/software_center.py:128
+#, python-format
+msgid "%s: request for starting applications sent"
+msgstr ""
+
+#: ../ui/software_center.py:188
+msgid "Sending comment..."
+msgstr ""
+
+#: ../ui/software_center.py:192
+msgid "You have already sent a comment ;)"
+msgstr ""
+
+#: ../ui/software_center.py:197
+msgid "Comment was successful. Thanks for your involvement. :)"
+msgstr ""
+
+#: ../ui/software_center.py:206
+msgid "Comment was failed. Please check your network connection!"
+msgstr ""
+
+#: ../ui/software_center.py:361
+#, python-format
+msgid "Update applications lists: %s"
+msgstr ""
+
+#: ../ui/software_center.py:370
+msgid "Successfully refreshed applications lists."
+msgstr ""
+
+#: ../ui/software_center.py:382
+msgid "Failed to refresh applications lists."
+msgstr ""
+
+#: ../ui/software_center.py:383
+msgid "Try again"
+msgstr ""
+
+#: ../ui/software_center.py:393
+#, python-format
+msgid ""
+"Problem occurred when analyzing dependencies for %s. Installation aborted"
+msgstr ""
+
+#: ../ui/software_center.py:396
+#, python-format
+msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
+msgstr ""
+
+#: ../ui/software_center.py:405
+#, python-format
+msgid "%s cannot be installed on 64-bit system."
+msgstr ""
+
+#: ../ui/software_center.py:407
+#, python-format
+msgid "%s cannot be installed. It might be a x86_64 specific package"
+msgstr ""
+
+#: ../ui/software_center.py:644 ../ui/preference.py:230
+msgid "Deepin Software Center"
+msgstr ""
+
+#: ../ui/software_center.py:680
+msgid "Join us"
+msgstr ""
+
+#: ../ui/software_center.py:700
+msgid "Upgrade"
+msgstr ""
+
+#: ../ui/software_center.py:701
+msgid "Uninstall"
+msgstr ""
+
+#: ../ui/software_center.py:702
+msgid "Install Manage"
+msgstr ""
+
+#: ../ui/software_center.py:726 ../ui/software_center.py:929
+msgid "Refresh applications lists"
+msgstr ""
+
+#: ../ui/software_center.py:727
+msgid "Open download directory"
+msgstr ""
+
+#: ../ui/software_center.py:728
+msgid "Clear up cached packages"
+msgstr ""
+
+#: ../ui/software_center.py:729
+msgid "View new features"
+msgstr ""
+
+#: ../ui/software_center.py:730
+msgid "Preferences"
+msgstr ""
+
+#: ../ui/software_center.py:731
+msgid "Quit"
+msgstr ""
+
+#: ../ui/software_center.py:929
+msgid "Refreshing applications lists"
+msgstr ""
+
+#: ../ui/software_center.py:931 ../ui/preference.py:383
+msgid "Run in background"
+msgstr ""
+
+#: ../ui/software_center.py:989
+#, python-format
+msgid "You have cleared up %s pakcages and saved %s of space"
+msgstr ""
+
+#: ../ui/software_center.py:991
+msgid "Your system is clean."
+msgstr ""
+
+#: ../ui/search_page.py:109
+#, python-format
+msgid "%s: %s matched applications"
+msgstr ""
+
+#: ../ui/search_page.py:285 ../ui/detail_page.py:428 ../ui/install_page.py:474
+msgid "Successfully installed"
+msgstr ""
+
+#: ../ui/upgrade_page.py:108
 #, python-format
 msgid "Last upgraded time: %s"
 msgstr ""
 
-#: ../ui/upgrade_page.py:117 ../ui/upgrade_page.py:182
+#: ../ui/upgrade_page.py:116 ../ui/upgrade_page.py:181
 #, python-format
 msgid "Unwatched (%s)"
 msgstr ""
 
-#: ../ui/upgrade_page.py:156
+#: ../ui/upgrade_page.py:155
 msgid "Upgrade select items"
 msgstr ""
 
-#: ../ui/upgrade_page.py:178
+#: ../ui/upgrade_page.py:177
 #, python-format
 msgid "%s applications are available for upgrade"
 msgstr ""
 
-#: ../ui/upgrade_page.py:212 ../ui/item_render.py:46
+#: ../ui/upgrade_page.py:211 ../ui/item_render.py:46
 msgid "Watch again"
 msgstr ""
 
-#: ../ui/upgrade_page.py:246
+#: ../ui/upgrade_page.py:245
 #, python-format
 msgid "%s applications are not being watched"
 msgstr ""
 
-#: ../ui/upgrade_page.py:549
+#: ../ui/upgrade_page.py:550
 #, python-format
 msgid "Refresh applications lists %s%%"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1117 ../ui/upgrade_page.py:1237
-#: ../ui/install_page.py:688
+#: ../ui/upgrade_page.py:1112 ../ui/upgrade_page.py:1232
+#: ../ui/install_page.py:683
 msgid "Waiting for download"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1230 ../ui/install_page.py:311
-#: ../ui/install_page.py:681
+#: ../ui/upgrade_page.py:1225 ../ui/install_page.py:306
+#: ../ui/install_page.py:676
 msgid "Analyzing dependencies"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1244 ../ui/install_page.py:695
+#: ../ui/upgrade_page.py:1239 ../ui/install_page.py:690
 msgid "Downloading"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1260
+#: ../ui/upgrade_page.py:1255
 msgid "Waiting for upgrade"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1270 ../ui/install_page.py:721
+#: ../ui/upgrade_page.py:1265 ../ui/install_page.py:716
 msgid "Analyzing dependencies failed"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1279 ../ui/upgrade_page.py:1286
+#: ../ui/upgrade_page.py:1274 ../ui/upgrade_page.py:1281
 msgid "Upgrading"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1295
+#: ../ui/upgrade_page.py:1290
 msgid "Upgrade complete"
 msgstr ""
 
-#: ../ui/install_page.py:137
+#: ../ui/detail_page.py:174
+msgid "Also in the category..."
+msgstr ""
+
+#: ../ui/detail_page.py:235 ../ui/detail_page.py:472
+msgid "Loading comments..."
+msgstr ""
+
+#: ../ui/detail_page.py:359
 #, python-format
-msgid "%s applications are being installed"
+msgid "Download: %s"
 msgstr ""
 
-#: ../ui/install_page.py:479 ../ui/search_page.py:252 ../ui/detail_page.py:437
-msgid "Successfully installed"
+#: ../ui/detail_page.py:381
+msgid "Category: "
 msgstr ""
 
-#: ../ui/install_page.py:597 ../ui/install_page.py:609
-msgid "Download was interrupted"
+#: ../ui/detail_page.py:384
+#, python-format
+msgid "Version: %s"
 msgstr ""
 
-#: ../ui/install_page.py:619
-msgid "Installation was interrupted"
+#: ../ui/detail_page.py:385
+msgid "Download: 0"
 msgstr ""
 
-#: ../ui/install_page.py:711
-msgid "Waiting for installation"
+#: ../ui/detail_page.py:386
+msgid "Size: calculating..."
 msgstr ""
 
-#: ../ui/install_page.py:730 ../ui/install_page.py:737
-msgid "Installing"
+#: ../ui/detail_page.py:390
+msgid "Visit Homepage"
 msgstr ""
 
-#: ../ui/install_page.py:746
-msgid "Installation complete"
+#: ../ui/detail_page.py:452
+#, python-format
+msgid "Size: %s"
+msgstr ""
+
+#: ../ui/detail_page.py:591
+msgid "Powered by 又拍云存储"
 msgstr ""
 
 #: ../ui/category_info.py:26
@@ -409,155 +583,16 @@ msgstr ""
 msgid "Text editor"
 msgstr ""
 
-#: ../ui/search_page.py:104
-#, python-format
-msgid "%s: %s matched applications"
+#: ../ui/download_rank_page.py:69
+msgid "Top 25 weekly"
 msgstr ""
 
-#: ../ui/item_render.py:44
-msgid "Unwatch"
+#: ../ui/download_rank_page.py:69
+msgid "Top 25 monthly"
 msgstr ""
 
-#: ../ui/uninstall_page.py:163
-#, python-format
-msgid "%s applications can be uninstalled"
-msgstr ""
-
-#: ../ui/uninstall_page.py:467 ../ui/uninstall_page.py:550
-msgid "Waiting for uninstall"
-msgstr ""
-
-#: ../ui/uninstall_page.py:557 ../ui/uninstall_page.py:564
-msgid "Uninstalling"
-msgstr ""
-
-#: ../ui/uninstall_page.py:571
-msgid "Uninstall successful"
-msgstr ""
-
-#: ../ui/software_center.py:118
-#, python-format
-msgid "%s haven't any desktop file"
-msgstr ""
-
-#: ../ui/software_center.py:126
-#, python-format
-msgid "%s: request for starting applications sent"
-msgstr ""
-
-#: ../ui/software_center.py:183
-msgid "Sending comment..."
-msgstr ""
-
-#: ../ui/software_center.py:187
-msgid "You have already sent a comment ;)"
-msgstr ""
-
-#: ../ui/software_center.py:192
-msgid "Comment was successful. Thanks for your involvement. :)"
-msgstr ""
-
-#: ../ui/software_center.py:201
-msgid "Comment was failed. Please check your network connection!"
-msgstr ""
-
-#: ../ui/software_center.py:353
-#, python-format
-msgid "Update applications lists: %s"
-msgstr ""
-
-#: ../ui/software_center.py:362
-msgid "Successfully refreshed applications lists."
-msgstr ""
-
-#: ../ui/software_center.py:374
-msgid "Failed to refresh applications lists."
-msgstr ""
-
-#: ../ui/software_center.py:383
-#, python-format
-msgid ""
-"Problem occurred when analyzing dependencies for %s. Installation aborted"
-msgstr ""
-
-#: ../ui/software_center.py:386
-#, python-format
-msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
-msgstr ""
-
-#: ../ui/software_center.py:395
-#, python-format
-msgid "%s cannot be installed on 64-bit system."
-msgstr ""
-
-#: ../ui/software_center.py:397
-#, python-format
-msgid "%s cannot be installed. It might be a x86_64 specific package"
-msgstr ""
-
-#: ../ui/software_center.py:625 ../ui/preference.py:230
-msgid "Deepin Software Center"
-msgstr ""
-
-#: ../ui/software_center.py:656
-msgid "Join us"
-msgstr ""
-
-#: ../ui/software_center.py:675 ../ui/home_page.py:727
-msgid "Home"
-msgstr ""
-
-#: ../ui/software_center.py:676
-msgid "Upgrade"
-msgstr ""
-
-#: ../ui/software_center.py:677
-msgid "Uninstall"
-msgstr ""
-
-#: ../ui/software_center.py:678
-msgid "Install Manage"
-msgstr ""
-
-#: ../ui/software_center.py:702 ../ui/software_center.py:908
-msgid "Refresh applications lists"
-msgstr ""
-
-#: ../ui/software_center.py:703
-msgid "Open download directory"
-msgstr ""
-
-#: ../ui/software_center.py:704
-msgid "Clear up cached packages"
-msgstr ""
-
-#: ../ui/software_center.py:705
-msgid "View new features"
-msgstr ""
-
-#: ../ui/software_center.py:706
-msgid "Preferences"
-msgstr ""
-
-#: ../ui/software_center.py:707
-msgid "Quit"
-msgstr ""
-
-#: ../ui/software_center.py:908
-msgid "Refreshing applications lists"
-msgstr ""
-
-#: ../ui/software_center.py:910 ../ui/preference.py:383
-msgid "Run in background"
-msgstr ""
-
-#: ../ui/software_center.py:963
-#, python-format
-msgid "You have cleared up %s pakcages and saved %s of space"
-msgstr ""
-
-#: ../ui/software_center.py:965
-msgid "Your system is clean."
+#: ../ui/download_rank_page.py:69
+msgid "Top 25 of all time"
 msgstr ""
 
 #: ../ui/preference.py:107
@@ -620,128 +655,97 @@ msgstr ""
 msgid "The software repository has changed. Refreshing applications lists"
 msgstr ""
 
-#: ../ui/preference.py:416
+#: ../ui/preference.py:418
 msgid ""
 "Test for downloading mirror failed. Please check your network connection."
 msgstr ""
 
-#: ../ui/preference.py:417
+#: ../ui/preference.py:419
 msgid "Close"
 msgstr ""
 
-#: ../ui/preference.py:468
+#: ../ui/preference.py:470
 msgid "Update applications lists"
 msgstr ""
 
-#: ../ui/preference.py:474
+#: ../ui/preference.py:476
 msgid "Time interval: "
 msgstr ""
 
-#: ../ui/preference.py:477
+#: ../ui/preference.py:479
 msgid " hour"
 msgstr ""
 
-#: ../ui/preference.py:493
+#: ../ui/preference.py:495
 msgid "Download settings"
 msgstr ""
 
-#: ../ui/preference.py:499
+#: ../ui/preference.py:501
 msgid "Max download task number: "
 msgstr ""
 
-#: ../ui/preference.py:509
+#: ../ui/preference.py:511
 msgid "Download directory: "
 msgstr ""
 
-#: ../ui/preference.py:515
+#: ../ui/preference.py:517
 msgid "Change"
 msgstr ""
 
-#: ../ui/preference.py:531
+#: ../ui/preference.py:533
 msgid "On uninstall software"
 msgstr ""
 
-#: ../ui/preference.py:536
+#: ../ui/preference.py:538
 msgid "Delete configuration files"
 msgstr ""
 
-#: ../ui/preference.py:564
+#: ../ui/preference.py:566
 msgid "Select Directory"
 msgstr ""
 
-#: ../ui/download_rank_page.py:69
-msgid "Top 25 weekly"
+#: ../ui/item_render.py:44
+msgid "Unwatch"
 msgstr ""
 
-#: ../ui/download_rank_page.py:69
-msgid "Top 25 monthly"
-msgstr ""
-
-#: ../ui/download_rank_page.py:69
-msgid "Top 25 of all time"
-msgstr ""
-
-#: ../ui/detail_page.py:177
-msgid "Also in the category..."
-msgstr ""
-
-#: ../ui/detail_page.py:238 ../ui/detail_page.py:482
-msgid "Loading comments..."
-msgstr ""
-
-#: ../ui/detail_page.py:362
+#: ../ui/uninstall_page.py:160
 #, python-format
-msgid "Download: %s"
+msgid "%s applications can be uninstalled"
 msgstr ""
 
-#: ../ui/detail_page.py:386
-msgid "Category: "
+#: ../ui/uninstall_page.py:462 ../ui/uninstall_page.py:545
+msgid "Waiting for uninstall"
 msgstr ""
 
-#: ../ui/detail_page.py:389
+#: ../ui/uninstall_page.py:552 ../ui/uninstall_page.py:559
+msgid "Uninstalling"
+msgstr ""
+
+#: ../ui/uninstall_page.py:566
+msgid "Uninstall successful"
+msgstr ""
+
+#: ../ui/install_page.py:134
 #, python-format
-msgid "Version: %s"
+msgid "%s applications are being installed"
 msgstr ""
 
-#: ../ui/detail_page.py:390
-msgid "Download: 0"
+#: ../ui/install_page.py:592 ../ui/install_page.py:604
+msgid "Download was interrupted"
 msgstr ""
 
-#: ../ui/detail_page.py:391
-msgid "Size: calculating..."
+#: ../ui/install_page.py:614
+msgid "Installation was interrupted"
 msgstr ""
 
-#: ../ui/detail_page.py:396
-msgid "Visit Homepage"
+#: ../ui/install_page.py:706
+msgid "Waiting for installation"
 msgstr ""
 
-#: ../ui/detail_page.py:460
-#, python-format
-msgid "Size: %s"
+#: ../ui/install_page.py:725 ../ui/install_page.py:732
+msgid "Installing"
 msgstr ""
 
-#: ../ui/detail_page.py:605
-msgid "Powered by 又拍云存储"
-msgstr ""
-
-#: ../ui/home_page.py:478
-#, python-format
-msgid "%s: %s applications"
-msgstr ""
-
-#: ../ui/home_page.py:671
-#, python-format
-msgid "%s > %s : %s applications"
-msgstr ""
-
-#: ../ui/home_page.py:756
-msgid "Hot applications"
-msgstr ""
-
-#: ../ui/home_page.py:756
-msgid "Topics"
-msgstr ""
-
-#: ../ui/home_page.py:756
-msgid "Download rank"
+#: ../ui/install_page.py:741
+msgid "Installation complete"
 msgstr ""

@@ -26,7 +26,6 @@ from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.constant import ALIGN_MIDDLE
 from deepin_utils.net import is_network_connected
 from dtk.ui.button import ImageButton
-from dtk.ui.star_view import StarView
 from dtk.ui.browser import WebView
 from constant import CONFIG_DIR, SERVER_ADDRESS, LANGUAGE
 from skin import app_theme
@@ -45,6 +44,7 @@ from deepin_utils.multithread import create_thread
 import gobject
 import gtk
 from item_render import get_icon_pixbuf_path
+from star_buffer import StarView
 import os
 from events import global_event
 import urllib2
@@ -245,8 +245,7 @@ class DetailPage(gtk.HBox):
         
     def grade_pkg(self):
         global_event.emit("grade-pkg", self.pkg_name, self.pkg_star_view.star_buffer.star_level)
-        
-        self.pkg_star_view.star_buffer.star_level = int(self.star)
+        self.pkg_star_view.set_star_level(int(self.star))
         self.pkg_star_view.queue_draw()
         
     def jump_to_category(self):
