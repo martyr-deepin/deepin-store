@@ -239,7 +239,7 @@ class DetailPage(gtk.HBox):
         self.loading_label_align.set_padding(10, 0, 0, 0)
         
         self.update_pkg_time = 0
-        self.update_pkg_interval = 200
+        self.update_pkg_interval = 0.2 # in seconds
 
     def hierarchy_change(self, widget, previous_toplevel):
         # When detail page remove from it's container, previous_toplevel is not None.
@@ -359,7 +359,6 @@ class DetailPage(gtk.HBox):
         FetchPackageInfo(pkg_name, self.update_some_info).start()
         self.pkg_name = pkg_name
         
-        print self.pkg_name
         (self.category, self.long_desc, 
          self.version, self.homepage, self.star, 
          self.download, self.alias_name,
