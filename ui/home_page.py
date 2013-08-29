@@ -1001,7 +1001,7 @@ class PkgIconItem(IconItem):
         self.pkg_icon_pixbuf = None
         
         self.star_level = get_star_level(mark)
-        self.star_buffer = DscStarBuffer(pkg_name)
+        self.star_buffer = DscStarBuffer(pkg_name, self)
         self.grade_star = 0
         self.pkg_name_area = PkgName()
         

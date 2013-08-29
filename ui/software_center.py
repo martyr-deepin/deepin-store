@@ -194,7 +194,7 @@ def grade_pkg(window, pkg_name, star):
 def vote_send_success_callback(pkg_name, window):
     grade_config_path, grade_config = get_grade_config()
 
-    global_event.emit("show-message", _("Comment was successful. Thanks for your involvement. :)"))
+    global_event.emit("show-message", _("Comment was successful. Thanks for your involvement. :)"), 5000)
     tool_tip.hide_all()
     current_time = time.time()
     
@@ -367,7 +367,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                         reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
                         error_handler=lambda e:handle_dbus_error("request_status", e),
                         )
-                global_event.emit("show-message", _("Successfully refreshed applications lists."), 3000)
+                global_event.emit("show-message", _("Successfully refreshed applications lists."), 5000)
                 global_event.emit('update-list-finish')
                 global_event.emit("hide-update-list-dialog")
 
