@@ -916,9 +916,11 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
             self.update_list_dialog = WaitingDialog(_("Refresh applications lists"), _("Refreshing applications lists"))
             self.update_list_dialog.set_size_request(300, 120)
             self.update_list_dialog.close_button.set_label(_("Run in background"))
+            self.update_list_dialog.set_transient_for(self.application.window)
             self.update_list_dialog.show_all()
         if not self.in_update_list:
             self.request_update_list()
+            global_event.emit('show-updating-view')
 
     def update_list_finish(self):
         try:

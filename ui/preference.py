@@ -187,7 +187,7 @@ class WaitingDialog(DialogBox):
                 mask_type=DIALOG_MASK_SINGLE_PAGE, 
                 close_callback=self.dialog_close_action)
         self.set_size_request(-1, -1)
-        self.set_position(gtk.WIN_POS_CENTER)
+        self.set_position(gtk.WIN_POS_CENTER_ON_PARENT)
 
         self.loading_widget = Loading() 
         loading_widget_align = gtk.Alignment()
@@ -384,6 +384,7 @@ class DscPreferenceDialog(PreferenceDialog):
     
     def test_mirror_action(self, widget):
         self.select_best_mirror_dialog.set_transient_for(self)
+        self.select_best_mirror_dialog.set_position(gtk.WIN_POS_CENTER_ON_PARENT)
         self.select_best_mirror_dialog.show_all()
         distro = aptsources.distro.get_distro()
         #distro.get_sources(SourcesList())
