@@ -26,6 +26,7 @@ from nls import get_locale_code
 
 LANGUAGE = get_locale_code()
 
+PROGRAM_NAME = 'deepin-software-center'
 PROGRAM_VERSION = "3.0"
 
 DSC_SERVICE_NAME = "com.linuxdeepin.softwarecenter"

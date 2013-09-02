@@ -82,8 +82,17 @@ class BottomTipBar(gtk.HBox):
     def expose(self, widget, event):
         cr = widget.window.cairo_create()
         rect = widget.allocation
+
+        cr.set_source_rgb(*color_hex_to_cairo('#cccccc'))
+        cr.rectangle(rect.x, rect.y, rect.width, 1)
+        cr.fill()
+
+        cr.set_source_rgb(*color_hex_to_cairo('#ffffff'))
+        cr.rectangle(rect.x, rect.y+1, rect.width, 1)
+        cr.fill()
+
         cr.set_source_rgb(*color_hex_to_cairo('#fff9c9'))
-        cr.rectangle(*rect)
+        cr.rectangle(rect.x, rect.y+2, rect.width, rect.height-2)
         cr.fill()
 
     def expose_info_image_box(self, widget, event):
