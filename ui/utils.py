@@ -187,6 +187,21 @@ def set_config_info(section, key, value):
     config.set(section, key, value)
     config.write()
 
+def is_auto_update():
+    config_info_config = get_config_info_config()
+    if config_info_config.has_option('update', 'auto'):
+        if config_info_config.get('update', 'auto') == 'False':
+            return False
+        else:
+            return True
+    else:
+        return True
+
+def set_auto_update(b):
+    config_info_config = get_config_info_config()
+    config_info_config.set('update', 'auto', b)
+    config_info_config.write()
+
 def get_update_interval():
     config_info_config = get_config_info_config()
     if config_info_config.has_option('update', 'interval'):

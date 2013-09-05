@@ -58,7 +58,7 @@ CONFIG_INFO_PATH = os.path.join(CONFIG_DIR, "config_info.ini")
 DELAY_UPDATE_INTERVAL = 600
 
 sys.path.insert(0, os.path.join(get_parent_dir(__file__, 3), 'ui'))
-from utils import get_update_interval
+from utils import get_update_interval, is_auto_update
 from constant import NO_NOTIFY_FILE
 
 def log(message):
@@ -163,7 +163,10 @@ class Update(dbus.service.Object):
     def set_delay_update(self, seconds):
         if self.delay_update_id:
             gobject.source_remove(self.delay_update_id)
-        self.delay_update_id = gobject.timeout_add_seconds(seconds, self.update_handler)
+        if is_auto_update() and seconds:
+            self.delay_update_id = gobject.timeout_add_seconds(seconds, self.update_handler)
+        else:
+            self.mainloop.quit()
 
     def start_dsc_backend(self):
         print "Start dsc backend service"
@@ -210,7 +213,7 @@ class Update(dbus.service.Object):
                 self.bus_interface.request_quit()
                 print "Quit dsc backend service."
                 log("Quit dsc backend service.")
-                self.set_delay_update(get_update_interval()*3600)
+                self.set_delay_update(int(get_update_interval())*3600)
             elif signal_type == "update-list-failed":
                 self.is_in_update_list = False
                 self.update_status = "failed"
@@ -238,6 +241,10 @@ class Update(dbus.service.Object):
             print "Fontend is running, waite 10 minutes to try again!"
             log("Fontend is running, waite 10 minutes to try again!")
             self.set_delay_update(DELAY_UPDATE_INTERVAL)
+        elif not is_auto_update():
+            print 'Auto update closed, exit...'
+            log('Auto update closed, exit...')
+            self.mainloop.quit()
         else:
             self.start_dsc_backend()
             gobject.timeout_add_seconds(30, start_updater, False)

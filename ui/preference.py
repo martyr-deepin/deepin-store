@@ -52,6 +52,8 @@ from utils import (
         set_software_download_dir,
         get_download_number,
         set_download_number,
+        is_auto_update,
+        set_auto_update,
         )
 from mirror_test import Mirror, MirrorTest
 from events import global_event
@@ -60,6 +62,7 @@ import aptsources.distro
 from loading_widget import Loading
 from constant import PROGRAM_VERSION
 import time
+import subprocess
 
 class MirrorItem(TreeItem):
 
@@ -472,11 +475,14 @@ class DscPreferenceDialog(PreferenceDialog):
         label_align = gtk.Alignment()
         label_align.set_padding(0, 0, 0, 0)
         label_align.add(dir_title_label)
+
+        self.is_auto_update = CheckButton(label_text='自动更新')
+        self.is_auto_update.connect('toggled', self.change_is_auto_update)
         
         update_label = Label(_("Time interval: "))
         self.update_spin = SpinBox(int(get_update_interval()), 0, 168, 1)
         self.update_spin.connect("value-changed", lambda w, v: set_update_interval(v))
-        hour_lablel = Label(_(" hour"))        
+        hour_lablel = Label(_(" hour"))
         hour_lablel.set_size_request(50, 12)
         spin_hbox = gtk.HBox(spacing=3)
         spin_hbox.pack_start(update_label, False, False)
@@ -485,7 +491,14 @@ class DscPreferenceDialog(PreferenceDialog):
 
         main_table.attach(label_align, 0, 2, 0, 1, yoptions=gtk.FILL, xpadding=8)
         main_table.attach(create_separator_box(), 0, 2, 1, 2, yoptions=gtk.FILL)
-        main_table.attach(spin_hbox, 0, 2, 2, 3, xpadding=10, xoptions=gtk.FILL)
+        main_table.attach(self.is_auto_update, 0, 1, 2, 3, xpadding=10, xoptions=gtk.FILL)
+        main_table.attach(spin_hbox, 1, 2, 2, 3, xpadding=10, xoptions=gtk.FILL)
+
+        if is_auto_update():
+            self.is_auto_update.set_active(True)
+        else:
+            self.is_auto_update.toggled()
+
         return main_table
 
     def create_download_dir_table(self):    
@@ -559,6 +572,13 @@ class DscPreferenceDialog(PreferenceDialog):
     def download_number_comobox_changed(self, widget, name, value, index):
         set_download_number(value)
         global_event.emit('max-download-number-changed', value)
+
+    def change_is_auto_update(self, widget, data=None):
+        self.update_spin.set_sensitive(widget.get_active())
+        set_auto_update(widget.get_active())
+        dsc_daemon_path = os.path.join(get_parent_dir(__file__, 2), 'update_data/apt/dsc-daemon.py')
+        if widget.get_active():
+            subprocess.Popen(['python', dsc_daemon_path], stderr=subprocess.STDOUT, shell=False)
 
 class WinDir(gtk.FileChooserDialog):
     '''Open chooser dir dialog'''
