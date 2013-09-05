@@ -479,15 +479,15 @@ class DscPreferenceDialog(PreferenceDialog):
         self.is_auto_update = CheckButton(label_text='自动更新')
         self.is_auto_update.connect('toggled', self.change_is_auto_update)
         
-        update_label = Label(_("Time interval: "))
+        self.update_label = Label(_("Time interval: "))
         self.update_spin = SpinBox(int(get_update_interval()), 0, 168, 1)
         self.update_spin.connect("value-changed", lambda w, v: set_update_interval(v))
-        hour_lablel = Label(_(" hour"))
-        hour_lablel.set_size_request(50, 12)
+        self.hour_lablel = Label(_(" hour"))
+        self.hour_lablel.set_size_request(50, 12)
         spin_hbox = gtk.HBox(spacing=3)
-        spin_hbox.pack_start(update_label, False, False)
+        spin_hbox.pack_start(self.update_label, False, False)
         spin_hbox.pack_start(self.update_spin, False, False)
-        spin_hbox.pack_start(hour_lablel, False, False)
+        spin_hbox.pack_start(self.hour_lablel, False, False)
 
         main_table.attach(label_align, 0, 2, 0, 1, yoptions=gtk.FILL, xpadding=8)
         main_table.attach(create_separator_box(), 0, 2, 1, 2, yoptions=gtk.FILL)
@@ -524,7 +524,7 @@ class DscPreferenceDialog(PreferenceDialog):
         change_download_dir_label = Label(_("Download directory: "))
         self.dir_entry = InputEntry()
         self.dir_entry.set_text(get_software_download_dir())
-        self.dir_entry.set_editable(False)        
+        self.dir_entry.set_editable(False)
         self.dir_entry.set_size(200, 25)
         
         modify_button = Button(_("Change"))
@@ -576,6 +576,8 @@ class DscPreferenceDialog(PreferenceDialog):
     def change_is_auto_update(self, widget, data=None):
         self.update_spin.set_sensitive(widget.get_active())
         set_auto_update(widget.get_active())
+        self.update_label.set_sensitive(widget.get_active())
+        self.hour_lablel.set_sensitive(widget.get_active())
         dsc_daemon_path = os.path.join(get_parent_dir(__file__, 2), 'update_data/apt/dsc-daemon.py')
         if widget.get_active():
             subprocess.Popen(['python', dsc_daemon_path], stderr=subprocess.STDOUT, shell=False)
