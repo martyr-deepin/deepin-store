@@ -135,9 +135,12 @@ class IndexSlideSwitcher(EventBox):
             self.queue_draw()
             if self.fetch_image_id +1 < self.image_number:
                 self.fetch_image_id += 1
-                FetchImageFromUpyun(self.slide_infos[self.fetch_image_id][2], lambda local_path: self.update_images(local_path, self.fetch_image_id)).start()
-        except:
-            print "Render Slide Iamge Error: %s -> %s", (self.slide_infos[0], local_path)
+                FetchImageFromUpyun(
+                        self.slide_infos[self.fetch_image_id][2], 
+                        lambda local_path: self.update_images(local_path, self.fetch_image_id)
+                        ).start()
+        except Exception, e:
+            print "Render Slide Iamge Error: %s -> %s" % (local_path, e)
         
     def expose_slide_switcher(self, widget, event):    
         # Init.

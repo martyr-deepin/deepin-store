@@ -898,7 +898,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
 
         self.init_download_manager()
 
-        self.upgrade_page.fetch_upgrade_info()
+        self.request_update_list()
         
         log("finish")
 
@@ -981,7 +981,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
                 error_handler=lambda e:handle_dbus_error("start_update_list", e),)
 
     def upgrade_pkg(self, pkg_names):
-        self.bus_interface.upgrade_pkg(
+        self.bus_interface.upgrade_pkgs_with_new_policy(
                 pkg_names, 
                 reply_handler=lambda :handle_dbus_reply("upgrade_pkg"), 
                 error_handler=lambda e:handle_dbus_error("upgrade_pkg", e))

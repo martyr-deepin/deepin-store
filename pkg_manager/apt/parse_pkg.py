@@ -26,8 +26,9 @@ import hashlib
 import traceback
 import apt_pkg
 from utils import log
-from constant import DOWNLOAD_STATUS_NOTNEED, DOWNLOAD_STATUS_ERROR
+from constant import DOWNLOAD_STATUS_NOTNEED, DOWNLOAD_STATUS_ERROR, ACTION_UPGRADE
 import apt.debfile as debfile
+from events import global_event
 
 def get_deb_download_info(cache, deb_file):
     try:
@@ -80,6 +81,36 @@ def get_deb_download_info(cache, deb_file):
         
         return DOWNLOAD_STATUS_ERROR
 
+def get_cache_pkg(cache, pkg_name):
+    try:
+        return (pkg_name, cache[pkg_name])
+    except:
+        try:
+            pkg_name += ':i386'
+            return (pkg_name, cache[pkg_name])
+        except:
+            return (pkg_name, None)
+
+def get_upgrade_download_info_with_new_policy(cache, pkg_names):
+    cache._depcache.init()
+    failed_analyze_pkgs = []
+    for name in pkg_names:
+        new_name, pkg = get_cache_pkg(cache, name)
+        if not pkg:
+            failed_analyze_pkgs.append(name)
+            global_event.emit('parse-download-error', name, ACTION_UPGRADE)
+        else:
+            if cache.is_pkg_upgradable(new_name):
+                pkg.mark_upgrade()
+            elif not cache.is_pkg_installed(new_name):
+                pkg.mark_install()
+    dependence = cache.get_changes()
+    cache._depcache.init()
+    if dependence == []:
+        return (DOWNLOAD_STATUS_NOTNEED, failed_analyze_pkgs)
+    else:
+        return (check_pkg_download_info(dependence), failed_analyze_pkgs)
+
 def get_pkg_download_info(cache, pkg_name):
     dependence = get_pkg_dependence(cache, pkg_name)
     if dependence == []:
@@ -122,7 +153,6 @@ def get_pkg_own_size(cache, pkg_name):
             return int(version.installed_size)
         except:
             return 0
-
     
 def check_pkg_download_info(pkgs):
     if len(pkgs) >= 1:
@@ -135,6 +165,7 @@ def check_pkg_download_info(pkgs):
                 urls = []
                 hash_infos = []
                 pkg_sizes = []
+                names = []
                 
                 for pkg in pkgs:
                     version = pkg.candidate
@@ -145,8 +176,9 @@ def check_pkg_download_info(pkgs):
                     urls.append(pkg_uris[0])
                     hash_infos.append((hashtype, hashvalue))
                     pkg_sizes.append(pkg_size)
+                    names.append(pkg.name)
                     
-                return (urls, hash_infos, pkg_sizes)
+                return (names, urls, hash_infos, pkg_sizes)
             except Exception, e:
                 print "get_pkg_download_info error: %s" % (e)
                 log(str(traceback.format_exc()))

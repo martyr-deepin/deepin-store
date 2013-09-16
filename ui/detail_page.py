@@ -461,6 +461,9 @@ class DetailPage(gtk.HBox):
         
     def open_url(self, webview, frame, network_request, nav_action, policy_dec):
         webbrowser.open(network_request.get_uri())
+
+    def webview_console_message_handler(self, webview, message, line, source_id):
+        return True
         
     def fetch_comment(self):
         if is_network_connected():
@@ -472,6 +475,7 @@ class DetailPage(gtk.HBox):
             self.right_comment_box.pack_start(loading_label_align, False, False)
             web_view = WebView(os.path.join(CONFIG_DIR, "cookie.txt"))
             web_view.connect("new-window-policy-decision-requested", self.open_url)
+            web_view.connect('console-message', self.webview_console_message_handler)
             web_view_align = gtk.Alignment()
             web_view_align.set(0.5, 0, 0, 0)
             web_view_align.set_padding(33, 33, 33, 33)
@@ -536,6 +540,7 @@ class DetailPage(gtk.HBox):
             screenshot_dir = os.path.join(SCREENSHOT_DOWNLOAD_DIR, pkg_name)
             screenshot_zip_path = os.path.join(screenshot_dir, "screenshot.zip")
             if os.path.exists(screenshot_zip_path):
+                print "DEBUG"
                 # Remove unused files first.
                 for screenshot_file in os.listdir(screenshot_dir):
                     if screenshot_file not in ["screenshot_md5.txt", "screenshot.zip"]:

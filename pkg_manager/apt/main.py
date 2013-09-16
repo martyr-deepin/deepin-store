@@ -33,6 +33,7 @@ from parse_pkg import (
         get_pkg_dependence_file_path, 
         get_pkg_own_size,
         get_cache_archive_dir,
+        get_upgrade_download_info_with_new_policy,
         )
 import gobject
 import dbus
@@ -193,10 +194,14 @@ class PackageManager(dbus.service.Object):
         self.pkg_cache = AptCache()
         self.exit_flag = False
         self.simulate = False
+        self.in_downloads = []
+        self.need_to_upgrade = []
         
         self.apt_action_pool = AptActionPool(self.pkg_cache)
         self.apt_action_pool.start()
         
+        global_event.register_event('parse-download-error', self.send_parse_download_error)
+
         global_event.register_event("action-start", lambda signal_content: self.update_signal([("action-start", signal_content)]))
         global_event.register_event("action-update", lambda signal_content: self.update_signal([("action-update", signal_content)]))
         global_event.register_event("action-finish", self.action_finish)
@@ -294,9 +299,33 @@ class PackageManager(dbus.service.Object):
         
     def handle_dbus_error(self, *error):
         log("%s (error): %s" % (self.module_dbus_name, str(error)))
+
+    def send_parse_download_error(self, pkg_name, action_type):
+        self.update_signal([("parse-download-error", (pkg_name, action_type))])
+
+    def add_upgrade_download_with_new_policy(self, pkg_names):
+        for pkg_name in pkg_names:
+            self.update_signal([("ready-download-start", (pkg_name, ACTION_UPGRADE))])
+        download_pkg_infos, failed_analyze_pkgs = get_upgrade_download_info_with_new_policy(self.pkg_cache, pkg_names)
+        if download_pkg_infos == DOWNLOAD_STATUS_NOTNEED:
+            self.start_upgrade(pkg_names)
+        else:
+            (names, download_urls, download_hash_infos, pkg_sizes) = download_pkg_infos
+            for (i, name) in enumerate(names):
+                if name.endswith(':i386'):
+                    name = name[:-5]
+                self.download_manager.add_download(
+                                        name,
+                                        ACTION_UPGRADE,
+                                        False,
+                                        [download_urls[i]],
+                                        [download_hash_infos[i]],
+                                        [pkg_sizes[i]],
+                                        file_save_dir=self.download_dir,
+                                        )
+                self.in_downloads.append(name)
         
     def add_download(self, pkg_name, action_type, simulate=False):
-        self.update_signal([("ready-download-start", (pkg_name, action_type))])
         pkg_infos = get_pkg_download_info(self.pkg_cache, pkg_name)
         self.update_signal([("ready-download-finish", (pkg_name, action_type))])
         if pkg_infos == DOWNLOAD_STATUS_NOTNEED:
@@ -306,19 +335,42 @@ class PackageManager(dbus.service.Object):
             self.update_signal([("parse-download-error", (pkg_name, action_type))])
             print "Download error"
         else:
-            (download_urls, download_hash_infos, pkg_sizes) = pkg_infos
+            (names, download_urls, download_hash_infos, pkg_sizes) = pkg_infos
             
-            self.download_manager.add_download(pkg_name, action_type, simulate, download_urls, download_hash_infos, pkg_sizes, file_save_dir=self.download_dir)
+            self.download_manager.add_download(
+                                        pkg_name, 
+                                        action_type, 
+                                        simulate, 
+                                        download_urls, 
+                                        download_hash_infos, 
+                                        pkg_sizes, 
+                                        file_save_dir=self.download_dir)
            
-    def download_finish(self, pkg_name, action_type, simulate, deb_file=""):
+    def download_finish(self, pkg_name, action_type, simulate=False, deb_file=""):
         self.update_signal([("download-finish", (pkg_name, action_type))])
         
         if action_type == ACTION_INSTALL:
             self.apt_action_pool.add_install_action([pkg_name], simulate, deb_file)
         elif action_type == ACTION_UPGRADE:
-            self.apt_action_pool.add_upgrade_action([pkg_name], simulate)
+            if not self.in_downloads:
+                print "DEBUG"
+                self.apt_action_pool.add_multi_upgrade_mission(self.need_to_upgrade)
+                self.need_to_upgrade = []
+            else:
+                for pkg in self.in_downloads:
+                    if str(pkg) == str(pkg_name):
+                        self.in_downloads.remove(pkg)
+                        break
+                self.need_to_upgrade.append(pkg_name)
+                if not self.in_downloads:
+                    self.apt_action_pool.add_multi_upgrade_mission(self.need_to_upgrade)
+                    self.need_to_upgrade = []
             
-        self.exit_manager.check()    
+        self.exit_manager.check()
+
+    def start_upgrade(self, pkg_names):
+        self.apt_action_pool.add_multi_upgrade_mission(pkg_names)
+
         
     def download_stop(self, pkg_name, action_type):
         self.update_signal([("download-stop", (pkg_name, action_type))])
@@ -395,7 +447,7 @@ class PackageManager(dbus.service.Object):
             total_size = -1
             size_flag = PKG_SIZE_ERROR
         else:
-            (download_urls, download_hash_infos, pkg_sizes) = pkg_infos
+            (names, download_urls, download_hash_infos, pkg_sizes) = pkg_infos
             for size in pkg_sizes:
                 total_size += size
             size_flag = PKG_SIZE_DOWNLOAD
@@ -530,7 +582,12 @@ class PackageManager(dbus.service.Object):
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
     def upgrade_pkg(self, pkg_names):
         for pkg_name in pkg_names:
+            self.update_signal([("ready-download-start", (pkg_name, ACTION_UPGRADE))])
             ThreadMethod(self.add_download, (pkg_name, ACTION_UPGRADE, self.simulate)).start()
+
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
+    def upgrade_pkgs_with_new_policy(self, pkg_names):
+        ThreadMethod(self.add_upgrade_download_with_new_policy, (pkg_names, )).start()
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
     def install_deb_files(self, deb_files):
