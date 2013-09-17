@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-29 14:46+0800\n"
+"POT-Creation-Date: 2013-09-17 09:49+0800\n"
 "PO-Revision-Date: 2013-03-25 15:30+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -27,7 +27,7 @@ msgstr "%s: %s款软件"
 msgid "%s > %s : %s applications"
 msgstr "%s > %s: %s款软件"
 
-#: ../ui/home_page.py:721 ../ui/software_center.py:699
+#: ../ui/home_page.py:721 ../ui/software_center.py:709
 msgid "Home"
 msgstr "首页推荐"
 
@@ -43,128 +43,128 @@ msgstr "专题介绍"
 msgid "Download rank"
 msgstr "下载排行"
 
-#: ../ui/software_center.py:120
+#: ../ui/software_center.py:121
 #, python-format
 msgid "%s haven't any desktop file"
 msgstr "%s 没有桌面启动文件"
 
-#: ../ui/software_center.py:128
+#: ../ui/software_center.py:129
 #, python-format
 msgid "%s: request for starting applications sent"
 msgstr "%s: 已经发送启动请求"
 
-#: ../ui/software_center.py:188
+#: ../ui/software_center.py:190
 msgid "Sending comment..."
 msgstr "发送评分..."
 
-#: ../ui/software_center.py:192
+#: ../ui/software_center.py:194
 msgid "You have already sent a comment ;)"
 msgstr "您已经评过分了哟！ ;)"
 
-#: ../ui/software_center.py:197
+#: ../ui/software_center.py:200
 msgid "Comment was successful. Thanks for your involvement. :)"
 msgstr "评分成功， 感谢您的参与！ :)"
 
-#: ../ui/software_center.py:206
+#: ../ui/software_center.py:216
 msgid "Comment was failed. Please check your network connection!"
 msgstr "评分失败，请检查您的网络连接！"
 
-#: ../ui/software_center.py:361
+#: ../ui/software_center.py:371
 #, python-format
 msgid "Update applications lists: %s"
 msgstr "更新软件列表: %s"
 
-#: ../ui/software_center.py:370
+#: ../ui/software_center.py:380
 msgid "Successfully refreshed applications lists."
 msgstr "软件列表更新完成!"
 
-#: ../ui/software_center.py:382
+#: ../ui/software_center.py:392
 msgid "Failed to refresh applications lists."
 msgstr "软件列表更新失败!"
 
-#: ../ui/software_center.py:383
+#: ../ui/software_center.py:393
 msgid "Try again"
 msgstr "重试"
 
-#: ../ui/software_center.py:393
+#: ../ui/software_center.py:403
 #, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted"
 msgstr "分析%s依赖出现问题， 安装停止"
 
-#: ../ui/software_center.py:396
+#: ../ui/software_center.py:406
 #, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
 msgstr "分析%s依赖出现问题， 升级停止"
 
-#: ../ui/software_center.py:405
+#: ../ui/software_center.py:415
 #, python-format
 msgid "%s cannot be installed on 64-bit system."
 msgstr "%s在64位系统上不能被安装"
 
-#: ../ui/software_center.py:407
+#: ../ui/software_center.py:417
 #, python-format
 msgid "%s cannot be installed. It might be a x86_64 specific package"
 msgstr "%s在32位系统上不能被安装，该包可能是64位系统特有的包"
 
-#: ../ui/software_center.py:644 ../ui/preference.py:230
+#: ../ui/software_center.py:654 ../ui/preference.py:233
 msgid "Deepin Software Center"
 msgstr "软件中心"
 
-#: ../ui/software_center.py:680
+#: ../ui/software_center.py:690
 msgid "Join us"
 msgstr "加入我们"
 
-#: ../ui/software_center.py:700
+#: ../ui/software_center.py:710
 msgid "Upgrade"
 msgstr "系统升级"
 
-#: ../ui/software_center.py:701
+#: ../ui/software_center.py:711
 msgid "Uninstall"
 msgstr "卸载软件"
 
-#: ../ui/software_center.py:702
+#: ../ui/software_center.py:712
 msgid "Install Manage"
 msgstr "安装管理"
 
-#: ../ui/software_center.py:726 ../ui/software_center.py:929
+#: ../ui/software_center.py:736 ../ui/software_center.py:939
 msgid "Refresh applications lists"
 msgstr "更新软件列表"
 
-#: ../ui/software_center.py:727
+#: ../ui/software_center.py:737
 msgid "Open download directory"
 msgstr "打开下载目录"
 
-#: ../ui/software_center.py:728
+#: ../ui/software_center.py:738
 msgid "Clear up cached packages"
 msgstr "智能清理下载文件"
 
-#: ../ui/software_center.py:729
+#: ../ui/software_center.py:739
 msgid "View new features"
 msgstr "显示新功能"
 
-#: ../ui/software_center.py:730
+#: ../ui/software_center.py:740
 msgid "Preferences"
 msgstr "选项"
 
-#: ../ui/software_center.py:731
+#: ../ui/software_center.py:741
 msgid "Quit"
 msgstr "退出"
 
-#: ../ui/software_center.py:929
+#: ../ui/software_center.py:939
 msgid "Refreshing applications lists"
 msgstr "正在更新软件列表"
 
-#: ../ui/software_center.py:931 ../ui/preference.py:383
+#: ../ui/software_center.py:941 ../ui/preference.py:386
 msgid "Run in background"
 msgstr "后台执行"
 
-#: ../ui/software_center.py:989
+#: ../ui/software_center.py:999
 #, python-format
 msgid "You have cleared up %s pakcages and saved %s of space"
 msgstr "恭喜您清理了%s个软件包，共节约了%s空间"
 
-#: ../ui/software_center.py:991
+#: ../ui/software_center.py:1001
 msgid "Your system is clean."
 msgstr "您的系统已经很干净了，不需要清理."
 
@@ -173,7 +173,7 @@ msgstr "您的系统已经很干净了，不需要清理."
 msgid "%s: %s matched applications"
 msgstr "%s: 搜索到%s款软件"
 
-#: ../ui/search_page.py:285 ../ui/detail_page.py:428 ../ui/install_page.py:474
+#: ../ui/search_page.py:285 ../ui/detail_page.py:424 ../ui/install_page.py:474
 msgid "Successfully installed"
 msgstr "已安装"
 
@@ -240,46 +240,46 @@ msgstr "升级中"
 msgid "Upgrade complete"
 msgstr "升级完成"
 
-#: ../ui/detail_page.py:174
+#: ../ui/detail_page.py:175
 msgid "Also in the category..."
 msgstr "同类热门推荐"
 
-#: ../ui/detail_page.py:235 ../ui/detail_page.py:472
+#: ../ui/detail_page.py:236 ../ui/detail_page.py:471
 msgid "Loading comments..."
 msgstr "正在加载评论..."
 
-#: ../ui/detail_page.py:359
+#: ../ui/detail_page.py:350
 #, python-format
 msgid "Download: %s"
 msgstr "下载：%s"
 
-#: ../ui/detail_page.py:381
+#: ../ui/detail_page.py:378
 msgid "Category: "
 msgstr "类别："
 
-#: ../ui/detail_page.py:384
+#: ../ui/detail_page.py:381
 #, python-format
 msgid "Version: %s"
 msgstr "版本：%s"
 
-#: ../ui/detail_page.py:385
+#: ../ui/detail_page.py:382
 msgid "Download: 0"
 msgstr "下载：0"
 
-#: ../ui/detail_page.py:386
+#: ../ui/detail_page.py:383
 msgid "Size: calculating..."
 msgstr "大小：计算中..."
 
-#: ../ui/detail_page.py:390
+#: ../ui/detail_page.py:387
 msgid "Visit Homepage"
 msgstr "访问首页"
 
-#: ../ui/detail_page.py:452
+#: ../ui/detail_page.py:448
 #, python-format
 msgid "Size: %s"
 msgstr "大小：%s"
 
-#: ../ui/detail_page.py:591
+#: ../ui/detail_page.py:589
 msgid "Powered by 又拍云存储"
 msgstr "Powered by 又拍云存储"
 
@@ -595,23 +595,23 @@ msgstr "月排行Top25"
 msgid "Top 25 of all time"
 msgstr "总排行Top25"
 
-#: ../ui/preference.py:107
+#: ../ui/preference.py:110
 msgid "Untitled"
 msgstr "未命名"
 
-#: ../ui/preference.py:124
+#: ../ui/preference.py:127
 msgid "Unknown mirror url"
 msgstr "未知源地址"
 
-#: ../ui/preference.py:212
+#: ../ui/preference.py:215
 msgid "Cancel"
 msgstr "取消"
 
-#: ../ui/preference.py:235
+#: ../ui/preference.py:238
 msgid "Version:"
 msgstr "版本："
 
-#: ../ui/preference.py:252
+#: ../ui/preference.py:255
 msgid ""
 "Deepin Software Center is a commonly used software center on Linux. It "
 "selected more than 2,600 decent applications and features easy installation "
@@ -626,86 +626,90 @@ msgstr ""
 "\n"
 "深度软件中心是自由软件，遵循自由软件基金会发布的GNU通用公共许可证第三版。\n"
 
-#: ../ui/preference.py:297
+#: ../ui/preference.py:300
 msgid "General"
 msgstr "常规"
 
-#: ../ui/preference.py:298
+#: ../ui/preference.py:301
 msgid "Software repository"
 msgstr "软件源"
 
-#: ../ui/preference.py:299
+#: ../ui/preference.py:302
 msgid "About"
 msgstr "关于"
 
-#: ../ui/preference.py:319
+#: ../ui/preference.py:322
 msgid "Select mirror"
 msgstr "选择软件下载源"
 
-#: ../ui/preference.py:339
+#: ../ui/preference.py:342
 msgid "Select fastest mirror"
 msgstr "选择最快下载源"
 
-#: ../ui/preference.py:360
+#: ../ui/preference.py:363
 msgid "Select best mirror"
 msgstr "选择最佳源"
 
-#: ../ui/preference.py:361
+#: ../ui/preference.py:364
 msgid ""
 "Please wait. The process will take 30 seconds or more depending on your "
 "network connection"
 msgstr "请等待，此过程根据网速不同会持续30秒或者更长时间"
 
-#: ../ui/preference.py:381
+#: ../ui/preference.py:384
 msgid "The software repository has changed. Refreshing applications lists"
 msgstr "软件源已经更改，正在更新软件列表"
 
-#: ../ui/preference.py:418
+#: ../ui/preference.py:421
 msgid ""
 "Test for downloading mirror failed. Please check your network connection."
 msgstr "测试下载源失败, 请检查您的网络连接！"
 
-#: ../ui/preference.py:419
+#: ../ui/preference.py:422
 msgid "Close"
 msgstr "关闭"
 
-#: ../ui/preference.py:470
+#: ../ui/preference.py:473
 msgid "Update applications lists"
 msgstr "软件列表更新"
 
-#: ../ui/preference.py:476
+#: ../ui/preference.py:479
+msgid "Update automatically"
+msgstr "自动更新"
+
+#: ../ui/preference.py:482
 msgid "Time interval: "
 msgstr "间隔时间："
 
-#: ../ui/preference.py:479
+#: ../ui/preference.py:485
 msgid " hour"
 msgstr " 小时"
 
-#: ../ui/preference.py:495
+#: ../ui/preference.py:508
 msgid "Download settings"
 msgstr "下载设置"
 
-#: ../ui/preference.py:501
+#: ../ui/preference.py:514
 msgid "Max download task number: "
 msgstr "最大下载任务数："
 
-#: ../ui/preference.py:511
+#: ../ui/preference.py:524
 msgid "Download directory: "
 msgstr "下载目录："
 
-#: ../ui/preference.py:517
+#: ../ui/preference.py:530
 msgid "Change"
 msgstr "更改"
 
-#: ../ui/preference.py:533
+#: ../ui/preference.py:546
 msgid "On uninstall software"
 msgstr "当卸载软件的时候"
 
-#: ../ui/preference.py:538
+#: ../ui/preference.py:551
 msgid "Delete configuration files"
 msgstr "删除系统配置文件"
 
-#: ../ui/preference.py:566
+#: ../ui/preference.py:588
 msgid "Select Directory"
 msgstr "选择目录"
 

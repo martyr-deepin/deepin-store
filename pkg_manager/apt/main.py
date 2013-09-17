@@ -224,6 +224,9 @@ class PackageManager(dbus.service.Object):
         global_event.register_event("update-list-failed", self.update_list_failed)
         global_event.register_event("update-list-update", self.update_list_update)
 
+        global_event.register_event("upgrade-commit-update", lambda signal_content: self.update_signal([('upgrade-commit-update', signal_content)]))
+        global_event.register_event("upgrade-commit-finish", lambda signal_content: self.update_signal([('upgrade-commit-finish', signal_content)]))
+
         self.packages_status = {}
         
         self.exit_manager = ExitManager(

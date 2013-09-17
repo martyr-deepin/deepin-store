@@ -476,8 +476,8 @@ class DscPreferenceDialog(PreferenceDialog):
         label_align.set_padding(0, 0, 0, 0)
         label_align.add(dir_title_label)
 
-        self.is_auto_update = CheckButton(label_text='自动更新')
-        self.is_auto_update.connect('toggled', self.change_is_auto_update)
+        self.is_auto_update_button = CheckButton(label_text=_('Update automatically'))
+        self.is_auto_update_button.connect('toggled', self.change_auto_update)
         
         self.update_label = Label(_("Time interval: "))
         self.update_spin = SpinBox(int(get_update_interval()), 0, 168, 1)
@@ -491,13 +491,13 @@ class DscPreferenceDialog(PreferenceDialog):
 
         main_table.attach(label_align, 0, 2, 0, 1, yoptions=gtk.FILL, xpadding=8)
         main_table.attach(create_separator_box(), 0, 2, 1, 2, yoptions=gtk.FILL)
-        main_table.attach(self.is_auto_update, 0, 1, 2, 3, xpadding=10, xoptions=gtk.FILL)
+        main_table.attach(self.is_auto_update_button, 0, 1, 2, 3, xpadding=10, xoptions=gtk.FILL)
         main_table.attach(spin_hbox, 1, 2, 2, 3, xpadding=10, xoptions=gtk.FILL)
 
         if is_auto_update():
-            self.is_auto_update.set_active(True)
+            self.is_auto_update_button.set_active(True)
         else:
-            self.is_auto_update.toggled()
+            self.is_auto_update_button.toggled()
 
         return main_table
 
@@ -573,7 +573,7 @@ class DscPreferenceDialog(PreferenceDialog):
         set_download_number(value)
         global_event.emit('max-download-number-changed', value)
 
-    def change_is_auto_update(self, widget, data=None):
+    def change_auto_update(self, widget, data=None):
         self.update_spin.set_sensitive(widget.get_active())
         set_auto_update(widget.get_active())
         self.update_label.set_sensitive(widget.get_active())

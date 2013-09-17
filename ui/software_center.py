@@ -898,7 +898,8 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
 
         self.init_download_manager()
 
-        self.request_update_list()
+        #self.request_update_list()
+        self.upgrade_page.fetch_upgrade_info()
         
         log("finish")
 

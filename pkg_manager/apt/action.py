@@ -81,7 +81,7 @@ class CommitProcess(apb.InstallProgress):
         
     def status_change(self, pkg, percent, status):
         '''Progress status change.'''
-        global_event.emit("commit-update", (self.pkg_names, self.action_type, int(percent), status))
+        global_event.emit("upgrade-commit-update", (self.pkg_names, self.action_type, int(percent), status))
         for pkg_name in self.pkg_names:
             global_event.emit("action-update", (pkg_name, self.action_type, int(percent), status))
         log((self.pkg_names, self.action_type, int(percent), status))
@@ -198,8 +198,7 @@ class MultiAptActionThread(MissionThread):
             try:
                 self.pkg_cache.commit(None, CommitProcess(self.pkg_names, self.action_type))
                 log("success")
-                print "finish"
-                #global_event.emit("commit-finish", (self.pkg_names, self.action_type, pkg_info_list))
+                global_event.emit("upgrade-commit-finish", (self.pkg_names, self.action_type, pkg_info_list))
                 for pkg_name in self.pkg_names:
                     global_event.emit('action-finish', (pkg_name, self.action_type, pkg_info_list))
             except Exception, e:
