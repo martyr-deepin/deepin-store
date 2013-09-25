@@ -328,7 +328,13 @@ class DataManager(object):
         q = sconn.query_parse(search, default_op=sconn.OP_AND)
         results = sconn.search(q, 0, sconn.get_doccount(), sortby="have_desktop_file")
         
-        return map(lambda result: result.data["pkg_name"][0], results)
+        all_results = map(lambda result: result.data["pkg_name"][0], results)
+        for keyword in keywords:
+            match_names = self.get_pkgs_match_input(keyword)
+            for name in match_names:
+                if name not in all_results:
+                    all_results.append(name)
+        return all_results
 
     def change_source_list(self, repo_urls, reply_handler, error_handler):
         self.bus_interface.change_source_list(repo_urls,

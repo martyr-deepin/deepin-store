@@ -37,6 +37,11 @@ dsc_root_dir = os.path.realpath(get_parent_dir(__file__, 2))
 
 global_logger = newLogger('global')
 
+def create_align(init, padding):
+    align = gtk.Alignment(*init)
+    align.set_padding(*padding)
+    return align
+
 def sort_for_home_page_data(infos):
     new_infos = []
     new_infos.append(tuple(infos[0]))

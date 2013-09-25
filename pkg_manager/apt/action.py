@@ -263,6 +263,7 @@ class AptActionPool(MissionThreadPool):
         for result in mission_result_list:
             if result:
                 for r in result:
+                    print r
                     pkg_name, action_type = r
                     if action_type == ACTION_INSTALL:
                         if self.install_action_dict.has_key(pkg_name):

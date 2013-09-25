@@ -25,7 +25,7 @@ import gobject
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, NO_NOTIFY_FILE, CHECK_BUTTON_PADDING_X, cute_info_dir
 import os
 from dtk.ui.treeview import TreeView, TreeItem
-from dtk.ui.button import CheckButtonBuffer, ImageButton, CheckAllButton
+from dtk.ui.button import CheckButtonBuffer, ImageButton, CheckAllButton, Button
 from star_buffer import DscStarBuffer
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
 from deepin_utils.core import split_with
@@ -33,6 +33,7 @@ from deepin_utils.net import is_network_connected
 from deepin_utils.file import read_file, format_file_size
 from dtk.ui.utils import is_in_rect, container_remove_all, get_content_size
 from dtk.ui.label import Label
+from dtk.ui.theme import DynamicPixbuf
 from item_render import (render_pkg_info, STAR_SIZE, get_star_level, ITEM_PADDING_Y, get_icon_pixbuf_path,
                          ITEM_INFO_AREA_WIDTH, ITEM_CANCEL_BUTTON_PADDING_RIGHT, NAME_SIZE, ICON_SIZE, ITEM_PADDING_MIDDLE,
                          ITEM_STAR_AREA_WIDTH, ITEM_STATUS_TEXT_PADDING_RIGHT,
@@ -42,12 +43,13 @@ from item_render import (render_pkg_info, STAR_SIZE, get_star_level, ITEM_PADDIN
                          ITEM_NOTIFY_AGAIN_STRING, ITEM_NOTIFY_AGAIN_WIDTH, ITEM_NOTIFY_AGAIN_HEIGHT,
                          )
 from skin import app_theme
-from dtk.ui.progressbar import ProgressBuffer
+from dtk.ui.progressbar import ProgressBuffer, ProgressBar
 from events import global_event
 from constant import ACTION_UPGRADE
 from dtk.ui.cycle_strip import CycleStrip
 import dtk.ui.tooltip as Tooltip
 from utils import get_last_upgrade_time, set_last_upgrade_time, handle_dbus_error, handle_dbus_reply
+import utils
 from nls import _
 
 class UpgradingBar(gtk.HBox):
@@ -151,6 +153,7 @@ class UpgradeBar(gtk.HBox):
             app_theme.get_pixbuf("button/upgrade_all_normal.png"),
             app_theme.get_pixbuf("button/upgrade_all_hover.png"),
             app_theme.get_pixbuf("button/upgrade_all_press.png"),
+            insensitive_dpixbuf=DynamicPixbuf(utils.get_common_image('button/upgrade_all_insensitive.png')),
             )
         Tooltip.text(self.upgrade_selected_button, _("Upgrade select items"))
         self.upgrade_selected_button_align = gtk.Alignment()
@@ -170,8 +173,11 @@ class UpgradeBar(gtk.HBox):
     def handle_active_changed(self, widget, state):
         if state:
             global_event.emit("select-all-upgrade-pkg")
+            self.upgrade_selected_button.set_sensitive(True)
+            self.upgrade_selected_button.set_state(gtk.STATE_NORMAL)
         else:
             global_event.emit("unselect-all-upgrade-pkg")
+            self.upgrade_selected_button.set_sensitive(False)
         
     def set_upgrade_info(self, upgrade_num, no_notify_num):
         self.message_label.set_text(_("%s applications are available for upgrade") % upgrade_num)
@@ -286,6 +292,8 @@ class UpgradePage(gtk.VBox):
         self.network_disable_view = gtk.VBox()
         self.network_disable_pixbuf = None
         self.network_disable_view.connect("expose-event", self.expose_network_disable_view)
+
+        self.create_upgrading_box()
         
         self.upgrade_treeview = TreeView(enable_drag_drop=False)
         self.upgrade_treeview.set_expand_column(1)
@@ -316,6 +324,7 @@ class UpgradePage(gtk.VBox):
         global_event.register_event("show-updating-view", self.show_updating_view)
         global_event.register_event("show-newest-view", self.show_newest_view)
         global_event.register_event("show-network-disable-view", self.show_network_disable_view)
+        global_event.register_event("show-upgrading-view", self.show_upgrading_view)
         
         global_event.register_event("click-upgrade-check-button", self.click_upgrade_check_button)
         global_event.register_event("click-notify-check-button", self.click_notify_check_button)
@@ -324,9 +333,77 @@ class UpgradePage(gtk.VBox):
         self.no_notify_treeview.draw_mask = self.draw_mask
         
         global_event.emit("show-updating-view")
+
+    def create_upgrading_box(self):
+        self.upgrading_view = gtk.VBox()
+
+        inner_box = gtk.VBox()
+
+        update_logo_box = gtk.VBox()
+        update_logo_box.set_size_request(48, 48)
+        update_logo_box.connect('expose-event', self.expose_update_logo_box)
+
+        progress_box = gtk.VBox()
+        self.upgrading_progressbar = ProgressBar()
+        self.upgrading_progressbar.set_size_request(-1, 12)
+        self.upgrading_progressbar.progress_buffer.progress = 0.0
+        self.upgrading_progress_info = Label("  ")
+
+        progress_box.pack_start(self.upgrading_progressbar, False, False)
+        progress_box.pack_start(self.upgrading_progress_info, False, False)
+        progress_box_align = utils.create_align((0.5, 0.5, 1, 0), (2, 2, 10, 10))
+        progress_box_align.add(progress_box)
+
+        upper_box = gtk.HBox()
+        upper_box.pack_start(update_logo_box, False, False)
+        upper_box.pack_start(progress_box_align)
+
+        middle_button_box = gtk.HBox()
+
+        self.upgrading_cancel_button = Button("取消")
+        upgrading_cancel_button_align = utils.create_align((0.5, 0.5, 0, 0), (4, 4, 4, 4))
+        upgrading_cancel_button_align.add(self.upgrading_cancel_button)
+
+        self.upgrading_hide_button = Button("后台运行")
+        upgrading_hide_button_align = utils.create_align((0.5, 0.5, 0, 0), (4, 4, 4, 4))
+        upgrading_hide_button_align.add(self.upgrading_hide_button)
+
+        middle_button_box.pack_end(upgrading_cancel_button_align, False, False)
+        middle_button_box.pack_end(upgrading_hide_button_align, False, False)
+        middle_button_box_align = utils.create_align((1, 0.5, 1, 0), (2, 2, 2, 2))
+        middle_button_box_align.add(middle_button_box)
+
+        bottom_info_box = gtk.VBox()
+
+        inner_box.pack_start(upper_box, False, False)
+        inner_box.pack_start(middle_button_box_align, False, False)
+        inner_box.pack_start(bottom_info_box)
+
+        upgrading_view_align = utils.create_align((0.5, 0.5, 1, 1), (40, 40, 50, 50))
+        upgrading_view_align.add(inner_box)
+        self.upgrading_view.pack_start(upgrading_view_align, True, True)
+
+    def expose_update_logo_box(self, widget, event):
+        rect = widget.allocation
+        cr = widget.window.cairo_create()
         
+        pixbuf = utils.get_common_image_pixbuf('update/update.png')
+
+        draw_pixbuf(cr,
+                    pixbuf,
+                    rect.x,
+                    rect.y,
+                    )        
+
     def click_upgrade_check_button(self):
-        self.upgrade_bar.select_button.update_status(map(lambda item: item.check_button_buffer.active, self.upgrade_treeview.visible_items))
+        actives = [item.check_button_buffer.active for item in self.upgrade_treeview.visible_items]
+        if True in actives:
+            self.upgrade_bar.upgrade_selected_button.set_sensitive(True)
+            self.upgrade_bar.upgrade_selected_button.set_state(gtk.STATE_NORMAL)
+        else:
+            self.upgrade_bar.upgrade_selected_button.set_sensitive(False)
+
+        #self.upgrade_bar.select_button.update_status(map(lambda item: item.check_button_buffer.active, self.upgrade_treeview.visible_items))
         
     def click_notify_check_button(self):
         self.no_notify_bar.select_button.update_status(map(lambda item: item.check_button_buffer.active, self.no_notify_treeview.visible_items))
@@ -343,6 +420,7 @@ class UpgradePage(gtk.VBox):
             global_event.emit("show-newest-view")
         else:
             self.upgrade_bar.set_upgrade_info(len(treeview.visible_items), self.no_notify_pkg_num)
+            self.click_upgrade_check_button()
             
     def monitor_no_notify_view(self, treeview):
         if len(treeview.visible_items) == 0:
@@ -360,6 +438,12 @@ class UpgradePage(gtk.VBox):
             self.show_all()
         else:
             global_event.emit("show-network-disable-view")
+
+    def show_upgrading_view(self):
+        container_remove_all(self)
+
+        self.pack_start(self.upgrading_view)
+        self.show_all()
             
     def show_newest_view(self):
         container_remove_all(self)
@@ -414,6 +498,7 @@ class UpgradePage(gtk.VBox):
                 pkg_names.append(item.pkg_name)
                 
         global_event.emit("upgrade-pkg", pkg_names)        
+        self.show_upgrading_view()
         
     def select_all_notify_pkg(self):
         for item in self.no_notify_treeview.visible_items:
@@ -690,36 +775,29 @@ class UpgradePage(gtk.VBox):
             self.no_notify_treeview.add_items(no_notify_items)
         else:
             global_event.emit("show-newest-view")
-        
+
     def download_ready(self, pkg_name):
-        for item in self.upgrade_treeview.visible_items:
-            if item.pkg_name == pkg_name:
-                item.download_ready()
-                break
+        pass
 
     def download_wait(self, pkg_name):
-        for item in self.upgrade_treeview.visible_items:
-            if item.pkg_name == pkg_name:
-                item.download_wait()
-                break
+        pass
 
     def download_start(self, pkg_name):
-        for item in self.upgrade_treeview.visible_items:
-            if item.pkg_name == pkg_name:
-                item.download_start()
-                break
+        self.upgrading_progress_info.set_text("开始下载...")
 
-    def download_update(self, pkg_name, percent, speed):
-        for item in self.upgrade_treeview.visible_items:
-            if item.pkg_name == pkg_name:
-                item.download_update(percent, speed)
-                break
+    def download_update(self, pkg_name, percent, speed, finish_number, total, downloaded_size, total_size):
+        self.upgrading_progress_info.set_text("正在下载：(%s/%s)  已完成：%s/%s 下载速度：%s/s" % (
+            finish_number,
+            total,
+            utils.bit_to_human_str(downloaded_size),
+            utils.bit_to_human_str(total_size),
+            utils.bit_to_human_str(speed),
+            ))
+        self.upgrading_progressbar.set_progress(percent)
         
     def download_finish(self, pkg_name):
-        for item in self.upgrade_treeview.visible_items:
-            if item.pkg_name == pkg_name:
-                item.download_finish()
-                break
+        self.upgrading_progress_info.set_text("下载完成!")
+        self.upgrading_progressbar.set_progress(100.0)
 
     def download_stop(self, pkg_name):
         for item in self.upgrade_treeview.visible_items:
@@ -728,29 +806,20 @@ class UpgradePage(gtk.VBox):
                 break
             
     def download_parse_failed(self, pkg_name):
-        for item in self.upgrade_treeview.visible_items:
-            if item.pkg_name == pkg_name:
-                item.download_parse_failed()
-                break
+        self.upgrading_progress_info.set_text("依赖分析失败!")
             
     def action_start(self, pkg_name):
-        for item in self.upgrade_treeview.visible_items:
-            if item.pkg_name == pkg_name:
-                item.action_start()
-                break
+        self.upgrading_progress_info.set_text("开始升级...")
+        self.upgrading_cancel_button.set_sensitive(False)
     
     def action_update(self, pkg_name, percent):
-        for item in self.upgrade_treeview.visible_items:
-            if item.pkg_name == pkg_name:
-                item.action_update(percent)
-                break
+        self.upgrading_progress_info.set_text("升级中...")
+        self.upgrading_progressbar.set_progress(percent)
     
     def action_finish(self, pkg_name, pkg_info_list):
-        for item in self.upgrade_treeview.visible_items:
-            if item.pkg_name == pkg_name:
-                item.action_finish()
-                break
-        
+        self.upgrading_progress_info.set_text("升级完成!")
+        self.upgrading_progressbar.set_progress(100.0)
+
 gobject.type_register(UpgradePage)
 
 class UpgradeItem(TreeItem):
@@ -997,13 +1066,15 @@ class UpgradeItem(TreeItem):
         return [ITEM_CHECKBUTTON_WIDTH,
                 ITEM_INFO_AREA_WIDTH,
                 ITEM_NO_NOTIFY_AREA_WIDTH,
-                ITEM_STAR_AREA_WIDTH + ITEM_BUTTON_AREA_WIDTH]
+                #ITEM_STAR_AREA_WIDTH + ITEM_BUTTON_AREA_WIDTH,
+                ]
     
     def get_column_renders(self):
         return [self.render_check_button,
                 self.render_pkg_info,
                 self.render_no_notify,
-                self.render_pkg_status]
+                #self.render_pkg_status,
+                ]
     
     def unselect(self):
         pass
@@ -1093,7 +1164,6 @@ class UpgradeItem(TreeItem):
         if column == 0:
             if self.check_button_buffer.press_button(offset_x, offset_y):
                 global_event.emit("click-upgrade-check-button")
-                
                 if self.redraw_request_callback:
                     self.redraw_request_callback(self)
         elif column == 1:
@@ -1406,7 +1476,7 @@ class NoNotifyItem(TreeItem):
         
         if self.status == self.STATUS_NORMAL:
             # Draw star.
-            self.star_buffer.render(cr, gtk.gdk.Rectangle(rect.x, rect.y, ITEM_STAR_AREA_WIDTH, ITEM_HEIGHT))
+            #self.star_buffer.render(cr, gtk.gdk.Rectangle(rect.x, rect.y, ITEM_STAR_AREA_WIDTH, ITEM_HEIGHT))
             
             self.render_notify_again(cr, rect)
         

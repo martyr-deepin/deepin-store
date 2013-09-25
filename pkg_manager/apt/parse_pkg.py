@@ -105,11 +105,12 @@ def get_upgrade_download_info_with_new_policy(cache, pkg_names):
             elif not cache.is_pkg_installed(new_name):
                 pkg.mark_install()
     dependence = cache.get_changes()
+    all_upgrade_pkg_names = [pkg.name for pkg in dependence]
     cache._depcache.init()
     if dependence == []:
-        return (DOWNLOAD_STATUS_NOTNEED, failed_analyze_pkgs)
+        return (DOWNLOAD_STATUS_NOTNEED, failed_analyze_pkgs, all_upgrade_pkg_names)
     else:
-        return (check_pkg_download_info(dependence), failed_analyze_pkgs)
+        return (check_pkg_download_info(dependence), failed_analyze_pkgs, all_upgrade_pkg_names)
 
 def get_pkg_download_info(cache, pkg_name):
     dependence = get_pkg_dependence(cache, pkg_name)
@@ -155,6 +156,7 @@ def get_pkg_own_size(cache, pkg_name):
             return 0
     
 def check_pkg_download_info(pkgs):
+    total = len(pkgs)
     if len(pkgs) >= 1:
         pkgs = [pkg for pkg in pkgs if not pkg.marked_delete and not pkg_file_has_exist(pkg)]
         
@@ -178,7 +180,7 @@ def check_pkg_download_info(pkgs):
                     pkg_sizes.append(pkg_size)
                     names.append(pkg.name)
                     
-                return (names, urls, hash_infos, pkg_sizes)
+                return (names, urls, hash_infos, pkg_sizes, total)
             except Exception, e:
                 print "get_pkg_download_info error: %s" % (e)
                 log(str(traceback.format_exc()))

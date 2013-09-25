@@ -21,6 +21,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from deepin_storm.download import FetchServiceThread, join_glib_loop, FetchFiles
+from deepin_utils.hash import get_hash
+import os
+import sys
 
 class DownloadManager(object):
     '''
@@ -40,7 +43,7 @@ class DownloadManager(object):
         
         self.fetch_files_dict = {}
         
-    def add_download(self, pkg_name, action_type, simulate, download_urls, download_hash_infos, file_sizes, deb_file="", file_save_dir="/var/cache/apt/archives"):
+    def add_download(self, pkg_name, action_type, simulate, download_urls, download_hash_infos, file_sizes, total, deb_file="", file_save_dir="/var/cache/apt/archives"):
         fetch_files = FetchFiles(
             download_urls,
             file_hash_infos=download_hash_infos,
@@ -49,7 +52,7 @@ class DownloadManager(object):
 
         if self.global_event:
             fetch_files.signal.register_event("start", lambda : self.start_download(pkg_name, action_type))
-            fetch_files.signal.register_event("update", lambda percent, speed: self.update_download(pkg_name, action_type, percent, speed))
+            fetch_files.signal.register_event("update", lambda percent, speed: self.update_download(pkg_name, action_type, percent, speed, fetch_files, total))
             fetch_files.signal.register_event("finish", lambda : self.finish_download(pkg_name, action_type, simulate, deb_file))
             fetch_files.signal.register_event("pause", lambda : self.global_event.emit("download-stop", pkg_name, action_type))
             fetch_files.signal.register_event("stop", lambda : self.global_event.emit("download-stop", pkg_name, action_type))
@@ -74,11 +77,21 @@ class DownloadManager(object):
             
         self.global_event.emit("download-start", pkg_name, action_type)    
     
-    def update_download(self, pkg_name ,action_type, percent, speed):
+    def update_download(self, pkg_name ,action_type, percent, speed, fetch_files, total):
         if self.fetch_files_dict.has_key(pkg_name):
             self.fetch_files_dict[pkg_name]["status"] = "update"
+
+        finish_number = total - len(fetch_files.fetch_file_dict)
+        for fetch_file in fetch_files.fetch_file_dict.values():
+            (expect_hash_type, expect_hash_value) = fetch_file.file_hash_info
+            if os.path.exists(fetch_file.file_save_path):
+                hash_value = get_hash(fetch_file.file_save_path, expect_hash_type)
+                if hash_value == expect_hash_value:
+                    finish_number += 1
             
-        self.global_event.emit("download-update", pkg_name, action_type, percent, speed)    
+        self.global_event.emit("download-update", \
+                pkg_name, action_type, percent, speed, finish_number, total, \
+                fetch_files.downloaded_size, fetch_files.total_size)
         
     def finish_download(self, pkg_name, action_type, simulate, deb_file):
         if self.fetch_files_dict.has_key(pkg_name):
@@ -98,8 +111,6 @@ class DownloadManager(object):
         print message
 
 if __name__ == "__main__":
-    import sys
-    import os
     
     def get_parent_dir(filepath, level=1):
         '''

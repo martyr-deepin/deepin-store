@@ -262,10 +262,10 @@ def switch_page(page_switcher, page_box, page, detail_page):
             
         log("page.category_view.select_first_item()")
         page.category_view.select_first_item()
-    elif isinstance(page, UpgradePage):
-        page.fetch_upgrade_info()
-        if page.in_no_notify_page:
-            page.show_init_page()
+    #elif isinstance(page, UpgradePage):
+        #page.fetch_upgrade_info()
+        #if page.in_no_notify_page:
+            #page.show_init_page()
 
 def message_handler(messages, bus_interface, upgrade_page, uninstall_page, install_page, home_page):
     for message in messages:
@@ -294,11 +294,11 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                     upgrade_page.download_start(pkg_name)
 
             elif signal_type == "download-update":
-                (pkg_name, action_type, percent, speed) = action_content
+                (pkg_name, action_type, percent, speed, finish_number, total, downloaded_size, total_size) = action_content
                 if action_type == ACTION_INSTALL:
                     install_page.download_update(pkg_name, percent, speed)
                 elif action_type == ACTION_UPGRADE:
-                    upgrade_page.download_update(pkg_name, percent, speed)
+                    upgrade_page.download_update(pkg_name, percent, speed, finish_number, total, downloaded_size, total_size)
 
             elif signal_type == "download-finish":
                 (pkg_name, action_type) = action_content
@@ -338,6 +338,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                     uninstall_page.action_finish(pkg_name, pkg_info_list)
                 elif action_type == ACTION_UPGRADE:
                     upgrade_page.action_finish(pkg_name, pkg_info_list)
+                    upgrade_page.fetch_upgrade_info()
                 elif action_type == ACTION_INSTALL:
                     install_page.action_finish(pkg_name, pkg_info_list)
                 
