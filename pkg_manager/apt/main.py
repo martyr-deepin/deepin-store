@@ -38,6 +38,7 @@ import dbus
 import dbus.service
 import dbus.mainloop.glib
 import os
+import json
 from constant import (
         DSC_SERVICE_NAME, 
         DSC_SERVICE_PATH, 
@@ -219,9 +220,6 @@ class PackageManager(dbus.service.Object):
         global_event.register_event("update-list-failed", self.update_list_failed)
         global_event.register_event("update-list-update", self.update_list_update)
 
-        global_event.register_event("upgrade-commit-update", lambda signal_content: self.update_signal([('upgrade-commit-update', signal_content)]))
-        global_event.register_event("upgrade-commit-finish", lambda signal_content: self.update_signal([('upgrade-commit-finish', signal_content)]))
-
         self.packages_status = {}
         
         self.exit_manager = ExitManager(
@@ -359,7 +357,7 @@ class PackageManager(dbus.service.Object):
         self.exit_manager.check()
 
     def start_upgrade(self, pkg_names):
-        self.apt_action_pool.add_multi_upgrade_mission(pkg_names)
+        self.apt_action_pool.add_multi_upgrade_mission(pkg_names, self.upgrade_id)
         
     def download_stop(self, pkg_name, action_type):
         self.update_signal([("download-stop", (pkg_name, action_type))])
@@ -442,9 +440,11 @@ class PackageManager(dbus.service.Object):
             size_flag = PKG_SIZE_DOWNLOAD
         return [size_flag, total_size]
 
-    @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="i")
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="as")
     def get_upgrade_download_size(self, pkg_names):
-        pkg_infos = get_upgrade_download_info_with_new_policy(self.pkg_cache, pkg_names)[0]
+        infos = get_upgrade_download_info_with_new_policy(self.pkg_cache, pkg_names)
+        pkg_infos = infos[0]
+        change_pkg_names = infos[2]
         if pkg_infos == DOWNLOAD_STATUS_NOTNEED:
             total_size = 0
         elif pkg_infos == DOWNLOAD_STATUS_ERROR:
@@ -454,7 +454,7 @@ class PackageManager(dbus.service.Object):
             total_size = 0
             for size in pkg_sizes:
                 total_size += size
-        return total_size
+        return [str(total_size), json.dumps(change_pkg_names)]
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="ai")
     def clean_download_cache(self):

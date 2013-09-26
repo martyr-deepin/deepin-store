@@ -60,12 +60,13 @@ class AptProcess(apb.InstallProgress):
         log((self.pkg_name, self.action_type, int(percent), status))
 
 class CommitProcess(apb.InstallProgress):
-    def __init__(self, pkg_names, action_type):
+    def __init__(self, pkg_names, action_type, upgrade_id):
         '''Init for install progress.'''
         # Init.
         apb.InstallProgress.__init__(self)
         self.pkg_names = pkg_names
         self.action_type = action_type
+        self.upgrade_id = upgrade_id
 
     def conffile(self, current, new):
         #global_event.emit("action-conffile", (current, new))
@@ -81,9 +82,7 @@ class CommitProcess(apb.InstallProgress):
         
     def status_change(self, pkg, percent, status):
         '''Progress status change.'''
-        global_event.emit("upgrade-commit-update", (self.pkg_names, self.action_type, int(percent), status))
-        for pkg_name in self.pkg_names:
-            global_event.emit("action-update", (pkg_name, self.action_type, int(percent), status))
+        global_event.emit("action-update", (self.upgrade_id, self.action_type, int(percent), status))
         log((self.pkg_names, self.action_type, int(percent), status))
 
 class AptActionThread(MissionThread):
@@ -163,7 +162,7 @@ class AptActionThread(MissionThread):
         return [(self.pkg_name, self.action_type)]
 
 class MultiAptActionThread(MissionThread):
-    def __init__(self, pkg_cache, pkg_names, action_type, purge_flag=False):
+    def __init__(self, pkg_cache, pkg_names, action_type, upgrade_id, purge_flag=False):
         '''
         init docs
         '''
@@ -173,6 +172,7 @@ class MultiAptActionThread(MissionThread):
         self.pkg_names = pkg_names
         self.action_type = action_type
         self.purge_flag = purge_flag
+        self.upgrade_id = upgrade_id
         
     def start_mission(self):
         log("start thread")
@@ -196,11 +196,9 @@ class MultiAptActionThread(MissionThread):
                 global_event.emit("action-start", (pkg_info[0], self.action_type))
 
             try:
-                self.pkg_cache.commit(None, CommitProcess(self.pkg_names, self.action_type))
+                self.pkg_cache.commit(None, CommitProcess(self.pkg_names, self.action_type, self.upgrade_id))
                 log("success")
-                global_event.emit("upgrade-commit-finish", (self.pkg_names, self.action_type, pkg_info_list))
-                for pkg_name in self.pkg_names:
-                    global_event.emit('action-finish', (pkg_name, self.action_type, pkg_info_list))
+                global_event.emit('action-finish', (self.upgrade_id, self.action_type, pkg_info_list))
             except Exception, e:
                 log("Commit Failed: %s" % e)
                 log(str(traceback.format_exc()))
@@ -307,10 +305,10 @@ class AptActionPool(MissionThreadPool):
             
         self.add_missions(missions)
 
-    def add_multi_upgrade_mission(self, pkg_names):
+    def add_multi_upgrade_mission(self, pkg_names, upgrade_id):
         missions = []
 
-        thread = MultiAptActionThread(self.pkg_cache, pkg_names, ACTION_UPGRADE)
+        thread = MultiAptActionThread(self.pkg_cache, pkg_names, ACTION_UPGRADE, upgrade_id=upgrade_id)
         for pkg_name in pkg_names:
             self.upgrade_action_dict[pkg_name] = {
                 "thread" : thread,

@@ -30,9 +30,12 @@ from skin import app_theme
 from dtk.ui.draw import draw_pixbuf, draw_text
 from dtk.ui.utils import get_content_size, is_in_rect
 from dtk.ui.label import Label
-from dtk.ui.button import CloseButton
+from dtk.ui.button import CloseButton, Button
 from dtk.ui.utils import color_hex_to_cairo, set_clickable_cursor
 from dtk.ui.theme import ui_theme
+from dtk.ui.constant import ALIGN_MIDDLE
+from dtk.ui.dialog import DialogBox, DIALOG_MASK_SINGLE_PAGE
+from nls import _
 
 class ActionButton(Label):
     def __init__(self, 
@@ -286,4 +289,77 @@ class NetworkConnectTimeout(gtk.EventBox):
                 self.press_callback()
                 self.is_hover = False
                 self.queue_draw()
+
+class ConfirmDialog(DialogBox):
+    '''
+    Simple message confirm dialog.
+    
+    @undocumented: click_confirm_button
+    @undocumented: click_cancel_button
+    '''
+	
+    def __init__(self, 
+                 title, 
+                 message, 
+                 default_width=330,
+                 default_height=145,
+                 confirm_callback=None, 
+                 cancel_callback=None, 
+                 cancel_first=True, 
+                 message_text_size=9,
+                 ):
+        '''
+        Initialize ConfirmDialog class.
+        
+        @param title: Title for confirm dialog.
+        @param message: Confirm message.
+        @param default_width: Dialog width, default is 330 pixel.
+        @param default_height: Dialog height, default is 145 pixel.
+        @param confirm_callback: Callback when user click confirm button.
+        @param cancel_callback: Callback when user click cancel button.
+        @param cancel_first: Set as True if to make cancel button before confirm button, default is True.
+        @param message_text_size: Text size of message, default is 11.
+        '''
+        # Init.
+        DialogBox.__init__(self, title, default_width, default_height, DIALOG_MASK_SINGLE_PAGE, close_callback=self.hide)
+        self.confirm_callback = confirm_callback
+        self.cancel_callback = cancel_callback
+        
+        self.label_align = gtk.Alignment()
+        self.label_align.set(0.5, 0.5, 0, 0)
+        self.label_align.set_padding(0, 0, 8, 8)
+        self.label = Label(message, text_x_align=ALIGN_MIDDLE, text_size=message_text_size)
+        
+        self.confirm_button = Button(_("OK"))
+        self.cancel_button = Button(_("Cancel"))
+        
+        self.confirm_button.connect("clicked", lambda w: self.click_confirm_button())
+        self.cancel_button.connect("clicked", lambda w: self.click_cancel_button())
+        
+        # Connect widgets.
+        self.body_box.pack_start(self.label_align, True, True)
+        self.label_align.add(self.label)
+        
+        if cancel_first:
+            self.right_button_box.set_buttons([self.cancel_button, self.confirm_button])
+        else:
+            self.right_button_box.set_buttons([self.confirm_button, self.cancel_button])
+        
+    def click_confirm_button(self):
+        '''
+        Internal function to handle click confirm button.
+        '''
+        if self.confirm_callback != None:
+            self.confirm_callback()        
+        
+        self.hide()
+        
+    def click_cancel_button(self):
+        '''
+        Internal function to handle click cancel button.
+        '''
+        if self.cancel_callback != None:
+            self.cancel_callback()
+        
+        self.hide()
 

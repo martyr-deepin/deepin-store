@@ -25,8 +25,7 @@ from nls import _
 
 import glib
 from data import data_exit
-from icon_window import IconWindow
-from detail_page import DetailPage
+
 from dtk.ui.theme import DynamicPixbuf
 from dtk.ui.menu import Menu
 from dtk.ui.constant import WIDGET_POS_BOTTOM_LEFT
@@ -39,8 +38,16 @@ from deepin_utils.math_lib import solve_parabola
 from deepin_utils.file import read_file, write_file, touch_file, get_parent_dir
 from deepin_utils.multithread import create_thread
 from dtk.ui.utils import container_remove_all, set_cursor, get_widget_root_coordinate
-from dtk.ui.application import Application
 from dtk.ui.statusbar import Statusbar
+from dtk.ui.slider import HSlider
+from dtk.ui.label import Label
+from dtk.ui.gio_utils import start_desktop_file
+from dtk.ui.iconview import IconView
+from dtk.ui.treeview import TreeView
+from dtk.ui.dbus_notify import DbusNotify
+
+from icon_window import IconWindow
+from detail_page import DetailPage
 from home_page import HomePage
 from uninstall_page import UninstallPage
 from install_page import InstallPage
@@ -59,12 +66,7 @@ from constant import (
             CONFIG_DIR, ONE_DAY_SECONDS,
             LANGUAGE,
         )
-from dtk.ui.slider import HSlider
 from events import global_event
-from dtk.ui.label import Label
-from dtk.ui.gio_utils import start_desktop_file
-from dtk.ui.iconview import IconView
-from dtk.ui.treeview import TreeView
 from start_desktop_window import StartDesktopWindow
 from utils import is_64bit_system, handle_dbus_reply, handle_dbus_error, bit_to_human_str, get_software_download_dir
 import utils
@@ -73,8 +75,9 @@ from server_action import SendVote, SendDownloadCount, SendUninstallCount
 from preference import preference_dialog, WaitingDialog
 from logger import Logger
 from paned_box import PanedBox
-from widgets import BottomTipBar
+from widgets import BottomTipBar, ConfirmDialog
 from star_buffer import StarView, DscStarBuffer
+from application import Application
 
 tool_tip = ToolTip()
 global tooltip_timeout_id
@@ -338,6 +341,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                     uninstall_page.action_finish(pkg_name, pkg_info_list)
                 elif action_type == ACTION_UPGRADE:
                     upgrade_page.action_finish(pkg_name, pkg_info_list)
+                    global_event.emit("upgrade-finish-action", len(pkg_info_list))
                     upgrade_page.fetch_upgrade_info()
                 elif action_type == ACTION_INSTALL:
                     install_page.action_finish(pkg_name, pkg_info_list)
@@ -644,7 +648,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         self.loginfo("Init ui")
         # Init application.
         image_dir = os.path.join(get_parent_dir(__file__, 2), "image")
-        self.application = Application(resizable=False)
+        self.application = Application(resizable=False, close_callback=self.application_close_window)
         self.application.set_default_size(888, 634)
         self.application.set_skin_preview(os.path.join(image_dir, "frame.png"))
         self.application.set_icon(os.path.join(image_dir, "logo48.png"))
@@ -653,6 +657,15 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
                 show_title=False
                 )
         self.application.window.set_title(_("Deepin Software Center"))
+        self.application.window.connect("delete-event", self.application_close_window)
+
+        self.confirm_dialog = ConfirmDialog(
+                title="警告", 
+                message="系统更新还未完成，是否隐藏到后台更新？",
+                confirm_callback=lambda:global_event.emit("hide-window"),
+                cancel_callback=lambda:self.application.close_window(self.application.window),
+                cancel_first=False,
+                )
         
         # Init page box.
         self.page_box = gtk.VBox()
@@ -761,6 +774,14 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         
         self.ready_show()
 
+    def application_close_window(self, widget=None, event=None):
+        if self.upgrade_page.in_upgrading_view:
+            self.confirm_dialog.show_all()
+        else:
+            self.application.close_window(widget)
+
+        return True
+
     def click_status_icon(self, status_icon, button=None, activate_time=None):
         self.application.window.show_all()
         self.status_icon.set_visible(False)
@@ -768,6 +789,13 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
     def hide_window(self):
         self.status_icon.set_visible(True)
         self.application.window.hide()
+
+    def upgrade_finish_action(self, upgrade_number):
+        if self.status_icon.get_visible():
+            notification = DbusNotify("deepin-software-center")
+            notification.set_summary(_("Upgrade Info"))
+            notification.set_body("软件中心已经为您更新了%s个软件包！" % upgrade_number)
+            notification.notify()
 
     def show_preference_dialog(self):
         preference_dialog.show_all()
@@ -892,6 +920,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         global_event.register_event('update-list-finish', self.update_list_finish)
         global_event.register_event('start-update-list', self.update_list_handler)
         global_event.register_event("hide-window", self.hide_window)
+        global_event.register_event("upgrade-finish-action", self.upgrade_finish_action)
         self.system_bus.add_signal_receiver(
             lambda messages: message_handler(messages, 
                                          self.bus_interface, 

@@ -22,6 +22,7 @@
 
 import gtk
 import gobject
+import json
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, NO_NOTIFY_FILE, CHECK_BUTTON_PADDING_X, cute_info_dir
 import os
 from dtk.ui.treeview import TreeView, TreeItem
@@ -51,6 +52,7 @@ import dtk.ui.tooltip as Tooltip
 from utils import get_last_upgrade_time, set_last_upgrade_time, handle_dbus_error, handle_dbus_reply
 import utils
 from nls import _
+from widgets import LoadingBox
 
 class UpgradingBar(gtk.HBox):
     '''
@@ -301,6 +303,7 @@ class UpgradePage(gtk.VBox):
         self.network_disable_view.connect("expose-event", self.expose_network_disable_view)
 
         self.create_upgrading_box()
+        self.create_init_box()
         
         self.upgrade_treeview = TreeView(enable_drag_drop=False)
         self.upgrade_treeview.set_expand_column(1)
@@ -313,6 +316,7 @@ class UpgradePage(gtk.VBox):
         self.no_notify_treeview.connect("items-change", self.monitor_no_notify_view)
         
         self.in_no_notify_page = False
+        self.in_upgrading_view = False
         
         self.pkg_info_dict = {}
         
@@ -418,10 +422,34 @@ class UpgradePage(gtk.VBox):
 
     def click_upgrade_check_button(self):
         global_event.emit("set-cursor", gtk.gdk.WATCH)
-        self.select_pkg_names = []
+
+        self.bus_interface.get_upgrade_download_size(
+                                        self.get_current_selected_pkgs(),
+                                        reply_handler=self.update_download_size_info,
+                                        error_handler=lambda e: handle_dbus_error("get_upgrade_download_size -> %s" % e),
+                                        )
+
+    def get_current_selected_pkgs(self):
+        select_pkg_names = []
         for item in self.upgrade_treeview.visible_items:
             if item.check_button_buffer.active:
-                self.select_pkg_names.append(item.pkg_name)
+                select_pkg_names.append(item.pkg_name)
+        return select_pkg_names
+
+        #self.upgrade_bar.select_button.update_status(map(lambda item: item.check_button_buffer.active, self.upgrade_treeview.visible_items))
+
+    def update_download_size_info(self, info):
+        size, change_pkg_names = info
+        size = int(size)
+        change_pkg_names = json.loads(change_pkg_names)
+
+        # TODO: add and remove action is different
+        #for item in self.upgrade_treeview.visible_items:
+            #if item.pkg_name in change_pkg_names:
+                #item.check_button_buffer.active = True
+        #self.upgrade_treeview.queue_draw()
+
+        self.select_pkg_names = self.get_current_selected_pkgs()
 
         if self.select_pkg_names:
             self.upgrade_bar.upgrade_selected_button.set_sensitive(True)
@@ -429,15 +457,6 @@ class UpgradePage(gtk.VBox):
         else:
             self.upgrade_bar.upgrade_selected_button.set_sensitive(False)
 
-        self.bus_interface.get_upgrade_download_size(
-                                        self.select_pkg_names,
-                                        reply_handler=self.update_download_size_info,
-                                        error_handler=lambda e: handle_dbus_error("get_upgrade_download_size -> %s" % e),
-                                        )
-
-        #self.upgrade_bar.select_button.update_status(map(lambda item: item.check_button_buffer.active, self.upgrade_treeview.visible_items))
-
-    def update_download_size_info(self, size):
         self.upgrade_bar.message_label.set_text("已经选择%s个更新，将会下载%s。" % (
             len(self.select_pkg_names), utils.bit_to_human_str(size)))
         global_event.emit("set-cursor", None)
@@ -478,11 +497,13 @@ class UpgradePage(gtk.VBox):
 
     def show_upgrading_view(self):
         container_remove_all(self)
-
         self.pack_start(self.upgrading_view)
+
+        self.in_upgrading_view = True
         self.show_all()
             
     def show_newest_view(self):
+        self.in_upgrading_view = False
         container_remove_all(self)
         container_remove_all(self.cycle_strip)
         
@@ -495,6 +516,7 @@ class UpgradePage(gtk.VBox):
         self.show_all()
 
     def show_network_disable_view(self):
+        self.in_upgrading_view = False
         container_remove_all(self)
         self.pack_start(self.network_disable_view, True, True)
         
@@ -754,13 +776,25 @@ class UpgradePage(gtk.VBox):
         self.bus_interface.remove_no_notify_pkg((pkg_name, NO_NOTIFY_FILE),
                 reply_handler=lambda :handle_dbus_reply("remove_no_notify_pkg-> %s" % pkg_name),
                 error_handler=lambda e:handle_dbus_error('remove_no_notify_pkg-> %s' % pkg_name, e))
+
+    def create_init_box(self):
+        self.loading_box = LoadingBox()
+        self.loading_box_align = utils.create_align((0.5, 0.5, 1, 1), (10, 10, 10, 10))
+        self.loading_box_align.add(self.loading_box)
+
+    def show_loading_page(self):
+        container_remove_all(self)
+
+        self.pack_start(self.loading_box_align)
     
     def fetch_upgrade_info(self):
+        self.show_loading_page()
         self.bus_interface.request_upgrade_pkgs(
                 reply_handler=self.render_upgrade_info, 
                 error_handler=lambda e:handle_dbus_error("request_upgrade_pkgs", e))
         
     def render_upgrade_info(self, pkg_infos):
+        self.in_upgrading_view = False
         if len(pkg_infos) > 0:
             if self.update_list_pixbuf:
                 del self.update_list_pixbuf
