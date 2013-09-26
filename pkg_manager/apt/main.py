@@ -26,10 +26,8 @@ sys.path.append(os.path.join(get_parent_dir(__file__, 3), "download_manager", "d
 
 import signal
 from download_manager import DownloadManager
-import apt.debfile as debfile
 from parse_pkg import (
         get_pkg_download_info, 
-        get_deb_download_info, 
         get_pkg_dependence_file_path, 
         get_pkg_own_size,
         get_cache_archive_dir,
@@ -444,6 +442,20 @@ class PackageManager(dbus.service.Object):
             size_flag = PKG_SIZE_DOWNLOAD
         return [size_flag, total_size]
 
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="i")
+    def get_upgrade_download_size(self, pkg_names):
+        pkg_infos = get_upgrade_download_info_with_new_policy(self.pkg_cache, pkg_names)[0]
+        if pkg_infos == DOWNLOAD_STATUS_NOTNEED:
+            total_size = 0
+        elif pkg_infos == DOWNLOAD_STATUS_ERROR:
+            total_size = -1
+        else:
+            (names, download_urls, download_hash_infos, pkg_sizes, total) = pkg_infos
+            total_size = 0
+            for size in pkg_sizes:
+                total_size += size
+        return total_size
+
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="ai")
     def clean_download_cache(self):
         '''Clean download cache.'''
@@ -584,6 +596,11 @@ class PackageManager(dbus.service.Object):
     def stop_download_pkg(self, pkg_names):
         for pkg_name in pkg_names:
             self.download_manager.stop_download(pkg_name)
+
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="")
+    def cancel_upgrade_download(self):
+        if getattr(self, 'upgrade_id'):
+            self.download_manager.stop_download(self.upgrade_id)
             
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
     def remove_wait_missions(self, pkg_infos):

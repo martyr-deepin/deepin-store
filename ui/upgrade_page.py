@@ -137,11 +137,13 @@ class UpgradeBar(gtk.HBox):
         self.select_button_align.set(0.0, 0.5, 0, 0)
         self.select_button_align.set_padding(0, 0, CHECK_BUTTON_PADDING_X, 0)
         self.select_button_align.add(self.select_button)
+
         self.message_label = Label()
         self.message_label_align = gtk.Alignment()
         self.message_label_align.set(0.0, 0.5, 0, 0)
         self.message_label_align.set_padding(0, 0, 0, 0)
         self.message_label_align.add(self.message_label)
+        
         self.no_notify_label = Label(
             hover_color=app_theme.get_color("homepage_hover")
             )
@@ -149,6 +151,12 @@ class UpgradeBar(gtk.HBox):
         self.no_notify_label_align = gtk.Alignment()
         self.no_notify_label_align.set(1.0, 0.5, 0, 0)
         self.no_notify_label_align.set_padding(0, 0, 0, 100)
+
+        self.check_update_label = Label("重新检查更新", hover_color=app_theme.get_color("homepage_hover"))
+        self.check_update_label.set_clickable()
+        check_update_label_align = utils.create_align((1.0, 0.5, 0, 0), (0, 0, 2, 2))
+        check_update_label_align.add(self.check_update_label)
+
         self.upgrade_selected_button = ImageButton(
             app_theme.get_pixbuf("button/upgrade_all_normal.png"),
             app_theme.get_pixbuf("button/upgrade_all_hover.png"),
@@ -157,27 +165,26 @@ class UpgradeBar(gtk.HBox):
             )
         Tooltip.text(self.upgrade_selected_button, _("Upgrade select items"))
         self.upgrade_selected_button_align = gtk.Alignment()
-        self.upgrade_selected_button_align.set(0.0, 0.5, 0, 0)
-        self.upgrade_selected_button_align.set_padding(0, 0, 40, ITEM_BUTTON_PADDING_RIGHT)
+        self.upgrade_selected_button_align.set(1.0, 0.5, 0, 0)
+        self.upgrade_selected_button_align.set_padding(0, 0, 6, ITEM_BUTTON_PADDING_RIGHT)
         self.upgrade_selected_button_align.add(self.upgrade_selected_button)
         
         self.pack_start(self.select_button_align, False, False)
         self.pack_start(self.message_label_align, False, False)
         self.pack_start(self.no_notify_label_align, True, True)
+        self.pack_start(check_update_label_align, False, False)
         self.pack_start(self.upgrade_selected_button_align, False, False)
         
         self.no_notify_label.connect("button-press-event", lambda w, e: global_event.emit("show-no-notify-page"))
+        self.check_update_label.connect("button-press-event", lambda w, e:global_event.emit('start-update-list'))
         self.select_button.connect("active-changed", self.handle_active_changed)
         self.upgrade_selected_button.connect("clicked", lambda w: global_event.emit("upgrade-selected-pkg"))
         
     def handle_active_changed(self, widget, state):
         if state:
             global_event.emit("select-all-upgrade-pkg")
-            self.upgrade_selected_button.set_sensitive(True)
-            self.upgrade_selected_button.set_state(gtk.STATE_NORMAL)
         else:
             global_event.emit("unselect-all-upgrade-pkg")
-            self.upgrade_selected_button.set_sensitive(False)
         
     def set_upgrade_info(self, upgrade_num, no_notify_num):
         self.message_label.set_text(_("%s applications are available for upgrade") % upgrade_num)
@@ -363,25 +370,39 @@ class UpgradePage(gtk.VBox):
         self.upgrading_cancel_button = Button("取消")
         upgrading_cancel_button_align = utils.create_align((0.5, 0.5, 0, 0), (4, 4, 4, 4))
         upgrading_cancel_button_align.add(self.upgrading_cancel_button)
+        self.upgrading_cancel_button.connect('clicked', self.cancel_upgrade_download)
 
         self.upgrading_hide_button = Button("后台运行")
         upgrading_hide_button_align = utils.create_align((0.5, 0.5, 0, 0), (4, 4, 4, 4))
         upgrading_hide_button_align.add(self.upgrading_hide_button)
+        self.upgrading_hide_button.connect("clicked", self.hide_window)
 
         middle_button_box.pack_end(upgrading_cancel_button_align, False, False)
         middle_button_box.pack_end(upgrading_hide_button_align, False, False)
         middle_button_box_align = utils.create_align((1, 0.5, 1, 0), (2, 2, 2, 2))
         middle_button_box_align.add(middle_button_box)
 
-        bottom_info_box = gtk.VBox()
+        top_progress_box = gtk.VBox()
 
-        inner_box.pack_start(upper_box, False, False)
-        inner_box.pack_start(middle_button_box_align, False, False)
-        inner_box.pack_start(bottom_info_box)
+        top_progress_box.pack_start(upper_box, False, False)
+        top_progress_box.pack_start(middle_button_box_align, False, False)
+        inner_box.pack_start(top_progress_box, False, False)
 
-        upgrading_view_align = utils.create_align((0.5, 0.5, 1, 1), (40, 40, 50, 50))
+        upgrading_view_align = utils.create_align((0.5, 0.0, 1, 0), (40, 40, 50, 50))
         upgrading_view_align.add(inner_box)
         self.upgrading_view.pack_start(upgrading_view_align, True, True)
+
+    def cancel_upgrade_download(self, widget):
+        self.bus_interface.cancel_upgrade_download(
+                reply_handler=self.cancel_upgrade_download_replay,
+                error_handler=lambda e:handle_dbus_error("cancel_upgrade_download -> %s" % e),
+                )
+
+    def cancel_upgrade_download_replay(self):
+        self.fetch_upgrade_info()
+
+    def hide_window(self, widget):
+        global_event.emit("hide-window")
 
     def expose_update_logo_box(self, widget, event):
         rect = widget.allocation
@@ -396,14 +417,30 @@ class UpgradePage(gtk.VBox):
                     )        
 
     def click_upgrade_check_button(self):
-        actives = [item.check_button_buffer.active for item in self.upgrade_treeview.visible_items]
-        if True in actives:
+        global_event.emit("set-cursor", gtk.gdk.WATCH)
+        self.select_pkg_names = []
+        for item in self.upgrade_treeview.visible_items:
+            if item.check_button_buffer.active:
+                self.select_pkg_names.append(item.pkg_name)
+
+        if self.select_pkg_names:
             self.upgrade_bar.upgrade_selected_button.set_sensitive(True)
             self.upgrade_bar.upgrade_selected_button.set_state(gtk.STATE_NORMAL)
         else:
             self.upgrade_bar.upgrade_selected_button.set_sensitive(False)
 
+        self.bus_interface.get_upgrade_download_size(
+                                        self.select_pkg_names,
+                                        reply_handler=self.update_download_size_info,
+                                        error_handler=lambda e: handle_dbus_error("get_upgrade_download_size -> %s" % e),
+                                        )
+
         #self.upgrade_bar.select_button.update_status(map(lambda item: item.check_button_buffer.active, self.upgrade_treeview.visible_items))
+
+    def update_download_size_info(self, size):
+        self.upgrade_bar.message_label.set_text("已经选择%s个更新，将会下载%s。" % (
+            len(self.select_pkg_names), utils.bit_to_human_str(size)))
+        global_event.emit("set-cursor", None)
         
     def click_notify_check_button(self):
         self.no_notify_bar.select_button.update_status(map(lambda item: item.check_button_buffer.active, self.no_notify_treeview.visible_items))
@@ -483,21 +520,19 @@ class UpgradePage(gtk.VBox):
             item.check_button_buffer.active = True
             
         self.upgrade_treeview.queue_draw()
+        self.click_upgrade_check_button()
     
     def unselect_all_pkg(self):
         for item in self.upgrade_treeview.visible_items:
             item.check_button_buffer.active = False
             
         self.upgrade_treeview.queue_draw()
+        self.click_upgrade_check_button()
         
     def upgrade_selected_pkg(self):
         set_last_upgrade_time()
-        pkg_names = []
-        for item in self.upgrade_treeview.visible_items:
-            if item.check_button_buffer.active:
-                pkg_names.append(item.pkg_name)
                 
-        global_event.emit("upgrade-pkg", pkg_names)        
+        global_event.emit("upgrade-pkg", self.select_pkg_names)        
         self.show_upgrading_view()
         
     def select_all_notify_pkg(self):
@@ -765,7 +800,7 @@ class UpgradePage(gtk.VBox):
                         self.upgrade_pkg_num += 1
                         upgrade_items.append(UpgradeItem(pkg_name, pkg_version, self.data_manager))
                 
-            self.upgrade_bar.set_upgrade_info(len(self.upgrade_treeview.visible_items), self.no_notify_pkg_num)
+            #self.upgrade_bar.set_upgrade_info(len(self.upgrade_treeview.visible_items), self.no_notify_pkg_num)
             
             if len(upgrade_items) == 0 and len(self.upgrade_treeview.visible_items) == 0:        
                 global_event.emit("show-newest-view")
@@ -777,10 +812,10 @@ class UpgradePage(gtk.VBox):
             global_event.emit("show-newest-view")
 
     def download_ready(self, pkg_name):
-        pass
+        self.upgrading_progress_info.set_text("分析依赖...")
 
     def download_wait(self, pkg_name):
-        pass
+        self.upgrading_progress_info.set_text("依赖分析完成")
 
     def download_start(self, pkg_name):
         self.upgrading_progress_info.set_text("开始下载...")
@@ -800,10 +835,7 @@ class UpgradePage(gtk.VBox):
         self.upgrading_progressbar.set_progress(100.0)
 
     def download_stop(self, pkg_name):
-        for item in self.upgrade_treeview.visible_items:
-            if item.pkg_name == pkg_name:
-                item.download_stop()
-                break
+        self.upgrading_progress_info.set_text("下载停止！")
             
     def download_parse_failed(self, pkg_name):
         self.upgrading_progress_info.set_text("依赖分析失败!")

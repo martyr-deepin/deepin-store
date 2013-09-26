@@ -734,7 +734,6 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
             menu_min_width = 150
         menu = Menu(
             [
-                (None, _("Refresh applications lists"), lambda:global_event.emit('start-update-list')),
              (None, _("Open download directory"), self.open_download_directory),
              (None, _("Clear up cached packages"), self.clean_download_cache),
              (None, _("View new features"), lambda : self.show_wizard_win()),
@@ -749,17 +748,26 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
                 menu.show(
                 get_widget_root_coordinate(button, WIDGET_POS_BOTTOM_LEFT),
                 (button.get_allocation().width, 0)))
-        
-        # Make window can received drop data.
-        #targets = [("text/uri-list", 0, 1)]        
-        #self.application.window.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_DROP, targets, gtk.gdk.ACTION_COPY)
-        #self.application.window.connect_after("drag-data-received", self.on_drag_data_received)        
+
+        self.status_icon = gtk.status_icon_new_from_file(utils.get_common_image('logo48.png'))
+        self.status_icon.set_visible(False)
+        self.status_icon.set_tooltip_text("Click to show detail")
+        self.status_icon.connect("activate", self.click_status_icon)
+        self.status_icon.connect("popup-menu", self.click_status_icon)
         
         start = time.time()
         self.init_home_page()
         self.loginfo("Finish Init UI: %s" % (time.time()-start, ))
         
         self.ready_show()
+
+    def click_status_icon(self, status_icon, button=None, activate_time=None):
+        self.application.window.show_all()
+        self.status_icon.set_visible(False)
+
+    def hide_window(self):
+        self.status_icon.set_visible(True)
+        self.application.window.hide()
 
     def show_preference_dialog(self):
         preference_dialog.show_all()
@@ -883,6 +891,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         global_event.register_event('max-download-number-changed', self.init_download_manager)
         global_event.register_event('update-list-finish', self.update_list_finish)
         global_event.register_event('start-update-list', self.update_list_handler)
+        global_event.register_event("hide-window", self.hide_window)
         self.system_bus.add_signal_receiver(
             lambda messages: message_handler(messages, 
                                          self.bus_interface, 
