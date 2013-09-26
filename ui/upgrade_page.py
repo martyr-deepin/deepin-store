@@ -298,6 +298,17 @@ class UpgradePage(gtk.VBox):
         self.newest_pixbuf = None
         self.newest_view.connect("expose-event", self.expose_newest_view)
 
+        self.check_update_label = Label(
+                "重新检查更新", 
+                underline=True,
+                text_color=app_theme.get_color("labelText"), 
+                hover_color=app_theme.get_color("homepage_hover"),)
+        self.check_update_label.set_clickable()
+        check_update_label_align = utils.create_align((0.6, 0.6, 0, 0), (0, 0, 0, 0))
+        check_update_label_align.add(self.check_update_label)
+        self.check_update_label.connect("button-press-event", lambda w, e:global_event.emit('start-update-list'))
+        self.newest_view.pack_start(check_update_label_align)
+
         self.network_disable_view = gtk.VBox()
         self.network_disable_pixbuf = None
         self.network_disable_view.connect("expose-event", self.expose_network_disable_view)
