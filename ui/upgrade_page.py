@@ -154,11 +154,6 @@ class UpgradeBar(gtk.HBox):
         self.no_notify_label_align.set(1.0, 0.5, 0, 0)
         self.no_notify_label_align.set_padding(0, 0, 0, 100)
 
-        self.check_update_label = Label("重新检查更新", hover_color=app_theme.get_color("homepage_hover"))
-        self.check_update_label.set_clickable()
-        check_update_label_align = utils.create_align((1.0, 0.5, 0, 0), (0, 0, 2, 2))
-        check_update_label_align.add(self.check_update_label)
-
         self.upgrade_selected_button = ImageButton(
             app_theme.get_pixbuf("button/upgrade_all_normal.png"),
             app_theme.get_pixbuf("button/upgrade_all_hover.png"),
@@ -174,11 +169,9 @@ class UpgradeBar(gtk.HBox):
         self.pack_start(self.select_button_align, False, False)
         self.pack_start(self.message_label_align, False, False)
         self.pack_start(self.no_notify_label_align, True, True)
-        self.pack_start(check_update_label_align, False, False)
         self.pack_start(self.upgrade_selected_button_align, False, False)
         
         self.no_notify_label.connect("button-press-event", lambda w, e: global_event.emit("show-no-notify-page"))
-        self.check_update_label.connect("button-press-event", lambda w, e:global_event.emit('start-update-list'))
         self.select_button.connect("active-changed", self.handle_active_changed)
         self.upgrade_selected_button.connect("clicked", lambda w: global_event.emit("upgrade-selected-pkg"))
         
@@ -297,17 +290,6 @@ class UpgradePage(gtk.VBox):
         self.newest_view = gtk.VBox()
         self.newest_pixbuf = None
         self.newest_view.connect("expose-event", self.expose_newest_view)
-
-        self.check_update_label = Label(
-                "重新检查更新", 
-                underline=True,
-                text_color=app_theme.get_color("labelText"), 
-                hover_color=app_theme.get_color("homepage_hover"),)
-        self.check_update_label.set_clickable()
-        check_update_label_align = utils.create_align((0.6, 0.6, 0, 0), (0, 0, 0, 0))
-        check_update_label_align.add(self.check_update_label)
-        self.check_update_label.connect("button-press-event", lambda w, e:global_event.emit('start-update-list'))
-        self.newest_view.pack_start(check_update_label_align)
 
         self.network_disable_view = gtk.VBox()
         self.network_disable_pixbuf = None

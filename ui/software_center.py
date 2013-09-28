@@ -743,6 +743,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
             menu_min_width = 150
         menu = Menu(
             [
+             (None, _("Refresh applications lists"), lambda:global_event.emit('start-update-list')),
              (None, _("Open download directory"), self.open_download_directory),
              (None, _("Clear up cached packages"), self.clean_download_cache),
              (None, _("View new features"), lambda : self.show_wizard_win()),
