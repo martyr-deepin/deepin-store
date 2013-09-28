@@ -48,7 +48,12 @@ def sort_for_home_page_data(infos):
     for i in xrange(len(infos)-1):
         new_infos.insert(0, tuple(infos[i+1]))
 
-    sorted(new_infos, key=itemgetter(1), reverse=True)
+    # bubble sort
+    number = len(new_infos)
+    for i in xrange(number-1):
+        for j in xrange(number-i-1):
+            if (new_infos[j][1] < new_infos[j+1][1]):
+                new_infos[j], new_infos[j+1] = new_infos[j+1], new_infos[j]
     return new_infos
 
 def get_common_image(name):

@@ -769,7 +769,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         self.loginfo("Finish Init UI: %s" % (time.time()-start, ))
 
         self.notification = DbusNotify("deepin-software-center")
-        
+
         self.ready_show()
 
     def application_close_window(self, widget=None, event=None):
@@ -1066,11 +1066,11 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
 
     @dbus.service.method(DSC_FRONTEND_NAME, in_signature="as", out_signature="")    
     def hello(self, arguments):
-        self.application.raise_to_top()
-        
-        #deb_files = filter(self.is_deb_file, arguments)        
-        #if len(deb_files) > 0:
-            #self.bus_interface.install_deb_files(deb_files)
+        if self.status_icon.get_visible():
+            self.application.window.show_all()
+            self.status_icon.set_visible(False)
+        else:
+            self.application.raise_to_top()
         
     @dbus.service.signal(DSC_FRONTEND_NAME)
     def update_signal(self, message):
