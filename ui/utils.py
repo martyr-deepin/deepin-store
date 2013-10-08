@@ -28,14 +28,22 @@ from deepin_utils.config import Config
 from deepin_utils.file import touch_file, get_parent_dir
 from deepin_utils.date_time import get_current_time
 import gtk
-from operator import itemgetter
 from logger import newLogger
+
+import pango
+from dtk.ui.label import Label
 
 LOG_PATH = "/tmp/dsc-frontend.log"
 
 dsc_root_dir = os.path.realpath(get_parent_dir(__file__, 2))
 
 global_logger = newLogger('global')
+
+def create_right_align_label(strings):
+    return Label(strings, text_x_align=pango.ALIGN_RIGHT, text_size=10)
+
+def create_left_align_label(strings):
+    return Label(strings, text_size=10)
 
 def create_align(init, padding):
     align = gtk.Alignment(*init)

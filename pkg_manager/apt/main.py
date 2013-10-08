@@ -212,7 +212,7 @@ class PackageManager(dbus.service.Object):
         global_event.register_event("download-update", self.send_signal_download_update)
         global_event.register_event("download-finish", self.download_finish)
         global_event.register_event("download-stop", self.download_stop)
-        global_event.register_event("download-failed", self.download_failed)
+        global_event.register_event("download-error", self.download_failed)
         
         self.in_update_list = False
         global_event.register_event("update-list-start", self.update_list_start)
@@ -272,21 +272,18 @@ class PackageManager(dbus.service.Object):
     def update_list_start(self):
         self.in_update_list = True
         self.update_signal([("update-list-start", "")])
-        print "start"
 
     def update_list_finish(self):
         self.in_update_list = False
         self.update_signal([("update-list-finish", "")])
         
         self.pkg_cache.open(apb.OpProgress())
-        print "finish"
         
         self.exit_manager.check()
 
     def update_list_failed(self):
         self.in_update_list = False
         self.update_signal([("update-list-failed", "")])
-        print "failed"
         
         self.exit_manager.check()
         
@@ -364,8 +361,8 @@ class PackageManager(dbus.service.Object):
         
         self.exit_manager.check()    
         
-    def download_failed(self, pkg_name, action_type):
-        self.update_signal([("download-failed", (pkg_name, action_type))])
+    def download_failed(self, pkg_name, action_type, e):
+        self.update_signal([("download-failed", (pkg_name, action_type, e))])
         
         self.exit_manager.check()    
 

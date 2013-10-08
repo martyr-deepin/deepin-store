@@ -319,6 +319,16 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 elif action_type == ACTION_UPGRADE:
                     upgrade_page.download_stop(pkg_name)
 
+            elif signal_type == "download-failed":
+                (pkg_name, action_type, error) = action_content
+                print "Download Failed >>", pkg_name, action_type, error
+                if action_type == ACTION_INSTALL:
+                    #install_page.download_stop(pkg_name)
+                    pass
+                elif action_type == ACTION_UPGRADE:
+                    #upgrade_page.download_stop(pkg_name)
+                    pass
+
             elif signal_type == "action-start":
                 (pkg_name, action_type) = action_content
                 if action_type == ACTION_UNINSTALL:
@@ -333,7 +343,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 if action_type == ACTION_UNINSTALL:
                     uninstall_page.action_update(pkg_name, percent)
                 elif action_type == ACTION_UPGRADE:
-                    upgrade_page.action_update(pkg_name, percent)
+                    upgrade_page.action_update(pkg_name, percent, status)
                     global_event.emit("current-upgrade-action", 'upgrade', percent)
                 elif action_type == ACTION_INSTALL:
                     install_page.action_update(pkg_name, percent)
@@ -611,6 +621,8 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
     class docs
     '''
 
+    pages = ['home', 'upgrade', 'uninstall', 'install']
+
     def __init__(self, session_bus, arguments):
         '''
         init docs
@@ -647,6 +659,16 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
     def show_install_page(self):
         if self.detail_page and self.install_page:
             self.switch_page(self.install_page)
+
+    @dbus.service.method(DSC_FRONTEND_NAME, in_signature="s", out_signature="")
+    def show_page(self, key):
+        try:
+            index = self.pages.index(key)
+            method = "show_%s_page" % key
+            getattr(self, method)()
+            self.navigatebar.set_index(index)
+        except:
+            print "Unknow page:", key
         
     def init_ui(self):
         self.loginfo("Init ui")

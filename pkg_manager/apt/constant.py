@@ -38,3 +38,7 @@ UPDATE_DATA_URL = "http://dsc-update-data.b0.upaiyun.com"
 PKG_SIZE_OWN = 0
 PKG_SIZE_DOWNLOAD = 1
 PKG_SIZE_ERROR = 2
+
+UPDATE_LIST_LOG_PATH = '/tmp/dsc-update-list.log'
+UPGRADE_LOG_PATH = '/tmp/dsc-upgrade.log'
+LOG_PATH = "/tmp/dsc-backend.log"

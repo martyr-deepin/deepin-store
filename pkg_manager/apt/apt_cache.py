@@ -40,7 +40,7 @@ class AptCache(apt.Cache):
         init docs
         '''
         apt_pkg.init()
-        apt.Cache.__init__(self)
+        apt.Cache.__init__(self, apt.progress.base.OpProgress())
         self.packages_status = {}
     
     def get_upgrade_pkgs(self):

@@ -94,16 +94,20 @@ def get_cache_pkg(cache, pkg_name):
 def get_upgrade_download_info_with_new_policy(cache, pkg_names):
     cache._depcache.init()
     failed_analyze_pkgs = []
-    for name in pkg_names:
-        new_name, pkg = get_cache_pkg(cache, name)
-        if not pkg:
-            failed_analyze_pkgs.append(name)
-            global_event.emit('parse-download-error', name, ACTION_UPGRADE)
-        else:
-            if cache.is_pkg_upgradable(new_name):
-                pkg.mark_upgrade()
-            elif not cache.is_pkg_installed(new_name):
-                pkg.mark_install()
+    dependence = []
+    try:
+        for name in pkg_names:
+            new_name, pkg = get_cache_pkg(cache, name)
+            if not pkg:
+                failed_analyze_pkgs.append(name)
+                global_event.emit('parse-download-error', name, ACTION_UPGRADE)
+            else:
+                if cache.is_pkg_upgradable(new_name):
+                    pkg.mark_upgrade()
+                elif not cache.is_pkg_installed(new_name):
+                    pkg.mark_install()
+    except Exception, e:
+        global_event.emit('parse-packages-failed', e)
     dependence = cache.get_changes()
     all_upgrade_pkg_names = [pkg.name for pkg in dependence]
     cache._depcache.init()

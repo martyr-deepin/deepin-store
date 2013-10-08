@@ -20,14 +20,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.thread_pool import MissionThread, MissionThreadPool
+import apt_pkg
 import apt.progress.base as apb
+from apt.deprecation import function_deprecated_by
+from dtk.ui.thread_pool import MissionThread, MissionThreadPool
+import time
+import gobject
+
 from events import global_event
-from time import sleep
 import traceback
 from utils import log
 from constant import ACTION_INSTALL, ACTION_UPGRADE, ACTION_UNINSTALL
-import time
+
 from update_list import UpdateList
 
 class AptProcess(apb.InstallProgress):
@@ -85,6 +89,98 @@ class CommitProcess(apb.InstallProgress):
         global_event.emit("action-update", (self.upgrade_id, self.action_type, int(percent), status))
         log((self.pkg_names, self.action_type, int(percent), status))
 
+class GInstallProgress(gobject.GObject, apb.InstallProgress):
+    """Installation progress with global_event signals.
+
+    Signals:
+
+        * action-update()
+        * action-start()
+        * action-finish()
+        * action-timeout()
+        * action-error()
+        * action-conffile()
+
+    """
+    # Seconds until a maintainer script will be regarded as hanging
+    INSTALL_TIMEOUT = 5 * 60
+
+    def __init__(self, pkg_names, action_type, upgrade_id):
+        apb.InstallProgress.__init__(self)
+        gobject.GObject.__init__(self)
+
+        self.finished = False
+        self.time_last_update = time.time()
+
+        self.pkg_names = pkg_names
+        self.action_type = action_type
+        self.upgrade_id = upgrade_id
+
+    def error(self, pkg, errormsg):
+        """Called when an error happens.
+
+        Emits: action-error()
+        """
+        #global_event.emit("action-error", pkg, errormsg)
+        print "error >>", pkg, errormsg
+
+    def conffile(self, current, new):
+        """Called during conffile.
+
+        Emits: action-conffile()
+        """
+        #global_event.emit("action-conffile", current, new)
+        print "conffile >>", current, new
+
+    def start_update(self):
+        """Called when the update starts.
+
+        Emits: action-start()
+        """
+        #global_event.emit("action-start")
+
+    def run(self, obj):
+        """Run."""
+        self.finished = False
+        return apb.InstallProgress.run(self, obj)
+
+    def finish_update(self):
+        """Called when the update finished.
+
+        Emits: action-finish()
+        """
+        #global_event.emit("action-finish")
+
+    def processing(self, pkg, stage):
+        """Called when entering a new stage in dpkg."""
+        # We have no percentage or alike, send -1 to let the bar pulse.
+        #global_event.emit("action-update", pkg, ("Installing stage: %s...") % stage, -1)
+        print "processing >>", pkg, stage
+
+    def status_change(self, pkg, percent, status):
+        """Called when the status changed.
+
+        Emits: action-update(status, percent)
+        """
+        self.time_last_update = time.time()
+        global_event.emit("action-update", (self.upgrade_id, self.action_type, int(percent), status))
+
+    def update_interface(self):
+        """Called periodically to update the interface.
+
+        Emits: action-timeout() [When a timeout happens]
+        """
+        #print "update_interface >>", self.time_last_update
+        apb.InstallProgress.update_interface(self)
+        if self.time_last_update + self.INSTALL_TIMEOUT < time.time():
+            global_event.emit("action-timeout")
+
+    if apt_pkg._COMPAT_0_7:
+        updateInterface = function_deprecated_by(update_interface)
+        startUpdate = function_deprecated_by(start_update)
+        finishUpdate = function_deprecated_by(finish_update)
+        statusChange = function_deprecated_by(status_change)
+
 class AptActionThread(MissionThread):
     '''
     class docs
@@ -129,22 +225,16 @@ class AptActionThread(MissionThread):
             global_event.emit("action-start", (self.pkg_name, self.action_type))
             if self.simulate:
                 global_event.emit("action-update", (self.pkg_name, self.action_type, 10, ""))
-                sleep(2)
-        
+                time.sleep(2)
                 global_event.emit("action-update", (self.pkg_name, self.action_type, 30, ""))
-                sleep(2)
-                
+                time.sleep(2)
                 global_event.emit("action-update", (self.pkg_name, self.action_type, 50, ""))
-                sleep(2)
-                
+                time.sleep(2)
                 global_event.emit("action-update", (self.pkg_name, self.action_type, 70, ""))
-                sleep(2)
-        
+                time.sleep(2)
                 global_event.emit("action-update", (self.pkg_name, self.action_type, 100, ""))
-                
                 global_event.emit("action-finish", (self.pkg_name, self.action_type, pkg_info_list))
             else:
-                # FIXME: it's very strange, there is no return code with commit method
                 try:
                     self.pkg_cache.commit(None, AptProcess(self.pkg_name, self.action_type))
                     log("success")
@@ -196,7 +286,7 @@ class MultiAptActionThread(MissionThread):
                 global_event.emit("action-start", (pkg_info[0], self.action_type))
 
             try:
-                self.pkg_cache.commit(None, CommitProcess(self.pkg_names, self.action_type, self.upgrade_id))
+                self.pkg_cache.commit(None, GInstallProgress(self.pkg_names, self.action_type, self.upgrade_id))
                 log("success")
                 global_event.emit('action-finish', (self.upgrade_id, self.action_type, pkg_info_list))
             except Exception, e:

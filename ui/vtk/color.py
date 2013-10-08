@@ -1,29 +1,36 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-# Copyright (C) 2011 ~ 2012 Deepin, Inc.
-#               2011 ~ 2012 Wang Yong
-# 
-# Author:     Wang Yong <lazycat.manatee@gmail.com>
-# Maintainer: Wang Yong <lazycat.manatee@gmail.com>
-# 
+
+# Copyright (C) 2012 Deepin, Inc.
+#               2012 Hailong Qiu
+#
+# Author:     Hailong Qiu <356752238@qq.com>
+# Maintainer: Hailong Qiu <356752238@qq.com>
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from datetime import datetime
-from constant import LOG_PATH
+import gtk
+import cairo
+import pango
 
-def log(message):
-    with open(LOG_PATH, "a") as file_handler:
-        now = datetime.now().strftime("[%Y-%m-%d %H:%M:%S]")
-        file_handler.write("%s %s\n" % (now, message))
+
+def alpha_color_hex_to_cairo((color, alpha)):
+    (r, g, b) = color_hex_to_cairo(color)
+    return (r, g, b, alpha)
+    
+def color_hex_to_cairo(color):
+    # 将 #FF0000 转换成 set_source_rgb 适应的值. 范围是 0.0 ~ 1.0
+    gdk_color = gtk.gdk.color_parse(color)
+    return (gdk_color.red / 65535.0, gdk_color.green / 65535.0, gdk_color.blue / 65535.0)
 

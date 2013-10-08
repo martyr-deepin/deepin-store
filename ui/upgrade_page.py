@@ -26,7 +26,7 @@ import json
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, NO_NOTIFY_FILE, CHECK_BUTTON_PADDING_X, cute_info_dir
 import os
 from dtk.ui.treeview import TreeView, TreeItem
-from dtk.ui.button import CheckButtonBuffer, ImageButton, CheckAllButton, Button
+from dtk.ui.button import CheckButtonBuffer, ImageButton, CheckAllButton
 from star_buffer import DscStarBuffer
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
 from deepin_utils.core import split_with
@@ -52,7 +52,7 @@ import dtk.ui.tooltip as Tooltip
 from utils import get_last_upgrade_time, set_last_upgrade_time, handle_dbus_error, handle_dbus_reply
 import utils
 from nls import _
-from widgets import LoadingBox
+import widgets
 
 class UpgradingBar(gtk.HBox):
     '''
@@ -341,27 +341,51 @@ class UpgradePage(gtk.VBox):
     def create_upgrading_box(self):
         self.upgrading_view = gtk.VBox()
 
-        inner_box = gtk.VBox()
+        inner_box = gtk.VBox(spacing=20)
 
-        update_logo_box = gtk.VBox()
-        update_logo_box.set_size_request(48, 48)
-        update_logo_box.connect('expose-event', self.expose_update_logo_box)
+        self.upgrade_page_logo = widgets.ImageBox(utils.get_common_image("upgrade/download.png"))
 
-        progress_box = gtk.VBox()
+        progress_box = gtk.VBox(spacing=6)
+        progress_box.set_size_request(400, -1)
+        self.upgrading_progress_title = widgets.TextLoading("正在下载更新", text_size=16)
         self.upgrading_progressbar = ProgressBar()
-        self.upgrading_progressbar.set_size_request(-1, 12)
+        self.upgrading_progressbar.set_size_request(360, 12)
         self.upgrading_progressbar.progress_buffer.progress = 0.0
-        self.upgrading_progress_info = Label("  ")
+        self.upgrading_progress_detail = Label("正在下载2个更新（总共19.2MB, 已完成39%）")
 
+        bottom_info_box = gtk.Table(3, 2)
+        recent_update_time_label = utils.create_right_align_label("最近更新列表时间：")
+        self.recent_update_time = utils.create_left_align_label("今天 下午 3:05")
+        bottom_info_box.attach(recent_update_time_label, 0, 1, 0, 1, xoptions=gtk.FILL, xpadding=0, ypadding=4)
+        bottom_info_box.attach(self.recent_update_time, 1, 2, 0, 1, xoptions=gtk.FILL, xpadding=0, ypadding=4)
+
+        recent_upgrade_time_label = utils.create_right_align_label("最近更新时间：")
+        self.recent_upgrade_time = utils.create_left_align_label("2013年09月30日 下午 3:25")
+        bottom_info_box.attach(recent_upgrade_time_label, 0, 1, 1, 2, xoptions=gtk.FILL, xpadding=0, ypadding=4)
+        bottom_info_box.attach(self.recent_upgrade_time, 1, 2, 1, 2, xoptions=gtk.FILL, xpadding=0, ypadding=4)
+
+        software_mirror_label = utils.create_right_align_label("接收更新软件源：")
+        self.software_mirror = utils.create_left_align_label("官方源 http://packages.linuxdeepin.com")
+        bottom_info_box.attach(software_mirror_label, 0, 1, 2, 3, xoptions=gtk.FILL, xpadding=0, ypadding=4)
+        bottom_info_box.attach(self.software_mirror, 1, 2, 2, 3, xoptions=gtk.FILL, xpadding=0, ypadding=4)
+
+        bottom_info_box_align = utils.create_align((0.0, 0.5, 0, 0), (20, 0, 0, 0))
+        bottom_info_box_align.add(bottom_info_box)
+
+        progress_box.pack_start(self.upgrading_progress_title, False, False)
         progress_box.pack_start(self.upgrading_progressbar, False, False)
-        progress_box.pack_start(self.upgrading_progress_info, False, False)
+        progress_box.pack_start(self.upgrading_progress_detail, False, False)
+        progress_box.pack_start(bottom_info_box_align, False, False)
         progress_box_align = utils.create_align((0.5, 0.5, 1, 0), (2, 2, 10, 10))
         progress_box_align.add(progress_box)
 
         upper_box = gtk.HBox()
-        upper_box.pack_start(update_logo_box, False, False)
+        upper_box.pack_start(self.upgrade_page_logo, False, False)
         upper_box.pack_start(progress_box_align)
+        upper_box_align = utils.create_align((0.5, 0.5, 0, 0), (0, 0, 5, 0))
+        upper_box_align.add(upper_box)
 
+        """
         middle_button_box = gtk.HBox()
 
         self.upgrading_cancel_button = Button("取消")
@@ -378,14 +402,11 @@ class UpgradePage(gtk.VBox):
         middle_button_box.pack_end(upgrading_hide_button_align, False, False)
         middle_button_box_align = utils.create_align((1, 0.5, 1, 0), (2, 2, 2, 2))
         middle_button_box_align.add(middle_button_box)
+        """
 
-        top_progress_box = gtk.VBox()
+        inner_box.pack_start(upper_box_align, False, False)
 
-        top_progress_box.pack_start(upper_box, False, False)
-        top_progress_box.pack_start(middle_button_box_align, False, False)
-        inner_box.pack_start(top_progress_box, False, False)
-
-        upgrading_view_align = utils.create_align((0.5, 0.0, 1, 0), (40, 40, 50, 50))
+        upgrading_view_align = utils.create_align((0.5, 0.5, 1, 0), (40, 40, 50, 50))
         upgrading_view_align.add(inner_box)
         self.upgrading_view.pack_start(upgrading_view_align, True, True)
 
@@ -400,18 +421,6 @@ class UpgradePage(gtk.VBox):
 
     def hide_window(self, widget):
         global_event.emit("hide-window")
-
-    def expose_update_logo_box(self, widget, event):
-        rect = widget.allocation
-        cr = widget.window.cairo_create()
-        
-        pixbuf = utils.get_common_image_pixbuf('update/update.png')
-
-        draw_pixbuf(cr,
-                    pixbuf,
-                    rect.x,
-                    rect.y,
-                    )        
 
     def click_upgrade_check_button(self):
         global_event.emit("set-cursor", gtk.gdk.WATCH)
@@ -492,7 +501,7 @@ class UpgradePage(gtk.VBox):
         container_remove_all(self)
         self.pack_start(self.upgrading_view)
 
-        self.in_upgrading_view = True
+        #self.in_upgrading_view = True
         self.show_all()
             
     def show_newest_view(self):
@@ -771,7 +780,7 @@ class UpgradePage(gtk.VBox):
                 error_handler=lambda e:handle_dbus_error('remove_no_notify_pkg-> %s' % pkg_name, e))
 
     def create_init_box(self):
-        self.loading_box = LoadingBox()
+        self.loading_box = widgets.LoadingBox()
         self.loading_box_align = utils.create_align((0.5, 0.5, 1, 1), (10, 10, 10, 10))
         self.loading_box_align.add(self.loading_box)
 
@@ -838,45 +847,48 @@ class UpgradePage(gtk.VBox):
         else:
             global_event.emit("show-newest-view")
 
+        #global_event.emit("show-upgrading-view")
+
     def download_ready(self, pkg_name):
-        self.upgrading_progress_info.set_text("分析依赖...")
+        self.upgrading_progress_detail.set_text("分析依赖...")
 
     def download_wait(self, pkg_name):
-        self.upgrading_progress_info.set_text("依赖分析完成")
+        self.upgrading_progress_detail.set_text("依赖分析完成")
 
     def download_start(self, pkg_name):
-        self.upgrading_progress_info.set_text("开始下载...")
+        self.upgrading_progress_detail.set_text("开始下载...")
 
     def download_update(self, pkg_name, percent, speed, finish_number, total, downloaded_size, total_size):
-        self.upgrading_progress_info.set_text("正在下载：(%s/%s)  已完成：%s/%s 下载速度：%s/s" % (
-            finish_number,
-            total,
+        self.upgrading_progress_detail.set_text("已完成：%s/%s (%s/%s) 下载速度：%s/s" % (
             utils.bit_to_human_str(downloaded_size),
             utils.bit_to_human_str(total_size),
+            finish_number,
+            total,
             utils.bit_to_human_str(speed),
             ))
         self.upgrading_progressbar.set_progress(percent)
         
     def download_finish(self, pkg_name):
-        self.upgrading_progress_info.set_text("下载完成!")
+        self.upgrading_progress_detail.set_text("下载完成!")
         self.upgrading_progressbar.set_progress(100.0)
 
     def download_stop(self, pkg_name):
-        self.upgrading_progress_info.set_text("下载停止！")
+        self.upgrading_progress_detail.set_text("下载停止！")
             
     def download_parse_failed(self, pkg_name):
-        self.upgrading_progress_info.set_text("依赖分析失败!")
+        self.upgrading_progress_detail.set_text("依赖分析失败!")
             
     def action_start(self, pkg_name):
-        self.upgrading_progress_info.set_text("开始升级...")
-        self.upgrading_cancel_button.set_sensitive(False)
+        self.upgrade_page_logo.change_image(utils.get_common_image("upgrade/upgrade.png"))
+        self.upgrading_progress_title.change_text("正在安装更新")
+        self.upgrading_progress_detail.set_text("开始更新...")
     
-    def action_update(self, pkg_name, percent):
-        self.upgrading_progress_info.set_text("升级中...")
+    def action_update(self, pkg_name, percent, status):
+        self.upgrading_progress_detail.set_text(str(status))
         self.upgrading_progressbar.set_progress(percent)
     
     def action_finish(self, pkg_name, pkg_info_list):
-        self.upgrading_progress_info.set_text("升级完成!")
+        self.upgrading_progress_detail.set_text("升级完成!")
         self.upgrading_progressbar.set_progress(100.0)
 
 gobject.type_register(UpgradePage)

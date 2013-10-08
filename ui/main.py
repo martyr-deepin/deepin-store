@@ -21,7 +21,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from software_center import DeepinSoftwareCenter
-import sys
 import dbus
 import dbus.service
 import dbus.mainloop.glib
@@ -30,12 +29,14 @@ from constant import DSC_FRONTEND_NAME, DSC_FRONTEND_PATH
 from deepin_utils.ipc import is_dbus_name_exists
 import gtk
 
-if __name__ == "__main__" :
+from optparse import OptionParser
+
+def start_main():
     # Init.
     DBusGMainLoop(set_as_default=True)
     gtk.gdk.threads_init()
     session_bus = dbus.SessionBus()
-    arguments = sys.argv[1::]
+    options, arguments = get_parser()
     
     # Send hello message if updater has running.
     if is_dbus_name_exists(DSC_FRONTEND_NAME, True):
@@ -44,6 +45,8 @@ if __name__ == "__main__" :
         bus_object = session_bus.get_object(DSC_FRONTEND_NAME, DSC_FRONTEND_PATH)
         bus_interface = dbus.Interface(bus_object, DSC_FRONTEND_NAME)
         bus_interface.hello(arguments)
+        if options.show_page:
+            bus_interface.show_page(options.show_page)
         
         print "Say hello to software center"
     else:
@@ -51,8 +54,22 @@ if __name__ == "__main__" :
         bus_name = dbus.service.BusName(DSC_FRONTEND_NAME, session_bus)
             
         software_center = DeepinSoftwareCenter(session_bus, arguments)
+        if options.show_page:
+            gtk.timeout_add(500, lambda:software_center.show_page(options.show_page))
         try:
             software_center.run()
         except KeyboardInterrupt:
             software_center.bus_interface.request_quit()
-    
+
+def get_parser():
+    parser = OptionParser()
+    parser.add_option("-p", "--page", dest="show_page",
+            help="show four page: home, upgrade, uninstall, install", metavar="pages")
+    parser.add_option("-q", "--quiet",
+            action="store_false", dest="verbose", default=True,
+            help="don't print status messages to stdout")
+    (options, args) = parser.parse_args()
+    return (options, args)
+
+if __name__ == '__main__':
+    start_main()

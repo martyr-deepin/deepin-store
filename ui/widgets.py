@@ -35,7 +35,87 @@ from dtk.ui.utils import color_hex_to_cairo, set_clickable_cursor
 from dtk.ui.theme import ui_theme
 from dtk.ui.constant import ALIGN_MIDDLE
 from dtk.ui.dialog import DialogBox, DIALOG_MASK_SINGLE_PAGE
+import dtk.ui.utils as dutils
 from nls import _
+
+class TextLoading(gtk.VBox):
+    """A text with dot end loading widget"""
+
+    total_dot_number = 4
+
+    def __init__(self, text, text_size=10, text_color="#003399"):
+        gtk.VBox.__init__(self)
+        self.text = text
+        self.draw_text = self.text
+        self.text_size = text_size
+        self.text_color = text_color
+        size = dutils.get_content_size(self.text + "." * self.total_dot_number, text_size)
+        self.set_size_request(*size)
+        self.dot_number = 0
+
+        self.connect("expose-event", self.on_expose_event)
+
+        gtk.timeout_add(600, self.loading_loop)
+
+    def change_text(self, text):
+        self.text = text
+        self.draw_text = text
+        size = dutils.get_content_size(self.text + "." * self.total_dot_number, self.text_size)
+        self.set_size_request(*size)
+        self.dot_number = 0
+        self.queue_draw()
+
+    def loading_loop(self):
+        if self.dot_number == self.total_dot_number:
+            self.dot_number = 0
+        else:
+            self.dot_number += 1
+        self.draw_text = self.text + "." * self.dot_number
+        self.queue_draw()
+        return True
+
+    def on_expose_event(self, widget, event):
+        cr = widget.window.cairo_create()
+        rect = widget.get_allocation()
+        draw_text(cr, 
+                self.draw_text, 
+                rect.x, 
+                rect.y, 
+                rect.width, 
+                rect.height, 
+                text_color=self.text_color,
+                text_size=self.text_size,
+                )
+        return True
+
+class ImageBox(gtk.VBox):
+    def __init__(self, img_path, width=None, height=None):
+        gtk.VBox.__init__(self)
+
+        self.img_path = img_path
+        self.pixbuf = gtk.gdk.pixbuf_new_from_file(self.img_path)
+        
+        if not width:
+            width = self.pixbuf.get_width()
+        if not height:
+            height = self.pixbuf.get_height()
+
+        self.set_size_request(width, height)
+        self.connect("expose-event", self.on_expose_event)
+
+    def change_image(self, img_path):
+        self.pixbuf = gtk.gdk.pixbuf_new_from_file(img_path)
+        self.queue_draw()
+
+    def on_expose_event(self, widget, event):
+        cr = widget.window.cairo_create()
+        rect = widget.get_allocation()
+        draw_pixbuf(cr,
+                    self.pixbuf,
+                    rect.x,
+                    rect.y,
+                    )    
+        return True
 
 class ActionButton(Label):
     def __init__(self, 
