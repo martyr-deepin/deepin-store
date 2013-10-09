@@ -19,11 +19,31 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
 from datetime import datetime
-from constant import LOG_PATH
+from constant import LOG_PATH, SYS_CONFIG_INFO_PATH
+
+from deepin_utils.config import Config
+from deepin_utils.file import touch_file
+from deepin_utils.date_time import get_current_time
 
 def log(message):
     with open(LOG_PATH, "a") as file_handler:
         now = datetime.now().strftime("[%Y-%m-%d %H:%M:%S]")
         file_handler.write("%s %s\n" % (now, message))
 
+def set_last_update_time():
+    config_info_config = get_config_info_config()
+    config_info_config.set("update", "last_update_time", get_current_time())
+    config_info_config.write()
+
+def get_config_info_config():
+    config_info_config = Config(SYS_CONFIG_INFO_PATH)
+
+    if os.path.exists(SYS_CONFIG_INFO_PATH):
+        config_info_config.load()
+    else:
+        touch_file(SYS_CONFIG_INFO_PATH)
+        config_info_config.load()
+
+    return config_info_config

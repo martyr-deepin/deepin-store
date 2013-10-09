@@ -362,6 +362,7 @@ class PackageManager(dbus.service.Object):
         self.exit_manager.check()    
         
     def download_failed(self, pkg_name, action_type, e):
+        print pkg_name, e
         self.update_signal([("download-failed", (pkg_name, action_type, e))])
         
         self.exit_manager.check()    

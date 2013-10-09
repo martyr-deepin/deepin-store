@@ -75,7 +75,7 @@ from server_action import SendVote, SendDownloadCount, SendUninstallCount
 from preference import preference_dialog, WaitingDialog
 from logger import Logger
 from paned_box import PanedBox
-from widgets import BottomTipBar, ConfirmDialog
+from widgets import BottomTipBar
 from star_buffer import StarView, DscStarBuffer
 from application import Application
 
@@ -321,13 +321,11 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
 
             elif signal_type == "download-failed":
                 (pkg_name, action_type, error) = action_content
-                print "Download Failed >>", pkg_name, action_type, error
                 if action_type == ACTION_INSTALL:
                     #install_page.download_stop(pkg_name)
                     pass
                 elif action_type == ACTION_UPGRADE:
-                    #upgrade_page.download_stop(pkg_name)
-                    pass
+                    upgrade_page.download_failed(pkg_name, error)
 
             elif signal_type == "action-start":
                 (pkg_name, action_type) = action_content

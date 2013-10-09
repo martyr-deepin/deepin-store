@@ -42,3 +42,5 @@ PKG_SIZE_ERROR = 2
 UPDATE_LIST_LOG_PATH = '/tmp/dsc-update-list.log'
 UPGRADE_LOG_PATH = '/tmp/dsc-upgrade.log'
 LOG_PATH = "/tmp/dsc-backend.log"
+
+SYS_CONFIG_INFO_PATH = "/var/cache/deepin-software-center/config_info.ini"

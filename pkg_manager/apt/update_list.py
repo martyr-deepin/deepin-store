@@ -27,7 +27,7 @@ import apt.progress.base
 import apt_pkg
 
 from events import global_event
-from utils import log
+import utils
 from dtk.ui.thread_pool import MissionThread
 
 from constant import UPDATE_LIST_LOG_PATH
@@ -99,7 +99,8 @@ class UpdateList(MissionThread):
     def start_mission(self):
         '''Update package list.'''
         global_event.emit("update-list-start")
-        log("Cache update list start!")
+        utils.set_last_update_time()
+        utils.log("Cache update list start!")
         
         log_file = open(UPDATE_LIST_LOG_PATH, 'ab')
         progress = AcquireProgress(log_file)
@@ -107,15 +108,15 @@ class UpdateList(MissionThread):
             self.pkg_cache.update(progress)
             if int(progress.percent) == 0:
                 global_event.emit("update-list-failed")
-                log("update list failed!")
+                utils.log("update list failed!")
             else:
                 global_event.emit("update-list-finish")
-                log("update list finish")
+                utils.log("update list finish")
                 self.pkg_cache.open(None)
         except apt.cache.FetchFailedException, e:
             global_event.emit("update-list-failed")
             failed_message = "Cache update list failed: %s" % e
-            log(failed_message)
+            utils.log(failed_message)
             progress._write(failed_message)
     
 if __name__ == "__main__":

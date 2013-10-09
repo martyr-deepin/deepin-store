@@ -120,6 +120,7 @@ class ImageBox(gtk.VBox):
 class ActionButton(Label):
     def __init__(self, 
                  text, 
+                 callback_action=None,
                  enable_gaussian=False, 
                  text_color=ui_theme.get_color("link_text"),
                  ):
@@ -133,7 +134,7 @@ class ActionButton(Label):
         '''
         Label.__init__(self, text, text_color, enable_gaussian=enable_gaussian, text_size=9,
                        gaussian_radious=1, border_radious=0, underline=True)
-        self.callback_action = None
+        self.callback_action = callback_action
 
         set_clickable_cursor(self)
         self.connect('button-press-event', self.button_press_action)

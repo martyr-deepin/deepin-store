@@ -13,3 +13,18 @@ Type=Application
 Encoding=UTF-8
 Categories=Application;System;Settings
 StartupNotify=false
+X-Ayatana-Desktop-Shortcuts=ShowUpgrade;ShowUninstall
+
+[ShowUpgrade Shortcut Group]
+Name=Open Upgrade Page
+Name[zh_CN]=打开更新页面
+Name[zh_TW]=打開更新頁面
+Exec=/usr/bin/deepin-software-center --page=upgrade
+TargetEnvironment=Unity
+
+[ShowUninstall Shortcut Group]
+Name=Open Uninstall Page
+Name[zh_CN]=打开卸载页面
+Name[zh_TW]=打開卸載頁面
+Exec=/usr/bin/deepin-software-center --page=uninstall
+TargetEnvironment=Unity

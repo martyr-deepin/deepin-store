@@ -121,8 +121,9 @@ class GInstallProgress(gobject.GObject, apb.InstallProgress):
 
         Emits: action-error()
         """
-        #global_event.emit("action-error", pkg, errormsg)
-        print "error >>", pkg, errormsg
+        global_event.emit("action-error", (pkg, errormsg))
+        global_event.emit("action-failed", (pkg, ACTION_UPGRADE, []))
+        log("error: %s" % errormsg)
 
     def conffile(self, current, new):
         """Called during conffile.

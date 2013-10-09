@@ -25,7 +25,6 @@ import gtk
 import gobject
 import pango
 import os
-import apt_pkg
 from dtk.ui.dialog import PreferenceDialog, DialogBox, DIALOG_MASK_SINGLE_PAGE
 from dtk.ui.entry import InputEntry
 from dtk.ui.button import Button, CheckButton, RadioButtonBuffer
@@ -55,6 +54,7 @@ from utils import (
         is_auto_update,
         set_auto_update,
         )
+import utils
 from mirror_test import Mirror, MirrorTest
 from events import global_event
 import aptsources
@@ -326,7 +326,7 @@ class DscPreferenceDialog(PreferenceDialog):
         label_align.add(dir_title_label)
 
         self.mirrors_dir = os.path.join(get_parent_dir(__file__, 2), 'mirrors')
-        self.current_mirror_hostname = self.get_current_mirror_hostname()
+        self.current_mirror_hostname = utils.get_current_mirror_hostname()
         self.mirror_items = self.get_mirror_items()
         self.mirror_view = TreeView(self.mirror_items,
                                 enable_drag_drop=False,
@@ -421,15 +421,6 @@ class DscPreferenceDialog(PreferenceDialog):
                 self.select_best_mirror_dialog.info_message_label.set_text(_("Test for downloading mirror failed. Please check your network connection."))
                 self.select_best_mirror_dialog.close_button.set_label(_("Close"))
             return False
-
-    def get_current_mirror_hostname(self):
-        apt_pkg.init_config()
-        apt_pkg.init_system()
-        source_list_obj = apt_pkg.SourceList()
-        source_list_obj.read_main_list()
-        url = source_list_obj.list[0].uri
-        hostname = url.split(":")[0] + "://" + url.split("/")[2]
-        return hostname
 
     def mirror_treeview_draw_mask(self, cr, x, y, w, h):
         cr.set_source_rgba(1, 1, 1, 0.9)

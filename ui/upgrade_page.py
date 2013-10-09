@@ -3,9 +3,11 @@
 
 # Copyright (C) 2011 ~ 2012 Deepin, Inc.
 #               2011 ~ 2012 Wang Yong
+#               2012 ~ 2013 Kaisheng Ye
 # 
 # Author:     Wang Yong <lazycat.manatee@gmail.com>
 # Maintainer: Wang Yong <lazycat.manatee@gmail.com>
+#             Kaisheng Ye <kaisheng.ye@gmail.com>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -34,7 +36,7 @@ from deepin_utils.net import is_network_connected
 from deepin_utils.file import read_file, format_file_size
 from dtk.ui.utils import is_in_rect, container_remove_all, get_content_size
 from dtk.ui.label import Label
-from dtk.ui.theme import DynamicPixbuf
+from dtk.ui.theme import DynamicPixbuf, DynamicColor
 from item_render import (render_pkg_info, STAR_SIZE, get_star_level, ITEM_PADDING_Y, get_icon_pixbuf_path,
                          ITEM_INFO_AREA_WIDTH, ITEM_CANCEL_BUTTON_PADDING_RIGHT, NAME_SIZE, ICON_SIZE, ITEM_PADDING_MIDDLE,
                          ITEM_STAR_AREA_WIDTH, ITEM_STATUS_TEXT_PADDING_RIGHT,
@@ -53,6 +55,7 @@ from utils import get_last_upgrade_time, set_last_upgrade_time, handle_dbus_erro
 import utils
 from nls import _
 import widgets
+from preference import preference_dialog
 
 class UpgradingBar(gtk.HBox):
     '''
@@ -256,6 +259,122 @@ class NoNotifyBar(gtk.HBox):
         
 gobject.type_register(NoNotifyBar)        
 
+class UpgradingBox(gtk.VBox):
+    def __init__(self):
+        gtk.VBox.__init__(self)
+
+        self.upgrade_page_logo = widgets.ImageBox(utils.get_common_image("upgrade/download.png"))
+
+        self.progress_box = gtk.VBox(spacing=6)
+        self.progress_box.set_size_request(400, -1)
+        self.upgrading_progress_title = widgets.TextLoading("正在下载更新", text_size=16)
+        self.upgrading_progressbar = ProgressBar()
+        self.upgrading_progressbar.set_size_request(360, 12)
+        self.upgrading_progressbar.progress_buffer.progress = 0.0
+        self.upgrading_progress_detail = Label("正在下载2个更新（总共19.2MB, 已完成39%）")
+
+        bottom_info_box = gtk.Table(3, 2)
+        recent_update_time_label = utils.create_right_align_label("最近更新列表时间：")
+        self.recent_update_time = utils.create_left_align_label(utils.get_last_update_time())
+        bottom_info_box.attach(recent_update_time_label, 0, 1, 0, 1, xoptions=gtk.FILL, xpadding=0, ypadding=4)
+        bottom_info_box.attach(self.recent_update_time, 1, 2, 0, 1, xoptions=gtk.FILL, xpadding=0, ypadding=4)
+
+        recent_upgrade_time_label = utils.create_right_align_label("最近更新时间：")
+        self.recent_upgrade_time = utils.create_left_align_label(get_last_upgrade_time())
+        bottom_info_box.attach(recent_upgrade_time_label, 0, 1, 1, 2, xoptions=gtk.FILL, xpadding=0, ypadding=4)
+        bottom_info_box.attach(self.recent_upgrade_time, 1, 2, 1, 2, xoptions=gtk.FILL, xpadding=0, ypadding=4)
+
+        software_mirror_label = utils.create_right_align_label("接收更新软件源：")
+        self.software_mirror = utils.create_left_align_label("%s %s" % (
+            preference_dialog.current_mirror_item.mirror.name, 
+            preference_dialog.current_mirror_item.mirror.hostname))
+        bottom_info_box.attach(software_mirror_label, 0, 1, 2, 3, xoptions=gtk.FILL, xpadding=0, ypadding=4)
+        bottom_info_box.attach(self.software_mirror, 1, 2, 2, 3, xoptions=gtk.FILL, xpadding=0, ypadding=4)
+
+        bottom_info_box_align = utils.create_align((0.0, 0.5, 0, 0), (20, 0, 0, 0))
+        bottom_info_box_align.add(bottom_info_box)
+
+        self.progress_box.pack_start(self.upgrading_progress_title, False, False)
+        self.progress_box.pack_start(self.upgrading_progressbar, False, False)
+        self.progress_box.pack_start(self.upgrading_progress_detail, False, False)
+        self.progress_box.pack_start(bottom_info_box_align, False, False)
+        self.progress_box_align = utils.create_align((0.5, 0.0, 1, 1), (2, 2, 10, 10))
+        self.progress_box_align.add(self.progress_box)
+
+        upper_box = gtk.HBox()
+        upper_box.pack_start(self.upgrade_page_logo, False, False)
+        upper_box.pack_start(self.progress_box_align)
+
+        upgrading_view_align = utils.create_align((0.5, 0.5, 0, 1), (170, 40, 50, 50))
+        upgrading_view_align.add(upper_box)
+        self.pack_start(upgrading_view_align, True, True)
+
+        #self.show_error("download_failed")
+
+    def create_upload_info_box(self):
+        upload_info_start = Label("根据上面的建议，如果您尝试后依然看到此处提示！您可以")
+        upload_info_middle = widgets.ActionButton("上报错误")
+        upload_info_end = Label("。")
+        upload_info_box = gtk.HBox()
+        upload_info_box.pack_start(upload_info_start, False, False)
+        upload_info_box.pack_start(upload_info_middle, False, False)
+        upload_info_box.pack_start(upload_info_end, False, False)
+        return upload_info_box
+
+    def create_download_failed_box(self):
+        download_failed_box = gtk.VBox(spacing=10)
+        download_failed_box.set_size_request(400, -1)
+        error_title = Label("更新下载失败", text_color=DynamicColor('#ff0000'), text_size=16)
+
+        detail_info_start = Label("请求的软件包在服务器上不存在，建议")
+        detail_info_middle = widgets.ActionButton("刷新软件列表", lambda:global_event.emit("start-update-list"))
+        detail_info_end = Label("后，再尝试更新。")
+        detail_info_box = gtk.HBox()
+        detail_info_box.pack_start(detail_info_start, False, False)
+        detail_info_box.pack_start(detail_info_middle, False, False)
+        detail_info_box.pack_start(detail_info_end, False, False)
+
+        download_failed_box.pack_start(error_title, False, False)
+        download_failed_box.pack_start(detail_info_box, False, False)
+        download_failed_box.pack_start(self.create_upload_info_box(), False, False)
+        return download_failed_box
+    
+    def create_install_failed_box(self):
+        install_failed_box = gtk.VBox(spacing=10)
+        install_failed_box.set_size_request(400, -1)
+        error_title = Label("安装更新失败", text_color=DynamicColor('#ff0000'), text_size=16)
+
+        detail_info_start = Label("请求的软件包在服务器上不存在，建议")
+        detail_info_middle = widgets.ActionButton("刷新软件列表", lambda:global_event.emit("start-update-list"))
+        detail_info_end = Label("后，再尝试更新。")
+        detail_info_box = gtk.HBox()
+        detail_info_box.pack_start(detail_info_start, False, False)
+        detail_info_box.pack_start(detail_info_middle, False, False)
+        detail_info_box.pack_start(detail_info_end, False, False)
+
+        install_failed_box.pack_start(error_title, False, False)
+        install_failed_box.pack_start(detail_info_box, False, False)
+        install_failed_box.pack_start(self.create_upload_info_box(), False, False)
+        return install_failed_box
+
+    def show_error(self, error_type):
+        if error_type == 'download_failed':
+            container_remove_all(self.progress_box_align)
+            self.download_failed_box = self.create_download_failed_box()
+            self.progress_box_align.add(self.download_failed_box)
+            self.upgrade_page_logo.change_image(utils.get_common_image('upgrade/download_failed.png'))
+        elif error_type == 'install_failed':
+            pass
+
+    def update(self):
+        container_remove_all(self.progress_box_align)
+        self.progress_box_align.add(self.progress_box)
+        self.recent_update_time.set_text(utils.get_last_update_time())
+        self.recent_upgrade_time.set_text(get_last_upgrade_time())
+        self.software_mirror.set_text("%s %s" % (
+            preference_dialog.current_mirror_item.mirror.name, 
+            preference_dialog.current_mirror_item.mirror.hostname))
+
 class UpgradePage(gtk.VBox):
     '''
     class docs
@@ -295,7 +414,7 @@ class UpgradePage(gtk.VBox):
         self.network_disable_pixbuf = None
         self.network_disable_view.connect("expose-event", self.expose_network_disable_view)
 
-        self.create_upgrading_box()
+        self.upgrading_view = UpgradingBox()
         self.create_init_box()
         
         self.upgrade_treeview = TreeView(enable_drag_drop=False)
@@ -337,78 +456,6 @@ class UpgradePage(gtk.VBox):
         self.no_notify_treeview.draw_mask = self.draw_mask
         
         global_event.emit("show-updating-view")
-
-    def create_upgrading_box(self):
-        self.upgrading_view = gtk.VBox()
-
-        inner_box = gtk.VBox(spacing=20)
-
-        self.upgrade_page_logo = widgets.ImageBox(utils.get_common_image("upgrade/download.png"))
-
-        progress_box = gtk.VBox(spacing=6)
-        progress_box.set_size_request(400, -1)
-        self.upgrading_progress_title = widgets.TextLoading("正在下载更新", text_size=16)
-        self.upgrading_progressbar = ProgressBar()
-        self.upgrading_progressbar.set_size_request(360, 12)
-        self.upgrading_progressbar.progress_buffer.progress = 0.0
-        self.upgrading_progress_detail = Label("正在下载2个更新（总共19.2MB, 已完成39%）")
-
-        bottom_info_box = gtk.Table(3, 2)
-        recent_update_time_label = utils.create_right_align_label("最近更新列表时间：")
-        self.recent_update_time = utils.create_left_align_label("今天 下午 3:05")
-        bottom_info_box.attach(recent_update_time_label, 0, 1, 0, 1, xoptions=gtk.FILL, xpadding=0, ypadding=4)
-        bottom_info_box.attach(self.recent_update_time, 1, 2, 0, 1, xoptions=gtk.FILL, xpadding=0, ypadding=4)
-
-        recent_upgrade_time_label = utils.create_right_align_label("最近更新时间：")
-        self.recent_upgrade_time = utils.create_left_align_label("2013年09月30日 下午 3:25")
-        bottom_info_box.attach(recent_upgrade_time_label, 0, 1, 1, 2, xoptions=gtk.FILL, xpadding=0, ypadding=4)
-        bottom_info_box.attach(self.recent_upgrade_time, 1, 2, 1, 2, xoptions=gtk.FILL, xpadding=0, ypadding=4)
-
-        software_mirror_label = utils.create_right_align_label("接收更新软件源：")
-        self.software_mirror = utils.create_left_align_label("官方源 http://packages.linuxdeepin.com")
-        bottom_info_box.attach(software_mirror_label, 0, 1, 2, 3, xoptions=gtk.FILL, xpadding=0, ypadding=4)
-        bottom_info_box.attach(self.software_mirror, 1, 2, 2, 3, xoptions=gtk.FILL, xpadding=0, ypadding=4)
-
-        bottom_info_box_align = utils.create_align((0.0, 0.5, 0, 0), (20, 0, 0, 0))
-        bottom_info_box_align.add(bottom_info_box)
-
-        progress_box.pack_start(self.upgrading_progress_title, False, False)
-        progress_box.pack_start(self.upgrading_progressbar, False, False)
-        progress_box.pack_start(self.upgrading_progress_detail, False, False)
-        progress_box.pack_start(bottom_info_box_align, False, False)
-        progress_box_align = utils.create_align((0.5, 0.5, 1, 0), (2, 2, 10, 10))
-        progress_box_align.add(progress_box)
-
-        upper_box = gtk.HBox()
-        upper_box.pack_start(self.upgrade_page_logo, False, False)
-        upper_box.pack_start(progress_box_align)
-        upper_box_align = utils.create_align((0.5, 0.5, 0, 0), (0, 0, 5, 0))
-        upper_box_align.add(upper_box)
-
-        """
-        middle_button_box = gtk.HBox()
-
-        self.upgrading_cancel_button = Button("取消")
-        upgrading_cancel_button_align = utils.create_align((0.5, 0.5, 0, 0), (4, 4, 4, 4))
-        upgrading_cancel_button_align.add(self.upgrading_cancel_button)
-        self.upgrading_cancel_button.connect('clicked', self.cancel_upgrade_download)
-
-        self.upgrading_hide_button = Button("后台运行")
-        upgrading_hide_button_align = utils.create_align((0.5, 0.5, 0, 0), (4, 4, 4, 4))
-        upgrading_hide_button_align.add(self.upgrading_hide_button)
-        self.upgrading_hide_button.connect("clicked", self.hide_window)
-
-        middle_button_box.pack_end(upgrading_cancel_button_align, False, False)
-        middle_button_box.pack_end(upgrading_hide_button_align, False, False)
-        middle_button_box_align = utils.create_align((1, 0.5, 1, 0), (2, 2, 2, 2))
-        middle_button_box_align.add(middle_button_box)
-        """
-
-        inner_box.pack_start(upper_box_align, False, False)
-
-        upgrading_view_align = utils.create_align((0.5, 0.5, 1, 0), (40, 40, 50, 50))
-        upgrading_view_align.add(inner_box)
-        self.upgrading_view.pack_start(upgrading_view_align, True, True)
 
     def cancel_upgrade_download(self, widget):
         self.bus_interface.cancel_upgrade_download(
@@ -500,6 +547,7 @@ class UpgradePage(gtk.VBox):
     def show_upgrading_view(self):
         container_remove_all(self)
         self.pack_start(self.upgrading_view)
+        self.upgrading_view.update()
 
         #self.in_upgrading_view = True
         self.show_all()
@@ -850,46 +898,49 @@ class UpgradePage(gtk.VBox):
         #global_event.emit("show-upgrading-view")
 
     def download_ready(self, pkg_name):
-        self.upgrading_progress_detail.set_text("分析依赖...")
+        self.upgrading_view.upgrading_progress_detail.set_text("分析依赖...")
 
     def download_wait(self, pkg_name):
-        self.upgrading_progress_detail.set_text("依赖分析完成")
+        self.upgrading_view.upgrading_progress_detail.set_text("依赖分析完成")
 
     def download_start(self, pkg_name):
-        self.upgrading_progress_detail.set_text("开始下载...")
+        self.upgrading_view.upgrading_progress_detail.set_text("开始下载...")
+
+    def download_failed(self, pkg_name, error):
+        self.upgrading_view.show_error("download_failed")
 
     def download_update(self, pkg_name, percent, speed, finish_number, total, downloaded_size, total_size):
-        self.upgrading_progress_detail.set_text("已完成：%s/%s (%s/%s) 下载速度：%s/s" % (
+        self.upgrading_view.upgrading_progress_detail.set_text("已完成：%s/%s (%s/%s) 下载速度：%s/s" % (
             utils.bit_to_human_str(downloaded_size),
             utils.bit_to_human_str(total_size),
             finish_number,
             total,
             utils.bit_to_human_str(speed),
             ))
-        self.upgrading_progressbar.set_progress(percent)
+        self.upgrading_view.upgrading_progressbar.set_progress(percent)
         
     def download_finish(self, pkg_name):
-        self.upgrading_progress_detail.set_text("下载完成!")
-        self.upgrading_progressbar.set_progress(100.0)
+        self.upgrading_view.upgrading_progress_detail.set_text("下载完成!")
+        self.upgrading_view.upgrading_progressbar.set_progress(100.0)
 
     def download_stop(self, pkg_name):
-        self.upgrading_progress_detail.set_text("下载停止！")
+        self.upgrading_view.upgrading_progress_detail.set_text("下载停止！")
             
     def download_parse_failed(self, pkg_name):
-        self.upgrading_progress_detail.set_text("依赖分析失败!")
+        self.upgrading_view.upgrading_progress_detail.set_text("依赖分析失败!")
             
     def action_start(self, pkg_name):
-        self.upgrade_page_logo.change_image(utils.get_common_image("upgrade/upgrade.png"))
-        self.upgrading_progress_title.change_text("正在安装更新")
-        self.upgrading_progress_detail.set_text("开始更新...")
+        self.upgrading_view.upgrade_page_logo.change_image(utils.get_common_image("upgrade/upgrade.png"))
+        self.upgrading_view.upgrading_progress_title.change_text("正在安装更新")
+        self.upgrading_view.upgrading_progress_detail.set_text("开始更新...")
     
     def action_update(self, pkg_name, percent, status):
-        self.upgrading_progress_detail.set_text(str(status))
-        self.upgrading_progressbar.set_progress(percent)
+        self.upgrading_view.upgrading_progress_detail.set_text(str(status))
+        self.upgrading_view.upgrading_progressbar.set_progress(percent)
     
     def action_finish(self, pkg_name, pkg_info_list):
-        self.upgrading_progress_detail.set_text("升级完成!")
-        self.upgrading_progressbar.set_progress(100.0)
+        self.upgrading_view.upgrading_progress_detail.set_text("升级完成!")
+        self.upgrading_view.upgrading_progressbar.set_progress(100.0)
 
 gobject.type_register(UpgradePage)
 

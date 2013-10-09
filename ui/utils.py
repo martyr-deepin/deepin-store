@@ -20,24 +20,49 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import threading as td
-from datetime import datetime
 import os
-from constant import CONFIG_INFO_PATH, DEFAULT_UPDATE_INTERVAL, DEFAULT_DOWNLOAD_DIRECTORY, DEFAULT_DOWNLOAD_NUMBER
+import gtk
+import pango
+import apt_pkg
+from datetime import datetime
+import threading as td
+
+from dtk.ui.label import Label
 from deepin_utils.config import Config
 from deepin_utils.file import touch_file, get_parent_dir
 from deepin_utils.date_time import get_current_time
-import gtk
+
+from constant import CONFIG_INFO_PATH, DEFAULT_UPDATE_INTERVAL, DEFAULT_DOWNLOAD_DIRECTORY, DEFAULT_DOWNLOAD_NUMBER
 from logger import newLogger
 
-import pango
-from dtk.ui.label import Label
 
 LOG_PATH = "/tmp/dsc-frontend.log"
 
 dsc_root_dir = os.path.realpath(get_parent_dir(__file__, 2))
 
 global_logger = newLogger('global')
+
+SYS_CONFIG_INFO_PATH = "/var/cache/deepin-software-center/config_info.ini"
+def get_last_update_time():
+    config = Config(SYS_CONFIG_INFO_PATH)
+
+    if os.path.exists(SYS_CONFIG_INFO_PATH):
+        config.load()
+        if config.has_option("update", "last_update_time"):
+            return config.get("update", "last_update_time")
+        else:
+            return ""
+    else:
+        return ""
+
+def get_current_mirror_hostname():
+    apt_pkg.init_config()
+    apt_pkg.init_system()
+    source_list_obj = apt_pkg.SourceList()
+    source_list_obj.read_main_list()
+    url = source_list_obj.list[0].uri
+    hostname = url.split(":")[0] + "://" + url.split("/")[2]
+    return hostname
 
 def create_right_align_label(strings):
     return Label(strings, text_x_align=pango.ALIGN_RIGHT, text_size=10)
