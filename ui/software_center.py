@@ -289,6 +289,34 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 elif action_type == ACTION_UPGRADE:
                     upgrade_page.download_wait(pkg_name)
 
+            elif signal_type == 'pkgs-not-in-cache':
+                (not_in_cache, action_type) = action_content
+                if action_type == ACTION_INSTALL:
+                    pass
+                elif action_type == ACTION_UPGRADE:
+                    upgrade_page.upgrading_view.show_error("pkgs_not_in_cache", not_in_cache)
+
+            elif signal_type == 'pkgs-mark-failed':
+                (pkg_dict, action_type) = action_content
+                if action_type == ACTION_INSTALL:
+                    pass
+                elif action_type == ACTION_UPGRADE:
+                    upgrade_page.upgrading_view.show_error("pkgs_mark_failed", pkg_dict)
+
+            elif signal_type == 'marked-delete-system-pkgs':
+                (pkgs, action_type) = action_content
+                if action_type == ACTION_INSTALL:
+                    pass
+                elif action_type == ACTION_UPGRADE:
+                    upgrade_page.upgrading_view.show_error("marked_delete_system_pkgs", pkgs)
+
+            elif signal_type == 'pkgs-parse-download-error':
+                (error, action_type) = action_content
+                if action_type == ACTION_INSTALL:
+                    pass
+                elif action_type == ACTION_UPGRADE:
+                    upgrade_page.upgrading_view.show_error("pkgs_parse_download_error", error)
+
             elif signal_type == "download-start":
                 (pkg_name, action_type) = action_content
                 if action_type == ACTION_INSTALL:
@@ -662,9 +690,10 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
     def show_page(self, key):
         try:
             index = self.pages.index(key)
-            method = "show_%s_page" % key
-            getattr(self, method)()
-            self.navigatebar.set_index(index)
+            if index != self.navigatebar.get_index():
+                method = "show_%s_page" % key
+                getattr(self, method)()
+                self.navigatebar.set_index(index)
         except:
             print "Unknow page:", key
         

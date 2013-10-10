@@ -23,63 +23,50 @@
 import os
 import errno
 import hashlib
-import traceback
 import apt_pkg
-from utils import log
-from constant import DOWNLOAD_STATUS_NOTNEED, DOWNLOAD_STATUS_ERROR, ACTION_UPGRADE
-import apt.debfile as debfile
+from constant import DOWNLOAD_STATUS_NOTNEED, DOWNLOAD_STATUS_ERROR, ACTION_UPGRADE, SYS_PKG_WHITE_LIST
 from events import global_event
 
-def get_deb_download_info(cache, deb_file):
-    try:
-        deb_package = debfile.DebPackage(deb_file, cache)
-        
-        if not (deb_package.compare_to_version_in_cache() == deb_package.VERSION_NONE):
-            log("%s: package has installed" % deb_file)
-            return DOWNLOAD_STATUS_ERROR
-        elif not deb_package.check_breaks_existing_packages():
-            log("%s: install package will break existing package" % deb_file)
-            return DOWNLOAD_STATUS_ERROR
-        elif not deb_package.check_conflicts():
-            log("%s: package conflicts with existing packages" % deb_file)
-            return DOWNLOAD_STATUS_ERROR
+def check_deleting_system_pkg(all_change_pkgs):
+    marked_delete_sys_pkgs = []
+    for pkg in all_change_pkgs:
+        if pkg.name.endswith(":i386"):
+            name = pkg.name[:-5]
         else:
-            deb_package.check()
-            (install_packages, remove_packages, unauthenticated_packages) = deb_package.required_changes
-            
-            depend_packages = []
-            depend_ok = True
-            
-            for depend in deb_package.depends:
-                for (pkg_name, require_version, version_operator) in depend:
-                    print "***: %s %s" % (cache[pkg_name].versions, require_version)
-                    newest_version = cache[pkg_name].versions[0].version
-                    if apt_pkg.check_dep(newest_version, version_operator, require_version):
-                        depend_packages.append(pkg_name)
-                    else:
-                        depend_ok = False
-                        log("Check depend %s failed" % (pkg_name))
-                        return DOWNLOAD_STATUS_ERROR
-        
-            if depend_ok:        
-                for pkg_name in install_packages + depend_packages:
-                    pkg = cache[pkg_name]
-                    if not pkg.installed:
-                        pkg.mark_install()
-                    
-                for pkg_name in remove_packages:
-                    pkg = cache[pkg_name]
-                    if pkg.installed:
-                        pkg.mark_uninstall()
-                    
-                # Get package information.
-                pkgs = sorted(cache.get_changes(), key=lambda pkg: pkg.name)
-                return check_pkg_download_info(pkgs)
-    except Exception, e:
-        print "get_deb_download_info error: %s" % (e)
-        log(str(traceback.format_exc()))
-        
-        return DOWNLOAD_STATUS_ERROR
+            name = pkg.name
+        if name in SYS_PKG_WHITE_LIST and pkg.marked_delete:
+            marked_delete_sys_pkgs.append(name)
+    return marked_delete_sys_pkgs
+
+def get_real_pkg_dict(cache, pkg_names):
+    in_cache_pkgs = {}
+    not_in_cache_pkgs = []
+    for name in pkg_names:
+        new_name, pkg = get_cache_pkg(cache, name)
+        if pkg:
+            in_cache_pkgs[name] = (new_name, pkg)
+        else:
+            not_in_cache_pkgs.append(name)
+    return (in_cache_pkgs, not_in_cache_pkgs)
+
+def get_changes_pkgs(cache, in_cache_pkgs):
+    cache._depcache.init()
+    mark_failed_pkg_dict = {}
+    for name in in_cache_pkgs:
+        new_name, pkg = in_cache_pkgs[name]
+        try:
+            if cache.is_pkg_upgradable(new_name):
+                pkg.mark_upgrade()
+            elif not cache.is_pkg_installed(new_name):
+                pkg.mark_install()
+        except Exception, e:
+            mark_failed_pkg_dict[name] = (new_name, pkg, str(e))
+
+    dependence = cache.get_changes()
+    all_change_pkgs = [pkg for pkg in dependence]
+    marked_delete_sys_pkgs = check_deleting_system_pkg(all_change_pkgs)
+    cache._depcache.init()
+    return (all_change_pkgs, mark_failed_pkg_dict, marked_delete_sys_pkgs)
 
 def get_cache_pkg(cache, pkg_name):
     try:
@@ -108,6 +95,7 @@ def get_upgrade_download_info_with_new_policy(cache, pkg_names):
                     pkg.mark_install()
     except Exception, e:
         global_event.emit('parse-packages-failed', e)
+
     dependence = cache.get_changes()
     all_upgrade_pkg_names = [pkg.name for pkg in dependence]
     cache._depcache.init()
@@ -161,11 +149,11 @@ def get_pkg_own_size(cache, pkg_name):
     
 def check_pkg_download_info(pkgs):
     total = len(pkgs)
-    if len(pkgs) >= 1:
+    if total >= 1:
         pkgs = [pkg for pkg in pkgs if not pkg.marked_delete and not pkg_file_has_exist(pkg)]
         
         if len(pkgs) == 0:
-            return DOWNLOAD_STATUS_NOTNEED
+            return (DOWNLOAD_STATUS_NOTNEED, None)
         else:
             try:
                 urls = []
@@ -184,14 +172,12 @@ def check_pkg_download_info(pkgs):
                     pkg_sizes.append(pkg_size)
                     names.append(pkg.name)
                     
-                return (names, urls, hash_infos, pkg_sizes, total)
+                return (names, urls, hash_infos, pkg_sizes)
             except Exception, e:
                 print "get_pkg_download_info error: %s" % (e)
-                log(str(traceback.format_exc()))
-                
-                return DOWNLOAD_STATUS_ERROR
+                return (DOWNLOAD_STATUS_ERROR, e)
     else:
-        return DOWNLOAD_STATUS_NOTNEED
+        return (DOWNLOAD_STATUS_NOTNEED, None)
     
 def get_cache_archive_dir():
     return apt_pkg.config.find_dir("Dir::Cache::Archives")    

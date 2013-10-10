@@ -293,7 +293,7 @@ class MultiAptActionThread(MissionThread):
             except Exception, e:
                 log("Commit Failed: %s" % e)
                 log(str(traceback.format_exc()))
-                #global_event.emit("action-failed", (self.pkg_name, self.action_type, pkg_info_list))
+                global_event.emit("action-failed", (self.upgrade_id, self.action_type, pkg_info_list))
         else:
             log("nothing to change")
         log("end thread")

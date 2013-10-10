@@ -40,15 +40,12 @@ def start_main():
     
     # Send hello message if updater has running.
     if is_dbus_name_exists(DSC_FRONTEND_NAME, True):
-        print "Software center has running!"
         
         bus_object = session_bus.get_object(DSC_FRONTEND_NAME, DSC_FRONTEND_PATH)
         bus_interface = dbus.Interface(bus_object, DSC_FRONTEND_NAME)
         bus_interface.hello(arguments)
         if options.show_page:
             bus_interface.show_page(options.show_page)
-        
-        print "Say hello to software center"
     else:
         # Init dbus.
         bus_name = dbus.service.BusName(DSC_FRONTEND_NAME, session_bus)

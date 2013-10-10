@@ -309,10 +309,10 @@ class UpgradingBox(gtk.VBox):
         upgrading_view_align.add(upper_box)
         self.pack_start(upgrading_view_align, True, True)
 
-        #self.show_error("download_failed")
+        #gtk.timeout_add(1000, lambda:self.show_error("marked_delete_system_pkgs"))
 
     def create_upload_info_box(self):
-        upload_info_start = Label("根据上面的建议，如果您尝试后依然看到此处提示！您可以")
+        upload_info_start = Label("根据上面的建议，如果您尝试后依然看到本提示，您可以")
         upload_info_middle = widgets.ActionButton("上报错误")
         upload_info_end = Label("。")
         upload_info_box = gtk.HBox()
@@ -344,7 +344,9 @@ class UpgradingBox(gtk.VBox):
         install_failed_box.set_size_request(400, -1)
         error_title = Label("安装更新失败", text_color=DynamicColor('#ff0000'), text_size=16)
 
-        detail_info_start = Label("请求的软件包在服务器上不存在，建议")
+        error_info = Label("出现这种情况的原因可能是本地依赖被破坏", wrap_width=360)
+
+        detail_info_start = Label("建议")
         detail_info_middle = widgets.ActionButton("刷新软件列表", lambda:global_event.emit("start-update-list"))
         detail_info_end = Label("后，再尝试更新。")
         detail_info_box = gtk.HBox()
@@ -353,18 +355,60 @@ class UpgradingBox(gtk.VBox):
         detail_info_box.pack_start(detail_info_end, False, False)
 
         install_failed_box.pack_start(error_title, False, False)
+        install_failed_box.pack_start(error_info, False, False)
         install_failed_box.pack_start(detail_info_box, False, False)
         install_failed_box.pack_start(self.create_upload_info_box(), False, False)
         return install_failed_box
 
-    def show_error(self, error_type):
+    def create_marked_delete_system_pkgs_box(self):
+        marked_delete_box = gtk.VBox(spacing=10)
+        marked_delete_box.set_size_request(400, -1)
+        error_title = Label("警告", text_color=DynamicColor('#ff0000'), text_size=16)
+
+        error_info = Label("本次升级要卸载重要的系统组件，出现这种情况的原因可能是本地依赖被破坏，或者服务端软件包依赖不正确", wrap_width=360)
+    
+        detail_info_start = Label("建议")
+        detail_info_middle = widgets.ActionButton("刷新软件列表", lambda:global_event.emit("start-update-list"))
+        detail_info_end = Label("后，再尝试更新。")
+        detail_info_box = gtk.HBox()
+        detail_info_box.pack_start(detail_info_start, False, False)
+        detail_info_box.pack_start(detail_info_middle, False, False)
+        detail_info_box.pack_start(detail_info_end, False, False)
+
+        marked_delete_box.pack_start(error_title, False, False)
+        marked_delete_box.pack_start(error_info, False, False)
+        marked_delete_box.pack_start(detail_info_box, False, False)
+        marked_delete_box.pack_start(self.create_upload_info_box(), False, False)
+        return marked_delete_box
+
+    def switch_info(self, info_box):
+        container_remove_all(self.progress_box_align)
+        self.progress_box_align.add(info_box)
+
+    def show_error(self, error_type, infos=None):
         if error_type == 'download_failed':
-            container_remove_all(self.progress_box_align)
             self.download_failed_box = self.create_download_failed_box()
-            self.progress_box_align.add(self.download_failed_box)
+            self.switch_info(self.download_failed_box)
             self.upgrade_page_logo.change_image(utils.get_common_image('upgrade/download_failed.png'))
+
         elif error_type == 'install_failed':
-            pass
+            self.install_failed_box = self.create_install_failed_box()
+            self.switch_info(self.install_failed_box)
+            self.upgrade_page_logo.change_image(utils.get_common_image('upgrade/upgrade_failed.png'))
+
+        elif error_type == 'pkgs_not_in_cache':
+            print infos
+
+        elif error_type == 'pkgs_mark_failed':
+            print infos
+            
+        elif error_type == 'marked_delete_system_pkgs':
+            """infos format: list of system package names"""
+            self.marked_delete_box = self.create_marked_delete_system_pkgs_box()
+            self.switch_info(self.marked_delete_box)
+
+        elif error_type == 'pkgs_parse_download_error':
+            print infos
 
     def update(self):
         container_remove_all(self.progress_box_align)

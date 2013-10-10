@@ -44,3 +44,26 @@ UPGRADE_LOG_PATH = '/tmp/dsc-upgrade.log'
 LOG_PATH = "/tmp/dsc-backend.log"
 
 SYS_CONFIG_INFO_PATH = "/var/cache/deepin-software-center/config_info.ini"
+SYS_PKG_WHITE_LIST = [
+"base-files",
+"pulseaudio",
+"xserver-xorg",
+"compiz",
+"deepin-session",
+"deepin-ui",
+"lightdm",
+"gnome-session",
+"deepin-xsession-settings",
+"deepin-desktop-environment-common",
+"deepin-desktop-environment-dock",
+"deepin-desktop-environment-launcher",
+"deepin-desktop-environment-desktop",
+"deepin-desktop-environment-lightdm-greeter",
+"deepin-desktop-environment-lock",
+"gnome-settings-daemon",
+"deepin-xsession-settings",
+"deepin-system-tray",
+"deepin-notifications",
+"deepin-system-settings",
+"deepin-icon-theme",
+]

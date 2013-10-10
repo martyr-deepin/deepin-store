@@ -43,7 +43,16 @@ class DownloadManager(object):
         
         self.fetch_files_dict = {}
         
-    def add_download(self, pkg_name, action_type, simulate, download_urls, download_hash_infos, file_sizes, total, deb_file="", file_save_dir="/var/cache/apt/archives"):
+    def add_download(self, 
+                    pkg_name, 
+                    action_type, 
+                    download_urls, 
+                    download_hash_infos, 
+                    file_sizes=[], 
+                    all_pkg_names=[], 
+                    all_change_pkgs=[], 
+                    file_save_dir="/var/cache/apt/archives"
+                    ):
         fetch_files = FetchFiles(
             download_urls,
             file_hash_infos=download_hash_infos,
@@ -52,8 +61,9 @@ class DownloadManager(object):
 
         if self.global_event:
             fetch_files.signal.register_event("start", lambda : self.start_download(pkg_name, action_type))
-            fetch_files.signal.register_event("update", lambda percent, speed: self.update_download(pkg_name, action_type, percent, speed, fetch_files, total))
-            fetch_files.signal.register_event("finish", lambda : self.finish_download(pkg_name, action_type, simulate, deb_file))
+            fetch_files.signal.register_event("update", lambda percent, speed: self.update_download(
+                pkg_name, action_type, percent, speed, fetch_files, all_change_pkgs))
+            fetch_files.signal.register_event("finish", lambda : self.finish_download(pkg_name, action_type, all_pkg_names))
             fetch_files.signal.register_event("pause", lambda : self.global_event.emit("download-stop", pkg_name, action_type))
             fetch_files.signal.register_event("stop", lambda : self.global_event.emit("download-stop", pkg_name, action_type))
             fetch_files.signal.register_event("error", lambda e: self.download_error(pkg_name, action_type, e))
@@ -83,7 +93,8 @@ class DownloadManager(object):
             
         self.global_event.emit("download-start", pkg_name, action_type)    
     
-    def update_download(self, pkg_name ,action_type, percent, speed, fetch_files, total):
+    def update_download(self, pkg_name ,action_type, percent, speed, fetch_files, all_change_pkgs):
+        total = len(all_change_pkgs)
         if self.fetch_files_dict.has_key(pkg_name):
             self.fetch_files_dict[pkg_name]["status"] = "update"
 
@@ -99,11 +110,11 @@ class DownloadManager(object):
                 pkg_name, action_type, percent, speed, finish_number, total, \
                 fetch_files.downloaded_size, fetch_files.total_size)
         
-    def finish_download(self, pkg_name, action_type, simulate, deb_file):
+    def finish_download(self, pkg_name, action_type, all_pkg_names):
         if self.fetch_files_dict.has_key(pkg_name):
             self.fetch_files_dict.pop(pkg_name)
             
-        self.global_event.emit("download-finish", pkg_name, action_type, simulate, deb_file)    
+        self.global_event.emit("download-finish", pkg_name, action_type, all_pkg_names)    
             
     def stop_download(self, pkg_name):
         if self.fetch_files_dict.has_key(pkg_name):
@@ -137,19 +148,19 @@ if __name__ == "__main__":
     sys.path.append(os.path.join(get_parent_dir(__file__, 3), "pkg_manager", "apt"))
     
     from parse_pkg import get_pkg_download_info
+    from apt_cache import AptCache
     import gtk
-    import apt
     import apt_pkg
     
     gtk.gdk.threads_init()
     
     apt_pkg.init()
-    cache = apt.Cache()
+    cache = AptCache()
     pkg_name = "amarok"
     pkg_infos = get_pkg_download_info(cache, pkg_name)
     download_manager = DownloadManager(verbose=True)
     if pkg_infos != None:
-        (download_urls, download_hash_infos, pkg_sizes) = pkg_infos
+        (names, download_urls, download_hash_infos, pkg_sizes) = pkg_infos
     
         download_manager.add_download(pkg_name, 1, False, download_urls, download_hash_infos, pkg_sizes)
         # download_manager.add_download(
