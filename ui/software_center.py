@@ -815,7 +815,12 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         self.preference_dialog = DscPreferenceDialog()
 
         start = time.time()
-        self.init_home_page()
+
+        if getattr(self, 'recommend_status'):
+            self.init_home_page(self.recommend_status)
+        else:
+            self.init_home_page()
+
         self.loginfo("Finish Init UI: %s" % (time.time()-start, ))
 
         self.notification = DbusNotify("deepin-software-center")
@@ -883,7 +888,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         self.application.window.show_all()
         gtk.timeout_add(100, self.application.raise_to_top)
         
-    def init_home_page(self):
+    def init_home_page(self, recommend_status="publish"):
         
         # Init DBus.
         self.system_bus = dbus.SystemBus()
@@ -902,7 +907,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         self.packages_status = {}
         
         # Init home page.
-        self.home_page = HomePage(self.data_manager)
+        self.home_page = HomePage(self.data_manager, recommend_status)
         
         # Init switch page.
         self.switch_page(self.home_page)

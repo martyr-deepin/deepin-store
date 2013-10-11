@@ -53,6 +53,9 @@ def start_main():
         software_center = DeepinSoftwareCenter(session_bus, arguments)
         if options.show_page:
             gtk.timeout_add(500, lambda:software_center.show_page(options.show_page))
+        if options.show_recommend:
+            software_center.recommend_status = options.show_recommend
+
         try:
             software_center.run()
         except KeyboardInterrupt:

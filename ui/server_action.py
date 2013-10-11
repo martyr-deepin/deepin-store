@@ -30,7 +30,6 @@ from constant import SERVER_ADDRESS, POST_TIMEOUT
 from events import global_event
 import traceback
 from deepin_utils.file import create_directory
-from utils import get_recommend_mode
 
 DEBUG = False
 
@@ -40,17 +39,21 @@ UPYUN_SERVER_ADDRESS = 'http://dsc-home-data.b0.upaiyun.com/'
 CACHE_DIR = os.path.join(os.path.expanduser("~"), '.cache', 'deepin-software-center')
 create_directory(CACHE_DIR)
 
-status = get_recommend_mode()
+status_modes = {
+        'test' : '2',
+        'publish' : '3',
+        'archive' : '4',
+        }
 
 class FetchAlbumData(td.Thread):
 
-    def __init__(self, language, debug_flag=False):
+    def __init__(self, language, status="publish"):
         td.Thread.__init__(self)
         self.language = language
         self.album_data_url = BAIDU_SERVER_ADDRESS + "album/"
         self.data = {
                 'hl': language if language != 'zh_HK' else 'zh_TW',
-                'status': status,
+                'status': status_modes.get(status),
                 }
         self.setDaemon(True)
 
@@ -71,14 +74,14 @@ class FetchAlbumData(td.Thread):
 
 class FetchHomeData(td.Thread):
 
-    def __init__(self, language, callback_method=None):
+    def __init__(self, language, status="publish", callback_method=None):
         td.Thread.__init__(self)
         self.callback_method = callback_method
         self.language = language
         self.home_data_url = BAIDU_SERVER_ADDRESS + "home/"
         self.data = {
                 'hl': language if language != 'zh_HK' else 'zh_TW',
-                'status': status,
+                'status': status_modes.get(status),
                 }
         self.setDaemon(True)
 

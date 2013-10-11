@@ -123,13 +123,14 @@ class HomePage(gtk.HBox):
     class docs
     '''
 	
-    def __init__(self, data_manager):
+    def __init__(self, data_manager, recommend_status):
         '''
         init docs
         '''
         # Init.
         gtk.HBox.__init__(self)
         self.data_manager = data_manager
+        self.recommend_status = recommend_status
         
         self.background_box = BackgroundBox()
         self.background_box.draw_mask = self.draw_mask
@@ -157,7 +158,7 @@ class HomePage(gtk.HBox):
         search_entry.connect("action-active", lambda entry, search_string: self.show_search_page(search_string))
         search_entry.entry.connect("press-return", lambda entry: self.show_search_page(entry.get_text(), True))
         
-        self.recommend_item = RecommendItem(data_manager)
+        self.recommend_item = RecommendItem(data_manager, self.recommend_status)
        
         category_pkg_info = data_manager.get_category_pkg_info()
         category_items = map(lambda (index, (first_category_name, second_category_items)):
@@ -713,13 +714,14 @@ class RecommendItem(TreeItem):
     '''
     class docs
     '''
-    def __init__(self, data_manager):
+    def __init__(self, data_manager, recommend_status):
         '''
         init docs
         '''
         TreeItem.__init__(self)
         self.name = _("Home")
         self.data_manager = data_manager
+        self.recommend_status = recommend_status
         
         self.page_cache = {}
         self.page_name = ['recommend', 'album', 'download_rank']
@@ -791,7 +793,7 @@ class RecommendItem(TreeItem):
         self.recommend_scrolled_window_initial = True
     
     def try_fetch_data(self):
-        FetchHomeData(LANGUAGE, self.data_manager.debug_flag).start()
+        FetchHomeData(LANGUAGE, self.recommend_status).start()
 
     def check_network_connection(self):
         if is_network_connected():
