@@ -22,11 +22,15 @@
 
 import gtk
 import pango
+import time
+from datetime import datetime
+
 from utils import get_common_image, get_common_image_pixbuf
 from ui_utils import set_widget_vcenter
 from constant import LANGUAGE
 from skin import app_theme
-#from ui_utils import draw_alpha_mask
+from nls import _
+
 from dtk.ui.draw import draw_pixbuf, draw_text
 from dtk.ui.utils import get_content_size, is_in_rect
 from dtk.ui.label import Label
@@ -36,7 +40,49 @@ from dtk.ui.theme import ui_theme
 from dtk.ui.constant import ALIGN_MIDDLE
 from dtk.ui.dialog import DialogBox, DIALOG_MASK_SINGLE_PAGE
 import dtk.ui.utils as dutils
-from nls import _
+
+class HumanTimeTip(gtk.VBox):
+    def __init__(self, timestamp):
+        gtk.VBox.__init__(self)
+        self.timestamp = timestamp
+        self.label = Label()
+        self.pack_start(self.label, False, False)
+
+        try:
+            timestamp = int(float(self.timestamp))
+            self.label.set_text(self.to_huamn_str(timestamp))
+        except:
+            self.label.set_text(self.timestamp)
+
+        gtk.timeout_add(1000, self.tick)
+
+    def to_huamn_str(self, timestamp):
+        now = int(float(time.time()))
+        interval = now - timestamp
+        if interval < 60:
+            return "刚刚"
+        else:
+            mins = interval / 60
+            if mins < 60:
+                return "%s分钟之前" % mins
+            else:
+                hours = mins / 60
+                if hours < 24:
+                    return "%s小时之前" % hours
+                else:
+                    days = hours / 24
+                    if days == 1:
+                        return "昨天"
+                    else:
+                        return datetime.strftime("%Y-%m-%d")
+
+    def tick(self):
+        try:
+            timestamp = int(float(self.timestamp))
+            self.label.set_text(self.to_huamn_str(timestamp))
+        except:
+            pass
+        return True
 
 class TextLoading(gtk.VBox):
     """A text with dot end loading widget"""

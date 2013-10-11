@@ -62,9 +62,8 @@ def get_parser():
     parser = OptionParser()
     parser.add_option("-p", "--page", dest="show_page",
             help="show four page: home, upgrade, uninstall, install", metavar="pages")
-    parser.add_option("-q", "--quiet",
-            action="store_false", dest="verbose", default=True,
-            help="don't print status messages to stdout")
+    parser.add_option("--home-recommend", dest="show_recommend",
+            help="show home page with status", metavar="status")
     (options, args) = parser.parse_args()
     return (options, args)
 

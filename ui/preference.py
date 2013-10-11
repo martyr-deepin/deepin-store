@@ -594,11 +594,10 @@ class WinDir(gtk.FileChooserDialog):
         self.destroy()    
         return folder
 
-preference_dialog = DscPreferenceDialog()
-
 if __name__ == '__main__':
     #d = TestProgressDialog()
     #d.dialog.show_all()
+    preference_dialog = DscPreferenceDialog()
     preference_dialog.show_all()
     #WaitingDialog("ceshi", "cececececececececeeedddddd").show_all()
     gtk.main()

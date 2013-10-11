@@ -51,11 +51,10 @@ from events import global_event
 from constant import ACTION_UPGRADE
 from dtk.ui.cycle_strip import CycleStrip
 import dtk.ui.tooltip as Tooltip
-from utils import get_last_upgrade_time, set_last_upgrade_time, handle_dbus_error, handle_dbus_reply
+from utils import get_last_upgrade_time, handle_dbus_error, handle_dbus_reply
 import utils
 from nls import _
 import widgets
-from preference import preference_dialog
 
 class UpgradingBar(gtk.HBox):
     '''
@@ -90,11 +89,17 @@ class NewestBar(gtk.HBox):
         '''
         gtk.HBox.__init__(self)
         
-        self.message_label = Label()
-        self.message_label_align = gtk.Alignment()
-        self.message_label_align.set(0.0, 0.5, 0, 0)
-        self.message_label_align.set_padding(0, 0, 8, 0)
-        self.message_label_align.add(self.message_label)
+        self.message_label = Label(_("Last upgraded time: "))
+        self.message_time = widgets.HumanTimeTip(utils.get_last_upgrade_time())
+
+        self.message_box = gtk.HBox()
+        self.message_box.pack_start(self.message_label, False, False)
+        self.message_box.pack_start(self.message_time, False, False)
+
+        self.message_box_align = gtk.Alignment()
+        self.message_box_align.set(0.0, 0.5, 0, 0)
+        self.message_box_align.set_padding(0, 0, 8, 0)
+        self.message_box_align.add(self.message_box)
         
         self.no_notify_label = Label(
             hover_color=app_theme.get_color("homepage_hover")
@@ -104,17 +109,10 @@ class NewestBar(gtk.HBox):
         self.no_notify_label_align.set(1.0, 0.5, 0, 0)
         self.no_notify_label_align.set_padding(0, 0, 0, 40)
         
-        self.pack_start(self.message_label_align, False, False)
+        self.pack_start(self.message_box_align, False, False)
         self.pack_start(self.no_notify_label_align, True, True)
         
         self.no_notify_label.connect("button-press-event", lambda w, e: global_event.emit("show-no-notify-page"))
-        
-    def set_update_time(self):
-        last_upgrade_time = get_last_upgrade_time()
-        if last_upgrade_time != "":
-            self.message_label.set_text(_("Last upgraded time: %s") % get_last_upgrade_time())
-        else:
-            self.message_label.set_text("")
         
     def set_no_notify_num(self, no_notify_num):
         
@@ -124,6 +122,9 @@ class NewestBar(gtk.HBox):
             self.no_notify_label_align.add(self.no_notify_label)
             
             self.show_all()
+
+    def set_update_time(self):
+        self.message_time.timestamp = utils.get_last_upgrade_time()
         
 class UpgradeBar(gtk.HBox):
     '''
@@ -260,8 +261,9 @@ class NoNotifyBar(gtk.HBox):
 gobject.type_register(NoNotifyBar)        
 
 class UpgradingBox(gtk.VBox):
-    def __init__(self):
+    def __init__(self, preference_dialog):
         gtk.VBox.__init__(self)
+        self.preference_dialog = preference_dialog
 
         self.upgrade_page_logo = widgets.ImageBox(utils.get_common_image("upgrade/download.png"))
 
@@ -275,19 +277,19 @@ class UpgradingBox(gtk.VBox):
 
         bottom_info_box = gtk.Table(3, 2)
         recent_update_time_label = utils.create_right_align_label("最近更新列表时间：")
-        self.recent_update_time = utils.create_left_align_label(utils.get_last_update_time())
+        self.recent_update_time = widgets.HumanTimeTip(utils.get_last_update_time())
         bottom_info_box.attach(recent_update_time_label, 0, 1, 0, 1, xoptions=gtk.FILL, xpadding=0, ypadding=4)
         bottom_info_box.attach(self.recent_update_time, 1, 2, 0, 1, xoptions=gtk.FILL, xpadding=0, ypadding=4)
 
         recent_upgrade_time_label = utils.create_right_align_label("最近更新时间：")
-        self.recent_upgrade_time = utils.create_left_align_label(get_last_upgrade_time())
+        self.recent_upgrade_time = widgets.HumanTimeTip(get_last_upgrade_time())
         bottom_info_box.attach(recent_upgrade_time_label, 0, 1, 1, 2, xoptions=gtk.FILL, xpadding=0, ypadding=4)
         bottom_info_box.attach(self.recent_upgrade_time, 1, 2, 1, 2, xoptions=gtk.FILL, xpadding=0, ypadding=4)
 
         software_mirror_label = utils.create_right_align_label("接收更新软件源：")
         self.software_mirror = utils.create_left_align_label("%s %s" % (
-            preference_dialog.current_mirror_item.mirror.name, 
-            preference_dialog.current_mirror_item.mirror.hostname))
+            self.preference_dialog.current_mirror_item.mirror.name, 
+            self.preference_dialog.current_mirror_item.mirror.hostname))
         bottom_info_box.attach(software_mirror_label, 0, 1, 2, 3, xoptions=gtk.FILL, xpadding=0, ypadding=4)
         bottom_info_box.attach(self.software_mirror, 1, 2, 2, 3, xoptions=gtk.FILL, xpadding=0, ypadding=4)
 
@@ -391,7 +393,7 @@ class UpgradingBox(gtk.VBox):
             self.switch_info(self.download_failed_box)
             self.upgrade_page_logo.change_image(utils.get_common_image('upgrade/download_failed.png'))
 
-        elif error_type == 'install_failed':
+        elif error_type == 'upgrade_failed':
             self.install_failed_box = self.create_install_failed_box()
             self.switch_info(self.install_failed_box)
             self.upgrade_page_logo.change_image(utils.get_common_image('upgrade/upgrade_failed.png'))
@@ -413,18 +415,18 @@ class UpgradingBox(gtk.VBox):
     def update(self):
         container_remove_all(self.progress_box_align)
         self.progress_box_align.add(self.progress_box)
-        self.recent_update_time.set_text(utils.get_last_update_time())
-        self.recent_upgrade_time.set_text(get_last_upgrade_time())
+        self.recent_update_time.timestamp = utils.get_last_update_time()
+        self.recent_upgrade_time.timestamp = get_last_upgrade_time()
         self.software_mirror.set_text("%s %s" % (
-            preference_dialog.current_mirror_item.mirror.name, 
-            preference_dialog.current_mirror_item.mirror.hostname))
+            self.preference_dialog.current_mirror_item.mirror.name, 
+            self.preference_dialog.current_mirror_item.mirror.hostname))
 
 class UpgradePage(gtk.VBox):
     '''
     class docs
     '''
 	
-    def __init__(self, bus_interface, data_manager):
+    def __init__(self, bus_interface, data_manager, preference_dialog):
         '''
         init docs
         '''
@@ -458,7 +460,7 @@ class UpgradePage(gtk.VBox):
         self.network_disable_pixbuf = None
         self.network_disable_view.connect("expose-event", self.expose_network_disable_view)
 
-        self.upgrading_view = UpgradingBox()
+        self.upgrading_view = UpgradingBox(preference_dialog)
         self.create_init_box()
         
         self.upgrade_treeview = TreeView(enable_drag_drop=False)
@@ -565,7 +567,6 @@ class UpgradePage(gtk.VBox):
         
     def monitor_upgrade_view(self, treeview):
         if len(treeview.visible_items) == 0:
-            set_last_upgrade_time()
             global_event.emit("show-newest-view")
         else:
             self.upgrade_bar.set_upgrade_info(len(treeview.visible_items), self.no_notify_pkg_num)
@@ -646,8 +647,6 @@ class UpgradePage(gtk.VBox):
         self.click_upgrade_check_button()
         
     def upgrade_selected_pkg(self):
-        set_last_upgrade_time()
-                
         global_event.emit("upgrade-pkg", self.select_pkg_names)        
         self.show_upgrading_view()
         
@@ -940,6 +939,7 @@ class UpgradePage(gtk.VBox):
             global_event.emit("show-newest-view")
 
         #global_event.emit("show-upgrading-view")
+        #global_event.emit("show-newest-view")
 
     def download_ready(self, pkg_name):
         self.upgrading_view.upgrading_progress_detail.set_text("分析依赖...")
@@ -1350,7 +1350,6 @@ class UpgradeItem(TreeItem):
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
                         
-                    set_last_upgrade_time()
                     global_event.emit("upgrade-pkg", [self.pkg_name])
                 elif self.is_in_star_area(column, offset_x, offset_y):
                     global_event.emit("grade-pkg", self.pkg_name, self.grade_star)

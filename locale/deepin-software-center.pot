@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-17 09:49+0800\n"
+"POT-Creation-Date: 2013-10-11 10:13+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,7 +27,7 @@ msgstr ""
 msgid "%s > %s : %s applications"
 msgstr ""
 
-#: ../ui/home_page.py:721 ../ui/software_center.py:709
+#: ../ui/home_page.py:721 ../ui/software_center.py:766
 msgid "Home"
 msgstr ""
 
@@ -43,128 +43,136 @@ msgstr ""
 msgid "Download rank"
 msgstr ""
 
-#: ../ui/software_center.py:121
+#: ../ui/software_center.py:124
 #, python-format
 msgid "%s haven't any desktop file"
 msgstr ""
 
-#: ../ui/software_center.py:129
+#: ../ui/software_center.py:132
 #, python-format
 msgid "%s: request for starting applications sent"
 msgstr ""
 
-#: ../ui/software_center.py:190
+#: ../ui/software_center.py:193
 msgid "Sending comment..."
 msgstr ""
 
-#: ../ui/software_center.py:194
+#: ../ui/software_center.py:197
 msgid "You have already sent a comment ;)"
 msgstr ""
 
-#: ../ui/software_center.py:200
+#: ../ui/software_center.py:203
 msgid "Comment was successful. Thanks for your involvement. :)"
 msgstr ""
 
-#: ../ui/software_center.py:216
+#: ../ui/software_center.py:219
 msgid "Comment was failed. Please check your network connection!"
 msgstr ""
 
-#: ../ui/software_center.py:371
+#: ../ui/software_center.py:418
 #, python-format
 msgid "Update applications lists: %s"
 msgstr ""
 
-#: ../ui/software_center.py:380
+#: ../ui/software_center.py:427
 msgid "Successfully refreshed applications lists."
 msgstr ""
 
-#: ../ui/software_center.py:392
+#: ../ui/software_center.py:439
 msgid "Failed to refresh applications lists."
 msgstr ""
 
-#: ../ui/software_center.py:393
+#: ../ui/software_center.py:440
 msgid "Try again"
 msgstr ""
 
-#: ../ui/software_center.py:403
+#: ../ui/software_center.py:450
 #, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted"
 msgstr ""
 
-#: ../ui/software_center.py:406
+#: ../ui/software_center.py:453
 #, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
 msgstr ""
 
-#: ../ui/software_center.py:415
+#: ../ui/software_center.py:458
 #, python-format
 msgid "%s cannot be installed on 64-bit system."
 msgstr ""
 
-#: ../ui/software_center.py:417
+#: ../ui/software_center.py:460
 #, python-format
 msgid "%s cannot be installed. It might be a x86_64 specific package"
 msgstr ""
 
-#: ../ui/software_center.py:654 ../ui/preference.py:233
+#: ../ui/software_center.py:710 ../ui/preference.py:233
 msgid "Deepin Software Center"
 msgstr ""
 
-#: ../ui/software_center.py:690
+#: ../ui/software_center.py:747
 msgid "Join us"
 msgstr ""
 
-#: ../ui/software_center.py:710
+#: ../ui/software_center.py:767
 msgid "Upgrade"
 msgstr ""
 
-#: ../ui/software_center.py:711
+#: ../ui/software_center.py:768
 msgid "Uninstall"
 msgstr ""
 
-#: ../ui/software_center.py:712
+#: ../ui/software_center.py:769
 msgid "Install Manage"
 msgstr ""
 
-#: ../ui/software_center.py:736 ../ui/software_center.py:939
+#: ../ui/software_center.py:793 ../ui/software_center.py:1041
 msgid "Refresh applications lists"
 msgstr ""
 
-#: ../ui/software_center.py:737
+#: ../ui/software_center.py:794
 msgid "Open download directory"
 msgstr ""
 
-#: ../ui/software_center.py:738
+#: ../ui/software_center.py:795
 msgid "Clear up cached packages"
 msgstr ""
 
-#: ../ui/software_center.py:739
+#: ../ui/software_center.py:796
 msgid "View new features"
 msgstr ""
 
-#: ../ui/software_center.py:740
+#: ../ui/software_center.py:797
 msgid "Preferences"
 msgstr ""
 
-#: ../ui/software_center.py:741
+#: ../ui/software_center.py:798
 msgid "Quit"
 msgstr ""
 
-#: ../ui/software_center.py:939
+#: ../ui/software_center.py:841
+msgid "Warning"
+msgstr ""
+
+#: ../ui/software_center.py:847
+msgid "Upgrade Info"
+msgstr ""
+
+#: ../ui/software_center.py:1041
 msgid "Refreshing applications lists"
 msgstr ""
 
-#: ../ui/software_center.py:941 ../ui/preference.py:386
+#: ../ui/software_center.py:1043 ../ui/preference.py:386
 msgid "Run in background"
 msgstr ""
 
-#: ../ui/software_center.py:999
+#: ../ui/software_center.py:1101
 #, python-format
 msgid "You have cleared up %s pakcages and saved %s of space"
 msgstr ""
 
-#: ../ui/software_center.py:1001
+#: ../ui/software_center.py:1103
 msgid "Your system is clean."
 msgstr ""
 
@@ -177,66 +185,65 @@ msgstr ""
 msgid "Successfully installed"
 msgstr ""
 
-#: ../ui/upgrade_page.py:108
-#, python-format
-msgid "Last upgraded time: %s"
+#: ../ui/upgrade_page.py:92
+msgid "Last upgraded time: "
 msgstr ""
 
-#: ../ui/upgrade_page.py:116 ../ui/upgrade_page.py:181
+#: ../ui/upgrade_page.py:121 ../ui/upgrade_page.py:193
 #, python-format
 msgid "Unwatched (%s)"
 msgstr ""
 
-#: ../ui/upgrade_page.py:155
+#: ../ui/upgrade_page.py:167
 msgid "Upgrade select items"
 msgstr ""
 
-#: ../ui/upgrade_page.py:177
+#: ../ui/upgrade_page.py:189
 #, python-format
 msgid "%s applications are available for upgrade"
 msgstr ""
 
-#: ../ui/upgrade_page.py:211 ../ui/item_render.py:46
+#: ../ui/upgrade_page.py:223 ../ui/item_render.py:46
 msgid "Watch again"
 msgstr ""
 
-#: ../ui/upgrade_page.py:245
+#: ../ui/upgrade_page.py:257
 #, python-format
 msgid "%s applications are not being watched"
 msgstr ""
 
-#: ../ui/upgrade_page.py:550
+#: ../ui/upgrade_page.py:785
 #, python-format
 msgid "Refresh applications lists %s%%"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1112 ../ui/upgrade_page.py:1232
+#: ../ui/upgrade_page.py:1348 ../ui/upgrade_page.py:1467
 #: ../ui/install_page.py:683
 msgid "Waiting for download"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1225 ../ui/install_page.py:306
+#: ../ui/upgrade_page.py:1460 ../ui/install_page.py:306
 #: ../ui/install_page.py:676
 msgid "Analyzing dependencies"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1239 ../ui/install_page.py:690
+#: ../ui/upgrade_page.py:1474 ../ui/install_page.py:690
 msgid "Downloading"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1255
+#: ../ui/upgrade_page.py:1490
 msgid "Waiting for upgrade"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1265 ../ui/install_page.py:716
+#: ../ui/upgrade_page.py:1500 ../ui/install_page.py:716
 msgid "Analyzing dependencies failed"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1274 ../ui/upgrade_page.py:1281
+#: ../ui/upgrade_page.py:1509 ../ui/upgrade_page.py:1516
 msgid "Upgrading"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1290
+#: ../ui/upgrade_page.py:1525
 msgid "Upgrade complete"
 msgstr ""
 
@@ -583,6 +590,14 @@ msgstr ""
 msgid "Text editor"
 msgstr ""
 
+#: ../ui/widgets.py:460
+msgid "OK"
+msgstr ""
+
+#: ../ui/widgets.py:461 ../ui/preference.py:215
+msgid "Cancel"
+msgstr ""
+
 #: ../ui/download_rank_page.py:69
 msgid "Top 25 weekly"
 msgstr ""
@@ -601,10 +616,6 @@ msgstr ""
 
 #: ../ui/preference.py:127
 msgid "Unknown mirror url"
-msgstr ""
-
-#: ../ui/preference.py:215
-msgid "Cancel"
 msgstr ""
 
 #: ../ui/preference.py:238
@@ -664,47 +675,47 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: ../ui/preference.py:473
+#: ../ui/preference.py:464
 msgid "Update applications lists"
 msgstr ""
 
-#: ../ui/preference.py:479
+#: ../ui/preference.py:470
 msgid "Update automatically"
 msgstr ""
 
-#: ../ui/preference.py:482
+#: ../ui/preference.py:473
 msgid "Time interval: "
 msgstr ""
 
-#: ../ui/preference.py:485
+#: ../ui/preference.py:476
 msgid " hour"
 msgstr ""
 
-#: ../ui/preference.py:508
+#: ../ui/preference.py:499
 msgid "Download settings"
 msgstr ""
 
-#: ../ui/preference.py:514
+#: ../ui/preference.py:505
 msgid "Max download task number: "
 msgstr ""
 
-#: ../ui/preference.py:524
+#: ../ui/preference.py:515
 msgid "Download directory: "
 msgstr ""
 
-#: ../ui/preference.py:530
+#: ../ui/preference.py:521
 msgid "Change"
 msgstr ""
 
-#: ../ui/preference.py:546
+#: ../ui/preference.py:537
 msgid "On uninstall software"
 msgstr ""
 
-#: ../ui/preference.py:551
+#: ../ui/preference.py:542
 msgid "Delete configuration files"
 msgstr ""
 
-#: ../ui/preference.py:588
+#: ../ui/preference.py:579
 msgid "Select Directory"
 msgstr ""
 

@@ -26,11 +26,11 @@ import pango
 import apt_pkg
 from datetime import datetime
 import threading as td
+import time
 
 from dtk.ui.label import Label
 from deepin_utils.config import Config
 from deepin_utils.file import touch_file, get_parent_dir
-from deepin_utils.date_time import get_current_time
 
 from constant import CONFIG_INFO_PATH, DEFAULT_UPDATE_INTERVAL, DEFAULT_DOWNLOAD_DIRECTORY, DEFAULT_DOWNLOAD_NUMBER
 from logger import newLogger
@@ -146,20 +146,6 @@ def handle_dbus_error(obj, error=None):
     global_logger.logerror("Dbus Reply Error: %s", obj)
     global_logger.logerror("ERROR MESSAGE: %s", error)
 
-class ThreadMethod(td.Thread):
-    '''
-    func: a method name
-    args: arguments tuple
-    '''
-    def __init__(self, func, args, daemon=False):
-        td.Thread.__init__(self)
-        self.func = func
-        self.args = args
-        self.setDaemon(daemon)
-
-    def run(self):
-        self.func(*self.args)
-
 def is_64bit_system():
     if os.uname()[-1] == "x86_64":
         return True
@@ -168,7 +154,7 @@ def is_64bit_system():
 
 def set_last_upgrade_time():
     config_info_config = get_config_info_config()
-    config_info_config.set("upgrade", "last_upgrade_time", get_current_time())
+    config_info_config.set("upgrade", "last_upgrade_time", time.time())
     config_info_config.write()
 
 def get_last_upgrade_time():
@@ -280,3 +266,18 @@ def set_download_number(number):
     config_info_config = get_config_info_config()
     config_info_config.set('download', 'number', number)
     config_info_config.write()
+
+class ThreadMethod(td.Thread):
+    '''
+    func: a method name
+    args: arguments tuple
+    '''
+    def __init__(self, func, args, daemon=False):
+        td.Thread.__init__(self)
+        self.func = func
+        self.args = args
+        self.setDaemon(daemon)
+
+    def run(self):
+        self.func(*self.args)
+

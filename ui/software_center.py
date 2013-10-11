@@ -72,7 +72,7 @@ from utils import is_64bit_system, handle_dbus_reply, handle_dbus_error, bit_to_
 import utils
 from tooltip import ToolTip
 from server_action import SendVote, SendDownloadCount, SendUninstallCount
-from preference import preference_dialog, WaitingDialog
+from preference import DscPreferenceDialog, WaitingDialog
 from logger import Logger
 from paned_box import PanedBox
 from widgets import BottomTipBar
@@ -383,6 +383,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                     global_event.emit("upgrade-finish-action", len(pkg_info_list))
                     upgrade_page.fetch_upgrade_info()
                     global_event.emit("current-upgrade-action", 'upgrade', 100.0)
+                    utils.set_last_upgrade_time()
                 elif action_type == ACTION_INSTALL:
                     install_page.action_finish(pkg_name, pkg_info_list)
                 
@@ -395,11 +396,12 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
 
             elif signal_type == 'action-failed':
                 # FIXME: change failed action dealing
-                (pkg_name, action_type, pkg_info_list) = action_content
+                (pkg_name, action_type, pkg_info_list, errormsg) = action_content
                 if action_type == ACTION_UNINSTALL:
                     uninstall_page.action_finish(pkg_name, pkg_info_list)
                 elif action_type == ACTION_UPGRADE:
-                    upgrade_page.action_finish(pkg_name, pkg_info_list)
+                    upgrade_page.upgrading_view.show_error("upgrade_failed", errormsg)
+                    utils.set_last_upgrade_time()
                 elif action_type == ACTION_INSTALL:
                     install_page.action_finish(pkg_name, pkg_info_list)
                 
@@ -449,10 +451,6 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 elif action_type == ACTION_UPGRADE:
                     upgrade_page.download_parse_failed(pkg_name)
                     global_event.emit("show-message", _("Problem occurred when analyzing dependencies for %s. Upgrade aborted") % pkg_name)
-
-            elif signal_type == "got-install-deb-pkg-name":
-                pkg_name = action_content
-                install_page.add_install_actions([pkg_name])
 
             elif signal_type == "pkg-not-in-cache":
                 pkg_name = action_content
@@ -814,11 +812,14 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         self.status_icon.connect("activate", self.click_status_icon)
         self.status_icon.connect("popup-menu", self.click_status_icon)
         
+        self.preference_dialog = DscPreferenceDialog()
+
         start = time.time()
         self.init_home_page()
         self.loginfo("Finish Init UI: %s" % (time.time()-start, ))
 
         self.notification = DbusNotify("deepin-software-center")
+
 
         self.ready_show()
 
@@ -848,7 +849,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
             self.notification.notify()
 
     def show_preference_dialog(self):
-        preference_dialog.show_all()
+        self.preference_dialog.show_all()
 
     def ready_show(self):    
         if utils.is_first_started():
@@ -921,7 +922,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         
         self.loginfo("Init pages")
         start = time.time()
-        self.upgrade_page = UpgradePage(self.bus_interface, self.data_manager)
+        self.upgrade_page = UpgradePage(self.bus_interface, self.data_manager, self.preference_dialog)
         self.uninstall_page = UninstallPage(self.bus_interface, self.data_manager)
         self.install_page = InstallPage(self.bus_interface, self.data_manager)
         self.loginfo("Init three pages time: %s" % (time.time()-start, ))

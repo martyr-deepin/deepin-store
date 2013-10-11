@@ -122,7 +122,7 @@ class GInstallProgress(gobject.GObject, apb.InstallProgress):
         Emits: action-error()
         """
         global_event.emit("action-error", (pkg, errormsg))
-        global_event.emit("action-failed", (pkg, ACTION_UPGRADE, []))
+        global_event.emit("action-failed", (pkg, ACTION_UPGRADE, [], str(errormsg)))
         log("error: %s" % errormsg)
 
     def conffile(self, current, new):
@@ -243,7 +243,7 @@ class AptActionThread(MissionThread):
                 except Exception, e:
                     log("Commit Failed: %s" % e)
                     log(str(traceback.format_exc()))
-                    global_event.emit("action-failed", (self.pkg_name, self.action_type, pkg_info_list))
+                    global_event.emit("action-failed", (self.pkg_name, self.action_type, pkg_info_list, str(e)))
         else:
             log("nothing to change")
         log("end thread")
@@ -293,7 +293,7 @@ class MultiAptActionThread(MissionThread):
             except Exception, e:
                 log("Commit Failed: %s" % e)
                 log(str(traceback.format_exc()))
-                global_event.emit("action-failed", (self.upgrade_id, self.action_type, pkg_info_list))
+                global_event.emit("action-failed", (self.upgrade_id, self.action_type, pkg_info_list, str(e)))
         else:
             log("nothing to change")
         log("end thread")

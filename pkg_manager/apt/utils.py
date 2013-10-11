@@ -21,11 +21,11 @@
 
 import os
 from datetime import datetime
+import time
 from constant import LOG_PATH, SYS_CONFIG_INFO_PATH
 
 from deepin_utils.config import Config
 from deepin_utils.file import touch_file
-from deepin_utils.date_time import get_current_time
 
 def log(message):
     with open(LOG_PATH, "a") as file_handler:
@@ -34,7 +34,7 @@ def log(message):
 
 def set_last_update_time():
     config_info_config = get_config_info_config()
-    config_info_config.set("update", "last_update_time", get_current_time())
+    config_info_config.set("update", "last_update_time", time.time())
     config_info_config.write()
 
 def get_config_info_config():
