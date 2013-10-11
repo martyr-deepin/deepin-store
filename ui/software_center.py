@@ -816,7 +816,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
 
         start = time.time()
 
-        if getattr(self, 'recommend_status'):
+        if hasattr(self, 'recommend_status'):
             self.init_home_page(self.recommend_status)
         else:
             self.init_home_page()
