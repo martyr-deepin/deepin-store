@@ -27,6 +27,19 @@ from constant import LOG_PATH, SYS_CONFIG_INFO_PATH
 from deepin_utils.config import Config
 from deepin_utils.file import touch_file
 
+BACKEND_PID = "/tmp/deepin-software-center/backend_running.pid"
+def set_running_lock(running):
+    if running:
+        touch_file(BACKEND_PID)
+        with open(BACKEND_PID, "w") as file_handler:
+            file_handler.write(str(os.getpid()))
+    else:
+        if os.path.exists(BACKEND_PID):
+            os.remove(BACKEND_PID)
+
+def get_running_lock():
+    return os.path.exists(BACKEND_PID)
+
 def log(message):
     with open(LOG_PATH, "a") as file_handler:
         now = datetime.now().strftime("[%Y-%m-%d %H:%M:%S]")

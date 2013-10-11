@@ -880,14 +880,17 @@ class UpgradePage(gtk.VBox):
 
         self.pack_start(self.loading_box_align)
     
-    def fetch_upgrade_info(self):
+    def fetch_upgrade_info(self, in_upgrading=False):
         self.show_loading_page()
         self.bus_interface.request_upgrade_pkgs(
-                reply_handler=self.render_upgrade_info, 
+                reply_handler=lambda pkg_infos:self.render_upgrade_info(pkg_infos, in_upgrading), 
                 error_handler=lambda e:handle_dbus_error("request_upgrade_pkgs", e))
         
-    def render_upgrade_info(self, pkg_infos):
-        self.in_upgrading_view = False
+    def render_upgrade_info(self, pkg_infos, in_upgrading):
+        if in_upgrading:
+            global_event.emit("show-upgrading-view")
+            return 
+
         if len(pkg_infos) > 0:
             if self.update_list_pixbuf:
                 del self.update_list_pixbuf
@@ -937,9 +940,6 @@ class UpgradePage(gtk.VBox):
             self.no_notify_treeview.add_items(no_notify_items)
         else:
             global_event.emit("show-newest-view")
-
-        #global_event.emit("show-upgrading-view")
-        #global_event.emit("show-newest-view")
 
     def download_ready(self, pkg_name):
         self.upgrading_view.upgrading_progress_detail.set_text("分析依赖...")

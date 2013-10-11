@@ -66,6 +66,7 @@ from apt_cache import AptCache
 from action import AptActionPool
 from events import global_event
 from utils import log
+import utils
 
 DATA_DIR = os.path.join(get_parent_dir(__file__, 3), "data")
 SOURCE_LIST = '/etc/apt/sources.list'
@@ -162,6 +163,7 @@ class ExitManager(td.Thread):
                 if self.have_exit_request():
                     print "Exit"
                     self.mainloop.quit()
+                    utils.set_running_lock(False)
                 else:
                     print "Pass"
                     self.loop()
@@ -203,16 +205,14 @@ class PackageManager(dbus.service.Object):
         
         global_event.register_event('parse-download-error', self.send_parse_download_error)
 
-        global_event.register_event("action-start", lambda signal_content: self.update_signal([("action-start", signal_content)]))
-        global_event.register_event("action-update", lambda signal_content: self.update_signal([("action-update", signal_content)]))
+        global_event.register_event("action-start", self.action_start)
+        global_event.register_event("action-update", self.action_update)
         global_event.register_event("action-finish", self.action_finish)
         global_event.register_event("action-failed", self.action_failed)
         
         
-        global_event.register_event(
-            "download-start", 
-            lambda pkg_name, action_type: self.update_signal([("download-start", (pkg_name, action_type))]))
-        global_event.register_event("download-update", self.send_signal_download_update)
+        global_event.register_event("download-start", self.download_start)
+        global_event.register_event("download-update", self.download_update)
         global_event.register_event("download-finish", self.download_finish)
         global_event.register_event("download-stop", self.download_stop)
         global_event.register_event("download-error", self.download_failed)
@@ -237,10 +237,44 @@ class PackageManager(dbus.service.Object):
         self.set_download_dir('/var/cache/apt/archives')
         self.init_download_manager(5)
 
-    def send_signal_download_update(self, *argv):
+    def download_start(self, pkg_name, action_type):
+        utils.set_running_lock(True)
+        self.update_signal([("download-start", (pkg_name, action_type))])
+
+    def download_update(self, *argv):
         self.update_signal([("download-update", argv)])
+
+    def download_stop(self, pkg_name, action_type):
+        self.update_signal([("download-stop", (pkg_name, action_type))])
+        
+        self.exit_manager.check()    
+        
+    def download_failed(self, pkg_name, action_type, e):
+        utils.set_running_lock(False)
+        self.update_signal([("download-failed", (pkg_name, action_type, e))])
+        
+        self.exit_manager.check()    
+           
+    def download_finish(self, action_id, action_type, all_pkg_names):
+        utils.set_running_lock(False)
+        self.update_signal([("download-finish", (action_id, action_type))])
+        
+        if action_type == ACTION_INSTALL:
+            self.apt_action_pool.add_install_action(all_pkg_names)
+        elif action_type == ACTION_UPGRADE:
+            self.start_upgrade(all_pkg_names, action_id)
+            
+        self.exit_manager.check()
+
+    def action_start(self, signal_content):
+        utils.set_running_lock(True)
+        self.update_signal([("action-start", signal_content)])
+        
+    def action_update(self, signal_content):
+        self.update_signal([("action-update", signal_content)])
         
     def action_finish(self, signal_content):
+        utils.set_running_lock(False)
         pkg_name, action_type, pkg_info_list = signal_content
         if action_type == ACTION_INSTALL:
             for pkg_info in pkg_info_list:
@@ -256,6 +290,7 @@ class PackageManager(dbus.service.Object):
         self.exit_manager.check()
 
     def action_failed(self, signal_content):
+        utils.set_running_lock(False)
         self.update_signal([("action-failed", signal_content)])
         
         self.exit_manager.check()
@@ -361,30 +396,10 @@ class PackageManager(dbus.service.Object):
                                         pkg_sizes, 
                                         all_pkg_names=[pkg_name,],
                                         file_save_dir=self.download_dir)
-           
-    def download_finish(self, action_id, action_type, all_pkg_names):
-        self.update_signal([("download-finish", (action_id, action_type))])
-        
-        if action_type == ACTION_INSTALL:
-            self.apt_action_pool.add_install_action(all_pkg_names)
-        elif action_type == ACTION_UPGRADE:
-            self.start_upgrade(all_pkg_names, action_id)
-            
-        self.exit_manager.check()
 
     def start_upgrade(self, pkg_names, action_id):
         self.apt_action_pool.add_multi_upgrade_mission(pkg_names, action_id)
         
-    def download_stop(self, pkg_name, action_type):
-        self.update_signal([("download-stop", (pkg_name, action_type))])
-        
-        self.exit_manager.check()    
-        
-    def download_failed(self, pkg_name, action_type, e):
-        self.update_signal([("download-failed", (pkg_name, action_type, e))])
-        
-        self.exit_manager.check()    
-
     def del_source_list_d(self):
         white_list_path = os.path.join(get_parent_dir(__file__), 'white_list.txt')
         if os.path.exists(white_list_path):

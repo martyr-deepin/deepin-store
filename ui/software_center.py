@@ -330,7 +330,6 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                     install_page.download_update(pkg_name, percent, speed)
                 elif action_type == ACTION_UPGRADE:
                     upgrade_page.download_update(pkg_name, percent, speed, finish_number, total, downloaded_size, total_size)
-                    global_event.emit("current-upgrade-action", 'download', percent)
 
             elif signal_type == "download-finish":
                 (pkg_name, action_type) = action_content
@@ -338,7 +337,6 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                     install_page.download_finish(pkg_name)
                 elif action_type == ACTION_UPGRADE:
                     upgrade_page.download_finish(pkg_name)
-                    global_event.emit("current-upgrade-action", 'download', 100.0)
 
             elif signal_type == "download-stop":
                 (pkg_name, action_type) = action_content
@@ -370,7 +368,6 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                     uninstall_page.action_update(pkg_name, percent)
                 elif action_type == ACTION_UPGRADE:
                     upgrade_page.action_update(pkg_name, percent, status)
-                    global_event.emit("current-upgrade-action", 'upgrade', percent)
                 elif action_type == ACTION_INSTALL:
                     install_page.action_update(pkg_name, percent)
 
@@ -381,9 +378,8 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 elif action_type == ACTION_UPGRADE:
                     upgrade_page.action_finish(pkg_name, pkg_info_list)
                     global_event.emit("upgrade-finish-action", len(pkg_info_list))
-                    upgrade_page.fetch_upgrade_info()
-                    global_event.emit("current-upgrade-action", 'upgrade', 100.0)
                     utils.set_last_upgrade_time()
+                    upgrade_page.fetch_upgrade_info()
                 elif action_type == ACTION_INSTALL:
                     install_page.action_finish(pkg_name, pkg_info_list)
                 
@@ -806,12 +802,6 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
                 get_widget_root_coordinate(button, WIDGET_POS_BOTTOM_LEFT),
                 (button.get_allocation().width, 0)))
 
-        self.status_icon = gtk.status_icon_new_from_file(utils.get_common_image('logo48.png'))
-        self.status_icon.set_visible(False)
-        self.status_icon.set_tooltip_text("Click to show detail")
-        self.status_icon.connect("activate", self.click_status_icon)
-        self.status_icon.connect("popup-menu", self.click_status_icon)
-        
         self.preference_dialog = DscPreferenceDialog()
 
         start = time.time()
@@ -836,22 +826,8 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
 
         return True
 
-    def click_status_icon(self, status_icon, button=None, activate_time=None):
-        self.application.window.show_all()
-        self.status_icon.set_visible(False)
-
-    def hide_window(self):
-        self.status_icon.set_visible(True)
-        self.application.window.hide()
-        self.notification.set_summary(_("Warning"))
-        self.notification.set_body("正在更新系统，未完成之前，请勿关闭或重启系统！")
-        self.notification.notify()
-
     def upgrade_finish_action(self, upgrade_number):
-        if self.status_icon.get_visible():
-            self.notification.set_summary(_("Upgrade Info"))
-            self.notification.set_body("软件中心已经为您更新了%s个软件包！" % upgrade_number)
-            self.notification.notify()
+        pass
 
     def show_preference_dialog(self):
         self.preference_dialog.show_all()
@@ -975,9 +951,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         global_event.register_event('max-download-number-changed', self.init_download_manager)
         global_event.register_event('update-list-finish', self.update_list_finish)
         global_event.register_event('start-update-list', self.update_list_handler)
-        global_event.register_event("hide-window", self.hide_window)
         global_event.register_event("upgrade-finish-action", self.upgrade_finish_action)
-        global_event.register_event("current-upgrade-action", self.update_current_upgrade_action)
 
         self.system_bus.add_signal_receiver(
             lambda messages: message_handler(messages, 
@@ -999,15 +973,6 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         self.upgrade_page.fetch_upgrade_info()
         
         log("finish")
-
-    def update_current_upgrade_action(self, action_type, percent):
-        if self.status_icon.get_visible():
-            message = 'click to show'
-            if action_type == 'download':
-                message = "正在下载: %.1f%%" % percent
-            elif action_type == 'upgrade':
-                message = "正在升级: %.1f%%" % percent
-            self.status_icon.set_tooltip_text(message)
 
     def uninstall_pkg(self, pkg_name, purge_flag, install_page):
         self.bus_interface.uninstall_pkg(pkg_name, purge_flag,
@@ -1122,11 +1087,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
 
     @dbus.service.method(DSC_FRONTEND_NAME, in_signature="as", out_signature="")    
     def hello(self, arguments):
-        if self.status_icon.get_visible():
-            self.application.window.show_all()
-            self.status_icon.set_visible(False)
-        else:
-            self.application.raise_to_top()
+        self.application.raise_to_top()
         
     @dbus.service.signal(DSC_FRONTEND_NAME)
     def update_signal(self, message):
