@@ -29,6 +29,7 @@ from utils import new_surface, propagate_expose, get_text_size
 from utils import cairo_popover, cairo_popover_rectangle 
 #from blur.vtk_cairo_blur import gaussian_blur
 from dtk_cairo_blur import gaussian_blur
+import utils
 
 import os
 from deepin_utils.file import get_parent_dir
@@ -517,6 +518,16 @@ DSC_UPDATE_MONITOR_PATH = '/com/linuxdeepin/softwarecenter_update_monitor'
 DSC_SERVICE_NAME = "com.linuxdeepin.softwarecenter"
 DSC_SERVICE_PATH = "/com/linuxdeepin/softwarecenter"
 
+ACTION_INSTALL = 1
+ACTION_UNINSTALL = 2
+ACTION_UPGRADE = 3
+
+ACTION_STR = {
+        ACTION_INSTALL: "安装",
+        ACTION_UPGRADE: "升级",
+        ACTION_UNINSTALL: "卸载"
+        }
+
 class TipWindow(dbus.service.Object):
     def __init__(self, session_bus):
         dbus.service.Object.__init__(self, session_bus, DSC_UPDATE_MONITOR_PATH)
@@ -535,7 +546,9 @@ class TipWindow(dbus.service.Object):
         label_align = self.create_align((0.5, 0.5, 1, 1), (3, 3, 5, 0))
         label_align.add(self.label)
         self.win.add_plugin(label_align)
-        #gtk.timeout_add(5000, self.show)
+        gtk.timeout_add(5000, self.show)
+
+    def run(self):
         self.start_dsc_backend()
         gtk.main()
 
@@ -576,34 +589,91 @@ class TipWindow(dbus.service.Object):
         return align
 
     def start_dsc_backend(self):
-        if is_dbus_name_exists(DSC_SERVICE_NAME, True):
+        if is_dbus_name_exists(DSC_SERVICE_NAME, False):
+            print "running..."
             self.label.set_label("软件中心后端正在运行...")
             self.show()
 
             self.system_bus = dbus.SystemBus()
             bus_object = self.system_bus.get_object(DSC_SERVICE_NAME, DSC_SERVICE_PATH)
             self.bus_interface = dbus.Interface(bus_object, DSC_SERVICE_NAME)
-            self.system_bus.add_signal_receiver(
+            gtk.timeout_add(2000, lambda :self.system_bus.add_signal_receiver(
                     self.backend_signal_receiver, 
                     signal_name="update_signal", 
                     dbus_interface=DSC_SERVICE_NAME, 
-                    path=DSC_SERVICE_PATH)
+                    path=DSC_SERVICE_PATH))
         else:
+            print "error..."
             self.label.set_label("出错了!\n软件中心的后端已退出")
+            gtk.timeout_add(3000, gtk.main_quit)
             self.show()
 
     def backend_signal_receiver(self, messages):
         for message in messages:
             (signal_type, action_content) = message
+
+            if signal_type == "download-start":
+                (pkg_name, action_type) = action_content
+                if action_type == ACTION_INSTALL:
+                    pass
+                elif action_type == ACTION_UPGRADE:
+                    pass
+                self.label.set_label("开始下载...")
             
-            if signal_type == "update-list-update":
-                pass
+            elif signal_type == "download-update":
+                (pkg_name, action_type, percent, speed, finish_number, total, downloaded_size, total_size) = action_content
+                if action_type == ACTION_INSTALL:
+                    pass
+                elif action_type == ACTION_UPGRADE:
+                    pass
+                self.label.set_label("正在下载：%i%% \n已完成：%s/%s (%s/%s)" % (
+                    percent, 
+                    utils.bit_to_human_str(downloaded_size), 
+                    utils.bit_to_human_str(total_size),
+                    finish_number+1,
+                    total,
+                    ))
+
+            elif signal_type == "download-finish":
+                (pkg_name, action_type) = action_content
+                if action_type == ACTION_INSTALL:
+                    pass
+                elif action_type == ACTION_UPGRADE:
+                    pass
+                self.label.set_label("下载完成")
+
+            elif signal_type == "download-failed":
+                (pkg_name, action_type, error) = action_content
+                self.label.set_label("下载失败，2秒钟后退出...")
+                gtk.timeout_add(2000, gtk.main_quit)
+
+            elif signal_type == "action-start":
+                (pkg_name, action_type) = action_content
+                self.label.set_label("开始%s" % ACTION_STR[action_type])
+
+            elif signal_type == "action-update":
+                (pkg_name, action_type, percent, status) = action_content
+                if int(float(percent)) != 100:
+                    self.label.set_label("正在%s - %i%%" % (ACTION_STR[action_type], percent))
+                else:
+                    self.label.set_label("%s完成，2秒钟后退出" % ACTION_STR[action_type])
+                    gtk.timeout_add(2000, gtk.main_quit)
+
+            elif signal_type == "action-finish":
+                (pkg_name, action_type, pkg_info_list) = action_content
+                self.label.set_label("%s完成，2秒钟后退出" % ACTION_STR[action_type])
+                gtk.timeout_add(2000, gtk.main_quit)
+
+            elif signal_type == "action-failed":
+                (pkg_name, action_type, pkg_info_list, errormsg) = action_content
+                self.label.set_label("%s失败，2秒钟后退出" % ACTION_STR[action_type])
+                gtk.timeout_add(2000, gtk.main_quit)
 
 if __name__ == '__main__':
     DBusGMainLoop(set_as_default=True)
     session_bus = dbus.SessionBus()
     
-    if is_dbus_name_exists(DSC_UPDATE_MONITOR_NAME, True):
+    if is_dbus_name_exists(DSC_UPDATE_MONITOR_NAME):
         print "Update MONITOR is running"
         bus_object = session_bus.get_object(DSC_UPDATE_MONITOR_NAME,
                                             DSC_UPDATE_MONITOR_PATH)
@@ -611,7 +681,9 @@ if __name__ == '__main__':
         bus_interface.hello()
     else:
         bus = dbus.service.BusName(DSC_UPDATE_MONITOR_NAME, session_bus)
+        win = TipWindow(session_bus)
         try:
-            TipWindow(session_bus).run()
-        except KeyboardInterrupt:
-            pass
+            win.run()
+        except:
+            if hasattr(win, 'bus_interface'):
+                win.bus_interface.request_quit()

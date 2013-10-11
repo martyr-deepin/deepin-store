@@ -35,14 +35,16 @@ from deepin_utils.file import touch_file, get_parent_dir
 from constant import CONFIG_INFO_PATH, DEFAULT_UPDATE_INTERVAL, DEFAULT_DOWNLOAD_DIRECTORY, DEFAULT_DOWNLOAD_NUMBER
 from logger import newLogger
 
-
-LOG_PATH = "/tmp/dsc-frontend.log"
-
 dsc_root_dir = os.path.realpath(get_parent_dir(__file__, 2))
-
 global_logger = newLogger('global')
 
+LOG_PATH = "/tmp/dsc-frontend.log"
 SYS_CONFIG_INFO_PATH = "/var/cache/deepin-software-center/config_info.ini"
+BACKEND_PID = "/tmp/deepin-software-center/backend_running.pid"
+
+def get_backend_running():
+    return os.path.exists(BACKEND_PID)
+
 def get_last_update_time():
     config = Config(SYS_CONFIG_INFO_PATH)
 

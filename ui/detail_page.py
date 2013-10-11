@@ -157,7 +157,7 @@ class DetailPage(gtk.HBox):
         self.left_category_box = gtk.VBox()
         self.left_version_label = Label(label_width=136)
         show_label_tooltip(self.left_version_label)
-        self.left_version_label.set_ellipsize(pango.ELLIPSIZE_MIDDLE)
+        self.left_version_label.set_ellipsize(pango.ELLIPSIZE_END)
         self.left_download_label = Label()
         self.left_size_label = Label()
         

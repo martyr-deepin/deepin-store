@@ -43,6 +43,7 @@ UPDATE_LIST_LOG_PATH = '/tmp/dsc-update-list.log'
 UPGRADE_LOG_PATH = '/tmp/dsc-upgrade.log'
 LOG_PATH = "/tmp/dsc-backend.log"
 
+BACKEND_PID = "/tmp/deepin-software-center/backend_running.pid"
 SYS_CONFIG_INFO_PATH = "/var/cache/deepin-software-center/config_info.ini"
 SYS_PKG_WHITE_LIST = [
 "base-files",

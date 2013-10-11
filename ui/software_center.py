@@ -24,6 +24,7 @@ from skin import app_theme
 from nls import _
 
 import glib
+import subprocess
 from data import data_exit
 
 from dtk.ui.theme import DynamicPixbuf
@@ -819,11 +820,10 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         self.ready_show()
 
     def application_close_window(self, widget=None, event=None):
-        if self.upgrade_page.in_upgrading_view:
-            global_event.emit("hide-window")
-        else:
-            self.application.close_window(widget)
+        if utils.get_backend_running():
+            global_event.emit("show-status-icon")
 
+        self.application.close_window(widget)
         return True
 
     def upgrade_finish_action(self, upgrade_number):
@@ -952,6 +952,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         global_event.register_event('update-list-finish', self.update_list_finish)
         global_event.register_event('start-update-list', self.update_list_handler)
         global_event.register_event("upgrade-finish-action", self.upgrade_finish_action)
+        global_event.register_event("show-status-icon", self.show_status_icon)
 
         self.system_bus.add_signal_receiver(
             lambda messages: message_handler(messages, 
@@ -970,9 +971,14 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         self.init_download_manager()
 
         #self.request_update_list()
-        self.upgrade_page.fetch_upgrade_info()
+        self.upgrade_page.fetch_upgrade_info(utils.get_backend_running())
         
         log("finish")
+
+    def show_status_icon(self):
+        status_icon_window_path = os.path.join(get_parent_dir(__file__), 'vtk/window.py')
+        command = ['python', status_icon_window_path]
+        subprocess.Popen(command, stderr=subprocess.STDOUT, shell=False)
 
     def uninstall_pkg(self, pkg_name, purge_flag, install_page):
         self.bus_interface.uninstall_pkg(pkg_name, purge_flag,

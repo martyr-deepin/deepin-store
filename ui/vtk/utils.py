@@ -299,7 +299,20 @@ def is_right_button(event): # 右键.
 def is_mid_button(event): # 滚轮按下.
     return event.button == 2
 
-
+def bit_to_human_str(size):
+    if size < 1024:
+        return "%sB" % size
+    else:
+        size = size/1024.0
+        if size <= 1024:
+            return "%.2fKB" % size
+        else:
+            size = size/1024.0
+            if size <= 1024:
+                return "%.2fMB" % size
+            else:
+                size = size/1024.0
+                return "%.2fGB" % size
 
 if __name__ == "__main__":
     print get_home_path()
