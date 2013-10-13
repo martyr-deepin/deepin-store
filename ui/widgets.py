@@ -49,7 +49,7 @@ class HumanTimeTip(gtk.VBox):
         self.pack_start(self.label, False, False)
 
         try:
-            timestamp = int(float(self.timestamp))
+            timestamp = float(self.timestamp)
             self.label.set_text(self.to_huamn_str(timestamp))
         except:
             self.label.set_text(self.timestamp)
@@ -57,7 +57,7 @@ class HumanTimeTip(gtk.VBox):
         gtk.timeout_add(1000, self.tick)
 
     def to_huamn_str(self, timestamp):
-        now = int(float(time.time()))
+        now = time.time()
         interval = now - timestamp
         if interval < 60:
             return "刚刚"
@@ -74,13 +74,15 @@ class HumanTimeTip(gtk.VBox):
                     if days == 1:
                         return "昨天"
                     else:
-                        return datetime.strftime("%Y-%m-%d")
+                        datetime_obj = datetime.fromtimestamp(timestamp)
+                        return datetime_obj.strftime("%Y-%m-%d")
 
     def tick(self):
         try:
-            timestamp = int(float(self.timestamp))
+            timestamp = float(self.timestamp)
             self.label.set_text(self.to_huamn_str(timestamp))
-        except:
+        except Exception, e:
+            print e
             pass
         return True
 
