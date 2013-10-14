@@ -943,6 +943,7 @@ class UpgradePage(gtk.VBox):
                 
             self.no_notify_treeview.add_items(no_notify_items)
         else:
+            self.upgrade_treeview.clear()
             global_event.emit("show-newest-view")
 
         #global_event.emit("show-upgrading-view")
