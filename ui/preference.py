@@ -269,6 +269,7 @@ class DscPreferenceDialog(PreferenceDialog):
     def __init__(self):
         PreferenceDialog.__init__(self, 566, 488)
 
+        self.current_mirror_item = None
         self.normal_settings = gtk.VBox()
         self.normal_settings.set_spacing(TABLE_ROW_SPACING)
         self.normal_settings.pack_start(self.create_uninstall_box(), False, True)

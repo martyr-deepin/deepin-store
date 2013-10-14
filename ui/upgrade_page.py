@@ -287,8 +287,11 @@ class UpgradingBox(gtk.VBox):
         bottom_info_box.attach(self.recent_upgrade_time, 1, 2, 1, 2, xoptions=gtk.FILL, xpadding=0, ypadding=4)
 
         software_mirror_label = utils.create_right_align_label("接收更新软件源：")
-        self.software_mirror = utils.create_left_align_label( 
-            self.preference_dialog.current_mirror_item.mirror.name)
+        if self.preference_dialog.current_mirror_item:
+            self.software_mirror = utils.create_left_align_label( 
+                self.preference_dialog.current_mirror_item.mirror.name)
+        else:
+            self.software_mirror = utils.create_left_align_label(utils.get_current_mirror_hostname())
         bottom_info_box.attach(software_mirror_label, 0, 1, 2, 3, xoptions=gtk.FILL, xpadding=0, ypadding=4)
         bottom_info_box.attach(self.software_mirror, 1, 2, 2, 3, xoptions=gtk.FILL, xpadding=0, ypadding=4)
 
@@ -416,8 +419,11 @@ class UpgradingBox(gtk.VBox):
         self.progress_box_align.add(self.progress_box)
         self.recent_update_time.timestamp = utils.get_last_update_time()
         self.recent_upgrade_time.timestamp = get_last_upgrade_time()
-        self.software_mirror.set_text(
-            self.preference_dialog.current_mirror_item.mirror.name)
+        if self.preference_dialog.current_mirror_item:
+            self.software_mirror = utils.create_left_align_label( 
+                self.preference_dialog.current_mirror_item.mirror.name)
+        else:
+            self.software_mirror = utils.create_left_align_label(utils.get_current_mirror_hostname())
 
 class UpgradePage(gtk.VBox):
     '''
