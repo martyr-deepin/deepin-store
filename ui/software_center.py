@@ -1,5 +1,6 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+#
 # Copyright (C) 2011 ~ 2012 Deepin, Inc.
 #               2011 ~ 2012 Wang Yong
 # 
@@ -368,7 +369,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 if action_type == ACTION_UNINSTALL:
                     uninstall_page.action_update(pkg_name, percent)
                 elif action_type == ACTION_UPGRADE:
-                    upgrade_page.action_update(pkg_name, percent, status)
+                    upgrade_page.action_update(pkg_name, percent, utils.l18n_status_info(status))
                 elif action_type == ACTION_INSTALL:
                     install_page.action_update(pkg_name, percent)
 

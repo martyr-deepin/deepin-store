@@ -940,6 +940,7 @@ class UpgradePage(gtk.VBox):
             global_event.emit("show-newest-view")
 
         #global_event.emit("show-upgrading-view")
+        #global_event.emit("show-newest-view")
 
     def download_ready(self, pkg_name):
         self.upgrading_view.upgrading_progress_detail.set_text("分析依赖...")

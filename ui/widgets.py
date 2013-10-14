@@ -58,7 +58,7 @@ class HumanTimeTip(gtk.VBox):
 
     def to_huamn_str(self, timestamp):
         now = time.time()
-        interval = now - timestamp
+        interval = int(now - timestamp)
         if interval < 60:
             return "刚刚"
         else:

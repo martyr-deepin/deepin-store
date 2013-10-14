@@ -34,6 +34,7 @@ from deepin_utils.file import touch_file, get_parent_dir
 
 from constant import CONFIG_INFO_PATH, DEFAULT_UPDATE_INTERVAL, DEFAULT_DOWNLOAD_DIRECTORY, DEFAULT_DOWNLOAD_NUMBER
 from logger import newLogger
+from nls import _
 
 dsc_root_dir = os.path.realpath(get_parent_dir(__file__, 2))
 global_logger = newLogger('global')
@@ -268,6 +269,29 @@ def set_download_number(number):
     config_info_config = get_config_info_config()
     config_info_config.set('download', 'number', number)
     config_info_config.write()
+
+header_ids = [
+        "Running",
+        "Preparing",
+        "Unpacking",
+        "Preparing to configure",
+        "Configuring",
+        "Installed",
+        ]
+
+header_ids_l18n = [
+        _("Running"),
+        _("Preparing"),
+        _("Unpacking"),
+        _("Preparing to configure"),
+        _("Configuring"),
+        _("Installed"),
+        ]
+
+def l18n_status_info(status):
+    for index, header in enumerate(header_ids):
+        if status.startswith(header):
+            return status.replace(header, header_ids_l18n[index])
 
 class ThreadMethod(td.Thread):
     '''
