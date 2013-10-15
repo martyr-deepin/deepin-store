@@ -379,18 +379,19 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                     uninstall_page.action_finish(pkg_name, pkg_info_list)
                 elif action_type == ACTION_UPGRADE:
                     upgrade_page.action_finish(pkg_name, pkg_info_list)
-                    global_event.emit("upgrade-finish-action", len(pkg_info_list))
+                    global_event.emit("upgrade-finish-action", pkg_info_list)
                     utils.set_last_upgrade_time()
-                    upgrade_page.fetch_upgrade_info()
+                    upgrade_page.refresh_status(pkg_info_list)
                 elif action_type == ACTION_INSTALL:
                     install_page.action_finish(pkg_name, pkg_info_list)
                 
                 refresh_current_page_status(pkg_name, pkg_info_list, bus_interface)
-                bus_interface.request_status(
-                        reply_handler=lambda reply: request_status_reply_hander(
-                            reply, install_page, upgrade_page, uninstall_page, pkg_info_list),
-                        error_handler=lambda e: action_finish_handle_dbus_error(pkg_info_list),
-                        )
+                if action_type != ACTION_UPGRADE:
+                    bus_interface.request_status(
+                            reply_handler=lambda reply: request_status_reply_hander(
+                                reply, install_page, upgrade_page, uninstall_page, pkg_info_list),
+                            error_handler=lambda e: action_finish_handle_dbus_error(pkg_info_list),
+                            )
 
             elif signal_type == 'action-failed':
                 # FIXME: change failed action dealing
@@ -827,8 +828,23 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         self.application.close_window(widget)
         return True
 
-    def upgrade_finish_action(self, upgrade_number):
-        pass
+    def upgrade_finish_action(self, pkg_info_list):
+        return
+        """
+        if len(pkg_info_list) > 0:
+            # Delete items from treeview.
+            upgraded_items = []
+            
+            for (pkg_name, marked_delete, marked_install, marked_upgrade) in pkg_info_list:
+                for item in self.upgrade_page.upgrade_treeview.visible_items:
+                    if item.pkg_name == pkg_name:
+                        upgraded_items.append(item)
+                        break
+                        
+            print upgraded_items
+            self.upgrade_page.upgrade_treeview.delete_items(upgraded_items)
+            print len(self.upgrade_page.upgrade_treeview.visible_items)
+        """
 
     def show_preference_dialog(self):
         self.preference_dialog.show_all()

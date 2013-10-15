@@ -27,6 +27,7 @@ import gobject
 import json
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, NO_NOTIFY_FILE, CHECK_BUTTON_PADDING_X, cute_info_dir
 import os
+import time
 from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.button import CheckButtonBuffer, ImageButton, CheckAllButton
 from star_buffer import DscStarBuffer
@@ -602,6 +603,7 @@ class UpgradePage(gtk.VBox):
         self.show_all()
             
     def show_newest_view(self):
+        start = time.time()
         self.in_upgrading_view = False
         container_remove_all(self)
         container_remove_all(self.cycle_strip)
@@ -612,7 +614,7 @@ class UpgradePage(gtk.VBox):
         self.pack_start(self.cycle_strip, False, False)
         self.pack_start(self.newest_view, True, True)
         
-        self.show_all()
+        print "show newest time:", time.time() - start
 
     def show_network_disable_view(self):
         self.in_upgrading_view = False
@@ -889,6 +891,34 @@ class UpgradePage(gtk.VBox):
         self.bus_interface.request_upgrade_pkgs(
                 reply_handler=lambda pkg_infos:self.render_upgrade_info(pkg_infos, in_upgrading), 
                 error_handler=lambda e:handle_dbus_error("request_upgrade_pkgs", e))
+
+    def refresh_status(self, pkg_info_list):
+        self.show_loading_page()
+        self.bus_interface.request_status(
+                reply_handler=lambda reply: self.request_status_reply_hander(
+                    reply, pkg_info_list),
+                error_handler=lambda e: handle_dbus_error("request_status", e),
+                )
+
+    def request_status_reply_hander(self, result, clear_action_list):
+        if len(clear_action_list) > 0:
+            upgraded_items = []
+            for (pkg_name, marked_delete, marked_install, marked_upgrade) in clear_action_list:
+                if marked_upgrade:
+                    for item in self.upgrade_treeview.visible_items:
+                        if item.pkg_name == pkg_name:
+                            upgraded_items.append(item)
+                            break
+                        
+            self.upgrade_treeview.delete_items(upgraded_items)
+        if len(self.upgrade_treeview.visible_items) > 0:
+            container_remove_all(self)
+            container_remove_all(self.cycle_strip)
+            
+            self.cycle_strip.add(self.upgrade_bar)
+            
+            self.pack_start(self.cycle_strip, False, False)
+            self.pack_start(self.upgrade_treeview, True, True)
         
     def render_upgrade_info(self, pkg_infos, in_upgrading):
         if in_upgrading:
@@ -896,6 +926,7 @@ class UpgradePage(gtk.VBox):
             return 
 
         if len(pkg_infos) > 0:
+            print "DEBUG"
             if self.update_list_pixbuf:
                 del self.update_list_pixbuf
                 self.update_list_pixbuf = None
@@ -903,15 +934,6 @@ class UpgradePage(gtk.VBox):
             (desktop_pkg_infos, library_pkg_infos) = split_with(
                 pkg_infos, 
                 lambda pkg_info: self.data_manager.is_pkg_have_desktop_file((eval(pkg_info)[0])))
-            
-            if len(self.get_children()) == 0 or self.get_children()[0] != self.upgrade_treeview:
-                container_remove_all(self)
-                container_remove_all(self.cycle_strip)
-                
-                self.cycle_strip.add(self.upgrade_bar)
-                
-                self.pack_start(self.cycle_strip, False, False)
-                self.pack_start(self.upgrade_treeview, True, True)
                 
             no_notify_config = self.read_no_notify_config()    
                 
@@ -936,9 +958,20 @@ class UpgradePage(gtk.VBox):
                 
             #self.upgrade_bar.set_upgrade_info(len(self.upgrade_treeview.visible_items), self.no_notify_pkg_num)
             
-            if len(upgrade_items) == 0 and len(self.upgrade_treeview.visible_items) == 0:        
+            print len(upgrade_items), len(self.upgrade_treeview.visible_items)
+            if len(upgrade_items) == 0:
+                self.upgrade_treeview.clear()
                 global_event.emit("show-newest-view")
             else:
+                if len(self.get_children()) == 0 or self.get_children()[0] != self.upgrade_treeview:
+                    container_remove_all(self)
+                    container_remove_all(self.cycle_strip)
+                    
+                    self.cycle_strip.add(self.upgrade_bar)
+                    
+                    self.pack_start(self.cycle_strip, False, False)
+                    self.pack_start(self.upgrade_treeview, True, True)
+
                 self.upgrade_treeview.add_items(upgrade_items)    
                 
             self.no_notify_treeview.add_items(no_notify_items)
