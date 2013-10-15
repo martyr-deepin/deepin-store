@@ -314,11 +314,14 @@ class UpgradingBox(gtk.VBox):
         upgrading_view_align.add(upper_box)
         self.pack_start(upgrading_view_align, True, True)
 
-        #gtk.timeout_add(1000, lambda:self.show_error("marked_delete_system_pkgs"))
+        gtk.timeout_add(2000, lambda:self.show_error("download_failed"))
+
+    def upload_error_log(self):
+        global_event.emit("upload-error-log")
 
     def create_upload_info_box(self):
         upload_info_start = Label("根据上面的建议，如果您尝试后依然看到本提示，您可以")
-        upload_info_middle = widgets.ActionButton("上报错误")
+        upload_info_middle = widgets.ActionButton("上报错误", self.upload_error_log)
         upload_info_end = Label("。")
         upload_info_box = gtk.HBox()
         upload_info_box.pack_start(upload_info_start, False, False)
@@ -341,7 +344,7 @@ class UpgradingBox(gtk.VBox):
 
         download_failed_box.pack_start(error_title, False, False)
         download_failed_box.pack_start(detail_info_box, False, False)
-        download_failed_box.pack_start(self.create_upload_info_box(), False, False)
+        download_failed_box.pack_start(UploadErrorLabelBox(), False, False)
         return download_failed_box
     
     def create_install_failed_box(self):
@@ -362,7 +365,7 @@ class UpgradingBox(gtk.VBox):
         install_failed_box.pack_start(error_title, False, False)
         install_failed_box.pack_start(error_info, False, False)
         install_failed_box.pack_start(detail_info_box, False, False)
-        install_failed_box.pack_start(self.create_upload_info_box(), False, False)
+        install_failed_box.pack_start(UploadErrorLabelBox(), False, False)
         return install_failed_box
 
     def create_marked_delete_system_pkgs_box(self):
@@ -383,7 +386,7 @@ class UpgradingBox(gtk.VBox):
         marked_delete_box.pack_start(error_title, False, False)
         marked_delete_box.pack_start(error_info, False, False)
         marked_delete_box.pack_start(detail_info_box, False, False)
-        marked_delete_box.pack_start(self.create_upload_info_box(), False, False)
+        marked_delete_box.pack_start(UploadErrorLabelBox(), False, False)
         return marked_delete_box
 
     def switch_info(self, info_box):
@@ -425,6 +428,65 @@ class UpgradingBox(gtk.VBox):
                 self.preference_dialog.current_mirror_item.mirror.name)
         else:
             self.software_mirror = utils.create_left_align_label(utils.get_current_mirror_hostname())
+
+class UploadErrorLabelBox(gtk.VBox):
+    def __init__(self):
+        gtk.VBox.__init__(self)
+        upload_info_start = Label("根据上面的建议，如果您尝试后依然看到本提示，您可以")
+        upload_info_middle = widgets.ActionButton("上报错误", self.upload_error_log)
+        upload_info_end = Label("。")
+        
+        action_info_box = gtk.HBox()
+        action_info_box.pack_start(upload_info_start, False, False)
+        action_info_box.pack_start(upload_info_middle, False, False)
+        action_info_box.pack_start(upload_info_end, False, False)
+        self.pack_start(action_info_box, False, False)
+
+        global_event.register_event("upload-error-log-success", self.handle_upload_success)
+        global_event.register_event("upload-error-log-failed", self.handle_upload_failed)
+
+    def show_uploading(self):
+        container_remove_all(self)
+        uploading = widgets.TextLoading("正在上传错误日志", text_color="#000000")
+        self.pack_start(uploading, False, False)
+        self.show_all()
+
+    def show_upload_sucess(self):
+        uploading = Label("错误上报成功，感谢您的支持，我们会尽快修复您上报的错误。")
+        container_remove_all(self)
+        self.pack_start(uploading, False, False)
+        self.show_all()
+
+    def show_upload_failed(self, e):
+        upload_info_start = Label("错误上报失败，您可以再次尝试")
+        upload_info_middle = widgets.ActionButton("上报错误", self.upload_error_log)
+        upload_info_end = Label("。")
+
+        action_info_box = gtk.HBox()
+        action_info_box.pack_start(upload_info_start, False, False)
+        action_info_box.pack_start(upload_info_middle, False, False)
+        action_info_box.pack_start(upload_info_end, False, False)
+
+        error_code = Label("Error: %s" % e)
+
+        container_remove_all(self)
+        self.pack_start(action_info_box, False, False)
+        self.pack_start(error_code, False, False)
+        self.show_all()
+
+    def handle_upload_success(self):
+        self.show_upload_sucess()
+        global_event.emit("set-cursor", None)
+
+    def handle_upload_failed(self, e):
+        self.show_upload_failed()
+        global_event.emit("set-cursor", None)
+
+    def upload_error_log(self):
+        global_event.emit("set-cursor", gtk.gdk.WATCH)
+        self.hide_all()
+        self.show_uploading()
+        global_event.emit("upload-error-log")
 
 class UpgradePage(gtk.VBox):
     '''
@@ -979,7 +1041,7 @@ class UpgradePage(gtk.VBox):
             self.upgrade_treeview.clear()
             global_event.emit("show-newest-view")
 
-        #global_event.emit("show-upgrading-view")
+        global_event.emit("show-upgrading-view")
         #global_event.emit("show-newest-view")
 
     def download_ready(self, pkg_name):

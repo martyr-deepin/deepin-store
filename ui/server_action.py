@@ -30,6 +30,8 @@ from constant import SERVER_ADDRESS, POST_TIMEOUT
 from events import global_event
 import traceback
 from deepin_utils.file import create_directory
+import utils
+import pycurl
 
 DEBUG = False
 
@@ -248,3 +250,29 @@ class FetchPackageInfo(td.Thread):
         except Exception, e:
             print 'Get %s info failed.' % self.pkg_name
             print 'Error Info:', e
+
+from bcs_config import bucket
+from datetime import datetime
+import uuid
+
+class SendErrorLog(td.Thread):
+    def __init__(self):
+        td.Thread.__init__(self)
+        self.setDaemon(True)
+
+    def run(self):
+        try:
+            filename = utils.generate_log_tar()
+            o_name, ext = os.path.splitext(filename)
+            dt_now = datetime.now()
+            folder = dt_now.strftime("/files/%Y/%m/%d/")
+            name = "%s_%s%s" % (dt_now.strftime("%Y%m%d%H%M%S"), uuid.uuid4().hex, ext)
+            up_path = os.path.join(folder, name)
+            bcs_obj = bucket.object(up_path)
+            with open(filename) as fp:
+                bcs_obj.put(fp.read())
+            global_event.emit('upload-error-log-success')
+            print "Upload Error Log Success"
+        except Exception, e:
+            print "Upload Error Log Failed: %s" % e
+            global_event.emit("upload-error-log-failed", e)

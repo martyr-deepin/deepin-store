@@ -73,7 +73,7 @@ from start_desktop_window import StartDesktopWindow
 from utils import is_64bit_system, handle_dbus_reply, handle_dbus_error, bit_to_human_str, get_software_download_dir
 import utils
 from tooltip import ToolTip
-from server_action import SendVote, SendDownloadCount, SendUninstallCount
+from server_action import SendVote, SendDownloadCount, SendUninstallCount, SendErrorLog
 from preference import DscPreferenceDialog, WaitingDialog
 from logger import Logger
 from paned_box import PanedBox
@@ -293,6 +293,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
 
             elif signal_type == 'pkgs-not-in-cache':
                 (not_in_cache, action_type) = action_content
+                utils.write_log("pkgs-not-in-cache:%s, action_type:%s" % (not_in_cache, action_type))
                 if action_type == ACTION_INSTALL:
                     pass
                 elif action_type == ACTION_UPGRADE:
@@ -300,6 +301,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
 
             elif signal_type == 'pkgs-mark-failed':
                 (pkg_dict, action_type) = action_content
+                utils.write_log("pkgs-mark-failed:%s, action_type:%s" % (pkg_dict, action_type))
                 if action_type == ACTION_INSTALL:
                     pass
                 elif action_type == ACTION_UPGRADE:
@@ -307,6 +309,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
 
             elif signal_type == 'marked-delete-system-pkgs':
                 (pkgs, action_type) = action_content
+                utils.write_log("marked-delete-system-pkgs:%s, action_type:%s" % (pkgs, action_type))
                 if action_type == ACTION_INSTALL:
                     pass
                 elif action_type == ACTION_UPGRADE:
@@ -314,6 +317,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
 
             elif signal_type == 'pkgs-parse-download-error':
                 (error, action_type) = action_content
+                utils.write_log("pkgs-parse-download-error:%s, action_type:%s" % (error, action_type))
                 if action_type == ACTION_INSTALL:
                     pass
                 elif action_type == ACTION_UPGRADE:
@@ -349,6 +353,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
 
             elif signal_type == "download-failed":
                 (pkg_name, action_type, error) = action_content
+                utils.write_log("download-failed:%s, action_type:%s" % (error, action_type))
                 if action_type == ACTION_INSTALL:
                     #install_page.download_stop(pkg_name)
                     pass
@@ -396,6 +401,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
             elif signal_type == 'action-failed':
                 # FIXME: change failed action dealing
                 (pkg_name, action_type, pkg_info_list, errormsg) = action_content
+                utils.write_log("action-failed:%s, action_type:%s" % (errormsg, action_type))
                 if action_type == ACTION_UNINSTALL:
                     uninstall_page.action_finish(pkg_name, pkg_info_list)
                 elif action_type == ACTION_UPGRADE:
@@ -970,6 +976,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         global_event.register_event('start-update-list', self.update_list_handler)
         global_event.register_event("upgrade-finish-action", self.upgrade_finish_action)
         global_event.register_event("show-status-icon", self.show_status_icon)
+        global_event.register_event("upload-error-log", self.exec_upload_error_log)
 
         self.system_bus.add_signal_receiver(
             lambda messages: message_handler(messages, 
@@ -991,6 +998,9 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         self.upgrade_page.fetch_upgrade_info(utils.get_backend_running())
         
         log("finish")
+
+    def exec_upload_error_log(self):
+        SendErrorLog().start()
 
     def show_status_icon(self):
         status_icon_window_path = os.path.join(get_parent_dir(__file__), 'vtk/window.py')

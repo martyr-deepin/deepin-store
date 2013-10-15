@@ -27,12 +27,20 @@ import apt_pkg
 from datetime import datetime
 import threading as td
 import time
+from tempfile import mkstemp
+from zipfile import ZipFile
 
 from dtk.ui.label import Label
 from deepin_utils.config import Config
 from deepin_utils.file import touch_file, get_parent_dir
 
-from constant import CONFIG_INFO_PATH, DEFAULT_UPDATE_INTERVAL, DEFAULT_DOWNLOAD_DIRECTORY, DEFAULT_DOWNLOAD_NUMBER
+from constant import (
+        CONFIG_INFO_PATH, 
+        DEFAULT_UPDATE_INTERVAL, 
+        DEFAULT_DOWNLOAD_DIRECTORY, 
+        DEFAULT_DOWNLOAD_NUMBER, 
+        PROGRAM_NAME,
+        )
 from logger import newLogger
 from nls import _
 
@@ -293,6 +301,17 @@ def l18n_status_info(status):
         if status.startswith(header):
             return status.replace(header, header_ids_l18n[index])
 
+LOG_DICT = ["/tmp/dsc-backend.log", "/tmp/dsc-frontend.log"]
+def generate_log_tar():
+    tmp = mkstemp(".zip", PROGRAM_NAME)
+    os.close(tmp[0])
+    filename = tmp[1]
+    with ZipFile(filename, 'w') as myzip:
+        for log in LOG_DICT:
+            if os.path.exists(log):
+                myzip.write(log)
+    return filename
+
 class ThreadMethod(td.Thread):
     '''
     func: a method name
@@ -307,3 +326,5 @@ class ThreadMethod(td.Thread):
     def run(self):
         self.func(*self.args)
 
+if __name__ == '__main__':
+    print generate_log_tar()
