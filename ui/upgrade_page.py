@@ -1161,7 +1161,7 @@ class UpgradeItem(TreeItem):
             draw_text(
                 cr,
                 ITEM_NO_NOTIFY_STRING,
-                rect.x + (ITEM_NO_NOTIFY_AREA_WIDTH - ITEM_NO_NOTIFY_WIDTH) / 2,
+                rect.x + rect.width - ITEM_BUTTON_PADDING_RIGHT - ITEM_NO_NOTIFY_WIDTH,
                 rect.y + (ITEM_HEIGHT - ITEM_NO_NOTIFY_HEIGHT) / 2,
                 ITEM_NO_NOTIFY_WIDTH,
                 ITEM_NO_NOTIFY_HEIGHT,
