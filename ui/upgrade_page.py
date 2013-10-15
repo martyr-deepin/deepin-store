@@ -314,7 +314,7 @@ class UpgradingBox(gtk.VBox):
         upgrading_view_align.add(upper_box)
         self.pack_start(upgrading_view_align, True, True)
 
-        gtk.timeout_add(2000, lambda:self.show_error("download_failed"))
+        #gtk.timeout_add(2000, lambda:self.show_error("download_failed"))
 
     def upload_error_log(self):
         global_event.emit("upload-error-log")
@@ -1041,7 +1041,7 @@ class UpgradePage(gtk.VBox):
             self.upgrade_treeview.clear()
             global_event.emit("show-newest-view")
 
-        global_event.emit("show-upgrading-view")
+        #global_event.emit("show-upgrading-view")
         #global_event.emit("show-newest-view")
 
     def download_ready(self, pkg_name):
