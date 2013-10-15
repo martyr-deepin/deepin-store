@@ -270,24 +270,24 @@ class UpgradingBox(gtk.VBox):
 
         self.progress_box = gtk.VBox(spacing=6)
         self.progress_box.set_size_request(400, -1)
-        self.upgrading_progress_title = widgets.TextLoading("正在下载更新", text_size=16)
+        self.upgrading_progress_title = widgets.TextLoading(_("正在下载更新"), text_size=16)
         self.upgrading_progressbar = ProgressBar()
         self.upgrading_progressbar.set_size_request(360, 12)
         self.upgrading_progressbar.progress_buffer.progress = 0.0
-        self.upgrading_progress_detail = Label("正在下载2个更新（总共19.2MB, 已完成39%）")
+        self.upgrading_progress_detail = Label("")
 
         bottom_info_box = gtk.Table(3, 2)
-        recent_update_time_label = utils.create_right_align_label("最近更新列表时间：")
+        recent_update_time_label = utils.create_right_align_label("_(最近更新列表时间：)")
         self.recent_update_time = widgets.HumanTimeTip(utils.get_last_update_time())
         bottom_info_box.attach(recent_update_time_label, 0, 1, 0, 1, xoptions=gtk.FILL, xpadding=0, ypadding=4)
         bottom_info_box.attach(self.recent_update_time, 1, 2, 0, 1, xoptions=gtk.FILL, xpadding=0, ypadding=4)
 
-        recent_upgrade_time_label = utils.create_right_align_label("最近更新时间：")
+        recent_upgrade_time_label = utils.create_right_align_label("_(最近更新时间：)")
         self.recent_upgrade_time = widgets.HumanTimeTip(get_last_upgrade_time())
         bottom_info_box.attach(recent_upgrade_time_label, 0, 1, 1, 2, xoptions=gtk.FILL, xpadding=0, ypadding=4)
         bottom_info_box.attach(self.recent_upgrade_time, 1, 2, 1, 2, xoptions=gtk.FILL, xpadding=0, ypadding=4)
 
-        software_mirror_label = utils.create_right_align_label("接收更新软件源：")
+        software_mirror_label = utils.create_right_align_label("_(接收更新软件源：)")
         if self.preference_dialog.current_mirror_item:
             self.software_mirror = utils.create_left_align_label( 
                 self.preference_dialog.current_mirror_item.mirror.name)
@@ -319,24 +319,14 @@ class UpgradingBox(gtk.VBox):
     def upload_error_log(self):
         global_event.emit("upload-error-log")
 
-    def create_upload_info_box(self):
-        upload_info_start = Label("根据上面的建议，如果您尝试后依然看到本提示，您可以")
-        upload_info_middle = widgets.ActionButton("上报错误", self.upload_error_log)
-        upload_info_end = Label("。")
-        upload_info_box = gtk.HBox()
-        upload_info_box.pack_start(upload_info_start, False, False)
-        upload_info_box.pack_start(upload_info_middle, False, False)
-        upload_info_box.pack_start(upload_info_end, False, False)
-        return upload_info_box
-
     def create_download_failed_box(self):
         download_failed_box = gtk.VBox(spacing=10)
         download_failed_box.set_size_request(400, -1)
-        error_title = Label("更新下载失败", text_color=DynamicColor('#ff0000'), text_size=16)
+        error_title = Label(_("更新下载失败"), text_color=DynamicColor('#ff0000'), text_size=16)
 
-        detail_info_start = Label("请求的软件包在服务器上不存在，建议")
-        detail_info_middle = widgets.ActionButton("刷新软件列表", lambda:global_event.emit("start-update-list"))
-        detail_info_end = Label("后，再尝试更新。")
+        detail_info_start = Label(_("请求的软件包在服务器上不存在，建议"))
+        detail_info_middle = widgets.ActionButton(_("刷新软件列表"), lambda:global_event.emit("start-update-list"))
+        detail_info_end = Label(_("后，再尝试更新。"))
         detail_info_box = gtk.HBox()
         detail_info_box.pack_start(detail_info_start, False, False)
         detail_info_box.pack_start(detail_info_middle, False, False)
@@ -350,13 +340,13 @@ class UpgradingBox(gtk.VBox):
     def create_install_failed_box(self):
         install_failed_box = gtk.VBox(spacing=10)
         install_failed_box.set_size_request(400, -1)
-        error_title = Label("安装更新失败", text_color=DynamicColor('#ff0000'), text_size=16)
+        error_title = Label(_("安装更新失败"), text_color=DynamicColor('#ff0000'), text_size=16)
 
-        error_info = Label("出现这种情况的原因可能是本地依赖被破坏", wrap_width=360)
+        error_info = Label(_("出现这种情况的原因可能是本地依赖被破坏"), wrap_width=360)
 
-        detail_info_start = Label("建议")
-        detail_info_middle = widgets.ActionButton("刷新软件列表", lambda:global_event.emit("start-update-list"))
-        detail_info_end = Label("后，再尝试更新。")
+        detail_info_start = Label(_("建议"))
+        detail_info_middle = widgets.ActionButton(_("刷新软件列表"), lambda:global_event.emit("start-update-list"))
+        detail_info_end = Label(_("后，再尝试更新。"))
         detail_info_box = gtk.HBox()
         detail_info_box.pack_start(detail_info_start, False, False)
         detail_info_box.pack_start(detail_info_middle, False, False)
@@ -371,13 +361,13 @@ class UpgradingBox(gtk.VBox):
     def create_marked_delete_system_pkgs_box(self):
         marked_delete_box = gtk.VBox(spacing=10)
         marked_delete_box.set_size_request(400, -1)
-        error_title = Label("警告", text_color=DynamicColor('#ff0000'), text_size=16)
+        error_title = Label(_("警告"), text_color=DynamicColor('#ff0000'), text_size=16)
 
-        error_info = Label("本次升级要卸载重要的系统组件，出现这种情况的原因可能是本地依赖被破坏，或者服务端软件包依赖不正确", wrap_width=360)
+        error_info = Label(_("本次升级要卸载重要的系统组件，出现这种情况的原因可能是本地依赖被破坏，或者服务端软件包依赖不正确"), wrap_width=360)
     
-        detail_info_start = Label("建议")
-        detail_info_middle = widgets.ActionButton("刷新软件列表", lambda:global_event.emit("start-update-list"))
-        detail_info_end = Label("后，再尝试更新。")
+        detail_info_start = Label(_("建议"))
+        detail_info_middle = widgets.ActionButton(_("刷新软件列表"), lambda:global_event.emit("start-update-list"))
+        detail_info_end = Label(_("后，再尝试更新。"))
         detail_info_box = gtk.HBox()
         detail_info_box.pack_start(detail_info_start, False, False)
         detail_info_box.pack_start(detail_info_middle, False, False)
@@ -432,9 +422,9 @@ class UpgradingBox(gtk.VBox):
 class UploadErrorLabelBox(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
-        upload_info_start = Label("根据上面的建议，如果您尝试后依然看到本提示，您可以")
-        upload_info_middle = widgets.ActionButton("上报错误", self.upload_error_log)
-        upload_info_end = Label("。")
+        upload_info_start = Label(_("根据上面的建议，如果您尝试后依然看到本提示，您可以"))
+        upload_info_middle = widgets.ActionButton(_("上报错误"), self.upload_error_log)
+        upload_info_end = Label(_("。"))
         
         action_info_box = gtk.HBox()
         action_info_box.pack_start(upload_info_start, False, False)
@@ -447,20 +437,20 @@ class UploadErrorLabelBox(gtk.VBox):
 
     def show_uploading(self):
         container_remove_all(self)
-        uploading = widgets.TextLoading("正在上传错误日志", text_color="#000000")
+        uploading = widgets.TextLoading(_("正在上传错误日志"), text_color="#000000")
         self.pack_start(uploading, False, False)
         self.show_all()
 
     def show_upload_sucess(self):
-        uploading = Label("错误上报成功，感谢您的支持，我们会尽快修复您上报的错误。")
+        uploading = Label(_("错误上报成功，感谢您的支持，我们会尽快修复您上报的错误。"))
         container_remove_all(self)
         self.pack_start(uploading, False, False)
         self.show_all()
 
     def show_upload_failed(self, e):
-        upload_info_start = Label("错误上报失败，您可以再次尝试")
-        upload_info_middle = widgets.ActionButton("上报错误", self.upload_error_log)
-        upload_info_end = Label("。")
+        upload_info_start = Label(_("错误上报失败，您可以再次尝试"))
+        upload_info_middle = widgets.ActionButton(_("上报错误"), self.upload_error_log)
+        upload_info_end = Label(_("。"))
 
         action_info_box = gtk.HBox()
         action_info_box.pack_start(upload_info_start, False, False)
@@ -619,7 +609,7 @@ class UpgradePage(gtk.VBox):
         else:
             self.upgrade_bar.upgrade_selected_button.set_sensitive(False)
 
-        self.upgrade_bar.message_label.set_text("已经选择%s个更新，将会下载%s。" % (
+        self.upgrade_bar.message_label.set_text(_("已经选择%s个更新，将会下载%s。") % (
             len(self.select_pkg_names), utils.bit_to_human_str(size)))
         global_event.emit("set-cursor", None)
         
@@ -1045,19 +1035,19 @@ class UpgradePage(gtk.VBox):
         #global_event.emit("show-newest-view")
 
     def download_ready(self, pkg_name):
-        self.upgrading_view.upgrading_progress_detail.set_text("分析依赖...")
+        self.upgrading_view.upgrading_progress_detail.set_text(_("分析依赖..."))
 
     def download_wait(self, pkg_name):
-        self.upgrading_view.upgrading_progress_detail.set_text("依赖分析完成")
+        self.upgrading_view.upgrading_progress_detail.set_text(_("依赖分析完成"))
 
     def download_start(self, pkg_name):
-        self.upgrading_view.upgrading_progress_detail.set_text("开始下载...")
+        self.upgrading_view.upgrading_progress_detail.set_text(_("开始下载..."))
 
     def download_failed(self, pkg_name, error):
         self.upgrading_view.show_error("download_failed")
 
     def download_update(self, pkg_name, percent, speed, finish_number, total, downloaded_size, total_size):
-        self.upgrading_view.upgrading_progress_detail.set_text("已完成：%s/%s (%s/%s) 下载速度：%s/s" % (
+        self.upgrading_view.upgrading_progress_detail.set_text(_("已完成：%s/%s (%s/%s) 下载速度：%s/s") % (
             utils.bit_to_human_str(downloaded_size),
             utils.bit_to_human_str(total_size),
             finish_number,
@@ -1067,26 +1057,26 @@ class UpgradePage(gtk.VBox):
         self.upgrading_view.upgrading_progressbar.set_progress(percent)
         
     def download_finish(self, pkg_name):
-        self.upgrading_view.upgrading_progress_detail.set_text("下载完成!")
+        self.upgrading_view.upgrading_progress_detail.set_text(_("下载完成!"))
         self.upgrading_view.upgrading_progressbar.set_progress(100.0)
 
     def download_stop(self, pkg_name):
-        self.upgrading_view.upgrading_progress_detail.set_text("下载停止！")
+        self.upgrading_view.upgrading_progress_detail.set_text(_("下载停止！"))
             
     def download_parse_failed(self, pkg_name):
-        self.upgrading_view.upgrading_progress_detail.set_text("依赖分析失败!")
+        self.upgrading_view.upgrading_progress_detail.set_text(_("依赖分析失败!"))
             
     def action_start(self, pkg_name):
         self.upgrading_view.upgrade_page_logo.change_image(utils.get_common_image("upgrade/upgrade.png"))
-        self.upgrading_view.upgrading_progress_title.change_text("正在安装更新")
-        self.upgrading_view.upgrading_progress_detail.set_text("开始更新...")
+        self.upgrading_view.upgrading_progress_title.change_text(_("正在安装更新"))
+        self.upgrading_view.upgrading_progress_detail.set_text(_("开始更新..."))
     
     def action_update(self, pkg_name, percent, status):
         self.upgrading_view.upgrading_progress_detail.set_text(str(status))
         self.upgrading_view.upgrading_progressbar.set_progress(percent)
     
     def action_finish(self, pkg_name, pkg_info_list):
-        self.upgrading_view.upgrading_progress_detail.set_text("升级完成!")
+        self.upgrading_view.upgrading_progress_detail.set_text(_("升级完成!"))
         self.upgrading_view.upgrading_progressbar.set_progress(100.0)
 
 gobject.type_register(UpgradePage)
