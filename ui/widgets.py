@@ -41,6 +41,10 @@ from dtk.ui.constant import ALIGN_MIDDLE
 from dtk.ui.dialog import DialogBox, DIALOG_MASK_SINGLE_PAGE
 import dtk.ui.utils as dutils
 
+class ActionLabel(Label):
+    def __init__(self):
+        pass
+
 class HumanTimeTip(gtk.VBox):
     def __init__(self, timestamp):
         gtk.VBox.__init__(self)
@@ -60,19 +64,19 @@ class HumanTimeTip(gtk.VBox):
         now = time.time()
         interval = int(now - timestamp)
         if interval < 60:
-            return "刚刚"
+            return _("刚刚")
         else:
             mins = interval / 60
             if mins < 60:
-                return "%s分钟之前" % mins
+                return _("%s分钟之前") % mins
             else:
                 hours = mins / 60
                 if hours < 24:
-                    return "%s小时之前" % hours
+                    return _("%s小时之前") % hours
                 else:
                     days = hours / 24
                     if days == 1:
-                        return "昨天"
+                        return _("昨天")
                     else:
                         datetime_obj = datetime.fromtimestamp(timestamp)
                         return datetime_obj.strftime("%Y-%m-%d")

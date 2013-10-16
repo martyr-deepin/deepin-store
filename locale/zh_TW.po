@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-16 09:02+0800\n"
+"POT-Creation-Date: 2013-10-16 17:48+0800\n"
 "PO-Revision-Date: 2013-05-28 15:52+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -172,11 +172,11 @@ msgstr "您的系統已經很乾淨了，毋需進行清理。"
 msgid "%s: %s matched applications"
 msgstr "%s：搜尋到 %s 款應用程式"
 
-#: ../ui/search_page.py:285 ../ui/detail_page.py:424 ../ui/install_page.py:474
+#: ../ui/search_page.py:286 ../ui/detail_page.py:424 ../ui/install_page.py:474
 msgid "Successfully installed"
 msgstr "已成功安裝"
 
-#: ../ui/upgrade_page.py:93
+#: ../ui/upgrade_page.py:93 ../ui/upgrade_page.py:285
 msgid "Last upgraded time: "
 msgstr "最後更新時間："
 
@@ -204,88 +204,88 @@ msgid "%s applications are not being watched"
 msgstr "%s 款應用程式將不再提醒"
 
 #: ../ui/upgrade_page.py:273
-msgid "正在下载更新"
-msgstr ""
+#, fuzzy
+msgid "Downloading updates"
+msgstr "正在下載"
 
 #: ../ui/upgrade_page.py:280
-msgid "最近更新列表时间："
-msgstr ""
-
-#: ../ui/upgrade_page.py:285
-msgid "最近更新时间："
+msgid "Last refresh app list time: "
 msgstr ""
 
 #: ../ui/upgrade_page.py:290
-msgid "接收更新软件源："
+msgid "The source mirror: "
 msgstr ""
 
 #: ../ui/upgrade_page.py:325
-msgid "更新下载失败"
+msgid "Failed to download updates"
 msgstr ""
 
 #: ../ui/upgrade_page.py:327
-msgid "请求的软件包在服务器上不存在，建议"
+msgid "The requested package does not exsist on server."
 msgstr ""
 
-#: ../ui/upgrade_page.py:328 ../ui/upgrade_page.py:348
-#: ../ui/upgrade_page.py:369
-msgid "刷新软件列表"
-msgstr ""
-
-#: ../ui/upgrade_page.py:329 ../ui/upgrade_page.py:349
+#: ../ui/upgrade_page.py:328 ../ui/upgrade_page.py:349
 #: ../ui/upgrade_page.py:370
-msgid "后，再尝试更新。"
+msgid "Suggest to "
 msgstr ""
 
-#: ../ui/upgrade_page.py:343
-msgid "安装更新失败"
-msgstr ""
+#: ../ui/upgrade_page.py:329 ../ui/upgrade_page.py:350
+#: ../ui/upgrade_page.py:371
+#, fuzzy
+msgid "refresh applications lists"
+msgstr "重新整理應用程式清單"
+
+#: ../ui/upgrade_page.py:330 ../ui/upgrade_page.py:351
+#: ../ui/upgrade_page.py:372
+#, fuzzy
+msgid " and try again."
+msgstr "重試"
 
 #: ../ui/upgrade_page.py:345
-msgid "出现这种情况的原因可能是本地依赖被破坏"
+msgid "Failed to install updates"
 msgstr ""
 
-#: ../ui/upgrade_page.py:347 ../ui/upgrade_page.py:368
-msgid "建议"
-msgstr ""
-
-#: ../ui/upgrade_page.py:364
-msgid "警告"
+#: ../ui/upgrade_page.py:347
+msgid "This may be because your local dependencies are corrupted."
 msgstr ""
 
 #: ../ui/upgrade_page.py:366
+msgid "Warning"
+msgstr ""
+
+#: ../ui/upgrade_page.py:368
 msgid ""
-"本次升级要卸载重要的系统组件，出现这种情况的原因可能是本地依赖被破坏，或者服"
-"务端软件包依赖不正确"
+"Crucial components will be uninstalled. This may be because your local "
+"dependencies are corrupted, or incorrect dependencies on server."
 msgstr ""
 
-#: ../ui/upgrade_page.py:425
-msgid "根据上面的建议，如果您尝试后依然看到本提示，您可以"
+#: ../ui/upgrade_page.py:427
+msgid "If the problem persists, you may wish to "
 msgstr ""
 
-#: ../ui/upgrade_page.py:426 ../ui/upgrade_page.py:452
-msgid "上报错误"
+#: ../ui/upgrade_page.py:428 ../ui/upgrade_page.py:454
+msgid "Send Error Report"
 msgstr ""
 
-#: ../ui/upgrade_page.py:427 ../ui/upgrade_page.py:453
-msgid "。"
+#: ../ui/upgrade_page.py:429
+msgid "."
 msgstr ""
 
-#: ../ui/upgrade_page.py:440
-msgid "正在上传错误日志"
+#: ../ui/upgrade_page.py:442
+msgid "Uploading error log"
 msgstr ""
 
-#: ../ui/upgrade_page.py:445
-msgid "错误上报成功，感谢您的支持，我们会尽快修复您上报的错误。"
+#: ../ui/upgrade_page.py:447
+msgid "The error was successfully reported and will be soon handled."
 msgstr ""
 
-#: ../ui/upgrade_page.py:451
-msgid "错误上报失败，您可以再次尝试"
+#: ../ui/upgrade_page.py:453
+msgid "Failed to send the error report. You may wish to try again. "
 msgstr ""
 
 #: ../ui/upgrade_page.py:612
 #, python-format
-msgid "已经选择%s个更新，将会下载%s。"
+msgid "%s updates are selected. %s will be downloaded."
 msgstr ""
 
 #: ../ui/upgrade_page.py:843
@@ -293,74 +293,82 @@ msgstr ""
 msgid "Refresh applications lists %s%%"
 msgstr "重新整理應用程式清單 %s%%"
 
-#: ../ui/upgrade_page.py:1038
-msgid "分析依赖..."
-msgstr ""
+#: ../ui/upgrade_page.py:1036
+#, fuzzy
+msgid "Analyzing dependencies..."
+msgstr "正在分析依賴關係"
 
-#: ../ui/upgrade_page.py:1041
-msgid "依赖分析完成"
-msgstr ""
+#: ../ui/upgrade_page.py:1039
+#, fuzzy
+msgid "Finished analyzing dependencies."
+msgstr "正在分析依賴關係"
 
-#: ../ui/upgrade_page.py:1044
-msgid "开始下载..."
-msgstr ""
+#: ../ui/upgrade_page.py:1042
+#, fuzzy
+msgid "Download has started..."
+msgstr "下載被中斷"
 
-#: ../ui/upgrade_page.py:1050
+#: ../ui/upgrade_page.py:1048
 #, python-format
-msgid "已完成：%s/%s (%s/%s) 下载速度：%s/s"
+msgid "Completed: %s/%s (%s/%s) Download rate: %s/s"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1060
-msgid "下载完成!"
+#: ../ui/upgrade_page.py:1058
+#, fuzzy
+msgid "Download finished."
+msgstr "正在下載"
+
+#: ../ui/upgrade_page.py:1062
+#, fuzzy
+msgid "Download stopped."
+msgstr "下載：%s"
+
+#: ../ui/upgrade_page.py:1065
+#, fuzzy
+msgid "Failed to analyze dependencies."
+msgstr "正在分析依賴關係"
+
+#: ../ui/upgrade_page.py:1069
+#, fuzzy
+msgid "Installing updates"
+msgstr "正在安裝"
+
+#: ../ui/upgrade_page.py:1070
+msgid "Updating..."
 msgstr ""
 
-#: ../ui/upgrade_page.py:1064
-msgid "下载停止！"
-msgstr ""
+#: ../ui/upgrade_page.py:1077
+#, fuzzy
+msgid "Upgrade finished."
+msgstr "升級信息"
 
-#: ../ui/upgrade_page.py:1067
-msgid "依赖分析失败!"
-msgstr ""
-
-#: ../ui/upgrade_page.py:1071
-msgid "正在安装更新"
-msgstr ""
-
-#: ../ui/upgrade_page.py:1072
-msgid "开始更新..."
-msgstr ""
-
-#: ../ui/upgrade_page.py:1079
-msgid "升级完成!"
-msgstr ""
-
-#: ../ui/upgrade_page.py:1441 ../ui/upgrade_page.py:1560
+#: ../ui/upgrade_page.py:1439 ../ui/upgrade_page.py:1558
 #: ../ui/install_page.py:683
 msgid "Waiting for download"
 msgstr "等待下載"
 
-#: ../ui/upgrade_page.py:1553 ../ui/install_page.py:306
+#: ../ui/upgrade_page.py:1551 ../ui/install_page.py:306
 #: ../ui/install_page.py:676
 msgid "Analyzing dependencies"
 msgstr "正在分析依賴關係"
 
-#: ../ui/upgrade_page.py:1567 ../ui/install_page.py:690
+#: ../ui/upgrade_page.py:1565 ../ui/install_page.py:690
 msgid "Downloading"
 msgstr "正在下載"
 
-#: ../ui/upgrade_page.py:1583
+#: ../ui/upgrade_page.py:1581
 msgid "Waiting for upgrade"
 msgstr "正在等待升級"
 
-#: ../ui/upgrade_page.py:1593 ../ui/install_page.py:716
+#: ../ui/upgrade_page.py:1591 ../ui/install_page.py:716
 msgid "Analyzing dependencies failed"
 msgstr "分析依賴關係失敗"
 
-#: ../ui/upgrade_page.py:1602 ../ui/upgrade_page.py:1609
+#: ../ui/upgrade_page.py:1600 ../ui/upgrade_page.py:1607
 msgid "Upgrading"
 msgstr "正在升級"
 
-#: ../ui/upgrade_page.py:1618
+#: ../ui/upgrade_page.py:1616
 msgid "Upgrade complete"
 msgstr "升級完成"
 
@@ -731,11 +739,29 @@ msgstr "終端機模擬"
 msgid "Text editor"
 msgstr "文字編輯器"
 
-#: ../ui/widgets.py:462
+#: ../ui/widgets.py:67
+msgid "刚刚"
+msgstr ""
+
+#: ../ui/widgets.py:71
+#, python-format
+msgid "%s分钟之前"
+msgstr ""
+
+#: ../ui/widgets.py:75
+#, python-format
+msgid "%s小时之前"
+msgstr ""
+
+#: ../ui/widgets.py:79
+msgid "昨天"
+msgstr ""
+
+#: ../ui/widgets.py:466
 msgid "OK"
 msgstr "確認"
 
-#: ../ui/widgets.py:463 ../ui/preference.py:215
+#: ../ui/widgets.py:467 ../ui/preference.py:215
 msgid "Cancel"
 msgstr "取消"
 
@@ -909,5 +935,10 @@ msgstr "正在安裝"
 msgid "Installation complete"
 msgstr "安裝完成"
 
-#~ msgid "Upgrade Info"
-#~ msgstr "升級信息"
+#, fuzzy
+#~ msgid "refresh the package list"
+#~ msgstr "重新整理應用程式清單"
+
+#, fuzzy
+#~ msgid "Last upgrade time: "
+#~ msgstr "最後更新時間："

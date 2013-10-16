@@ -194,6 +194,7 @@ class SearchItem(TreeItem):
         '''
         TreeItem.__init__(self)
         self.pkg_name = pkg_name
+        print pkg_name
         self.desktop_info = desktop_info
         self.is_installed = is_installed
         self.data_manager = data_manager
