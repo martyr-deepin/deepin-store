@@ -601,16 +601,16 @@ class UpgradePage(gtk.VBox):
                 #item.check_button_buffer.active = True
         #self.upgrade_treeview.queue_draw()
 
-        self.select_pkg_names = self.get_current_selected_pkgs()
+        select_pkg_names = self.get_current_selected_pkgs()
 
-        if self.select_pkg_names:
+        if select_pkg_names:
             self.upgrade_bar.upgrade_selected_button.set_sensitive(True)
             self.upgrade_bar.upgrade_selected_button.set_state(gtk.STATE_NORMAL)
         else:
             self.upgrade_bar.upgrade_selected_button.set_sensitive(False)
 
         self.upgrade_bar.message_label.set_text(_("已经选择%s个更新，将会下载%s。") % (
-            len(self.select_pkg_names), utils.bit_to_human_str(size)))
+            len(select_pkg_names), utils.bit_to_human_str(size)))
         global_event.emit("set-cursor", None)
         
     def click_notify_check_button(self):
@@ -705,7 +705,7 @@ class UpgradePage(gtk.VBox):
         self.click_upgrade_check_button()
         
     def upgrade_selected_pkg(self):
-        global_event.emit("upgrade-pkg", self.select_pkg_names)        
+        global_event.emit("upgrade-pkg", self.get_current_selected_pkgs())
         self.show_upgrading_view()
         
     def select_all_notify_pkg(self):
