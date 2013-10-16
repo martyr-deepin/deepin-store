@@ -277,17 +277,17 @@ class UpgradingBox(gtk.VBox):
         self.upgrading_progress_detail = Label("")
 
         bottom_info_box = gtk.Table(3, 2)
-        recent_update_time_label = utils.create_right_align_label("_(最近更新列表时间：)")
+        recent_update_time_label = utils.create_right_align_label(_("最近更新列表时间："))
         self.recent_update_time = widgets.HumanTimeTip(utils.get_last_update_time())
         bottom_info_box.attach(recent_update_time_label, 0, 1, 0, 1, xoptions=gtk.FILL, xpadding=0, ypadding=4)
         bottom_info_box.attach(self.recent_update_time, 1, 2, 0, 1, xoptions=gtk.FILL, xpadding=0, ypadding=4)
 
-        recent_upgrade_time_label = utils.create_right_align_label("_(最近更新时间：)")
+        recent_upgrade_time_label = utils.create_right_align_label(_("最近更新时间："))
         self.recent_upgrade_time = widgets.HumanTimeTip(get_last_upgrade_time())
         bottom_info_box.attach(recent_upgrade_time_label, 0, 1, 1, 2, xoptions=gtk.FILL, xpadding=0, ypadding=4)
         bottom_info_box.attach(self.recent_upgrade_time, 1, 2, 1, 2, xoptions=gtk.FILL, xpadding=0, ypadding=4)
 
-        software_mirror_label = utils.create_right_align_label("_(接收更新软件源：)")
+        software_mirror_label = utils.create_right_align_label(_("接收更新软件源："))
         if self.preference_dialog.current_mirror_item:
             self.software_mirror = utils.create_left_align_label( 
                 self.preference_dialog.current_mirror_item.mirror.name)
@@ -978,7 +978,6 @@ class UpgradePage(gtk.VBox):
             return 
 
         if len(pkg_infos) > 0:
-            print "DEBUG"
             if self.update_list_pixbuf:
                 del self.update_list_pixbuf
                 self.update_list_pixbuf = None
@@ -1010,8 +1009,7 @@ class UpgradePage(gtk.VBox):
                 
             #self.upgrade_bar.set_upgrade_info(len(self.upgrade_treeview.visible_items), self.no_notify_pkg_num)
             
-            print len(upgrade_items), len(self.upgrade_treeview.visible_items)
-            if len(upgrade_items) == 0:
+            if len(upgrade_items) == 0 and len(self.upgrade_treeview.visible_items) == 0:
                 self.upgrade_treeview.clear()
                 global_event.emit("show-newest-view")
             else:

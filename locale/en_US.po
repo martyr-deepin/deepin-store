@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-15 15:46+0800\n"
+"POT-Creation-Date: 2013-10-16 09:02+0800\n"
 "PO-Revision-Date: 2013-05-28 15:52+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -207,6 +207,18 @@ msgstr "%s applications are not being watched"
 
 #: ../ui/upgrade_page.py:273
 msgid "正在下载更新"
+msgstr ""
+
+#: ../ui/upgrade_page.py:280
+msgid "最近更新列表时间："
+msgstr ""
+
+#: ../ui/upgrade_page.py:285
+msgid "最近更新时间："
+msgstr ""
+
+#: ../ui/upgrade_page.py:290
+msgid "接收更新软件源："
 msgstr ""
 
 #: ../ui/upgrade_page.py:325
