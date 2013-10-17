@@ -179,7 +179,7 @@ msgstr "已安装"
 
 #: ../ui/upgrade_page.py:93 ../ui/upgrade_page.py:285
 msgid "Last upgraded time: "
-msgstr "最近更新时间: "
+msgstr "最近更新时间："
 
 #: ../ui/upgrade_page.py:122 ../ui/upgrade_page.py:194
 #, python-format

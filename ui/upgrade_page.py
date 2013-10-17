@@ -27,7 +27,6 @@ import gobject
 import json
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, NO_NOTIFY_FILE, CHECK_BUTTON_PADDING_X, cute_info_dir
 import os
-import time
 from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.button import CheckButtonBuffer, ImageButton, CheckAllButton
 from star_buffer import DscStarBuffer
@@ -656,7 +655,6 @@ class UpgradePage(gtk.VBox):
         self.show_all()
             
     def show_newest_view(self):
-        start = time.time()
         self.in_upgrading_view = False
         container_remove_all(self)
         container_remove_all(self.cycle_strip)
@@ -666,8 +664,6 @@ class UpgradePage(gtk.VBox):
         self.cycle_strip.add(self.newest_bar)
         self.pack_start(self.cycle_strip, False, False)
         self.pack_start(self.newest_view, True, True)
-        
-        print "show newest time:", time.time() - start
 
     def show_network_disable_view(self):
         self.in_upgrading_view = False
