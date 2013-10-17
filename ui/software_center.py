@@ -80,7 +80,7 @@ from logger import Logger
 from paned_box import PanedBox
 from widgets import BottomTipBar
 from star_buffer import StarView, DscStarBuffer
-from application import Application
+from dtk.ui.application import Application
 
 tool_tip = ToolTip()
 global tooltip_timeout_id
@@ -705,7 +705,10 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         self.loginfo("Init ui")
         # Init application.
         image_dir = os.path.join(get_parent_dir(__file__, 2), "image")
-        self.application = Application(resizable=False, close_callback=self.application_close_window)
+        self.application = Application(
+            resizable=False, 
+            destroy_func=self.application_close_window,
+            )
         self.application.set_default_size(888, 634)
         self.application.set_skin_preview(os.path.join(image_dir, "frame.png"))
         self.application.set_icon(os.path.join(image_dir, "logo48.png"))
@@ -832,7 +835,9 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         if utils.get_backend_running():
             global_event.emit("show-status-icon")
 
-        self.application.close_window(widget)
+        self.application.window.hide_all()
+        gtk.main_quit()
+            
         return True
 
     def upgrade_finish_action(self, pkg_info_list):
