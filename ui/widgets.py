@@ -64,19 +64,25 @@ class HumanTimeTip(gtk.VBox):
         now = time.time()
         interval = int(now - timestamp)
         if interval < 60:
-            return _("刚刚")
+            return _("Just now")
         else:
             mins = interval / 60
             if mins < 60:
-                return _("%s分钟之前") % mins
+                if mins == 1:
+                    return _("One minute ago")
+                else:
+                    return _("%s minutes ago") % mins
             else:
                 hours = mins / 60
                 if hours < 24:
-                    return _("%s小时之前") % hours
+                    if hours == 1:
+                        return _("One hour ago")
+                    else:
+                        return _("%s hours ago") % hours
                 else:
                     days = hours / 24
                     if days == 1:
-                        return _("昨天")
+                        return _("Yesterday")
                     else:
                         datetime_obj = datetime.fromtimestamp(timestamp)
                         return datetime_obj.strftime("%Y-%m-%d")
