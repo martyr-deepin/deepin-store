@@ -346,15 +346,16 @@ class PackageManager(dbus.service.Object):
 
         real_pkg_dict, not_in_cache = parse_pkg.get_real_pkg_dict(self.pkg_cache, pkg_names)
         if not_in_cache:
-            self.update_signal([("pkgs-not-in-cache", (not_in_cache, action_type))])
+            self.update_signal([("pkgs-not-in-cache", (json.dumps(not_in_cache), action_type))])
         else:
             (all_change_pkgs, mark_failed_pkg_dict, marked_delete_sys_pkgs
                     ) = parse_pkg.get_changes_pkgs(self.pkg_cache, real_pkg_dict)
 
             if mark_failed_pkg_dict:
-                self.update_signal([("pkgs-mark-failed", (mark_failed_pkg_dict, action_type))])
-            elif marked_delete_sys_pkgs:
-                self.update_signal([("marked-delete-system-pkgs", (marked_delete_sys_pkgs, action_type))])
+                self.update_signal([("pkgs-mark-failed", (json.dumps(mark_failed_pkg_dict), action_type))])
+
+            if marked_delete_sys_pkgs:
+                self.update_signal([("marked-delete-system-pkgs", (json.dumps(marked_delete_sys_pkgs), action_type))])
             else:
                 self.update_signal([("ready-download-finish", (action_id, action_type))])
                 download_pkg_infos = parse_pkg.check_pkg_download_info(all_change_pkgs)

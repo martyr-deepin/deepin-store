@@ -60,6 +60,7 @@ import gobject
 import dbus
 import dbus.service
 import time
+import json
 from constant import (
             DSC_SERVICE_NAME, DSC_SERVICE_PATH, 
             DSC_FRONTEND_NAME, DSC_FRONTEND_PATH, 
@@ -297,7 +298,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 if action_type == ACTION_INSTALL:
                     pass
                 elif action_type == ACTION_UPGRADE:
-                    upgrade_page.upgrading_view.show_error("pkgs_not_in_cache", not_in_cache)
+                    upgrade_page.upgrading_view.show_error("pkgs_not_in_cache", json.loads(not_in_cache))
 
             elif signal_type == 'pkgs-mark-failed':
                 (pkg_dict, action_type) = action_content
@@ -313,7 +314,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 if action_type == ACTION_INSTALL:
                     pass
                 elif action_type == ACTION_UPGRADE:
-                    upgrade_page.upgrading_view.show_error("marked_delete_system_pkgs", pkgs)
+                    upgrade_page.upgrading_view.show_error("marked_delete_system_pkgs", json.loads(pkgs))
 
             elif signal_type == 'pkgs-parse-download-error':
                 (error, action_type) = action_content
