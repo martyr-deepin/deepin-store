@@ -317,7 +317,7 @@ class DscPreferenceDialog(PreferenceDialog):
         self.data_manager.change_source_list(repo_urls, reply_handler=handle_dbus_reply, error_handler=handle_dbus_error)
 
     def create_mirror_select_table(self):
-        main_table = gtk.Table(4, 2)
+        main_table = gtk.Table(3, 2)
         main_table.set_row_spacings(CONTENT_ROW_SPACING)
         
         dir_title_label = Label(_("Select mirror"))
@@ -340,6 +340,7 @@ class DscPreferenceDialog(PreferenceDialog):
         self.mirror_view.draw_mask = self.mirror_treeview_draw_mask
         #self.display_current_mirror()
 
+        """
         self.mirror_test_button = Button(_("Select fastest mirror"))
         self.mirror_test_button.connect('clicked', self.test_mirror_action)
         mirror_test_button_align = gtk.Alignment(0, 0.5, 0, 0)
@@ -352,14 +353,15 @@ class DscPreferenceDialog(PreferenceDialog):
         mirror_message_label_align.add(self.mirror_message_label)
         self.mirror_message_hbox = gtk.HBox()
         self.mirror_message_hbox.pack_start(mirror_message_label_align, False)
+        """
 
         self.mirror_test_progressbar = ProgressBar()
 
         main_table.attach(label_align, 0, 2, 0, 1, yoptions=gtk.FILL, xpadding=8)
         main_table.attach(create_separator_box(), 0, 2, 1, 2, yoptions=gtk.FILL)
         main_table.attach(self.mirror_view, 0, 2, 2, 3, xpadding=10, xoptions=gtk.FILL)
-        main_table.attach(mirror_test_button_align, 0, 1, 3, 4, xoptions=gtk.FILL)
-        main_table.attach(self.mirror_message_hbox, 1, 2, 3, 4, xoptions=gtk.FILL)
+        """main_table.attach(mirror_test_button_align, 0, 1, 3, 4, xoptions=gtk.FILL)
+        main_table.attach(self.mirror_message_hbox, 1, 2, 3, 4, xoptions=gtk.FILL)"""
         
         title = _("Select best mirror")
         info_message = _("Please wait. The process will take 30 seconds or more depending on your network connection")

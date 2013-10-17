@@ -1030,7 +1030,7 @@ class UpgradePage(gtk.VBox):
             self.upgrade_treeview.clear()
             global_event.emit("show-newest-view")
 
-        global_event.emit("show-upgrading-view")
+        #global_event.emit("show-upgrading-view")
         #global_event.emit("show-newest-view")
 
     def download_ready(self, pkg_name):

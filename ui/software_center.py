@@ -1039,6 +1039,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
                 error_handler=lambda e:handle_dbus_error("set_download_dir", e))
 
     def update_list_handler(self):
+        """
         try:
             self.show_dialog('update_list_dialog')
         except:
@@ -1047,6 +1048,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
             self.update_list_dialog.close_button.set_label(_("Run in background"))
             self.update_list_dialog.set_transient_for(self.application.window)
             self.update_list_dialog.show_all()
+        """
         if not self.in_update_list:
             self.request_update_list()
             global_event.emit('show-updating-view')
