@@ -30,7 +30,7 @@ from dtk.ui.entry import InputEntry
 from dtk.ui.button import Button, CheckButton
 from dtk.ui.label import Label
 from dtk.ui.line import HSeparator
-from dtk.ui.treeview import TreeView, NodeItem, get_background_color
+from dtk.ui.treeview import TreeView, TreeItem, get_background_color
 from dtk.ui.utils import get_content_size, is_in_rect, alpha_color_hex_to_cairo, color_hex_to_cairo
 from dtk.ui.draw import draw_text, draw_pixbuf
 from dtk.ui.spin import SpinBox
@@ -96,12 +96,14 @@ class SelectedButtonBuffer(gobject.GObject):
         #self.active_hover_dpixbuf = ui_theme.get_pixbuf("button/radio_button_active_hover.png")
         #self.inactive_press_dpixbuf = ui_theme.get_pixbuf("button/radio_button_inactive_press.png")
         #self.active_press_dpixbuf = ui_theme.get_pixbuf("button/radio_button_active_press.png")
-        self.active_pixbuf = utils.get_common_image_pixbuf("mirror/selected.png")
+        self.active_dpixbuf = app_theme.get_pixbuf("mirror/check_box-2.png")
         
         self.render_padding_x = render_padding_x
         self.render_padding_y = render_padding_y
-        self.render_width = self.active_pixbuf.get_width()
-        self.render_height = self.active_pixbuf.get_height()
+
+        pixbuf = self.active_dpixbuf.get_pixbuf()
+        self.render_width = pixbuf.get_width()
+        self.render_height = pixbuf.get_height()
         
         self.active = active
         self.button_state = self.STATE_NORMAL
@@ -212,7 +214,7 @@ class SelectedButtonBuffer(gobject.GObject):
         image = None
         if self.button_state == self.STATE_NORMAL:
             if self.active:
-                image = self.active_pixbuf
+                image = self.active_dpixbuf.get_pixbuf()
             else:
                 image = None
         
@@ -226,7 +228,7 @@ class SelectedButtonBuffer(gobject.GObject):
             
 gobject.type_register(SelectedButtonBuffer)
 
-class MirrorItem(NodeItem):
+class MirrorItem(TreeItem):
 
     __gsignals__ = {
         "item-clicked" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
@@ -238,14 +240,33 @@ class MirrorItem(NodeItem):
     NAME_AREA_WIDTH = 100
     URL_AREA_WIDTH = 300
 
+    ITEM_BUTTON_PADDING_RIGHT = 2
+    ITEM_HEIGHT = 25
+
+    BUTTON_NORMAL = 1
+    BUTTON_HOVER = 2
+    BUTTON_PRESS = 3
+
     def __init__(self, mirror, item_clicked_callback=None):
 
-        NodeItem.__init__(self)
+        TreeItem.__init__(self)
         self.mirror = mirror
         self.radio_button = SelectedButtonBuffer(render_padding_x=2, render_padding_y=4)
 
+        button_pixbuf = app_theme.get_pixbuf("mirror/server_small_normal.png").get_pixbuf()
+        (self.button_width, self.button_height) = button_pixbuf.get_width(), button_pixbuf.get_height()
+        self.button_status = self.BUTTON_NORMAL
+
         if item_clicked_callback:
             self.connect('item-clicked', item_clicked_callback)
+
+    def is_in_button_area(self, column, offset_x, offset_y):
+        return (column == 3
+                and is_in_rect((offset_x, offset_y), 
+                               (self.get_column_widths()[column] - self.ITEM_BUTTON_PADDING_RIGHT - self.button_width,
+                                (self.ITEM_HEIGHT - self.button_height) / 2,
+                                self.button_width,
+                                self.button_height)))
 
     def get_content_complete(self):
         name_complete = get_content_size(self.mirror.name)[0] < self.NAME_AREA_WIDTH
@@ -292,59 +313,55 @@ class MirrorItem(NodeItem):
 
     def render_change_button(self, cr, rect):
         self.render_background(cr, rect)
-        background_color = get_background_color(self.is_highlight, False, self.is_hover)
-        if background_color:
-            cr.set_source_rgb(*color_hex_to_cairo("#ff0000"))
-            cr.rectangle(rect.x, rect.y, rect.width, rect.height)
-            cr.fill()
+        if self.is_hover:
+
+            if self.button_status == self.BUTTON_NORMAL:
+                pixbuf = app_theme.get_pixbuf("mirror/server_small_normal.png").get_pixbuf()
+            elif self.button_status == self.BUTTON_HOVER:
+                pixbuf = app_theme.get_pixbuf("mirror/server_small_hover.png").get_pixbuf()
+            elif self.button_status == self.BUTTON_PRESS:
+                pixbuf = app_theme.get_pixbuf("mirror/server_small_press.png").get_pixbuf()
+            draw_pixbuf(
+                cr,
+                pixbuf,
+                rect.x + 2,
+                rect.y + 2,
+                )
         
     def get_column_renders(self):
-        return [self.render_radio_button, self.render_name, self.render_url]
+        return [self.render_radio_button, self.render_name, self.render_url, self.render_change_button]
 
     def get_column_widths(self):
         '''docstring for get_column_widths'''
-        return [20, self.NAME_AREA_WIDTH, 300]
+        return [20, self.NAME_AREA_WIDTH, 300, 49]
 
     def get_height(self):
-        return 24
+        return 25
 
     def select(self):
         self.is_select = True
-        if self.redraw_request_callback:
-            self.redraw_request_callback(self)
-
-    def button_press(self, column, x, y):
-        self.emit('item-clicked')
+        self.redraw()
 
     def unselect(self):
         self.is_select = False
         self.unhighlight()
-        if self.redraw_request_callback:
-            self.redraw_request_callback(self)
+        self.redraw()
 
     def unhighlight(self):
         self.is_highlight = False
-        
-        if self.redraw_request_callback:
-            self.redraw_request_callback(self)
+        self.redraw()
     
     def highlight(self):
         self.is_highlight = True
-        
-        if self.redraw_request_callback:
-            self.redraw_request_callback(self)
+        self.redraw()
 
     def unhover(self, column, offset_x, offset_y):
         self.is_hover = False
-        
-        if self.redraw_request_callback:
-            self.redraw_request_callback(self)
+        self.redraw()
     
     def hover(self, column, offset_x, offset_y):
         self.is_hover = True
-        
-        if self.redraw_request_callback:
-            self.redraw_request_callback(self)
+        self.redraw()
 
     def button_release(self, column, x, y):
         if column == 0:
@@ -374,6 +391,22 @@ class MirrorItem(NodeItem):
             cr.set_source_rgb(*color_hex_to_cairo(ui_theme.get_color(background_color).get_color()))    
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
+
+    def motion_notify(self, column, offset_x, offset_y):
+        if self.is_in_button_area(column, offset_x, offset_y):
+            self.button_status = self.BUTTON_HOVER
+            
+            if self.redraw_request_callback:
+                self.redraw_request_callback(self)
+        elif self.button_status != self.BUTTON_NORMAL:
+            self.button_status = self.BUTTON_NORMAL
+            
+            if self.redraw_request_callback:
+                self.redraw_request_callback(self)
+
+    def button_press(self, column, offset_x, offset_y):
+        if self.is_in_button_area(column, offset_x, offset_y):
+            self.emit("item-clicked")
 
 def create_separator_box(padding_x=0, padding_y=0):    
     separator_box = HSeparator(
@@ -533,9 +566,8 @@ class DscPreferenceDialog(PreferenceDialog):
         self.mirror_items = self.get_mirror_items()
         self.mirror_view = TreeView(self.mirror_items,
                                 enable_drag_drop=False,
-                                enable_hover=True,
                                 enable_multiple_select=False,
-                                mask_bound_height=0,
+                                #mask_bound_height=0,
                              )
         self.mirror_view.set_expand_column(2)
         self.mirror_view.set_size_request(-1, len(self.mirror_view.visible_items) * self.mirror_view.visible_items[0].get_height())
