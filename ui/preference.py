@@ -233,48 +233,40 @@ class MirrorItem(NodeItem):
     }
 
     PADDING_X = 5
-    NAME_WIDTH = 130
+
+    RADIO_BUTTON_AREA_WIDTH = 20
+    NAME_AREA_WIDTH = 100
+    URL_AREA_WIDTH = 300
 
     def __init__(self, mirror, item_clicked_callback=None):
 
         NodeItem.__init__(self)
         self.mirror = mirror
-        self.radio_button = SelectedButtonBuffer(render_padding_x=7, render_padding_y=4)
+        self.radio_button = SelectedButtonBuffer(render_padding_x=2, render_padding_y=4)
 
         if item_clicked_callback:
             self.connect('item-clicked', item_clicked_callback)
 
-    def render_odd_line_bg(self, cr, rect):
-        #if self.row_index % 2 == 1:
-        if self.is_hover:
-            backgound_color = ui_theme.get_color('globalItemHighlight').get_color()
-            cr.set_source_rgb(*color_hex_to_cairo("#ff0000"))
-        else:
-            backgound_color = ("#FFFFFF", 0.9)
-            cr.set_source_rgba(*alpha_color_hex_to_cairo(backgound_color))
-        cr.rectangle(rect.x, rect.y, rect.width, rect.height)
-        cr.fill()
+    def get_content_complete(self):
+        name_complete = get_content_size(self.mirror.name)[0] < self.NAME_AREA_WIDTH
+        url_complate = get_content_size(self.mirror.hostname)[0] < self.URL_AREA_WIDTH
+        return name_complete and url_complate
 
     def render_radio_button(self, cr, rect):
-        self.render_odd_line_bg(cr, rect)
+        self.render_background(cr, rect)
         
         self.radio_button.render(cr, rect)
 
     def render_name(self, cr, rect):
-        background_color = get_background_color(self.is_highlight, self.is_select, self.is_hover)
-        if background_color:
-            cr.set_source_rgb(*color_hex_to_cairo(ui_theme.get_color(background_color).get_color()))    
-            cr.rectangle(rect.x, rect.y, rect.width, rect.height)
-            cr.fill()
-
-        #self.render_odd_line_bg(cr, rect)
+        self.render_background(cr, rect)
 
         self.name = self.mirror.name
-        self.render_background(cr, rect)
-        #rect.x -= self.PADDING_X
-        rect.width -= self.PADDING_X * 2        
+
+        #rect.width -= self.PADDING_X * 2        
         if self.name:
             (text_width, text_height) = get_content_size(self.name)
+            if text_width > rect.width:
+                self.is_complate = False
             draw_text(cr, self.name, rect.x, rect.y, rect.width, rect.height,
                     alignment = pango.ALIGN_LEFT)
         else:
@@ -284,12 +276,10 @@ class MirrorItem(NodeItem):
                     alignment = pango.ALIGN_LEFT)
 
     def render_url(self, cr, rect):
-        self.render_odd_line_bg(cr, rect)
-
-        self.mirror_url = self.mirror.hostname
         self.render_background(cr, rect)
-        #rect.x += self.NAME_WIDTH
-        rect.width -= self.PADDING_X * 2
+        self.mirror_url = self.mirror.hostname
+
+        #rect.width -= self.PADDING_X * 2
         if self.mirror_url:
             (text_width, text_height) = get_content_size(self.mirror_url)
             draw_text(cr, self.mirror_url, rect.x, rect.y, rect.width, rect.height,
@@ -299,13 +289,21 @@ class MirrorItem(NodeItem):
             (text_width, text_height) = get_content_size(mirror_url)
             draw_text(cr, mirror_url, rect.x, rect.y, rect.width, rect.height,
                     alignment = pango.ALIGN_LEFT)
+
+    def render_change_button(self, cr, rect):
+        self.render_background(cr, rect)
+        background_color = get_background_color(self.is_highlight, False, self.is_hover)
+        if background_color:
+            cr.set_source_rgb(*color_hex_to_cairo("#ff0000"))
+            cr.rectangle(rect.x, rect.y, rect.width, rect.height)
+            cr.fill()
         
     def get_column_renders(self):
         return [self.render_radio_button, self.render_name, self.render_url]
 
     def get_column_widths(self):
         '''docstring for get_column_widths'''
-        return [30, self.NAME_WIDTH, 300]
+        return [20, self.NAME_AREA_WIDTH, 300]
 
     def get_height(self):
         return 24
@@ -343,7 +341,6 @@ class MirrorItem(NodeItem):
             self.redraw_request_callback(self)
     
     def hover(self, column, offset_x, offset_y):
-        print ">>>>>>"
         self.is_hover = True
         
         if self.redraw_request_callback:
@@ -367,7 +364,16 @@ class MirrorItem(NodeItem):
             self.redraw_request_callback(self)
 
     def render_background(self,  cr, rect):
-        pass
+        backgound_color = ("#FFFFFF", 0.9)
+        cr.set_source_rgba(*alpha_color_hex_to_cairo(backgound_color))
+        cr.rectangle(rect.x, rect.y, rect.width, rect.height)
+        cr.fill()
+
+        background_color = get_background_color(self.is_highlight, False, self.is_hover)
+        if background_color:
+            cr.set_source_rgb(*color_hex_to_cairo(ui_theme.get_color(background_color).get_color()))    
+            cr.rectangle(rect.x, rect.y, rect.width, rect.height)
+            cr.fill()
 
 def create_separator_box(padding_x=0, padding_y=0):    
     separator_box = HSeparator(
@@ -527,7 +533,7 @@ class DscPreferenceDialog(PreferenceDialog):
         self.mirror_items = self.get_mirror_items()
         self.mirror_view = TreeView(self.mirror_items,
                                 enable_drag_drop=False,
-                                enable_hover=False,
+                                enable_hover=True,
                                 enable_multiple_select=False,
                                 mask_bound_height=0,
                              )
@@ -578,11 +584,17 @@ class DscPreferenceDialog(PreferenceDialog):
     def update_list_finish_handler(self):
         self.select_best_mirror_dialog.hide_all()
 
-    def mirror_changed_handler(self, parent=None):
-        self.select_best_mirror_dialog.set_transient_for(self)
-        self.select_best_mirror_dialog.info_message_label.set_text(_("The software repository has changed. Refreshing applications lists"))
-        self.select_best_mirror_dialog.show_all()
-        self.select_best_mirror_dialog.close_button.set_label(_("Run in background"))
+    def mirror_changed_handler(self, item):
+        for i in self.mirror_items:
+            if i != item and i.radio_button.active == True:
+                i.radio_button.active = False
+            elif i == item:
+                i.radio_button.active = True
+        self.mirror_view.queue_draw()
+        if item != self.current_mirror_item:
+            self.current_mirror_item = item
+        else:
+            self.select_best_mirror_dialog.hide_all()
     
     def test_mirror_action(self, widget):
         self.select_best_mirror_dialog.set_transient_for(self)
@@ -643,18 +655,9 @@ class DscPreferenceDialog(PreferenceDialog):
         return items
 
     def mirror_clicked_callback(self, item):
-        for i in self.mirror_items:
-            if i != item and i.radio_button.active == True:
-                i.radio_button.active = False
-            elif i == item:
-                i.radio_button.active = True
-        self.mirror_view.queue_draw()
-        if item != self.current_mirror_item:
-            global_event.emit('change-mirror', item.mirror.get_repo_urls())
-            self.current_mirror_item = item
-        else:
-            self.select_best_mirror_dialog.hide_all()
-            
+        #global_event.emit('change-mirror', item.mirror.get_repo_urls())
+        global_event.emit('change-mirror', item)
+        self.hide_all()
 
     def create_source_update_frequency_table(self):
         main_table = gtk.Table(3, 2)

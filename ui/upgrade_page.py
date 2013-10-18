@@ -67,16 +67,23 @@ class UpgradingBar(gtk.HBox):
         '''
         gtk.HBox.__init__(self)
 
-        self.message_label = Label()
+        self.message_label = Label(_("Last upgraded time: "))
+        self.message_time = widgets.HumanTimeTip(utils.get_last_update_time())
+
+        self.message_box = gtk.HBox()
+        self.message_box.pack_start(self.message_label, False, False)
+        self.message_box.pack_start(self.message_time, False, False)
+
         self.message_label_align = gtk.Alignment()
         self.message_label_align.set(0.0, 0.5, 0, 0)
         self.message_label_align.set_padding(0, 0, 8, 0)
-        self.message_label_align.add(self.message_label)
+        self.message_label_align.add(self.message_box)
         
         self.pack_start(self.message_label_align, True, True)
         
     def set_upgrading_message(self, message):
-        self.message_label.set_text(message)
+        #self.message_label.set_text(message)
+        pass
         
 class NewestBar(gtk.HBox):
     '''

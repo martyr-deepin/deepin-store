@@ -972,8 +972,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         global_event.register_event("show-pkg-name-tooltip", lambda pkg_name: show_tooltip(self.application.window, pkg_name))
         global_event.register_event("hide-pkg-name-tooltip", lambda :tool_tip.hide())
         global_event.register_event("update-current-status-pkg-page", update_current_status_pkg_page)
-        global_event.register_event('change-mirror', lambda repo_urls: self.bus_interface.change_source_list(
-            repo_urls, reply_handler=self.handle_mirror_change_reply, error_handler=lambda e:handle_dbus_error("change_source_list", e)))
+        global_event.register_event('change-mirror', self.change_mirror_action)
         global_event.register_event('download-directory-changed', self.set_software_download_dir)
         global_event.register_event('vote-send-success', lambda p: vote_send_success_callback(p, self.application.window))
         global_event.register_event('vote-send-failed', lambda p: vote_send_failed_callback(p, self.application.window))
@@ -1004,6 +1003,14 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         self.upgrade_page.fetch_upgrade_info(utils.get_backend_running())
         
         log("finish")
+
+    def change_mirror_action(self, item):
+        repo_urls = item.mirror.get_repo_urls()
+        self.bus_interface.change_source_list(
+            repo_urls, 
+            reply_handler=lambda :self.handle_mirror_change_reply(item),
+            error_handler=lambda e:handle_dbus_error("change_source_list", e)
+            )
 
     def exec_upload_error_log(self):
         SendErrorLog().start()
@@ -1044,16 +1051,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
                 error_handler=lambda e:handle_dbus_error("set_download_dir", e))
 
     def update_list_handler(self):
-        """
-        try:
-            self.show_dialog('update_list_dialog')
-        except:
-            self.update_list_dialog = WaitingDialog(_("Refresh applications lists"), _("Refreshing applications lists"))
-            self.update_list_dialog.set_size_request(300, 120)
-            self.update_list_dialog.close_button.set_label(_("Run in background"))
-            self.update_list_dialog.set_transient_for(self.application.window)
-            self.update_list_dialog.show_all()
-        """
+        self.show_page("upgrade")
         if not self.in_update_list:
             self.request_update_list()
             global_event.emit('show-updating-view')
@@ -1071,11 +1069,9 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
     def show_dialog(self, name):
         getattr(self, name).show_all()
 
-    def handle_mirror_change_reply(self, reply=None):
-        global_event.emit("mirror-changed")
-        print "Start update list..."
-        create_thread(self.request_update_list).start()
-        #self.request_update_list()
+    def handle_mirror_change_reply(self, item):
+        global_event.emit("mirror-changed", item)
+        self.update_list_handler()
 
     def update_status_bar_message(self, message, hide_timeout=0):
         if not self.paned_box.bottom_window.is_visible():

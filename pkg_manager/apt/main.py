@@ -47,7 +47,6 @@ from parse_pkg import (
         get_pkg_dependence_file_path, 
         get_pkg_own_size,
         get_cache_archive_dir,
-        get_upgrade_download_info_with_new_policy,
         )
 import parse_pkg
 from constant import (
@@ -361,7 +360,7 @@ class PackageManager(dbus.service.Object):
                 download_pkg_infos = parse_pkg.check_pkg_download_info(all_change_pkgs)
                 if download_pkg_infos[0] == DOWNLOAD_STATUS_ERROR:
                     self.update_signal([("pkgs-parse-download-error", (str(download_pkg_infos[1]), action_type))])
-                elif download_pkg_infos[1] == DOWNLOAD_STATUS_NOTNEED:
+                elif download_pkg_infos[0] == DOWNLOAD_STATUS_NOTNEED:
                     self.start_upgrade(pkg_names, action_id)
                 else:
                     (names, download_urls, download_hash_infos, pkg_sizes) = download_pkg_infos
@@ -474,19 +473,25 @@ class PackageManager(dbus.service.Object):
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="as")
     def get_upgrade_download_size(self, pkg_names):
-        infos = get_upgrade_download_info_with_new_policy(self.pkg_cache, pkg_names)
-        pkg_infos = infos[0]
-        change_pkg_names = infos[2]
-        if pkg_infos == DOWNLOAD_STATUS_NOTNEED:
-            total_size = 0
-        elif pkg_infos == DOWNLOAD_STATUS_ERROR:
-            total_size = -1
+        real_pkg_dict, not_in_cache = parse_pkg.get_real_pkg_dict(self.pkg_cache, pkg_names)
+        if not_in_cache:
+            return ["0", "error"]
         else:
-            (names, download_urls, download_hash_infos, pkg_sizes) = pkg_infos
-            total_size = 0
-            for size in pkg_sizes:
-                total_size += size
-        return [str(total_size), json.dumps(change_pkg_names)]
+            (all_change_pkgs, mark_failed_pkg_dict, marked_delete_sys_pkgs
+                    ) = parse_pkg.get_changes_pkgs(self.pkg_cache, real_pkg_dict)
+
+            download_pkg_infos = parse_pkg.check_pkg_download_info(all_change_pkgs)
+            change_pkg_names = [pkg.name for pkg in all_change_pkgs]
+            if download_pkg_infos[0] == DOWNLOAD_STATUS_ERROR:
+                return ["0", "error"]
+            elif download_pkg_infos[0] == DOWNLOAD_STATUS_NOTNEED:
+                return ["0", json.dumps(change_pkg_names)]
+            else:
+                (names, download_urls, download_hash_infos, pkg_sizes) = download_pkg_infos
+                total_size = 0
+                for size in pkg_sizes:
+                    total_size += size
+                return [str(total_size), json.dumps(change_pkg_names)]
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="ai")
     def clean_download_cache(self):
