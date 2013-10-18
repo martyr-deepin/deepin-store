@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-17 10:29+0800\n"
+"POT-Creation-Date: 2013-10-18 09:12+0800\n"
 "PO-Revision-Date: 2013-05-28 15:52+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -26,7 +26,7 @@ msgstr "%s: %s 應用程式"
 msgid "%s > %s : %s applications"
 msgstr "%s > %s : %s 款應用程式"
 
-#: ../ui/home_page.py:722 ../ui/software_center.py:772
+#: ../ui/home_page.py:722 ../ui/software_center.py:775
 msgid "Home"
 msgstr "首頁推薦"
 
@@ -106,64 +106,56 @@ msgstr "無法將 %s 安裝在 64 位元系統上。"
 msgid "%s cannot be installed. It might be a x86_64 specific package"
 msgstr "無法安裝 %s。它可能是 64 位元系統特有的套件"
 
-#: ../ui/software_center.py:716 ../ui/preference.py:233
+#: ../ui/software_center.py:719 ../ui/preference.py:429
 msgid "Deepin Software Center"
 msgstr "深度軟件中心"
 
-#: ../ui/software_center.py:753
+#: ../ui/software_center.py:756
 msgid "Join us"
 msgstr "加入我們"
 
-#: ../ui/software_center.py:773
+#: ../ui/software_center.py:776
 msgid "Upgrade"
 msgstr "系統升級"
 
-#: ../ui/software_center.py:774
+#: ../ui/software_center.py:777
 msgid "Uninstall"
 msgstr "解除安裝"
 
-#: ../ui/software_center.py:775
+#: ../ui/software_center.py:778
 msgid "Install Manage"
 msgstr "安裝管理"
 
-#: ../ui/software_center.py:799 ../ui/software_center.py:1045
+#: ../ui/software_center.py:802
 msgid "Refresh applications lists"
 msgstr "重新整理應用程式清單"
 
-#: ../ui/software_center.py:800
+#: ../ui/software_center.py:803
 msgid "Open download directory"
 msgstr "開啟下載目錄"
 
-#: ../ui/software_center.py:801
+#: ../ui/software_center.py:804
 msgid "Clear up cached packages"
 msgstr "清理快取套件"
 
-#: ../ui/software_center.py:802
+#: ../ui/software_center.py:805
 msgid "View new features"
 msgstr "檢視新特性"
 
-#: ../ui/software_center.py:803
+#: ../ui/software_center.py:806
 msgid "Preferences"
 msgstr "偏好設定"
 
-#: ../ui/software_center.py:804
+#: ../ui/software_center.py:807
 msgid "Quit"
 msgstr "退出"
 
-#: ../ui/software_center.py:1045
-msgid "Refreshing applications lists"
-msgstr "正在重新整理應用程式清單"
-
-#: ../ui/software_center.py:1047 ../ui/preference.py:387
-msgid "Run in background"
-msgstr "後台運行"
-
-#: ../ui/software_center.py:1105
+#: ../ui/software_center.py:1112
 #, python-format
 msgid "You have cleared up %s pakcages and saved %s of space"
 msgstr "已清理了 %s 個套件，共節約了 %s 磁碟空間"
 
-#: ../ui/software_center.py:1107
+#: ../ui/software_center.py:1114
 msgid "Your system is clean."
 msgstr "系統無需進行清理。"
 
@@ -176,199 +168,199 @@ msgstr "%s：搜尋到 %s 款應用程式"
 msgid "Successfully installed"
 msgstr "已成功安裝"
 
-#: ../ui/upgrade_page.py:93 ../ui/upgrade_page.py:285
+#: ../ui/upgrade_page.py:92 ../ui/upgrade_page.py:284
 msgid "Last upgraded time: "
 msgstr "最後更新時間：%s"
 
-#: ../ui/upgrade_page.py:122 ../ui/upgrade_page.py:194
+#: ../ui/upgrade_page.py:121 ../ui/upgrade_page.py:193
 #, python-format
 msgid "Unwatched (%s)"
 msgstr "不再提醒(%s)"
 
-#: ../ui/upgrade_page.py:168
+#: ../ui/upgrade_page.py:167
 msgid "Upgrade select items"
 msgstr "升級所選軟件"
 
-#: ../ui/upgrade_page.py:190
+#: ../ui/upgrade_page.py:189
 #, python-format
 msgid "%s applications are available for upgrade"
 msgstr "當前共有 %s 款應用程式有可用的升級"
 
-#: ../ui/upgrade_page.py:224 ../ui/item_render.py:46
+#: ../ui/upgrade_page.py:223 ../ui/item_render.py:46
 msgid "Watch again"
 msgstr "重新提醒"
 
-#: ../ui/upgrade_page.py:258
+#: ../ui/upgrade_page.py:257
 #, python-format
 msgid "%s applications are not being watched"
 msgstr "%s 款應用程式將不再提醒"
 
-#: ../ui/upgrade_page.py:273
+#: ../ui/upgrade_page.py:272
 #, fuzzy
 msgid "Downloading updates"
 msgstr "正在下載"
 
-#: ../ui/upgrade_page.py:280
+#: ../ui/upgrade_page.py:279
 msgid "Last refresh app list time: "
 msgstr ""
 
-#: ../ui/upgrade_page.py:290
+#: ../ui/upgrade_page.py:289
 msgid "The source mirror: "
 msgstr ""
 
-#: ../ui/upgrade_page.py:351
+#: ../ui/upgrade_page.py:350
 msgid "Failed to download updates"
 msgstr ""
 
-#: ../ui/upgrade_page.py:353
+#: ../ui/upgrade_page.py:352
 msgid "The requested package does not exsist on server."
+msgstr ""
+
+#: ../ui/upgrade_page.py:353 ../ui/upgrade_page.py:374
+#: ../ui/upgrade_page.py:395
+msgid "Suggest to "
 msgstr ""
 
 #: ../ui/upgrade_page.py:354 ../ui/upgrade_page.py:375
 #: ../ui/upgrade_page.py:396
-msgid "Suggest to "
-msgstr ""
-
-#: ../ui/upgrade_page.py:355 ../ui/upgrade_page.py:376
-#: ../ui/upgrade_page.py:397
 #, fuzzy
 msgid "refresh applications lists"
 msgstr "重新整理應用程式清單"
 
-#: ../ui/upgrade_page.py:356 ../ui/upgrade_page.py:377
-#: ../ui/upgrade_page.py:398
+#: ../ui/upgrade_page.py:355 ../ui/upgrade_page.py:376
+#: ../ui/upgrade_page.py:397
 #, fuzzy
 msgid " and try again."
 msgstr "重試"
 
-#: ../ui/upgrade_page.py:371
+#: ../ui/upgrade_page.py:370
 msgid "Failed to install updates"
 msgstr ""
 
-#: ../ui/upgrade_page.py:373
+#: ../ui/upgrade_page.py:372
 msgid "This may be because your local dependencies are corrupted."
 msgstr ""
 
-#: ../ui/upgrade_page.py:392
+#: ../ui/upgrade_page.py:391
 msgid "Warning"
 msgstr ""
 
-#: ../ui/upgrade_page.py:394
+#: ../ui/upgrade_page.py:393
 msgid ""
 "Crucial components will be uninstalled. This may be because your local "
 "dependencies are corrupted, or incorrect dependencies on server."
 msgstr ""
 
-#: ../ui/upgrade_page.py:428
+#: ../ui/upgrade_page.py:427
 msgid "If the problem persists, you may wish to "
 msgstr ""
 
-#: ../ui/upgrade_page.py:429 ../ui/upgrade_page.py:455
+#: ../ui/upgrade_page.py:428 ../ui/upgrade_page.py:454
 msgid "Send Error Report"
 msgstr ""
 
-#: ../ui/upgrade_page.py:430
+#: ../ui/upgrade_page.py:429
 msgid "."
 msgstr ""
 
-#: ../ui/upgrade_page.py:443
+#: ../ui/upgrade_page.py:442
 msgid "Uploading error log"
 msgstr ""
 
-#: ../ui/upgrade_page.py:448
+#: ../ui/upgrade_page.py:447
 msgid "The error was successfully reported and will be soon handled."
 msgstr ""
 
-#: ../ui/upgrade_page.py:454
+#: ../ui/upgrade_page.py:453
 msgid "Failed to send the error report. You may wish to try again. "
 msgstr ""
 
-#: ../ui/upgrade_page.py:613
+#: ../ui/upgrade_page.py:612
 #, python-format
 msgid "%s updates are selected. %s will be downloaded."
 msgstr ""
 
-#: ../ui/upgrade_page.py:844
+#: ../ui/upgrade_page.py:840
 #, python-format
 msgid "Refresh applications lists %s%%"
 msgstr "重新整理應用程式清單 %s%%"
 
-#: ../ui/upgrade_page.py:1037
+#: ../ui/upgrade_page.py:1033
 #, fuzzy
 msgid "Analyzing dependencies..."
 msgstr "正在分析相依關係"
 
-#: ../ui/upgrade_page.py:1040
+#: ../ui/upgrade_page.py:1036
 #, fuzzy
 msgid "Finished analyzing dependencies."
 msgstr "正在分析相依關係"
 
-#: ../ui/upgrade_page.py:1043
+#: ../ui/upgrade_page.py:1039
 #, fuzzy
 msgid "Download has started..."
 msgstr "下載被中斷"
 
-#: ../ui/upgrade_page.py:1049
+#: ../ui/upgrade_page.py:1045
 #, python-format
 msgid "Completed: %s/%s (%s/%s) Download rate: %s/s"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1059
+#: ../ui/upgrade_page.py:1055
 #, fuzzy
 msgid "Download finished."
 msgstr "正在下載"
 
-#: ../ui/upgrade_page.py:1063
+#: ../ui/upgrade_page.py:1059
 #, fuzzy
 msgid "Download stopped."
 msgstr "下載：%s"
 
-#: ../ui/upgrade_page.py:1066
+#: ../ui/upgrade_page.py:1062
 #, fuzzy
 msgid "Failed to analyze dependencies."
 msgstr "正在分析相依關係"
 
-#: ../ui/upgrade_page.py:1070
+#: ../ui/upgrade_page.py:1066
 #, fuzzy
 msgid "Installing updates"
 msgstr "正在安裝"
 
-#: ../ui/upgrade_page.py:1071
+#: ../ui/upgrade_page.py:1067
 msgid "Updating..."
 msgstr ""
 
-#: ../ui/upgrade_page.py:1078
+#: ../ui/upgrade_page.py:1074
 #, fuzzy
 msgid "Upgrade finished."
 msgstr "系統升級"
 
-#: ../ui/upgrade_page.py:1440 ../ui/upgrade_page.py:1559
+#: ../ui/upgrade_page.py:1436 ../ui/upgrade_page.py:1555
 #: ../ui/install_page.py:683
 msgid "Waiting for download"
 msgstr "等待下載"
 
-#: ../ui/upgrade_page.py:1552 ../ui/install_page.py:306
+#: ../ui/upgrade_page.py:1548 ../ui/install_page.py:306
 #: ../ui/install_page.py:676
 msgid "Analyzing dependencies"
 msgstr "正在分析相依關係"
 
-#: ../ui/upgrade_page.py:1566 ../ui/install_page.py:690
+#: ../ui/upgrade_page.py:1562 ../ui/install_page.py:690
 msgid "Downloading"
 msgstr "正在下載"
 
-#: ../ui/upgrade_page.py:1582
+#: ../ui/upgrade_page.py:1578
 msgid "Waiting for upgrade"
 msgstr "正在等待升級"
 
-#: ../ui/upgrade_page.py:1592 ../ui/install_page.py:716
+#: ../ui/upgrade_page.py:1588 ../ui/install_page.py:716
 msgid "Analyzing dependencies failed"
 msgstr "分析相依關係失敗"
 
-#: ../ui/upgrade_page.py:1601 ../ui/upgrade_page.py:1608
+#: ../ui/upgrade_page.py:1597 ../ui/upgrade_page.py:1604
 msgid "Upgrading"
 msgstr "正在升級"
 
-#: ../ui/upgrade_page.py:1617
+#: ../ui/upgrade_page.py:1613
 msgid "Upgrade complete"
 msgstr "升級完成"
 
@@ -769,7 +761,7 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: ../ui/widgets.py:473 ../ui/preference.py:215
+#: ../ui/widgets.py:473 ../ui/preference.py:411
 msgid "Cancel"
 msgstr "取消"
 
@@ -785,19 +777,19 @@ msgstr "月排行Top25"
 msgid "Top 25 of all time"
 msgstr "總排行Top25"
 
-#: ../ui/preference.py:110
+#: ../ui/preference.py:281
 msgid "Untitled"
 msgstr "無標題"
 
-#: ../ui/preference.py:127
+#: ../ui/preference.py:298
 msgid "Unknown mirror url"
 msgstr "未知鏡像 url"
 
-#: ../ui/preference.py:238
+#: ../ui/preference.py:434
 msgid "Version:"
 msgstr "版本："
 
-#: ../ui/preference.py:255
+#: ../ui/preference.py:451
 msgid ""
 "Deepin Software Center is a commonly used software center on Linux. It "
 "selected more than 2,600 decent applications and features easy installation "
@@ -810,90 +802,90 @@ msgstr ""
 "2,600 多套應用程式。輕松安裝與解除安裝軟件、提供多線程加速下載，並可以輕松清"
 "理下載快取檔案。也創新性的提供軟件推薦和主題分享功能。\n"
 
-#: ../ui/preference.py:301
+#: ../ui/preference.py:497
 msgid "General"
 msgstr "一般"
 
-#: ../ui/preference.py:302
+#: ../ui/preference.py:498
 msgid "Software repository"
 msgstr "軟件檔案庫"
 
-#: ../ui/preference.py:303
+#: ../ui/preference.py:499
 msgid "About"
 msgstr "關於"
 
-#: ../ui/preference.py:323
+#: ../ui/preference.py:519
 msgid "Select mirror"
 msgstr "選擇鏡像"
 
-#: ../ui/preference.py:343
-msgid "Select fastest mirror"
-msgstr "選擇最快鏡像"
-
-#: ../ui/preference.py:364
+#: ../ui/preference.py:562
 msgid "Select best mirror"
 msgstr "選擇最佳鏡像"
 
-#: ../ui/preference.py:365
+#: ../ui/preference.py:563
 msgid ""
 "Please wait. The process will take 30 seconds or more depending on your "
 "network connection"
 msgstr "請稍候。該過程根據網絡連線狀況不同可能會持續 30 秒或更長時間"
 
-#: ../ui/preference.py:385
+#: ../ui/preference.py:583
 msgid "The software repository has changed. Refreshing applications lists"
 msgstr "軟件檔案庫已經更改，正在重新整理應用程式清單"
 
-#: ../ui/preference.py:422
+#: ../ui/preference.py:585
+msgid "Run in background"
+msgstr "後台運行"
+
+#: ../ui/preference.py:620
 msgid ""
 "Test for downloading mirror failed. Please check your network connection."
 msgstr "測試鏡像下載失敗，請檢查網絡連線。"
 
-#: ../ui/preference.py:423
+#: ../ui/preference.py:621
 msgid "Close"
 msgstr "關閉"
 
-#: ../ui/preference.py:465
+#: ../ui/preference.py:663
 msgid "Update applications lists"
 msgstr "更新應用程式清單"
 
-#: ../ui/preference.py:471
+#: ../ui/preference.py:669
 msgid "Update automatically"
 msgstr "自動更新"
 
-#: ../ui/preference.py:474
+#: ../ui/preference.py:672
 msgid "Time interval: "
 msgstr "相隔時間: "
 
-#: ../ui/preference.py:477
+#: ../ui/preference.py:675
 msgid " hour"
 msgstr " 小時"
 
-#: ../ui/preference.py:500
+#: ../ui/preference.py:698
 msgid "Download settings"
 msgstr "下載設定"
 
-#: ../ui/preference.py:506
+#: ../ui/preference.py:704
 msgid "Max download task number: "
 msgstr "最大下載工作數量: "
 
-#: ../ui/preference.py:516
+#: ../ui/preference.py:714
 msgid "Download directory: "
 msgstr "下載目錄: "
 
-#: ../ui/preference.py:522
+#: ../ui/preference.py:720
 msgid "Change"
 msgstr "變更"
 
-#: ../ui/preference.py:538
+#: ../ui/preference.py:736
 msgid "On uninstall software"
 msgstr "當解除安裝軟件時"
 
-#: ../ui/preference.py:543
+#: ../ui/preference.py:741
 msgid "Delete configuration files"
 msgstr "刪除系統設定檔"
 
-#: ../ui/preference.py:580
+#: ../ui/preference.py:778
 msgid "Select Directory"
 msgstr "選擇目錄"
 
@@ -942,6 +934,12 @@ msgstr "正在安裝"
 #: ../ui/install_page.py:741
 msgid "Installation complete"
 msgstr "安裝完成"
+
+#~ msgid "Refreshing applications lists"
+#~ msgstr "正在重新整理應用程式清單"
+
+#~ msgid "Select fastest mirror"
+#~ msgstr "選擇最快鏡像"
 
 #, fuzzy
 #~ msgid "refresh the package list"

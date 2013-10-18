@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-17 10:29+0800\n"
+"POT-Creation-Date: 2013-10-18 09:12+0800\n"
 "PO-Revision-Date: 2013-05-28 15:52+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -27,7 +27,7 @@ msgstr "%s: %s applications"
 msgid "%s > %s : %s applications"
 msgstr "%s > %s : %s applications"
 
-#: ../ui/home_page.py:722 ../ui/software_center.py:772
+#: ../ui/home_page.py:722 ../ui/software_center.py:775
 msgid "Home"
 msgstr "Home"
 
@@ -108,64 +108,56 @@ msgstr "%s cannot be installed on 64-bit system."
 msgid "%s cannot be installed. It might be a x86_64 specific package"
 msgstr "%s cannot be installed. It might be a x86_64 specific package"
 
-#: ../ui/software_center.py:716 ../ui/preference.py:233
+#: ../ui/software_center.py:719 ../ui/preference.py:429
 msgid "Deepin Software Center"
 msgstr "Deepin Software Center"
 
-#: ../ui/software_center.py:753
+#: ../ui/software_center.py:756
 msgid "Join us"
 msgstr "Join us"
 
-#: ../ui/software_center.py:773
+#: ../ui/software_center.py:776
 msgid "Upgrade"
 msgstr "Upgrade"
 
-#: ../ui/software_center.py:774
+#: ../ui/software_center.py:777
 msgid "Uninstall"
 msgstr "Uninstall"
 
-#: ../ui/software_center.py:775
+#: ../ui/software_center.py:778
 msgid "Install Manage"
 msgstr "Installation"
 
-#: ../ui/software_center.py:799 ../ui/software_center.py:1045
+#: ../ui/software_center.py:802
 msgid "Refresh applications lists"
 msgstr "Refresh application list"
 
-#: ../ui/software_center.py:800
+#: ../ui/software_center.py:803
 msgid "Open download directory"
 msgstr "Open download directory"
 
-#: ../ui/software_center.py:801
+#: ../ui/software_center.py:804
 msgid "Clear up cached packages"
 msgstr "Clear up cached packages"
 
-#: ../ui/software_center.py:802
+#: ../ui/software_center.py:805
 msgid "View new features"
 msgstr "View new features"
 
-#: ../ui/software_center.py:803
+#: ../ui/software_center.py:806
 msgid "Preferences"
 msgstr "Preferences"
 
-#: ../ui/software_center.py:804
+#: ../ui/software_center.py:807
 msgid "Quit"
 msgstr "Quit"
 
-#: ../ui/software_center.py:1045
-msgid "Refreshing applications lists"
-msgstr "Refreshing application list"
-
-#: ../ui/software_center.py:1047 ../ui/preference.py:387
-msgid "Run in background"
-msgstr "Run in background"
-
-#: ../ui/software_center.py:1105
+#: ../ui/software_center.py:1112
 #, python-format
 msgid "You have cleared up %s pakcages and saved %s of space"
 msgstr "You have cleared up %s pakcages and freed %s of space"
 
-#: ../ui/software_center.py:1107
+#: ../ui/software_center.py:1114
 msgid "Your system is clean."
 msgstr "Your system is clean."
 
@@ -178,199 +170,199 @@ msgstr "%s: %s matched applications"
 msgid "Successfully installed"
 msgstr "Successfully installed"
 
-#: ../ui/upgrade_page.py:93 ../ui/upgrade_page.py:285
+#: ../ui/upgrade_page.py:92 ../ui/upgrade_page.py:284
 msgid "Last upgraded time: "
 msgstr "Last time upgraded: "
 
-#: ../ui/upgrade_page.py:122 ../ui/upgrade_page.py:194
+#: ../ui/upgrade_page.py:121 ../ui/upgrade_page.py:193
 #, python-format
 msgid "Unwatched (%s)"
 msgstr "Unwatched (%s)"
 
-#: ../ui/upgrade_page.py:168
+#: ../ui/upgrade_page.py:167
 msgid "Upgrade select items"
 msgstr "Upgrade select items"
 
-#: ../ui/upgrade_page.py:190
+#: ../ui/upgrade_page.py:189
 #, python-format
 msgid "%s applications are available for upgrade"
 msgstr "%s applications are available for upgrade"
 
-#: ../ui/upgrade_page.py:224 ../ui/item_render.py:46
+#: ../ui/upgrade_page.py:223 ../ui/item_render.py:46
 msgid "Watch again"
 msgstr "Watch again"
 
-#: ../ui/upgrade_page.py:258
+#: ../ui/upgrade_page.py:257
 #, python-format
 msgid "%s applications are not being watched"
 msgstr "%s applications are not being watched"
 
-#: ../ui/upgrade_page.py:273
+#: ../ui/upgrade_page.py:272
 #, fuzzy
 msgid "Downloading updates"
 msgstr "Downloading"
 
-#: ../ui/upgrade_page.py:280
+#: ../ui/upgrade_page.py:279
 msgid "Last refresh app list time: "
 msgstr ""
 
-#: ../ui/upgrade_page.py:290
+#: ../ui/upgrade_page.py:289
 msgid "The source mirror: "
 msgstr ""
 
-#: ../ui/upgrade_page.py:351
+#: ../ui/upgrade_page.py:350
 msgid "Failed to download updates"
 msgstr ""
 
-#: ../ui/upgrade_page.py:353
+#: ../ui/upgrade_page.py:352
 msgid "The requested package does not exsist on server."
+msgstr ""
+
+#: ../ui/upgrade_page.py:353 ../ui/upgrade_page.py:374
+#: ../ui/upgrade_page.py:395
+msgid "Suggest to "
 msgstr ""
 
 #: ../ui/upgrade_page.py:354 ../ui/upgrade_page.py:375
 #: ../ui/upgrade_page.py:396
-msgid "Suggest to "
-msgstr ""
-
-#: ../ui/upgrade_page.py:355 ../ui/upgrade_page.py:376
-#: ../ui/upgrade_page.py:397
 #, fuzzy
 msgid "refresh applications lists"
 msgstr "Refresh application list"
 
-#: ../ui/upgrade_page.py:356 ../ui/upgrade_page.py:377
-#: ../ui/upgrade_page.py:398
+#: ../ui/upgrade_page.py:355 ../ui/upgrade_page.py:376
+#: ../ui/upgrade_page.py:397
 #, fuzzy
 msgid " and try again."
 msgstr "Try again"
 
-#: ../ui/upgrade_page.py:371
+#: ../ui/upgrade_page.py:370
 msgid "Failed to install updates"
 msgstr ""
 
-#: ../ui/upgrade_page.py:373
+#: ../ui/upgrade_page.py:372
 msgid "This may be because your local dependencies are corrupted."
 msgstr ""
 
-#: ../ui/upgrade_page.py:392
+#: ../ui/upgrade_page.py:391
 msgid "Warning"
 msgstr ""
 
-#: ../ui/upgrade_page.py:394
+#: ../ui/upgrade_page.py:393
 msgid ""
 "Crucial components will be uninstalled. This may be because your local "
 "dependencies are corrupted, or incorrect dependencies on server."
 msgstr ""
 
-#: ../ui/upgrade_page.py:428
+#: ../ui/upgrade_page.py:427
 msgid "If the problem persists, you may wish to "
 msgstr ""
 
-#: ../ui/upgrade_page.py:429 ../ui/upgrade_page.py:455
+#: ../ui/upgrade_page.py:428 ../ui/upgrade_page.py:454
 msgid "Send Error Report"
 msgstr ""
 
-#: ../ui/upgrade_page.py:430
+#: ../ui/upgrade_page.py:429
 msgid "."
 msgstr ""
 
-#: ../ui/upgrade_page.py:443
+#: ../ui/upgrade_page.py:442
 msgid "Uploading error log"
 msgstr ""
 
-#: ../ui/upgrade_page.py:448
+#: ../ui/upgrade_page.py:447
 msgid "The error was successfully reported and will be soon handled."
 msgstr ""
 
-#: ../ui/upgrade_page.py:454
+#: ../ui/upgrade_page.py:453
 msgid "Failed to send the error report. You may wish to try again. "
 msgstr ""
 
-#: ../ui/upgrade_page.py:613
+#: ../ui/upgrade_page.py:612
 #, python-format
 msgid "%s updates are selected. %s will be downloaded."
 msgstr ""
 
-#: ../ui/upgrade_page.py:844
+#: ../ui/upgrade_page.py:840
 #, python-format
 msgid "Refresh applications lists %s%%"
 msgstr "Refresh application lists %s%%"
 
-#: ../ui/upgrade_page.py:1037
+#: ../ui/upgrade_page.py:1033
 #, fuzzy
 msgid "Analyzing dependencies..."
 msgstr "Analyzing dependencies"
 
-#: ../ui/upgrade_page.py:1040
+#: ../ui/upgrade_page.py:1036
 #, fuzzy
 msgid "Finished analyzing dependencies."
 msgstr "Analyzing dependencies"
 
-#: ../ui/upgrade_page.py:1043
+#: ../ui/upgrade_page.py:1039
 #, fuzzy
 msgid "Download has started..."
 msgstr "Download was interrupted"
 
-#: ../ui/upgrade_page.py:1049
+#: ../ui/upgrade_page.py:1045
 #, python-format
 msgid "Completed: %s/%s (%s/%s) Download rate: %s/s"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1059
+#: ../ui/upgrade_page.py:1055
 #, fuzzy
 msgid "Download finished."
 msgstr "Downloading"
 
-#: ../ui/upgrade_page.py:1063
+#: ../ui/upgrade_page.py:1059
 #, fuzzy
 msgid "Download stopped."
 msgstr "Download: %s"
 
-#: ../ui/upgrade_page.py:1066
+#: ../ui/upgrade_page.py:1062
 #, fuzzy
 msgid "Failed to analyze dependencies."
 msgstr "Analyzing dependencies"
 
-#: ../ui/upgrade_page.py:1070
+#: ../ui/upgrade_page.py:1066
 #, fuzzy
 msgid "Installing updates"
 msgstr "Installing"
 
-#: ../ui/upgrade_page.py:1071
+#: ../ui/upgrade_page.py:1067
 msgid "Updating..."
 msgstr ""
 
-#: ../ui/upgrade_page.py:1078
+#: ../ui/upgrade_page.py:1074
 #, fuzzy
 msgid "Upgrade finished."
 msgstr "Upgrade Info"
 
-#: ../ui/upgrade_page.py:1440 ../ui/upgrade_page.py:1559
+#: ../ui/upgrade_page.py:1436 ../ui/upgrade_page.py:1555
 #: ../ui/install_page.py:683
 msgid "Waiting for download"
 msgstr "Waiting for download"
 
-#: ../ui/upgrade_page.py:1552 ../ui/install_page.py:306
+#: ../ui/upgrade_page.py:1548 ../ui/install_page.py:306
 #: ../ui/install_page.py:676
 msgid "Analyzing dependencies"
 msgstr "Analyzing dependencies"
 
-#: ../ui/upgrade_page.py:1566 ../ui/install_page.py:690
+#: ../ui/upgrade_page.py:1562 ../ui/install_page.py:690
 msgid "Downloading"
 msgstr "Downloading"
 
-#: ../ui/upgrade_page.py:1582
+#: ../ui/upgrade_page.py:1578
 msgid "Waiting for upgrade"
 msgstr "Waiting for upgrade"
 
-#: ../ui/upgrade_page.py:1592 ../ui/install_page.py:716
+#: ../ui/upgrade_page.py:1588 ../ui/install_page.py:716
 msgid "Analyzing dependencies failed"
 msgstr "Analyzing dependencies failed"
 
-#: ../ui/upgrade_page.py:1601 ../ui/upgrade_page.py:1608
+#: ../ui/upgrade_page.py:1597 ../ui/upgrade_page.py:1604
 msgid "Upgrading"
 msgstr "Upgrading"
 
-#: ../ui/upgrade_page.py:1617
+#: ../ui/upgrade_page.py:1613
 msgid "Upgrade complete"
 msgstr "Upgrade complete"
 
@@ -778,7 +770,7 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: ../ui/widgets.py:473 ../ui/preference.py:215
+#: ../ui/widgets.py:473 ../ui/preference.py:411
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -794,19 +786,19 @@ msgstr "Top 25 monthly"
 msgid "Top 25 of all time"
 msgstr "Top 25 of all time"
 
-#: ../ui/preference.py:110
+#: ../ui/preference.py:281
 msgid "Untitled"
 msgstr "Untitled"
 
-#: ../ui/preference.py:127
+#: ../ui/preference.py:298
 msgid "Unknown mirror url"
 msgstr "Unknown mirror url"
 
-#: ../ui/preference.py:238
+#: ../ui/preference.py:434
 msgid "Version:"
 msgstr "Version:"
 
-#: ../ui/preference.py:255
+#: ../ui/preference.py:451
 msgid ""
 "Deepin Software Center is a commonly used software center on Linux. It "
 "selected more than 2,600 decent applications and features easy installation "
@@ -822,31 +814,27 @@ msgstr ""
 "cached packages. It provides topics for software introduction and shares "
 "good applications. \n"
 
-#: ../ui/preference.py:301
+#: ../ui/preference.py:497
 msgid "General"
 msgstr "General"
 
-#: ../ui/preference.py:302
+#: ../ui/preference.py:498
 msgid "Software repository"
 msgstr "Mirrors"
 
-#: ../ui/preference.py:303
+#: ../ui/preference.py:499
 msgid "About"
 msgstr "About"
 
-#: ../ui/preference.py:323
+#: ../ui/preference.py:519
 msgid "Select mirror"
 msgstr "Select mirror"
 
-#: ../ui/preference.py:343
-msgid "Select fastest mirror"
-msgstr "Select fastest mirror"
-
-#: ../ui/preference.py:364
+#: ../ui/preference.py:562
 msgid "Select best mirror"
 msgstr "Select best mirror"
 
-#: ../ui/preference.py:365
+#: ../ui/preference.py:563
 msgid ""
 "Please wait. The process will take 30 seconds or more depending on your "
 "network connection"
@@ -854,61 +842,65 @@ msgstr ""
 "Please wait. The process will take 30 seconds or more depending on your "
 "network connection"
 
-#: ../ui/preference.py:385
+#: ../ui/preference.py:583
 msgid "The software repository has changed. Refreshing applications lists"
 msgstr "The software repository has changed. Refreshing application list"
 
-#: ../ui/preference.py:422
+#: ../ui/preference.py:585
+msgid "Run in background"
+msgstr "Run in background"
+
+#: ../ui/preference.py:620
 msgid ""
 "Test for downloading mirror failed. Please check your network connection."
 msgstr ""
 "Test for downloading mirror failed. Please check your network connection."
 
-#: ../ui/preference.py:423
+#: ../ui/preference.py:621
 msgid "Close"
 msgstr "Close"
 
-#: ../ui/preference.py:465
+#: ../ui/preference.py:663
 msgid "Update applications lists"
 msgstr "Update application list"
 
-#: ../ui/preference.py:471
+#: ../ui/preference.py:669
 msgid "Update automatically"
 msgstr "Update automatically"
 
-#: ../ui/preference.py:474
+#: ../ui/preference.py:672
 msgid "Time interval: "
 msgstr "Time interval: "
 
-#: ../ui/preference.py:477
+#: ../ui/preference.py:675
 msgid " hour"
 msgstr " hour"
 
-#: ../ui/preference.py:500
+#: ../ui/preference.py:698
 msgid "Download settings"
 msgstr "Download settings"
 
-#: ../ui/preference.py:506
+#: ../ui/preference.py:704
 msgid "Max download task number: "
 msgstr "Max download task number: "
 
-#: ../ui/preference.py:516
+#: ../ui/preference.py:714
 msgid "Download directory: "
 msgstr "Download directory: "
 
-#: ../ui/preference.py:522
+#: ../ui/preference.py:720
 msgid "Change"
 msgstr "Change"
 
-#: ../ui/preference.py:538
+#: ../ui/preference.py:736
 msgid "On uninstall software"
 msgstr "On uninstall software"
 
-#: ../ui/preference.py:543
+#: ../ui/preference.py:741
 msgid "Delete configuration files"
 msgstr "Delete configuration files"
 
-#: ../ui/preference.py:580
+#: ../ui/preference.py:778
 msgid "Select Directory"
 msgstr "Select Directory"
 
@@ -957,6 +949,12 @@ msgstr "Installing"
 #: ../ui/install_page.py:741
 msgid "Installation complete"
 msgstr "Installation complete"
+
+#~ msgid "Refreshing applications lists"
+#~ msgstr "Refreshing application list"
+
+#~ msgid "Select fastest mirror"
+#~ msgstr "Select fastest mirror"
 
 #, fuzzy
 #~ msgid "refresh the package list"
