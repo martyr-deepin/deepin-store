@@ -30,7 +30,7 @@ from dtk.ui.entry import InputEntry
 from dtk.ui.button import Button, CheckButton
 from dtk.ui.label import Label
 from dtk.ui.line import HSeparator
-from dtk.ui.treeview import TreeItem, TreeView, NodeItem, get_background_color
+from dtk.ui.treeview import TreeView, NodeItem, get_background_color
 from dtk.ui.utils import get_content_size, is_in_rect, alpha_color_hex_to_cairo, color_hex_to_cairo
 from dtk.ui.draw import draw_text, draw_pixbuf
 from dtk.ui.spin import SpinBox
@@ -591,10 +591,6 @@ class DscPreferenceDialog(PreferenceDialog):
             elif i == item:
                 i.radio_button.active = True
         self.mirror_view.queue_draw()
-        if item != self.current_mirror_item:
-            self.current_mirror_item = item
-        else:
-            self.select_best_mirror_dialog.hide_all()
     
     def test_mirror_action(self, widget):
         self.select_best_mirror_dialog.set_transient_for(self)
@@ -655,9 +651,10 @@ class DscPreferenceDialog(PreferenceDialog):
         return items
 
     def mirror_clicked_callback(self, item):
-        #global_event.emit('change-mirror', item.mirror.get_repo_urls())
-        global_event.emit('change-mirror', item)
-        self.hide_all()
+        if item != self.current_mirror_item:
+            self.current_mirror_item = item
+            global_event.emit('change-mirror', item)
+            self.hide_all()
 
     def create_source_update_frequency_table(self):
         main_table = gtk.Table(3, 2)

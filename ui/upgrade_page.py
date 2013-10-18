@@ -273,6 +273,7 @@ class UpgradingBox(gtk.VBox):
         self.preference_dialog = preference_dialog
 
         self.upgrade_page_logo = widgets.ImageBox(utils.get_common_image("upgrade/download.png"))
+        global_event.register_event("mirror-changed", self.mirror_changed_handler)
 
         self.progress_box = gtk.VBox(spacing=6)
         self.progress_box.set_size_request(400, -1)
@@ -422,11 +423,16 @@ class UpgradingBox(gtk.VBox):
         self.progress_box_align.add(self.progress_box)
         self.recent_update_time.timestamp = utils.get_last_update_time()
         self.recent_upgrade_time.timestamp = get_last_upgrade_time()
+        """
         if self.preference_dialog.current_mirror_item:
             self.software_mirror = utils.create_left_align_label( 
                 self.preference_dialog.current_mirror_item.mirror.name)
         else:
             self.software_mirror = utils.create_left_align_label(utils.get_current_mirror_hostname())
+        """
+
+    def mirror_changed_handler(self, item):
+        self.software_mirror.set_text(item.mirror.name)
 
 class UploadErrorLabelBox(gtk.VBox):
     def __init__(self):
