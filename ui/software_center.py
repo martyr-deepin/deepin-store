@@ -75,7 +75,7 @@ from utils import is_64bit_system, handle_dbus_reply, handle_dbus_error, bit_to_
 import utils
 from tooltip import ToolTip
 from server_action import SendVote, SendDownloadCount, SendUninstallCount, SendErrorLog
-from preference import DscPreferenceDialog, WaitingDialog
+from preference import DscPreferenceDialog
 from logger import Logger
 from paned_box import PanedBox
 from widgets import BottomTipBar
@@ -460,11 +460,17 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
 
             elif signal_type == "pkg-not-in-cache":
                 pkg_name = action_content
+                """
                 if is_64bit_system():
                     message = _("%s cannot be installed on 64-bit system.") % pkg_name
                 else:
                     message = _("%s cannot be installed. It might be a x86_64 specific package") % pkg_name
-                global_event.emit("show-message", message)
+                """
+                list_message = []
+                list_message.append(_('请求安装的包"%s"在当前系统软件列表中不存在') % pkg_name)
+                list_message.append(_('刷新软件列表后重试'))
+                list_message.append(lambda:global_event.emit('start-update-list'))
+                global_event.emit("show-message", list_message, 0)
         except Exception, e:
             print e
             print message

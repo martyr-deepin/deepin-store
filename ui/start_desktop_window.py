@@ -33,7 +33,7 @@ from dtk.ui.scrolled_window import ScrolledWindow
 from events import global_event
 from dtk.ui.window import Window
 
-DESKTOP_ICON_WIDTH = 80
+DESKTOP_ICON_WIDTH = 100
 DESKTOP_ICON_HEIGHT = 95
 
 class StartDesktopWindow(Window):
