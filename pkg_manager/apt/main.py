@@ -381,10 +381,10 @@ class PackageManager(dbus.service.Object):
     def add_download(self, pkg_name, action_type, simulate=False):
         pkg_infos = get_pkg_download_info(self.pkg_cache, pkg_name)
         self.update_signal([("ready-download-finish", (pkg_name, action_type))])
-        if pkg_infos == DOWNLOAD_STATUS_NOTNEED:
-            self.download_finish(pkg_name, action_type, simulate)
+        if pkg_infos[0] == DOWNLOAD_STATUS_NOTNEED:
+            self.download_finish(pkg_name, action_type, [pkg_name,])
             print "Don't need download"
-        elif pkg_infos == DOWNLOAD_STATUS_ERROR:
+        elif pkg_infos[0] == DOWNLOAD_STATUS_ERROR:
             self.update_signal([("parse-download-error", (pkg_name, action_type))])
             print "Download error"
         else:
@@ -395,7 +395,7 @@ class PackageManager(dbus.service.Object):
                                         action_type, 
                                         download_urls, 
                                         download_hash_infos, 
-                                        pkg_sizes, 
+                                        file_sizes=pkg_sizes, 
                                         all_pkg_names=[pkg_name,],
                                         file_save_dir=self.download_dir)
 
@@ -460,10 +460,10 @@ class PackageManager(dbus.service.Object):
     def get_download_size(self, pkg_name):
         total_size = 0
         pkg_infos = get_pkg_download_info(self.pkg_cache, pkg_name)
-        if pkg_infos == DOWNLOAD_STATUS_NOTNEED:
+        if pkg_infos[0] == DOWNLOAD_STATUS_NOTNEED:
             total_size = get_pkg_own_size(self.pkg_cache, pkg_name)
             size_flag = PKG_SIZE_OWN
-        elif pkg_infos == DOWNLOAD_STATUS_ERROR:
+        elif pkg_infos[0] == DOWNLOAD_STATUS_ERROR:
             total_size = -1
             size_flag = PKG_SIZE_ERROR
         else:

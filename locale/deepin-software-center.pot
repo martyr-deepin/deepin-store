@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-22 10:21+0800\n"
+"POT-Creation-Date: 2013-10-22 11:38+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,7 +27,7 @@ msgstr ""
 msgid "%s > %s : %s applications"
 msgstr ""
 
-#: ../ui/home_page.py:722 ../ui/software_center.py:784
+#: ../ui/home_page.py:722 ../ui/software_center.py:785
 msgid "Home"
 msgstr ""
 
@@ -69,97 +69,92 @@ msgstr ""
 msgid "Comment was failed. Please check your network connection!"
 msgstr ""
 
-#: ../ui/software_center.py:424
-#, python-format
-msgid "Update applications lists: [%s] %s"
+#: ../ui/software_center.py:429
+msgid "Generating local package database..."
 msgstr ""
 
-#: ../ui/software_center.py:428
-msgid "正在生成软件列表数据库..."
-msgstr ""
-
-#: ../ui/software_center.py:436
+#: ../ui/software_center.py:437
 msgid "Successfully refreshed applications lists."
 msgstr ""
 
-#: ../ui/software_center.py:448
+#: ../ui/software_center.py:449
 msgid "Failed to refresh applications lists."
 msgstr ""
 
-#: ../ui/software_center.py:449
+#: ../ui/software_center.py:450
 msgid "Try again"
 msgstr ""
 
-#: ../ui/software_center.py:459
+#: ../ui/software_center.py:460
 #, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted"
 msgstr ""
 
-#: ../ui/software_center.py:462
+#: ../ui/software_center.py:463
 #, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
 msgstr ""
 
-#: ../ui/software_center.py:473
-#, python-format
-msgid "请求安装的包\"%s\"在当前系统软件列表中不存在"
-msgstr ""
-
 #: ../ui/software_center.py:474
-msgid "刷新软件列表后重试"
+#, python-format
+msgid "The requested package \"%s\" was not found in the package list."
 msgstr ""
 
-#: ../ui/software_center.py:728 ../ui/preference.py:468
+#: ../ui/software_center.py:475
+msgid "Refresh the package list and try again."
+msgstr ""
+
+#: ../ui/software_center.py:729 ../ui/preference.py:468
 msgid "Deepin Software Center"
 msgstr ""
 
-#: ../ui/software_center.py:765
+#: ../ui/software_center.py:766
 msgid "Join us"
 msgstr ""
 
-#: ../ui/software_center.py:785
+#: ../ui/software_center.py:786
 msgid "Upgrade"
 msgstr ""
 
-#: ../ui/software_center.py:786
+#: ../ui/software_center.py:787
 msgid "Uninstall"
 msgstr ""
 
-#: ../ui/software_center.py:787
+#: ../ui/software_center.py:788
 msgid "Install Manage"
 msgstr ""
 
-#: ../ui/software_center.py:811
+#: ../ui/software_center.py:812
 msgid "Refresh applications lists"
 msgstr ""
 
-#: ../ui/software_center.py:812
+#: ../ui/software_center.py:813
 msgid "Open download directory"
 msgstr ""
 
-#: ../ui/software_center.py:813
+#: ../ui/software_center.py:814
 msgid "Clear up cached packages"
 msgstr ""
 
-#: ../ui/software_center.py:814
+#: ../ui/software_center.py:815
 msgid "View new features"
 msgstr ""
 
-#: ../ui/software_center.py:815
+#: ../ui/software_center.py:816
 msgid "Preferences"
 msgstr ""
 
-#: ../ui/software_center.py:816
+#: ../ui/software_center.py:817
 msgid "Quit"
 msgstr ""
 
-#: ../ui/software_center.py:1117
+#: ../ui/software_center.py:1118
 #, python-format
 msgid "You have cleared up %s pakcages and saved %s of space"
 msgstr ""
 
-#: ../ui/software_center.py:1119
+#: ../ui/software_center.py:1120
 msgid "Your system is clean."
 msgstr ""
 
@@ -422,6 +417,22 @@ msgstr ""
 
 #: ../ui/utils.py:296
 msgid "Installed"
+msgstr ""
+
+#: ../ui/utils.py:306
+msgid "Err"
+msgstr ""
+
+#: ../ui/utils.py:307
+msgid "Ign"
+msgstr ""
+
+#: ../ui/utils.py:308
+msgid "Get"
+msgstr ""
+
+#: ../ui/utils.py:309
+msgid "Hit"
 msgstr ""
 
 #: ../ui/category_info.py:26

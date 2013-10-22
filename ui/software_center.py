@@ -421,11 +421,12 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
             elif signal_type == "update-list-update":
                 upgrade_page.update_upgrade_progress(action_content[0])
                 percent = "%i%%" % float(action_content[0])
-                global_event.emit("show-message", _("Update applications lists: [%s] %s") % (percent, str(action_content[1])))
-                #global_event.emit('update-progress-in-update-list-dialog', float(action_content[0]), action_content[1])
+                status = str(action_content[1])
+                status = utils.update_l18n_status_info(status)
+                global_event.emit("show-message", status)
 
             elif signal_type == "update-list-merge":
-                global_event.emit("show-message", _("正在生成软件列表数据库..."), 0)
+                global_event.emit("show-message", _("Generating local package database..."), 0)
 
             elif signal_type == "update-list-finish":
                 upgrade_page.fetch_upgrade_info()
@@ -470,8 +471,8 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                     message = _("%s cannot be installed. It might be a x86_64 specific package") % pkg_name
                 """
                 list_message = []
-                list_message.append(_('请求安装的包"%s"在当前系统软件列表中不存在') % pkg_name)
-                list_message.append(_('刷新软件列表后重试'))
+                list_message.append(_('The requested package \"%s\" was not found in the package list.') % pkg_name)
+                list_message.append(_('Refresh the package list and try again.'))
                 list_message.append(lambda:global_event.emit('start-update-list'))
                 global_event.emit("show-message", list_message, 0)
         except Exception, e:

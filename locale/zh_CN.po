@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-22 10:21+0800\n"
+"POT-Creation-Date: 2013-10-22 11:38+0800\n"
 "PO-Revision-Date: 2013-03-25 15:30+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -27,7 +27,7 @@ msgstr "%s: %s款软件"
 msgid "%s > %s : %s applications"
 msgstr "%s > %s: %s款软件"
 
-#: ../ui/home_page.py:722 ../ui/software_center.py:784
+#: ../ui/home_page.py:722 ../ui/software_center.py:785
 msgid "Home"
 msgstr "首页推荐"
 
@@ -69,97 +69,91 @@ msgstr "评分成功， 感谢您的参与！ :)"
 msgid "Comment was failed. Please check your network connection!"
 msgstr "评分失败，请检查您的网络连接！"
 
-#: ../ui/software_center.py:424
-#, python-format
-msgid "Update applications lists: [%s] %s"
-msgstr "更新软件列表: [%s] %s"
+#: ../ui/software_center.py:429
+msgid "Generating local package database..."
+msgstr "正在生成软件列表数据库..."
 
-#: ../ui/software_center.py:428
-msgid "正在生成软件列表数据库..."
-msgstr ""
-
-#: ../ui/software_center.py:436
+#: ../ui/software_center.py:437
 msgid "Successfully refreshed applications lists."
 msgstr "软件列表更新完成!"
 
-#: ../ui/software_center.py:448
+#: ../ui/software_center.py:449
 msgid "Failed to refresh applications lists."
 msgstr "软件列表更新失败!"
 
-#: ../ui/software_center.py:449
+#: ../ui/software_center.py:450
 msgid "Try again"
 msgstr "重试"
 
-#: ../ui/software_center.py:459
+#: ../ui/software_center.py:460
 #, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted"
 msgstr "分析%s依赖出现问题， 安装停止"
 
-#: ../ui/software_center.py:462
+#: ../ui/software_center.py:463
 #, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
 msgstr "分析%s依赖出现问题， 升级停止"
 
-#: ../ui/software_center.py:473
-#, python-format
-msgid "请求安装的包\"%s\"在当前系统软件列表中不存在"
-msgstr ""
-
 #: ../ui/software_center.py:474
-msgid "刷新软件列表后重试"
-msgstr ""
+msgid "The requested package \"%s\" was not found in the package list."
+msgstr "请求软件包\"%s\"在当前系统软件列表中不存在。"
 
-#: ../ui/software_center.py:728 ../ui/preference.py:468
+#: ../ui/software_center.py:475
+msgid "Refresh the package list and try again."
+msgstr "刷新软件列表后重试"
+
+#: ../ui/software_center.py:729 ../ui/preference.py:468
 msgid "Deepin Software Center"
 msgstr "软件中心"
 
-#: ../ui/software_center.py:765
+#: ../ui/software_center.py:766
 msgid "Join us"
 msgstr "加入我们"
 
-#: ../ui/software_center.py:785
+#: ../ui/software_center.py:786
 msgid "Upgrade"
 msgstr "系统升级"
 
-#: ../ui/software_center.py:786
+#: ../ui/software_center.py:787
 msgid "Uninstall"
 msgstr "卸载软件"
 
-#: ../ui/software_center.py:787
+#: ../ui/software_center.py:788
 msgid "Install Manage"
 msgstr "安装管理"
 
-#: ../ui/software_center.py:811
+#: ../ui/software_center.py:812
 msgid "Refresh applications lists"
 msgstr "更新软件列表"
 
-#: ../ui/software_center.py:812
+#: ../ui/software_center.py:813
 msgid "Open download directory"
 msgstr "打开下载目录"
 
-#: ../ui/software_center.py:813
+#: ../ui/software_center.py:814
 msgid "Clear up cached packages"
 msgstr "智能清理下载文件"
 
-#: ../ui/software_center.py:814
+#: ../ui/software_center.py:815
 msgid "View new features"
 msgstr "显示新功能"
 
-#: ../ui/software_center.py:815
+#: ../ui/software_center.py:816
 msgid "Preferences"
 msgstr "选项"
 
-#: ../ui/software_center.py:816
+#: ../ui/software_center.py:817
 msgid "Quit"
 msgstr "退出"
 
-#: ../ui/software_center.py:1117
+#: ../ui/software_center.py:1118
 #, python-format
 msgid "You have cleared up %s pakcages and saved %s of space"
 msgstr "恭喜您清理了%s个软件包，共节约了%s空间"
 
-#: ../ui/software_center.py:1119
+#: ../ui/software_center.py:1120
 msgid "Your system is clean."
 msgstr "您的系统已经很干净了，不需要清理."
 
@@ -425,6 +419,22 @@ msgstr "正在配置"
 #: ../ui/utils.py:296
 msgid "Installed"
 msgstr "已安装"
+
+#: ../ui/utils.py:306
+msgid "Err"
+msgstr "忽略"
+
+#: ../ui/utils.py:307
+msgid "Ign"
+msgstr "忽略"
+
+#: ../ui/utils.py:308
+msgid "Get"
+msgstr "获取"
+
+#: ../ui/utils.py:309
+msgid "Hit"
+msgstr "命中"
 
 #: ../ui/category_info.py:26
 msgid "Internet"
@@ -924,6 +934,9 @@ msgstr "安装中"
 msgid "Installation complete"
 msgstr "安装完成"
 
+#~ msgid "Update applications lists: [%s] %s"
+#~ msgstr "更新软件列表: [%s] %s"
+
 #~ msgid "%s cannot be installed on 64-bit system."
 #~ msgstr "%s在64位系统上不能被安装"
 
@@ -941,9 +954,6 @@ msgstr "安装完成"
 
 #~ msgid "Select fastest mirror"
 #~ msgstr "选择最快下载源"
-
-#~ msgid " refresh the package list"
-#~ msgstr "刷新软件列表"
 
 #, fuzzy
 #~ msgid "Last upgrade time: "
