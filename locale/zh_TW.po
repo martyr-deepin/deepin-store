@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-22 09:43+0800\n"
+"POT-Creation-Date: 2013-10-22 10:21+0800\n"
 "PO-Revision-Date: 2013-05-28 15:52+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -26,7 +26,7 @@ msgstr "%s: %s 應用程式"
 msgid "%s > %s : %s applications"
 msgstr "%s > %s : %s 款應用程式"
 
-#: ../ui/home_page.py:722 ../ui/software_center.py:775
+#: ../ui/home_page.py:722 ../ui/software_center.py:784
 msgid "Home"
 msgstr "首頁推薦"
 
@@ -73,89 +73,92 @@ msgstr "評分失敗。請檢查您的網路連線！"
 msgid "Update applications lists: [%s] %s"
 msgstr "更新應用程式清單：[%s] %s"
 
-#: ../ui/software_center.py:433
+#: ../ui/software_center.py:428
+msgid "正在生成软件列表数据库..."
+msgstr ""
+
+#: ../ui/software_center.py:436
 msgid "Successfully refreshed applications lists."
 msgstr "已成功重新整理了應用程式清單。"
 
-#: ../ui/software_center.py:445
+#: ../ui/software_center.py:448
 msgid "Failed to refresh applications lists."
 msgstr "無法重新整理應用程式清單。"
 
-#: ../ui/software_center.py:446
+#: ../ui/software_center.py:449
 msgid "Try again"
 msgstr "重試"
 
-#: ../ui/software_center.py:456
+#: ../ui/software_center.py:459
 #, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted"
 msgstr "分析 %s 依賴關係時發生問題。安裝停止"
 
-#: ../ui/software_center.py:459
+#: ../ui/software_center.py:462
 #, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
 msgstr "分析 %s 依賴關係時發生問題。升級停止"
 
-#: ../ui/software_center.py:464
+#: ../ui/software_center.py:473
 #, python-format
-msgid "%s cannot be installed on 64-bit system."
-msgstr "無法將 %s 安裝在 64 位元系統上。"
+msgid "请求安装的包\"%s\"在当前系统软件列表中不存在"
+msgstr ""
 
-#: ../ui/software_center.py:466
-#, python-format
-msgid "%s cannot be installed. It might be a x86_64 specific package"
-msgstr "無法安裝 %s。它可能是 64 位元系統特有的套件"
+#: ../ui/software_center.py:474
+msgid "刷新软件列表后重试"
+msgstr ""
 
-#: ../ui/software_center.py:719 ../ui/preference.py:468
+#: ../ui/software_center.py:728 ../ui/preference.py:468
 msgid "Deepin Software Center"
 msgstr "深度軟體中心"
 
-#: ../ui/software_center.py:756
+#: ../ui/software_center.py:765
 msgid "Join us"
 msgstr "加入我們"
 
-#: ../ui/software_center.py:776
+#: ../ui/software_center.py:785
 msgid "Upgrade"
 msgstr "系統升級"
 
-#: ../ui/software_center.py:777
+#: ../ui/software_center.py:786
 msgid "Uninstall"
 msgstr "解除安裝"
 
-#: ../ui/software_center.py:778
+#: ../ui/software_center.py:787
 msgid "Install Manage"
 msgstr "安裝管理"
 
-#: ../ui/software_center.py:802
+#: ../ui/software_center.py:811
 msgid "Refresh applications lists"
 msgstr "重新整理應用程式清單"
 
-#: ../ui/software_center.py:803
+#: ../ui/software_center.py:812
 msgid "Open download directory"
 msgstr "開啟下載目錄"
 
-#: ../ui/software_center.py:804
+#: ../ui/software_center.py:813
 msgid "Clear up cached packages"
 msgstr "清理快取套件"
 
-#: ../ui/software_center.py:805
+#: ../ui/software_center.py:814
 msgid "View new features"
 msgstr "檢視新特點"
 
-#: ../ui/software_center.py:806
+#: ../ui/software_center.py:815
 msgid "Preferences"
 msgstr "偏好設定"
 
-#: ../ui/software_center.py:807
+#: ../ui/software_center.py:816
 msgid "Quit"
 msgstr "退出"
 
-#: ../ui/software_center.py:1108
+#: ../ui/software_center.py:1117
 #, python-format
 msgid "You have cleared up %s pakcages and saved %s of space"
 msgstr "恭喜您清理了 %s 個套件，共節約了 %s 磁碟空間"
 
-#: ../ui/software_center.py:1110
+#: ../ui/software_center.py:1119
 msgid "Your system is clean."
 msgstr "您的系統已經很乾淨了，毋需進行清理。"
 
@@ -917,6 +920,12 @@ msgstr "正在安裝"
 #: ../ui/install_page.py:741
 msgid "Installation complete"
 msgstr "安裝完成"
+
+#~ msgid "%s cannot be installed on 64-bit system."
+#~ msgstr "無法將 %s 安裝在 64 位元系統上。"
+
+#~ msgid "%s cannot be installed. It might be a x86_64 specific package"
+#~ msgstr "無法安裝 %s。它可能是 64 位元系統特有的套件"
 
 #~ msgid "The software repository has changed. Refreshing applications lists"
 #~ msgstr "軟體檔案庫已經更改，正在重新整理應用程式清單"

@@ -312,6 +312,7 @@ class PackageManager(dbus.service.Object):
         self.update_signal([("update-list-start", "")])
 
     def update_list_finish(self):
+        self.update_signal([("update-list-merge", "")])
         self.pkg_cache.open(apb.OpProgress())
         db_build.BuildSoftwareDB(self.pkg_cache)
 

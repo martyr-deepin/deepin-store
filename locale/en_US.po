@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-22 09:41+0800\n"
+"POT-Creation-Date: 2013-10-22 10:21+0800\n"
 "PO-Revision-Date: 2013-05-28 15:52+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -27,7 +27,7 @@ msgstr "%s: %s applications"
 msgid "%s > %s : %s applications"
 msgstr "%s > %s : %s applications"
 
-#: ../ui/home_page.py:722 ../ui/software_center.py:775
+#: ../ui/home_page.py:722 ../ui/software_center.py:784
 msgid "Home"
 msgstr "Home"
 
@@ -74,90 +74,93 @@ msgstr "Comment failed. Please check your network connection!"
 msgid "Update applications lists: [%s] %s"
 msgstr "Update application lists: %s"
 
-#: ../ui/software_center.py:433
+#: ../ui/software_center.py:428
+msgid "正在生成软件列表数据库..."
+msgstr ""
+
+#: ../ui/software_center.py:436
 msgid "Successfully refreshed applications lists."
 msgstr "Successfully refreshed application list."
 
-#: ../ui/software_center.py:445
+#: ../ui/software_center.py:448
 msgid "Failed to refresh applications lists."
 msgstr "Failed to refresh application list."
 
-#: ../ui/software_center.py:446
+#: ../ui/software_center.py:449
 msgid "Try again"
 msgstr "Try again"
 
-#: ../ui/software_center.py:456
+#: ../ui/software_center.py:459
 #, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted"
 msgstr ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted"
 
-#: ../ui/software_center.py:459
+#: ../ui/software_center.py:462
 #, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
 msgstr "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
 
-#: ../ui/software_center.py:464
+#: ../ui/software_center.py:473
 #, python-format
-msgid "%s cannot be installed on 64-bit system."
-msgstr "%s cannot be installed on 64-bit system."
+msgid "请求安装的包\"%s\"在当前系统软件列表中不存在"
+msgstr ""
 
-#: ../ui/software_center.py:466
-#, python-format
-msgid "%s cannot be installed. It might be a x86_64 specific package"
-msgstr "%s cannot be installed. It might be a x86_64 specific package"
+#: ../ui/software_center.py:474
+msgid "刷新软件列表后重试"
+msgstr ""
 
-#: ../ui/software_center.py:719 ../ui/preference.py:468
+#: ../ui/software_center.py:728 ../ui/preference.py:468
 msgid "Deepin Software Center"
 msgstr "Deepin Software Center"
 
-#: ../ui/software_center.py:756
+#: ../ui/software_center.py:765
 msgid "Join us"
 msgstr "Join us"
 
-#: ../ui/software_center.py:776
+#: ../ui/software_center.py:785
 msgid "Upgrade"
 msgstr "Upgrade"
 
-#: ../ui/software_center.py:777
+#: ../ui/software_center.py:786
 msgid "Uninstall"
 msgstr "Uninstall"
 
-#: ../ui/software_center.py:778
+#: ../ui/software_center.py:787
 msgid "Install Manage"
 msgstr "Installation"
 
-#: ../ui/software_center.py:802
+#: ../ui/software_center.py:811
 msgid "Refresh applications lists"
 msgstr "Refresh application list"
 
-#: ../ui/software_center.py:803
+#: ../ui/software_center.py:812
 msgid "Open download directory"
 msgstr "Open download directory"
 
-#: ../ui/software_center.py:804
+#: ../ui/software_center.py:813
 msgid "Clear up cached packages"
 msgstr "Clear up cached packages"
 
-#: ../ui/software_center.py:805
+#: ../ui/software_center.py:814
 msgid "View new features"
 msgstr "View new features"
 
-#: ../ui/software_center.py:806
+#: ../ui/software_center.py:815
 msgid "Preferences"
 msgstr "Preferences"
 
-#: ../ui/software_center.py:807
+#: ../ui/software_center.py:816
 msgid "Quit"
 msgstr "Quit"
 
-#: ../ui/software_center.py:1108
+#: ../ui/software_center.py:1117
 #, python-format
 msgid "You have cleared up %s pakcages and saved %s of space"
 msgstr "You have cleared up %s pakcages and freed %s of space"
 
-#: ../ui/software_center.py:1110
+#: ../ui/software_center.py:1119
 msgid "Your system is clean."
 msgstr "Your system is clean."
 
@@ -941,6 +944,12 @@ msgstr "Installing"
 #: ../ui/install_page.py:741
 msgid "Installation complete"
 msgstr "Installation complete"
+
+#~ msgid "%s cannot be installed on 64-bit system."
+#~ msgstr "%s cannot be installed on 64-bit system."
+
+#~ msgid "%s cannot be installed. It might be a x86_64 specific package"
+#~ msgstr "%s cannot be installed. It might be a x86_64 specific package"
 
 #~ msgid "The software repository has changed. Refreshing applications lists"
 #~ msgstr "The software repository has changed. Refreshing application list"

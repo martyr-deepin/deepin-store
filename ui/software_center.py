@@ -424,6 +424,9 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 global_event.emit("show-message", _("Update applications lists: [%s] %s") % (percent, str(action_content[1])))
                 #global_event.emit('update-progress-in-update-list-dialog', float(action_content[0]), action_content[1])
 
+            elif signal_type == "update-list-merge":
+                global_event.emit("show-message", _("正在生成软件列表数据库..."), 0)
+
             elif signal_type == "update-list-finish":
                 upgrade_page.fetch_upgrade_info()
                 bus_interface.request_status(
