@@ -91,8 +91,7 @@ class HumanTimeTip(gtk.VBox):
         try:
             timestamp = float(self.timestamp)
             self.label.set_text(self.to_huamn_str(timestamp))
-        except Exception, e:
-            print e
+        except:
             pass
         return True
 

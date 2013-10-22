@@ -409,8 +409,14 @@ class AlbumDetailItem(TreeItem):
 
     @post_gui
     def update_software_pic(self, local_path):
-        self.pixbuf = gtk.gdk.pixbuf_new_from_file(local_path)
-        self.emit_redraw_request()
+        if os.path.exists(local_path):
+            try:
+                self.pixbuf = gtk.gdk.pixbuf_new_from_file(local_path)
+                self.emit_redraw_request()
+            except Exception, e:
+                print "Load image error: %s\nError message: %s" % (local_path, e)
+        else:
+            print "Failed load image: %s" % local_path
 
     def update_install_status(self, is_installed):
         self.install_status = True

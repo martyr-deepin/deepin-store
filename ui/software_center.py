@@ -420,9 +420,9 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
 
             elif signal_type == "update-list-update":
                 upgrade_page.update_upgrade_progress(action_content[0])
-                percent = "%.2f%%" % float(action_content[0])
-                global_event.emit("show-message", _("Update applications lists: %s") % percent)
-                global_event.emit('update-progress-in-update-list-dialog', float(action_content[0]), action_content[1])
+                percent = "%i%%" % float(action_content[0])
+                global_event.emit("show-message", _("Update applications lists: [%s]%s") % (percent, str(action_content[1])))
+                #global_event.emit('update-progress-in-update-list-dialog', float(action_content[0]), action_content[1])
 
             elif signal_type == "update-list-finish":
                 upgrade_page.fetch_upgrade_info()

@@ -66,6 +66,7 @@ from action import AptActionPool
 from events import global_event
 from utils import log
 import utils
+#import db_build
 
 DATA_DIR = os.path.join(get_parent_dir(__file__, 3), "data")
 SOURCE_LIST = '/etc/apt/sources.list'
@@ -311,11 +312,11 @@ class PackageManager(dbus.service.Object):
         self.update_signal([("update-list-start", "")])
 
     def update_list_finish(self):
-        self.in_update_list = False
-        self.update_signal([("update-list-finish", "")])
-        
         self.pkg_cache.open(apb.OpProgress())
-        
+        db_build.BuildSoftwareDB(self.pkg_cache)
+
+        self.update_signal([("update-list-finish", "")])
+        self.in_update_list = False
         self.exit_manager.check()
 
     def update_list_failed(self):
