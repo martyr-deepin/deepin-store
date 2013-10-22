@@ -66,7 +66,7 @@ from action import AptActionPool
 from events import global_event
 from utils import log
 import utils
-#import db_build
+import db_build
 
 DATA_DIR = os.path.join(get_parent_dir(__file__, 3), "data")
 SOURCE_LIST = '/etc/apt/sources.list'
