@@ -83,14 +83,6 @@ from widgets import BottomTipBar
 from star_buffer import StarView, DscStarBuffer
 from dtk.ui.application import Application
 
-def show_confirm_dialog():
-    d = ConfirmDialog(
-            "标题",
-            "内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容",
-            text_wrap_width=300,
-            )
-    d.show_all()
-
 tool_tip = ToolTip()
 global tooltip_timeout_id
 tooltip_timeout_id = None
@@ -818,7 +810,6 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
             menu_min_width = 150
         menu = Menu(
             [
-             (None, "测试ConfirmDialog", show_confirm_dialog),
              (None, _("Refresh applications lists"), lambda:global_event.emit('start-update-list')),
              (None, _("Open download directory"), self.open_download_directory),
              (None, _("Clear up cached packages"), self.clean_download_cache),
