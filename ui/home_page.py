@@ -52,9 +52,11 @@ from skin import app_theme
 from data import DATA_ID
 from category_info import get_category_name
 from nls import _
-from widgets import LoadingBox, NetworkConnectFailed
+from widgets import LoadingBox, NetworkConnectFailed, NetworkConnectTimeout
 from server_action import FetchHomeData
 from utils import sort_for_home_page_data
+
+NETWORK_TRY_TIMES = 1
 
 FIRST_CATEGORY_PADDING_X = 66
 
@@ -200,7 +202,6 @@ class HomePage(gtk.HBox):
         global_event.register_event("show-pkg-view", self.show_pkg_view)
         
     def jump_to_category(self, first_category_name, second_category_name):
-        print (first_category_name, second_category_name)
         
         for item in self.category_view.visible_items:
             if isinstance(item, CategoryItem) and item.is_expand:
@@ -739,6 +740,8 @@ class RecommendItem(TreeItem):
 
         self.loading_box = LoadingBox()
         self.network_failed_box = NetworkConnectFailed(self.check_network_connection)
+        self.network_timeout_box = NetworkConnectTimeout(self.check_network_connection)
+        self.timeout_times = 0
         self.recommend_scrolled_window_initial = False
 
     @post_gui
@@ -794,12 +797,18 @@ class RecommendItem(TreeItem):
     
     def try_fetch_data(self):
         FetchHomeData(LANGUAGE, self.recommend_status).start()
+        self.timeout_times += 1
 
     def check_network_connection(self):
         if is_network_connected():
-            self.network_connected_flag = True
-            self.switch_page_view(self.loading_box)
-            self.try_fetch_data()
+            if self.timeout_times < NETWORK_TRY_TIMES:
+                self.network_connected_flag = True
+                self.switch_page_view(self.loading_box)
+                self.try_fetch_data()
+            else:
+                self.network_connected_flag = False
+                self.switch_page_view(self.network_timeout_box)
+                self.timeout_times = 0
         else:    
             self.network_connected_flag = False
             self.switch_page_view(self.network_failed_box)

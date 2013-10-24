@@ -403,7 +403,8 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
             elif signal_type == 'action-failed':
                 # FIXME: change failed action dealing
                 (pkg_name, action_type, pkg_info_list, errormsg) = action_content
-                utils.write_log("action-failed:%s, action_type:%s" % (errormsg, action_type))
+                pkg_list = [str(info[0]) for info in pkg_info_list]
+                utils.write_log("action-failed:%s, action_type:%s, pkg_list: %s" % (errormsg, action_type, pkg_list))
                 if action_type == ACTION_UNINSTALL:
                     uninstall_page.action_finish(pkg_name, pkg_info_list)
                 elif action_type == ACTION_UPGRADE:
