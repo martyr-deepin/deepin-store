@@ -47,6 +47,7 @@ from dtk.ui.gio_utils import start_desktop_file
 from dtk.ui.iconview import IconView
 from dtk.ui.treeview import TreeView
 from dtk.ui.dbus_notify import DbusNotify
+from dtk.ui.dialog import ConfirmDialog
 
 from icon_window import IconWindow
 from detail_page import DetailPage
@@ -75,7 +76,7 @@ from utils import is_64bit_system, handle_dbus_reply, handle_dbus_error, bit_to_
 import utils
 from tooltip import ToolTip
 from server_action import SendVote, SendDownloadCount, SendUninstallCount, SendErrorLog
-from preference import DscPreferenceDialog, WaitingDialog
+from preference import DscPreferenceDialog
 from logger import Logger
 from paned_box import PanedBox
 from widgets import BottomTipBar
@@ -402,7 +403,8 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
             elif signal_type == 'action-failed':
                 # FIXME: change failed action dealing
                 (pkg_name, action_type, pkg_info_list, errormsg) = action_content
-                utils.write_log("action-failed:%s, action_type:%s" % (errormsg, action_type))
+                pkg_list = [str(info[0]) for info in pkg_info_list]
+                utils.write_log("action-failed:%s, action_type:%s, pkg_list: %s" % (errormsg, action_type, pkg_list))
                 if action_type == ACTION_UNINSTALL:
                     uninstall_page.action_finish(pkg_name, pkg_info_list)
                 elif action_type == ACTION_UPGRADE:
@@ -421,8 +423,12 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
             elif signal_type == "update-list-update":
                 upgrade_page.update_upgrade_progress(action_content[0])
                 percent = "%i%%" % float(action_content[0])
-                global_event.emit("show-message", _("Update applications lists: [%s]%s") % (percent, str(action_content[1])))
-                #global_event.emit('update-progress-in-update-list-dialog', float(action_content[0]), action_content[1])
+                status = str(action_content[1])
+                status = utils.update_l18n_status_info(status)
+                global_event.emit("show-message", status)
+
+            elif signal_type == "update-list-merge":
+                global_event.emit("show-message", _("Generating local package database..."), 0)
 
             elif signal_type == "update-list-finish":
                 upgrade_page.fetch_upgrade_info()
@@ -460,11 +466,17 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
 
             elif signal_type == "pkg-not-in-cache":
                 pkg_name = action_content
+                """
                 if is_64bit_system():
                     message = _("%s cannot be installed on 64-bit system.") % pkg_name
                 else:
                     message = _("%s cannot be installed. It might be a x86_64 specific package") % pkg_name
-                global_event.emit("show-message", message)
+                """
+                list_message = []
+                list_message.append(_('The requested package \"%s\" was not found in the package list.') % pkg_name)
+                list_message.append(_('Refresh the package list and try again.'))
+                list_message.append(lambda:global_event.emit('start-update-list'))
+                global_event.emit("show-message", list_message, 0)
         except Exception, e:
             print e
             print message

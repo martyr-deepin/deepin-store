@@ -43,15 +43,18 @@ class BuildSoftwareDB(object):
 
 
         for pkg in self.cache:
-            self.cursor.execute(
-                "INSERT INTO software VALUES(?,?,?,?,?,?)",
-                (pkg.name, 
-                 unicode(pkg.candidate.summary),
-                 unicode(pkg.candidate.description),
-                 unicode(pkg.candidate.version),
-                 unicode(pkg.candidate.homepage),
-                 unicode(pkg.candidate.size)
-                ))
+            try:
+                self.cursor.execute(
+                    "INSERT INTO software VALUES(?,?,?,?,?,?)",
+                    (pkg.name, 
+                    unicode(pkg.candidate.summary),
+                    unicode(pkg.candidate.description),
+                    unicode(pkg.candidate.version),
+                    unicode(pkg.candidate.homepage),
+                    unicode(pkg.candidate.size)
+                    ))
+            except Exception, e:
+                print "Error in db_build: %s" % e
 
         self.connect.commit()
         self.connect.close()

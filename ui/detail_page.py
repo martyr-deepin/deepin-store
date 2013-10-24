@@ -540,7 +540,6 @@ class DetailPage(gtk.HBox):
             screenshot_dir = os.path.join(SCREENSHOT_DOWNLOAD_DIR, pkg_name)
             screenshot_zip_path = os.path.join(screenshot_dir, "screenshot.zip")
             if os.path.exists(screenshot_zip_path):
-                print "DEBUG"
                 # Remove unused files first.
                 for screenshot_file in os.listdir(screenshot_dir):
                     if screenshot_file not in ["screenshot_md5.txt", "screenshot.zip"]:

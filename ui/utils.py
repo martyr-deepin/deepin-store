@@ -287,19 +287,32 @@ header_ids = [
         "Installed",
         ]
 
-header_ids_l18n = [
-        _("Running"),
-        _("Preparing"),
-        _("Unpacking"),
-        _("Preparing to configure"),
-        _("Configuring"),
-        _("Installed"),
-        ]
+header_ids_l18n = {
+        "Running": _("Running"),
+        "Preparing": _("Preparing"),
+        "Unpacking": _("Unpacking"),
+        "Preparing to configure": _("Preparing to configure"),
+        "Configuring": _("Configuring"),
+        "Installed":  _("Installed"),
+        }
 
 def l18n_status_info(status):
-    for index, header in enumerate(header_ids):
-        if status.startswith(header):
-            return status.replace(header, header_ids_l18n[index])
+    for key in header_ids_l18n.keys():
+        if status.startswith(key):
+            return status.replace(key, header_ids_l18n[key])
+    return status
+
+update_header_ids = {
+        "Err": _("Err"),
+        "Ign": _("Ign"),
+        "Get": _("Get"),
+        "Hit": _("Hit"),
+        }
+def update_l18n_status_info(status):
+    for key in update_header_ids.keys():
+        if status.startswith(key):
+            return status.replace(key, update_header_ids[key])
+    return status
 
 LOG_DICT = ["/tmp/dsc-backend.log", "/tmp/dsc-frontend.log"]
 def generate_log_tar():
@@ -327,4 +340,4 @@ class ThreadMethod(td.Thread):
         self.func(*self.args)
 
 if __name__ == '__main__':
-    print generate_log_tar()
+    print update_l18n_status_info("Ign http://test.packages.linuxdeepin.com raring/universe Translation-en")
