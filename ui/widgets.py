@@ -32,7 +32,6 @@ from skin import app_theme
 from nls import _
 
 from dtk.ui.draw import draw_pixbuf, draw_text
-from dtk.ui.utils import get_content_size, is_in_rect
 from dtk.ui.label import Label
 from dtk.ui.button import CloseButton, Button
 from dtk.ui.utils import color_hex_to_cairo, set_clickable_cursor
@@ -209,14 +208,17 @@ class BottomTipBar(gtk.HBox):
         self.info_image_box.connect('expose-event', self.expose_info_image_box)
 
         self.info_label = Label("")
+        self.end_info_label = Label("")
         self.info_callback_button = ActionButton('')
 
         self.close_button = CloseButton()
 
         self.pack_start(self.info_image_box, False, False)
         self.pack_start(self.info_label)
-        self.pack_start(self.info_callback_button, False, False)
-        self.pack_start(self.close_button, False, False)
+
+        self.pack_end(self.close_button, False, False)
+        self.pack_end(self.info_callback_button, False, False)
+        self.pack_end(self.end_info_label, False, False)
 
         self.connect('expose-event', self.expose)
 
@@ -247,6 +249,9 @@ class BottomTipBar(gtk.HBox):
                     rect.x + (rect.width-pix_width)/2,
                     rect.y + (rect.height-pix_height)/2,
                     )
+
+    def update_end_info(self, info):
+        self.end_info_label.set_text(info)
 
     def update_info(self, info, callback_name='', callback_action=None):
         self.info_label.set_text(info)
@@ -315,7 +320,7 @@ class NetworkConnectFailed(gtk.EventBox):
         text_y = icon_y + failed_pixbuf.get_height() + self.text_padding_y
         text_x = icon_x + self.text_padding_x
         
-        _width, _height = get_content_size(self.prompt_text)
+        _width, _height = dutils.get_content_size(self.prompt_text)
         
         self.text_rect = gtk.gdk.Rectangle(text_x - rect.x, text_y - rect.y,
                                            rect.x + rect.width -  text_x - pixbuf_offset_x,
@@ -334,7 +339,7 @@ class NetworkConnectFailed(gtk.EventBox):
     
     def on_motion_notify(self, widget, event):
         if self.text_rect is not None:
-            if is_in_rect((event.x, event.y), self.text_rect):
+            if dutils.is_in_rect((event.x, event.y), self.text_rect):
                 self.is_hover = True
             else:    
                 self.is_hover = False
@@ -396,7 +401,7 @@ class NetworkConnectTimeout(gtk.EventBox):
         text_y = icon_y + failed_pixbuf.get_height() + self.text_padding_y
         text_x = icon_x + self.text_padding_x
         
-        _width, _height = get_content_size(self.prompt_text)
+        _width, _height = dutils.get_content_size(self.prompt_text)
         
         self.text_rect = gtk.gdk.Rectangle(text_x - rect.x, text_y - rect.y,
                                            rect.x + rect.width -  text_x - pixbuf_offset_x,
@@ -415,7 +420,7 @@ class NetworkConnectTimeout(gtk.EventBox):
     
     def on_motion_notify(self, widget, event):
         if self.text_rect is not None:
-            if is_in_rect((event.x, event.y), self.text_rect):
+            if dutils.is_in_rect((event.x, event.y), self.text_rect):
                 self.is_hover = True
             else:    
                 self.is_hover = False

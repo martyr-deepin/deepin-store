@@ -35,6 +35,7 @@ from dtk.ui.button import LinkButton
 from dtk.ui.slider import Wizard
 from dtk.ui.navigatebar import Navigatebar
 from dtk.ui.timeline import Timeline, CURVE_SINE
+import dtk.ui.utils as dutils
 from deepin_utils.process import run_command
 from deepin_utils.math_lib import solve_parabola
 from deepin_utils.file import read_file, write_file, touch_file, get_parent_dir
@@ -47,7 +48,6 @@ from dtk.ui.gio_utils import start_desktop_file
 from dtk.ui.iconview import IconView
 from dtk.ui.treeview import TreeView
 from dtk.ui.dbus_notify import DbusNotify
-from dtk.ui.dialog import ConfirmDialog
 
 from icon_window import IconWindow
 from detail_page import DetailPage
@@ -62,6 +62,8 @@ import dbus
 import dbus.service
 import time
 import json
+import sys
+import traceback
 from constant import (
             DSC_SERVICE_NAME, DSC_SERVICE_PATH, 
             DSC_FRONTEND_NAME, DSC_FRONTEND_PATH, 
@@ -422,13 +424,14 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
 
             elif signal_type == "update-list-update":
                 upgrade_page.update_upgrade_progress(action_content[0])
-                percent = "%i%%" % float(action_content[0])
+                percent = "[%i%%] " % float(action_content[0])
                 status = str(action_content[1])
+                speed_str = str(action_content[2])
                 status = utils.update_l18n_status_info(status)
-                global_event.emit("show-message", status)
+                global_event.emit("show-message", [percent + status, speed_str])
 
             elif signal_type == "update-list-merge":
-                global_event.emit("show-message", _("Generating local package database..."), 0)
+                global_event.emit("show-message", [_("Generating local package database..."), ''], 0)
 
             elif signal_type == "update-list-finish":
                 upgrade_page.fetch_upgrade_info()
@@ -436,7 +439,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                         reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
                         error_handler=lambda e:handle_dbus_error("request_status", e),
                         )
-                global_event.emit("show-message", _("Successfully refreshed applications lists."), 5000)
+                global_event.emit("show-message", [_("Successfully refreshed applications lists."), ''], 5000)
                 global_event.emit('update-list-finish')
                 global_event.emit("hide-update-list-dialog")
 
@@ -478,8 +481,8 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 list_message.append(lambda:global_event.emit('start-update-list'))
                 global_event.emit("show-message", list_message, 0)
         except Exception, e:
-            print e
-            print message
+            traceback.print_exc(file=sys.stdout)
+            print "Message Handler Error:", e
     
     return True
 
@@ -1090,8 +1093,13 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
             self.paned_box.bottom_window.show()
         if isinstance(message, list) and len(message) == 3:
             self.bottom_tip_bar.update_info(*message)
+            self.bottom_tip_bar.update_end_info("")
+        elif isinstance(message, list) and len(message) == 2:
+            self.bottom_tip_bar.update_info(message[0])
+            self.bottom_tip_bar.update_end_info(message[1])
         else:
             self.bottom_tip_bar.update_info(message)
+            self.bottom_tip_bar.update_end_info("")
         if hide_timeout != 0:
             gtk.timeout_add(hide_timeout, lambda:self.paned_box.bottom_window.hide())
     

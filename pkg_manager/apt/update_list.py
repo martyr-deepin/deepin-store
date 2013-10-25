@@ -85,7 +85,14 @@ class AcquireProgress(apt.progress.text.AcquireProgress):
         self.percent = (((self.current_bytes + self.current_items) * 100.0) /
                         float(self.total_bytes + self.total_items))
 
-        global_event.emit("update-list-update", self.percent, self.status_message)
+        end = ""
+        if self.current_cps:
+            eta = long(float(self.total_bytes - self.current_bytes) /
+                        self.current_cps)
+            end = " %sB/s %s" % (apt_pkg.size_to_str(self.current_cps),
+                                 apt_pkg.time_to_str(eta))
+
+        global_event.emit("update-list-update", self.percent, self.status_message, end)
         return True
 
 class UpdateList(MissionThread):

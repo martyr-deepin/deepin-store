@@ -326,8 +326,8 @@ class PackageManager(dbus.service.Object):
         
         self.exit_manager.check()
         
-    def update_list_update(self, percent, status_message):
-        self.update_signal([("update-list-update", (percent, status_message))])
+    def update_list_update(self, percent, status_message, speed_str):
+        self.update_signal([("update-list-update", (percent, status_message, speed_str))])
 
     def handle_dbus_reply(self, *reply):
         log("%s (reply): %s" % (self.module_dbus_name, str(reply)))        
