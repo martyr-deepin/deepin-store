@@ -329,25 +329,18 @@ class UpgradingBox(gtk.VBox):
             self.switch_info(self.download_failed_box)
             self.upgrade_page_logo.change_image(utils.get_common_image('upgrade/download_failed.png'))
 
-        elif error_type == 'upgrade_failed':
+        elif error_type == 'upgrade_failed' \
+                or error_type == 'pkgs_mark_failed' \
+                or error_type == 'pkgs_not_in_cache' \
+                or error_type == 'pkgs_parse_download_error':
             self.install_failed_box = self.create_install_failed_box()
             self.switch_info(self.install_failed_box)
             self.upgrade_page_logo.change_image(utils.get_common_image('upgrade/upgrade_failed.png'))
 
-        elif error_type == 'pkgs_not_in_cache':
-            print infos
-
-        elif error_type == 'pkgs_mark_failed':
-            """not stop for this error"""
-            print infos
-            
         elif error_type == 'marked_delete_system_pkgs':
             """infos format: list of system package names"""
             self.marked_delete_box = self.create_marked_delete_system_pkgs_box()
             self.switch_info(self.marked_delete_box)
-
-        elif error_type == 'pkgs_parse_download_error':
-            print infos
 
     def upload_error_log(self):
         global_event.emit("upload-error-log")

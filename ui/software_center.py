@@ -304,12 +304,12 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                     upgrade_page.upgrading_view.show_error("pkgs_not_in_cache", json.loads(not_in_cache))
 
             elif signal_type == 'pkgs-mark-failed':
-                (pkg_dict, action_type) = action_content
-                utils.write_log("pkgs-mark-failed:%s, action_type:%s" % (pkg_dict, action_type))
+                (pkg_list, action_type) = action_content
+                utils.write_log("pkgs-mark-failed:%s, action_type:%s" % (pkg_list, action_type))
                 if action_type == ACTION_INSTALL:
                     pass
                 elif action_type == ACTION_UPGRADE:
-                    upgrade_page.upgrading_view.show_error("pkgs_mark_failed", pkg_dict)
+                    upgrade_page.upgrading_view.show_error("pkgs_mark_failed", pkg_list)
 
             elif signal_type == 'marked-delete-system-pkgs':
                 (pkgs, action_type) = action_content

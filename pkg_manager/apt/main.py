@@ -353,9 +353,9 @@ class PackageManager(dbus.service.Object):
                     ) = parse_pkg.get_changes_pkgs(self.pkg_cache, real_pkg_dict)
 
             if mark_failed_pkg_dict:
-                self.update_signal([("pkgs-mark-failed", (json.dumps(mark_failed_pkg_dict), action_type))])
+                self.update_signal([("pkgs-mark-failed", (json.dumps(mark_failed_pkg_dict.keys()), action_type))])
 
-            if marked_delete_sys_pkgs:
+            elif marked_delete_sys_pkgs:
                 self.update_signal([("marked-delete-system-pkgs", (json.dumps(marked_delete_sys_pkgs), action_type))])
             else:
                 self.update_signal([("ready-download-finish", (action_id, action_type))])
