@@ -79,6 +79,9 @@ class InstallPage(gtk.VBox):
         self.cute_message_image.connect("expose-event", self.expose_cute_message_image)
         self.treeview.connect("items-change", self.update_message_bar)
         self.treeview.connect("items-change", lambda treeview: global_event.emit("update-install-notify-number", self.get_installing_pkgs_number()))
+
+        #self.get_action_item("deepin-webapps-baidu-map")
+        #self.download_finish("deepin-webapps-baidu-map")
         
     def expose_cute_message_image(self, widget, event):
         if self.cute_message_pixbuf:
@@ -268,6 +271,8 @@ class InstallPage(gtk.VBox):
                 break
             
 gobject.type_register(InstallPage)
+
+ITEM_CANCEL_BUTTON_PADDING_RIGHT = 40
 
 class InstallItem(TreeItem):
     '''
