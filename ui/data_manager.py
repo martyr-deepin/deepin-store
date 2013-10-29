@@ -30,6 +30,7 @@ from data import DATA_ID
 from constant import LANGUAGE
 
 UPDATE_DATA_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID)
+cache_soft_db_path = os.path.join(get_parent_dir(__file__, 2), "data", "cache_soft.db")
 
 def db_path_exists(path):
     if not os.path.exists(path):
@@ -52,6 +53,10 @@ class DataManager(object):
         db_path_exists(software_db_path)
         self.software_db_connect = sqlite3.connect(software_db_path)
         self.software_db_cursor = self.software_db_connect.cursor()
+
+        if os.path.exists(cache_soft_db_path):
+            self.cache_soft_db_connect = sqlite3.connect(cache_soft_db_path)
+            self.cache_soft_db_cursor = self.cache_soft_db_connect.cursor()
 
         desktop_db_path = os.path.join(UPDATE_DATA_DIR, "desktop", LANGUAGE, "desktop.db")
         db_path_exists(desktop_db_path)
@@ -83,12 +88,22 @@ class DataManager(object):
     #@print_exec_time
     def get_pkgs_match_input(self, input_string):
         # Select package name match input string.
+
         input_string = input_string.lower()
-        self.software_db_cursor.execute(
-            "SELECT pkg_name FROM software WHERE pkg_name LIKE ?", ("%" + unicode(input_string) + "%",))
         pkg_names = []
-        for (pkg_name, ) in self.software_db_cursor.fetchall():
-            pkg_names.append(pkg_name)
+        argv = [
+            "SELECT pkg_name FROM software WHERE pkg_name LIKE ?",
+            ("%" + unicode(input_string) + "%",)
+            ]
+
+        if hasattr(self, 'cache_soft_db_cursor'):
+            self.cache_soft_db_cursor.execute(*argv)
+            for (pkg_name, ) in self.cache_soft_db_cursor.fetchall():
+                pkg_names.append(pkg_name)
+        else:
+            self.software_db_cursor.execute(*argv)
+            for (pkg_name, ) in self.software_db_cursor.fetchall():
+                pkg_names.append(pkg_name)
             
         # Sort package name.
         pkg_names = sorted(
@@ -159,9 +174,20 @@ class DataManager(object):
         
         self.software_db_cursor.execute(
             "SELECT long_desc, version, homepage, alias_name FROM software WHERE pkg_name=?", [pkg_name])
-        (long_desc, version, homepage, alias_name) = self.software_db_cursor.fetchone()
-        
-        return (category, long_desc, version, homepage, 5.0, 0, alias_name, recommend_pkgs)
+        info = self.software_db_cursor.fetchone()
+        if info:
+            (long_desc, version, homepage, alias_name) = info
+            return (category, long_desc, version, homepage, 5.0, 0, alias_name, recommend_pkgs)
+        else:
+            if hasattr(self, 'cache_soft_db_cursor'):
+                self.cache_soft_db_cursor.execute(
+                    "SELECT long_desc, version, homepage FROM software WHERE pkg_name=?",
+                    [pkg_name])
+                info = self.cache_soft_db_cursor.fetchone()
+                if info:
+                    (long_desc, version, homepage) = info
+                    return (category, long_desc, version, homepage, 5.0, 0, pkg_name, recommend_pkgs)
+        return None
         
     def get_pkg_search_info(self, pkg_name):
         self.software_db_cursor.execute(
