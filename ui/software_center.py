@@ -718,7 +718,6 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
             print "Unknow page:", key
         
     def init_ui(self):
-        self.in_wizard_showing = False
         self.loginfo("Init ui")
         # Init application.
         self.application = Application(
@@ -908,6 +907,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         self.wizard.show_all()
         
     def wizard_callback(self):
+        self.in_wizard_showing = False
         self.application.window.show_all()
         gtk.timeout_add(200, self.application.raise_to_top)
         
