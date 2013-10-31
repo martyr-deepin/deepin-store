@@ -679,6 +679,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         
         global debug_flag
         debug_flag = "--debug" in arguments
+        self.in_wizard_showing = False
 
     def exit(self):
         gtk.main_quit()
@@ -717,16 +718,16 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
             print "Unknow page:", key
         
     def init_ui(self):
+        self.in_wizard_showing = False
         self.loginfo("Init ui")
         # Init application.
-        image_dir = os.path.join(get_parent_dir(__file__, 2), "image")
         self.application = Application(
             resizable=False, 
             destroy_func=self.application_close_window,
             )
         self.application.set_default_size(888, 634)
-        self.application.set_skin_preview(os.path.join(image_dir, "frame.png"))
-        self.application.set_icon(os.path.join(image_dir, "logo48.png"))
+        self.application.set_skin_preview(utils.get_common_image("frame.png"))
+        self.application.set_icon(utils.get_common_image("logo48.png"))
         self.application.add_titlebar(
                 ["theme", "menu", "min", "close"],
                 show_title=False
@@ -787,17 +788,17 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         
         self.navigatebar = Navigatebar(
                 [
-                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_home.png')), _("Home"), self.show_home_page),
-                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_update.png')), _("Upgrade"), self.show_upgrade_page),
-                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_uninstall.png')), _("Uninstall"), self.show_uninstall_page),
-                (DynamicPixbuf(os.path.join(image_dir, "navigatebar", 'nav_download.png')), _("Install Manage"), self.show_install_page),
+                (DynamicPixbuf(utils.get_common_image("navigatebar/nav_home.png")), _("Home"), self.show_home_page),
+                (DynamicPixbuf(utils.get_common_image("navigatebar/nav_update.png")), _("Upgrade"), self.show_upgrade_page),
+                (DynamicPixbuf(utils.get_common_image("navigatebar/nav_uninstall.png")), _("Uninstall"), self.show_uninstall_page),
+                (DynamicPixbuf(utils.get_common_image("navigatebar/nav_download.png")), _("Install Manage"), self.show_install_page),
                 ],
                 font_size = 11,
                 padding_x = 2,
                 padding_y = 2,
                 vertical=False,
-                item_hover_pixbuf=DynamicPixbuf(os.path.join(image_dir, "navigatebar", "nav_hover.png")),
-                item_press_pixbuf=DynamicPixbuf(os.path.join(image_dir, "navigatebar", "nav_press.png")),
+                item_hover_pixbuf=DynamicPixbuf(utils.get_common_image("navigatebar/nav_hover.png")),
+                item_press_pixbuf=DynamicPixbuf(utils.get_common_image("navigatebar/nav_press.png")),
                 )
         self.navigatebar.set_size_request(-1, 56)
         self.navigatebar_align = gtk.Alignment(0, 0, 1, 1)
@@ -843,9 +844,6 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
 
         self.notification = DbusNotify("deepin-software-center")
 
-
-        self.ready_show()
-
     def application_close_window(self, widget=None, event=None):
         if utils.get_backend_running():
             global_event.emit("show-status-icon")
@@ -878,9 +876,12 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
 
     def ready_show(self):    
         if utils.is_first_started():
-            self.show_wizard_win(True, callback=self.wizard_callback)
             utils.set_first_started()
+            self.in_wizard_showing = True
+            self.show_wizard_win(True, callback=self.wizard_callback)
+            self.init_ui()
         else:    
+            self.init_ui()
             self.application.window.show_all()
         #self.paned_box.bottom_window.set_composited(True)
         gtk.main()    
@@ -892,7 +893,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
             wizard_dir = os.path.join(program_dir, 'wizard', 'en_US')
         wizard_root_dir = os.path.dirname(wizard_dir)            
             
-        Wizard(
+        self.wizard = Wizard(
             [os.path.join(wizard_dir, "%d.png" % i) for i in range(3)],
             (os.path.join(wizard_root_dir, "dot_normal.png"),
              os.path.join(wizard_root_dir, "dot_active.png"),             
@@ -902,11 +903,13 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
              ),
             show_button,
             callback
-            ).show_all()
+            )
+        self.wizard.set_icon(utils.get_common_image_pixbuf("logo48.png"))
+        self.wizard.show_all()
         
     def wizard_callback(self):
         self.application.window.show_all()
-        gtk.timeout_add(100, self.application.raise_to_top)
+        gtk.timeout_add(200, self.application.raise_to_top)
         
     def init_home_page(self, recommend_status="publish"):
         
@@ -1131,7 +1134,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         global_event.emit("show-message", message, 5000)
 
     def run(self):    
-        self.init_ui()
+        self.ready_show()
         
         # Send exit request to backend when frontend exit.
         self.bus_interface.request_quit(
@@ -1142,9 +1145,12 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         data_exit()
         self.loginfo('Data id removed')
 
-    @dbus.service.method(DSC_FRONTEND_NAME, in_signature="as", out_signature="")    
-    def hello(self, arguments):
-        self.application.raise_to_top()
+    @dbus.service.method(DSC_FRONTEND_NAME, in_signature="", out_signature="")
+    def hello(self):
+        if not self.in_wizard_showing:
+            self.application.raise_to_top()
+        else:
+            self.wizard.present()
         
     @dbus.service.signal(DSC_FRONTEND_NAME)
     def update_signal(self, message):
