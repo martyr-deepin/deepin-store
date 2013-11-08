@@ -898,7 +898,7 @@ msgstr "有 %s 款應用程式可以解除安裝"
 
 #: ../ui/uninstall_page.py:462 ../ui/uninstall_page.py:545
 msgid "Waiting for uninstall"
-msgstr "正在等待解除安裝"
+msgstr "等待解除安裝"
 
 #: ../ui/uninstall_page.py:552 ../ui/uninstall_page.py:559
 msgid "Uninstalling"

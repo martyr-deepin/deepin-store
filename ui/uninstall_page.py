@@ -209,7 +209,8 @@ class UninstallPage(gtk.VBox):
         items = []
         for pkg_info in pkg_infos:
             (pkg_name, pkg_version) = eval(pkg_info)
-            if self.data_manager.is_pkg_have_desktop_file(pkg_name) != None and self.data_manager.is_pkg_display_in_uninstall_page(pkg_name)[0] == '1':
+            if self.data_manager.is_pkg_have_desktop_file(pkg_name) != None \
+                and self.data_manager.is_pkg_display_in_uninstall_page(pkg_name)[0] == '1':
                 items.append(UninstallItem(pkg_name, pkg_version, self.data_manager))
             
         if self.search_flag:
@@ -281,7 +282,7 @@ class UninstallItem(TreeItem):
         self.status = self.STATUS_NORMAL
         self.status_text = ""
         self.progress_buffer = ProgressBuffer()
-        
+
     def render_pkg_info(self, cr, rect):
         if self.row_index % 2 == 1:
             cr.set_source_rgba(1, 1, 1, 0.5)
