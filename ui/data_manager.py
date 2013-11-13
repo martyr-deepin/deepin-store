@@ -358,7 +358,7 @@ class DataManager(object):
         for keyword in keywords:
             match_names = self.get_pkgs_match_input(keyword)
             for name in match_names:
-                if name not in all_results:
+                if name not in all_results and not name.endswidth(":i386"):
                     all_results.append(name)
         return all_results
 
