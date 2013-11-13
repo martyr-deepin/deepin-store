@@ -282,6 +282,7 @@ class UninstallItem(TreeItem):
         self.status = self.STATUS_NORMAL
         self.status_text = ""
         self.progress_buffer = ProgressBuffer()
+        #self.action_wait()
 
     def render_pkg_info(self, cr, rect):
         if self.row_index % 2 == 1:
@@ -355,7 +356,7 @@ class UninstallItem(TreeItem):
             draw_pixbuf(
                 cr,
                 cancel_pixbuf,
-                rect.x + rect.width - ITEM_CANCEL_BUTTON_PADDING_RIGHT,
+                rect.x + rect.width - 50,
                 rect.y + (ITEM_HEIGHT - cancel_pixbuf.get_height()) / 2,
                 )
         elif self.status == self.STATUS_NORMAL:
