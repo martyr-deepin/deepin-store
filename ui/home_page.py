@@ -179,6 +179,7 @@ class HomePage(gtk.HBox):
             )
         self.category_view.draw_mask = self.draw_mask
         self.category_view.set_size_request(-1, 470)
+
         self.category_view_align = gtk.Alignment()
         self.category_view_align.set(0.5, 0.5, 1, 1)
         self.category_view_align.set_padding(10, 10, 0, 0)
@@ -200,6 +201,10 @@ class HomePage(gtk.HBox):
         self.split_line.connect("expose-event", self.expose_split_line)
         
         global_event.register_event("show-pkg-view", self.show_pkg_view)
+        global_event.register_event("category-expand", self.category_expand_handler)
+
+    def category_expand_handler(self, item):
+        self.category_view.visible_item(item.child_items[-1])
         
     def jump_to_category(self, first_category_name, second_category_name):
         
@@ -549,6 +554,7 @@ class CategoryItem(TreeItem):
             
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
+        global_event.emit("category-expand", self)
     
     def unexpand(self):
         self.is_expand = False
