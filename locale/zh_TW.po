@@ -70,11 +70,11 @@ msgstr "評分失敗。請檢查您的網路連線！"
 
 #: ../ui/software_center.py:429
 msgid "Generating local package database..."
-msgstr ""
+msgstr "正在建立套件列表數據庫..."
 
 #: ../ui/software_center.py:437
 msgid "Successfully refreshed applications lists."
-msgstr "已成功重新整理了應用程式清單。"
+msgstr "已成功重新整理應用程式清單。"
 
 #: ../ui/software_center.py:449
 msgid "Failed to refresh applications lists."
@@ -98,7 +98,7 @@ msgstr "分析 %s 依賴關係時發生問題。升級停止"
 #: ../ui/software_center.py:474
 #, fuzzy, python-format
 msgid "The requested package \"%s\" was not found in the package list."
-msgstr "請求的套件在伺服器上不存在。"
+msgstr "請求的套件不存在於伺服器上。"
 
 #: ../ui/software_center.py:475
 #, fuzzy
@@ -152,7 +152,7 @@ msgstr "退出"
 #: ../ui/software_center.py:1118
 #, python-format
 msgid "You have cleared up %s pakcages and saved %s of space"
-msgstr "恭喜您清理了 %s 個套件，共節約了 %s 磁碟空間"
+msgstr "恭喜您清理了 %s 個套件，共節省了 %s 磁碟空間"
 
 #: ../ui/software_center.py:1120
 msgid "Your system is clean."
@@ -178,7 +178,7 @@ msgstr "不再提醒(%s)"
 
 #: ../ui/upgrade_page.py:174
 msgid "Upgrade select items"
-msgstr "升級所選軟體"
+msgstr "升級已選擇的軟體"
 
 #: ../ui/upgrade_page.py:196
 #, python-format
@@ -200,7 +200,7 @@ msgstr "正在下載更新"
 
 #: ../ui/upgrade_page.py:287
 msgid "Last refresh app list time: "
-msgstr "上次重新整理應用清單時間："
+msgstr "上次重新整理應用程式清單時間："
 
 #: ../ui/upgrade_page.py:297
 msgid "The source mirror: "
@@ -212,7 +212,7 @@ msgstr "無法下載更新"
 
 #: ../ui/upgrade_page.py:360
 msgid "The requested package does not exsist on server."
-msgstr "請求的套件在伺服器上不存在。"
+msgstr "請求的套件不存在於伺服器上。"
 
 #: ../ui/upgrade_page.py:361 ../ui/upgrade_page.py:382
 #: ../ui/upgrade_page.py:403
@@ -235,7 +235,7 @@ msgstr "無法安裝更新"
 
 #: ../ui/upgrade_page.py:380
 msgid "This may be because your local dependencies are corrupted."
-msgstr "出現該情況的原因可能是本地依賴關係被損壞。"
+msgstr "出現該情況的原因可能是本機依賴關係已破壞。"
 
 #: ../ui/upgrade_page.py:399
 msgid "Warning"
@@ -246,7 +246,7 @@ msgid ""
 "Crucial components will be uninstalled. This may be because your local "
 "dependencies are corrupted, or incorrect dependencies on server."
 msgstr ""
-"本次更新將要解除安裝重要的系統組件，出現該情況的原因可能是本地依賴關係損壞，"
+"本次更新將要解除安裝重要的系統組件，出現該情況的原因可能是本機依賴關係已破壞，"
 "或者伺服器端套件依賴不正確。"
 
 #: ../ui/upgrade_page.py:440
@@ -263,7 +263,7 @@ msgstr "。"
 
 #: ../ui/upgrade_page.py:455
 msgid "Uploading error log"
-msgstr "正在上載錯誤日志"
+msgstr "正在上傳錯誤日志"
 
 #: ../ui/upgrade_page.py:460
 msgid "The error was successfully reported and will be soon handled."
@@ -423,19 +423,19 @@ msgstr "已安裝"
 
 #: ../ui/utils.py:306
 msgid "Err"
-msgstr ""
+msgstr "忽略"
 
 #: ../ui/utils.py:307
 msgid "Ign"
-msgstr ""
+msgstr "忽略"
 
 #: ../ui/utils.py:308
 msgid "Get"
-msgstr ""
+msgstr "取得"
 
 #: ../ui/utils.py:309
 msgid "Hit"
-msgstr ""
+msgstr "命中"
 
 #: ../ui/category_info.py:26
 msgid "Internet"
@@ -940,7 +940,7 @@ msgstr "安裝完成"
 #~ msgstr "無法將 %s 安裝在 64 位元系統上。"
 
 #~ msgid "%s cannot be installed. It might be a x86_64 specific package"
-#~ msgstr "無法安裝 %s。它可能是 64 位元系統特有的套件"
+#~ msgstr "無法安裝 %s。它可能是 64 位元系統獨有的套件"
 
 #~ msgid "The software repository has changed. Refreshing applications lists"
 #~ msgstr "軟體檔案庫已經更改，正在重新整理應用程式清單"
