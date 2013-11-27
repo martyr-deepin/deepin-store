@@ -28,6 +28,7 @@ from dbus.mainloop.glib import DBusGMainLoop
 from constant import DSC_FRONTEND_NAME, DSC_FRONTEND_PATH
 from deepin_utils.ipc import is_dbus_name_exists
 import gtk
+import os
 
 from optparse import OptionParser
 
@@ -71,4 +72,8 @@ def get_parser():
     return (options, args)
 
 if __name__ == '__main__':
+    if os.getuid() == 0:
+        import sys
+        print "can't start width root privilege"
+        sys.exit(1)
     start_main()
