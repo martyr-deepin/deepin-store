@@ -38,11 +38,11 @@ msgstr "Destacadas"
 
 #: ../ui/home_page.py:760
 msgid "Topics"
-msgstr "Categorías"
+msgstr "Temáticas"
 
 #: ../ui/home_page.py:760
 msgid "Download rank"
-msgstr "Nº de descargas"
+msgstr "Más descargados"
 
 #: ../ui/software_center.py:127
 #, fuzzy, python-format
@@ -124,7 +124,7 @@ msgstr "Desinstalar"
 
 #: ../ui/software_center.py:788
 msgid "Install Manage"
-msgstr "Install Manage"
+msgstr "Descargas"
 
 #: ../ui/software_center.py:812
 msgid "Refresh applications lists"
@@ -458,20 +458,20 @@ msgstr "Internet"
 
 #: ../ui/category_info.py:27
 msgid "Browser"
-msgstr "Navegador"
+msgstr "Navegadores"
 
 #: ../ui/category_info.py:28
 msgid "Instant messaging"
-msgstr "Mensagería instantánea"
+msgstr "Mensajería"
 
 # 需调整宽度
 #: ../ui/category_info.py:29
 msgid "Email"
-msgstr "Email"
+msgstr "Correo Web"
 
 #: ../ui/category_info.py:30
 msgid "File transfer"
-msgstr "Transferencia de archivos"
+msgstr "Almacenamiento y P2P"
 
 #: ../ui/category_info.py:31
 msgid "News"
@@ -495,15 +495,15 @@ msgstr "Multimedia"
 
 #: ../ui/category_info.py:36
 msgid "Audiovideo"
-msgstr "Audio/vídeo"
+msgstr "Audio y vídeo"
 
 #: ../ui/category_info.py:37
 msgid "Audiovideo editing"
-msgstr "Edición de audio/vídeo"
+msgstr "Edición"
 
 #: ../ui/category_info.py:38
 msgid "Disc burner"
-msgstr "Grabación de discos"
+msgstr "Quemadores de discos"
 
 #: ../ui/category_info.py:39
 msgid "MIDI"
@@ -511,24 +511,24 @@ msgstr "MIDI"
 
 #: ../ui/category_info.py:40
 msgid "Mixer"
-msgstr "Mezclador"
+msgstr "Mezclas"
 
 #: ../ui/category_info.py:41
 msgid "Player"
-msgstr "Reproductor"
+msgstr "Reproductores"
 
 #: ../ui/category_info.py:42
 msgid "Recorder"
-msgstr "Grabador"
+msgstr "Grabadoras"
 
 #: ../ui/category_info.py:43
 msgid "Sequencer"
-msgstr "Sequenciador"
+msgstr "Sequenciadores"
 
 #: ../ui/category_info.py:44
 #, fuzzy
 msgid "Tuner"
-msgstr "Tuner"
+msgstr "Sintonizadores"
 
 #: ../ui/category_info.py:45
 msgid "Games"
@@ -536,23 +536,23 @@ msgstr "Juegos"
 
 #: ../ui/category_info.py:46
 msgid "Action games"
-msgstr "Juegos de acción"
+msgstr "Accción"
 
 #: ../ui/category_info.py:47
 msgid "Advernture games"
-msgstr "Juegos de aventura"
+msgstr "Aventura"
 
 #: ../ui/category_info.py:48
 msgid "Arcade games"
-msgstr "Juegos de arcade"
+msgstr "Arcade"
 
 #: ../ui/category_info.py:49
 msgid "Board games"
-msgstr "Juegos de mesa"
+msgstr "Tablero"
 
 #: ../ui/category_info.py:50
 msgid "Card games"
-msgstr "Juegos de cartas"
+msgstr "Naipes"
 
 #: ../ui/category_info.py:51
 msgid "Emulator"
@@ -560,27 +560,27 @@ msgstr "Emuladores"
 
 #: ../ui/category_info.py:52
 msgid "Kids games"
-msgstr "Juegos infantiles"
+msgstr "Para niños"
 
 #: ../ui/category_info.py:53
 msgid "Logic games"
-msgstr "Juegos de lógica"
+msgstr "Lógica"
 
 #: ../ui/category_info.py:54
 msgid "Puzzle games"
-msgstr "Juegos de puzle"
+msgstr "Rompecabezas"
 
 #: ../ui/category_info.py:55
 msgid "Role-playing games"
-msgstr "Juegos de rol"
+msgstr "Rol"
 
 #: ../ui/category_info.py:56
 msgid "Sports games"
-msgstr "Juegos de deportes"
+msgstr "Deportes"
 
 #: ../ui/category_info.py:57
 msgid "Strategy games"
-msgstr "Juegos de estrategia"
+msgstr "Estrategia"
 
 #: ../ui/category_info.py:58
 msgid "Graphics"
@@ -588,15 +588,15 @@ msgstr "Gráficos"
 
 #: ../ui/category_info.py:59
 msgid "2D graphics"
-msgstr "Gráficos 2D"
+msgstr "2D"
 
 #: ../ui/category_info.py:60
 msgid "3D graphics"
-msgstr "Gráficos 3D"
+msgstr "3D"
 
 #: ../ui/category_info.py:61
 msgid "Image processing"
-msgstr "Procesamiento de imagen"
+msgstr "Editores"
 
 # 调整宽度
 #: ../ui/category_info.py:62
@@ -605,11 +605,11 @@ msgstr "Fotografía"
 
 #: ../ui/category_info.py:63
 msgid "Vector graphics"
-msgstr "Gráficos vectoriales"
+msgstr "Vectorial"
 
 #: ../ui/category_info.py:64
 msgid "Viewer"
-msgstr "Visor"
+msgstr "Galerías"
 
 #: ../ui/category_info.py:65
 msgid "Productivity"
@@ -625,7 +625,7 @@ msgstr "Impresoras y escáneres"
 
 #: ../ui/category_info.py:68
 msgid "Industry"
-msgstr "Industria"
+msgstr "Industrial"
 
 #: ../ui/category_info.py:69
 msgid "Engineering"
@@ -638,7 +638,7 @@ msgstr "Finanzas"
 #: ../ui/category_info.py:71
 #, fuzzy
 msgid "Ham radio"
-msgstr "Ham radio"
+msgstr "Radio"
 
 #: ../ui/category_info.py:72
 msgid "Medical"
@@ -646,7 +646,7 @@ msgstr "Medicina"
 
 #: ../ui/category_info.py:73
 msgid "Publishing"
-msgstr "Publicación"
+msgstr "Edición"
 
 #: ../ui/category_info.py:74
 msgid "Education"
@@ -674,15 +674,15 @@ msgstr "Bases de datos"
 
 #: ../ui/category_info.py:80
 msgid "Debugging"
-msgstr "Depuración"
+msgstr "Deporadores"
 
 #: ../ui/category_info.py:81
 msgid "IDE"
-msgstr "Entorno de desarrollo"
+msgstr "Entornos de desarrollo"
 
 #: ../ui/category_info.py:82
 msgid "Software development"
-msgstr "Desarrollo de software"
+msgstr "Software"
 
 # 调整宽度
 #: ../ui/category_info.py:83
@@ -700,20 +700,20 @@ msgstr "Sistema"
 
 #: ../ui/category_info.py:86
 msgid "Desktop environment"
-msgstr "Entorno de escritorio"
+msgstr "Escritorios"
 
 # 调整宽度
 #: ../ui/category_info.py:87
 msgid "Monitor"
-msgstr "Monitor"
+msgstr "Monitorización"
 
 #: ../ui/category_info.py:88
 msgid "Network"
-msgstr "Redes"
+msgstr "Redes e Internet"
 
 #: ../ui/category_info.py:89
 msgid "Package manager"
-msgstr "Gestor de paquetes"
+msgstr "Gestión de paquetes"
 
 #: ../ui/category_info.py:90
 msgid "Settings"
@@ -725,7 +725,7 @@ msgstr "Virtualización"
 
 #: ../ui/category_info.py:92
 msgid "Window manager"
-msgstr "Gestor de ventanas"
+msgstr "Gestores de ventanas"
 
 # 调整宽度
 #: ../ui/category_info.py:93
@@ -738,7 +738,7 @@ msgstr "Accesorios"
 
 #: ../ui/category_info.py:95
 msgid "Archiving"
-msgstr "Compresor"
+msgstr "Compresores"
 
 #: ../ui/category_info.py:96
 msgid "Emulation"
@@ -746,7 +746,7 @@ msgstr "Emulación"
 
 #: ../ui/category_info.py:97
 msgid "File manager"
-msgstr "Gestor de ficheros"
+msgstr "Gestores de ficheros"
 
 #: ../ui/category_info.py:98
 msgid "Screensaver"
@@ -754,12 +754,12 @@ msgstr "Salvapantallas"
 
 #: ../ui/category_info.py:99
 msgid "Terminal emulator"
-msgstr "Emulador de terminal"
+msgstr "Terminales"
 
 # 调整宽度
 #: ../ui/category_info.py:100
 msgid "Text editor"
-msgstr "Editor de texto"
+msgstr "Editores de texto"
 
 #: ../ui/widgets.py:67
 msgid "Just now"
@@ -907,7 +907,7 @@ msgstr "Dejar de seguir"
 #: ../ui/uninstall_page.py:160
 #, python-format
 msgid "%s applications can be uninstalled"
-msgstr "%s pueden ser desinstaladas"
+msgstr "%s aplicaciones instaladas"
 
 #: ../ui/uninstall_page.py:462
 #: ../ui/uninstall_page.py:545
