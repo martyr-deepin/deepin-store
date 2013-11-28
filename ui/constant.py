@@ -78,5 +78,5 @@ dsc_root_dir = os.path.realpath(get_parent_dir(__file__, 2))
 
 cute_info_dir = os.path.join(dsc_root_dir, "image", "info", LANGUAGE)
 if not os.path.exists(cute_info_dir):
-    cute_info_dir = os.path.join(dsc_root_dir, "image", "info")
+    cute_info_dir = os.path.join(dsc_root_dir, "image/info/en_US")
 

@@ -32,6 +32,8 @@ from constant import LANGUAGE
 UPDATE_DATA_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID)
 cache_soft_db_path = os.path.join(get_parent_dir(__file__, 2), "data", "cache_soft.db")
 
+DATA_SUPPORT_LANGUAGE = ['en_US', 'zh_CN', 'zh_TW', 'zh_HK']
+
 def db_path_exists(path):
     if not os.path.exists(path):
         print "Database not exist:", path
@@ -48,8 +50,10 @@ class DataManager(object):
         '''
         self.bus_interface = bus_interface
         self.debug_flag = debug_flag
+
+        self.language = LANGUAGE if LANGUAGE in DATA_SUPPORT_LANGUAGE else 'en_US'
         
-        software_db_path = os.path.join(UPDATE_DATA_DIR, "software", LANGUAGE, "software.db")
+        software_db_path = os.path.join(UPDATE_DATA_DIR, "software", self.language, "software.db")
         db_path_exists(software_db_path)
         self.software_db_connect = sqlite3.connect(software_db_path)
         self.software_db_cursor = self.software_db_connect.cursor()
@@ -58,7 +62,7 @@ class DataManager(object):
             self.cache_soft_db_connect = sqlite3.connect(cache_soft_db_path)
             self.cache_soft_db_cursor = self.cache_soft_db_connect.cursor()
 
-        desktop_db_path = os.path.join(UPDATE_DATA_DIR, "desktop", LANGUAGE, "desktop.db")
+        desktop_db_path = os.path.join(UPDATE_DATA_DIR, "desktop", self.language, "desktop.db")
         db_path_exists(desktop_db_path)
         self.desktop_db_connect = sqlite3.connect(desktop_db_path)
         self.desktop_db_cursor = self.desktop_db_connect.cursor()
@@ -70,17 +74,6 @@ class DataManager(object):
         
         self.category_dict = {}
         self.category_name_dict = {}
-        
-        #album_db_path = os.path.join(UPDATE_DATA_DIR, "home", "album", LANGUAGE, "album.db")
-        #db_path_exists(album_db_path)
-        #self.album_db_connect = sqlite3.connect(album_db_path)
-        #self.album_db_cursor = self.album_db_connect.cursor()
-
-        #self.recommend_db_path = os.path.join(UPDATE_DATA_DIR, "home", "recommend", '%s.txt' % LANGUAGE)
-        #db_path_exists(self.recommend_db_path)
-
-        #self.slide_db_path = os.path.join(UPDATE_DATA_DIR, "home", "slide", '%s.txt' % LANGUAGE)
-        #db_path_exists(self.slide_db_path)
         
         self.build_category_dict()
 
