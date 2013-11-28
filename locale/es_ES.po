@@ -1,7 +1,7 @@
-# English translations for PACKAGE package.
+# Spanish translation for PACKAGE package.
 # Copyright (C) 2013 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Automatically generated, 2013.
+# Translator/Contributor FerN Talavera
 #
 msgid ""
 msgstr ""
@@ -174,7 +174,7 @@ msgstr "Instalación satisfactoria"
 #: ../ui/upgrade_page.py:99
 #: ../ui/upgrade_page.py:292
 msgid "Last upgraded time: "
-msgstr "Última vez actualizado:"
+msgstr "Última actualización: "
 
 #: ../ui/upgrade_page.py:128
 #: ../ui/upgrade_page.py:200
@@ -207,12 +207,12 @@ msgstr "Descargando actualizaciones"
 
 #: ../ui/upgrade_page.py:287
 msgid "Last refresh app list time: "
-msgstr "Listado actualizado por última vez el:"
+msgstr "Listado-Última actualización: "
 
 #: ../ui/upgrade_page.py:297
 #, fuzzy
 msgid "The source mirror: "
-msgstr "The source mirror:"
+msgstr "The source mirror: "
 
 #: ../ui/upgrade_page.py:358
 msgid "Failed to download updates"
@@ -226,7 +226,7 @@ msgstr "El paquete no se pudo encontrar en el servidor"
 #: ../ui/upgrade_page.py:382
 #: ../ui/upgrade_page.py:403
 msgid "Suggest to "
-msgstr "Compartir con"
+msgstr "Recomendar "
 
 #: ../ui/upgrade_page.py:362
 #: ../ui/upgrade_page.py:383
@@ -238,7 +238,7 @@ msgstr "actualiza la lista de paquetes"
 #: ../ui/upgrade_page.py:384
 #: ../ui/upgrade_page.py:405
 msgid " and try again."
-msgstr "vuelve a intentarlo"
+msgstr " y vuelve a intentarlo"
 
 #: ../ui/upgrade_page.py:378
 msgid "Failed to install updates"
@@ -258,7 +258,7 @@ msgstr "Se van a desinstalar elementos importantes. Esto puede ser debido a depe
 
 #: ../ui/upgrade_page.py:440
 msgid "If the problem persists, you may wish to "
-msgstr "Si el problema continua, podría interesarle"
+msgstr "Si el problema continua, podría interesarle "
 
 #: ../ui/upgrade_page.py:441
 #: ../ui/upgrade_page.py:467
@@ -279,7 +279,7 @@ msgstr "Se ha informado correctamente del error y será atendido en breve."
 
 #: ../ui/upgrade_page.py:466
 msgid "Failed to send the error report. You may wish to try again. "
-msgstr "Fallo al enviar el registro de errores. Tal vez quiera reintentar."
+msgstr "Fallo al enviar el registro de errores. Tal vez quiera reintentarlo. "
 
 #: ../ui/upgrade_page.py:625
 #, python-format
@@ -870,7 +870,7 @@ msgstr "Actualizar cada: "
 
 #: ../ui/preference.py:707
 msgid " hour"
-msgstr "hora"
+msgstr " hora"
 
 #: ../ui/preference.py:730
 msgid "Download settings"
@@ -974,7 +974,7 @@ msgstr "Instalación completada"
 
 #, fuzzy
 #~ msgid "Last upgrade time: "
-#~ msgstr "Ultima vez actualizado: "
+#~ msgstr "Última actualización: "
 
 #~ msgid "Option"
 #~ msgstr "Opción"
