@@ -386,13 +386,16 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 (pkg_name, action_type, pkg_info_list) = action_content
                 if action_type == ACTION_UNINSTALL:
                     uninstall_page.action_finish(pkg_name, pkg_info_list)
+                    show_notify(_("Uninstall %s Successfully.") % pkg_name, _("Uninstall"))
                 elif action_type == ACTION_UPGRADE:
                     upgrade_page.action_finish(pkg_name, pkg_info_list)
                     global_event.emit("upgrade-finish-action", pkg_info_list)
                     utils.set_last_upgrade_time()
                     upgrade_page.refresh_status(pkg_info_list)
+                    show_notify(_("%s packages upgrade Successfully.") % len(pkg_info_list), _("Upgrade"))
                 elif action_type == ACTION_INSTALL:
                     install_page.action_finish(pkg_name, pkg_info_list)
+                    show_notify(_("Install %s Successfully.") % pkg_name, _("Install"))
                 
                 refresh_current_page_status(pkg_name, pkg_info_list, bus_interface)
                 if action_type != ACTION_UPGRADE:
@@ -469,12 +472,6 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
 
             elif signal_type == "pkg-not-in-cache":
                 pkg_name = action_content
-                """
-                if is_64bit_system():
-                    message = _("%s cannot be installed on 64-bit system.") % pkg_name
-                else:
-                    message = _("%s cannot be installed. It might be a x86_64 specific package") % pkg_name
-                """
                 list_message = []
                 list_message.append(_('The requested package \"%s\" was not found in the package list.') % pkg_name)
                 list_message.append(_('Refresh the package list and try again.'))
@@ -658,6 +655,12 @@ def clear_action_pages(bus_interface, upgrade_page, uninstall_page, install_page
 def action_finish_handle_dbus_error(pkg_info_list):
     if pkg_info_list:
         global_event.emit("request-clear-action-pages", pkg_info_list)
+
+def show_notify(message, summary=None, timeout=None):
+    notification = DbusNotify("deepin-software-center")
+    notification.set_summary(summary if summary else _("Information"))
+    notification.set_body(message)
+    notification.notify()
     
 debug_flag = False                
 
@@ -840,8 +843,6 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
             self.init_home_page()
 
         self.loginfo("Finish Init UI: %s" % (time.time()-start, ))
-
-        self.notification = DbusNotify("deepin-software-center")
 
     def application_close_window(self, widget=None, event=None):
         if utils.get_backend_running():
