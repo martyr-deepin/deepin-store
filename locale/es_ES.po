@@ -42,7 +42,7 @@ msgstr "Temáticas"
 
 #: ../ui/home_page.py:760
 msgid "Download rank"
-msgstr "Más descargados"
+msgstr "Más descargadas"
 
 #: ../ui/software_center.py:127
 #, fuzzy, python-format
@@ -56,11 +56,11 @@ msgstr "%s: request for starting applications sent"
 
 #: ../ui/software_center.py:196
 msgid "Sending comment..."
-msgstr "Enviando commentario..."
+msgstr "Enviando puntuación..."
 
 #: ../ui/software_center.py:200
 msgid "You have already sent a comment ;)"
-msgstr "Ya has comentado este paquete ;)"
+msgstr "Ya has puntuado este paquete ;)"
 
 #: ../ui/software_center.py:206
 msgid "Comment was successful. Thanks for your involvement. :)"
@@ -103,7 +103,7 @@ msgstr "El paquete \"%s\" no se ha podido encontrar en la lista de paquetes."
 
 #: ../ui/software_center.py:475
 msgid "Refresh the package list and try again."
-msgstr "Actualiza la lista de paquetes y reintenta"
+msgstr "Actualiza la lista de paquetes y reintenta."
 
 #: ../ui/software_center.py:729
 #: ../ui/preference.py:468
@@ -162,7 +162,7 @@ msgstr "Tu sistema está limpio."
 #: ../ui/search_page.py:109
 #, python-format
 msgid "%s: %s matched applications"
-msgstr "%s: %s aplicaciones concuerdan"
+msgstr "%s: %s aplicaciones relacionadas"
 
 #: ../ui/search_page.py:285
 #: ../ui/detail_page.py:424
@@ -216,11 +216,11 @@ msgstr "The source mirror: "
 
 #: ../ui/upgrade_page.py:358
 msgid "Failed to download updates"
-msgstr "Fallo al descarga las actualizaciones"
+msgstr "Fallo al descargar las actualizaciones"
 
 #: ../ui/upgrade_page.py:360
 msgid "The requested package does not exsist on server."
-msgstr "El paquete no se pudo encontrar en el servidor"
+msgstr "El paquete no se pudo encontrar en el servidor."
 
 #: ../ui/upgrade_page.py:361
 #: ../ui/upgrade_page.py:382
@@ -238,7 +238,7 @@ msgstr "actualiza la lista de paquetes"
 #: ../ui/upgrade_page.py:384
 #: ../ui/upgrade_page.py:405
 msgid " and try again."
-msgstr " y vuelve a intentarlo"
+msgstr " y vuelve a intentarlo."
 
 #: ../ui/upgrade_page.py:378
 msgid "Failed to install updates"
@@ -293,11 +293,11 @@ msgstr "Actualizar lista de aplicaciones %s%%"
 
 #: ../ui/upgrade_page.py:1046
 msgid "Analyzing dependencies..."
-msgstr "Analizando dependencias"
+msgstr "Analizando dependencias..."
 
 #: ../ui/upgrade_page.py:1049
 msgid "Finished analyzing dependencies."
-msgstr "Finalizado análisis de de dependencias"
+msgstr "Finalizado análisis de de dependencias."
 
 #: ../ui/upgrade_page.py:1052
 msgid "Download has started..."
@@ -310,15 +310,15 @@ msgstr "Completado: %s/%s (%s/%s) Velocidad: %s/s"
 
 #: ../ui/upgrade_page.py:1068
 msgid "Download finished."
-msgstr "Descarga terminada"
+msgstr "Descarga terminada."
 
 #: ../ui/upgrade_page.py:1072
 msgid "Download stopped."
-msgstr "Se detuvo la descarga"
+msgstr "Descarga detenida."
 
 #: ../ui/upgrade_page.py:1075
 msgid "Failed to analyze dependencies."
-msgstr "Error al analizar las dependencias"
+msgstr "Error al analizar las dependencias."
 
 #: ../ui/upgrade_page.py:1079
 msgid "Installing updates"
@@ -330,7 +330,7 @@ msgstr "Actualizando..."
 
 #: ../ui/upgrade_page.py:1087
 msgid "Upgrade finished."
-msgstr "Actualización terminada"
+msgstr "Actualización terminada."
 
 #: ../ui/upgrade_page.py:1449
 #: ../ui/upgrade_page.py:1568
@@ -392,7 +392,7 @@ msgstr "Versión: %s"
 
 #: ../ui/detail_page.py:382
 msgid "Download: 0"
-msgstr "Descarga: 0"
+msgstr "Descargas: 0"
 
 #: ../ui/detail_page.py:383
 msgid "Size: calculating..."
@@ -400,7 +400,7 @@ msgstr "Tamaño: calculando..."
 
 #: ../ui/detail_page.py:387
 msgid "Visit Homepage"
-msgstr "Visita la Web"
+msgstr "Visita su Web"
 
 #: ../ui/detail_page.py:448
 #, python-format
@@ -503,7 +503,7 @@ msgstr "Edición"
 
 #: ../ui/category_info.py:38
 msgid "Disc burner"
-msgstr "Quemadores de discos"
+msgstr "CD y DVD"
 
 #: ../ui/category_info.py:39
 msgid "MIDI"
@@ -526,9 +526,8 @@ msgid "Sequencer"
 msgstr "Sequenciadores"
 
 #: ../ui/category_info.py:44
-#, fuzzy
 msgid "Tuner"
-msgstr "Sintonizadores"
+msgstr "Radio"
 
 #: ../ui/category_info.py:45
 msgid "Games"
@@ -536,7 +535,7 @@ msgstr "Juegos"
 
 #: ../ui/category_info.py:46
 msgid "Action games"
-msgstr "Accción"
+msgstr "Acción"
 
 #: ../ui/category_info.py:47
 msgid "Advernture games"
@@ -568,7 +567,7 @@ msgstr "Lógica"
 
 #: ../ui/category_info.py:54
 msgid "Puzzle games"
-msgstr "Rompecabezas"
+msgstr "Puzle"
 
 #: ../ui/category_info.py:55
 msgid "Role-playing games"
@@ -636,7 +635,6 @@ msgid "Finance"
 msgstr "Finanzas"
 
 #: ../ui/category_info.py:71
-#, fuzzy
 msgid "Ham radio"
 msgstr "Radio"
 
@@ -674,7 +672,7 @@ msgstr "Bases de datos"
 
 #: ../ui/category_info.py:80
 msgid "Debugging"
-msgstr "Deporadores"
+msgstr "Depuradores"
 
 #: ../ui/category_info.py:81
 msgid "IDE"
@@ -882,7 +880,7 @@ msgstr "Máximo de tareas simultáneas: "
 
 #: ../ui/preference.py:746
 msgid "Download directory: "
-msgstr "Carpeta de descarga: "
+msgstr "Carpeta de descargas: "
 
 #: ../ui/preference.py:752
 msgid "Change"
@@ -958,7 +956,7 @@ msgstr "Instalación completada"
 #~ msgstr "%s no se puede instalar en sistemas 64-bit."
 
 #~ msgid "%s cannot be installed. It might be a x86_64 specific package"
-#~ msgstr "%s no se puede instalar. Puede que sea específico para sistemas 32-bit."
+#~ msgstr "%s no se puede instalar. Puede que sea específico para sistemas 32-bit"
 
 #~ msgid "The software repository has changed. Refreshing applications lists"
 #~ msgstr "El repositorio de software ha cambiado. Actualizando lista de aplicaciones"
