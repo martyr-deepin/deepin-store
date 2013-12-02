@@ -38,7 +38,7 @@ msgstr "Destacadas"
 
 #: ../ui/home_page.py:760
 msgid "Topics"
-msgstr "Temáticas"
+msgstr "Por temática"
 
 #: ../ui/home_page.py:760
 msgid "Download rank"
@@ -124,7 +124,7 @@ msgstr "Desinstalar"
 
 #: ../ui/software_center.py:788
 msgid "Install Manage"
-msgstr "Descargas"
+msgstr "En progreso..."
 
 #: ../ui/software_center.py:812
 msgid "Refresh applications lists"
@@ -800,7 +800,7 @@ msgstr "Top 25 semanal"
 
 #: ../ui/download_rank_page.py:69
 msgid "Top 25 monthly"
-msgstr "Top 25 del mes"
+msgstr "Top 25 mensual"
 
 #: ../ui/download_rank_page.py:69
 msgid "Top 25 of all time"
@@ -820,7 +820,7 @@ msgstr "Versión:"
 
 #: ../ui/preference.py:490
 msgid "Deepin Software Center is a commonly used software center on Linux. It selected more than 2,600 decent applications and features easy installation and uninstall, software repository and recommended applications. It supports 1-click install, downloading packages with multi-thread and clearing up cached packages. It provides topics for software introduction and shares good applications. \n"
-msgstr "El Centro de Software Deepin es una excelente herramienta común a los sistemas Linux. Está provisto de más de 2.600 aplicaciones estupendas además de proporcionarnos una forma fácil de instalar, desinstalar aplicaciones así como compartir, comentar y agregar nuevos orígenes de software. Con tan sólo un click podrá instalar, descargar y limpiar paquetes de software etiquetados cómodamente por categorías para que resulte -aún más fácil- encontrar justo la aplicación que andabas buscando. \n"
+msgstr "El Centro de Software Deepin es usado en multitud de entornos Linux. Está provisto de más de 2.600 aplicaciones estupendas además de proporcionarnos una forma fácil de instalar, desinstalar aplicaciones así como compartir, comentar y agregar nuevos orígenes de software. Con tan sólo un click podrá instalar, descargar y limpiar paquetes de software etiquetados cómodamente por categorías para que resulte -aún más fácil- encontrar justo la aplicación que andabas buscando. \n"
 
 #: ../ui/preference.py:536
 msgid "General"
@@ -828,7 +828,7 @@ msgstr "General"
 
 #: ../ui/preference.py:537
 msgid "Software repository"
-msgstr "Orígenes de software"
+msgstr "Repositorios"
 
 #: ../ui/preference.py:538
 msgid "About"
@@ -876,7 +876,7 @@ msgstr "Configuración de descarga"
 
 #: ../ui/preference.py:736
 msgid "Max download task number: "
-msgstr "Máximo de tareas simultáneas: "
+msgstr "Descargas simultáneas: "
 
 #: ../ui/preference.py:746
 msgid "Download directory: "
@@ -884,7 +884,7 @@ msgstr "Carpeta de descargas: "
 
 #: ../ui/preference.py:752
 msgid "Change"
-msgstr "Modificar"
+msgstr "Otra..."
 
 #: ../ui/preference.py:768
 msgid "On uninstall software"
