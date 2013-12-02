@@ -56,11 +56,11 @@ msgstr "%s: request for starting applications sent"
 
 #: ../ui/software_center.py:196
 msgid "Sending comment..."
-msgstr "Enviando puntuación..."
+msgstr "Puntuando..."
 
 #: ../ui/software_center.py:200
 msgid "You have already sent a comment ;)"
-msgstr "Ya has puntuado este paquete ;)"
+msgstr "Ya puntuaste antes ;)"
 
 #: ../ui/software_center.py:206
 msgid "Comment was successful. Thanks for your involvement. :)"
@@ -72,7 +72,7 @@ msgstr "No hemos podido publicar tu comentario. Comprueba tu conexión a interne
 
 #: ../ui/software_center.py:429
 msgid "Generating local package database..."
-msgstr "Generando base de datos local de los paquetes..."
+msgstr "Generando base de datos sobre paquetes..."
 
 #: ../ui/software_center.py:437
 msgid "Successfully refreshed applications lists."
@@ -124,7 +124,7 @@ msgstr "Desinstalar"
 
 #: ../ui/software_center.py:788
 msgid "Install Manage"
-msgstr "En progreso..."
+msgstr "En progreso"
 
 #: ../ui/software_center.py:812
 msgid "Refresh applications lists"
@@ -919,7 +919,7 @@ msgstr "Desinstalando"
 
 #: ../ui/uninstall_page.py:566
 msgid "Uninstall successful"
-msgstr "Desinstalación completada"
+msgstr "Desinstalada"
 
 #: ../ui/install_page.py:134
 #, python-format
@@ -946,7 +946,7 @@ msgstr "Instalando"
 
 #: ../ui/install_page.py:741
 msgid "Installation complete"
-msgstr "Instalación completada"
+msgstr "Instalada"
 
 #, fuzzy
 #~ msgid "Update applications lists: [%s] %s"
