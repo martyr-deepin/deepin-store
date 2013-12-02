@@ -47,12 +47,12 @@ msgstr "Más descargadas"
 #: ../ui/software_center.py:127
 #, fuzzy, python-format
 msgid "%s haven't any desktop file"
-msgstr "%s haven't any desktop file"
+msgstr "%s no es un ejecutable"
 
 #: ../ui/software_center.py:135
 #, fuzzy, python-format
 msgid "%s: request for starting applications sent"
-msgstr "%s: request for starting applications sent"
+msgstr "%s: arrancando la aplicación"
 
 #: ../ui/software_center.py:196
 msgid "Sending comment..."
@@ -212,7 +212,7 @@ msgstr "Listado-Última actualización: "
 #: ../ui/upgrade_page.py:297
 #, fuzzy
 msgid "The source mirror: "
-msgstr "The source mirror: "
+msgstr "Mirror de descarga: "
 
 #: ../ui/upgrade_page.py:358
 msgid "Failed to download updates"
