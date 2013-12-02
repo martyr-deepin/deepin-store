@@ -45,12 +45,10 @@ msgid "Download rank"
 msgstr "Más descargadas"
 
 #: ../ui/software_center.py:127
-#, fuzzy, python-format
 msgid "%s haven't any desktop file"
 msgstr "%s no es un ejecutable"
 
 #: ../ui/software_center.py:135
-#, fuzzy, python-format
 msgid "%s: request for starting applications sent"
 msgstr "%s: arrancando la aplicación"
 
@@ -140,7 +138,7 @@ msgstr "Limpiar la caché de paquetes"
 
 #: ../ui/software_center.py:815
 msgid "View new features"
-msgstr "Ver las mejoras"
+msgstr "¡Nuevas funciones!"
 
 #: ../ui/software_center.py:816
 msgid "Preferences"
@@ -210,7 +208,6 @@ msgid "Last refresh app list time: "
 msgstr "Listado-Última actualización: "
 
 #: ../ui/upgrade_page.py:297
-#, fuzzy
 msgid "The source mirror: "
 msgstr "Mirror de descarga: "
 
@@ -868,7 +865,7 @@ msgstr "Actualizar cada: "
 
 #: ../ui/preference.py:707
 msgid " hour"
-msgstr " hora"
+msgstr " horas"
 
 #: ../ui/preference.py:730
 msgid "Download settings"
