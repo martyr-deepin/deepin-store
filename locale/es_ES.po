@@ -880,11 +880,11 @@ msgstr "Descargas simultáneas: "
 
 #: ../ui/preference.py:746
 msgid "Download directory: "
-msgstr "Carpeta de descargas: "
+msgstr "Guardar en: "
 
 #: ../ui/preference.py:752
 msgid "Change"
-msgstr "Otra..."
+msgstr "Seleccionar"
 
 #: ../ui/preference.py:768
 msgid "On uninstall software"
