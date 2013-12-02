@@ -516,7 +516,7 @@ msgstr "Reproductores"
 
 #: ../ui/category_info.py:42
 msgid "Recorder"
-msgstr "Grabadoras"
+msgstr "Grabación"
 
 #: ../ui/category_info.py:43
 msgid "Sequencer"
