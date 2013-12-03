@@ -46,5 +46,3 @@ class MessageBar(CycleStrip):
         
     def set_message(self, message):
         self.label.set_text(message)
-        
-        print message
