@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-29 09:59+0800\n"
+"POT-Creation-Date: 2013-12-03 17:24+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -784,11 +784,15 @@ msgstr ""
 msgid "Yesterday"
 msgstr ""
 
-#: ../ui/widgets.py:476
+#: ../ui/widgets.py:297 ../ui/widgets.py:373
+msgid "Click to refresh"
+msgstr ""
+
+#: ../ui/widgets.py:466
 msgid "OK"
 msgstr ""
 
-#: ../ui/widgets.py:477 ../ui/preference.py:450
+#: ../ui/widgets.py:467 ../ui/preference.py:450
 msgid "Cancel"
 msgstr ""
 

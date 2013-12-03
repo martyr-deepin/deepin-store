@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-29 09:59+0800\n"
+"POT-Creation-Date: 2013-12-03 17:24+0800\n"
 "PO-Revision-Date: 2013-12-02 19:14+0100\n"
 "Last-Translator: FerN Talavera <fejnartal@gmail.com>\n"
 "Language-Team: none\n"
@@ -72,6 +72,7 @@ msgstr ""
 "No hemos podido publicar tu comentario. Comprueba tu conexión a internet."
 
 #: ../ui/software_center.py:389
+#, python-format
 msgid "Uninstall %s Successfully."
 msgstr "%s desinstalada."
 
@@ -89,6 +90,7 @@ msgid "Upgrade"
 msgstr "Actualizar"
 
 #: ../ui/software_center.py:398
+#, python-format
 msgid "Install %s Successfully."
 msgstr "¡%s instalada!"
 
@@ -798,11 +800,15 @@ msgstr "Hace %s horas"
 msgid "Yesterday"
 msgstr "Ayer"
 
-#: ../ui/widgets.py:476
+#: ../ui/widgets.py:297 ../ui/widgets.py:373
+msgid "Click to refresh"
+msgstr ""
+
+#: ../ui/widgets.py:466
 msgid "OK"
 msgstr "OK"
 
-#: ../ui/widgets.py:477 ../ui/preference.py:450
+#: ../ui/widgets.py:467 ../ui/preference.py:450
 msgid "Cancel"
 msgstr "Cancelar"
 

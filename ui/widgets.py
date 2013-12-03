@@ -285,21 +285,16 @@ class NetworkConnectFailed(gtk.EventBox):
 
         
         self.connect("expose-event", self.on_expose_event)
+
+        self.lang = LANGUAGE if LANGUAGE != "es_ES" else "en_US"
         
-        if LANGUAGE == "zh_CN":
-            prefix = "cn"
-        elif LANGUAGE in ["zh_HK", "zh_TW"]:    
-            prefix = "tw"
-        else:    
-            prefix = "en"
-            
-        self.failed_dpixbuf = gtk.gdk.pixbuf_new_from_file(get_common_image("network/failed_%s.png" % prefix))
+        self.failed_dpixbuf = get_common_image_pixbuf("network/%s/failed.png" % self.lang)
         self.connect("motion-notify-event", self.on_motion_notify)
         self.connect("button-press-event", self.on_button_press)
         
         self.normal_text_dcolor = app_theme.get_color("labelText")
         self.hover_text_dcolor = app_theme.get_color("globalItemHighlight")
-        self.prompt_text = "点击此处刷新"
+        self.prompt_text = _("Click to refresh")
         self.text_padding_y = 5
         self.text_padding_x = 5
         self.text_rect = None
@@ -367,20 +362,15 @@ class NetworkConnectTimeout(gtk.EventBox):
         
         self.connect("expose-event", self.on_expose_event)
         
-        if LANGUAGE == "zh_CN":
-            prefix = "cn"
-        elif LANGUAGE in ["zh_HK", "zh_TW"]:    
-            prefix = "tw"
-        else:    
-            prefix = "en"
+        self.lang = LANGUAGE if LANGUAGE != "es_ES" else "en_US"
             
-        self.failed_dpixbuf = get_common_image_pixbuf("network/timeout_%s.png" % prefix)
+        self.failed_dpixbuf = get_common_image_pixbuf("network/%s/timeout.png" % self.lang)
         self.connect("motion-notify-event", self.on_motion_notify)
         self.connect("button-press-event", self.on_button_press)
         
         self.normal_text_dcolor = app_theme.get_color("labelText")
         self.hover_text_dcolor = app_theme.get_color("globalItemHighlight")
-        self.prompt_text = "点击此处刷新"
+        self.prompt_text = _("Click to refresh")
         self.text_padding_y = 5
         self.text_padding_x = 5
         self.text_rect = None

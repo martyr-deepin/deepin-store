@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-29 09:59+0800\n"
+"POT-Creation-Date: 2013-12-03 17:24+0800\n"
 "PO-Revision-Date: 2013-03-25 15:30+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -70,6 +70,7 @@ msgid "Comment was failed. Please check your network connection!"
 msgstr "评分失败，请检查您的网络连接！"
 
 #: ../ui/software_center.py:389
+#, python-format
 msgid "Uninstall %s Successfully."
 msgstr "卸载%s成功啦~"
 
@@ -87,6 +88,7 @@ msgid "Upgrade"
 msgstr "系统升级"
 
 #: ../ui/software_center.py:398
+#, python-format
 msgid "Install %s Successfully."
 msgstr "安装%s完成啦~"
 
@@ -785,11 +787,15 @@ msgstr "%s小时之前"
 msgid "Yesterday"
 msgstr "昨天"
 
-#: ../ui/widgets.py:476
+#: ../ui/widgets.py:297 ../ui/widgets.py:373
+msgid "Click to refresh"
+msgstr "点击此处刷新"
+
+#: ../ui/widgets.py:466
 msgid "OK"
 msgstr "确定"
 
-#: ../ui/widgets.py:477 ../ui/preference.py:450
+#: ../ui/widgets.py:467 ../ui/preference.py:450
 msgid "Cancel"
 msgstr "取消"
 
