@@ -20,10 +20,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import os
 import urllib2
 import json
-from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, cute_info_dir, SERVER_ADDRESS, POST_TIMEOUT
+from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, SERVER_ADDRESS, POST_TIMEOUT
 from skin import app_theme
 from dtk.ui.utils import get_content_size, set_cursor, container_remove_all, is_in_rect
 import gobject

@@ -25,7 +25,7 @@ import pango
 import time
 from datetime import datetime
 
-from utils import get_common_image, get_common_image_pixbuf
+from utils import get_common_image, get_common_image_pixbuf, get_common_locale_image_pixbuf
 from ui_utils import set_widget_vcenter
 from constant import LANGUAGE
 from skin import app_theme
@@ -286,9 +286,7 @@ class NetworkConnectFailed(gtk.EventBox):
         
         self.connect("expose-event", self.on_expose_event)
 
-        self.lang = LANGUAGE if LANGUAGE != "es_ES" else "en_US"
-        
-        self.failed_dpixbuf = get_common_image_pixbuf("network/%s/failed.png" % self.lang)
+        self.failed_dpixbuf = get_common_locale_image_pixbuf("network", "failed.png")
         self.connect("motion-notify-event", self.on_motion_notify)
         self.connect("button-press-event", self.on_button_press)
         
@@ -362,9 +360,7 @@ class NetworkConnectTimeout(gtk.EventBox):
         
         self.connect("expose-event", self.on_expose_event)
         
-        self.lang = LANGUAGE if LANGUAGE != "es_ES" else "en_US"
-            
-        self.failed_dpixbuf = get_common_image_pixbuf("network/%s/timeout.png" % self.lang)
+        self.failed_dpixbuf = get_common_locale_image_pixbuf("network", "timeout.png")
         self.connect("motion-notify-event", self.on_motion_notify)
         self.connect("button-press-event", self.on_button_press)
         

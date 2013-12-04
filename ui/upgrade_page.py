@@ -25,7 +25,7 @@
 import gtk
 import gobject
 import json
-from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, NO_NOTIFY_FILE, CHECK_BUTTON_PADDING_X, cute_info_dir
+from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, NO_NOTIFY_FILE, CHECK_BUTTON_PADDING_X
 import os
 from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.button import CheckButtonBuffer, ImageButton, CheckAllButton
@@ -857,7 +857,7 @@ class UpgradePage(gtk.VBox):
         rect = widget.allocation
         
         if self.update_list_pixbuf == None:
-            self.update_list_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(cute_info_dir, "upgrading.png"))
+            self.update_list_pixbuf = utils.get_common_locale_image_pixbuf("info", "upgrading.png")
         
         cr.set_source_rgb(1, 1, 1)
         cr.rectangle(rect.x, rect.y, rect.width, rect.height)
@@ -875,7 +875,7 @@ class UpgradePage(gtk.VBox):
         rect = widget.allocation
         
         if self.newest_pixbuf == None:
-            self.newest_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(cute_info_dir, "newest.png"))
+            self.newest_pixbuf = utils.get_common_locale_image_pixbuf("info", "newest.png")
         
         cr.set_source_rgb(1, 1, 1)
         cr.rectangle(rect.x, rect.y, rect.width, rect.height)
@@ -893,7 +893,7 @@ class UpgradePage(gtk.VBox):
         rect = widget.allocation
         
         if self.network_disable_pixbuf == None:
-            self.network_disable_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(cute_info_dir, "network_disable.png"))
+            self.network_disable_pixbuf = utils.get_common_locale_image_pixbuf("info", "network_disable.png")
         
         cr.set_source_rgb(1, 1, 1)
         cr.rectangle(rect.x, rect.y, rect.width, rect.height)

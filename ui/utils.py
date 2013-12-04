@@ -32,7 +32,7 @@ from zipfile import ZipFile
 
 from dtk.ui.label import Label
 from deepin_utils.config import Config
-from deepin_utils.file import touch_file, get_parent_dir
+from deepin_utils.file import touch_file
 
 from constant import (
         CONFIG_INFO_PATH, 
@@ -40,11 +40,12 @@ from constant import (
         DEFAULT_DOWNLOAD_DIRECTORY, 
         DEFAULT_DOWNLOAD_NUMBER, 
         PROGRAM_NAME,
+        dsc_root_dir,
+        LANGUAGE
         )
 from logger import newLogger
 from nls import _
 
-dsc_root_dir = os.path.realpath(get_parent_dir(__file__, 2))
 global_logger = newLogger('global')
 
 LOG_PATH = "/tmp/dsc-frontend.log"
@@ -103,9 +104,21 @@ def sort_for_home_page_data(infos):
 def get_common_image(name):
     return os.path.join(dsc_root_dir, "image", name)
 
+def get_common_locale_image(folder, name):
+    locale_image = os.path.join(dsc_root_dir, "image", folder, LANGUAGE, name)
+    if not os.path.exists(locale_image):
+        locale_image = os.path.join(dsc_root_dir, "image", folder, name)
+    return locale_image
+
 def get_common_image_pixbuf(name):
     if os.path.exists(get_common_image(name)):
         return gtk.gdk.pixbuf_new_from_file(get_common_image(name))
+    else:
+        return None
+
+def get_common_locale_image_pixbuf(folder, name):
+    if os.path.exists(get_common_locale_image(folder, name)):
+        return gtk.gdk.pixbuf_new_from_file(get_common_locale_image(folder, name))
     else:
         return None
 

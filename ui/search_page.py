@@ -28,9 +28,8 @@ from skin import app_theme
 from message_bar import MessageBar
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from dtk.ui.constant import DEFAULT_FONT_SIZE
-from dtk.ui.utils import cairo_state, is_in_rect, get_content_size
-from dtk.ui.utils import container_remove_all
-from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, cute_info_dir
+from dtk.ui.utils import cairo_state, is_in_rect, get_content_size, container_remove_all
+from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
 from dtk.ui.treeview import TreeView, TreeItem
 #from dtk.ui.star_view import StarBuffer
 from star_buffer import DscStarBuffer
@@ -47,6 +46,7 @@ from item_render import (render_pkg_icon, render_pkg_name, STAR_SIZE, get_star_l
 from events import global_event
 from nls import _
 from widgets import LoadingBox
+from utils import get_common_locale_image_pixbuf
 
 def handle_dbus_error(*error):
     print "handle_dbus_error: ", error
@@ -75,7 +75,7 @@ class SearchPage(gtk.VBox):
         self.treeview = TreeView(enable_drag_drop=False, expand_column=0)
 
         self.cute_message_image = gtk.VBox()
-        self.cute_message_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(cute_info_dir, "noresult.png"))
+        self.cute_message_pixbuf = get_common_locale_image_pixbuf("info", "noresult.png")
         self.cute_message_image.connect("expose-event", self.expose_cute_message_image)
 
         self.content_box.pack_start(self.message_bar, False, False)
