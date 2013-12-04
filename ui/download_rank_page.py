@@ -96,11 +96,6 @@ class DownloadRankPage(gtk.VBox):
         self.pack_start(self.tab_box_align, False, False)    
         self.pack_start(self.page_box, True, True)    
 
-        self.cute_message_image = gtk.VBox()
-        self.cute_message_image.set_size_request(-1, 312)
-        self.cute_message_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(cute_info_dir, "network_disable.png"))
-        self.cute_message_image.connect("expose-event", self.expose_cute_message_image)
-
         self.loading = LoadingBox()
 
         self.view_list =  [
@@ -118,22 +113,6 @@ class DownloadRankPage(gtk.VBox):
         gtk.timeout_add(300, self.get_pkgs_status)
 
         global_event.emit("update-rank-page", 0)
-
-    def expose_cute_message_image(self, widget, event):
-        if self.cute_message_pixbuf:
-            cr = widget.window.cairo_create()
-            rect = widget.allocation
-            
-            cr.set_source_rgba(1, 1, 1, 0)
-            cr.rectangle(rect.x, rect.y, rect.width, rect.height)
-            cr.fill()
-            
-            draw_pixbuf(
-                cr,
-                self.cute_message_pixbuf,
-                rect.x + (rect.width - self.cute_message_pixbuf.get_width()) / 2,
-                rect.y + (rect.height - self.cute_message_pixbuf.get_height()) / 2,
-                )
 
     def get_rank_pkg_names(self, data_type):
         pkg_names = []
@@ -206,7 +185,7 @@ class DownloadRankPage(gtk.VBox):
         self.page_align.add(self.loading)
 
         ThreadMethod(self.get_rank_pkg_names, (self.view_list[page_index][0],)).start()
-        self.show_all()    
+        self.show_all()
         
 gobject.type_register(DownloadRankPage)
 
