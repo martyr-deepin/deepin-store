@@ -980,7 +980,7 @@ class UpgradePage(gtk.VBox):
                 error_handler=lambda e:handle_dbus_error("request_upgrade_pkgs", e))
 
     def refresh_status(self, pkg_info_list):
-        self.upgrading_top_bar.shutdown_action()
+        gtk.timeout_add(2000, self.upgrading_top_bar.shutdown_action)
         self.show_loading_page()
         self.bus_interface.request_status(
                 reply_handler=lambda reply: self.request_status_reply_hander(
