@@ -75,3 +75,5 @@ PKG_SIZE_DOWNLOAD = 1
 PKG_SIZE_ERROR = 2
 
 dsc_root_dir = os.path.realpath(get_parent_dir(__file__, 2))
+
+SHUT_DOWN_DIALOG_PATH = '/usr/share/deepin-system-settings/modules/power/src/tray_shutdown_plugin.py'

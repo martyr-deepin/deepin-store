@@ -22,39 +22,45 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
 import gtk
 import gobject
 import json
-from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, NO_NOTIFY_FILE, CHECK_BUTTON_PADDING_X
-import os
+import subprocess
+
+from skin import app_theme
+
 from dtk.ui.treeview import TreeView, TreeItem
-from dtk.ui.button import CheckButtonBuffer, ImageButton, CheckAllButton
-from star_buffer import DscStarBuffer
+from dtk.ui.button import CheckButtonBuffer, ImageButton, CheckAllButton, CheckButton
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
-from deepin_utils.core import split_with
-from deepin_utils.net import is_network_connected
-from deepin_utils.file import read_file, format_file_size
 from dtk.ui.utils import is_in_rect, container_remove_all, get_content_size
 from dtk.ui.label import Label
 from dtk.ui.theme import DynamicPixbuf, DynamicColor
-from item_render import (render_pkg_info, STAR_SIZE, get_star_level, ITEM_PADDING_Y, get_icon_pixbuf_path,
-                         ITEM_INFO_AREA_WIDTH, ITEM_CANCEL_BUTTON_PADDING_RIGHT, NAME_SIZE, ICON_SIZE, ITEM_PADDING_MIDDLE,
-                         ITEM_STAR_AREA_WIDTH, ITEM_STATUS_TEXT_PADDING_RIGHT,
-                         ITEM_BUTTON_AREA_WIDTH, ITEM_BUTTON_PADDING_RIGHT, ITEM_PADDING_X,
-                         ITEM_HEIGHT, ITEM_CHECKBUTTON_WIDTH, ITEM_CHECKBUTTON_PADDING_X, ITEM_CHECKBUTTON_PADDING_Y,
-                         PROGRESSBAR_HEIGHT, ITEM_NO_NOTIFY_AREA_WIDTH, ITEM_NO_NOTIFY_STRING, ITEM_NO_NOTIFY_WIDTH, ITEM_NO_NOTIFY_HEIGHT,
-                         ITEM_NOTIFY_AGAIN_STRING, ITEM_NOTIFY_AGAIN_WIDTH, ITEM_NOTIFY_AGAIN_HEIGHT,
-                         )
-from skin import app_theme
 from dtk.ui.progressbar import ProgressBuffer, ProgressBar
-from events import global_event
-from constant import ACTION_UPGRADE
 from dtk.ui.cycle_strip import CycleStrip
 import dtk.ui.tooltip as Tooltip
-from utils import get_last_upgrade_time, handle_dbus_error, handle_dbus_reply
+from deepin_utils.core import split_with
+from deepin_utils.net import is_network_connected
+from deepin_utils.file import read_file, format_file_size
+
 import utils
 from nls import _
 import widgets
+from events import global_event
+from star_buffer import DscStarBuffer
+from constant import (BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, NO_NOTIFY_FILE,
+        CHECK_BUTTON_PADDING_X, SHUT_DOWN_DIALOG_PATH, ACTION_UPGRADE )
+from item_render import (render_pkg_info, STAR_SIZE, get_star_level, ITEM_PADDING_Y, 
+        get_icon_pixbuf_path, ITEM_INFO_AREA_WIDTH, ITEM_CANCEL_BUTTON_PADDING_RIGHT,
+        NAME_SIZE, ICON_SIZE, ITEM_PADDING_MIDDLE, ITEM_STAR_AREA_WIDTH, 
+        ITEM_STATUS_TEXT_PADDING_RIGHT, ITEM_BUTTON_AREA_WIDTH, 
+        ITEM_BUTTON_PADDING_RIGHT, ITEM_PADDING_X, ITEM_HEIGHT, 
+        ITEM_CHECKBUTTON_WIDTH, ITEM_CHECKBUTTON_PADDING_X, 
+        ITEM_CHECKBUTTON_PADDING_Y, PROGRESSBAR_HEIGHT, ITEM_NO_NOTIFY_AREA_WIDTH,
+        ITEM_NO_NOTIFY_STRING, ITEM_NO_NOTIFY_WIDTH, ITEM_NO_NOTIFY_HEIGHT,
+        ITEM_NOTIFY_AGAIN_STRING, ITEM_NOTIFY_AGAIN_WIDTH, ITEM_NOTIFY_AGAIN_HEIGHT,
+    )
+from utils import handle_dbus_error, handle_dbus_reply
 
 class UpgradingBar(gtk.HBox):
     '''
@@ -267,6 +273,38 @@ class NoNotifyBar(gtk.HBox):
         
 gobject.type_register(NoNotifyBar)        
 
+class UpgradingTopBar(gtk.HBox):
+    def __init__(self):
+        gtk.HBox.__init__(self)
+
+        self.is_shutdown_button = CheckButton()
+        self.is_shutdown_button.connect("toggled", self.is_shutdown_button_toggled)
+        self.is_shutdown_button_align = gtk.Alignment()
+        self.is_shutdown_button_align.set(0.0, 0.5, 0, 0)
+        self.is_shutdown_button_align.set_padding(0, 0, 10, 0)
+        self.is_shutdown_button_align.add(self.is_shutdown_button)
+
+        self.message_label = Label(_("Shut down the computer after upgrade"))
+        self.message_label_align = gtk.Alignment()
+        self.message_label_align.set(0.0, 0.5, 0, 0)
+        self.message_label_align.set_padding(0, 0, 0, 0)
+        self.message_label_align.add(self.message_label)
+        
+        self.pack_start(self.is_shutdown_button_align, False, False)
+        self.pack_start(self.message_label_align, False, False)
+
+    def is_shutdown_button_toggled(self, widget=None):
+        if self.is_shutdown_button.get_active():
+            if not self.is_system_shutdown_dialog_exists():
+                self.message_label.set_text(_("Deepin System Settings is not installed, this function is not work!"))
+
+    def is_system_shutdown_dialog_exists(self):
+        return os.path.exists(SHUT_DOWN_DIALOG_PATH)
+
+    def shutdown_action(self):
+        if self.is_shutdown_button.get_active() and self.is_system_shutdown_dialog_exists():
+            subprocess.Popen(["python", SHUT_DOWN_DIALOG_PATH, "shutdown"], stderr=subprocess.STDOUT, shell=False)
+
 class UpgradingBox(gtk.VBox):
     def __init__(self, preference_dialog):
         gtk.VBox.__init__(self)
@@ -290,7 +328,7 @@ class UpgradingBox(gtk.VBox):
         bottom_info_box.attach(self.recent_update_time, 1, 2, 0, 1, xoptions=gtk.FILL, xpadding=0, ypadding=4)
 
         recent_upgrade_time_label = utils.create_right_align_label(_("Last upgraded time: "))
-        self.recent_upgrade_time = widgets.HumanTimeTip(get_last_upgrade_time())
+        self.recent_upgrade_time = widgets.HumanTimeTip(utils.get_last_upgrade_time())
         bottom_info_box.attach(recent_upgrade_time_label, 0, 1, 1, 2, xoptions=gtk.FILL, xpadding=0, ypadding=4)
         bottom_info_box.attach(self.recent_upgrade_time, 1, 2, 1, 2, xoptions=gtk.FILL, xpadding=0, ypadding=4)
 
@@ -415,7 +453,7 @@ class UpgradingBox(gtk.VBox):
         container_remove_all(self.progress_box_align)
         self.progress_box_align.add(self.progress_box)
         self.recent_update_time.timestamp = utils.get_last_update_time()
-        self.recent_upgrade_time.timestamp = get_last_upgrade_time()
+        self.recent_upgrade_time.timestamp = utils.get_last_upgrade_time()
         """
         if self.preference_dialog.current_mirror_item:
             self.software_mirror = utils.create_left_align_label( 
@@ -508,6 +546,7 @@ class UpgradePage(gtk.VBox):
         self.no_notify_bar = NoNotifyBar()
         self.newest_bar = NewestBar()
         self.upgrading_bar = UpgradingBar()
+        self.upgrading_top_bar = UpgradingTopBar()
         
         self.cycle_strip = CycleStrip(app_theme.get_pixbuf("strip/background.png"))
         
@@ -529,7 +568,8 @@ class UpgradePage(gtk.VBox):
         self.upgrade_treeview = TreeView(enable_drag_drop=False)
         self.upgrade_treeview.set_expand_column(1)
         self.upgrade_treeview.connect("items-change", self.monitor_upgrade_view)
-        self.upgrade_treeview.connect("items-change", lambda treeview: global_event.emit("update-upgrade-notify-number", len(treeview.visible_items)))
+        self.upgrade_treeview.connect("items-change", lambda treeview: global_event.emit(
+            "update-upgrade-notify-number", len(treeview.visible_items)))
         
         
         self.no_notify_treeview = TreeView(enable_drag_drop=False)
@@ -594,7 +634,8 @@ class UpgradePage(gtk.VBox):
                 select_pkg_names.append(item.pkg_name)
         return select_pkg_names
 
-        #self.upgrade_bar.select_button.update_status(map(lambda item: item.check_button_buffer.active, self.upgrade_treeview.visible_items))
+        #self.upgrade_bar.select_button.update_status(map(lambda item: 
+            #item.check_button_buffer.active, self.upgrade_treeview.visible_items))
 
     def update_download_size_info(self, info):
         size, change_pkg_names = info
@@ -620,7 +661,8 @@ class UpgradePage(gtk.VBox):
         global_event.emit("set-cursor", None)
         
     def click_notify_check_button(self):
-        self.no_notify_bar.select_button.update_status(map(lambda item: item.check_button_buffer.active, self.no_notify_treeview.visible_items))
+        self.no_notify_bar.select_button.update_status(map(lambda item: 
+            item.check_button_buffer.active, self.no_notify_treeview.visible_items))
     
     def show_init_page(self):
         if len(self.upgrade_treeview.visible_items) == 0:
@@ -654,6 +696,10 @@ class UpgradePage(gtk.VBox):
 
     def show_upgrading_view(self):
         container_remove_all(self)
+        container_remove_all(self.cycle_strip)
+
+        self.cycle_strip.add(self.upgrading_top_bar)
+        self.pack_start(self.cycle_strip, False, False)
         self.pack_start(self.upgrading_view)
         self.upgrading_view.update()
 
@@ -837,20 +883,6 @@ class UpgradePage(gtk.VBox):
         pkg_items = filter(lambda item: item not in self.upgrade_treeview.visible_items, pkg_items)
         self.upgrade_treeview.add_items(pkg_items)        
         
-    def render_upgrade_progress(self):
-        if len(self.upgrade_progress_status) > 0:
-            self.current_progress = self.upgrade_progress_status[0]
-            self.upgrade_progress_status = self.upgrade_progress_status[1::]
-            
-            self.current_progress = "%.2f" % float(self.current_progress)
-            self.upgrading_bar.set_upgrading_message(_("Refresh applications lists %s%%") % self.current_progress)
-            
-        return True    
-        
-    def update_upgrade_progress(self, percent):
-        gtk.timeout_add(500, self.render_upgrade_progress)
-        self.upgrade_progress_status.append(percent)
-        
     def expose_update_view(self, widget, event):
         # Init.
         cr = widget.window.cairo_create()
@@ -948,6 +980,7 @@ class UpgradePage(gtk.VBox):
                 error_handler=lambda e:handle_dbus_error("request_upgrade_pkgs", e))
 
     def refresh_status(self, pkg_info_list):
+        self.upgrading_top_bar.shutdown_action()
         self.show_loading_page()
         self.bus_interface.request_status(
                 reply_handler=lambda reply: self.request_status_reply_hander(

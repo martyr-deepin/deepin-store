@@ -426,7 +426,6 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                         )
 
             elif signal_type == "update-list-update":
-                upgrade_page.update_upgrade_progress(action_content[0])
                 percent = "[%i%%] " % float(action_content[0])
                 status = str(action_content[1])
                 speed_str = str(action_content[2])
