@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-03 17:24+0800\n"
+"POT-Creation-Date: 2013-12-05 14:02+0800\n"
 "PO-Revision-Date: 2013-03-25 15:30+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -27,7 +27,7 @@ msgstr "%s: %s款软件"
 msgid "%s > %s : %s applications"
 msgstr "%s > %s: %s款软件"
 
-#: ../ui/home_page.py:729 ../ui/software_center.py:793
+#: ../ui/home_page.py:729 ../ui/software_center.py:792
 msgid "Home"
 msgstr "首页推荐"
 
@@ -74,7 +74,7 @@ msgstr "评分失败，请检查您的网络连接！"
 msgid "Uninstall %s Successfully."
 msgstr "卸载%s成功啦~"
 
-#: ../ui/software_center.py:389 ../ui/software_center.py:795
+#: ../ui/software_center.py:389 ../ui/software_center.py:794
 msgid "Uninstall"
 msgstr "卸载软件"
 
@@ -83,7 +83,7 @@ msgstr "卸载软件"
 msgid "%s packages upgrade Successfully."
 msgstr "%s个软件包升级成功啦～"
 
-#: ../ui/software_center.py:395 ../ui/software_center.py:794
+#: ../ui/software_center.py:395 ../ui/software_center.py:793
 msgid "Upgrade"
 msgstr "系统升级"
 
@@ -96,89 +96,89 @@ msgstr "安装%s完成啦~"
 msgid "Install"
 msgstr "安装软件"
 
-#: ../ui/software_center.py:437
+#: ../ui/software_center.py:436
 msgid "Generating local package database..."
 msgstr "正在生成软件列表数据库..."
 
-#: ../ui/software_center.py:445
+#: ../ui/software_center.py:444
 msgid "Successfully refreshed applications lists."
 msgstr "软件列表更新完成!"
 
-#: ../ui/software_center.py:457
+#: ../ui/software_center.py:456
 msgid "Failed to refresh applications lists."
 msgstr "软件列表更新失败!"
 
-#: ../ui/software_center.py:458
+#: ../ui/software_center.py:457
 msgid "Try again"
 msgstr "重试"
 
-#: ../ui/software_center.py:468
+#: ../ui/software_center.py:467
 #, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted"
 msgstr "分析%s依赖出现问题， 安装停止"
 
-#: ../ui/software_center.py:471
+#: ../ui/software_center.py:470
 #, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
 msgstr "分析%s依赖出现问题， 升级停止"
 
-#: ../ui/software_center.py:476
+#: ../ui/software_center.py:475
 #, python-format
 msgid "The requested package \"%s\" was not found in the package list."
 msgstr "请求软件包\"%s\"在当前系统软件列表中不存在。"
 
-#: ../ui/software_center.py:477
+#: ../ui/software_center.py:476
 msgid "Refresh the package list and try again."
 msgstr "刷新软件列表后重试"
 
-#: ../ui/software_center.py:661
+#: ../ui/software_center.py:660
 #, fuzzy
 msgid "Information"
 msgstr "模拟"
 
-#: ../ui/software_center.py:737 ../ui/preference.py:468
+#: ../ui/software_center.py:736 ../ui/preference.py:468
 msgid "Deepin Software Center"
 msgstr "软件中心"
 
-#: ../ui/software_center.py:774
+#: ../ui/software_center.py:773
 msgid "Join us"
 msgstr "加入我们"
 
-#: ../ui/software_center.py:796
+#: ../ui/software_center.py:795
 msgid "Install Manage"
 msgstr "安装管理"
 
-#: ../ui/software_center.py:820
+#: ../ui/software_center.py:819
 msgid "Refresh applications lists"
 msgstr "更新软件列表"
 
-#: ../ui/software_center.py:821
+#: ../ui/software_center.py:820
 msgid "Open download directory"
 msgstr "打开下载目录"
 
-#: ../ui/software_center.py:822
+#: ../ui/software_center.py:821
 msgid "Clear up cached packages"
 msgstr "智能清理下载文件"
 
-#: ../ui/software_center.py:823
+#: ../ui/software_center.py:822
 msgid "View new features"
 msgstr "显示新功能"
 
-#: ../ui/software_center.py:824
+#: ../ui/software_center.py:823
 msgid "Preferences"
 msgstr "选项"
 
-#: ../ui/software_center.py:825
+#: ../ui/software_center.py:824
 msgid "Quit"
 msgstr "退出"
 
-#: ../ui/software_center.py:1132
+#: ../ui/software_center.py:1131
 #, python-format
 msgid "You have cleared up %s pakcages and saved %s of space"
 msgstr "恭喜您清理了%s个软件包，共节约了%s空间"
 
-#: ../ui/software_center.py:1134
+#: ../ui/software_center.py:1133
 msgid "Your system is clean."
 msgstr "您的系统已经很干净了，不需要清理."
 
@@ -187,85 +187,94 @@ msgstr "您的系统已经很干净了，不需要清理."
 msgid "%s: %s matched applications"
 msgstr "%s: 搜索到%s款软件"
 
-#: ../ui/search_page.py:285 ../ui/detail_page.py:436 ../ui/install_page.py:479
+#: ../ui/search_page.py:285 ../ui/detail_page.py:436 ../ui/install_page.py:480
 msgid "Successfully installed"
 msgstr "已安装"
 
-#: ../ui/upgrade_page.py:70 ../ui/upgrade_page.py:99 ../ui/upgrade_page.py:292
+#: ../ui/upgrade_page.py:76 ../ui/upgrade_page.py:105
+#: ../ui/upgrade_page.py:330
 msgid "Last upgraded time: "
 msgstr "最近更新时间："
 
-#: ../ui/upgrade_page.py:128 ../ui/upgrade_page.py:200
+#: ../ui/upgrade_page.py:134 ../ui/upgrade_page.py:206
 #, python-format
 msgid "Unwatched (%s)"
 msgstr "不再提醒升级(%s)"
 
-#: ../ui/upgrade_page.py:174
+#: ../ui/upgrade_page.py:180
 msgid "Upgrade select items"
 msgstr "升级所选软件"
 
-#: ../ui/upgrade_page.py:196
+#: ../ui/upgrade_page.py:202
 #, python-format
 msgid "%s applications are available for upgrade"
 msgstr "当前可升级软件共 %s 款"
 
-#: ../ui/upgrade_page.py:230 ../ui/item_render.py:46
+#: ../ui/upgrade_page.py:236 ../ui/item_render.py:46
 msgid "Watch again"
 msgstr "重新提醒"
 
-#: ../ui/upgrade_page.py:264
+#: ../ui/upgrade_page.py:270
 #, python-format
 msgid "%s applications are not being watched"
 msgstr "有%s款软件不再提醒"
 
-#: ../ui/upgrade_page.py:280
+#: ../ui/upgrade_page.py:287
+msgid "Shut down the computer after upgrade"
+msgstr "更新完成后关闭计算机"
+
+#: ../ui/upgrade_page.py:299
+msgid "Deepin System Settings is not installed, this function is not work!"
+msgstr "未安装深度系统设置，本功能无效！"
+
+#: ../ui/upgrade_page.py:318
 msgid "Downloading updates"
 msgstr "正在下载更新"
 
-#: ../ui/upgrade_page.py:287
+#: ../ui/upgrade_page.py:325
 msgid "Last refresh app list time: "
 msgstr "最近更新软件列表时间："
 
-#: ../ui/upgrade_page.py:297
+#: ../ui/upgrade_page.py:335
 msgid "The source mirror: "
 msgstr "接收更新源："
 
-#: ../ui/upgrade_page.py:351
+#: ../ui/upgrade_page.py:389
 msgid "Failed to download updates"
 msgstr "更新下载失败"
 
-#: ../ui/upgrade_page.py:353
+#: ../ui/upgrade_page.py:391
 msgid "The requested package does not exsist on server."
 msgstr "请求的软件包在服务器上不存在。"
 
-#: ../ui/upgrade_page.py:354 ../ui/upgrade_page.py:375
-#: ../ui/upgrade_page.py:396
+#: ../ui/upgrade_page.py:392 ../ui/upgrade_page.py:413
+#: ../ui/upgrade_page.py:434
 msgid "Suggest to "
 msgstr "建议"
 
-#: ../ui/upgrade_page.py:355 ../ui/upgrade_page.py:376
-#: ../ui/upgrade_page.py:397
+#: ../ui/upgrade_page.py:393 ../ui/upgrade_page.py:414
+#: ../ui/upgrade_page.py:435
 msgid "refresh applications lists"
 msgstr "刷新软件列表"
 
-#: ../ui/upgrade_page.py:356 ../ui/upgrade_page.py:377
-#: ../ui/upgrade_page.py:398
+#: ../ui/upgrade_page.py:394 ../ui/upgrade_page.py:415
+#: ../ui/upgrade_page.py:436
 msgid " and try again."
 msgstr "后，再尝试更新。"
 
-#: ../ui/upgrade_page.py:371
+#: ../ui/upgrade_page.py:409
 msgid "Failed to install updates"
 msgstr "安装更新失败"
 
-#: ../ui/upgrade_page.py:373
+#: ../ui/upgrade_page.py:411
 msgid "This may be because your local dependencies are corrupted."
 msgstr "出现这种情况的原因可能是本地依赖被破坏"
 
-#: ../ui/upgrade_page.py:392
+#: ../ui/upgrade_page.py:430
 msgid "Warning"
 msgstr "警告"
 
-#: ../ui/upgrade_page.py:394
+#: ../ui/upgrade_page.py:432
 msgid ""
 "Crucial components will be uninstalled. This may be because your local "
 "dependencies are corrupted, or incorrect dependencies on server."
@@ -273,108 +282,103 @@ msgstr ""
 "本次升级要卸载重要的系统组件，出现这种情况的原因可能是本地依赖被破坏，或者服"
 "务端软件包依赖不正确"
 
-#: ../ui/upgrade_page.py:433
+#: ../ui/upgrade_page.py:471
 msgid "If the problem persists, you may wish to "
 msgstr "根据上面的建议，如果您尝试后依然看到本提示，您可以"
 
-#: ../ui/upgrade_page.py:434 ../ui/upgrade_page.py:460
+#: ../ui/upgrade_page.py:472 ../ui/upgrade_page.py:498
 msgid "Send Error Report"
 msgstr "上报错误"
 
-#: ../ui/upgrade_page.py:435
+#: ../ui/upgrade_page.py:473
 msgid "."
 msgstr "。"
 
-#: ../ui/upgrade_page.py:448
+#: ../ui/upgrade_page.py:486
 msgid "Uploading error log"
 msgstr "正在上传错误日志"
 
-#: ../ui/upgrade_page.py:453
+#: ../ui/upgrade_page.py:491
 msgid "The error was successfully reported and will be soon handled."
 msgstr "错误上报成功，感谢您的支持，我们会尽快修复您上报的错误。"
 
-#: ../ui/upgrade_page.py:459
+#: ../ui/upgrade_page.py:497
 msgid "Failed to send the error report. You may wish to try again. "
 msgstr "错误上报失败，您可以再次尝试"
 
-#: ../ui/upgrade_page.py:618
+#: ../ui/upgrade_page.py:659
 #, python-format
 msgid "%s updates are selected. %s will be downloaded."
 msgstr "已经选择%s个更新，将会下载%s。"
 
-#: ../ui/upgrade_page.py:846
-#, python-format
-msgid "Refresh applications lists %s%%"
-msgstr "更新软件列表 %s%%"
-
-#: ../ui/upgrade_page.py:1039
+#: ../ui/upgrade_page.py:1072
 msgid "Analyzing dependencies..."
 msgstr "分析依赖..."
 
-#: ../ui/upgrade_page.py:1042
+#: ../ui/upgrade_page.py:1075
 msgid "Finished analyzing dependencies."
 msgstr "依赖分析完成"
 
-#: ../ui/upgrade_page.py:1045
+#: ../ui/upgrade_page.py:1078
 msgid "Download has started..."
 msgstr "开始下载..."
 
-#: ../ui/upgrade_page.py:1051
+#: ../ui/upgrade_page.py:1084
 #, python-format
 msgid "Completed: %s/%s (%s/%s) Download rate: %s/s"
 msgstr "已完成：%s/%s (%s/%s) 下载速度：%s/s"
 
-#: ../ui/upgrade_page.py:1061
+#: ../ui/upgrade_page.py:1094
 msgid "Download finished."
 msgstr "下载完成!"
 
-#: ../ui/upgrade_page.py:1065
+#: ../ui/upgrade_page.py:1098
 msgid "Download stopped."
 msgstr "下载停止！"
 
-#: ../ui/upgrade_page.py:1068
+#: ../ui/upgrade_page.py:1101
 msgid "Failed to analyze dependencies."
 msgstr "依赖分析失败!"
 
-#: ../ui/upgrade_page.py:1072
+#: ../ui/upgrade_page.py:1105
 msgid "Installing updates"
 msgstr "正在安装更新"
 
-#: ../ui/upgrade_page.py:1073
+#: ../ui/upgrade_page.py:1106
 msgid "Updating..."
 msgstr "开始更新..."
 
-#: ../ui/upgrade_page.py:1080
+#: ../ui/upgrade_page.py:1113
 msgid "Upgrade finished."
 msgstr "升级完成!"
 
-#: ../ui/upgrade_page.py:1442 ../ui/upgrade_page.py:1561
-#: ../ui/install_page.py:688
+#: ../ui/upgrade_page.py:1475 ../ui/upgrade_page.py:1594
+#: ../ui/install_page.py:689
 msgid "Waiting for download"
 msgstr "等待下载"
 
-#: ../ui/upgrade_page.py:1554 ../ui/install_page.py:311
-#: ../ui/install_page.py:681
+#: ../ui/upgrade_page.py:1587 ../ui/install_page.py:312
+#: ../ui/install_page.py:682
 msgid "Analyzing dependencies"
 msgstr "分析依赖中"
 
-#: ../ui/upgrade_page.py:1568 ../ui/install_page.py:695
+#: ../ui/upgrade_page.py:1601 ../ui/install_page.py:696
 msgid "Downloading"
 msgstr "下载中"
 
-#: ../ui/upgrade_page.py:1584
+#: ../ui/upgrade_page.py:1617
 msgid "Waiting for upgrade"
 msgstr "等待升级"
 
-#: ../ui/upgrade_page.py:1594 ../ui/install_page.py:721
+#: ../ui/upgrade_page.py:1627 ../ui/install_page.py:722
 msgid "Analyzing dependencies failed"
 msgstr "分析依赖失败"
 
-#: ../ui/upgrade_page.py:1603 ../ui/upgrade_page.py:1610
+#: ../ui/upgrade_page.py:1636 ../ui/upgrade_page.py:1643
 msgid "Upgrading"
 msgstr "升级中"
 
-#: ../ui/upgrade_page.py:1619
+#: ../ui/upgrade_page.py:1652
 msgid "Upgrade complete"
 msgstr "升级完成"
 
@@ -421,43 +425,43 @@ msgstr "大小：%s"
 msgid "Powered by 又拍云存储"
 msgstr "Powered by 又拍云存储"
 
-#: ../ui/utils.py:291
+#: ../ui/utils.py:304
 msgid "Running"
 msgstr "正在运行"
 
-#: ../ui/utils.py:292
+#: ../ui/utils.py:305
 msgid "Preparing"
 msgstr "正在准备"
 
-#: ../ui/utils.py:293
+#: ../ui/utils.py:306
 msgid "Unpacking"
 msgstr "正在解压缩"
 
-#: ../ui/utils.py:294
+#: ../ui/utils.py:307
 msgid "Preparing to configure"
 msgstr "正在准备配置"
 
-#: ../ui/utils.py:295
+#: ../ui/utils.py:308
 msgid "Configuring"
 msgstr "正在配置"
 
-#: ../ui/utils.py:296
+#: ../ui/utils.py:309
 msgid "Installed"
 msgstr "已安装"
 
-#: ../ui/utils.py:306
+#: ../ui/utils.py:319
 msgid "Err"
 msgstr "忽略"
 
-#: ../ui/utils.py:307
+#: ../ui/utils.py:320
 msgid "Ign"
 msgstr "忽略"
 
-#: ../ui/utils.py:308
+#: ../ui/utils.py:321
 msgid "Get"
 msgstr "获取"
 
-#: ../ui/utils.py:309
+#: ../ui/utils.py:322
 msgid "Hit"
 msgstr "命中"
 
@@ -787,27 +791,27 @@ msgstr "%s小时之前"
 msgid "Yesterday"
 msgstr "昨天"
 
-#: ../ui/widgets.py:297 ../ui/widgets.py:373
+#: ../ui/widgets.py:295 ../ui/widgets.py:369
 msgid "Click to refresh"
 msgstr "点击此处刷新"
 
-#: ../ui/widgets.py:466
+#: ../ui/widgets.py:462
 msgid "OK"
 msgstr "确定"
 
-#: ../ui/widgets.py:467 ../ui/preference.py:450
+#: ../ui/widgets.py:463 ../ui/preference.py:450
 msgid "Cancel"
 msgstr "取消"
 
-#: ../ui/download_rank_page.py:69
+#: ../ui/download_rank_page.py:68
 msgid "Top 25 weekly"
 msgstr "周排行Top25"
 
-#: ../ui/download_rank_page.py:69
+#: ../ui/download_rank_page.py:68
 msgid "Top 25 monthly"
 msgstr "月排行Top25"
 
-#: ../ui/download_rank_page.py:69
+#: ../ui/download_rank_page.py:68
 msgid "Top 25 of all time"
 msgstr "总排行Top25"
 
@@ -938,30 +942,33 @@ msgstr "卸载中"
 msgid "Uninstall successful"
 msgstr "卸载完成"
 
-#: ../ui/install_page.py:137
+#: ../ui/install_page.py:138
 #, python-format
 msgid "%s applications are being installed"
 msgstr "%s款软件正在安装"
 
-#: ../ui/install_page.py:597 ../ui/install_page.py:609
+#: ../ui/install_page.py:598 ../ui/install_page.py:610
 msgid "Download was interrupted"
 msgstr "下载被终止"
 
-#: ../ui/install_page.py:619
+#: ../ui/install_page.py:620
 msgid "Installation was interrupted"
 msgstr "安装被终止"
 
-#: ../ui/install_page.py:711
+#: ../ui/install_page.py:712
 msgid "Waiting for installation"
 msgstr "等待安装"
 
-#: ../ui/install_page.py:730 ../ui/install_page.py:737
+#: ../ui/install_page.py:731 ../ui/install_page.py:738
 msgid "Installing"
 msgstr "安装中"
 
-#: ../ui/install_page.py:746
+#: ../ui/install_page.py:747
 msgid "Installation complete"
 msgstr "安装完成"
+
+#~ msgid "Refresh applications lists %s%%"
+#~ msgstr "更新软件列表 %s%%"
 
 #~ msgid "Update applications lists: [%s] %s"
 #~ msgstr "更新软件列表: [%s] %s"
