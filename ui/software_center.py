@@ -820,8 +820,8 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
              (None, _("Open download directory"), self.open_download_directory),
              (None, _("Clear up cached packages"), self.clean_download_cache),
              (None, _("View new features"), lambda : self.show_wizard_win()),
-             (None, _("Preferences"), self.show_preference_dialog),
-             (None, _("Quit"), self.exit),
+             (self.get_pixbuf_group("menu", "setting"), _("Preferences"), self.show_preference_dialog),
+             (self.get_pixbuf_group("menu", "close"), _("Quit"), self.exit),
              ],
             is_root_menu=True,
             menu_min_width=menu_min_width,
@@ -842,6 +842,12 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
             self.init_home_page()
 
         self.loginfo("Finish Init UI: %s" % (time.time()-start, ))
+
+    def get_pixbuf_group(self, folder, name):
+        return (app_theme.get_pixbuf("%s/%s_normal.png" % (folder, name)),
+                app_theme.get_pixbuf("%s/%s_hover.png" % (folder, name)),
+                app_theme.get_pixbuf("%s/%s_disable.png" % (folder, name)),
+                )
 
     def application_close_window(self, widget=None, event=None):
         if utils.get_backend_running():
