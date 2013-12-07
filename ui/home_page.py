@@ -64,17 +64,18 @@ CATEGORY_ITEM_NAME_WIDTH = -1
 CATEGORY_ITEM_HEIGHT = 42
 
 if LANGUAGE == 'en_US' or LANGUAGE == 'es_ES':
-    CATEGORY_ITEM_NAME_SIZE = 9
+    CATEGORY_ITEM_NAME_SIZE = 10
     SECOND_CATEGORY_ITEM_NAME_SIZE = 8
     SECOND_CATEGORY_PADDING_X = 26
+    CATEGORY_ITEM_EXPAND_PADDING_X = 25
 else:
     CATEGORY_ITEM_NAME_SIZE = 11
     SECOND_CATEGORY_ITEM_NAME_SIZE = 10
     SECOND_CATEGORY_PADDING_X = 46
+    CATEGORY_ITEM_EXPAND_PADDING_X = 30
 
 SECOND_CATEGORY_ITEM_HEIGHT = 30
 
-CATEGORY_ITEM_EXPAND_PADDING_X = 30
 
 LOAD_ITEMS_NUMBER = 20
 
@@ -766,7 +767,7 @@ class RecommendItem(TreeItem):
         self.slider_switcher.connect("leave-notify-index", lambda w, i: global_event.emit("set-cursor", None))
 
         self.recommend_infos = sort_for_home_page_data(data['recommend'])
-        self.tab_switcher = TabSwitcher([_("Hot applications"), _("Topics"), _("Download rank")])
+        self.tab_switcher = TabSwitcher([_("Hot applications"), _("Topics"), _("Download rank")], CATEGORY_ITEM_NAME_SIZE)
         self.tab_switcher_align = gtk.Alignment()
         self.tab_switcher_align.set(0.5, 0.5, 1, 1)
         self.tab_switcher_align.set_padding(10, 0, 0, 9)
