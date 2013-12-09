@@ -213,11 +213,15 @@ class DataManager(object):
         return infos    
     
     def is_pkg_have_desktop_file(self, pkg_name):
+        if pkg_name.endswith(":i386"):
+            pkg_name = pkg_name[:-5]
         self.desktop_db_cursor.execute(
             "SELECT desktop_path FROM desktop WHERE pkg_name=?", [pkg_name])
         return self.desktop_db_cursor.fetchone()
 
     def is_pkg_display_in_uninstall_page(self, pkg_name):
+        if pkg_name.endswith(":i386"):
+            pkg_name = pkg_name[:-5]
         self.desktop_db_cursor.execute(
             "SELECT display_flag FROM desktop WHERE pkg_name=?", [pkg_name])
         return self.desktop_db_cursor.fetchone()
