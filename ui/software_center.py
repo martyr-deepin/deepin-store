@@ -164,6 +164,7 @@ def hide_message(message_label):
 def request_status_reply_hander(result, install_page, upgrade_page, uninstall_page, pkg_info_list=None):
     (download_status, action_status) = map(eval, result)
     
+    print download_status, action_status
     install_page.update_download_status(download_status[ACTION_INSTALL])
     install_page.update_action_status(action_status[ACTION_INSTALL])
     
@@ -682,6 +683,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         global debug_flag
         debug_flag = "--debug" in arguments
         self.in_wizard_showing = False
+        self.init_hide = False
 
     def exit(self):
         gtk.main_quit()
@@ -887,7 +889,8 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
             self.init_ui()
         else:    
             self.init_ui()
-            self.application.window.show_all()
+            if not self.init_hide:
+                self.application.window.show_all()
         #self.paned_box.bottom_window.set_composited(True)
         gtk.main()    
         
@@ -910,7 +913,8 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
             callback
             )
         self.wizard.set_icon(utils.get_common_image_pixbuf("logo48.png"))
-        self.wizard.show_all()
+        if not self.init_hide:
+            self.wizard.show_all()
         
     def wizard_callback(self):
         self.in_wizard_showing = False
@@ -967,8 +971,8 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         # Handle global event.
         global_event.register_event("install-pkg", lambda pkg_names: install_pkg(
             self.bus_interface, self.install_page, pkg_names, self.application.window))
-        global_event.register_event("upgrade-pkg", self.upgrade_pkg)
-        global_event.register_event("uninstall-pkg", lambda pkg_name, purge_flag: self.uninstall_pkg(pkg_name, purge_flag, self.install_page))
+        global_event.register_event("upgrade-pkg", self.upgrade_pkgs)
+        global_event.register_event("uninstall-pkg", lambda pkg_name, purge_flag: self.uninstall_pkg(pkg_name, purge_flag))
         global_event.register_event("stop-download-pkg", self.bus_interface.stop_download_pkg)
         global_event.register_event("switch-to-detail-page", lambda pkg_name : switch_to_detail_page(self.page_switcher, self.detail_page, pkg_name))
         global_event.register_event("switch-from-detail-page", lambda : switch_from_detail_page(self.page_switcher, self.detail_page, self.page_box))
@@ -1044,13 +1048,14 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         command = ['python', status_icon_window_path]
         subprocess.Popen(command, stderr=subprocess.STDOUT, shell=False)
 
-    def uninstall_pkg(self, pkg_name, purge_flag, install_page):
+    @dbus.service.method(DSC_FRONTEND_NAME, in_signature="sb", out_signature="")
+    def uninstall_pkg(self, pkg_name, purge_flag):
         self.bus_interface.uninstall_pkg(pkg_name, purge_flag,
                 reply_handler=lambda :handle_dbus_reply("uninstall_pkg"),
                 error_handler=lambda e:handle_dbus_error("uninstall_pkg", e))
         SendUninstallCount(pkg_name).start()
         
-        install_page.delete_item_match_pkgname(pkg_name)
+        self.install_page.delete_item_match_pkgname(pkg_name)
 
     def init_download_manager(self, v=5):
         self.bus_interface.init_download_manager(
@@ -1118,11 +1123,11 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
                 reply_handler=lambda :handle_dbus_reply("start_update_list"),
                 error_handler=lambda e:handle_dbus_error("start_update_list", e),)
 
-    def upgrade_pkg(self, pkg_names):
+    def upgrade_pkgs(self, pkg_names):
         self.bus_interface.upgrade_pkgs_with_new_policy(
                 pkg_names, 
-                reply_handler=lambda :handle_dbus_reply("upgrade_pkg"), 
-                error_handler=lambda e:handle_dbus_error("upgrade_pkg", e))
+                reply_handler=lambda :handle_dbus_reply("upgrade_pkgs"), 
+                error_handler=lambda e:handle_dbus_error("upgrade_pkgs", e))
         return False
 
     def clean_download_cache(self):
@@ -1152,8 +1157,30 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         self.loginfo('Data id removed')
 
     @dbus.service.method(DSC_FRONTEND_NAME, in_signature="", out_signature="")
-    def hello(self):
+    def request_exit(self):
+        self.exit()
+        self.bus_interface.request_quit(
+                reply_handler=lambda :handle_dbus_reply("request_quit"), 
+                error_handler=lambda e:handle_dbus_error("request_quit", e))
+        data_exit()
+        self.loginfo('Data id removed')
+
+    @dbus.service.method(DSC_FRONTEND_NAME, in_signature="as", out_signature="")
+    def install_pkgs(self, pkg_names):
+        for pkg_name in pkg_names:
+            print pkg_name
+            self.install_page.download_wait(pkg_name)
+        create_thread(lambda : self.bus_interface.install_pkg(
+                                    pkg_names, 
+                                    reply_handler=lambda :handle_dbus_reply("install_pkg"), 
+                                    error_handler=lambda e:handle_dbus_error("install_pkg", e))).start()
+        for pkg_name in pkg_names:
+            SendDownloadCount(pkg_name).start()
+
+    @dbus.service.method(DSC_FRONTEND_NAME, in_signature="", out_signature="")
+    def raise_to_top(self):
         if not self.in_wizard_showing:
+            self.application.window.show_all()
             self.application.raise_to_top()
         else:
             self.wizard.present()

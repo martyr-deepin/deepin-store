@@ -15,3 +15,6 @@ echo "Remove /usr/bin/deepin-software-center-backend.py"
 chmod +x `pwd`/main.py
 ln -s `pwd`/main.py /usr/bin/deepin-software-center-backend.py
 echo "Build symbol link for service file"
+
+cp ../../com.linuxdeepin.softwarecenter_frontend.service /usr/share/dbus-1/services/
+echo "Copy frontend services file to /usr/share/dbus-1/services/"

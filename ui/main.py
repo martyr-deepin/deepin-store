@@ -44,7 +44,7 @@ def start_main():
         
         bus_object = session_bus.get_object(DSC_FRONTEND_NAME, DSC_FRONTEND_PATH)
         bus_interface = dbus.Interface(bus_object, DSC_FRONTEND_NAME)
-        bus_interface.hello(arguments)
+        bus_interface.raise_to_top()
         if options.show_page:
             bus_interface.show_page(options.show_page)
     else:
@@ -56,6 +56,8 @@ def start_main():
             gtk.timeout_add(500, lambda:software_center.show_page(options.show_page))
         if options.show_recommend:
             software_center.recommend_status = options.show_recommend
+        if options.start_quiet:
+            software_center.init_hide = True
 
         try:
             software_center.run()
@@ -68,6 +70,8 @@ def get_parser():
             help="show four page: home, upgrade, uninstall, install", metavar="pages")
     parser.add_option("--home-recommend", dest="show_recommend",
             help="show home page with status", metavar="status")
+    parser.add_option("-q", "--quiet", action="store_true", dest="start_quiet",
+            help="start deepin software center in quiet mode")
     (options, args) = parser.parse_args()
     return (options, args)
 

@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=com.linuxdeepin.softwarecenter_frontend
+Exec=/usr/bin/deepin-software-center -q
