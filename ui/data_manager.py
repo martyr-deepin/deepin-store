@@ -1,11 +1,13 @@
-#! /usr/bin/env python
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
-
+#
 # Copyright (C) 2011 ~ 2012 Deepin, Inc.
 #               2011 ~ 2012 Wang Yong
+#               2012 ~ 2013 Kaisheng Ye
 # 
 # Author:     Wang Yong <lazycat.manatee@gmail.com>
 # Maintainer: Wang Yong <lazycat.manatee@gmail.com>
+#             Kaisheng Ye <kaisheng.ye@gmail.com>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -188,8 +190,16 @@ class DataManager(object):
         result = self.software_db_cursor.fetchone()
         
         if result == None:
-            print "FIXME: get_pkg_search_info got %s data out of repo database" % (pkg_name)
-            return (pkg_name, "FIXME", "FIXME", 5.0)
+            if hasattr(self, 'cache_soft_db_cursor'):
+                self.cache_soft_db_cursor.execute(
+                    "SELECT short_desc, long_desc FROM software WHERE pkg_name=?",
+                    [pkg_name])
+                info = self.cache_soft_db_cursor.fetchone()
+                if info:
+                    (short_desc, long_desc) = info
+                    return (pkg_name, short_desc, long_desc, 5.0)
+                else:
+                    return (pkg_name, "FIXME", "FIXME", 5.0)
         else:
             (alias_name, short_desc, long_desc) = result
             return (alias_name, short_desc, long_desc, 5.0)
@@ -355,7 +365,7 @@ class DataManager(object):
         for keyword in keywords:
             match_names = self.get_pkgs_match_input(keyword)
             for name in match_names:
-                if name not in all_results and name.encode('utf-8').split(":i386") == 1:
+                if name not in all_results:
                     all_results.append(name)
         return all_results
 
