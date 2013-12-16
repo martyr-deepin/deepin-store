@@ -107,7 +107,7 @@ def get_common_image(name):
 def get_common_locale_image(folder, name):
     locale_image = os.path.join(dsc_root_dir, "image", folder, LANGUAGE, name)
     if not os.path.exists(locale_image):
-        locale_image = os.path.join(dsc_root_dir, "image", folder, name)
+        locale_image = os.path.join(dsc_root_dir, "image", folder, "en_US", name)
     return locale_image
 
 def get_common_image_pixbuf(name):
