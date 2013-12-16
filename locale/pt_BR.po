@@ -1,21 +1,24 @@
-# English translations for PACKAGE package.
-# Copyright (C) 2013 THE PACKAGE'S COPYRIGHT HOLDER
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Automatically generated, 2013.
 #
+# Translators:
+# Automatically generated, 2013
+# 648trindade <rafaelgt.mbin@gmail.com>, 2013
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-16 09:30+0800\n"
-"PO-Revision-Date: 2013-05-28 15:52+0800\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: en_US\n"
+"PO-Revision-Date: 2013-12-14 04:33+0000\n"
+"Last-Translator: 648trindade <rafaelgt.mbin@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
+"deepin-software-center/language/pt_BR/)\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../ui/detail_page.py:175
 msgid "Also in the category..."
@@ -62,7 +65,7 @@ msgstr "Size: %s"
 
 #: ../ui/detail_page.py:600
 msgid "Powered by 又拍云存储"
-msgstr "Powered by 又拍云存储"
+msgstr "Agilizado por 又拍云存储"
 
 #: ../ui/uninstall_page.py:160
 #, python-format
@@ -154,145 +157,136 @@ msgstr "%s applications are not being watched"
 
 #: ../ui/upgrade_page.py:287
 msgid "Shut down the computer after upgrade"
-msgstr ""
+msgstr "Desligar o computador após atualização"
 
 #: ../ui/upgrade_page.py:299
 msgid "Deepin System Settings is not installed, this function is not work!"
-msgstr ""
+msgstr "Deepin System Settings não está instalado, essa função não funcionará!"
 
 #: ../ui/upgrade_page.py:318
-#, fuzzy
 msgid "Downloading updates"
-msgstr "Downloading"
+msgstr "Baixando atualização"
 
 #: ../ui/upgrade_page.py:325
 msgid "Last refresh app list time: "
-msgstr ""
+msgstr "Tempo da ultima atualização da lista de aplicativos:"
 
 #: ../ui/upgrade_page.py:335
 msgid "The source mirror: "
-msgstr ""
+msgstr "Espelho da fonte"
 
 #: ../ui/upgrade_page.py:389
 msgid "Failed to download updates"
-msgstr ""
+msgstr "Falha ao baixar atualização"
 
 #: ../ui/upgrade_page.py:391
 msgid "The requested package does not exsist on server."
-msgstr ""
+msgstr "O pacote requisitado não existe no servidor"
 
 #: ../ui/upgrade_page.py:392 ../ui/upgrade_page.py:413
 #: ../ui/upgrade_page.py:434
 msgid "Suggest to "
-msgstr ""
+msgstr "Sugerir para"
 
 #: ../ui/upgrade_page.py:393 ../ui/upgrade_page.py:414
 #: ../ui/upgrade_page.py:435
-#, fuzzy
 msgid "refresh applications lists"
-msgstr "Refresh application list"
+msgstr "Atualizar lista de aplicações"
 
 #: ../ui/upgrade_page.py:394 ../ui/upgrade_page.py:415
 #: ../ui/upgrade_page.py:436
-#, fuzzy
 msgid " and try again."
-msgstr "Try again"
+msgstr "Tentar novamente"
 
 #: ../ui/upgrade_page.py:409
 msgid "Failed to install updates"
-msgstr ""
+msgstr "Falha ao instalar atualização"
 
 #: ../ui/upgrade_page.py:411
 msgid "This may be because your local dependencies are corrupted."
-msgstr ""
+msgstr "Isso pode ocorrer porque suas dependencias locais estão corrompidas"
 
 #: ../ui/upgrade_page.py:430
 msgid "Warning"
-msgstr ""
+msgstr "Atenção"
 
 #: ../ui/upgrade_page.py:432
 msgid ""
 "Crucial components will be uninstalled. This may be because your local "
 "dependencies are corrupted, or incorrect dependencies on server."
 msgstr ""
+"Componentes cruciais serão desinstalados. Isso pode ocorrer porque suas "
+"dependencias locais estão corrompidas"
 
 #: ../ui/upgrade_page.py:471
 msgid "If the problem persists, you may wish to "
-msgstr ""
+msgstr "Se o problema persistir, você pode optar por"
 
 #: ../ui/upgrade_page.py:472 ../ui/upgrade_page.py:498
 msgid "Send Error Report"
-msgstr ""
+msgstr "Enviar relatório de erro"
 
 #: ../ui/upgrade_page.py:473
 msgid "."
-msgstr ""
+msgstr "."
 
 #: ../ui/upgrade_page.py:486
 msgid "Uploading error log"
-msgstr ""
+msgstr "Enviando log de erro"
 
 #: ../ui/upgrade_page.py:491
 msgid "The error was successfully reported and will be soon handled."
-msgstr ""
+msgstr "O relatorio do erro foi enviado com sucesso e será analizádo."
 
 #: ../ui/upgrade_page.py:497
 msgid "Failed to send the error report. You may wish to try again. "
-msgstr ""
+msgstr "Falha ao enviar relatório de erro. Você pode querer tentar novamente"
 
 #: ../ui/upgrade_page.py:659
 #, python-format
 msgid "%s updates are selected. %s will be downloaded."
-msgstr ""
+msgstr "%s atualizações foram selecionadas. %s serão baixadas."
 
 #: ../ui/upgrade_page.py:1072
-#, fuzzy
 msgid "Analyzing dependencies..."
-msgstr "Analyzing dependencies"
+msgstr "Analizando dependencias"
 
 #: ../ui/upgrade_page.py:1075
-#, fuzzy
 msgid "Finished analyzing dependencies."
-msgstr "Analyzing dependencies"
+msgstr "Analise de dependencia finalizada"
 
 #: ../ui/upgrade_page.py:1078
-#, fuzzy
 msgid "Download has started..."
-msgstr "Download was interrupted"
+msgstr "O download foi iniciado"
 
 #: ../ui/upgrade_page.py:1084
 #, python-format
 msgid "Completed: %s/%s (%s/%s) Download rate: %s/s"
-msgstr ""
+msgstr "Completo:%s/%s(%s/%s) Taixa de download: %s/s"
 
 #: ../ui/upgrade_page.py:1094
-#, fuzzy
 msgid "Download finished."
-msgstr "Downloading"
+msgstr "Download finalizado"
 
 #: ../ui/upgrade_page.py:1098
-#, fuzzy
 msgid "Download stopped."
-msgstr "Download: %s"
+msgstr "Download parado"
 
 #: ../ui/upgrade_page.py:1101
-#, fuzzy
 msgid "Failed to analyze dependencies."
-msgstr "Analyzing dependencies"
+msgstr "Falha ao analizar dependencias."
 
 #: ../ui/upgrade_page.py:1105
-#, fuzzy
 msgid "Installing updates"
-msgstr "Installing"
+msgstr "Instalando atualizações"
 
 #: ../ui/upgrade_page.py:1106
 msgid "Updating..."
-msgstr ""
+msgstr "Enviando..."
 
 #: ../ui/upgrade_page.py:1113
-#, fuzzy
 msgid "Upgrade finished."
-msgstr "Upgrade Info"
+msgstr "Atualização completa"
 
 #: ../ui/upgrade_page.py:1617
 msgid "Waiting for upgrade"
@@ -330,7 +324,6 @@ msgstr "Browser"
 msgid "Instant messaging"
 msgstr "Instant messaging"
 
-# 需调整宽度
 #: ../ui/category_info.py:29
 msgid "Email"
 msgstr "Email"
@@ -463,7 +456,6 @@ msgstr "3D graphics"
 msgid "Image processing"
 msgstr "Image processing"
 
-# 调整宽度
 #: ../ui/category_info.py:62
 msgid "Photography"
 msgstr "Photography"
@@ -548,7 +540,6 @@ msgstr "IDE"
 msgid "Software development"
 msgstr "Software development"
 
-# 调整宽度
 #: ../ui/category_info.py:83
 msgid "Version control"
 msgstr "Version control"
@@ -557,7 +548,6 @@ msgstr "Version control"
 msgid "Web development"
 msgstr "Web development"
 
-# 调整宽度
 #: ../ui/category_info.py:85
 msgid "System"
 msgstr "System"
@@ -566,7 +556,6 @@ msgstr "System"
 msgid "Desktop environment"
 msgstr "Desktop environment"
 
-# 调整宽度
 #: ../ui/category_info.py:87
 msgid "Monitor"
 msgstr "Monitor"
@@ -591,7 +580,6 @@ msgstr "Virtualization"
 msgid "Window manager"
 msgstr "Window manager"
 
-# 调整宽度
 #: ../ui/category_info.py:93
 msgid "Utilities"
 msgstr "Utilities"
@@ -620,7 +608,6 @@ msgstr "Screensaver"
 msgid "Terminal emulator"
 msgstr "Terminal emulator"
 
-# 调整宽度
 #: ../ui/category_info.py:100
 msgid "Text editor"
 msgstr "Text editor"
@@ -628,12 +615,12 @@ msgstr "Text editor"
 #: ../ui/home_page.py:485
 #, python-format
 msgid "%s: %s applications"
-msgstr "%s: %s applications"
+msgstr "%s: %s aplicações"
 
 #: ../ui/home_page.py:674
 #, python-format
 msgid "%s > %s : %s applications"
-msgstr "%s > %s : %s applications"
+msgstr "%s > %s : %s aplicações"
 
 #: ../ui/home_page.py:730 ../ui/software_center.py:794
 msgid "Home"
@@ -641,49 +628,49 @@ msgstr "Home"
 
 #: ../ui/home_page.py:770
 msgid "Hot applications"
-msgstr "Hot APP"
+msgstr "Aplicações preferidas"
 
 #: ../ui/home_page.py:770
 msgid "Topics"
-msgstr "Topics"
+msgstr "Topicos"
 
 #: ../ui/home_page.py:770
 msgid "Download rank"
-msgstr "Download rank"
+msgstr "Ranking de download"
 
 #: ../ui/widgets.py:66
 msgid "Just now"
-msgstr ""
+msgstr "Agora"
 
 #: ../ui/widgets.py:71
 msgid "One minute ago"
-msgstr ""
+msgstr "Um minuto atraz"
 
 #: ../ui/widgets.py:73
 #, python-format
 msgid "%s minutes ago"
-msgstr ""
+msgstr "%s minutos atraz"
 
 #: ../ui/widgets.py:78
 msgid "One hour ago"
-msgstr ""
+msgstr "Uma hora atraz"
 
 #: ../ui/widgets.py:80
 #, python-format
 msgid "%s hours ago"
-msgstr ""
+msgstr "%s horas atraz"
 
 #: ../ui/widgets.py:84
 msgid "Yesterday"
-msgstr ""
+msgstr "Ontem"
 
 #: ../ui/widgets.py:295 ../ui/widgets.py:369
 msgid "Click to refresh"
-msgstr ""
+msgstr "Clique para atualizar"
 
 #: ../ui/widgets.py:462
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: ../ui/widgets.py:463 ../ui/preference.py:450
 msgid "Cancel"
@@ -715,37 +702,37 @@ msgstr "Installed"
 
 #: ../ui/utils.py:319
 msgid "Err"
-msgstr ""
+msgstr "Desviar"
 
 #: ../ui/utils.py:320
 msgid "Ign"
-msgstr ""
+msgstr "Ign"
 
 #: ../ui/utils.py:321
 msgid "Get"
-msgstr ""
+msgstr "Pegar"
 
 #: ../ui/utils.py:322
 msgid "Hit"
-msgstr ""
+msgstr "Dica"
 
 #: ../ui/software_center.py:130
 #, python-format
 msgid "%s haven't any desktop file"
-msgstr "%s haven't any desktop file"
+msgstr "%s não há nenhum arquivo para desktop"
 
 #: ../ui/software_center.py:138
 #, python-format
 msgid "%s: request for starting applications sent"
-msgstr "%s: request for starting applications sent"
+msgstr "%s: solicitar inicialização de aplicação"
 
 #: ../ui/software_center.py:200
 msgid "Sending comment..."
-msgstr "Sending comment..."
+msgstr "Enviando comentario"
 
 #: ../ui/software_center.py:204
 msgid "You have already sent a comment ;)"
-msgstr "You have already sent a comment ;)"
+msgstr "Você já enviou um comentário ;)"
 
 #: ../ui/software_center.py:210
 msgid "Comment was successful. Thanks for your involvement. :)"
@@ -756,9 +743,9 @@ msgid "Comment was failed. Please check your network connection!"
 msgstr "Comment failed. Please check your network connection!"
 
 #: ../ui/software_center.py:390
-#, fuzzy, python-format
+#, python-format
 msgid "Uninstall %s Successfully."
-msgstr "Uninstall successful"
+msgstr "Desinstalados %s com sucesso."
 
 #: ../ui/software_center.py:390 ../ui/software_center.py:796
 msgid "Uninstall"
@@ -767,25 +754,24 @@ msgstr "Uninstall"
 #: ../ui/software_center.py:396
 #, python-format
 msgid "%s packages upgrade Successfully."
-msgstr ""
+msgstr "%s pacotes atualizados com sucesso."
 
 #: ../ui/software_center.py:396 ../ui/software_center.py:795
 msgid "Upgrade"
 msgstr "Upgrade"
 
 #: ../ui/software_center.py:399
-#, fuzzy, python-format
+#, python-format
 msgid "Install %s Successfully."
-msgstr "Uninstall successful"
+msgstr "Instalados %s com sucesso."
 
 #: ../ui/software_center.py:399
-#, fuzzy
 msgid "Install"
-msgstr "Installed"
+msgstr "Instalar"
 
 #: ../ui/software_center.py:437
 msgid "Generating local package database..."
-msgstr ""
+msgstr "Gerando base local de pacotes..."
 
 #: ../ui/software_center.py:445
 msgid "Successfully refreshed applications lists."
@@ -814,17 +800,15 @@ msgstr "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
 #: ../ui/software_center.py:476
 #, python-format
 msgid "The requested package \"%s\" was not found in the package list."
-msgstr ""
+msgstr "O pacote solicitado \"%s\" não foi encontrado na lista de pacotes."
 
 #: ../ui/software_center.py:477
-#, fuzzy
 msgid "Refresh the package list and try again."
-msgstr "Refresh application list"
+msgstr "Atualizar lista de pacotes e tentar novamente"
 
 #: ../ui/software_center.py:661
-#, fuzzy
 msgid "Information"
-msgstr "Emulation"
+msgstr "Informação"
 
 #: ../ui/software_center.py:738 ../ui/preference.py:468
 msgid "Deepin Software Center"
@@ -989,43 +973,3 @@ msgstr "Select Directory"
 #, python-format
 msgid "%s: %s matched applications"
 msgstr "%s: %s matched applications"
-
-#~ msgid "Refresh applications lists %s%%"
-#~ msgstr "Refresh application lists %s%%"
-
-#, fuzzy
-#~ msgid "Update applications lists: [%s] %s"
-#~ msgstr "Update application lists: %s"
-
-#~ msgid "%s cannot be installed on 64-bit system."
-#~ msgstr "%s cannot be installed on 64-bit system."
-
-#~ msgid "%s cannot be installed. It might be a x86_64 specific package"
-#~ msgstr "%s cannot be installed. It might be a x86_64 specific package"
-
-#~ msgid "The software repository has changed. Refreshing applications lists"
-#~ msgstr "The software repository has changed. Refreshing application list"
-
-#~ msgid "Run in background"
-#~ msgstr "Run in background"
-
-#~ msgid "Refreshing applications lists"
-#~ msgstr "Refreshing application list"
-
-#~ msgid "Select fastest mirror"
-#~ msgstr "Select fastest mirror"
-
-#, fuzzy
-#~ msgid "Last upgrade time: "
-#~ msgstr "Last time upgraded: "
-
-#~ msgid "Option"
-#~ msgstr "Option"
-
-# second category name size
-#~ msgid "10"
-#~ msgstr "8"
-
-# first category name size
-#~ msgid "11"
-#~ msgstr "9"

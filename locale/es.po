@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-05 14:02+0800\n"
+"POT-Creation-Date: 2013-12-16 09:30+0800\n"
 "PO-Revision-Date: 2013-12-02 19:14+0100\n"
 "Last-Translator: FerN Talavera <fejnartal@gmail.com>\n"
 "Language-Team: none\n"
@@ -18,183 +18,113 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: ../ui/home_page.py:484
+#: ../ui/detail_page.py:175
+msgid "Also in the category..."
+msgstr "También en la categoría..."
+
+#: ../ui/detail_page.py:236 ../ui/detail_page.py:483
+msgid "Loading comments..."
+msgstr "Cargando comentarios..."
+
+#: ../ui/detail_page.py:350
 #, python-format
-msgid "%s: %s applications"
-msgstr "%s: %s aplicaciones"
+msgid "Download: %s"
+msgstr "Descarga: %s"
 
-#: ../ui/home_page.py:673
+#: ../ui/detail_page.py:389
+msgid "Category: "
+msgstr "Categoría: "
+
+#: ../ui/detail_page.py:393
 #, python-format
-msgid "%s > %s : %s applications"
-msgstr "%s > %s : %s aplicaciones"
+msgid "Version: %s"
+msgstr "Versión: %s"
 
-#: ../ui/home_page.py:729 ../ui/software_center.py:792
-msgid "Home"
-msgstr "Inicio"
+#: ../ui/detail_page.py:394
+msgid "Download: 0"
+msgstr "Descargas: 0"
 
-#: ../ui/home_page.py:769
-msgid "Hot applications"
-msgstr "Destacadas"
+#: ../ui/detail_page.py:395
+msgid "Size: calculating..."
+msgstr "Tamaño: calculando..."
 
-#: ../ui/home_page.py:769
-msgid "Topics"
-msgstr "Por temática"
+#: ../ui/detail_page.py:399
+msgid "Visit Homepage"
+msgstr "Visita su Web"
 
-#: ../ui/home_page.py:769
-msgid "Download rank"
-msgstr "Más descargadas"
-
-#: ../ui/software_center.py:130
-#, fuzzy, python-format
-msgid "%s haven't any desktop file"
-msgstr "%s no es un ejecutable"
-
-#: ../ui/software_center.py:138
-#, fuzzy, python-format
-msgid "%s: request for starting applications sent"
-msgstr "%s: arrancando la aplicación"
-
-#: ../ui/software_center.py:199
-msgid "Sending comment..."
-msgstr "Comentando..."
-
-#: ../ui/software_center.py:203
-msgid "You have already sent a comment ;)"
-msgstr "Ya comentaste antes ;)"
-
-#: ../ui/software_center.py:209
-msgid "Comment was successful. Thanks for your involvement. :)"
-msgstr "Tu comentario se ha enviado. Muchas gracias por participar. :)"
-
-#: ../ui/software_center.py:225
-msgid "Comment was failed. Please check your network connection!"
-msgstr ""
-"No hemos podido publicar tu comentario. Comprueba tu conexión a internet."
-
-#: ../ui/software_center.py:389
-#, python-format
-msgid "Uninstall %s Successfully."
-msgstr "%s desinstalada."
-
-#: ../ui/software_center.py:389 ../ui/software_center.py:794
-msgid "Uninstall"
-msgstr "Desinstalar"
-
-#: ../ui/software_center.py:395
-#, python-format
-msgid "%s packages upgrade Successfully."
-msgstr "%s actualizadas satisfactoriamente."
-
-#: ../ui/software_center.py:395 ../ui/software_center.py:793
-msgid "Upgrade"
-msgstr "Actualizar"
-
-#: ../ui/software_center.py:398
-#, python-format
-msgid "Install %s Successfully."
-msgstr "¡%s instalada!"
-
-#: ../ui/software_center.py:398
-msgid "Install"
-msgstr "Instalar"
-
-#: ../ui/software_center.py:436
-msgid "Generating local package database..."
-msgstr "Generando base de datos sobre paquetes..."
-
-#: ../ui/software_center.py:444
-msgid "Successfully refreshed applications lists."
-msgstr "La lista de aplicaciones se ha actualizado correctamente."
-
-#: ../ui/software_center.py:456
-msgid "Failed to refresh applications lists."
-msgstr "No se pudo actualizar la lista de aplicaciones."
-
-#: ../ui/software_center.py:457
-msgid "Try again"
-msgstr "Vuelva a intentarlo"
-
-#: ../ui/software_center.py:467
-#, python-format
-msgid ""
-"Problem occurred when analyzing dependencies for %s. Installation aborted"
-msgstr ""
-"Se encontraron errores al analizar las dependencias para %s. Instalación "
-"cancelada"
-
-#: ../ui/software_center.py:470
-#, python-format
-msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
-msgstr ""
-"Se encontraron errores al analizar las dependencias para %s. Actualización "
-"cancelada"
-
-#: ../ui/software_center.py:475
-#, python-format
-msgid "The requested package \"%s\" was not found in the package list."
-msgstr "El paquete \"%s\" no se ha podido encontrar en la lista de paquetes."
-
-#: ../ui/software_center.py:476
-msgid "Refresh the package list and try again."
-msgstr "Actualiza la lista de paquetes y reintenta"
-
-#: ../ui/software_center.py:660
-msgid "Information"
-msgstr "Información"
-
-#: ../ui/software_center.py:736 ../ui/preference.py:468
-msgid "Deepin Software Center"
-msgstr "Deepin - Centro de Software"
-
-#: ../ui/software_center.py:773
-msgid "Join us"
-msgstr "Únete"
-
-#: ../ui/software_center.py:795
-msgid "Install Manage"
-msgstr "En progreso"
-
-#: ../ui/software_center.py:819
-msgid "Refresh applications lists"
-msgstr "Actualizar la lista de aplicaciones"
-
-#: ../ui/software_center.py:820
-msgid "Open download directory"
-msgstr "Abrir carpeta de descargas"
-
-#: ../ui/software_center.py:821
-msgid "Clear up cached packages"
-msgstr "Limpiar la caché de paquetes"
-
-#: ../ui/software_center.py:822
-msgid "View new features"
-msgstr "¡Nuevas funciones!"
-
-#: ../ui/software_center.py:823
-msgid "Preferences"
-msgstr "Configuración"
-
-#: ../ui/software_center.py:824
-msgid "Quit"
-msgstr "Salir"
-
-#: ../ui/software_center.py:1131
-#, python-format
-msgid "You have cleared up %s pakcages and saved %s of space"
-msgstr "¡Hemos limpiado %s paquetes ahorrando %s de espacio en disco!"
-
-#: ../ui/software_center.py:1133
-msgid "Your system is clean."
-msgstr "Tu sistema está limpio."
-
-#: ../ui/search_page.py:109
-#, python-format
-msgid "%s: %s matched applications"
-msgstr "%s: %s aplicaciones relacionadas"
-
-#: ../ui/search_page.py:285 ../ui/detail_page.py:436 ../ui/install_page.py:480
+#: ../ui/detail_page.py:436 ../ui/install_page.py:480 ../ui/search_page.py:285
 msgid "Successfully installed"
 msgstr "Instalación satisfactoria"
+
+#: ../ui/detail_page.py:460
+#, python-format
+msgid "Size: %s"
+msgstr "Tamaño: %s"
+
+#: ../ui/detail_page.py:600
+#, fuzzy
+msgid "Powered by 又拍云存储"
+msgstr "Powered by 又拍云存储"
+
+#: ../ui/uninstall_page.py:160
+#, python-format
+msgid "%s applications can be uninstalled"
+msgstr "%s aplicaciones instaladas"
+
+#: ../ui/uninstall_page.py:464 ../ui/uninstall_page.py:547
+msgid "Waiting for uninstall"
+msgstr "Esperando la desinstalación"
+
+#: ../ui/uninstall_page.py:554 ../ui/uninstall_page.py:561
+msgid "Uninstalling"
+msgstr "Desinstalando"
+
+#: ../ui/uninstall_page.py:568
+msgid "Uninstall successful"
+msgstr "Desinstalada"
+
+#: ../ui/install_page.py:138
+#, python-format
+msgid "%s applications are being installed"
+msgstr "%s aplicaciones se están instalando"
+
+#: ../ui/install_page.py:312 ../ui/install_page.py:682
+#: ../ui/upgrade_page.py:1587
+msgid "Analyzing dependencies"
+msgstr "Analizando dependencias"
+
+#: ../ui/install_page.py:598 ../ui/install_page.py:610
+msgid "Download was interrupted"
+msgstr "Se ha interrumpido la descarga"
+
+#: ../ui/install_page.py:620
+msgid "Installation was interrupted"
+msgstr "Se ha interrumpido la instalación"
+
+#: ../ui/install_page.py:689 ../ui/upgrade_page.py:1475
+#: ../ui/upgrade_page.py:1594
+msgid "Waiting for download"
+msgstr "Esperando la descarga"
+
+#: ../ui/install_page.py:696 ../ui/upgrade_page.py:1601
+msgid "Downloading"
+msgstr "Descargando"
+
+#: ../ui/install_page.py:712
+msgid "Waiting for installation"
+msgstr "Esperando la instalación"
+
+#: ../ui/install_page.py:722 ../ui/upgrade_page.py:1627
+msgid "Analyzing dependencies failed"
+msgstr "Análisis de dependencias fallido"
+
+#: ../ui/install_page.py:731 ../ui/install_page.py:738
+msgid "Installing"
+msgstr "Instalando"
+
+#: ../ui/install_page.py:747
+msgid "Installation complete"
+msgstr "Instalada"
 
 #: ../ui/upgrade_page.py:76 ../ui/upgrade_page.py:105
 #: ../ui/upgrade_page.py:330
@@ -357,27 +287,9 @@ msgstr "Actualizando..."
 msgid "Upgrade finished."
 msgstr "Actualización terminada."
 
-#: ../ui/upgrade_page.py:1475 ../ui/upgrade_page.py:1594
-#: ../ui/install_page.py:689
-msgid "Waiting for download"
-msgstr "Esperando la descarga"
-
-#: ../ui/upgrade_page.py:1587 ../ui/install_page.py:312
-#: ../ui/install_page.py:682
-msgid "Analyzing dependencies"
-msgstr "Analizando dependencias"
-
-#: ../ui/upgrade_page.py:1601 ../ui/install_page.py:696
-msgid "Downloading"
-msgstr "Descargando"
-
 #: ../ui/upgrade_page.py:1617
 msgid "Waiting for upgrade"
 msgstr "Esperando la actualización"
-
-#: ../ui/upgrade_page.py:1627 ../ui/install_page.py:722
-msgid "Analyzing dependencies failed"
-msgstr "Análisis de dependencias fallido"
 
 #: ../ui/upgrade_page.py:1636 ../ui/upgrade_page.py:1643
 msgid "Upgrading"
@@ -387,89 +299,17 @@ msgstr "Actualizando"
 msgid "Upgrade complete"
 msgstr "Actualización finalizada"
 
-#: ../ui/detail_page.py:175
-msgid "Also in the category..."
-msgstr "También en la categoría..."
+#: ../ui/download_rank_page.py:68
+msgid "Top 25 weekly"
+msgstr "Top 25 semanal"
 
-#: ../ui/detail_page.py:236 ../ui/detail_page.py:483
-msgid "Loading comments..."
-msgstr "Cargando comentarios..."
+#: ../ui/download_rank_page.py:68
+msgid "Top 25 monthly"
+msgstr "Top 25 mensual"
 
-#: ../ui/detail_page.py:350
-#, python-format
-msgid "Download: %s"
-msgstr "Descarga: %s"
-
-#: ../ui/detail_page.py:389
-msgid "Category: "
-msgstr "Categoría: "
-
-#: ../ui/detail_page.py:393
-#, python-format
-msgid "Version: %s"
-msgstr "Versión: %s"
-
-#: ../ui/detail_page.py:394
-msgid "Download: 0"
-msgstr "Descargas: 0"
-
-#: ../ui/detail_page.py:395
-msgid "Size: calculating..."
-msgstr "Tamaño: calculando..."
-
-#: ../ui/detail_page.py:399
-msgid "Visit Homepage"
-msgstr "Visita su Web"
-
-#: ../ui/detail_page.py:460
-#, python-format
-msgid "Size: %s"
-msgstr "Tamaño: %s"
-
-#: ../ui/detail_page.py:600
-#, fuzzy
-msgid "Powered by 又拍云存储"
-msgstr "Powered by 又拍云存储"
-
-#: ../ui/utils.py:304
-msgid "Running"
-msgstr "Ejecutando"
-
-#: ../ui/utils.py:305
-msgid "Preparing"
-msgstr "Preparando"
-
-#: ../ui/utils.py:306
-msgid "Unpacking"
-msgstr "Desempaquetando"
-
-#: ../ui/utils.py:307
-msgid "Preparing to configure"
-msgstr "Preparando la configuración"
-
-#: ../ui/utils.py:308
-msgid "Configuring"
-msgstr "Configurando"
-
-#: ../ui/utils.py:309
-msgid "Installed"
-msgstr "Instalado"
-
-#: ../ui/utils.py:319
-msgid "Err"
-msgstr "Error"
-
-#: ../ui/utils.py:320
-msgid "Ign"
-msgstr "Ignorar"
-
-#: ../ui/utils.py:321
-msgid "Get"
-msgstr "Obtener"
-
-#: ../ui/utils.py:322
-msgid "Hit"
-msgstr "Hit"
+#: ../ui/download_rank_page.py:68
+msgid "Top 25 of all time"
+msgstr "Top 25 de siempre"
 
 #: ../ui/category_info.py:26
 msgid "Internet"
@@ -778,6 +618,32 @@ msgstr "Terminales"
 msgid "Text editor"
 msgstr "Editores de texto"
 
+#: ../ui/home_page.py:485
+#, python-format
+msgid "%s: %s applications"
+msgstr "%s: %s aplicaciones"
+
+#: ../ui/home_page.py:674
+#, python-format
+msgid "%s > %s : %s applications"
+msgstr "%s > %s : %s aplicaciones"
+
+#: ../ui/home_page.py:730 ../ui/software_center.py:794
+msgid "Home"
+msgstr "Inicio"
+
+#: ../ui/home_page.py:770
+msgid "Hot applications"
+msgstr "Destacadas"
+
+#: ../ui/home_page.py:770
+msgid "Topics"
+msgstr "Por temática"
+
+#: ../ui/home_page.py:770
+msgid "Download rank"
+msgstr "Más descargadas"
+
 #: ../ui/widgets.py:66
 msgid "Just now"
 msgstr "Ahora mismo"
@@ -816,17 +682,192 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: ../ui/download_rank_page.py:68
-msgid "Top 25 weekly"
-msgstr "Top 25 semanal"
+#: ../ui/utils.py:304
+msgid "Running"
+msgstr "Ejecutando"
 
-#: ../ui/download_rank_page.py:68
-msgid "Top 25 monthly"
-msgstr "Top 25 mensual"
+#: ../ui/utils.py:305
+msgid "Preparing"
+msgstr "Preparando"
 
-#: ../ui/download_rank_page.py:68
-msgid "Top 25 of all time"
-msgstr "Top 25 de siempre"
+#: ../ui/utils.py:306
+msgid "Unpacking"
+msgstr "Desempaquetando"
+
+#: ../ui/utils.py:307
+msgid "Preparing to configure"
+msgstr "Preparando la configuración"
+
+#: ../ui/utils.py:308
+msgid "Configuring"
+msgstr "Configurando"
+
+#: ../ui/utils.py:309
+msgid "Installed"
+msgstr "Instalado"
+
+#: ../ui/utils.py:319
+msgid "Err"
+msgstr "Error"
+
+#: ../ui/utils.py:320
+msgid "Ign"
+msgstr "Ignorar"
+
+#: ../ui/utils.py:321
+msgid "Get"
+msgstr "Obtener"
+
+#: ../ui/utils.py:322
+msgid "Hit"
+msgstr "Hit"
+
+#: ../ui/software_center.py:130
+#, fuzzy, python-format
+msgid "%s haven't any desktop file"
+msgstr "%s no es un ejecutable"
+
+#: ../ui/software_center.py:138
+#, fuzzy, python-format
+msgid "%s: request for starting applications sent"
+msgstr "%s: arrancando la aplicación"
+
+#: ../ui/software_center.py:200
+msgid "Sending comment..."
+msgstr "Comentando..."
+
+#: ../ui/software_center.py:204
+msgid "You have already sent a comment ;)"
+msgstr "Ya comentaste antes ;)"
+
+#: ../ui/software_center.py:210
+msgid "Comment was successful. Thanks for your involvement. :)"
+msgstr "Tu comentario se ha enviado. Muchas gracias por participar. :)"
+
+#: ../ui/software_center.py:226
+msgid "Comment was failed. Please check your network connection!"
+msgstr ""
+"No hemos podido publicar tu comentario. Comprueba tu conexión a internet."
+
+#: ../ui/software_center.py:390
+#, python-format
+msgid "Uninstall %s Successfully."
+msgstr "%s desinstalada."
+
+#: ../ui/software_center.py:390 ../ui/software_center.py:796
+msgid "Uninstall"
+msgstr "Desinstalar"
+
+#: ../ui/software_center.py:396
+#, python-format
+msgid "%s packages upgrade Successfully."
+msgstr "%s actualizadas satisfactoriamente."
+
+#: ../ui/software_center.py:396 ../ui/software_center.py:795
+msgid "Upgrade"
+msgstr "Actualizar"
+
+#: ../ui/software_center.py:399
+#, python-format
+msgid "Install %s Successfully."
+msgstr "¡%s instalada!"
+
+#: ../ui/software_center.py:399
+msgid "Install"
+msgstr "Instalar"
+
+#: ../ui/software_center.py:437
+msgid "Generating local package database..."
+msgstr "Generando base de datos sobre paquetes..."
+
+#: ../ui/software_center.py:445
+msgid "Successfully refreshed applications lists."
+msgstr "La lista de aplicaciones se ha actualizado correctamente."
+
+#: ../ui/software_center.py:457
+msgid "Failed to refresh applications lists."
+msgstr "No se pudo actualizar la lista de aplicaciones."
+
+#: ../ui/software_center.py:458
+msgid "Try again"
+msgstr "Vuelva a intentarlo"
+
+#: ../ui/software_center.py:468
+#, python-format
+msgid ""
+"Problem occurred when analyzing dependencies for %s. Installation aborted"
+msgstr ""
+"Se encontraron errores al analizar las dependencias para %s. Instalación "
+"cancelada"
+
+#: ../ui/software_center.py:471
+#, python-format
+msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
+msgstr ""
+"Se encontraron errores al analizar las dependencias para %s. Actualización "
+"cancelada"
+
+#: ../ui/software_center.py:476
+#, python-format
+msgid "The requested package \"%s\" was not found in the package list."
+msgstr "El paquete \"%s\" no se ha podido encontrar en la lista de paquetes."
+
+#: ../ui/software_center.py:477
+msgid "Refresh the package list and try again."
+msgstr "Actualiza la lista de paquetes y reintenta"
+
+#: ../ui/software_center.py:661
+msgid "Information"
+msgstr "Información"
+
+#: ../ui/software_center.py:738 ../ui/preference.py:468
+msgid "Deepin Software Center"
+msgstr "Deepin - Centro de Software"
+
+#: ../ui/software_center.py:775
+msgid "Join us"
+msgstr "Únete"
+
+#: ../ui/software_center.py:797
+msgid "Install Manage"
+msgstr "En progreso"
+
+#: ../ui/software_center.py:821
+msgid "Refresh applications lists"
+msgstr "Actualizar la lista de aplicaciones"
+
+#: ../ui/software_center.py:822
+msgid "Open download directory"
+msgstr "Abrir carpeta de descargas"
+
+#: ../ui/software_center.py:823
+msgid "Clear up cached packages"
+msgstr "Limpiar la caché de paquetes"
+
+#: ../ui/software_center.py:824
+msgid "View new features"
+msgstr "¡Nuevas funciones!"
+
+#: ../ui/software_center.py:825
+msgid "Preferences"
+msgstr "Configuración"
+
+#: ../ui/software_center.py:826
+msgid "Quit"
+msgstr "Salir"
+
+#: ../ui/software_center.py:1142
+#, python-format
+msgid "You have cleared up %s pakcages and saved %s of space"
+msgstr "¡Hemos limpiado %s paquetes ahorrando %s de espacio en disco!"
+
+#: ../ui/software_center.py:1144
+msgid "Your system is clean."
+msgstr "Tu sistema está limpio."
+
+#: ../ui/item_render.py:44
+msgid "Unwatch"
+msgstr "Dejar de seguir"
 
 #: ../ui/preference.py:294
 msgid "Untitled"
@@ -940,51 +981,10 @@ msgstr "Borrar archivos de configuración"
 msgid "Select Directory"
 msgstr "Seleccionar carpeta"
 
-#: ../ui/item_render.py:44
-msgid "Unwatch"
-msgstr "Dejar de seguir"
-
-#: ../ui/uninstall_page.py:160
+#: ../ui/search_page.py:109
 #, python-format
-msgid "%s applications can be uninstalled"
-msgstr "%s aplicaciones instaladas"
-
-#: ../ui/uninstall_page.py:464 ../ui/uninstall_page.py:547
-msgid "Waiting for uninstall"
-msgstr "Esperando la desinstalación"
-
-#: ../ui/uninstall_page.py:554 ../ui/uninstall_page.py:561
-msgid "Uninstalling"
-msgstr "Desinstalando"
-
-#: ../ui/uninstall_page.py:568
-msgid "Uninstall successful"
-msgstr "Desinstalada"
-
-#: ../ui/install_page.py:138
-#, python-format
-msgid "%s applications are being installed"
-msgstr "%s aplicaciones se están instalando"
-
-#: ../ui/install_page.py:598 ../ui/install_page.py:610
-msgid "Download was interrupted"
-msgstr "Se ha interrumpido la descarga"
-
-#: ../ui/install_page.py:620
-msgid "Installation was interrupted"
-msgstr "Se ha interrumpido la instalación"
-
-#: ../ui/install_page.py:712
-msgid "Waiting for installation"
-msgstr "Esperando la instalación"
-
-#: ../ui/install_page.py:731 ../ui/install_page.py:738
-msgid "Installing"
-msgstr "Instalando"
-
-#: ../ui/install_page.py:747
-msgid "Installation complete"
-msgstr "Instalada"
+msgid "%s: %s matched applications"
+msgstr "%s: %s aplicaciones relacionadas"
 
 #~ msgid "Refresh applications lists %s%%"
 #~ msgstr "Actualizar lista de aplicaciones %s%%"

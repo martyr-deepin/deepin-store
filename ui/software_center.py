@@ -164,7 +164,6 @@ def hide_message(message_label):
 def request_status_reply_hander(result, install_page, upgrade_page, uninstall_page, pkg_info_list=None):
     (download_status, action_status) = map(eval, result)
     
-    print download_status, action_status
     install_page.update_download_status(download_status[ACTION_INSTALL])
     install_page.update_action_status(action_status[ACTION_INSTALL])
     
@@ -1168,7 +1167,6 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
     @dbus.service.method(DSC_FRONTEND_NAME, in_signature="as", out_signature="")
     def install_pkgs(self, pkg_names):
         for pkg_name in pkg_names:
-            print pkg_name
             self.install_page.download_wait(pkg_name)
         create_thread(lambda : self.bus_interface.install_pkg(
                                     pkg_names, 
