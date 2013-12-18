@@ -30,6 +30,7 @@ import os
 from deepin_utils.file import get_parent_dir
 from deepin_utils.config import Config
 from constant import LANGUAGE
+from urlparse import urlparse
 
 root_dir = get_parent_dir(__file__, 2)
 mirrors_dir = os.path.join(root_dir, 'mirrors')
@@ -38,8 +39,9 @@ class Mirror(object):
     def __init__(self, ini_file):
         self.config = Config(ini_file)
         self.config.load()
-        ubuntu_url = self.get_repo_urls()[0]
-        self._hostname = ubuntu_url.split(":")[0] + "://" + ubuntu_url.split(":")[1].split("/")[2]
+        deepin_url = self.get_repo_urls()[1]
+        _url_parse = urlparse(deepin_url)
+        self._hostname = _url_parse.scheme + "://" + _url_parse.netloc
         self._priority = int(self.config.get("mirror", "priority")) if self.config.has_option("mirror", "priority") else 100
     
     @property
