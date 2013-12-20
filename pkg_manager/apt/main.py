@@ -341,6 +341,14 @@ class PackageManager(dbus.service.Object):
     def get_unique_id(self):
         return str(uuid.uuid4())
 
+    def get_real_pkg_name(self, pkg_name):
+        if pkg_name in self.pkg_cache:
+            return pkg_name
+        elif (pkg_name + ":i386") in self.pkg_cache:
+            return pkg_name + ":i386"
+        else:
+            return None
+
     def add_upgrade_download_with_new_policy(self, pkg_names, action_type):
         action_id = '%s_%s' % (self.get_unique_id(), action_type)
         self.update_signal([("ready-download-start", (action_id, action_type))])
@@ -606,26 +614,29 @@ class PackageManager(dbus.service.Object):
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
     def install_pkg(self, pkg_names):
         for pkg_name in pkg_names:
-            try:
-                self.pkg_cache[pkg_name]
-                ThreadMethod(self.add_download, (pkg_name, ACTION_INSTALL, self.simulate)).start()
-            except:
-                try:
-                    self.pkg_cache[pkg_name+":i386"]
-                    ThreadMethod(self.add_download, (pkg_name+":i386", ACTION_INSTALL, self.simulate)).start()
-                except:
-                    self.update_signal([("pkg-not-in-cache", pkg_name)])
+            real_pkg_name = self.get_real_pkg_name(pkg_name)
+            if real_pkg_name:
+                ThreadMethod(self.add_download, (real_pkg_name, ACTION_INSTALL, self.simulate)).start()
+            else:
+                self.update_signal([("pkg-not-in-cache", pkg_name)])
     
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="sb", out_signature="")    
     def uninstall_pkg(self, pkg_name, purge):
-        self.apt_action_pool.add_uninstall_action(pkg_name, self.simulate, purge)
-        print pkg_name
+        real_pkg_name = self.get_real_pkg_name(pkg_name)
+        if real_pkg_name:
+            self.apt_action_pool.add_uninstall_action(real_pkg_name, self.simulate, purge)
+        else:
+            self.update_signal([("pkg-not-in-cache", pkg_name)])
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
     def upgrade_pkg(self, pkg_names):
         for pkg_name in pkg_names:
-            self.update_signal([("ready-download-start", (pkg_name, ACTION_UPGRADE))])
-            ThreadMethod(self.add_download, (pkg_name, ACTION_UPGRADE, self.simulate)).start()
+            real_pkg_name = self.get_real_pkg_name(pkg_name)
+            if real_pkg_name:
+                self.update_signal([("ready-download-start", (real_pkg_name, ACTION_UPGRADE))])
+                ThreadMethod(self.add_download, (real_pkg_name, ACTION_UPGRADE, self.simulate)).start()
+            else:
+                self.update_signal([("pkg-not-in-cache", pkg_name)])
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
     def upgrade_pkgs_with_new_policy(self, pkg_names):
