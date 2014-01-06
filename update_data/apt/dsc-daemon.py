@@ -31,8 +31,11 @@ import dbus.mainloop.glib
 from dbus.mainloop.glib import DBusGMainLoop
 from datetime import datetime
 import traceback
+import threading
+import urllib2, urllib
+import uuid
 from deepin_utils.ipc import is_dbus_name_exists
-from deepin_utils.file import get_parent_dir
+from deepin_utils.file import get_parent_dir, touch_file
 from deepin_utils.config import Config
 from dtk.ui.dbus_notify import DbusNotify
 from nls import _
@@ -57,6 +60,8 @@ CONFIG_INFO_PATH = os.path.join(CONFIG_DIR, "config_info.ini")
 
 DELAY_UPDATE_INTERVAL = 600
 
+SERVER_ADDRESS = "http://apis.linuxdeepin.com/dscapi/statistics/?uid="
+
 sys.path.insert(0, os.path.join(get_parent_dir(__file__, 3), 'ui'))
 from utils import get_update_interval, is_auto_update
 from constant import NO_NOTIFY_FILE
@@ -69,6 +74,7 @@ def log(message):
         now = datetime.now().strftime("[%Y-%m-%d %H:%M:%S]")
         file_handler.write("%s %s\n" % (now, message))
 
+# for deepin software center data update
 def start_updater(loop=True):
     try:
         if is_dbus_name_exists(DSC_UPDATER_NAME, False):
@@ -86,6 +92,54 @@ def start_updater(loop=True):
         traceback.print_exc(file=sys.stdout)
 
     return loop
+
+class SendStatistics(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self)
+        self.config = self.init_config()
+        self.daemon = True
+
+    def init_config(self):
+        if os.path.exists(CONFIG_INFO_PATH):
+            config = Config(CONFIG_INFO_PATH)
+            config.load()
+            uid = config.get("statistics", 'uid')
+            if not uid:
+                uid = uuid.uuid4().hex
+                config.set("statistics", 'uid', uid)
+                config.set("statistics", 'last_date', '')
+                config.write()
+        else:
+            touch_file(CONFIG_INFO_PATH)
+            uid = uuid.uuid4().hex
+            config = Config(CONFIG_INFO_PATH)
+            config.load()
+            config.set("statistics", 'uid', uid)
+            config.set("statistics", 'last_date', '')
+            config.write()
+
+        return config
+
+    def run(self):
+        uid = self.config.get('statistics', 'uid')
+        last_date = self.config.get('statistics', 'last_date')
+        current_date = datetime.now().strftime("%Y-%m-%d")
+        if last_date == current_date:
+            return
+        else:
+            try:
+                result = urllib2.urlopen(SERVER_ADDRESS+uid).read()
+                msg = "SendStatistics:", result
+                log(msg)
+                print msg
+                if result == "OK":
+                    self.config.set('statistics', "last_date", current_date)
+                    self.config.write()
+            except Exception, e:
+                msg = "Error in SendStatistics: %s" % (e)
+                log(msg)
+                print msg
+                traceback.print_exc(file=sys.stdout)
 
 class NetworkDetector(gobject.GObject):
 
@@ -249,6 +303,7 @@ class Update(dbus.service.Object):
             self.start_dsc_backend()
             gobject.timeout_add_seconds(30, start_updater, False)
             gobject.timeout_add_seconds(1, self.start_update_list, self.bus_interface)
+            SendStatistics().start()
         return True
 
     def start_update_list(self, bus_interface):
