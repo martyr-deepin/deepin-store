@@ -146,7 +146,7 @@ msgstr ""
 
 #: ../ui/software_center.py:795
 msgid "Install Manage"
-msgstr ""
+msgstr "Installation"
 
 #: ../ui/software_center.py:819
 msgid "Refresh applications lists"

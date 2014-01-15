@@ -1009,6 +1009,7 @@ class UpgradePage(gtk.VBox):
             self.pack_start(self.upgrade_treeview, True, True)
         
     def render_upgrade_info(self, pkg_infos, in_upgrading):
+        self.upgrade_treeview.clear()
         if in_upgrading:
             global_event.emit("show-upgrading-view")
             return 
