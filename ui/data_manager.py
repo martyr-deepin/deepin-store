@@ -32,7 +32,7 @@ from data import DATA_ID
 from constant import LANGUAGE
 
 UPDATE_DATA_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID)
-cache_soft_db_path = os.path.join(get_parent_dir(__file__, 2), "data", "cache_soft.db")
+CACHE_SOFT_DB_PATH = os.path.join(get_parent_dir(__file__, 2), "data", "cache_soft.db")
 
 DATA_SUPPORT_LANGUAGE = ['en_US', 'zh_CN', 'zh_TW', 'zh_HK']
 
@@ -60,10 +60,6 @@ class DataManager(object):
         self.software_db_connect = sqlite3.connect(software_db_path)
         self.software_db_cursor = self.software_db_connect.cursor()
 
-        if os.path.exists(cache_soft_db_path):
-            self.cache_soft_db_connect = sqlite3.connect(cache_soft_db_path)
-            self.cache_soft_db_cursor = self.cache_soft_db_connect.cursor()
-
         desktop_db_path = os.path.join(UPDATE_DATA_DIR, "desktop", self.language, "desktop.db")
         db_path_exists(desktop_db_path)
         self.desktop_db_connect = sqlite3.connect(desktop_db_path)
@@ -79,8 +75,19 @@ class DataManager(object):
         
         self.build_category_dict()
 
-    #from deepin_utils.date_time import print_exec_time
-    #@print_exec_time
+    def is_cache_soft_db_exists(self):
+        return os.path.exists(CACHE_SOFT_DB_PATH)
+
+    def get_info_from_cache_soft_db(self, argv):
+        if self.is_cache_soft_db_exists():
+            if not hasattr(self, 'cache_soft_db_cursor'):
+                self.cache_soft_db_connect = sqlite3.connect(CACHE_SOFT_DB_PATH)
+                self.cache_soft_db_cursor = self.cache_soft_db_connect.cursor()
+            self.cache_soft_db_cursor.execute(*argv)
+            return self.cache_soft_db_cursor.fetchall()
+        else:
+            return []
+
     def get_pkgs_match_input(self, input_string):
         # Select package name match input string.
 
@@ -91,9 +98,9 @@ class DataManager(object):
             ("%" + unicode(input_string) + "%",)
             ]
 
-        if hasattr(self, 'cache_soft_db_cursor'):
-            self.cache_soft_db_cursor.execute(*argv)
-            for (pkg_name, ) in self.cache_soft_db_cursor.fetchall():
+        cache_info = self.get_info_from_cache_soft_db(argv)
+        if cache_info:
+            for (pkg_name, ) in cache_info:
                 pkg_names.append(pkg_name)
         else:
             self.software_db_cursor.execute(*argv)
@@ -146,43 +153,54 @@ class DataManager(object):
         return self.desktop_db_cursor.fetchall()
         
     def get_pkg_detail_info(self, pkg_name):
+        result = {
+                'category': None,
+                'recommend_pkgs': [],
+                'long_desc': 'Unknown',
+                'version': 'Unknown',
+                'homepage': '',
+                'star_value': 5.0,
+                'download_number': 0,
+                'alias_name': pkg_name,
+                }
+
+        # get category, recommend_pkgs
         self.desktop_db_cursor.execute(
             "SELECT first_category_name, second_category_name FROM desktop WHERE pkg_name=?", [pkg_name])
         category_names = self.desktop_db_cursor.fetchone()
-        recommend_pkgs = []
-        if category_names == None or category_names[0] == "" or category_names[1] == "":
-            category = None
-        else:
-            category = category_names
-            first_category_name, second_category_name = category
-            
+        if category_names and category_names[0] and category_names[1]:
+            result['category'] = category_names
             self.category_db_cursor.execute(
                 "SELECT recommend_pkgs FROM category_name WHERE first_category_name=? and second_category_name=?",
-                [first_category_name, second_category_name])
+                [category_names[0], category_names[1]])
             names = eval(self.category_db_cursor.fetchone()[0])
             for name in names:
                 if name != pkg_name:
                     self.software_db_cursor.execute(
                         "SELECT alias_name FROM software WHERE pkg_name=?", [name])
-                    (alias_name,) = self.software_db_cursor.fetchone()
-                    recommend_pkgs.append((name, alias_name, 5.0))
-        
+                    alias_name = self.software_db_cursor.fetchone()[0]
+                    result['recommend_pkgs'].append((name, alias_name, 5.0))
+
+        # get long_desc, version, homepage, alias_name
         self.software_db_cursor.execute(
             "SELECT long_desc, version, homepage, alias_name FROM software WHERE pkg_name=?", [pkg_name])
         info = self.software_db_cursor.fetchone()
+
         if info:
-            (long_desc, version, homepage, alias_name) = info
-            return (category, long_desc, version, homepage, 5.0, 0, alias_name, recommend_pkgs)
-        else:
-            if hasattr(self, 'cache_soft_db_cursor'):
-                self.cache_soft_db_cursor.execute(
-                    "SELECT long_desc, version, homepage FROM software WHERE pkg_name=?",
-                    [pkg_name])
-                info = self.cache_soft_db_cursor.fetchone()
-                if info:
-                    (long_desc, version, homepage) = info
-                    return (category, long_desc, version, homepage, 5.0, 0, pkg_name, recommend_pkgs)
-        return None
+            result["long_desc"] = info[0]
+            result['version'] = info[1]
+            result['homepage'] = info[2]
+            result["alias_name"] = info[3]
+
+        cache_info = self.get_info_from_cache_soft_db([
+            "SELECT long_desc, version, homepage FROM software WHERE pkg_name=?",
+            [pkg_name]])
+        if cache_info:
+            result['long_desc'] = cache_info[0][0]
+            result['version'] = cache_info[0][1]
+            result['homepage'] = cache_info[0][2]
+
+        return result
         
     def get_pkg_search_info(self, pkg_name):
         self.software_db_cursor.execute(
@@ -190,16 +208,14 @@ class DataManager(object):
         result = self.software_db_cursor.fetchone()
         
         if result == None:
-            if hasattr(self, 'cache_soft_db_cursor'):
-                self.cache_soft_db_cursor.execute(
-                    "SELECT short_desc, long_desc FROM software WHERE pkg_name=?",
-                    [pkg_name])
-                info = self.cache_soft_db_cursor.fetchone()
-                if info:
-                    (short_desc, long_desc) = info
-                    return (pkg_name, short_desc, long_desc, 5.0)
-                else:
-                    return (pkg_name, "FIXME", "FIXME", 5.0)
+            cache_info = self.get_info_from_cache_soft_db([
+                "SELECT short_desc, long_desc FROM software WHERE pkg_name=?",
+                [pkg_name]])
+            if cache_info:
+                (short_desc, long_desc) = cache_info[0]
+                return (pkg_name, short_desc, long_desc, 5.0)
+            else:
+                return (pkg_name, "FIXME", "FIXME", 5.0)
         else:
             (alias_name, short_desc, long_desc) = result
             return (alias_name, short_desc, long_desc, 5.0)

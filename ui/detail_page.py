@@ -360,20 +360,14 @@ class DetailPage(gtk.HBox):
         self.pkg_name = pkg_name
         
         detail_info = self.data_manager.get_pkg_detail_info(self.pkg_name)
-        if detail_info:
-            (self.category, self.long_desc, 
-            self.version, self.homepage, self.star, 
-            self.download, self.alias_name,
-            self.recommend_pkgs) = detail_info
-        else:
-            self.category = None
-            self.long_desc = "Unknown"
-            self.version = "Unknown"
-            self.homepage = ""
-            self.star = 5.0
-            self.download = 0
-            self.alias_name = pkg_name
-            self.recommend_pkgs = []
+        self.category = detail_info['category']
+        self.long_desc = detail_info['long_desc']
+        self.version = detail_info['version']
+        self.homepage = detail_info['homepage']
+        self.star = detail_info['star_value']
+        self.download = detail_info['download_number']
+        self.alias_name = detail_info['alias_name']
+        self.recommend_pkgs = detail_info['recommend_pkgs']
         
         self.pkg_star_view = StarView()
         self.pkg_star_view.connect("clicked", lambda w: self.grade_pkg())
