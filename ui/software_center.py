@@ -657,6 +657,7 @@ def action_finish_handle_dbus_error(pkg_info_list):
 
 def show_notify(message, summary=None, timeout=None):
     notification = DbusNotify("deepin-software-center")
+    notification.set_icon_from_path(utils.get_common_image("logo48.png"))
     notification.set_summary(summary if summary else _("Information"))
     notification.set_body(message)
     notification.notify()
