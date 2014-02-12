@@ -47,7 +47,6 @@ from dtk.ui.label import Label
 from dtk.ui.gio_utils import start_desktop_file
 from dtk.ui.iconview import IconView
 from dtk.ui.treeview import TreeView
-from dtk.ui.dbus_notify import DbusNotify
 
 from icon_window import IconWindow
 from detail_page import DetailPage
@@ -655,12 +654,21 @@ def action_finish_handle_dbus_error(pkg_info_list):
     if pkg_info_list:
         global_event.emit("request-clear-action-pages", pkg_info_list)
 
-def show_notify(message, summary=None, timeout=None):
-    notification = DbusNotify("deepin-software-center")
-    notification.set_icon_from_path(utils.get_common_image("logo48.png"))
-    notification.set_summary(summary if summary else _("Information"))
-    notification.set_body(message)
-    notification.notify()
+def show_notify(message, summary=None, timeout=3500):
+    app_name = "deepin-software-center"
+    replaces_id = 0
+    app_icon = utils.get_common_image("logo48.png")
+    body = message
+    hints = {"image-path": app_icon}
+    actions = []
+    try:
+        session_bus = dbus.SessionBus()
+        obj = session_bus.get_object('org.freedesktop.Notifications', '/org/freedesktop/Notifications')
+        interface = dbus.Interface(obj, 'org.freedesktop.Notifications')
+        interface.Notify(app_name, replaces_id, app_icon, summary,
+                         body, actions, hints, timeout)
+    except:
+        pass
     
 debug_flag = False                
 
