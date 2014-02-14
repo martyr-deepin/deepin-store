@@ -1098,8 +1098,10 @@ class PkgIconItem(IconItem):
         
         # Draw long desc.
         long_desc_height = 32
-        if len(self.long_desc.split("\n")) == 1:
-            self.long_desc += "\n"
+        if self.long_desc == None:
+            self.long_desc = "FIX ME"
+        #if self.long_desc and len(self.long_desc.split("\n")) == 1:
+            #self.long_desc += "\n"
         with cairo_state(cr):
             cr.rectangle(
                 rect.x + self.DRAW_PADDING_LEFT + ICON_SIZE + self.DRAW_INFO_PADDING_X,
