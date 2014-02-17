@@ -23,6 +23,8 @@
 import os
 import sqlite3
 from deepin_utils.file import get_parent_dir, remove_file, touch_file_dir
+import locale
+locale.setlocale(locale.LC_ALL, '')
 
 class BuildSoftwareDB(object):
     def __init__(self, cache):
