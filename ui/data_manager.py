@@ -196,7 +196,7 @@ class DataManager(object):
             "SELECT long_desc, version, homepage FROM software WHERE pkg_name=?",
             [pkg_name]])
         if cache_info:
-            result['long_desc'] = cache_info[0][0]
+            if result['long_desc'] == 'Unknown': result['long_desc'] = cache_info[0][0]
             result['version'] = cache_info[0][1]
             result['homepage'] = cache_info[0][2]
 
