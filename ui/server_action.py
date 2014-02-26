@@ -29,7 +29,7 @@ import json
 from constant import SERVER_ADDRESS, POST_TIMEOUT
 from events import global_event
 import traceback
-from deepin_utils.file import create_directory
+from deepin_utils.file import create_directory, touch_file
 import utils
 import pycurl
 
@@ -40,6 +40,7 @@ UPYUN_SERVER_ADDRESS = 'http://dsc-home-data.b0.upaiyun.com/'
 
 CACHE_DIR = os.path.join(os.path.expanduser("~"), '.cache', 'deepin-software-center')
 create_directory(CACHE_DIR)
+HOME_CACHE_DATA_PATH = os.path.join(CACHE_DIR, "home_cache_data.json")
 
 status_modes = {
         'test' : '2',
@@ -76,9 +77,8 @@ class FetchAlbumData(td.Thread):
 
 class FetchHomeData(td.Thread):
 
-    def __init__(self, language, status="publish", callback_method=None):
+    def __init__(self, language, status="publish"):
         td.Thread.__init__(self)
-        self.callback_method = callback_method
         self.language = language
         self.home_data_url = BAIDU_SERVER_ADDRESS + "home/"
         self.data = {
@@ -88,7 +88,7 @@ class FetchHomeData(td.Thread):
         self.setDaemon(True)
 
     def run(self):
-        json_data = None
+        json_data = {}
         query = urllib.urlencode(self.data)
         request_url = ("%s?%s") % (self.home_data_url, query)
         try:
@@ -96,15 +96,17 @@ class FetchHomeData(td.Thread):
                 request_url,
                 timeout=POST_TIMEOUT,
             )
-            json_data = json.loads(connection.read())            
-            if self.callback_method:
-                self.callback_method(json_data)
+            json_data = json.loads(connection.read())
+            touch_file(HOME_CACHE_DATA_PATH)
+            with open(HOME_CACHE_DATA_PATH, "wb") as fp:
+                json.dump(json_data, fp)
         except Exception, e:
-            if self.callback_method:
-                self.callback_method(None)
             traceback.print_exc(file=sys.stdout)
             print "Fetch home data failed: %s." % (e)
             print "url:", request_url
+            if os.path.exists(HOME_CACHE_DATA_PATH):
+                with open(HOME_CACHE_DATA_PATH) as fp:
+                    json_data = json.load(fp)
         global_event.emit("download-home-infos-finish", json_data)
 
 class FetchImageFromUpyun(td.Thread):
