@@ -32,12 +32,11 @@ from dbus.mainloop.glib import DBusGMainLoop
 from datetime import datetime
 import traceback
 import threading
-import urllib2, urllib
+import urllib2
 import uuid
 from deepin_utils.ipc import is_dbus_name_exists
 from deepin_utils.file import get_parent_dir, touch_file
 from deepin_utils.config import Config
-from dtk.ui.dbus_notify import DbusNotify
 from nls import _
 
 DSC_SERVICE_NAME = "com.linuxdeepin.softwarecenter"
@@ -63,8 +62,8 @@ DELAY_UPDATE_INTERVAL = 600
 SERVER_ADDRESS = "http://apis.linuxdeepin.com/dscapi/statistics/?uid="
 
 sys.path.insert(0, os.path.join(get_parent_dir(__file__, 3), 'ui'))
-from utils import get_update_interval, is_auto_update
 from constant import NO_NOTIFY_FILE
+import utils
 
 def log(message):
     if not os.path.exists(LOG_PATH):
@@ -217,7 +216,7 @@ class Update(dbus.service.Object):
     def set_delay_update(self, seconds):
         if self.delay_update_id:
             gobject.source_remove(self.delay_update_id)
-        if is_auto_update() and seconds:
+        if utils.is_auto_update() and seconds:
             self.delay_update_id = gobject.timeout_add_seconds(seconds, self.update_handler)
         else:
             self.mainloop.quit()
@@ -256,18 +255,18 @@ class Update(dbus.service.Object):
                             (update_num, update_num-remind_num))
                 elif remind_num > 0 and remind_num != self.remind_num:
                     if remind_num != 1:
-                        self.show_notify(_("There are %s packages need to upgrade in your system, please open the software center to upgrade!")
-                                % remind_num)
+                        utils.show_notify(_("There are %s packages need to upgrade in your system, please open the software center to upgrade!")
+                                % remind_num, _("Upgrade Info"))
                     else:
-                        self.show_notify(_("There is %s package need to upgrade in your system, please open the software center to upgrade!") 
-                                % remind_num)
+                        utils.show_notify(_("There is %s package need to upgrade in your system, please open the software center to upgrade!") 
+                                % remind_num, _("Upgrade Info"))
                 self.remind_num = remind_num
                 print "Finish update list."
                 log("Finish update list.")
                 self.bus_interface.request_quit()
                 print "Quit dsc backend service."
                 log("Quit dsc backend service.")
-                self.set_delay_update(int(get_update_interval())*3600)
+                self.set_delay_update(int(utils.get_update_interval())*3600)
             elif signal_type == "update-list-failed":
                 self.is_in_update_list = False
                 self.update_status = "failed"
@@ -295,7 +294,7 @@ class Update(dbus.service.Object):
             print "Fontend is running, waite 10 minutes to try again!"
             log("Fontend is running, waite 10 minutes to try again!")
             self.set_delay_update(DELAY_UPDATE_INTERVAL)
-        elif not is_auto_update():
+        elif not utils.is_auto_update():
             print 'Auto update closed, exit...'
             log('Auto update closed, exit...')
             self.mainloop.quit()
@@ -333,12 +332,6 @@ class Update(dbus.service.Object):
     @dbus.service.method(DSC_UPDATE_DAEMON_NAME, in_signature="", out_signature="b")    
     def get_update_list_status(self):
         return self.is_in_update_list
-
-    def show_notify(self, message=None, timeout=None):
-        notification = DbusNotify("deepin-software-center")
-        notification.set_summary(_("Upgrade Info"))
-        notification.set_body(message)
-        notification.notify()
 
 if __name__ == "__main__" :
 

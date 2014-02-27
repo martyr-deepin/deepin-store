@@ -385,16 +385,16 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 (pkg_name, action_type, pkg_info_list) = action_content
                 if action_type == ACTION_UNINSTALL:
                     uninstall_page.action_finish(pkg_name, pkg_info_list)
-                    show_notify(_("Uninstall %s Successfully.") % pkg_name, _("Uninstall"))
+                    utils.show_notify(_("Uninstall %s Successfully.") % pkg_name, _("Uninstall"))
                 elif action_type == ACTION_UPGRADE:
                     upgrade_page.action_finish(pkg_name, pkg_info_list)
                     global_event.emit("upgrade-finish-action", pkg_info_list)
                     utils.set_last_upgrade_time()
                     upgrade_page.refresh_status(pkg_info_list)
-                    show_notify(_("%s packages upgrade Successfully.") % len(pkg_info_list), _("Upgrade"))
+                    utils.show_notify(_("%s packages upgrade Successfully.") % len(pkg_info_list), _("Upgrade"))
                 elif action_type == ACTION_INSTALL:
                     install_page.action_finish(pkg_name, pkg_info_list)
-                    show_notify(_("Install %s Successfully.") % pkg_name, _("Install"))
+                    utils.show_notify(_("Install %s Successfully.") % pkg_name, _("Install"))
                 
                 refresh_current_page_status(pkg_name, pkg_info_list, bus_interface)
                 if action_type != ACTION_UPGRADE:
@@ -653,22 +653,6 @@ def clear_action_pages(bus_interface, upgrade_page, uninstall_page, install_page
 def action_finish_handle_dbus_error(pkg_info_list):
     if pkg_info_list:
         global_event.emit("request-clear-action-pages", pkg_info_list)
-
-def show_notify(message, summary=None, timeout=3500):
-    app_name = "deepin-software-center"
-    replaces_id = 0
-    app_icon = utils.get_common_image("logo48.png")
-    body = message
-    hints = {"image-path": app_icon}
-    actions = []
-    try:
-        session_bus = dbus.SessionBus()
-        obj = session_bus.get_object('org.freedesktop.Notifications', '/org/freedesktop/Notifications')
-        interface = dbus.Interface(obj, 'org.freedesktop.Notifications')
-        interface.Notify(app_name, replaces_id, app_icon, summary,
-                         body, actions, hints, timeout)
-    except:
-        pass
     
 debug_flag = False                
 

@@ -45,12 +45,29 @@ from constant import (
         )
 from logger import newLogger
 from nls import _
+import dbus
 
 global_logger = newLogger('global')
 
 LOG_PATH = "/tmp/dsc-frontend.log"
 SYS_CONFIG_INFO_PATH = "/var/cache/deepin-software-center/config_info.ini"
 BACKEND_PID = "/tmp/deepin-software-center/backend_running.pid"
+
+def show_notify(message, summary=None, timeout=3500):
+    app_name = "deepin-software-center"
+    replaces_id = 0
+    app_icon = get_common_image("logo48.png")
+    body = message
+    hints = {"image-path": app_icon}
+    actions = []
+    try:
+        session_bus = dbus.SessionBus()
+        obj = session_bus.get_object('org.freedesktop.Notifications', '/org/freedesktop/Notifications')
+        interface = dbus.Interface(obj, 'org.freedesktop.Notifications')
+        interface.Notify(app_name, replaces_id, app_icon, summary,
+                         body, actions, hints, timeout)
+    except:
+        pass
 
 def get_backend_running():
     return os.path.exists(BACKEND_PID)

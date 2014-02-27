@@ -31,7 +31,6 @@ from events import global_event
 import traceback
 from deepin_utils.file import create_directory, touch_file
 import utils
-import pycurl
 
 DEBUG = False
 
@@ -228,8 +227,6 @@ class SendDownloadCount(td.Thread):
                 data=urllib.urlencode(args),
                 timeout=POST_TIMEOUT
                 )
-            print "Send download count (%s) successful." % (self.pkgName)
-            print "Result:", result.read()
         except Exception, e:
             print "Send download count (%s) failed." % (self.pkgName)
             print "Error: ", e
