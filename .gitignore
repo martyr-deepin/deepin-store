@@ -9,4 +9,3 @@ dtk.egg-info
 *.swp
 data
 /move.py
-*.mo
