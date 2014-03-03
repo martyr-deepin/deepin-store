@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-25 11:21+0800\n"
+"POT-Creation-Date: 2014-03-03 17:18+0800\n"
 "PO-Revision-Date: 2014-02-18 21:35+0000\n"
 "Last-Translator: fri <pavelfric@seznam.cz>\n"
 "Language-Team: Czech (http://www.transifex.com/projects/p/deepin-software-"
@@ -21,6 +21,70 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
+#: ../ui/detail_page.py:175
+msgid "Also in the category..."
+msgstr "Také ve skupině..."
+
+#: ../ui/detail_page.py:236 ../ui/detail_page.py:477
+msgid "Loading comments..."
+msgstr "Nahrávají se poznámky..."
+
+#: ../ui/detail_page.py:350
+#, python-format
+msgid "Download: %s"
+msgstr "Stahování: %s"
+
+#: ../ui/detail_page.py:383
+msgid "Category: "
+msgstr "Skupina: "
+
+#: ../ui/detail_page.py:387
+#, python-format
+msgid "Version: %s"
+msgstr "Verze: %s"
+
+#: ../ui/detail_page.py:388
+msgid "Download: 0"
+msgstr "Stahování: 0"
+
+#: ../ui/detail_page.py:389
+msgid "Size: calculating..."
+msgstr "Velikost: Počítá se..."
+
+#: ../ui/detail_page.py:393
+msgid "Visit Homepage"
+msgstr "Navštívit domovskou stránku"
+
+#: ../ui/detail_page.py:430 ../ui/install_page.py:480 ../ui/search_page.py:285
+msgid "Successfully installed"
+msgstr "Úspěšně nainstalováno"
+
+#: ../ui/detail_page.py:454
+#, python-format
+msgid "Size: %s"
+msgstr "Velikost: %s"
+
+#: ../ui/detail_page.py:594
+msgid "Powered by 又拍云存储"
+msgstr "Poháněno 又拍云存储"
+
+#: ../ui/uninstall_page.py:160
+#, python-format
+msgid "%s applications can be uninstalled"
+msgstr "Lze odinstalovat %s programů"
+
+#: ../ui/uninstall_page.py:464 ../ui/uninstall_page.py:547
+msgid "Waiting for uninstall"
+msgstr "Čeká se na odinstalaci"
+
+#: ../ui/uninstall_page.py:554 ../ui/uninstall_page.py:561
+msgid "Uninstalling"
+msgstr "Odinstalovává se"
+
+#: ../ui/uninstall_page.py:568
+msgid "Uninstall successful"
+msgstr "Odinstalování proběhlo úspěšně"
+
 #: ../ui/install_page.py:138
 #, python-format
 msgid "%s applications are being installed"
@@ -30,10 +94,6 @@ msgstr "Je instalováno %s programů"
 #: ../ui/upgrade_page.py:1588
 msgid "Analyzing dependencies"
 msgstr "Provádí se rozbor závislostí"
-
-#: ../ui/install_page.py:480 ../ui/detail_page.py:430 ../ui/search_page.py:285
-msgid "Successfully installed"
-msgstr "Úspěšně nainstalováno"
 
 #: ../ui/install_page.py:598 ../ui/install_page.py:610
 msgid "Download was interrupted"
@@ -68,80 +128,6 @@ msgstr "Instaluje se"
 msgid "Installation complete"
 msgstr "Instalace dokončena"
 
-#: ../ui/home_page.py:485
-#, python-format
-msgid "%s: %s applications"
-msgstr "%s: %s programů"
-
-#: ../ui/home_page.py:674
-#, python-format
-msgid "%s > %s : %s applications"
-msgstr "%s > %s : %s programů"
-
-#: ../ui/home_page.py:730 ../ui/software_center.py:802
-msgid "Home"
-msgstr "Domovská složka"
-
-#: ../ui/home_page.py:770
-msgid "Hot applications"
-msgstr "Nejlepší programy"
-
-#: ../ui/home_page.py:770
-msgid "Topics"
-msgstr "Náměty"
-
-#: ../ui/home_page.py:770
-msgid "Download rank"
-msgstr "Žebříček stahování"
-
-#: ../ui/utils.py:304
-msgid "Running"
-msgstr "Běží"
-
-#: ../ui/utils.py:305
-msgid "Preparing"
-msgstr "Připravuje se"
-
-#: ../ui/utils.py:306
-msgid "Unpacking"
-msgstr "Rozbaluje se"
-
-#: ../ui/utils.py:307
-msgid "Preparing to configure"
-msgstr "Připravuje se nastavení"
-
-#: ../ui/utils.py:308
-msgid "Configuring"
-msgstr "Nastavuje se..."
-
-#: ../ui/utils.py:309
-msgid "Installed"
-msgstr "Nainstalováno"
-
-#: ../ui/utils.py:319
-msgid "Err"
-msgstr "Chyba"
-
-#: ../ui/utils.py:320
-msgid "Ign"
-msgstr "Přehlížet"
-
-#: ../ui/utils.py:321
-msgid "Get"
-msgstr "Získat"
-
-#: ../ui/utils.py:322
-msgid "Hit"
-msgstr "Nález"
-
-#: ../ui/item_render.py:44
-msgid "Unwatch"
-msgstr "Přestat sledovat"
-
-#: ../ui/item_render.py:46 ../ui/upgrade_page.py:236
-msgid "Watch again"
-msgstr "Sledovat opět"
-
 #: ../ui/upgrade_page.py:76 ../ui/upgrade_page.py:105
 #: ../ui/upgrade_page.py:330
 msgid "Last upgraded time: "
@@ -160,6 +146,10 @@ msgstr "Povýšit vybrané položky"
 #, python-format
 msgid "%s applications are available for upgrade"
 msgstr "Pro povýšení je dostupných %s programů"
+
+#: ../ui/upgrade_page.py:236 ../ui/item_render.py:46
+msgid "Watch again"
+msgstr "Sledovat opět"
 
 #: ../ui/upgrade_page.py:270
 #, python-format
@@ -313,177 +303,6 @@ msgstr "Povyšuje se"
 msgid "Upgrade complete"
 msgstr "Povýšení dokončeno"
 
-#: ../ui/widgets.py:66
-msgid "Just now"
-msgstr "Právě teď"
-
-#: ../ui/widgets.py:71
-msgid "One minute ago"
-msgstr "Před minutou"
-
-#: ../ui/widgets.py:73
-#, python-format
-msgid "%s minutes ago"
-msgstr "Před %s minutami"
-
-#: ../ui/widgets.py:78
-msgid "One hour ago"
-msgstr "Před hodinou"
-
-#: ../ui/widgets.py:80
-#, python-format
-msgid "%s hours ago"
-msgstr "Před %s hodinami"
-
-#: ../ui/widgets.py:84
-msgid "Yesterday"
-msgstr "Včera"
-
-#: ../ui/widgets.py:295 ../ui/widgets.py:369
-msgid "Click to refresh"
-msgstr "Klepněte pro obnovení"
-
-#: ../ui/widgets.py:462
-msgid "OK"
-msgstr "OK"
-
-#: ../ui/widgets.py:463 ../ui/preference.py:450
-msgid "Cancel"
-msgstr "Zrušit"
-
-#: ../ui/preference.py:294
-msgid "Untitled"
-msgstr "Bez názvu"
-
-#: ../ui/preference.py:309
-msgid "Unknown mirror url"
-msgstr "Neznámá adresa (URL) zrcadla"
-
-#: ../ui/preference.py:468 ../ui/software_center.py:746
-msgid "Deepin Software Center"
-msgstr "Středisko programů"
-
-#: ../ui/preference.py:473
-msgid "Version:"
-msgstr "Verze:"
-
-#: ../ui/preference.py:490
-msgid ""
-"Deepin Software Center is a commonly used software center on Linux. It "
-"selected more than 2,600 decent applications and features easy installation "
-"and uninstall, software repository and recommended applications. It supports "
-"1-click install, downloading packages with multi-thread and clearing up "
-"cached packages. It provides topics for software introduction and shares "
-"good applications. \n"
-msgstr ""
-"Středisko programů Deepin je střediskem běžné používaných programů na "
-"Linuxu. Bylo vybráno více než 2600 pěkných programů, jejichž snadnou "
-"instalaci ze skladiště a odinstalaci středisko zajišťuje. Naleznete zde "
-"doporučení ohledně programů. Je podporována instalace na jedno klepnutí, "
-"vícevláknové stahování balíčků a úklid balíčků uložených do vyrovnávací "
-"paměti. Jsou poskytovány náměty pro uvedení programů a jsou sdíleny dobré "
-"programy.\n"
-
-#: ../ui/preference.py:536
-msgid "General"
-msgstr "Obecné"
-
-#: ../ui/preference.py:537
-msgid "Software repository"
-msgstr "Skladiště programů"
-
-#: ../ui/preference.py:538
-msgid "About"
-msgstr "O programu"
-
-#: ../ui/preference.py:558
-msgid "Select mirror"
-msgstr "Vybrat zrcadlo"
-
-#: ../ui/preference.py:600
-msgid "Select best mirror"
-msgstr "Vybrat nejlepší zrcadlo"
-
-#: ../ui/preference.py:601
-msgid ""
-"Please wait. The process will take 30 seconds or more depending on your "
-"network connection"
-msgstr ""
-"Počkejte, prosím. Proces zabere 30 sekund či více v závislosti na vašem "
-"síťovém spojení"
-
-#: ../ui/preference.py:660
-msgid ""
-"Test for downloading mirror failed. Please check your network connection."
-msgstr ""
-"Zkouška stahovacího zrcadla nedopadla dobře. Prověřte, prosím své síťové "
-"spojení."
-
-#: ../ui/preference.py:661
-msgid "Close"
-msgstr "Zavřít"
-
-#: ../ui/preference.py:695
-msgid "Update applications lists"
-msgstr "Obnovit seznam programů"
-
-#: ../ui/preference.py:701
-msgid "Update automatically"
-msgstr "Aktualizovat automaticky"
-
-#: ../ui/preference.py:704
-msgid "Time interval: "
-msgstr "Časový interval: "
-
-#: ../ui/preference.py:707
-msgid " hour"
-msgstr " hodina"
-
-#: ../ui/preference.py:730
-msgid "Download settings"
-msgstr "Nastavení stahování"
-
-#: ../ui/preference.py:736
-msgid "Max download task number: "
-msgstr "Nejvyšší počet stahovacích úkolů: "
-
-#: ../ui/preference.py:746
-msgid "Download directory: "
-msgstr "Adresář pro stahování: "
-
-#: ../ui/preference.py:752
-msgid "Change"
-msgstr "Změnit"
-
-#: ../ui/preference.py:768
-msgid "On uninstall software"
-msgstr "Při odinstalování programu"
-
-#: ../ui/preference.py:773
-msgid "Delete configuration files"
-msgstr "Smazat soubory s nastavením"
-
-#: ../ui/preference.py:810
-msgid "Select Directory"
-msgstr "Vybrat adresář"
-
-#: ../ui/uninstall_page.py:160
-#, python-format
-msgid "%s applications can be uninstalled"
-msgstr "Lze odinstalovat %s programů"
-
-#: ../ui/uninstall_page.py:464 ../ui/uninstall_page.py:547
-msgid "Waiting for uninstall"
-msgstr "Čeká se na odinstalaci"
-
-#: ../ui/uninstall_page.py:554 ../ui/uninstall_page.py:561
-msgid "Uninstalling"
-msgstr "Odinstalovává se"
-
-#: ../ui/uninstall_page.py:568
-msgid "Uninstall successful"
-msgstr "Odinstalování proběhlo úspěšně"
-
 #: ../ui/download_rank_page.py:68
 msgid "Top 25 weekly"
 msgstr "Prvních 25 každý týden"
@@ -495,49 +314,6 @@ msgstr "Prvních 25 každý měsíc"
 #: ../ui/download_rank_page.py:68
 msgid "Top 25 of all time"
 msgstr "Prvních 25 všech dob"
-
-#: ../ui/detail_page.py:175
-msgid "Also in the category..."
-msgstr "Také ve skupině..."
-
-#: ../ui/detail_page.py:236 ../ui/detail_page.py:477
-msgid "Loading comments..."
-msgstr "Nahrávají se poznámky..."
-
-#: ../ui/detail_page.py:350
-#, python-format
-msgid "Download: %s"
-msgstr "Stahování: %s"
-
-#: ../ui/detail_page.py:383
-msgid "Category: "
-msgstr "Skupina: "
-
-#: ../ui/detail_page.py:387
-#, python-format
-msgid "Version: %s"
-msgstr "Verze: %s"
-
-#: ../ui/detail_page.py:388
-msgid "Download: 0"
-msgstr "Stahování: 0"
-
-#: ../ui/detail_page.py:389
-msgid "Size: calculating..."
-msgstr "Velikost: Počítá se..."
-
-#: ../ui/detail_page.py:393
-msgid "Visit Homepage"
-msgstr "Navštívit domovskou stránku"
-
-#: ../ui/detail_page.py:454
-#, python-format
-msgid "Size: %s"
-msgstr "Velikost: %s"
-
-#: ../ui/detail_page.py:594
-msgid "Powered by 又拍云存储"
-msgstr "Poháněno 又拍云存储"
 
 #: ../ui/category_info.py:26
 msgid "Internet"
@@ -839,10 +615,109 @@ msgstr "Emulátor terminálu"
 msgid "Text editor"
 msgstr "Textový editor"
 
-#: ../ui/search_page.py:109
+#: ../ui/home_page.py:485
 #, python-format
-msgid "%s: %s matched applications"
-msgstr "%s: %s odpovídajících programů"
+msgid "%s: %s applications"
+msgstr "%s: %s programů"
+
+#: ../ui/home_page.py:674
+#, python-format
+msgid "%s > %s : %s applications"
+msgstr "%s > %s : %s programů"
+
+#: ../ui/home_page.py:730 ../ui/software_center.py:786
+msgid "Home"
+msgstr "Domovská složka"
+
+#: ../ui/home_page.py:770
+msgid "Hot applications"
+msgstr "Nejlepší programy"
+
+#: ../ui/home_page.py:770
+msgid "Topics"
+msgstr "Náměty"
+
+#: ../ui/home_page.py:770
+msgid "Download rank"
+msgstr "Žebříček stahování"
+
+#: ../ui/widgets.py:66
+msgid "Just now"
+msgstr "Právě teď"
+
+#: ../ui/widgets.py:71
+msgid "One minute ago"
+msgstr "Před minutou"
+
+#: ../ui/widgets.py:73
+#, python-format
+msgid "%s minutes ago"
+msgstr "Před %s minutami"
+
+#: ../ui/widgets.py:78
+msgid "One hour ago"
+msgstr "Před hodinou"
+
+#: ../ui/widgets.py:80
+#, python-format
+msgid "%s hours ago"
+msgstr "Před %s hodinami"
+
+#: ../ui/widgets.py:84
+msgid "Yesterday"
+msgstr "Včera"
+
+#: ../ui/widgets.py:295 ../ui/widgets.py:369
+msgid "Click to refresh"
+msgstr "Klepněte pro obnovení"
+
+#: ../ui/widgets.py:462
+msgid "OK"
+msgstr "OK"
+
+#: ../ui/widgets.py:463 ../ui/preference.py:445
+msgid "Cancel"
+msgstr "Zrušit"
+
+#: ../ui/utils.py:321
+msgid "Running"
+msgstr "Běží"
+
+#: ../ui/utils.py:322
+msgid "Preparing"
+msgstr "Připravuje se"
+
+#: ../ui/utils.py:323
+msgid "Unpacking"
+msgstr "Rozbaluje se"
+
+#: ../ui/utils.py:324
+msgid "Preparing to configure"
+msgstr "Připravuje se nastavení"
+
+#: ../ui/utils.py:325
+msgid "Configuring"
+msgstr "Nastavuje se..."
+
+#: ../ui/utils.py:326
+msgid "Installed"
+msgstr "Nainstalováno"
+
+#: ../ui/utils.py:336
+msgid "Err"
+msgstr "Chyba"
+
+#: ../ui/utils.py:337
+msgid "Ign"
+msgstr "Přehlížet"
+
+#: ../ui/utils.py:338
+msgid "Get"
+msgstr "Získat"
+
+#: ../ui/utils.py:339
+msgid "Hit"
+msgstr "Nález"
 
 #: ../ui/software_center.py:129
 #, python-format
@@ -875,7 +750,7 @@ msgstr "Poznámku se nepodařilo přidat. Ověřte, prosím, své síťové spoj
 msgid "Uninstall %s Successfully."
 msgstr "Odinstalace %s byla úspěšná."
 
-#: ../ui/software_center.py:388 ../ui/software_center.py:804
+#: ../ui/software_center.py:388 ../ui/software_center.py:788
 msgid "Uninstall"
 msgstr "Odinstalovat"
 
@@ -884,7 +759,7 @@ msgstr "Odinstalovat"
 msgid "%s packages upgrade Successfully."
 msgstr "Povýšení %s balíčků proběhlo úspěšně."
 
-#: ../ui/software_center.py:394 ../ui/software_center.py:803
+#: ../ui/software_center.py:394 ../ui/software_center.py:787
 msgid "Upgrade"
 msgstr "Povýšit"
 
@@ -933,46 +808,176 @@ msgstr "Požadovaný balíček \"%s\" nebyl nalezen v seznamu balíčků."
 msgid "Refresh the package list and try again."
 msgstr "Obnovit seznam balíčků a zkusit to znovu."
 
-#: ../ui/software_center.py:783
+#: ../ui/software_center.py:730 ../ui/preference.py:463
+msgid "Deepin Software Center"
+msgstr "Středisko programů"
+
+#: ../ui/software_center.py:767
 msgid "Join us"
 msgstr "Připojte se k nám"
 
-#: ../ui/software_center.py:805
-msgid "Install Manage"
-msgstr "Správa instalace"
+#: ../ui/software_center.py:789
+#, fuzzy
+msgid "Installation"
+msgstr "Instaluje se"
 
-#: ../ui/software_center.py:829
+#: ../ui/software_center.py:813
 msgid "Refresh applications lists"
 msgstr "Obnovit seznam programů"
 
-#: ../ui/software_center.py:830
+#: ../ui/software_center.py:814
 msgid "Open download directory"
 msgstr "Otevřít adresář pro stahování"
 
-#: ../ui/software_center.py:831
+#: ../ui/software_center.py:815
 msgid "Clear up cached packages"
 msgstr "Odstranit balíčky ve vyrovnávací paměti"
 
-#: ../ui/software_center.py:832
+#: ../ui/software_center.py:816
 msgid "View new features"
 msgstr "Zobrazit nové vlastnosti"
 
-#: ../ui/software_center.py:833
+#: ../ui/software_center.py:817
 msgid "Preferences"
 msgstr "Nastavení"
 
-#: ../ui/software_center.py:834
+#: ../ui/software_center.py:818
 msgid "Quit"
 msgstr "Ukončit"
 
-#: ../ui/software_center.py:1150
+#: ../ui/software_center.py:1134
 #, python-format
 msgid "You have cleared up %s pakcages and saved %s of space"
 msgstr "Odstranil jste %s balíčků a ušetřil %s místa"
 
-#: ../ui/software_center.py:1152
+#: ../ui/software_center.py:1136
 msgid "Your system is clean."
 msgstr "Váš systém je uklizený."
+
+#: ../ui/item_render.py:44
+msgid "Unwatch"
+msgstr "Přestat sledovat"
+
+#: ../ui/preference.py:468
+msgid "Version:"
+msgstr "Verze:"
+
+#: ../ui/preference.py:485
+msgid ""
+"Deepin Software Center is a commonly used software center on Linux. It "
+"selected more than 2,600 decent applications and features easy installation "
+"and uninstall, software repository and recommended applications. It supports "
+"1-click install, downloading packages with multi-thread and clearing up "
+"cached packages. It provides topics for software introduction and shares "
+"good applications. \n"
+msgstr ""
+"Středisko programů Deepin je střediskem běžné používaných programů na "
+"Linuxu. Bylo vybráno více než 2600 pěkných programů, jejichž snadnou "
+"instalaci ze skladiště a odinstalaci středisko zajišťuje. Naleznete zde "
+"doporučení ohledně programů. Je podporována instalace na jedno klepnutí, "
+"vícevláknové stahování balíčků a úklid balíčků uložených do vyrovnávací "
+"paměti. Jsou poskytovány náměty pro uvedení programů a jsou sdíleny dobré "
+"programy.\n"
+
+#: ../ui/preference.py:531
+msgid "General"
+msgstr "Obecné"
+
+#: ../ui/preference.py:532
+msgid "Mirrors"
+msgstr ""
+
+#: ../ui/preference.py:533
+msgid "About"
+msgstr "O programu"
+
+#: ../ui/preference.py:555
+msgid "Select mirror"
+msgstr "Vybrat zrcadlo"
+
+#: ../ui/preference.py:579
+msgid "Select best mirror"
+msgstr "Vybrat nejlepší zrcadlo"
+
+#: ../ui/preference.py:580
+msgid ""
+"Please wait. The process will take 30 seconds or more depending on your "
+"network connection"
+msgstr ""
+"Počkejte, prosím. Proces zabere 30 sekund či více v závislosti na vašem "
+"síťovém spojení"
+
+#: ../ui/preference.py:642
+msgid ""
+"Test for downloading mirror failed. Please check your network connection."
+msgstr ""
+"Zkouška stahovacího zrcadla nedopadla dobře. Prověřte, prosím své síťové "
+"spojení."
+
+#: ../ui/preference.py:643
+msgid "Close"
+msgstr "Zavřít"
+
+#: ../ui/preference.py:677
+msgid "Update applications lists"
+msgstr "Obnovit seznam programů"
+
+#: ../ui/preference.py:683
+msgid "Update automatically"
+msgstr "Aktualizovat automaticky"
+
+#: ../ui/preference.py:686
+msgid "Time interval: "
+msgstr "Časový interval: "
+
+#: ../ui/preference.py:689
+msgid " hour"
+msgstr " hodina"
+
+#: ../ui/preference.py:712
+msgid "Download settings"
+msgstr "Nastavení stahování"
+
+#: ../ui/preference.py:718
+msgid "Max download task number: "
+msgstr "Nejvyšší počet stahovacích úkolů: "
+
+#: ../ui/preference.py:728
+msgid "Download directory: "
+msgstr "Adresář pro stahování: "
+
+#: ../ui/preference.py:734
+msgid "Change"
+msgstr "Změnit"
+
+#: ../ui/preference.py:750
+msgid "On uninstall software"
+msgstr "Při odinstalování programu"
+
+#: ../ui/preference.py:755
+msgid "Delete configuration files"
+msgstr "Smazat soubory s nastavením"
+
+#: ../ui/preference.py:792
+msgid "Select Directory"
+msgstr "Vybrat adresář"
+
+#: ../ui/search_page.py:109
+#, python-format
+msgid "%s: %s matched applications"
+msgstr "%s: %s odpovídajících programů"
+
+#~ msgid "Untitled"
+#~ msgstr "Bez názvu"
+
+#~ msgid "Unknown mirror url"
+#~ msgstr "Neznámá adresa (URL) zrcadla"
+
+#~ msgid "Software repository"
+#~ msgstr "Skladiště programů"
+
+#~ msgid "Install Manage"
+#~ msgstr "Správa instalace"
 
 #~ msgid "Information"
 #~ msgstr "Informace"

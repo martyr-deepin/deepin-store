@@ -529,7 +529,7 @@ class DscPreferenceDialog(PreferenceDialog):
 
         self.set_preference_items([
             (_("General"), self.normal_settings_align),
-            (_("Software repository"), self.mirror_settings_align),
+            (_("Mirrors"), self.mirror_settings_align),
             (_("About"), AboutBox()),
             ])
         

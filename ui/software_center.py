@@ -786,7 +786,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
                 (DynamicPixbuf(utils.get_common_image("navigatebar/nav_home.png")), _("Home"), self.show_home_page),
                 (DynamicPixbuf(utils.get_common_image("navigatebar/nav_update.png")), _("Upgrade"), self.show_upgrade_page),
                 (DynamicPixbuf(utils.get_common_image("navigatebar/nav_uninstall.png")), _("Uninstall"), self.show_uninstall_page),
-                (DynamicPixbuf(utils.get_common_image("navigatebar/nav_download.png")), _("Install Manage"), self.show_install_page),
+                (DynamicPixbuf(utils.get_common_image("navigatebar/nav_download.png")), _("Installation"), self.show_install_page),
                 ],
                 font_size = 11,
                 padding_x = 2,
