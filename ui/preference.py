@@ -223,8 +223,9 @@ class SelectedButtonBuffer(gobject.GObject):
             draw_pixbuf(
                 cr, 
                 image, 
-                rect.x + self.render_padding_x,
-                rect.y + self.render_padding_y)
+                rect.x + (rect.width - image.get_width())/2,
+                rect.y + (rect.height - image.get_height())/2
+                )
             
 gobject.type_register(SelectedButtonBuffer)
 
@@ -235,6 +236,8 @@ class MirrorItem(TreeItem):
     }
 
     PADDING_X = 5
+    PADDING_Y = 4
+    PADDING_MIDDLE = 2
 
     RADIO_BUTTON_AREA_WIDTH = 20
     NAME_AREA_WIDTH = 124
@@ -253,15 +256,19 @@ class MirrorItem(TreeItem):
         self.mirror = mirror
         self.radio_button = SelectedButtonBuffer(render_padding_x=2, render_padding_y=4)
 
-        button_pixbuf = app_theme.get_pixbuf("mirror/server_small_normal.png").get_pixbuf()
-        (self.button_width, self.button_height) = button_pixbuf.get_width(), button_pixbuf.get_height()
+
+        self.pixbuf_normal = app_theme.get_pixbuf("mirror/server_small_normal.png").get_pixbuf()
+        self.pixbuf_hover = app_theme.get_pixbuf("mirror/server_small_hover.png").get_pixbuf()
+        self.pixbuf_press = app_theme.get_pixbuf("mirror/server_small_press.png").get_pixbuf()
+
+        (self.button_width, self.button_height) = self.pixbuf_normal.get_width(), self.pixbuf_normal.get_height()
         self.button_status = self.BUTTON_NORMAL
 
         if item_clicked_callback:
             self.connect('item-clicked', item_clicked_callback)
 
     def is_in_button_area(self, column, offset_x, offset_y):
-        return (column == 3
+        return (column == 2
                 and is_in_rect((offset_x, offset_y), 
                                (self.get_column_widths()[column] - self.ITEM_BUTTON_PADDING_RIGHT - self.button_width,
                                 (self.ITEM_HEIGHT - self.button_height) / 2,
@@ -275,68 +282,48 @@ class MirrorItem(TreeItem):
 
     def render_radio_button(self, cr, rect):
         self.render_background(cr, rect)
-        
         self.radio_button.render(cr, rect)
-
-    def render_name(self, cr, rect):
-        self.render_background(cr, rect)
-
-        self.name = self.mirror.name
-
-        #rect.width -= self.PADDING_X * 2        
-        if self.name:
-            (text_width, text_height) = get_content_size(self.name)
-            if text_width > rect.width:
-                self.is_complate = False
-            draw_text(cr, self.name, rect.x, rect.y, rect.width, rect.height,
-                    alignment = pango.ALIGN_LEFT)
-        else:
-            name = _("Untitled")
-            (text_width, text_height) = get_content_size(name)
-            draw_text(cr, name, rect.x, rect.y, rect.width, rect.height,
-                    alignment = pango.ALIGN_LEFT)
 
     def render_url(self, cr, rect):
         self.render_background(cr, rect)
         self.mirror_url = self.mirror.hostname
+        self.name = "<b>%s</b>" % self.mirror.name
 
-        #rect.width -= self.PADDING_X * 2
-        if self.mirror_url:
-            (text_width, text_height) = get_content_size(self.mirror_url)
-            draw_text(cr, self.mirror_url, rect.x, rect.y, rect.width, rect.height,
-                    alignment = pango.ALIGN_LEFT)
-        else:
-            mirror_url = _("Unknown mirror url")
-            (text_width, text_height) = get_content_size(mirror_url)
-            draw_text(cr, mirror_url, rect.x, rect.y, rect.width, rect.height,
-                    alignment = pango.ALIGN_LEFT)
+        (name_width, name_height) = get_content_size(self.name)
+        draw_text(cr, self.name, rect.x, rect.y + self.PADDING_Y, rect.width, name_height,
+                alignment = pango.ALIGN_LEFT)
+
+        (url_width, url_height) = get_content_size(self.mirror_url)
+        draw_text(cr, self.mirror_url, rect.x, rect.y + name_height + self.PADDING_Y + self.PADDING_MIDDLE, rect.width, url_height,
+                alignment = pango.ALIGN_LEFT)
 
     def render_change_button(self, cr, rect):
         self.render_background(cr, rect)
         if self.is_hover:
-
             if self.button_status == self.BUTTON_NORMAL:
-                pixbuf = app_theme.get_pixbuf("mirror/server_small_normal.png").get_pixbuf()
+                self.pixbuf = self.pixbuf_normal
             elif self.button_status == self.BUTTON_HOVER:
-                pixbuf = app_theme.get_pixbuf("mirror/server_small_hover.png").get_pixbuf()
+                self.pixbuf = self.pixbuf_hover
             elif self.button_status == self.BUTTON_PRESS:
-                pixbuf = app_theme.get_pixbuf("mirror/server_small_press.png").get_pixbuf()
+                self.pixbuf = self.pixbuf_press
+
             draw_pixbuf(
                 cr,
-                pixbuf,
-                rect.x + 2,
-                rect.y + 2,
+                self.pixbuf,
+                rect.x,
+                rect.y + (rect.height - self.pixbuf.get_height())/2,
                 )
         
     def get_column_renders(self):
-        return [self.render_radio_button, self.render_name, self.render_url, self.render_change_button]
+        return [self.render_radio_button, self.render_url, self.render_change_button]
 
     def get_column_widths(self):
         '''docstring for get_column_widths'''
-        return [20, self.NAME_AREA_WIDTH, 300, 49]
+        return [30, -1, 60]
 
     def get_height(self):
-        return 25
+        (name_width, name_height) = get_content_size(self.mirror.name)
+        return name_height * 2 + self.PADDING_Y * 2 + self.PADDING_MIDDLE
 
     def select(self):
         self.is_select = True
@@ -407,6 +394,14 @@ class MirrorItem(TreeItem):
     def button_press(self, column, offset_x, offset_y):
         if self.is_in_button_area(column, offset_x, offset_y):
             self.emit("item-clicked")
+
+    def release_resource(self):
+        if self.pixbuf:
+            del self.pixbuf
+            self.pixbuf = None
+        
+        return True
+
 
 def create_separator_box(padding_x=0, padding_y=0):    
     separator_box = HSeparator(
@@ -522,7 +517,7 @@ class DscPreferenceDialog(PreferenceDialog):
         self.mirror_settings.pack_start(self.create_source_update_frequency_table(), False, True)
 
         self.mirror_settings_inner_align = gtk.Alignment(0.5, 0.5, 1, 1)
-        self.mirror_settings_inner_align.set_padding(padding_top=25, padding_bottom=10, padding_left=5, padding_right=0)
+        self.mirror_settings_inner_align.set_padding(padding_top=25, padding_bottom=10, padding_left=0, padding_right=0)
         self.mirror_settings_inner_align.add(self.mirror_settings)
 
         self.mirror_settings_scrolled_win = ScrolledWindow()
@@ -552,13 +547,15 @@ class DscPreferenceDialog(PreferenceDialog):
         self.data_manager.change_source_list(repo_urls, reply_handler=handle_dbus_reply, error_handler=handle_dbus_error)
 
     def create_mirror_select_table(self):
-        main_table = gtk.Table(3, 2)
+        vbox = gtk.VBox()
+        vbox.set_size_request(423, -1)
+        main_table = gtk.Table(2, 2)
         main_table.set_row_spacings(CONTENT_ROW_SPACING)
         
         dir_title_label = Label(_("Select mirror"))
-        dir_title_label.set_size_request(400, 12)
+        dir_title_label.set_size_request(423, 12)
         label_align = gtk.Alignment()
-        label_align.set_padding(0, 0, 0, 0)
+        label_align.set_padding(0, 0, 10, 0)
         label_align.add(dir_title_label)
 
         self.mirrors_dir = os.path.join(get_parent_dir(__file__, 2), 'mirrors')
@@ -569,33 +566,15 @@ class DscPreferenceDialog(PreferenceDialog):
                                 enable_multiple_select=False,
                                 #mask_bound_height=0,
                              )
-        self.mirror_view.set_expand_column(2)
+        self.mirror_view.set_expand_column(1)
         self.mirror_view.set_size_request(-1, len(self.mirror_view.visible_items) * self.mirror_view.visible_items[0].get_height())
         self.mirror_view.draw_mask = self.mirror_treeview_draw_mask
         #self.display_current_mirror()
-
-        """
-        self.mirror_test_button = Button(_("Select fastest mirror"))
-        self.mirror_test_button.connect('clicked', self.test_mirror_action)
-        mirror_test_button_align = gtk.Alignment(0, 0.5, 0, 0)
-        mirror_test_button_align.set_padding(0, 0, 7, 5)
-        mirror_test_button_align.add(self.mirror_test_button)
-
-        self.mirror_message_label = Label()
-        mirror_message_label_align = gtk.Alignment(0, 0.5, 1, 1)
-        mirror_message_label_align.set_padding(0, 0, 5, 5)
-        mirror_message_label_align.add(self.mirror_message_label)
-        self.mirror_message_hbox = gtk.HBox()
-        self.mirror_message_hbox.pack_start(mirror_message_label_align, False)
-        """
 
         self.mirror_test_progressbar = ProgressBar()
 
         main_table.attach(label_align, 0, 2, 0, 1, yoptions=gtk.FILL, xpadding=8)
         main_table.attach(create_separator_box(), 0, 2, 1, 2, yoptions=gtk.FILL)
-        main_table.attach(self.mirror_view, 0, 2, 2, 3, xpadding=10, xoptions=gtk.FILL)
-        """main_table.attach(mirror_test_button_align, 0, 1, 3, 4, xoptions=gtk.FILL)
-        main_table.attach(self.mirror_message_hbox, 1, 2, 3, 4, xoptions=gtk.FILL)"""
         
         title = _("Select best mirror")
         info_message = _("Please wait. The process will take 30 seconds or more depending on your network connection")
@@ -603,7 +582,10 @@ class DscPreferenceDialog(PreferenceDialog):
         global_event.register_event("mirror-changed", self.mirror_changed_handler)
         global_event.register_event("update-list-finish", self.update_list_finish_handler)
 
-        return main_table
+        vbox.pack_start(main_table, False, False)
+        vbox.pack_start(self.mirror_view, False, False)
+
+        return vbox
 
     def cancel_mirror_test(self, widget):
         try:
