@@ -59,7 +59,7 @@ class RecommendIconItem(IconItem):
             self.pkg_picture_pixbuf = gtk.gdk.pixbuf_new_from_file(local_path)
             self.emit_redraw_request()
         except:
-            print "Render Recommend Iamge Error: %s -> %s", (self.info[0], local_path)
+            print "Render Recommend Iamge Error: %s -> %s" % (self.info[0], local_path)
 
     def emit_redraw_request(self):
         '''
