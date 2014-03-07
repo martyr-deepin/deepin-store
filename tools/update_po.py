@@ -51,7 +51,7 @@ if __name__ == "__main__":
     # Update po files from pot files.
     for lang in langs:
         subprocess.call(
-            "msgmerge -U %s %s" % (
+            "msgmerge -s -U %s %s" % (
                 os.path.join(locale_dir, "%s.po" % (lang)),
                 os.path.join(locale_dir, "%s.pot" % (project_name))
                 ),
