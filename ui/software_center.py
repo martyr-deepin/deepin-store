@@ -1083,6 +1083,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         except:
             pass
         self.in_update_list = False
+        self.data_manager.init_cache_soft_db()
 
     def hide_dialog(self, name):
         getattr(self, name).hide_all()

@@ -60,6 +60,8 @@ class DataManager(object):
         self.software_db_connect = sqlite3.connect(software_db_path)
         self.software_db_cursor = self.software_db_connect.cursor()
 
+        self.init_cache_soft_db()
+
         desktop_db_path = os.path.join(UPDATE_DATA_DIR, "desktop", self.language, "desktop.db")
         db_path_exists(desktop_db_path)
         self.desktop_db_connect = sqlite3.connect(desktop_db_path)
@@ -74,6 +76,11 @@ class DataManager(object):
         self.category_name_dict = {}
         
         self.build_category_dict()
+
+    def init_cache_soft_db(self):
+        if self.is_cache_soft_db_exists() and not hasattr(self, 'cache_soft_db_cursor'):
+            self.cache_soft_db_connect = sqlite3.connect(CACHE_SOFT_DB_PATH)
+            self.cache_soft_db_cursor = self.cache_soft_db_connect.cursor()
 
     def is_cache_soft_db_exists(self):
         return os.path.exists(CACHE_SOFT_DB_PATH)
