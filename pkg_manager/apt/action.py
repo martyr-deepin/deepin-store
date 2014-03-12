@@ -22,7 +22,6 @@
 
 import apt_pkg
 import apt.progress.base as apb
-from apt.deprecation import function_deprecated_by
 from dtk.ui.thread_pool import MissionThread, MissionThreadPool
 import time
 import gobject
@@ -175,12 +174,6 @@ class GInstallProgress(gobject.GObject, apb.InstallProgress):
         apb.InstallProgress.update_interface(self)
         if self.time_last_update + self.INSTALL_TIMEOUT < time.time():
             global_event.emit("action-timeout")
-
-    if apt_pkg._COMPAT_0_7:
-        updateInterface = function_deprecated_by(update_interface)
-        startUpdate = function_deprecated_by(start_update)
-        finishUpdate = function_deprecated_by(finish_update)
-        statusChange = function_deprecated_by(status_change)
 
 class AptActionThread(MissionThread):
     '''

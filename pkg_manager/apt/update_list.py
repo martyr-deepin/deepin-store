@@ -21,7 +21,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import apt
-import apt.progress.old
 import apt.progress.text
 import apt.progress.base
 import apt_pkg
