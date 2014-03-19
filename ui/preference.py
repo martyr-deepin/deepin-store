@@ -649,8 +649,10 @@ class DscPreferenceDialog(PreferenceDialog):
         cr.fill()
 
     def get_mirror_items(self):
+        import json
         items = []
         self.mirrors_list = []
+        json_data = []
         for ini_file in os.listdir(self.mirrors_dir):
             m = Mirror(os.path.join(self.mirrors_dir, ini_file))
             item = MirrorItem(m, self.mirror_clicked_callback)
@@ -659,6 +661,19 @@ class DscPreferenceDialog(PreferenceDialog):
                 self.current_mirror_item = item
             self.mirrors_list.append(m)
             items.append(item)
+
+            info = {}
+            info['category'] = m.config.get("mirror", "category")
+            info['ubuntu_url'] = m.config.get("mirror", "ubuntu_url")
+            info['deepin_url'] = m.config.get("mirror", "deepin_url")
+            info['name[zh_CN]'] = m.config.get("mirror", "name[zh_CN]")
+            info['name[en_US]'] = m.config.get("mirror", "name[en_US]")
+            info['name[zh_TW]'] = m.config.get("mirror", "name[zh_TW]")
+            info['name[zh_HK]'] = m.config.get("mirror", "name[zh_HK]")
+            json_data.append(info)
+
+        with open("/tmp/mirrors.json", "wb") as fp:
+            json.dump(json_data, fp)
         
         items.sort(key=lambda x:x.mirror.priority)
         
