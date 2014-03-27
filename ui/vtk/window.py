@@ -548,40 +548,44 @@ class TipWindow(dbus.service.Object):
         self.win.add_plugin(label_align)
         gtk.timeout_add(5000, self.show)
 
+    def update_info(self, s):
+        self.status_icon.set_tooltip_markup(s)
+
     def run(self):
         self.start_dsc_backend()
         gtk.main()
 
     def show(self, status_icon=None, button=None, activate_time=None):
-        self.win.set_redraw_on_allocate(True)
+        pass
+        #self.win.set_redraw_on_allocate(True)
 
-        screen, rect, cons = self.status_icon.get_geometry()
+        #screen, rect, cons = self.status_icon.get_geometry()
 
-        if self.win.allocation.width != 1:
-            cal_width = self.win.allocation.width
-            print cal_width
-        else:
-            cal_width = self.width
+        #if self.win.allocation.width != 1:
+            #cal_width = self.win.allocation.width
+            #print cal_width
+        #else:
+            #cal_width = self.width
 
-        self.win.offset = cal_width / 2
+        #self.win.offset = cal_width / 2
 
-        if self.win.allocation.height != 1:
-            cal_height = self.win.allocation.height
-        else:
-            cal_height = self.height
+        #if self.win.allocation.height != 1:
+            #cal_height = self.win.allocation.height
+        #else:
+            #cal_height = self.height
 
-        if (rect.x-self.win.offset+cal_width) <= screen.get_width():
-            if (rect.y - cal_height -20) > 0:
-                self.win.move(rect.x-self.win.offset, rect.y - cal_height -20)
-            else:
-                self.win.move(rect.x-self.win.offset, rect.y+20)
-        else:
-            self.win.offset = cal_width - (screen.get_width() - rect.x)
-            if (rect.y - cal_height - 20) > 0:
-                self.win.move(rect.x-self.win.offset, rect.y - cal_height - 20)
-            else:
-                self.win.move(rect.x-self.win.offset, rect.y+20)
-        self.win.show_all()
+        #if (rect.x-self.win.offset+cal_width) <= screen.get_width():
+            #if (rect.y - cal_height -20) > 0:
+                #self.win.move(rect.x-self.win.offset, rect.y - cal_height -20)
+            #else:
+                #self.win.move(rect.x-self.win.offset, rect.y+20)
+        #else:
+            #self.win.offset = cal_width - (screen.get_width() - rect.x)
+            #if (rect.y - cal_height - 20) > 0:
+                #self.win.move(rect.x-self.win.offset, rect.y - cal_height - 20)
+            #else:
+                #self.win.move(rect.x-self.win.offset, rect.y+20)
+        #self.win.show_all()
 
     def create_align(self, init, padding):
         align = gtk.Alignment(*init)
@@ -591,8 +595,8 @@ class TipWindow(dbus.service.Object):
     def start_dsc_backend(self):
         if is_dbus_name_exists(DSC_SERVICE_NAME, False):
             print "running..."
-            self.label.set_label("软件中心后端正在运行...")
-            self.show()
+            #self.label.set_label("软件中心后端正在运行...")
+            self.update_info("软件中心后端正在运行...")
 
             self.system_bus = dbus.SystemBus()
             bus_object = self.system_bus.get_object(DSC_SERVICE_NAME, DSC_SERVICE_PATH)
@@ -604,9 +608,10 @@ class TipWindow(dbus.service.Object):
                     path=DSC_SERVICE_PATH))
         else:
             print "error..."
-            self.label.set_label("出错了!\n软件中心的后端已退出")
+            #self.label.set_label("出错了!\n软件中心的后端已退出")
+            self.update_info("出错了!\n软件中心的后端已退出")
             gtk.timeout_add(3000, gtk.main_quit)
-            self.show()
+            #self.show()
 
     def backend_signal_receiver(self, messages):
         for message in messages:
@@ -618,7 +623,8 @@ class TipWindow(dbus.service.Object):
                     pass
                 elif action_type == ACTION_UPGRADE:
                     pass
-                self.label.set_label("开始下载...")
+                #self.label.set_label("开始下载...")
+                self.update_info("开始下载...")
             
             elif signal_type == "download-update":
                 (pkg_name, action_type, percent, speed, finish_number, total, downloaded_size, total_size) = action_content
@@ -626,7 +632,14 @@ class TipWindow(dbus.service.Object):
                     pass
                 elif action_type == ACTION_UPGRADE:
                     pass
-                self.label.set_label("正在下载：%i%% \n已完成：%s/%s (%s/%s)" % (
+                #self.label.set_label("正在下载：%i%% \n已完成：%s/%s (%s/%s)" % (
+                    #percent, 
+                    #utils.bit_to_human_str(downloaded_size), 
+                    #utils.bit_to_human_str(total_size),
+                    #finish_number+1,
+                    #total,
+                    #))
+                self.update_info("正在下载：%i%% \n已完成：%s/%s (%s/%s)" % (
                     percent, 
                     utils.bit_to_human_str(downloaded_size), 
                     utils.bit_to_human_str(total_size),
@@ -640,33 +653,40 @@ class TipWindow(dbus.service.Object):
                     pass
                 elif action_type == ACTION_UPGRADE:
                     pass
-                self.label.set_label("下载完成")
+                #self.label.set_label("下载完成")
+                self.update_info("下载完成")
 
             elif signal_type == "download-failed":
                 (pkg_name, action_type, error) = action_content
-                self.label.set_label("下载失败，2秒钟后退出...")
+                #self.label.set_label("下载失败，2秒钟后退出...")
+                self.update_info("下载失败，2秒钟后退出...")
                 gtk.timeout_add(2000, gtk.main_quit)
 
             elif signal_type == "action-start":
                 (pkg_name, action_type) = action_content
-                self.label.set_label("开始%s" % ACTION_STR[action_type])
+                #self.label.set_label("开始%s" % ACTION_STR[action_type])
+                self.update_info("开始%s" % ACTION_STR[action_type])
 
             elif signal_type == "action-update":
                 (pkg_name, action_type, percent, status) = action_content
                 if int(float(percent)) != 100:
-                    self.label.set_label("正在%s - %i%%" % (ACTION_STR[action_type], percent))
+                    #self.label.set_label("正在%s - %i%%" % (ACTION_STR[action_type], percent))
+                    self.update_info("正在%s - %i%%" % (ACTION_STR[action_type], percent))
                 else:
-                    self.label.set_label("%s完成，2秒钟后退出" % ACTION_STR[action_type])
+                    #self.label.set_label("%s完成，2秒钟后退出" % ACTION_STR[action_type])
+                    self.update_info("%s完成，2秒钟后退出" % ACTION_STR[action_type])
                     gtk.timeout_add(2000, gtk.main_quit)
 
             elif signal_type == "action-finish":
                 (pkg_name, action_type, pkg_info_list) = action_content
-                self.label.set_label("%s完成，2秒钟后退出" % ACTION_STR[action_type])
+                #self.label.set_label("%s完成，2秒钟后退出" % ACTION_STR[action_type])
+                self.update_info("%s完成，2秒钟后退出" % ACTION_STR[action_type])
                 gtk.timeout_add(2000, gtk.main_quit)
 
             elif signal_type == "action-failed":
                 (pkg_name, action_type, pkg_info_list, errormsg) = action_content
-                self.label.set_label("%s失败，2秒钟后退出" % ACTION_STR[action_type])
+                #self.label.set_label("%s失败，2秒钟后退出" % ACTION_STR[action_type])
+                self.update_info("%s失败，2秒钟后退出" % ACTION_STR[action_type])
                 gtk.timeout_add(2000, gtk.main_quit)
 
 if __name__ == '__main__':
