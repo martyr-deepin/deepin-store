@@ -51,6 +51,9 @@ DSC_UPDATE_DAEMON_PATH = "/com/linuxdeepin/softwarecenter/update/daemon"
 DSC_UPDATER_NAME = "com.linuxdeepin.softwarecenterupdater"
 DSC_UPDATER_PATH = "/com/linuxdeepin/softwarecenterupdater"
 
+NOTIFICATIONS_NAME = "org.freedesktop.Notifications"
+NOTIFICATIONS_PATH = "/org/freedesktop/Notifications"
+
 LOG_PATH = "/tmp/dsc-update-daemon.log"
 DATA_CURRENT_ID_CONFIG_PATH = '/tmp/deepin-software-center/data_current_id.ini'
 
@@ -192,6 +195,7 @@ class NetworkDetector(gobject.GObject):
 class Update(dbus.service.Object):
     def __init__(self, session_bus, mainloop):
         dbus.service.Object.__init__(self, session_bus, DSC_UPDATE_DAEMON_PATH)
+        self.session_bus = session_bus
         self.mainloop = mainloop
 
         self.exit_flag = False
@@ -206,12 +210,44 @@ class Update(dbus.service.Object):
         self.remind_num = 0
 
         self.net_detector = NetworkDetector()
+        self.init_notify()
 
         log("Start Update List Daemon")
 
     def run(self):
         self.update_handler()
         return False
+
+    def init_notify(self):
+        self.notify_id = None
+        notify_obj = self.session_bus.get_object(NOTIFICATIONS_NAME, NOTIFICATIONS_PATH)
+        self.notify_interface = dbus.Interface(notify_obj, NOTIFICATIONS_NAME)
+        self.session_bus.add_signal_receiver(
+            self.handle_notification_action,
+            signal_name="ActionInvoked",
+            dbus_interface=NOTIFICATIONS_NAME, 
+            bus_name=NOTIFICATIONS_NAME,
+            path=NOTIFICATIONS_PATH,
+        )
+
+    def send_notify(self, body, summary):
+        app_name = "deepin-software-center"
+        replaces_id = 0
+        app_icon = utils.get_common_image("logo48.png")
+        actions = ["_id_default_", "default", "_id_open_update_", _("Upgrade")]
+        hints = {"image-path": app_icon}
+        timeout = 3500
+        return self.notify_interface.Notify(app_name, replaces_id, app_icon,
+            summary, body, actions, hints, timeout)
+
+    def handle_notification_action(self, notify_id, action_id):
+        if self.notify_id == notify_id:
+            dsc_obj = self.session_bus.get_object(DSC_FRONTEND_NAME, DSC_FRONTEND_PATH)
+            self.dsc_interface = dbus.Interface(dsc_obj, DSC_FRONTEND_NAME)
+            if action_id == "_id_default_":
+                self.dsc_interface.show_page("home")
+            elif action_id == "_id_open_update_":
+                self.dsc_interface.show_page("upgrade")
 
     def set_delay_update(self, seconds):
         if self.delay_update_id:
@@ -255,11 +291,17 @@ class Update(dbus.service.Object):
                             (update_num, update_num-remind_num))
                 elif remind_num > 0 and remind_num != self.remind_num:
                     if remind_num != 1:
-                        utils.show_notify(_("There are %s packages need to upgrade in your system, please open the software center to upgrade!")
-                                % remind_num, _("Upgrade Info"))
+                        self.notify_id = self.send_notify(_(
+                            "There are %s packages need to upgrade in your system,"
+                            " please open the software center to upgrade!"
+                            ) % remind_num,
+                            _("Software Center"))
                     else:
-                        utils.show_notify(_("There is %s package need to upgrade in your system, please open the software center to upgrade!") 
-                                % remind_num, _("Upgrade Info"))
+                        self.notify_id = self.send_notify(_(
+                            "There is %s package need to upgrade in your system,"
+                            " please open the software center to upgrade!"
+                            ) % remind_num,
+                            _("Software Center"))
                 self.remind_num = remind_num
                 print "Finish update list."
                 log("Finish update list.")
@@ -347,9 +389,7 @@ if __name__ == "__main__" :
     mainloop = gobject.MainLoop()
     signal.signal(signal.SIGINT, lambda : mainloop.quit()) # capture "Ctrl + c" signal
 
-    if is_dbus_name_exists(DSC_UPDATE_DAEMON_NAME, True):
-        print "Daemon is running"
-    else:
+    if not is_dbus_name_exists(DSC_UPDATE_DAEMON_NAME, True):
         bus_name = dbus.service.BusName(DSC_UPDATE_DAEMON_NAME, session_bus)
             
         update = Update(session_bus, mainloop)

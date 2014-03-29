@@ -53,19 +53,26 @@ LOG_PATH = "/tmp/dsc-frontend.log"
 SYS_CONFIG_INFO_PATH = "/var/cache/deepin-software-center/config_info.ini"
 BACKEND_PID = "/tmp/deepin-software-center/backend_running.pid"
 
-def show_notify(message, summary=None, timeout=3500):
+def show_notify(body, summary=None, actions=[]):
     app_name = "deepin-software-center"
     replaces_id = 0
     app_icon = get_common_image("logo48.png")
-    body = message
     hints = {"image-path": app_icon}
-    actions = []
+    timeout = 3500
     try:
         session_bus = dbus.SessionBus()
         obj = session_bus.get_object('org.freedesktop.Notifications', '/org/freedesktop/Notifications')
         interface = dbus.Interface(obj, 'org.freedesktop.Notifications')
-        interface.Notify(app_name, replaces_id, app_icon, summary,
-                         body, actions, hints, timeout)
+        interface.Notify(
+            app_name,
+            replaces_id,
+            app_icon,
+            summary,
+            body, 
+            actions, 
+            hints, 
+            timeout
+        )
     except:
         pass
 
@@ -370,4 +377,8 @@ class ThreadMethod(td.Thread):
         self.func(*self.args)
 
 if __name__ == '__main__':
-    print update_l18n_status_info("Ign http://test.packages.linuxdeepin.com raring/universe Translation-en")
+    show_notify(
+            "您的系统有12个软件包需要更新",
+            "软件中心",
+            ["_id_default_", "default", "_id_open_update_", "更新"]
+            )
