@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-06 21:22+0800\n"
+"POT-Creation-Date: 2014-03-29 17:35+0800\n"
 "PO-Revision-Date: 2014-02-28 01:31+0000\n"
 "Last-Translator: lihongwu <lihongwu1987@gmail.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/deepin-software-"
@@ -19,7 +19,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../apt/dsc-daemon.py:258
+#: ../apt/dsc-daemon.py:237
+#, fuzzy
+msgid "Upgrade"
+msgstr "アップグレード情報"
+
+#: ../apt/dsc-daemon.py:295
 #, python-format
 msgid ""
 "There are %s packages need to upgrade in your system, please open the "
@@ -28,11 +33,11 @@ msgstr ""
 "あなたのシステムには%sのパッケージはアップグレードする必要があります。ソフト"
 "ウェアセンターをチェックしてアップグレードしてください。"
 
-#: ../apt/dsc-daemon.py:259 ../apt/dsc-daemon.py:262
-msgid "Upgrade Info"
-msgstr "アップグレード情報"
+#: ../apt/dsc-daemon.py:298 ../apt/dsc-daemon.py:304
+msgid "Software Center"
+msgstr ""
 
-#: ../apt/dsc-daemon.py:261
+#: ../apt/dsc-daemon.py:301
 #, python-format
 msgid ""
 "There is %s package need to upgrade in your system, please open the software "

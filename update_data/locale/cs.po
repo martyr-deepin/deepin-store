@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-06 21:22+0800\n"
+"POT-Creation-Date: 2014-03-29 17:35+0800\n"
 "PO-Revision-Date: 2014-01-03 07:52+0000\n"
 "Last-Translator: fri <pavelfric@seznam.cz>\n"
 "Language-Team: Czech (http://www.transifex.com/projects/p/deepin-software-"
@@ -19,7 +19,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: ../apt/dsc-daemon.py:258
+#: ../apt/dsc-daemon.py:237
+#, fuzzy
+msgid "Upgrade"
+msgstr "Informace o povýšení"
+
+#: ../apt/dsc-daemon.py:295
 #, python-format
 msgid ""
 "There are %s packages need to upgrade in your system, please open the "
@@ -28,11 +33,11 @@ msgstr ""
 "Ve vašem systému je %s balíčků, které je třeba povýšit. Otevřete, prosím, "
 "středisko programů, anyste je mohli povýšit!"
 
-#: ../apt/dsc-daemon.py:259 ../apt/dsc-daemon.py:262
-msgid "Upgrade Info"
-msgstr "Informace o povýšení"
+#: ../apt/dsc-daemon.py:298 ../apt/dsc-daemon.py:304
+msgid "Software Center"
+msgstr ""
 
-#: ../apt/dsc-daemon.py:261
+#: ../apt/dsc-daemon.py:301
 #, python-format
 msgid ""
 "There is %s package need to upgrade in your system, please open the software "
