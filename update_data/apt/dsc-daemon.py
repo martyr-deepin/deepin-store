@@ -375,6 +375,10 @@ class Update(dbus.service.Object):
     def get_update_list_status(self):
         return self.is_in_update_list
 
+    @dbus.service.method(DSC_UPDATE_DAEMON_NAME, in_signature="", out_signature="")    
+    def quit(self):
+        self.mainloop.quit()
+
 if __name__ == "__main__" :
 
     uid = os.geteuid()

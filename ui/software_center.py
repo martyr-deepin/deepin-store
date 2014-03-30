@@ -828,14 +828,10 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
 
         self.preference_dialog = DscPreferenceDialog()
 
-        start = time.time()
-
         if hasattr(self, 'recommend_status'):
             self.init_home_page(self.recommend_status)
         else:
             self.init_home_page()
-
-        self.loginfo("Finish Init UI: %s" % (time.time()-start, ))
 
     def get_pixbuf_group(self, folder, name):
         return (app_theme.get_pixbuf("%s/%s_normal.png" % (folder, name)),
@@ -884,7 +880,6 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
             if not self.init_hide:
                 self.application.window.show_all()
         #self.paned_box.bottom_window.set_composited(True)
-        gtk.main()    
         
     def show_wizard_win(self, show_button=False, callback=None):    
         program_dir = get_parent_dir(__file__, 2)
@@ -951,11 +946,9 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         log("Init pages.")
         
         self.loginfo("Init pages")
-        start = time.time()
         self.upgrade_page = UpgradePage(self.bus_interface, self.data_manager, self.preference_dialog)
         self.uninstall_page = UninstallPage(self.bus_interface, self.data_manager)
         self.install_page = InstallPage(self.bus_interface, self.data_manager)
-        self.loginfo("Init three pages time: %s" % (time.time()-start, ))
 
         
         log("Handle global event.")
@@ -1003,16 +996,15 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         global_event.register_event("show-status-icon", self.show_status_icon)
         global_event.register_event("upload-error-log", self.exec_upload_error_log)
 
-        self.system_bus.add_signal_receiver(
-            lambda messages: message_handler(messages, 
+        self.bus_interface.connect_to_signal(
+                signal_name="update_signal",
+                handler_function=lambda messages: message_handler(messages,
                                          self.bus_interface, 
                                          self.upgrade_page, 
                                          self.uninstall_page, 
                                          self.install_page,
                                          self.home_page),
-            dbus_interface=DSC_SERVICE_NAME, 
-            path=DSC_SERVICE_PATH, 
-            signal_name="update_signal")
+                )
         glib.timeout_add(1000, lambda : clear_action_pages(self.bus_interface, self.upgrade_page, self.uninstall_page, self.install_page))
         glib.timeout_add(1000, lambda : clear_install_stop_list(self.install_page))
         glib.timeout_add(1000, lambda : clear_failed_action(self.install_page, self.upgrade_page))
@@ -1139,6 +1131,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
 
     def run(self):    
         self.ready_show()
+        gtk.main()    
         
         # Send exit request to backend when frontend exit.
         self.bus_interface.request_quit(

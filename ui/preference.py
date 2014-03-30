@@ -25,6 +25,7 @@ import gtk
 import gobject
 import pango
 import os
+import dbus
 from dtk.ui.dialog import PreferenceDialog, DialogBox, DIALOG_MASK_SINGLE_PAGE
 from dtk.ui.entry import InputEntry
 from dtk.ui.button import Button, CheckButton
@@ -39,6 +40,7 @@ from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.theme import DynamicColor, ui_theme
 from dtk.ui.combo import ComboBox
 from deepin_utils.file import get_parent_dir
+from deepin_utils.ipc import is_dbus_name_exists
 from nls import _
 from utils import (
         get_purg_flag, 
@@ -51,8 +53,6 @@ from utils import (
         set_software_download_dir,
         get_download_number,
         set_download_number,
-        is_auto_update,
-        set_auto_update,
         )
 import utils
 from mirror_test import Mirror, MirrorTest
@@ -63,6 +63,9 @@ from loading_widget import Loading
 from constant import PROGRAM_VERSION
 import time
 import subprocess
+
+DSC_UPDATE_DAEMON_NAME = "com.linuxdeepin.softwarecenter.update.daemon"
+DSC_UPDATE_DAEMON_PATH = "/" + DSC_UPDATE_DAEMON_NAME.replace(".", "/")
 
 class SelectedButtonBuffer(gobject.GObject):
     '''
@@ -395,14 +398,6 @@ class MirrorItem(TreeItem):
         if self.is_in_button_area(column, offset_x, offset_y):
             self.emit("item-clicked")
 
-    def release_resource(self):
-        if self.pixbuf:
-            del self.pixbuf
-            self.pixbuf = None
-        
-        return True
-
-
 def create_separator_box(padding_x=0, padding_y=0):    
     separator_box = HSeparator(
         app_theme.get_shadow_color("hSeparator").get_color_info(),
@@ -412,53 +407,23 @@ def create_separator_box(padding_x=0, padding_y=0):
 TABLE_ROW_SPACING = 25
 CONTENT_ROW_SPACING = 8
 
-class WaitingDialog(DialogBox):
-
-    def __init__(self, title, info_message, cancel_callback=None):
-        DialogBox.__init__(self, 
-                title, 
-                mask_type=DIALOG_MASK_SINGLE_PAGE, 
-                close_callback=self.dialog_close_action)
-        self.set_size_request(-1, -1)
-        self.set_position(gtk.WIN_POS_CENTER_ON_PARENT)
-
-        self.loading_widget = Loading() 
-        loading_widget_align = gtk.Alignment()
-        loading_widget_align.set(0.5, 0.5, 0, 0)
-        loading_widget_align.set_padding(padding_top=0, padding_bottom=0, padding_left=0, padding_right=8)
-        loading_widget_align.add(self.loading_widget)
-
-        self.info_message_label = Label(info_message, enable_select=False, wrap_width=200, text_size=10)
-        info_message_align = gtk.Alignment()
-        info_message_align.set(0.5, 0.5, 0, 0)
-        info_message_align.add(self.info_message_label)
-
-        outer_align = gtk.Alignment()
-        outer_align.set(0.5, 0.5, 0, 0)
-        outer_align.set_padding(padding_top=10, padding_bottom=10, padding_left=25, padding_right=25)
-
-        outer_hbox = gtk.HBox()
-        outer_hbox.pack_start(loading_widget_align, False, False)
-        outer_hbox.pack_start(info_message_align, False, False)
-        outer_align.add(outer_hbox)
-
-        self.close_button = Button(_("Cancel"))
-        if cancel_callback:
-            self.close_button.connect("clicked", cancel_callback)
-        else:
-            self.close_button.connect("clicked", lambda w: self.hide_all())
-
-        self.body_box.pack_start(outer_align, False, False)
-        self.right_button_box.set_buttons([self.close_button])
-
-    def dialog_close_action(self):
-        self.hide_all()
-
-class AboutBox(gtk.VBox):    
-    
+class BaseBox(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
-        main_box = gtk.VBox(spacing=15)
+        self.main_box = gtk.VBox()
+        self.main_box.set_size_request(400, -1)
+        self.main_box.set_spacing(TABLE_ROW_SPACING)
+
+        self.main_box_align = gtk.Alignment(0, 0, 1, 1)
+        self.main_box_align.set_padding(padding_left=12, padding_right=5, padding_top=25, padding_bottom=10)
+        self.main_box_align.add(self.main_box)
+        self.add(self.main_box_align)
+
+class AboutBox(BaseBox):    
+    
+    def __init__(self):
+        BaseBox.__init__(self)
+
         logo_image = gtk.image_new_from_pixbuf(gtk.gdk.pixbuf_new_from_file(os.path.join(get_parent_dir(__file__, 2), "image", "logo16.png")))
         logo_name = Label(_("Deepin Software Center"), text_size=10)
         logo_box = gtk.HBox(spacing=2)
@@ -467,257 +432,46 @@ class AboutBox(gtk.VBox):
         
         version_label = Label(_("Version:"))
         version_content = Label(PROGRAM_VERSION, DynamicColor('#4D5154'))
-        # publish_label = Label(_("Release date:"))
-        # publish_content = Label("2012.07.12", light_color)
         info_box = gtk.HBox(spacing=5)
         info_box.pack_start(version_label, False, False)
         info_box.pack_start(version_content, False, False)
-        # info_box.pack_start(publish_label, False, False)
-        # info_box.pack_start(publish_content, False, False)
         
-        title_box = gtk.HBox()
-        title_box.pack_start(logo_box, False, False)
         align = gtk.Alignment()
         align.set(0, 0, 0, 1)
+
+        title_box = gtk.HBox()
+        title_box.pack_start(logo_box, False, False)
         title_box.pack_start(align, True, True)
         title_box.pack_start(info_box, False, False)
         
         describe = _("Deepin Software Center is a commonly used software center on Linux. It selected more than 2,600 decent applications and features easy installation and uninstall, software repository and recommended applications. It supports 1-click install, downloading packages with multi-thread and clearing up cached packages. It provides topics for software introduction and shares good applications. \n")
         
         describe_label = Label(describe, enable_select=False, wrap_width=400, text_size=10)
-        main_box.pack_start(title_box, False, False)
-        main_box.pack_start(create_separator_box(), False, True)
-        main_box.pack_start(describe_label, False, False)
-        
-        main_align = gtk.Alignment()
-        main_align.set_padding(25, 0, 12, 0)
-        main_align.set(0, 0, 1, 1)
-        main_align.add(main_box)
-        self.add(main_align)
+        self.main_box.pack_start(title_box, False, False)
+        self.main_box.pack_start(create_separator_box(), False, True)
+        self.main_box.pack_start(describe_label, False, False)
 
-class DscPreferenceDialog(PreferenceDialog):
+class GeneralBox(BaseBox):
     def __init__(self):
-        PreferenceDialog.__init__(self, 566, 488)
+        BaseBox.__init__(self)
 
-        self.current_mirror_item = None
-        self.normal_settings = gtk.VBox()
-        self.normal_settings.set_spacing(TABLE_ROW_SPACING)
-        self.normal_settings.pack_start(self.create_uninstall_box(), False, True)
-        self.normal_settings.pack_start(self.create_download_dir_table(), False, True)
+        self.main_box.pack_start(self.create_uninstall_box(), False, True)
+        self.main_box.pack_start(self.create_download_dir_table(), False, True)
 
-        self.normal_settings_align = gtk.Alignment(0, 0, 1, 1)
-        self.normal_settings_align.set_padding(padding_left=5, padding_right=5, padding_top=25, padding_bottom=10)
-        self.normal_settings_align.add(self.normal_settings)
-
-        self.mirror_settings = gtk.VBox()
-        self.mirror_settings.set_app_paintable(True)
-        self.mirror_settings.connect("expose-event", self.mirror_settings_align_expose)
-        self.mirror_settings.set_spacing(TABLE_ROW_SPACING)
-        self.mirror_settings.pack_start(self.create_mirror_select_table(), False, True)
-        self.mirror_settings.pack_start(self.create_source_update_frequency_table(), False, True)
-
-        self.mirror_settings_inner_align = gtk.Alignment(0.5, 0.5, 1, 1)
-        self.mirror_settings_inner_align.set_padding(padding_top=25, padding_bottom=10, padding_left=0, padding_right=0)
-        self.mirror_settings_inner_align.add(self.mirror_settings)
-
-        self.mirror_settings_scrolled_win = ScrolledWindow()
-        self.mirror_settings_scrolled_win.add_child(self.mirror_settings_inner_align)
-
-        self.mirror_settings_align = gtk.Alignment(0, 0, 1, 1)
-        self.mirror_settings_align.set_padding(padding_left=0, padding_right=0, padding_top=0, padding_bottom=3)
-        self.mirror_settings_align.add(self.mirror_settings_scrolled_win)
-
-        self.set_preference_items([
-            (_("General"), self.normal_settings_align),
-            (_("Mirrors"), self.mirror_settings_align),
-            (_("About"), AboutBox()),
-            ])
-        
-    def mirror_settings_align_expose(self, widget, event=None):
-        cr = widget.window.cairo_create()
-        rect = widget.allocation
-
-        # draw backgound
-        cr.rectangle(*rect)
-        #cr.set_source_rgb(*color_hex_to_cairo("#ff0000"))
-        cr.set_source_rgba(1, 1, 1, 0)
-        cr.fill()
-
-    def mirror_select_action(self, repo_urls):
-        self.data_manager.change_source_list(repo_urls, reply_handler=handle_dbus_reply, error_handler=handle_dbus_error)
-
-    def create_mirror_select_table(self):
-        vbox = gtk.VBox()
-        vbox.set_size_request(423, -1)
+    def create_uninstall_box(self):
         main_table = gtk.Table(2, 2)
         main_table.set_row_spacings(CONTENT_ROW_SPACING)
+        uninstall_title_label = Label(_("On uninstall software"))
         
-        dir_title_label = Label(_("Select mirror"))
-        dir_title_label.set_size_request(423, 12)
-        label_align = gtk.Alignment()
-        label_align.set_padding(0, 0, 10, 0)
-        label_align.add(dir_title_label)
-
-        self.mirrors_dir = os.path.join(get_parent_dir(__file__, 2), 'mirrors')
-        self.current_mirror_hostname = utils.get_current_mirror_hostname()
-        self.mirror_items = self.get_mirror_items()
-        self.mirror_view = TreeView(self.mirror_items,
-                                enable_drag_drop=False,
-                                enable_multiple_select=False,
-                                #mask_bound_height=0,
-                             )
-        self.mirror_view.set_expand_column(1)
-        self.mirror_view.set_size_request(-1, len(self.mirror_view.visible_items) * self.mirror_view.visible_items[0].get_height())
-        self.mirror_view.draw_mask = self.mirror_treeview_draw_mask
-        #self.display_current_mirror()
-
-        self.mirror_test_progressbar = ProgressBar()
-
-        main_table.attach(label_align, 0, 2, 0, 1, yoptions=gtk.FILL, xpadding=8)
+        # mini_check_button
+        self.delete_check_button = CheckButton(_("Delete configuration files"))
+        self.delete_check_button.set_active(get_purg_flag())
+        self.delete_check_button.connect("toggled", lambda w: set_purge_flag(self.delete_check_button.get_active()))
+        
+        main_table.attach(uninstall_title_label, 0, 2, 0, 1, yoptions=gtk.FILL)
         main_table.attach(create_separator_box(), 0, 2, 1, 2, yoptions=gtk.FILL)
+        main_table.attach(self.delete_check_button, 0, 1, 2, 3, yoptions=gtk.FILL)
         
-        title = _("Select best mirror")
-        info_message = _("Please wait. The process will take 30 seconds or more depending on your network connection")
-        self.select_best_mirror_dialog = WaitingDialog(title, info_message, self.cancel_mirror_test)
-        global_event.register_event("mirror-changed", self.mirror_changed_handler)
-        global_event.register_event("update-list-finish", self.update_list_finish_handler)
-
-        vbox.pack_start(main_table, False, False)
-        vbox.pack_start(self.mirror_view, False, False)
-
-        return vbox
-
-    def cancel_mirror_test(self, widget):
-        try:
-            self.mirror_test.terminated = True
-            gobject.source_remove(self.update_status_id)
-        except:
-            pass
-        self.select_best_mirror_dialog.hide_all()
-
-    def update_list_finish_handler(self):
-        self.select_best_mirror_dialog.hide_all()
-
-    def mirror_changed_handler(self, item):
-        for i in self.mirror_items:
-            if i != item and i.radio_button.active == True:
-                i.radio_button.active = False
-            elif i == item:
-                i.radio_button.active = True
-        self.mirror_view.queue_draw()
-    
-    def test_mirror_action(self, widget):
-        self.select_best_mirror_dialog.set_transient_for(self)
-        self.select_best_mirror_dialog.set_position(gtk.WIN_POS_CENTER_ON_PARENT)
-        self.select_best_mirror_dialog.show_all()
-        distro = aptsources.distro.get_distro()
-        #distro.get_sources(SourcesList())
-        pipe = os.popen("dpkg --print-architecture")
-        arch = pipe.read().strip()
-        test_file = "dists/%s/Contents-%s.gz" % \
-                    (
-                    distro.codename,
-                    #"quantal",
-                    arch,
-                    )
-
-        self.mirror_test = MirrorTest(self.mirrors_list, test_file)
-        self.mirror_test.start()
-
-        # now run the tests in a background thread, and update the UI on each event
-        self.update_status_id = gtk.timeout_add(100, self.update_progress)
-
-    def update_progress(self):
-        if self.mirror_test.running:
-            return True
-        else:
-            time.sleep(1)
-            if self.mirror_test.best != None:
-                for item in self.mirror_items:
-                    if item.mirror == self.mirror_test.best[1]:
-                        print item.mirror.get_repo_urls()
-                        self.mirror_clicked_callback(item)
-            else:
-                self.select_best_mirror_dialog.loading_widget.hide_all()
-                self.select_best_mirror_dialog.info_message_label.set_text(_("Test for downloading mirror failed. Please check your network connection."))
-                self.select_best_mirror_dialog.close_button.set_label(_("Close"))
-            return False
-
-    def mirror_treeview_draw_mask(self, cr, x, y, w, h):
-        cr.set_source_rgba(1, 1, 1, 0.9)
-        cr.rectangle(x, y, w, h)
-        cr.fill()
-
-    def get_mirror_items(self):
-        import json
-        items = []
-        self.mirrors_list = []
-        json_data = []
-        for ini_file in os.listdir(self.mirrors_dir):
-            m = Mirror(os.path.join(self.mirrors_dir, ini_file))
-            item = MirrorItem(m, self.mirror_clicked_callback)
-            if m.hostname == self.current_mirror_hostname:
-                item.radio_button.active = True
-                self.current_mirror_item = item
-            self.mirrors_list.append(m)
-            items.append(item)
-
-            info = {}
-            info['category'] = m.config.get("mirror", "category")
-            info['ubuntu_url'] = m.config.get("mirror", "ubuntu_url")
-            info['deepin_url'] = m.config.get("mirror", "deepin_url")
-            info['name[zh_CN]'] = m.config.get("mirror", "name[zh_CN]")
-            info['name[en_US]'] = m.config.get("mirror", "name[en_US]")
-            info['name[zh_TW]'] = m.config.get("mirror", "name[zh_TW]")
-            info['name[zh_HK]'] = m.config.get("mirror", "name[zh_HK]")
-            json_data.append(info)
-
-        with open("/tmp/mirrors.json", "wb") as fp:
-            json.dump(json_data, fp)
-        
-        items.sort(key=lambda x:x.mirror.priority)
-        
-        return items
-
-    def mirror_clicked_callback(self, item):
-        if item != self.current_mirror_item:
-            self.current_mirror_item = item
-            global_event.emit('change-mirror', item)
-            self.hide_all()
-
-    def create_source_update_frequency_table(self):
-        main_table = gtk.Table(3, 2)
-        main_table.set_row_spacings(CONTENT_ROW_SPACING)
-        
-        dir_title_label = Label(_("Update applications lists"))
-        dir_title_label.set_size_request(200, 12)
-        label_align = gtk.Alignment()
-        label_align.set_padding(0, 0, 0, 0)
-        label_align.add(dir_title_label)
-
-        self.is_auto_update_button = CheckButton(label_text=_('Update automatically'))
-        self.is_auto_update_button.connect('toggled', self.change_auto_update)
-        
-        self.update_label = Label(_("Time interval: "))
-        self.update_spin = SpinBox(int(get_update_interval()), 0, 168, 1)
-        self.update_spin.connect("value-changed", lambda w, v: set_update_interval(v))
-        self.hour_lablel = Label(_(" hour"))
-        self.hour_lablel.set_size_request(50, 12)
-        spin_hbox = gtk.HBox(spacing=3)
-        spin_hbox.pack_start(self.update_label, False, False)
-        spin_hbox.pack_start(self.update_spin, False, False)
-        spin_hbox.pack_start(self.hour_lablel, False, False)
-
-        main_table.attach(label_align, 0, 2, 0, 1, yoptions=gtk.FILL, xpadding=8)
-        main_table.attach(create_separator_box(), 0, 2, 1, 2, yoptions=gtk.FILL)
-        main_table.attach(self.is_auto_update_button, 0, 1, 2, 3, xpadding=10, xoptions=gtk.FILL)
-        main_table.attach(spin_hbox, 1, 2, 2, 3, xpadding=10, xoptions=gtk.FILL)
-
-        if is_auto_update():
-            self.is_auto_update_button.set_active(True)
-        else:
-            self.is_auto_update_button.toggled()
-
         return main_table
 
     def create_download_dir_table(self):    
@@ -753,29 +507,15 @@ class DscPreferenceDialog(PreferenceDialog):
         download_dir_hbox.pack_start(self.dir_entry, False, False)
         download_dir_hbox.pack_start(modify_button, False, False)
         
-        main_table.attach(label_align, 0, 2, 0, 1, yoptions=gtk.FILL, xpadding=8)
+        main_table.attach(label_align, 0, 2, 0, 1, yoptions=gtk.FILL)
         main_table.attach(create_separator_box(), 0, 2, 1, 2, yoptions=gtk.FILL)
-        main_table.attach(download_number_hbox, 0, 2, 2, 3, xpadding=10, xoptions=gtk.FILL)
-        main_table.attach(download_dir_hbox, 0, 2, 3, 4, xpadding=10, xoptions=gtk.FILL)
+        main_table.attach(download_number_hbox, 0, 2, 2, 3, xoptions=gtk.FILL)
+        main_table.attach(download_dir_hbox, 0, 2, 3, 4, xoptions=gtk.FILL)
         return main_table
 
-    def create_uninstall_box(self):
-        main_table = gtk.Table(2, 2)
-        main_table.set_row_spacings(CONTENT_ROW_SPACING)
-        uninstall_title_label = Label(_("On uninstall software"))
-        uninstall_title_label.set_size_request(350, 12)
-        
-        # mini_check_button
-
-        self.delete_check_button = CheckButton(_("Delete configuration files"))
-        self.delete_check_button.set_active(get_purg_flag())
-        self.delete_check_button.connect("toggled", lambda w: set_purge_flag(self.delete_check_button.get_active()))
-        
-        main_table.attach(uninstall_title_label, 0, 2, 0, 1, yoptions=gtk.FILL, xpadding=8)
-        main_table.attach(create_separator_box(), 0, 2, 1, 2, yoptions=gtk.FILL)
-        main_table.attach(self.delete_check_button, 0, 1, 2, 3, yoptions=gtk.FILL)
-        
-        return main_table
+    def download_number_comobox_changed(self, widget, name, value, index):
+        set_download_number(value)
+        global_event.emit('max-download-number-changed', value)
 
     def change_download_save_dir(self, widget):
         local_dir = WinDir(False).run()
@@ -788,22 +528,126 @@ class DscPreferenceDialog(PreferenceDialog):
                 set_software_download_dir(local_dir)
                 global_event.emit('download-directory-changed')
 
-    def download_number_comobox_changed(self, widget, name, value, index):
-        set_download_number(value)
-        global_event.emit('max-download-number-changed', value)
+class MirrorsBox(BaseBox):
+
+    def __init__(self):
+        BaseBox.__init__(self)
+
+        self.current_mirror_item = None
+
+        self.main_box.pack_start(self.create_mirror_select_table(), True, True)
+        self.main_box.pack_start(self.create_source_update_frequency_table(), False, True)
+
+    def create_source_update_frequency_table(self):
+        main_table = gtk.Table(3, 2)
+        main_table.set_row_spacings(CONTENT_ROW_SPACING)
+        
+        dir_title_label = Label(_("Update applications lists"))
+
+        # auto update check button
+        self.is_auto_update_button = CheckButton(label_text=_('Update automatically'))
+        self.is_auto_update_button.connect('released', self.change_auto_update)
+        self.is_auto_update_button.set_active(utils.is_auto_update())
+        
+        self.update_label = Label(_("Time interval: "))
+        self.update_spin = SpinBox(int(get_update_interval()), 0, 168, 1)
+        self.update_spin.connect("value-changed", lambda w, v: set_update_interval(v))
+        self.hour_lablel = Label(_(" hour"))
+        self.hour_lablel.set_size_request(50, 12)
+        spin_hbox = gtk.HBox(spacing=3)
+        spin_hbox.pack_start(self.update_label, False, False)
+        spin_hbox.pack_start(self.update_spin, False, False)
+        spin_hbox.pack_start(self.hour_lablel, False, False)
+
+        main_table.attach(dir_title_label, 0, 2, 0, 1, yoptions=gtk.FILL)
+        main_table.attach(create_separator_box(), 0, 2, 1, 2, yoptions=gtk.FILL)
+        main_table.attach(self.is_auto_update_button, 0, 1, 2, 3, xoptions=gtk.FILL)
+        main_table.attach(spin_hbox, 1, 2, 2, 3, xpadding=10, xoptions=gtk.FILL)
+        return main_table
 
     def change_auto_update(self, widget, data=None):
-        self.update_spin.set_sensitive(widget.get_active())
-        set_auto_update(widget.get_active())
-        self.update_label.set_sensitive(widget.get_active())
-        self.hour_lablel.set_sensitive(widget.get_active())
-        dsc_daemon_path = os.path.join(get_parent_dir(__file__, 2), 'update_data/apt/dsc-daemon.py')
-        if widget.get_active():
+        widget_active = widget.get_active()
+        self.update_spin.set_sensitive(widget_active)
+        self.update_label.set_sensitive(widget_active)
+        self.hour_lablel.set_sensitive(widget_active)
+
+        utils.set_auto_update(widget_active)
+
+        daemon_running = is_dbus_name_exists(DSC_UPDATE_DAEMON_NAME)
+        if widget_active and not daemon_running:
+            dsc_daemon_path = os.path.join(get_parent_dir(__file__, 2), 'update_data/apt/dsc-daemon.py')
             subprocess.Popen(['python', dsc_daemon_path], stderr=subprocess.STDOUT, shell=False)
+        elif not widget_active and daemon_running:
+            session = dbus.SessionBus()
+            dbus_obj = session.get_object(DSC_UPDATE_DAEMON_NAME, DSC_UPDATE_DAEMON_PATH)
+            iface = dbus.Interface(dbus_obj, DSC_UPDATE_DAEMON_NAME)
+            iface.quit()
+
+    def create_mirror_select_table(self):
+        main_table = gtk.Table(3, 2)
+        main_table.set_row_spacings(CONTENT_ROW_SPACING)
+        
+        mirror_select_title = Label(_("Select mirror"))
+
+        self.mirrors_dir = os.path.join(get_parent_dir(__file__, 2), 'mirrors')
+        self.current_mirror_hostname = utils.get_current_mirror_hostname()
+        self.mirror_items = self.get_mirror_items()
+        self.mirror_view = TreeView(self.mirror_items,
+                                enable_drag_drop=False,
+                                enable_multiple_select=False,
+                             )
+        self.mirror_view.set_expand_column(1)
+        #self.mirror_view.set_size_request(-1, len(self.mirror_view.visible_items) * self.mirror_view.visible_items[0].get_height())
+        self.mirror_view.set_size_request(-1, 280)
+        self.mirror_view.draw_mask = self.mirror_treeview_draw_mask
+
+        main_table.attach(mirror_select_title, 0, 2, 0, 1, yoptions=gtk.FILL)
+        main_table.attach(create_separator_box(), 0, 2, 1, 2, xoptions=gtk.FILL)
+        main_table.attach(self.mirror_view, 0, 2, 2, 3, xoptions=gtk.FILL)
+        
+        global_event.register_event("mirror-changed", self.mirror_changed_handler)
+
+        #vbox.pack_start(main_table, False, False)
+        #vbox.pack_start(self.mirror_view, False, False)
+
+        return main_table
+
+    def mirror_changed_handler(self, item):
+        self.current_mirror_item = item
+        for i in self.mirror_items:
+            if i != item and i.radio_button.active == True:
+                i.radio_button.active = False
+            elif i == item:
+                i.radio_button.active = True
+        self.mirror_view.queue_draw()
+
+    def mirror_treeview_draw_mask(self, cr, x, y, w, h):
+        cr.set_source_rgba(1, 1, 1, 0.5)
+        cr.rectangle(x, y, w, h)
+        cr.fill()
+
+    def get_mirror_items(self):
+        items = []
+        self.mirrors_list = []
+        for ini_file in os.listdir(self.mirrors_dir):
+            if ini_file.endswith(".ini"):
+                m = Mirror(os.path.join(self.mirrors_dir, ini_file))
+                item = MirrorItem(m, self.mirror_clicked_callback)
+                if m.hostname == self.current_mirror_hostname:
+                    item.radio_button.active = True
+                    self.current_mirror_item = item
+                self.mirrors_list.append(m)
+                items.append(item)
+
+        items.sort(key=lambda item:item.mirror.priority)
+        return items
+
+    def mirror_clicked_callback(self, item):
+        if item != self.current_mirror_item:
+            global_event.emit('change-mirror', item)
+            self.hide_all()
 
 class WinDir(gtk.FileChooserDialog):
-    '''Open chooser dir dialog'''
-
     def __init__(self, return_uri=True, title=_("Select Directory")):
         gtk.FileChooserDialog.__init__(self, title, None, gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
                                        (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
@@ -822,10 +666,21 @@ class WinDir(gtk.FileChooserDialog):
         self.destroy()    
         return folder
 
+class DscPreferenceDialog(PreferenceDialog):
+    def __init__(self):
+        PreferenceDialog.__init__(self, 566, 488)
+
+        self.general_box = GeneralBox()
+        self.mirrors_box = MirrorsBox()
+        self.about_box = AboutBox()
+
+        self.set_preference_items([
+            (_("General"), self.general_box),
+            (_("Mirrors"), self.mirrors_box),
+            (_("About"), self.about_box),
+            ])
+
 if __name__ == '__main__':
-    #d = TestProgressDialog()
-    #d.dialog.show_all()
     preference_dialog = DscPreferenceDialog()
     preference_dialog.show_all()
-    #WaitingDialog("ceshi", "cececececececececeeedddddd").show_all()
     gtk.main()
