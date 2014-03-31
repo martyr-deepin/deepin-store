@@ -53,6 +53,12 @@ LOG_PATH = "/tmp/dsc-frontend.log"
 SYS_CONFIG_INFO_PATH = "/var/cache/deepin-software-center/config_info.ini"
 BACKEND_PID = "/tmp/deepin-software-center/backend_running.pid"
 
+def get_origin_name(pkg_name):
+    if pkg_name.endswith(":i386"):
+        return pkg_name[:-5]
+    else:
+        return pkg_name
+
 def show_notify(body, summary=None, actions=[]):
     app_name = "deepin-software-center"
     replaces_id = 0

@@ -46,7 +46,7 @@ from item_render import (render_pkg_icon, render_pkg_name, STAR_SIZE, get_star_l
 from events import global_event
 from nls import _
 from widgets import LoadingBox
-from utils import get_common_locale_image_pixbuf
+import utils
 
 def handle_dbus_error(*error):
     print "handle_dbus_error: ", error
@@ -75,7 +75,7 @@ class SearchPage(gtk.VBox):
         self.treeview = TreeView(enable_drag_drop=False, expand_column=0)
 
         self.cute_message_image = gtk.VBox()
-        self.cute_message_pixbuf = get_common_locale_image_pixbuf("info", "noresult.png")
+        self.cute_message_pixbuf = utils.get_common_locale_image_pixbuf("info", "noresult.png")
         self.cute_message_image.connect("expose-event", self.expose_cute_message_image)
 
         self.content_box.pack_start(self.message_bar, False, False)
@@ -219,9 +219,10 @@ class SearchItem(TreeItem):
         
         # Render icon.
         if self.icon_pixbuf == None:
-            self.icon_pixbuf = gtk.gdk.pixbuf_new_from_file(get_icon_pixbuf_path(self.pkg_name))        
+            self.icon_pixbuf = gtk.gdk.pixbuf_new_from_file(
+                    get_icon_pixbuf_path(utils.get_origin_name(self.pkg_name)))
             
-        render_pkg_icon(cr, rect, self.pkg_name, self.icon_pixbuf)
+        render_pkg_icon(cr, rect, self.icon_pixbuf)
 
         # Render name.
         render_pkg_name(cr, rect, get_match_context(self.alias_name, self.keywords), rect.width)

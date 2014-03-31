@@ -80,7 +80,7 @@ def get_icon_pixbuf_path(pkg_name):
     else:
         return os.path.join(ICON_DIR, "default.png")
 
-def render_pkg_icon(cr, rect, pkg_name, icon_pixbuf, offset_x=0):
+def render_pkg_icon(cr, rect, icon_pixbuf, offset_x=0):
     # Draw icon.
     draw_pixbuf(cr, 
                 icon_pixbuf, 
@@ -101,7 +101,7 @@ def render_pkg_info(cr, rect, alias_name, pkg_name, icon_pixbuf, first_info, sec
     text_width = rect.width - ICON_SIZE - ITEM_PADDING_X * 2 - ITEM_PADDING_MIDDLE
     
     # Draw icon.
-    render_pkg_icon(cr, rect, pkg_name, icon_pixbuf, offset_x)
+    render_pkg_icon(cr, rect, icon_pixbuf, offset_x)
         
     # Draw name.
     render_pkg_name(cr, rect, alias_name, text_width, offset_x)

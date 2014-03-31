@@ -59,6 +59,7 @@ from constant import (
         )
 from nls import _
 import time
+import utils
 
 PKG_SCREENSHOT_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update_data", "pkg_screenshot", "zh_CN")
 
@@ -287,7 +288,9 @@ class DetailPage(gtk.HBox):
             rect = widget.allocation
             
             # Draw pkg icon.
-            self.pkg_pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(get_icon_pixbuf_path(self.pkg_name), self.ICON_SIZE, self.ICON_SIZE)
+            self.pkg_pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(
+                    get_icon_pixbuf_path(
+                        utils.get_origin_name(self.pkg_name)), self.ICON_SIZE, self.ICON_SIZE)
             draw_pixbuf(cr,
                         self.pkg_pixbuf,
                         rect.x + self.ICON_PADDING_X + (self.ICON_SIZE - self.pkg_pixbuf.get_width()) / 2,
