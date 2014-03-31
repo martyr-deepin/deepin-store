@@ -709,9 +709,15 @@ class PackageManager(dbus.service.Object):
         pkg_name, status = pkg_status
         self.pkg_cache.set_pkg_status(pkg_name, pkg_status)
 
-    @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="i")
-    def get_pkg_status(self, pkg_name):
-        return self.pkg_cache.get_pkg_status(pkg_name)
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="s")
+    def get_pkg_installed(self, pkg_name):
+        if self.is_pkg_in_cache(pkg_name):
+            if self.pkg_cache.is_pkg_installed(pkg_name):
+                return "installed"
+            else:
+                return "uninstalled"
+        else:
+            return "unknown"
 
     @dbus.service.signal(DSC_SERVICE_NAME)    
     # Use below command for test:

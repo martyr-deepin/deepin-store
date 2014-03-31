@@ -138,11 +138,12 @@ class DataManager(object):
             reply_handler=reply_handler,
             error_handler=error_handler)
 
-    def get_pkg_download_size(self, pkg_name, reply_handler, error_handler):
-        return self.bus_interface.get_download_size(
+    def get_pkg_download_size(self, pkg_name, callback):
+        self.bus_interface.get_download_size(
                 pkg_name,
-                reply_handler=reply_handler,
-                error_handler=error_handler)
+                reply_handler=lambda r: callback(r, True),
+                error_handler=lambda e: callback(e, False)
+                )
         
     def get_search_pkgs_info(self, pkg_names):
         pkg_infos = []
@@ -158,6 +159,12 @@ class DataManager(object):
         self.desktop_db_cursor.execute(
             "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
         return self.desktop_db_cursor.fetchall()
+    
+    def get_pkg_installed(self, pkg_name, callback):
+        self.bus_interface.get_pkg_installed(pkg_name,
+                reply_handler=lambda r: callback(r, True),
+                error_handler=lambda e: callback(e, False)
+                )
         
     def get_pkg_detail_info(self, pkg_name):
         result = {
@@ -166,8 +173,6 @@ class DataManager(object):
                 'long_desc': 'Unknown',
                 'version': 'Unknown',
                 'homepage': '',
-                'star_value': 5.0,
-                'download_number': 0,
                 'alias_name': pkg_name,
                 }
 
@@ -190,14 +195,12 @@ class DataManager(object):
 
         # get long_desc, version, homepage, alias_name
         self.software_db_cursor.execute(
-            "SELECT long_desc, version, homepage, alias_name FROM software WHERE pkg_name=?", [pkg_name])
+            "SELECT long_desc, alias_name FROM software WHERE pkg_name=?", [pkg_name])
         info = self.software_db_cursor.fetchone()
 
         if info:
             result["long_desc"] = info[0]
-            result['version'] = info[1]
-            result['homepage'] = info[2]
-            result["alias_name"] = info[3]
+            result["alias_name"] = info[1]
 
         cache_info = self.get_info_from_cache_soft_db([
             "SELECT long_desc, version, homepage FROM software WHERE pkg_name=?",
@@ -206,7 +209,6 @@ class DataManager(object):
             if result['long_desc'] == 'Unknown': result['long_desc'] = cache_info[0][0]
             result['version'] = cache_info[0][1]
             result['homepage'] = cache_info[0][2]
-
         return result
         
     def get_pkg_search_info(self, pkg_name):

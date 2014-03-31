@@ -364,19 +364,17 @@ class DetailPage(gtk.HBox):
         self.long_desc = detail_info['long_desc']
         self.version = detail_info['version']
         self.homepage = detail_info['homepage']
-        self.star = detail_info['star_value']
-        self.download = detail_info['download_number']
         self.alias_name = detail_info['alias_name']
         self.recommend_pkgs = detail_info['recommend_pkgs']
         
         self.pkg_star_view = StarView()
         self.pkg_star_view.connect("clicked", lambda w: self.grade_pkg())
-        self.pkg_star_mark = StarMark(self.star, self.MARK_SIZE, self.MARK_PADDING_X, self.MARK_PADDING_Y)
+        self.pkg_star_mark = StarMark(5.0, self.MARK_SIZE, self.MARK_PADDING_X, self.MARK_PADDING_Y)
         container_remove_all(self.star_box)
         self.star_box.pack_start(self.pkg_star_view, False, False)
         self.star_box.pack_start(self.pkg_star_mark, False, False)
         
-        create_thread(self.fetch_pkg_status).start()
+        self.fetch_pkg_status()
         
         container_remove_all(self.left_category_box)
         if self.category != None:
@@ -422,48 +420,55 @@ class DetailPage(gtk.HBox):
         
         self.show_all()
         
-    def handle_pkg_status(self, *reply):
+    def handle_pkg_status(self, reply, success):
         container_remove_all(self.left_action_box)
-        install_status = reply
-        if install_status[0][0]:
-            if not self.data_manager.get_pkg_desktop_info(self.pkg_name):
-                status_label = Label(_("Successfully installed"))
+        if success:
+            install_status = str(reply)
+            print install_status
+            if install_status == "installed":
+                if not self.data_manager.get_pkg_desktop_info(self.pkg_name):
+                    status_label = Label(_("Successfully installed"))
+                    self.left_action_box.pack_start(status_label)
+                else:
+                    action_button = ImageButton(
+                        app_theme.get_pixbuf("button/start_normal.png"),
+                        app_theme.get_pixbuf("button/start_hover.png"),
+                        app_theme.get_pixbuf("button/start_press.png"),
+                        )
+                    action_button.connect("button-press-event", self.button_press_start_button)
+                    self.left_action_box.pack_start(action_button)
+            elif install_status == "unknown":
+                status_label = Label(_("Not found"))
                 self.left_action_box.pack_start(status_label)
             else:
                 action_button = ImageButton(
-                    app_theme.get_pixbuf("button/start_normal.png"),
-                    app_theme.get_pixbuf("button/start_hover.png"),
-                    app_theme.get_pixbuf("button/start_press.png"),
+                    app_theme.get_pixbuf("button/install_normal.png"),
+                    app_theme.get_pixbuf("button/install_hover.png"),
+                    app_theme.get_pixbuf("button/install_press.png"),
                     )
-                action_button.connect("button-press-event", self.button_press_start_button)
+                action_button.connect("clicked", lambda w: global_event.emit("install-pkg", [self.pkg_name]))
                 self.left_action_box.pack_start(action_button)
+            self.left_action_box.show_all()
+            global_event.emit('update-current-status-pkg-page', self)
         else:
-            action_button = ImageButton(
-                app_theme.get_pixbuf("button/install_normal.png"),
-                app_theme.get_pixbuf("button/install_hover.png"),
-                app_theme.get_pixbuf("button/install_press.png"),
-                )
-            action_button.connect("clicked", lambda w: global_event.emit("install-pkg", [self.pkg_name]))
-            self.left_action_box.pack_start(action_button)
-        self.left_action_box.show_all()
-        global_event.emit('update-current-status-pkg-page', self)
+            global_logger.logerror("get_pkg_installed handle_dbus_error")
+            global_logger.logerror(reply)
 
-    def handle_pkg_download_size(self, reply):
+    def handle_pkg_download_size(self, reply, success):
         # FIXME: download information display
-        if reply[0] == PKG_SIZE_OWN or reply[0] == PKG_SIZE_DOWNLOAD:
-            self.left_size_label.set_text(_("Size: %s") % bit_to_human_str(reply[1]))
-        elif reply[0] == PKG_SIZE_ERROR:
-            self.left_size_label.set_text("")
-            global_logger.logerror("Error for calculate pkg size!")
-        
-    def handle_dbus_error(self, *error):
-        container_remove_all(self.left_action_box)
-        global_logger.logerror("request_pkgs_install_status handle_dbus_error")
-        global_logger.logerror(error)
+        if success:
+            if reply[0] == PKG_SIZE_OWN or reply[0] == PKG_SIZE_DOWNLOAD:
+                self.left_size_label.set_text(_("Size: %s") % bit_to_human_str(reply[1]))
+            elif reply[0] == PKG_SIZE_ERROR:
+                self.left_size_label.set_text("")
+                global_logger.logerror("Error for calculate pkg size!")
+        else:
+            global_logger.logerror("request_pkgs_install_status handle_dbus_error")
+            global_logger.logerror(reply)
     
     def fetch_pkg_status(self):
-        self.data_manager.get_pkgs_install_status([self.pkg_name], self.handle_pkg_status, self.handle_dbus_error)
-        self.data_manager.get_pkg_download_size(self.pkg_name, self.handle_pkg_download_size, self.handle_dbus_error)
+        self.data_manager.get_pkg_installed(self.pkg_name, self.handle_pkg_status)
+        self.data_manager.get_pkg_download_size(self.pkg_name, self.handle_pkg_download_size)
         
     def open_url(self, webview, frame, network_request, nav_action, policy_dec):
         webbrowser.open(network_request.get_uri())
