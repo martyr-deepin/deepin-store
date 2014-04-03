@@ -223,11 +223,9 @@ class Update(dbus.service.Object):
         notify_obj = self.session_bus.get_object(NOTIFICATIONS_NAME, NOTIFICATIONS_PATH)
         self.notify_interface = dbus.Interface(notify_obj, NOTIFICATIONS_NAME)
         self.session_bus.add_signal_receiver(
-            self.handle_notification_action,
+            handler_function=self.handle_notification_action,
             signal_name="ActionInvoked",
-            dbus_interface=NOTIFICATIONS_NAME, 
-            bus_name=NOTIFICATIONS_NAME,
-            path=NOTIFICATIONS_PATH,
+            dbus_interface=NOTIFICATIONS_NAME
         )
 
     def send_notify(self, body, summary):
@@ -241,6 +239,7 @@ class Update(dbus.service.Object):
             summary, body, actions, hints, timeout)
 
     def handle_notification_action(self, notify_id, action_id):
+        print(self.notify_id, notify_id, action_id)
         if self.notify_id == notify_id:
             dsc_obj = self.session_bus.get_object(DSC_FRONTEND_NAME, DSC_FRONTEND_PATH)
             self.dsc_interface = dbus.Interface(dsc_obj, DSC_FRONTEND_NAME)
