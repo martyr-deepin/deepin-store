@@ -246,8 +246,10 @@ class Update(dbus.service.Object):
             self.dsc_interface = dbus.Interface(dsc_obj, DSC_FRONTEND_NAME)
             if action_id == "_id_default_":
                 self.dsc_interface.show_page("home")
+                self.dsc_interface.raise_to_top()
             elif action_id == "_id_open_update_":
                 self.dsc_interface.show_page("upgrade")
+                self.dsc_interface.raise_to_top()
 
     def set_delay_update(self, seconds):
         if self.delay_update_id:
