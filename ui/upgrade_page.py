@@ -27,6 +27,7 @@ import gtk
 import gobject
 import json
 import subprocess
+import lsb_release
 
 from skin import app_theme
 
@@ -49,7 +50,7 @@ import widgets
 from events import global_event
 from star_buffer import DscStarBuffer
 from constant import (BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, NO_NOTIFY_FILE,
-        CHECK_BUTTON_PADDING_X, SHUT_DOWN_DIALOG_PATH, ACTION_UPGRADE )
+        CHECK_BUTTON_PADDING_X, SHUT_DOWN_DIALOG_PATH, ACTION_UPGRADE, DDE_SHUTDOWN_PATH )
 from item_render import (render_pkg_info, STAR_SIZE, get_star_level, ITEM_PADDING_Y, 
         get_icon_pixbuf_path, ITEM_INFO_AREA_WIDTH, ITEM_CANCEL_BUTTON_PADDING_RIGHT,
         NAME_SIZE, ICON_SIZE, ITEM_PADDING_MIDDLE, ITEM_STAR_AREA_WIDTH, 
@@ -295,15 +296,23 @@ class UpgradingTopBar(gtk.HBox):
 
     def is_shutdown_button_toggled(self, widget=None):
         if self.is_shutdown_button.get_active():
-            if not self.is_system_shutdown_dialog_exists():
-                self.message_label.set_text(_("Deepin System Settings is not installed, this function is not work!"))
-
-    def is_system_shutdown_dialog_exists(self):
-        return os.path.exists(SHUT_DOWN_DIALOG_PATH)
+            system_id = lsb_release.get_distro_information()["ID"].lower()
+            if system_id == "linuxdeepin" or system_id == "deepin":
+                release_version = lsb_release.get_distro_information()["RELEASE"]
+                if release_version == "2013" and not os.path.exists(SHUT_DOWN_DIALOG_PATH):
+                    self.message_label.set_text(_("Deepin System Settings is not installed, this function is not work!"))
+                elif release_version == "2014" and not os.path.exists(DDE_SHUTDOWN_PATH):
+                    self.message_label.set_text(_("Startdde is not installed, this function is not work!"))
+            else:
+                self.message_label.set_text(_("The system is not deepin, this function is not work!"))
 
     def shutdown_action(self):
-        if self.is_shutdown_button.get_active() and self.is_system_shutdown_dialog_exists():
-            subprocess.Popen(["python", SHUT_DOWN_DIALOG_PATH, "shutdown"], stderr=subprocess.STDOUT, shell=False)
+        if self.is_shutdown_button.get_active():
+            release_version = lsb_release.get_distro_information()["RELEASE"]
+            if release_version == "2013" and os.path.exists(SHUT_DOWN_DIALOG_PATH):
+                subprocess.Popen(["python", SHUT_DOWN_DIALOG_PATH, "shutdown"], stderr=subprocess.STDOUT, shell=False)
+            elif release_version == "2014" and os.path.exists(DDE_SHUTDOWN_PATH):
+                subprocess.Popen([DDE_SHUTDOWN_PATH, "--shutdown"], stderr=subprocess.STDOUT, shell=False)
 
 class UpgradingBox(gtk.VBox):
     def __init__(self, preference_dialog):
@@ -1066,7 +1075,7 @@ class UpgradePage(gtk.VBox):
             self.upgrade_treeview.clear()
             global_event.emit("show-newest-view")
 
-        #global_event.emit("show-upgrading-view")
+        global_event.emit("show-upgrading-view")
         #global_event.emit("show-newest-view")
 
     def download_ready(self, pkg_name):
