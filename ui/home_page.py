@@ -466,7 +466,7 @@ class CategoryItem(TreeItem):
 
         self.all_pkg_names = []
         self.all_desktop_infos = {}
-        self.all_pkg_names = self.data_manager.get_first_category_pkg_info(self.first_category_name)
+        self.all_pkg_names = self.data_manager.get_first_category_packages(self.first_category_name)
             
         self.message_bar = MessageBar(18)
         self.message_bar.set_message(_("%s: %s applications") % (
@@ -649,7 +649,7 @@ class SecondCategoryItem(TreeItem):
 
         self.page_box = gtk.VBox()    
             
-        self.all_pkg_names = self.data_manager.get_second_category_pkg_info(self.second_category_name)
+        self.all_pkg_names = self.data_manager.get_second_category_packages(self.second_category_name)
         self.message_bar = MessageBar(18)
         self.message_bar.set_message(_("%s > %s : %s applications") % (
                 get_category_name(self.first_category_name), 

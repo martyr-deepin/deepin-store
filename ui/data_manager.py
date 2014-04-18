@@ -275,10 +275,10 @@ class DataManager(object):
 
     def get_display_flag(self, pkg_name):
         self.desktop_db_cursor.execute(
-            "SELECT display_flag FROM package WHERE pkg_name=?", (pkg_name, ))
+            "SELECT display_flag, first_category_name FROM package WHERE pkg_name=?", (pkg_name, ))
         r = self.desktop_db_cursor.fetchone()
         if r:
-            return r[0]
+            return r[0] and r[1]
         else:
             return False
 
@@ -359,13 +359,13 @@ class DataManager(object):
     def get_second_category(self, first_category_name):
         return CATEGORY_TYPE_DICT.get(first_category_name).keys()
 
-    def get_first_category_pkg_info(self, first_category_name):
+    def get_first_category_packages(self, first_category_name):
         self.desktop_db_cursor.execute(
             "SELECT pkg_name FROM package WHERE first_category_name=? ORDER BY pkg_name", (first_category_name,))
         r = self.desktop_db_cursor.fetchall()
         return map(lambda s: s[0], r)
 
-    def get_second_category_pkg_info(self, second_category_name):
+    def get_second_category_packages(self, second_category_name):
         self.desktop_db_cursor.execute(
             "SELECT pkg_name FROM package WHERE second_category_name=? ORDER BY pkg_name", (second_category_name,))
         r = self.desktop_db_cursor.fetchall()

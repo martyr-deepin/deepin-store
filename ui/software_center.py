@@ -1006,12 +1006,10 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         glib.timeout_add(1000, lambda : clear_install_stop_list(self.install_page))
         glib.timeout_add(1000, lambda : clear_failed_action(self.install_page, self.upgrade_page))
 
-        self.init_download_manager()
+        #self.init_download_manager()
 
         #self.request_update_list()
         self.upgrade_page.fetch_upgrade_info(utils.get_backend_running())
-        
-        log("finish")
 
     def change_mirror_action(self, item):
         repo_urls = item.mirror.get_repo_urls()

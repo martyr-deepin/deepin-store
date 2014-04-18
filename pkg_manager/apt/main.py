@@ -573,9 +573,9 @@ class PackageManager(dbus.service.Object):
             cache_upgrade_pkgs = self.pkg_cache.get_upgrade_pkgs()
             return cache_upgrade_pkgs
     
-    @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="as")    
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="s")
     def request_uninstall_pkgs(self):
-        return self.pkg_cache.get_uninstall_pkgs()
+        return json.dumps(self.pkg_cache.get_uninstall_pkgs())
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="as")    
     def request_pkgs_install_version(self, pkg_names):

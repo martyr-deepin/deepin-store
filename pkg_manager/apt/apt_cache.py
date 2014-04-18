@@ -73,7 +73,7 @@ class AptCache(apt.Cache):
         for pkg in self:
             if self.is_pkg_installed(pkg.name):
                 pkg_version = pkg.installed.version
-                pkg_infos.append(str((pkg.name, pkg_version)))
+                pkg_infos.append([pkg.name, pkg_version])
         return pkg_infos
     
     def get_pkgs_uninstall_version(self, pkg_names):

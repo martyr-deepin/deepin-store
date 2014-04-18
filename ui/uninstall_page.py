@@ -22,6 +22,7 @@
 
 import gtk
 import gobject
+import json
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
 from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.progressbar import ProgressBuffer
@@ -41,19 +42,11 @@ from dtk.ui.entry import InputEntry
 from dtk.ui.button import ImageButton
 from dtk.ui.cycle_strip import CycleStrip
 from dtk.ui.label import Label
-from utils import handle_dbus_error, get_purg_flag
+from utils import handle_dbus_error, get_purg_flag, global_logger
 from nls import _
 
 class MessageBar(CycleStrip):
-    '''
-    class docs
-    '''
-	
     def __init__(self, padding_left=0,):
-        '''
-        init docs
-        '''
-        # Init.
         CycleStrip.__init__(self, app_theme.get_pixbuf("strip/background.png"))
         
         self.label = Label()
@@ -199,19 +192,19 @@ class UninstallPage(gtk.VBox):
         
     def fetch_uninstall_info(self):
         self.bus_interface.request_uninstall_pkgs(
-                        reply_handler=self.render_uninstall_info,
+                        reply_handler=self.add_uninstall_items,
                         error_handler=lambda e:handle_dbus_error("request_uninstall_pkgs", e))
-    
-    def render_uninstall_info(self, pkg_infos):
-        self.add_uninstall_items(pkg_infos)
         
     def add_uninstall_items(self, pkg_infos):
         items = []
-        for pkg_info in pkg_infos:
-            (pkg_name, pkg_version) = eval(pkg_info)
-            if self.data_manager.is_pkg_have_desktop_file(pkg_name) != None \
-                and self.data_manager.is_pkg_display_in_uninstall_page(pkg_name):
-                items.append(UninstallItem(pkg_name, pkg_version, self.data_manager))
+        try:
+            uninstall_pkg_infos = json.loads(str(pkg_infos))
+            for pkg_info in uninstall_pkg_infos:
+                pkg_name, pkg_version = pkg_info
+                if self.data_manager.is_pkg_display_in_uninstall_page(pkg_name):
+                    items.append(UninstallItem(pkg_name, pkg_version, self.data_manager))
+        except:
+            global_logger.logerror("uninstall pkg_infos parse error: %s" % str(pkg_infos))
             
         if self.search_flag:
             self.uninstall_change_items["add"] += items
