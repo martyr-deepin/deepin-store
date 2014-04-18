@@ -21,7 +21,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import pango
-import os
 import gtk
 import gobject
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
@@ -302,8 +301,10 @@ class InstallItem(TreeItem):
         self.data_manager = data_manager
         self.icon_pixbuf = None
         
-        (self.short_desc, star, self.alias_name) = data_manager.get_item_pkg_info(self.pkg_name)
-        self.star_level = get_star_level(star)
+        info = data_manager.get_item_pkg_info(self.pkg_name)
+        self.alias_name = info[1]
+        self.short_desc = info[2]
+        self.star_level = get_star_level(5.0)
         self.star_buffer = DscStarBuffer(pkg_name)
         
         self.grade_star = 0

@@ -210,7 +210,7 @@ class UninstallPage(gtk.VBox):
         for pkg_info in pkg_infos:
             (pkg_name, pkg_version) = eval(pkg_info)
             if self.data_manager.is_pkg_have_desktop_file(pkg_name) != None \
-                and self.data_manager.is_pkg_display_in_uninstall_page(pkg_name)[0] == '1':
+                and self.data_manager.is_pkg_display_in_uninstall_page(pkg_name):
                 items.append(UninstallItem(pkg_name, pkg_version, self.data_manager))
             
         if self.search_flag:
@@ -269,8 +269,10 @@ class UninstallItem(TreeItem):
         self.data_manager = data_manager
         self.icon_pixbuf = None
         
-        (self.short_desc, star, self.alias_name) = data_manager.get_item_pkg_info(self.pkg_name)
-        self.star_level = get_star_level(star)
+        info = data_manager.get_item_pkg_info(self.pkg_name)
+        self.alias_name = info[1]
+        self.short_desc = info[2]
+        self.star_level = get_star_level(5.0)
         self.star_buffer = DscStarBuffer(pkg_name)
 
         self.grade_star = 0

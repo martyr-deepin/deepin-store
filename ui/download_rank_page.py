@@ -37,24 +37,17 @@ import gtk
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from events import global_event
 from nls import _
-from utils import ThreadMethod, handle_dbus_error
+from utils import ThreadMethod, handle_dbus_error, global_logger
 from widgets import LoadingBox
 
 RANK_TAB_HEIGHT = 20
 
 class DownloadRankPage(gtk.VBox):
-    '''
-    class docs
-    '''
-
     __gsignals__ = {
         "get-rank-pkg-names-finish" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
         }
 	
     def __init__(self, data_manager):
-        '''
-        init docs
-        '''
         # Init.
         gtk.VBox.__init__(self)
         self.data_manager = data_manager
@@ -138,29 +131,28 @@ class DownloadRankPage(gtk.VBox):
 
     def get_pkgs_status(self):
         if self.show_flag:
-            infos = self.data_manager.get_download_rank_info(self.pkg_names)
-
-            if len(infos) > 25:
-                infos = infos[:25]
-
-            valid_pkg_names = []
-            for info in infos:
-                valid_pkg_names.append(info[0])
-
             view = self.view_list[self.current_page_index][1]
             view.clear()
             container_remove_all(self.page_align)
 
             items = []
-            for i in range(len(infos)):
-                items.append(PkgIconItem(self.data_manager, *infos[i]))
+            pkg_names = self.pkg_names[:25]
+            for pkg_name in pkg_names:
+                info = self.data_manager.get_item_pkg_info(pkg_name)
+                items.append(PkgIconItem(pkg_name, info[1], self.data_manager))
+
             view.add_items(items)
             self.page_align.add(self.view_list[self.current_page_index][2])
             global_event.emit("update-current-status-pkg-page", view)
+            self.show_flag = None
             self.show_all()
 
-            self.show_flag = None
         return True
+
+    def update_install_status(self, status, items):
+        for (index, state) in enumerate(status):
+            items[index].is_installed = state
+            items[index].emit_redraw_request()
 
     def draw_mask(self, cr, x, y, w, h):
         '''
@@ -276,7 +268,7 @@ class PkgIconItem(IconItem):
     BUTTON_PADDING_X = 44
     BUTTON_PADDING_BOTTOM = 18
     
-    def __init__(self, data_manager, pkg_name, alias_name, star, desktop_info, is_installed=None):
+    def __init__(self, pkg_name, alias_name, data_manager):
         '''
         Initialize ItemIcon class.
         
@@ -285,10 +277,10 @@ class PkgIconItem(IconItem):
         IconItem.__init__(self)
         self.pkg_name = pkg_name
         self.alias_name = alias_name
-        self.desktop_info = desktop_info
-        self.star_level = get_star_level(star)
+        self.data_manager = data_manager
+
+        self.star_level = get_star_level(5.0)
         self.star_buffer = DscStarBuffer(pkg_name)
-        self.is_installed = is_installed
         
         self.grade_star = 0
         
@@ -303,14 +295,19 @@ class PkgIconItem(IconItem):
         self.highlight_flag = False
         
         self.button_status = BUTTON_NORMAL
-        data_manager.get_pkgs_install_status(
-                [self.pkg_name,], 
-                self.update_install_status, 
-                lambda e:handle_dbus_error("get_pkgs_install_status", e))
 
-    def update_install_status(self, is_installed):
-        self.is_installed = is_installed[0]
-        self.emit_redraw_request()
+        # TODO: fetch install_status
+        self.install_status = "uninstalled"
+        self.desktops = []
+        self.data_manager.get_pkg_installed(self.pkg_name, self.handle_pkg_status)
+
+    def handle_pkg_status(self, status, success):
+        if success:
+            self.install_status= str(status)
+            self.emit_redraw_request()
+        else:
+            global_logger.logerror("%s: get_pkg_installed handle_dbus_error" % self.pkg_name)
+            global_logger.logerror(status)
 
     def get_width(self):
         '''
@@ -357,12 +354,23 @@ class PkgIconItem(IconItem):
                                       STAR_SIZE
                                       ),
                     self.star_buffer)
-        if self.is_installed != None:
-            if self.is_installed:
+
+        # render button
+        name = ""
+        draw_str = ""
+        if self.install_status == "uninstalled":
+            name = "button/install_small"
+        elif self.install_status == "unknown":
+            draw_str = _("Not found")
+        else:
+            desktops = json.loads(self.install_status)
+            if desktops:
                 name = "button/start_small"
+                self.desktops = self.data_manager.get_pkg_desktop_info(desktops)
             else:
-                name = "button/install_small"
-            
+                draw_str = _("Installed")
+
+        if name:
             if self.button_status == BUTTON_NORMAL:
                 status = "normal"
             elif self.button_status == BUTTON_HOVER:
@@ -376,9 +384,20 @@ class PkgIconItem(IconItem):
                 pixbuf,
                 rect.x + self.BUTTON_PADDING_X,
                 rect.y + rect.height - self.BUTTON_PADDING_BOTTOM - pixbuf.get_height())
+        else:
+            str_width, str_height = get_content_size(draw_str, 10)
+            draw_text(
+                cr,
+                draw_str,
+                rect.x + self.BUTTON_PADDING_X,
+                rect.y + rect.height - self.BUTTON_PADDING_BOTTOM - str_height,
+                rect.width,
+                str_height,
+                wrap_width=rect.width,
+            )
         
     def is_in_button_area(self, x, y):
-        if self.is_installed != None:
+        if self.desktops:
             pixbuf = app_theme.get_pixbuf("button/start_small_normal.png").get_pixbuf()
             return is_in_rect((x, y),
                             (self.BUTTON_PADDING_X,
@@ -468,8 +487,8 @@ class PkgIconItem(IconItem):
         elif self.is_in_star_area(x, y):
             global_event.emit("grade-pkg", self.pkg_name, self.grade_star)
         elif self.is_in_button_area(x, y):
-            if self.is_installed:
-                global_event.emit("start-pkg", self.alias_name, self.desktop_info, self.get_offset_with_button(x, y))
+            if self.desktops:
+                global_event.emit("start-pkg", self.alias_name, self.desktops, self.get_offset_with_button(x, y))
             else:
                 global_event.emit("install-pkg", [self.pkg_name])
                 
@@ -477,6 +496,19 @@ class PkgIconItem(IconItem):
             self.emit_redraw_request()
         else:
             global_event.emit("switch-to-detail-page", self.pkg_name)
+
+    def icon_item_button_release(self, x, y):
+        '''
+        Handle button-release event.
+        
+        This is IconView interface, you should implement it.
+        '''
+        if self.is_in_button_area(x, y):
+            self.button_status = BUTTON_HOVER
+            self.emit_redraw_request()
+        elif self.button_status != BUTTON_NORMAL:
+            self.button_status = BUTTON_NORMAL
+            self.emit_redraw_request()
     
     def icon_item_release_resource(self):
         '''

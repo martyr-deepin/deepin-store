@@ -34,11 +34,13 @@ from events import global_event
 import gtk
 import gobject
 import os
+import json
 from data import DATA_ID
 from server_action import FetchAlbumData, FetchImageFromUpyun
 from dtk.ui.threads import post_gui
-from utils import handle_dbus_error
+from utils import handle_dbus_error, global_logger
 from widgets import LoadingBox, NetworkConnectFailed
+from nls import _
 
 from operator import attrgetter
 
@@ -395,11 +397,13 @@ class AlbumDetailItem(TreeItem):
         self.alias_name = software_info['display_name']
         self.software_pic = software_info['software_pic']
         self.desktop_info = data_manager.get_pkg_desktop_info(self.pkg_name)
-        self.install_status = False
-        data_manager.get_pkgs_install_status(
-                [self.pkg_name,], 
-                self.update_install_status, 
-                lambda :handle_dbus_error("get_pkgs_install_status", self.pkg_name))
+        self.data_manager = data_manager
+
+        # TODO: fetch install_status
+        self.install_status = "uninstalled"
+        self.desktops = []
+        self.data_manager.get_pkg_installed(self.pkg_name, self.handle_pkg_status)
+
         FetchImageFromUpyun(self.software_pic, self.update_software_pic).start()
         self.pixbuf = None
         
@@ -418,10 +422,13 @@ class AlbumDetailItem(TreeItem):
         else:
             print "Failed load image: %s" % local_path
 
-    def update_install_status(self, is_installed):
-        self.install_status = True
-        self.is_installed = is_installed[0]
-        self.emit_redraw_request()
+    def handle_pkg_status(self, status, success):
+        if success:
+            self.install_status= str(status)
+            self.emit_redraw_request()
+        else:
+            global_logger.logerror("%s: get_pkg_installed handle_dbus_error" % self.pkg_name)
+            global_logger.logerror(status)
         
     def render_pkg_picture(self, cr, rect):
         if self.pixbuf == None:
@@ -463,12 +470,21 @@ class AlbumDetailItem(TreeItem):
         
     def render_pkg_action(self, cr, rect):
         # Render button.
-        if self.install_status:
-            if self.is_installed:
+        name = ""
+        draw_str = ""
+        if self.install_status == "uninstalled":
+            name = "button/install"
+        elif self.install_status == "unknown":
+            draw_str = _("Not found")
+        else:
+            desktops = json.loads(self.install_status)
+            if desktops:
                 name = "button/start"
+                self.desktops = self.data_manager.get_pkg_desktop_info(desktops)
             else:
-                name = "button/install"
-            
+                draw_str = _("Installed")
+
+        if name:
             if self.button_status == BUTTON_NORMAL:
                 status = "normal"
             elif self.button_status == BUTTON_HOVER:
@@ -483,7 +499,16 @@ class AlbumDetailItem(TreeItem):
                 rect.x + self.BUTTON_PADDING_X,
                 rect.y + (rect.height - pixbuf.get_height()) / 2)
         else:
-            pass
+            str_width, str_height = get_content_size(draw_str, 10)
+            draw_text(
+                cr,
+                draw_str,
+                rect.x + self.BUTTON_PADDING_X,
+                rect.y + (rect.height - str_height) / 2,
+                rect.width,
+                str_height,
+                wrap_width=rect.width,
+            )
         
     def is_in_button_area(self, column, offset_x, offset_y):
 
@@ -555,8 +580,8 @@ class AlbumDetailItem(TreeItem):
                 global_event.emit("set-cursor", gtk.gdk.HAND2)    
         else:        
             if self.is_in_button_area(column, offset_x, offset_y):
-                if self.is_installed:
-                    global_event.emit("start-pkg", self.alias_name, self.desktop_info, self.get_offset_with_button(offset_x, offset_y))
+                if self.desktops:
+                    global_event.emit("start-pkg", self.alias_name, self.desktops, self.get_offset_with_button(offset_x, offset_y))
                 else:
                     global_event.emit("install-pkg", [self.pkg_name])
                     

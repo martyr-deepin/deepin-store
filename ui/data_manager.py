@@ -30,11 +30,14 @@ from collections import OrderedDict
 import xappy
 from data import DATA_ID
 from constant import LANGUAGE
+from category import CATEGORY_TYPE_DICT
+import logging
+import gio
 
 UPDATE_DATA_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID)
 CACHE_SOFT_DB_PATH = os.path.join(get_parent_dir(__file__, 2), "data", "cache_soft.db")
 
-DATA_SUPPORT_LANGUAGE = ['en_US', 'zh_CN', 'zh_TW', 'zh_HK']
+DATA_SUPPORT_LANGUAGE = ['en_US', 'zh_CN', 'zh_TW']
 
 def db_path_exists(path):
     if not os.path.exists(path):
@@ -62,7 +65,7 @@ class DataManager(object):
 
         self.init_cache_soft_db()
 
-        desktop_db_path = os.path.join(UPDATE_DATA_DIR, "desktop", self.language, "desktop.db")
+        desktop_db_path = os.path.join(UPDATE_DATA_DIR, "desktop", "desktop2014.db")
         db_path_exists(desktop_db_path)
         self.desktop_db_connect = sqlite3.connect(desktop_db_path)
         self.desktop_db_cursor = self.desktop_db_connect.cursor()
@@ -71,11 +74,13 @@ class DataManager(object):
         db_path_exists(category_db_path)
         self.category_db_connect = sqlite3.connect(category_db_path)
         self.category_db_cursor = self.category_db_connect.cursor()
+
+        self.icon_data_dir = os.path.join(UPDATE_DATA_DIR, "app_icon")
         
         self.category_dict = {}
         self.category_name_dict = {}
         
-        self.build_category_dict()
+        #self.build_category_dict()
 
     def init_cache_soft_db(self):
         if self.is_cache_soft_db_exists() and not hasattr(self, 'cache_soft_db_cursor'):
@@ -132,18 +137,14 @@ class DataManager(object):
         else:
             return 1
 
-    def get_pkgs_install_status(self, pkg_names, reply_handler, error_handler):
-        return self.bus_interface.request_pkgs_install_status(
-            pkg_names,
-            reply_handler=reply_handler,
-            error_handler=error_handler)
-
     def get_pkg_download_size(self, pkg_name, callback):
         self.bus_interface.get_download_size(
                 pkg_name,
                 reply_handler=lambda r: callback(r, True),
                 error_handler=lambda e: callback(e, False)
                 )
+    def get_pkg_icon_path(self, pkg_name):
+        pass
         
     def get_search_pkgs_info(self, pkg_names):
         pkg_infos = []
@@ -155,10 +156,14 @@ class DataManager(object):
         
         return pkg_infos
     
-    def get_pkg_desktop_info(self, pkg_name):
-        self.desktop_db_cursor.execute(
-            "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
-        return self.desktop_db_cursor.fetchall()
+    def get_pkg_desktop_info(self, desktops):
+        app_infos = []
+        all_app_infos = gio.app_info_get_all()
+        for desktop in desktops:
+            app_info = gio.unix.desktop_app_info_new_from_filename(desktop)
+            if app_info in all_app_infos:
+                app_infos.append(app_info)
+        return app_infos
     
     def get_pkg_installed(self, pkg_name, callback):
         self.bus_interface.get_pkg_installed(pkg_name,
@@ -178,10 +183,11 @@ class DataManager(object):
 
         # get category, recommend_pkgs
         self.desktop_db_cursor.execute(
-            "SELECT first_category_name, second_category_name FROM desktop WHERE pkg_name=?", [pkg_name])
+            "SELECT first_category_name, second_category_name FROM package WHERE pkg_name=?", [pkg_name])
         category_names = self.desktop_db_cursor.fetchone()
         if category_names and category_names[0] and category_names[1]:
             result['category'] = category_names
+            """
             self.category_db_cursor.execute(
                 "SELECT recommend_pkgs FROM category_name WHERE first_category_name=? and second_category_name=?",
                 [category_names[0], category_names[1]])
@@ -192,6 +198,7 @@ class DataManager(object):
                         "SELECT alias_name FROM software WHERE pkg_name=?", [name])
                     alias_name = self.software_db_cursor.fetchone()[0]
                     result['recommend_pkgs'].append((name, alias_name, 5.0))
+            """
 
         # get long_desc, version, homepage, alias_name
         self.software_db_cursor.execute(
@@ -206,7 +213,8 @@ class DataManager(object):
             "SELECT long_desc, version, homepage FROM software WHERE pkg_name=?",
             [pkg_name]])
         if cache_info:
-            if result['long_desc'] == 'Unknown': result['long_desc'] = cache_info[0][0]
+            if result['long_desc'] == 'Unknown':
+                result['long_desc'] = cache_info[0][0]
             result['version'] = cache_info[0][1]
             result['homepage'] = cache_info[0][2]
         return result
@@ -231,63 +239,63 @@ class DataManager(object):
     
     def get_item_pkg_info(self, pkg_name):
         self.software_db_cursor.execute(
-            "SELECT short_desc, alias_name FROM software WHERE pkg_name=?", [pkg_name])
+                "SELECT pkg_name, alias_name, short_desc, long_desc FROM software WHERE pkg_name=?",
+                (pkg_name,)
+                )
         info = self.software_db_cursor.fetchone()
-        if info == None:
-            return (None, 5.0, pkg_name)
+        if info != None and info[2] != "":
+            return info
         else:
-            (short_desc, alias_name) = info
-            return (short_desc, 5.0, alias_name)
+            r = self.get_info_from_cache_soft_db(["SELECT short_desc, long_desc FROM software WHERE pkg_name=?", (pkg_name, )])
+            if r:
+                return [pkg_name, pkg_name, r[0][0], r[0][1]]
+            else:
+                return [pkg_name, pkg_name, "", ""]
     
     def get_item_pkgs_info(self, pkg_names):
         infos = []
         for (index, pkg_name) in enumerate(pkg_names):
-            (short_desc, star, alias_name) = self.get_item_pkg_info(pkg_name)
-            infos.append([pkg_name, short_desc, star, alias_name])
-            
+            infos.append(self.get_item_pkg_info(pkg_name))
         return infos    
     
     def is_pkg_have_desktop_file(self, pkg_name):
-        if pkg_name.endswith(":i386"):
-            pkg_name = pkg_name[:-5]
         self.desktop_db_cursor.execute(
-            "SELECT desktop_path FROM desktop WHERE pkg_name=?", [pkg_name])
-        return self.desktop_db_cursor.fetchone()
+            "SELECT id FROM package WHERE pkg_name=?", [pkg_name])
+        r = self.desktop_db_cursor.fetchone()
+        if r:
+            return True
+        else:
+            if pkg_name.endswith(":i386"):
+                pkg_name = pkg_name[:-5]
+                self.desktop_db_cursor.execute(
+                    "SELECT id FROM package WHERE pkg_name=?", [pkg_name])
+                return self.desktop_db_cursor.fetchone()
+            else:
+                return False
+
+    def get_display_flag(self, pkg_name):
+        self.desktop_db_cursor.execute(
+            "SELECT display_flag FROM package WHERE pkg_name=?", (pkg_name, ))
+        r = self.desktop_db_cursor.fetchone()
+        if r:
+            return r[0]
+        else:
+            return False
 
     def is_pkg_display_in_uninstall_page(self, pkg_name):
-        if pkg_name.endswith(":i386"):
-            pkg_name = pkg_name[:-5]
-        self.desktop_db_cursor.execute(
-            "SELECT display_flag FROM desktop WHERE pkg_name=?", [pkg_name])
-        return self.desktop_db_cursor.fetchone()
+        if self.get_display_flag(pkg_name):
+            return True
+        else:
+            if pkg_name.endswith(":i386"):
+                pkg_name = pkg_name[:-5]
+                return self.get_display_flag(pkg_name)
+            else:
+                return False
     
     def get_album_info(self):
         self.album_db_cursor.execute(
             "SELECT album_id, album_name, album_summary FROM album ORDER BY album_id")
         return self.album_db_cursor.fetchall()
-    
-    def get_album_detail_info(self, album_id):
-        self.album_db_cursor.execute(
-            "SELECT pkg_name, pkg_title, pkg_summary FROM album_pkg WHERE album_id=? ORDER BY pkg_sort_id", 
-            [album_id])
-        infos = self.album_db_cursor.fetchall() 
-        pkg_names = map(lambda info: info[0], infos)
-        
-        install_status = self.bus_interface.request_pkgs_install_status(pkg_names)
-        
-        detail_infos = []
-        for (index, (pkg_name, pkg_title, pkg_summary)) in enumerate(infos):
-            self.software_db_cursor.execute(
-                "SELECT alias_name FROM software WHERE pkg_name=?", [pkg_name])
-            (alias_name,) = self.software_db_cursor.fetchone()
-            
-            self.desktop_db_cursor.execute(
-                "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
-            desktop_infos = self.desktop_db_cursor.fetchall()
-            
-            detail_infos.append((pkg_name, pkg_title, pkg_summary, alias_name, desktop_infos, install_status[index]))
-        
-        return detail_infos
     
     def get_download_rank_info(self, pkg_names):
         infos = []
@@ -344,34 +352,24 @@ class DataManager(object):
             "SELECT first_category_index, second_category_index, first_category_name, second_category_name FROM category_name")
         for (first_category_index, second_category_index, first_category, second_category) in self.category_db_cursor.fetchall():
             self.category_name_dict[(first_category_index, second_category_index)] = (first_category, second_category)
-            
-    def get_category_pkg_info(self):
-        # Category dict format:
-        # 
-        # category_dict = {
-        #     first_category : {
-        #         second_category : {
-        #             pkg_name : [(desktop_path, icon_name)]
-        #             }
-        #         }
-        #     }
-    
+
+    def get_first_category(self):
+        return CATEGORY_TYPE_DICT.keys()
+
+    def get_second_category(self, first_category_name):
+        return CATEGORY_TYPE_DICT.get(first_category_name).keys()
+
+    def get_first_category_pkg_info(self, first_category_name):
         self.desktop_db_cursor.execute(
-            "SELECT desktop_path, pkg_name, icon_name, display_name, first_category_name, second_category_name FROM desktop ORDER BY display_name")
-        for (desktop_path, pkg_name, icon_name, display_name, first_category_name, second_category_name) in self.desktop_db_cursor.fetchall():
-            if first_category_name != "" and second_category_name != "":
-                
-                second_category_dict = self.category_dict[first_category_name][second_category_name]    
-                if not second_category_dict.has_key(pkg_name):
-                    second_category_dict[pkg_name] = []
-                    
-                pkg_list = second_category_dict[pkg_name] 
-                second_category_dict[pkg_name] = pkg_list + [(desktop_path, icon_name, display_name)]
-            
-        return self.category_dict    
-    
-    def get_second_category_pkg_info(self, first_category):
-        return self.category_dict[first_category]
+            "SELECT pkg_name FROM package WHERE first_category_name=? ORDER BY pkg_name", (first_category_name,))
+        r = self.desktop_db_cursor.fetchall()
+        return map(lambda s: s[0], r)
+
+    def get_second_category_pkg_info(self, second_category_name):
+        self.desktop_db_cursor.execute(
+            "SELECT pkg_name FROM package WHERE second_category_name=? ORDER BY pkg_name", (second_category_name,))
+        r = self.desktop_db_cursor.fetchall()
+        return map(lambda s: s[0], r)
                 
     def search_query(self, keywords):
         '''
@@ -407,9 +405,3 @@ if __name__ == "__main__":
     bus_interface = dbus.Interface(bus_object, DSC_SERVICE_NAME)
 
     data_manager = DataManager(bus_interface)
-    #print data_manager.get_all_download_rank_info()
-    #print data_manager.get_month_download_rank_info()
-    #print data_manager.get_week_download_rank_info()
-    for info in  data_manager.get_album_detail_info(0):
-        print info
-

@@ -485,7 +485,7 @@ class PackageManager(dbus.service.Object):
     def get_upgrade_download_size(self, pkg_names):
         real_pkg_dict, not_in_cache = parse_pkg.get_real_pkg_dict(self.pkg_cache, pkg_names)
         if not_in_cache:
-            return ["0", "error"]
+            return ["-1", json.dumps([])]
         else:
             (all_change_pkgs, mark_failed_pkg_dict, marked_delete_sys_pkgs
                     ) = parse_pkg.get_changes_pkgs(self.pkg_cache, real_pkg_dict)
@@ -493,7 +493,7 @@ class PackageManager(dbus.service.Object):
             download_pkg_infos = parse_pkg.check_pkg_download_info(all_change_pkgs)
             change_pkg_names = [pkg.name for pkg in all_change_pkgs]
             if download_pkg_infos[0] == DOWNLOAD_STATUS_ERROR:
-                return ["0", "error"]
+                return ["-1", json.dumps([])]
             elif download_pkg_infos[0] == DOWNLOAD_STATUS_NOTNEED:
                 return ["0", json.dumps(change_pkg_names)]
             else:
@@ -713,11 +713,22 @@ class PackageManager(dbus.service.Object):
     def get_pkg_installed(self, pkg_name):
         if self.is_pkg_in_cache(pkg_name):
             if self.pkg_cache.is_pkg_installed(pkg_name):
-                return "installed"
+                return self.get_desktops(pkg_name)
             else:
                 return "uninstalled"
         else:
             return "unknown"
+
+    def get_desktops(self, pkg_name):
+        desktops = []
+        try:
+            pkg_obj = self.pkg_cache[pkg_name]
+            for f in pkg_obj.installed_files:
+                if f.endswith(".desktop"):
+                    desktops.append(f)
+        except:
+            pass
+        return json.dumps(desktops)
 
     @dbus.service.signal(DSC_SERVICE_NAME)    
     # Use below command for test:

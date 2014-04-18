@@ -20,6 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import logging
 import urllib
 import pango
 from dtk.ui.scrolled_window import ScrolledWindow
@@ -46,6 +47,7 @@ import gtk
 from item_render import get_icon_pixbuf_path
 from star_buffer import StarView
 import os
+import json
 from events import global_event
 import urllib2
 import webbrowser
@@ -333,12 +335,12 @@ class DetailPage(gtk.HBox):
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
             
-    def button_press_start_button(self, widget, event):
+    def button_press_start_button(self, widget, event, desktops):
         pixbuf = app_theme.get_pixbuf("button/start_normal.png").get_pixbuf()
-        desktop_info = self.data_manager.get_pkg_desktop_info(self.pkg_name)
+        desktop_infos = self.data_manager.get_pkg_desktop_info(desktops)
         global_event.emit("start-pkg", 
                           self.alias_name, 
-                          desktop_info, 
+                          desktop_infos, 
                           (int(event.x), int(event.y), pixbuf.get_width() / 2, 0))
 
     @post_gui
@@ -427,23 +429,7 @@ class DetailPage(gtk.HBox):
         container_remove_all(self.left_action_box)
         if success:
             install_status = str(reply)
-            print install_status
-            if install_status == "installed":
-                if not self.data_manager.get_pkg_desktop_info(self.pkg_name):
-                    status_label = Label(_("Successfully installed"))
-                    self.left_action_box.pack_start(status_label)
-                else:
-                    action_button = ImageButton(
-                        app_theme.get_pixbuf("button/start_normal.png"),
-                        app_theme.get_pixbuf("button/start_hover.png"),
-                        app_theme.get_pixbuf("button/start_press.png"),
-                        )
-                    action_button.connect("button-press-event", self.button_press_start_button)
-                    self.left_action_box.pack_start(action_button)
-            elif install_status == "unknown":
-                status_label = Label(_("Not found"))
-                self.left_action_box.pack_start(status_label)
-            else:
+            if install_status == "uninstalled":
                 action_button = ImageButton(
                     app_theme.get_pixbuf("button/install_normal.png"),
                     app_theme.get_pixbuf("button/install_hover.png"),
@@ -451,6 +437,26 @@ class DetailPage(gtk.HBox):
                     )
                 action_button.connect("clicked", lambda w: global_event.emit("install-pkg", [self.pkg_name]))
                 self.left_action_box.pack_start(action_button)
+            elif install_status == "unknown":
+                status_label = Label(_("Not found"))
+                self.left_action_box.pack_start(status_label)
+            else:
+                try:
+                    desktops = json.loads(install_status)
+                    if not desktops:
+                        status_label = Label(_("Successfully installed"))
+                        self.left_action_box.pack_start(status_label)
+                    else:
+                        action_button = ImageButton(
+                            app_theme.get_pixbuf("button/start_normal.png"),
+                            app_theme.get_pixbuf("button/start_hover.png"),
+                            app_theme.get_pixbuf("button/start_press.png"),
+                        )
+                        action_button.connect("button-press-event", lambda w, e:self.button_press_start_button(w, e, desktops))
+                        self.left_action_box.pack_start(action_button)
+                except:
+                    logging.error("detail install status: %s = %s" % (self.pkg_name, install_status))
+
             self.left_action_box.show_all()
             global_event.emit('update-current-status-pkg-page', self)
         else:

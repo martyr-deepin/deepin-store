@@ -28,6 +28,7 @@ import gobject
 import json
 import subprocess
 import lsb_release
+import logging
 
 from skin import app_theme
 
@@ -657,16 +658,19 @@ class UpgradePage(gtk.VBox):
                 #item.check_button_buffer.active = True
         #self.upgrade_treeview.queue_draw()
 
-        select_pkg_names = self.get_current_selected_pkgs()
-
-        if select_pkg_names:
-            self.upgrade_bar.upgrade_selected_button.set_sensitive(True)
-            self.upgrade_bar.upgrade_selected_button.set_state(gtk.STATE_NORMAL)
-        else:
+        if size == -1:
+            self.upgrade_bar.message_label.set_text(_("There is a problem with your local apt dependence environment "))
             self.upgrade_bar.upgrade_selected_button.set_sensitive(False)
+        else:
+            select_pkg_names = self.get_current_selected_pkgs()
+            self.upgrade_bar.message_label.set_text(_("%s updates are selected. %s will be downloaded.") % (
+                len(select_pkg_names), utils.bit_to_human_str(size)))
+            if select_pkg_names:
+                self.upgrade_bar.upgrade_selected_button.set_sensitive(True)
+                self.upgrade_bar.upgrade_selected_button.set_state(gtk.STATE_NORMAL)
+            else:
+                self.upgrade_bar.upgrade_selected_button.set_sensitive(False)
 
-        self.upgrade_bar.message_label.set_text(_("%s updates are selected. %s will be downloaded.") % (
-            len(select_pkg_names), utils.bit_to_human_str(size)))
         global_event.emit("set-cursor", None)
         
     def click_notify_check_button(self):
@@ -1075,7 +1079,7 @@ class UpgradePage(gtk.VBox):
             self.upgrade_treeview.clear()
             global_event.emit("show-newest-view")
 
-        global_event.emit("show-upgrading-view")
+        #global_event.emit("show-upgrading-view")
         #global_event.emit("show-newest-view")
 
     def download_ready(self, pkg_name):
@@ -1151,7 +1155,10 @@ class UpgradeItem(TreeItem):
         self.data_manager = data_manager
         self.icon_pixbuf = None
         
-        (self.short_desc, star, self.alias_name) = data_manager.get_item_pkg_info(self.pkg_name)
+        info = data_manager.get_item_pkg_info(self.pkg_name)
+        self.alias_name = info[1]
+        self.short_desc = info[2]
+        star = 5.0
         self.star_level = get_star_level(star)
         self.star_buffer = DscStarBuffer(pkg_name)
         
@@ -1714,7 +1721,10 @@ class NoNotifyItem(TreeItem):
         self.data_manager = data_manager
         self.icon_pixbuf = None
         
-        (self.short_desc, star, self.alias_name) = data_manager.get_item_pkg_info(self.pkg_name)
+        info = data_manager.get_item_pkg_info(self.pkg_name)
+        self.alias_name = info[1]
+        self.short_desc = info[2]
+        star = 5.0
         self.star_level = get_star_level(star)
         self.star_buffer = DscStarBuffer(pkg_name)
         

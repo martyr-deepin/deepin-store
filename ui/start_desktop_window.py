@@ -32,6 +32,8 @@ from dtk.ui.iconview import IconView, IconItem
 from dtk.ui.scrolled_window import ScrolledWindow
 from events import global_event
 from dtk.ui.window import Window
+from nls import _
+import logging
 
 DESKTOP_ICON_WIDTH = 100
 DESKTOP_ICON_HEIGHT = 95
@@ -155,8 +157,10 @@ class StartDesktopItem(IconItem):
         '''
         IconItem.__init__(self)
         self.pkg_name = pkg_name
-        (self.desktop_path, self.desktop_icon_name, self.desktop_display_name) = desktop_info
-        self.icon_pixbuf = None
+        self.desktop_info = desktop_info
+        self.desktop_display_name = desktop_info.get_name()
+        self.desktop_icon_name = desktop_info.get_icon().to_string()
+        self.icon_pixbuf = self.get_theme_pixbuf(self.desktop_icon_name)
         self.hover_flag = False
         self.highlight_flag = False
         
@@ -177,6 +181,14 @@ class StartDesktopItem(IconItem):
         This is IconView interface, you should implement it.
         '''
         return DESKTOP_ICON_HEIGHT
+
+    def get_theme_pixbuf(self, name):
+        icon_theme = gtk.icon_theme_get_default()
+        try:
+            return icon_theme.load_icon(name, 48, 0)
+        except gobject.GError, exc:
+            print "can't load icon", exc
+            return None
     
     def render(self, cr, rect):
         '''
@@ -210,7 +222,11 @@ class StartDesktopItem(IconItem):
         
         This is IconView interface, you should implement it.
         '''
-        global_event.emit("start-desktop", self.pkg_name, self.desktop_path)
+        try:
+            self.desktop_info.launch()
+            global_event.emit("show-message", _("%s: request for starting applications sent") % self.desktop_display_name, 5000)
+        except:
+            logging.error("Launch error: %s" % desktop_info)
     
     def icon_item_release_resource(self):
         '''

@@ -25,6 +25,7 @@ import gtk
 import os
 import gobject
 import cairo
+import json
 from message_bar import MessageBar
 from dtk.ui.utils import remove_timeout_id, cairo_state, get_content_size
 from deepin_utils.net import is_network_connected
@@ -54,7 +55,7 @@ from category_info import get_category_name
 from nls import _
 from widgets import LoadingBox, NetworkConnectFailed, NetworkConnectTimeout
 from server_action import FetchHomeData
-from utils import sort_for_home_page_data
+from utils import sort_for_home_page_data, global_logger
 
 NETWORK_TRY_TIMES = 1
 
@@ -163,14 +164,9 @@ class HomePage(gtk.HBox):
         
         self.recommend_item = RecommendItem(data_manager, self.recommend_status)
        
-        category_pkg_info = data_manager.get_category_pkg_info()
-        category_items = map(lambda (index, (first_category_name, second_category_items)):
-                                 CategoryItem(index + 1, 
-                                              first_category_name, 
-                                              second_category_items,
-                                              data_manager,
-                                              ), 
-                             enumerate(category_pkg_info.items()))
+        category_items = []
+        for (index, first_category_name) in enumerate(data_manager.get_first_category()):
+            category_items.append(CategoryItem(index+1, first_category_name, data_manager))
         
         self.category_view = TreeView(
             [self.recommend_item] + category_items,
@@ -331,14 +327,13 @@ class CategoryItem(TreeItem):
     class docs
     '''
 	
-    def __init__(self, index, first_category_name, second_category_items, data_manager):
+    def __init__(self, index, first_category_name, data_manager):
         '''
         init docs
         '''
         TreeItem.__init__(self)
         self.index = index
         self.first_category_name = first_category_name
-        self.second_category_items = second_category_items
         self.data_manager = data_manager
     
     def render_name(self, cr, rect):
@@ -450,36 +445,28 @@ class CategoryItem(TreeItem):
             self.load_new_items(self.all_pkg_names[start:end])
             
     def load_new_items(self, pkg_names):
-        pkg_infos = self.data_manager.get_item_pkgs_info(pkg_names)
-        self.data_manager.get_pkgs_install_status(
-            pkg_names, 
-            reply_handler=lambda status: self.load_items_reply_handler(status, pkg_infos),
-            error_handler=handle_dbus_error)
-
-    def load_items_reply_handler(self, status, pkg_infos):
         items = []
-        for (index, (pkg_name, short_desc, star, alias_name)) in enumerate(pkg_infos):
-            if short_desc != None:
-                items.append(PkgIconItem(status[index], alias_name, pkg_name, short_desc, star, self.all_desktop_infos[pkg_name]))
+        for pkg_name in pkg_names:
+            info = self.data_manager.get_item_pkg_info(pkg_name)
+            items.append(PkgIconItem(info[0], info[1], info[2], self.data_manager))
         self.pkg_icon_view.add_items(items)
-        
         global_event.emit("show-pkg-view", self.page_box)
 
-    def single_click(self, column, offset_x, offset_y):
+    def handle_pkg_install_status_request(self, status, items):
+        for (index, state) in enumerate(status):
+            items[index].is_installed = state
+            items[index].emit_redraw_request()
 
+    def single_click(self, column, offset_x, offset_y):
         # init Loading widget
         loading_box = LoadingBox()
-
         global_event.emit("show-pkg-view", loading_box)
 
         self.page_box = gtk.VBox()    
 
         self.all_pkg_names = []
         self.all_desktop_infos = {}
-        for (second_category, pkg_dict) in self.second_category_items.items():
-            for (pkg_name, desktop_info) in pkg_dict.items():
-                self.all_pkg_names.append(pkg_name)
-                self.all_desktop_infos[pkg_name] = desktop_info
+        self.all_pkg_names = self.data_manager.get_first_category_pkg_info(self.first_category_name)
             
         self.message_bar = MessageBar(18)
         self.message_bar.set_message(_("%s: %s applications") % (
@@ -533,16 +520,11 @@ class CategoryItem(TreeItem):
         
     def add_child_item(self):
         items = []
-        for (second_category_name, second_category_dict) in self.data_manager.get_second_category_pkg_info(self.first_category_name).items():
-            pkg_names = []
-            desktop_infos = {}
-            for (pkg_name, desktop_info) in second_category_dict.items():
-                pkg_names.append(pkg_name)
-                desktop_infos[pkg_name] = desktop_info
-                
-            items.append(SecondCategoryItem(self.first_category_name, second_category_name, pkg_names, self.data_manager, desktop_infos))    
+        second_category_names = self.data_manager.get_second_category(self.first_category_name)
+        for second_category_name in second_category_names:
+            items.append(SecondCategoryItem(self.first_category_name, second_category_name, self.data_manager))
             
-        self.child_items = items    
+        self.child_items = items
         self.add_items_callback(self.child_items, self.row_index + 1)
         
     def delete_chlid_item(self):
@@ -572,16 +554,14 @@ class SecondCategoryItem(TreeItem):
     class docs
     '''
 	
-    def __init__(self, first_category_name, second_category_name, pkg_names, data_manager, desktop_infos):
+    def __init__(self, first_category_name, second_category_name, data_manager):
         '''
         init docs
         '''
         TreeItem.__init__(self)
         self.first_category_name = first_category_name
         self.second_category_name = second_category_name
-        self.all_pkg_names = pkg_names
         self.data_manager = data_manager
-        self.all_desktop_infos = desktop_infos
     
     def render_name(self, cr, rect):
         text_color = "#333333"
@@ -649,18 +629,17 @@ class SecondCategoryItem(TreeItem):
             self.load_new_items(self.all_pkg_names[start:end])
 
     def load_new_items(self, pkg_names):
-        pkg_infos = self.data_manager.get_item_pkgs_info(pkg_names)
-        self.data_manager.get_pkgs_install_status(
-            pkg_names, 
-            reply_handler=lambda status: self.load_items_reply_handler(status, pkg_infos),
-            error_handler=handle_dbus_error)
-
-    def load_items_reply_handler(self, status, pkg_infos):
         items = []
-        for (index, (pkg_name, short_desc, star, alias_name)) in enumerate(pkg_infos):
-            items.append(PkgIconItem(status[index], alias_name, pkg_name, short_desc, star, self.all_desktop_infos[pkg_name]))
+        for pkg_name in pkg_names:
+            info = self.data_manager.get_item_pkg_info(pkg_name)
+            items.append(PkgIconItem(info[0], info[1], info[2], self.data_manager))
         self.pkg_icon_view.add_items(items)
         global_event.emit("show-pkg-view", self.page_box)
+
+    def handle_pkg_install_status_request(self, status, items):
+        for (index, state) in enumerate(status):
+            items[index].is_installed = state
+            items[index].emit_redraw_request()
 
     def button_press(self, column, offset_x, offset_y):
         # init Loading widget
@@ -670,6 +649,7 @@ class SecondCategoryItem(TreeItem):
 
         self.page_box = gtk.VBox()    
             
+        self.all_pkg_names = self.data_manager.get_second_category_pkg_info(self.second_category_name)
         self.message_bar = MessageBar(18)
         self.message_bar.set_message(_("%s > %s : %s applications") % (
                 get_category_name(self.first_category_name), 
@@ -1004,21 +984,19 @@ class PkgIconItem(IconItem):
     DRAW_STAR_PADDING_Y = 40
     DRAW_LONG_DESC_PADDING_Y = 68
     
-    def __init__(self, is_installed, alias_name, pkg_name, long_desc, mark, desktop_info):
+    def __init__(self, pkg_name, alias_name, short_desc, data_manager):
         '''
         init docs
         '''
         IconItem.__init__(self)
-        self.is_installed = is_installed
         self.alias_name = alias_name
         self.pkg_name = pkg_name
-        self.long_desc = long_desc
-        self.mark = mark
-        self.desktop_info = desktop_info
+        self.short_desc = short_desc
+        self.data_manager = data_manager
         
         self.pkg_icon_pixbuf = None
         
-        self.star_level = get_star_level(mark)
+        self.star_level = get_star_level(5.0)
         self.star_buffer = DscStarBuffer(pkg_name, self)
         self.grade_star = 0
         self.pkg_name_area = PkgName()
@@ -1027,6 +1005,19 @@ class PkgIconItem(IconItem):
         self.height = 114
         
         self.button_status = BUTTON_NORMAL
+
+        ### TODO: is_installed status
+        self.install_status = "uninstalled"
+        self.desktops = []
+        self.data_manager.get_pkg_installed(self.pkg_name, self.handle_pkg_status)
+    
+    def handle_pkg_status(self, status, success):
+        if success:
+            self.install_status= str(status)
+            self.emit_redraw_request()
+        else:
+            global_logger.logerror("%s: get_pkg_installed handle_dbus_error" % self.pkg_name)
+            global_logger.logerror(status)
 
     def get_width(self):
         '''
@@ -1056,24 +1047,46 @@ class PkgIconItem(IconItem):
             rect.y + self.DRAW_PADDING_Y)    
         
         # Draw button.
-        if self.is_installed:
-            name = "button/start_small"
-        else:
+        name = ""
+        draw_str = ""
+        if self.install_status == "uninstalled":
             name = "button/install_small"
-        
-        if self.button_status == BUTTON_NORMAL:
-            status = "normal"
-        elif self.button_status == BUTTON_HOVER:
-            status = "hover"
-        elif self.button_status == BUTTON_PRESS:
-            status = "press"
-            
-        pixbuf = app_theme.get_pixbuf("%s_%s.png" % (name, status)).get_pixbuf()
-        draw_pixbuf(
-            cr,
-            pixbuf,
-            rect.x + self.DRAW_PADDING_LEFT,
-            rect.y + self.DRAW_PADDING_Y + self.DRAW_ICON_SIZE + self.DRAW_BUTTON_PADDING_Y)
+        elif self.install_status == "unknown":
+            draw_str = _("Not found")
+        else:
+            desktops = json.loads(self.install_status)
+            if desktops:
+                name = "button/start_small"
+                self.desktops = self.data_manager.get_pkg_desktop_info(desktops)
+            else:
+                draw_str = _("Installed")
+
+        if name:
+            if self.button_status == BUTTON_NORMAL:
+                status = "normal"
+            elif self.button_status == BUTTON_HOVER:
+                status = "hover"
+            elif self.button_status == BUTTON_PRESS:
+                status = "press"
+                
+            pixbuf = app_theme.get_pixbuf("%s_%s.png" % (name, status)).get_pixbuf()
+            draw_pixbuf(
+                cr,
+                pixbuf,
+                rect.x + self.DRAW_PADDING_LEFT,
+                rect.y + self.DRAW_PADDING_Y + self.DRAW_ICON_SIZE + self.DRAW_BUTTON_PADDING_Y)
+        else:
+            str_width, str_height = get_content_size(draw_str, 10)
+            draw_text(
+                cr,
+                draw_str,
+                rect.x + self.DRAW_PADDING_LEFT,
+                rect.y + self.DRAW_PADDING_Y + self.DRAW_ICON_SIZE + self.DRAW_BUTTON_PADDING_Y,
+                rect.width,
+                str_height,
+                wrap_width=rect.width,
+            )
+
         
         # Draw name.
         self.text_width = rect.width - self.DRAW_PADDING_LEFT - self.DRAW_PADDING_RIGHT - self.DRAW_INFO_PADDING_X - self.pkg_icon_pixbuf.get_width()
@@ -1098,10 +1111,8 @@ class PkgIconItem(IconItem):
         
         # Draw long desc.
         long_desc_height = 32
-        if self.long_desc == None:
-            self.long_desc = "FIX ME"
-        #if self.long_desc and len(self.long_desc.split("\n")) == 1:
-            #self.long_desc += "\n"
+        if self.short_desc == None:
+            self.short_desc = "FIX ME"
         with cairo_state(cr):
             cr.rectangle(
                 rect.x + self.DRAW_PADDING_LEFT + ICON_SIZE + self.DRAW_INFO_PADDING_X,
@@ -1112,7 +1123,7 @@ class PkgIconItem(IconItem):
             cr.clip()
             draw_text(
                 cr,
-                self.long_desc,
+                self.short_desc,
                 rect.x + self.DRAW_PADDING_LEFT + ICON_SIZE + self.DRAW_INFO_PADDING_X,
                 rect.y + self.DRAW_LONG_DESC_PADDING_Y,
                 self.text_width,
@@ -1207,8 +1218,8 @@ class PkgIconItem(IconItem):
         if self.is_in_star_area(x, y):
             global_event.emit("grade-pkg", (self.pkg_name, self.star_buffer), self.grade_star)
         elif self.is_in_button_area(x, y):
-            if self.is_installed:
-                global_event.emit("start-pkg", self.alias_name, self.desktop_info, self.get_offset_with_button(x, y))
+            if self.desktops:
+                global_event.emit("start-pkg", self.alias_name, self.desktops, self.get_offset_with_button(x, y))
             else:
                 global_event.emit("install-pkg", [self.pkg_name])
                 

@@ -21,9 +21,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import gtk
-import pango
 import gobject
-import os
+import json
 from skin import app_theme
 from message_bar import MessageBar
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
@@ -159,27 +158,13 @@ class SearchPage(gtk.VBox):
 
     def load_new_items(self, pkg_names):
         if pkg_names:
-            results = self.data_manager.get_search_pkgs_info(pkg_names)
-            self.data_manager.get_pkgs_install_status(
-                                pkg_names, 
-                                reply_handler=lambda status: self.search_reply_handler(status, results),
-                                error_handler=handle_dbus_error)
+            items = []
+            for pkg_name in pkg_names:
+                items.append(SearchItem(pkg_name, self.data_manager, self.keywords))
+            self.treeview.add_items(items)
+            #global_event.emit("show-pkg-view", self.page_box)
         else:
             self.update_message_bar(self.treeview)
-
-    def search_reply_handler(self, status, results):
-        for (i, result) in enumerate(results):
-            result.append(status[i])
-        self.render_search_info(results, self.keywords)
-
-    def render_search_info(self, pkg_infos, keywords):
-        self.keywords = keywords
-        
-        items = []
-        for pkg_info in pkg_infos:
-            items.append(SearchItem(pkg_info, self.data_manager, keywords))
-            
-        self.treeview.add_items(items)
         
 gobject.type_register(SearchPage)
 
@@ -188,21 +173,23 @@ class SearchItem(TreeItem):
     class docs
     '''
 	
-    def __init__(self, (pkg_name, desktop_info, is_installed), data_manager, keywords):
+    def __init__(self, pkg_name, data_manager, keywords):
         '''
         init docs
         '''
         TreeItem.__init__(self)
         self.pkg_name = pkg_name
-        self.desktop_info = desktop_info
-        self.is_installed = is_installed
         self.data_manager = data_manager
         self.keywords = keywords
         self.icon_pixbuf = None
         
         (self.alias_name, self.short_desc, self.long_desc, star) = data_manager.get_pkg_search_info(self.pkg_name)
-        self.is_have_desktop_file = data_manager.is_pkg_have_desktop_file(self.pkg_name)
-        self.star_level = get_star_level(star)
+        info = self.data_manager.get_item_pkg_info(self.pkg_name)
+        self.alias_name = info[1]
+        self.short_desc = info[2]
+        self.long_desc = info[3]
+
+        self.star_level = get_star_level(5.0)
         self.star_buffer = DscStarBuffer(pkg_name)
         
         self.grade_star = 0
@@ -211,6 +198,19 @@ class SearchItem(TreeItem):
         
         self.button_status = BUTTON_NORMAL
         
+        ### TODO: is_installed status
+        self.install_status = "uninstalled"
+        self.desktops = []
+        self.data_manager.get_pkg_installed(self.pkg_name, self.handle_pkg_status)
+
+    def handle_pkg_status(self, status, success):
+        if success:
+            self.install_status= str(status)
+            self.emit_redraw_request()
+        else:
+            utils.global_logger.logerror("%s: get_pkg_installed handle_dbus_error" % self.pkg_name)
+            utils.global_logger.logerror(status)
+
     def render_info(self, cr, rect):
         if self.row_index % 2 == 1:
             cr.set_source_rgba(1, 1, 1, 0.5)
@@ -258,22 +258,32 @@ class SearchItem(TreeItem):
         # Render star.
         self.star_buffer.render(cr, gtk.gdk.Rectangle(rect.x, rect.y, ITEM_STAR_AREA_WIDTH, ITEM_HEIGHT))
         
-        # Render button.
-        if self.is_installed:
-            name = "button/start"
+        # Draw button.
+        name = ""
+        draw_str = ""
+        if self.install_status == "uninstalled":
+            name = "button/install_small"
+        elif self.install_status == "unknown":
+            draw_str = _("Not found")
         else:
-            name = "button/install"
+            desktops = json.loads(self.install_status)
+            if desktops:
+                name = "button/start_small"
+                self.desktops = self.data_manager.get_pkg_desktop_info(desktops)
+            else:
+                draw_str = _("Installed")
+
+        # Render button.
         
-        if self.button_status == BUTTON_NORMAL:
-            status = "normal"
-        elif self.button_status == BUTTON_HOVER:
-            status = "hover"
-        elif self.button_status == BUTTON_PRESS:
-            status = "press"
-            
-        pixbuf = app_theme.get_pixbuf("%s_%s.png" % (name, status)).get_pixbuf()
-            
-        if (not self.is_installed) or self.is_have_desktop_file:
+        if name:
+            if self.button_status == BUTTON_NORMAL:
+                status = "normal"
+            elif self.button_status == BUTTON_HOVER:
+                status = "hover"
+            elif self.button_status == BUTTON_PRESS:
+                status = "press"
+                
+            pixbuf = app_theme.get_pixbuf("%s_%s.png" % (name, status)).get_pixbuf()
             draw_pixbuf(
                 cr,
                 pixbuf,
@@ -281,14 +291,15 @@ class SearchItem(TreeItem):
                 rect.y + (rect.height - pixbuf.get_height()) / 2
                 )
         else:
+            str_width, str_height = get_content_size(draw_str, 10)
             draw_text(
                 cr,
-                _("Successfully installed"),
-                rect.x + rect.width - ITEM_BUTTON_PADDING_RIGHT - pixbuf.get_width(),
-                rect.y + (rect.height - pixbuf.get_height()) / 2,
-                pixbuf.get_width(),
-                pixbuf.get_height(),
-                alignment=pango.ALIGN_CENTER,
+                draw_str,
+                rect.x + rect.width - ITEM_BUTTON_PADDING_RIGHT - str_width,
+                rect.y + (rect.height - str_height) / 2,
+                rect.width,
+                str_height,
+                wrap_width=rect.width
                 )
         
     def is_in_button_area(self, column, offset_x, offset_y):
@@ -370,7 +381,7 @@ class SearchItem(TreeItem):
                 if self.redraw_request_callback:
                     self.redraw_request_callback(self)
             else:
-                if self.is_have_desktop_file:
+                if self.desktops:
                     if self.is_in_button_area(column, offset_x, offset_y):
                         self.button_status = BUTTON_HOVER
                         
@@ -405,26 +416,23 @@ class SearchItem(TreeItem):
             if self.is_in_star_area(column, offset_x, offset_y):
                 global_event.emit("grade-pkg", self.pkg_name, self.grade_star)
             elif self.is_in_button_area(column, offset_x, offset_y):
-                if self.is_installed:
-                    if self.is_have_desktop_file:
-                        global_event.emit("start-pkg", self.alias_name, self.desktop_info, self.get_offset_with_button(offset_x, offset_y))
-                        
-                        self.button_status = BUTTON_PRESS
-                            
-                        if self.redraw_request_callback:
-                            self.redraw_request_callback(self, True)
+                if self.desktops:
+                    global_event.emit("start-pkg", self.alias_name, self.desktops, self.get_offset_with_button(offset_x, offset_y))
+                    
+                    self.button_status = BUTTON_PRESS
+                    if self.redraw_request_callback:
+                        self.redraw_request_callback(self, True)
                 else:
                     global_event.emit("install-pkg", [self.pkg_name])
-                        
+
                     self.button_status = BUTTON_PRESS
-                        
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self, True)
             else:
                 global_event.emit("switch-to-detail-page", self.pkg_name)
                 
     def button_release(self, column, offset_x, offset_y):
-        if self.is_have_desktop_file:
+        if self.desktops:
             if self.is_in_button_area(column, offset_x, offset_y):
                 if self.button_status != BUTTON_HOVER:
                     self.button_status = BUTTON_HOVER

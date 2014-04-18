@@ -63,6 +63,7 @@ import time
 import json
 import sys
 import traceback
+import logging
 from constant import (
             DSC_SERVICE_NAME, DSC_SERVICE_PATH, 
             DSC_FRONTEND_NAME, DSC_FRONTEND_PATH, 
@@ -122,22 +123,19 @@ def jump_to_category(page_switcher, page_box, home_page, detail_page, first_cate
     switch_page(page_switcher, page_box, home_page, detail_page)
     home_page.jump_to_category(first_category_name, second_category_name)
 
-def start_pkg(pkg_name, desktop_infos, (offset_x, offset_y, popup_x, popup_y), window):
-    desktop_infos = filter(lambda desktop_info: os.path.exists(desktop_info[0]) != None, desktop_infos)
+def start_pkg(alias_name, desktop_infos, (offset_x, offset_y, popup_x, popup_y), window):
     desktop_infos_num = len(desktop_infos)
     if desktop_infos_num == 0:
-        global_event.emit("show-message", _("%s haven't any desktop file") % (pkg_name))
+        global_event.emit("show-message", _("%s haven't any desktop file") % (alias_name))
     elif desktop_infos_num == 1:
-        start_desktop(pkg_name, desktop_infos[0][0])
+        try:
+            desktop_infos[0].launch()
+            global_event.emit("show-message", _("%s: request for starting applications sent") % alias_name, 5000)
+        except:
+            logging.error("Launch error: %s" % desktop_infos[0])
     else:
         (screen, px, py, modifier_type) = window.get_display().get_pointer()
-        StartDesktopWindow().start(pkg_name, desktop_infos, (px - offset_x + popup_x, py - offset_y + popup_y))
-        
-def start_desktop(pkg_name, desktop_path):
-    global_event.emit("show-message", _("%s: request for starting applications sent") % (pkg_name), 5000)
-    result = start_desktop_file(desktop_path.strip())
-    if result != True:
-        global_event.emit("show-message", result)
+        StartDesktopWindow().start(alias_name, desktop_infos, (px - offset_x + popup_x, py - offset_y + popup_y))
 
 global hide_timeout_id
 hide_timeout_id = None
@@ -979,9 +977,8 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         global_event.register_event("grade-pkg", lambda pkg, star: grade_pkg(self.application.window, pkg, star))
         global_event.register_event("set-cursor", lambda cursor: set_cursor(self.application.window, cursor))
         global_event.register_event("show-message", self.update_status_bar_message)
-        global_event.register_event("start-pkg", lambda pkg_name, desktop_infos, offset: start_pkg(
-            pkg_name, desktop_infos, offset, self.application.window))
-        global_event.register_event("start-desktop", start_desktop)
+        global_event.register_event("start-pkg", lambda alias_name, desktop_infos, offset: start_pkg(
+            alias_name, desktop_infos, offset, self.application.window))
         global_event.register_event("show-pkg-name-tooltip", lambda pkg_name: show_tooltip(self.application.window, pkg_name))
         global_event.register_event("hide-pkg-name-tooltip", lambda :tool_tip.hide())
         global_event.register_event("update-current-status-pkg-page", update_current_status_pkg_page)
