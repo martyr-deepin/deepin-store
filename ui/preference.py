@@ -595,6 +595,7 @@ class MirrorsBox(BaseBox):
         self.mirror_view = TreeView(self.mirror_items,
                                 enable_drag_drop=False,
                                 enable_multiple_select=False,
+                                mask_bound_height=0,
                              )
         self.mirror_view.set_expand_column(1)
         #self.mirror_view.set_size_request(-1, len(self.mirror_view.visible_items) * self.mirror_view.visible_items[0].get_height())
