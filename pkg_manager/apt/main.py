@@ -419,6 +419,17 @@ class PackageManager(dbus.service.Object):
                     if os.path.exists(line):
                         os.remove(line)
 
+    def get_desktops(self, pkg_name):
+        desktops = []
+        try:
+            pkg_obj = self.pkg_cache[pkg_name]
+            for f in pkg_obj.installed_files:
+                if f.endswith(".desktop"):
+                    desktops.append(f)
+        except:
+            pass
+        return desktops
+
     @dbus.service.method(DSC_SERVICE_NAME, in_signature='', out_signature='as')
     def read_no_notify_config(self, no_notify_config_path):
         if os.path.exists(no_notify_config_path):
@@ -709,26 +720,30 @@ class PackageManager(dbus.service.Object):
         pkg_name, status = pkg_status
         self.pkg_cache.set_pkg_status(pkg_name, pkg_status)
 
-    @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="s")
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="i")
     def get_pkg_installed(self, pkg_name):
         if self.is_pkg_in_cache(pkg_name):
             if self.pkg_cache.is_pkg_installed(pkg_name):
-                return self.get_desktops(pkg_name)
+                return 1
             else:
-                return "uninstalled"
+                return 0
         else:
-            return "unknown"
+            return -1
 
-    def get_desktops(self, pkg_name):
-        desktops = []
-        try:
-            pkg_obj = self.pkg_cache[pkg_name]
-            for f in pkg_obj.installed_files:
-                if f.endswith(".desktop"):
-                    desktops.append(f)
-        except:
-            pass
-        return json.dumps(desktops)
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="ss", out_signature="s")
+    def get_pkg_start_status(self, pkg_name, start_pkg_names):
+        is_current_installed = self.get_pkg_installed(pkg_name)
+        if is_current_installed == -1:
+            return "unknown"
+        elif is_current_installed == 0:
+            return "uninstalled"
+        else:
+            desktops = self.get_desktops(pkg_name)
+            names = start_pkg_names.split(",")
+            for name in names:
+                if self.get_pkg_installed(name) == 1:
+                    desktops += self.get_desktops(name)
+            return json.dumps(desktops)
 
     @dbus.service.signal(DSC_SERVICE_NAME)    
     # Use below command for test:

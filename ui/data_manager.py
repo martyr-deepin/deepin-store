@@ -166,7 +166,13 @@ class DataManager(object):
         return app_infos
     
     def get_pkg_installed(self, pkg_name, callback):
-        self.bus_interface.get_pkg_installed(pkg_name,
+        self.desktop_db_cursor.execute("SELECT start_pkg_names FROM package WHERE pkg_name=?", (pkg_name,))
+        start_pkg_names = self.desktop_db_cursor.fetchone()
+        if start_pkg_names:
+            start_pkg_names = start_pkg_names[0]
+        else:
+            start_pkg_names = ""
+        self.bus_interface.get_pkg_start_status(pkg_name, start_pkg_names,
                 reply_handler=lambda r: callback(r, True),
                 error_handler=lambda e: callback(e, False)
                 )
