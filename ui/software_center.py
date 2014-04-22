@@ -27,34 +27,6 @@ from nls import _
 import glib
 import subprocess
 from data import data_exit
-
-from dtk.ui.theme import DynamicPixbuf
-from dtk.ui.menu import Menu
-from dtk.ui.constant import WIDGET_POS_BOTTOM_LEFT
-from dtk.ui.button import LinkButton
-from dtk.ui.slider import Wizard
-from dtk.ui.navigatebar import Navigatebar
-from dtk.ui.timeline import Timeline, CURVE_SINE
-import dtk.ui.utils as dutils
-from deepin_utils.process import run_command
-from deepin_utils.math_lib import solve_parabola
-from deepin_utils.file import read_file, write_file, touch_file, get_parent_dir
-from deepin_utils.multithread import create_thread
-from dtk.ui.utils import container_remove_all, set_cursor, get_widget_root_coordinate
-from dtk.ui.statusbar import Statusbar
-from dtk.ui.slider import HSlider
-from dtk.ui.label import Label
-from dtk.ui.gio_utils import start_desktop_file
-from dtk.ui.iconview import IconView
-from dtk.ui.treeview import TreeView
-
-from icon_window import IconWindow
-from detail_page import DetailPage
-from home_page import HomePage
-from uninstall_page import UninstallPage
-from install_page import InstallPage
-from upgrade_page import UpgradePage
-from data_manager import DataManager
 import gtk
 import gobject
 import dbus
@@ -64,17 +36,37 @@ import json
 import sys
 import traceback
 import logging
-from constant import (
-            DSC_SERVICE_NAME, DSC_SERVICE_PATH, 
-            DSC_FRONTEND_NAME, DSC_FRONTEND_PATH, 
-            ACTION_INSTALL, ACTION_UNINSTALL, ACTION_UPGRADE,
-            #PKG_STATUS_INSTALLED, PKG_STATUS_UNINSTALLED, PKG_STATUS_UPGRADED,
-            CONFIG_DIR, ONE_DAY_SECONDS,
-            LANGUAGE,
-        )
+
+from dtk.ui.theme import DynamicPixbuf
+from dtk.ui.menu import Menu
+from dtk.ui.constant import WIDGET_POS_BOTTOM_LEFT
+from dtk.ui.button import LinkButton
+from dtk.ui.slider import Wizard
+from dtk.ui.navigatebar import Navigatebar
+from dtk.ui.timeline import Timeline, CURVE_SINE
+from deepin_utils.process import run_command
+from deepin_utils.math_lib import solve_parabola
+from deepin_utils.file import read_file, write_file, touch_file, get_parent_dir
+from deepin_utils.multithread import create_thread
+from dtk.ui.utils import container_remove_all, set_cursor, get_widget_root_coordinate
+from dtk.ui.statusbar import Statusbar
+from dtk.ui.slider import HSlider
+from dtk.ui.label import Label
+from dtk.ui.iconview import IconView
+from dtk.ui.treeview import TreeView
+from dtk.ui.application import Application
+
+from inhibit import InhibitObject
+from icon_window import IconWindow
+from detail_page import DetailPage
+from home_page import HomePage
+from uninstall_page import UninstallPage
+from install_page import InstallPage
+from upgrade_page import UpgradePage
+from data_manager import DataManager
 from events import global_event
 from start_desktop_window import StartDesktopWindow
-from utils import is_64bit_system, handle_dbus_reply, handle_dbus_error, bit_to_human_str, get_software_download_dir
+from utils import handle_dbus_reply, handle_dbus_error, bit_to_human_str, get_software_download_dir
 import utils
 from tooltip import ToolTip
 from server_action import SendVote, SendDownloadCount, SendUninstallCount, SendErrorLog
@@ -83,7 +75,15 @@ from logger import Logger
 from paned_box import PanedBox
 from widgets import BottomTipBar
 from star_buffer import StarView, DscStarBuffer
-from dtk.ui.application import Application
+from constant import (
+            DSC_SERVICE_NAME, DSC_SERVICE_PATH, 
+            DSC_FRONTEND_NAME, DSC_FRONTEND_PATH, 
+            ACTION_INSTALL, ACTION_UNINSTALL, ACTION_UPGRADE,
+            CONFIG_DIR, ONE_DAY_SECONDS,
+            LANGUAGE,
+        )
+
+inhibit_obj = InhibitObject()
 
 tool_tip = ToolTip()
 global tooltip_timeout_id
@@ -369,6 +369,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                     upgrade_page.action_start(pkg_name)
                 elif action_type == ACTION_INSTALL:
                     install_page.action_start(pkg_name)
+                inhibit_obj.set_inhibit()
 
             elif signal_type == "action-update":
                 (pkg_name, action_type, percent, status) = action_content
@@ -393,6 +394,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 elif action_type == ACTION_INSTALL:
                     install_page.action_finish(pkg_name, pkg_info_list)
                     utils.show_notify(_("Install %s Successfully.") % pkg_name, _("Install"))
+                inhibit_obj.unset_inhibit()
                 
                 refresh_current_page_status(pkg_name, pkg_info_list, bus_interface)
                 if action_type != ACTION_UPGRADE:
@@ -414,6 +416,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                     utils.set_last_upgrade_time()
                 elif action_type == ACTION_INSTALL:
                     install_page.action_finish(pkg_name, pkg_info_list)
+                inhibit_obj.unset_inhibit()
                 
                 refresh_current_page_status(pkg_name, pkg_info_list, bus_interface)
                 bus_interface.request_status(
