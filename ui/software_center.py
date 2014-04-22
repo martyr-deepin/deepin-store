@@ -83,8 +83,6 @@ from constant import (
             LANGUAGE,
         )
 
-inhibit_obj = InhibitObject()
-
 tool_tip = ToolTip()
 global tooltip_timeout_id
 tooltip_timeout_id = None
@@ -273,7 +271,7 @@ def switch_page(page_switcher, page_box, page, detail_page):
         #if page.in_no_notify_page:
             #page.show_init_page()
 
-def message_handler(messages, bus_interface, upgrade_page, uninstall_page, install_page, home_page):
+def message_handler(messages, bus_interface, upgrade_page, uninstall_page, install_page, home_page, inhibit_obj):
     for message in messages:
         try:
             (signal_type, action_content) = message
@@ -918,6 +916,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         # Say hello to backend. 
         #self.bus_interface.say_hello(self.simulate)
         self.set_software_download_dir()
+        self.inhibit_obj = InhibitObject()
         
         self.loginfo("Init data manager")
         
@@ -1003,7 +1002,9 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
                                          self.upgrade_page, 
                                          self.uninstall_page, 
                                          self.install_page,
-                                         self.home_page),
+                                         self.home_page,
+                                         self.inhibit_obj,
+                                         ),
                 )
         glib.timeout_add(1000, lambda : clear_action_pages(self.bus_interface, self.upgrade_page, self.uninstall_page, self.install_page))
         glib.timeout_add(1000, lambda : clear_install_stop_list(self.install_page))
