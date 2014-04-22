@@ -37,15 +37,16 @@ class InhibitObject(object):
         self.inhibit_fd = None
 
     def set_inhibit(self):
-        self.inhibit_fd = self.bus_interface.Inhibit(
-            "shutdown:sleep:idle:handle-power-key:handle-suspend-key:handle-hibernate-key:handle-lid-switch",
-            "deepin-software-center",
-            _( "Please wait a moment while system update is being performed... Do not turn off your computer."),
-            "block"
-            )
-        print self.inhibit_fd
+        if not self.inhibit_fd:
+            self.inhibit_fd = self.bus_interface.Inhibit(
+                "shutdown:sleep:idle:handle-power-key:handle-suspend-key:handle-hibernate-key:handle-lid-switch",
+                "deepin-software-center",
+                _( "Please wait a moment while system update is being performed... Do not turn off your computer."),
+                "block"
+                )
+            print self.inhibit_fd
 
     def unset_inhibit(self):
         if self.inhibit_fd:
-            os.close(self.inhibit_fd)
+            os.close(self.inhibit_fd.take())
 
