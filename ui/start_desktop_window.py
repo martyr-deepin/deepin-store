@@ -226,7 +226,7 @@ class StartDesktopItem(IconItem):
             self.desktop_info.launch()
             global_event.emit("show-message", _("%s: request for starting applications sent") % self.desktop_display_name, 5000)
         except:
-            logging.error("Launch error: %s" % desktop_info)
+            logging.error("Launch error: %s" % self.desktop_info)
     
     def icon_item_release_resource(self):
         '''

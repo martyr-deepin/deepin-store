@@ -103,6 +103,7 @@ class UninstallPage(gtk.VBox):
         
         self.treeview.connect("items-change", self.update_message_bar)
         
+        self.white_kernel_pkg_names = self.get_white_kernel_pkg_names()
         self.fetch_uninstall_info()
         
         self.treeview.draw_mask = self.draw_mask
@@ -194,6 +195,20 @@ class UninstallPage(gtk.VBox):
         self.bus_interface.request_uninstall_pkgs(
                         reply_handler=self.add_uninstall_items,
                         error_handler=lambda e:handle_dbus_error("request_uninstall_pkgs", e))
+
+    def get_white_kernel_pkg_names(self):
+        import commands
+        version = commands.getoutput("uname -r").split("-generic")[0]
+        white_pkg_names = ["linux-image-generic", "linux-headers-generic"]
+        white_pkg_names.append("linux-image-%s-generic" % version)
+        white_pkg_names.append("linux-image-extra-%s-generic" % version)
+        white_pkg_names.append("linux-headers-%s-generic" % version)
+        white_pkg_names.append("linux-headers-%s" % version)
+        return white_pkg_names
+
+    def is_uninstallable_kernel(self, pkg_name):
+        if pkg_name.startswith("linux-image") or pkg_name.startswith("linux-headers"):
+            return pkg_name not in self.white_kernel_pkg_names
         
     def add_uninstall_items(self, pkg_infos):
         items = []
@@ -201,8 +216,9 @@ class UninstallPage(gtk.VBox):
             uninstall_pkg_infos = json.loads(str(pkg_infos))
             for pkg_info in uninstall_pkg_infos:
                 pkg_name, pkg_version = pkg_info
-                if self.data_manager.is_pkg_display_in_uninstall_page(pkg_name):
-                    items.append(UninstallItem(pkg_name, pkg_version, self.data_manager))
+                if self.is_uninstallable_kernel(pkg_name) or \
+                    self.data_manager.is_pkg_display_in_uninstall_page(pkg_name):
+                        items.append(UninstallItem(pkg_name, pkg_version, self.data_manager))
         except:
             global_logger.logerror("uninstall pkg_infos parse error: %s" % str(pkg_infos))
             
