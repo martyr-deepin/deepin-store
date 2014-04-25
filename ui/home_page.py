@@ -995,6 +995,8 @@ class PkgIconItem(IconItem):
         self.data_manager = data_manager
         
         self.pkg_icon_pixbuf = None
+        self.pkg_icon_width = 0
+        self.pkg_icon_height = 0
         
         self.star_level = get_star_level(5.0)
         self.star_buffer = DscStarBuffer(pkg_name, self)
@@ -1034,16 +1036,22 @@ class PkgIconItem(IconItem):
         This is IconView interface, you should implement it.
         '''
         return self.height
+
+    def init_pkg_icon_pixbuf(self):
+        if self.pkg_icon_pixbuf == None:
+            self.pkg_icon_pixbuf = gtk.gdk.pixbuf_new_from_file(get_icon_pixbuf_path(self.pkg_name))        
+            if self.pkg_icon_pixbuf:
+                self.pkg_icon_width = self.pkg_icon_pixbuf.get_width()
+                self.pkg_icon_height = self.pkg_icon_pixbuf.get_height()
     
     def render(self, cr, rect):
         # Draw icon.
-        if self.pkg_icon_pixbuf == None:
-            self.pkg_icon_pixbuf = gtk.gdk.pixbuf_new_from_file(get_icon_pixbuf_path(self.pkg_name))        
+        self.init_pkg_icon_pixbuf()
 
         draw_pixbuf(
             cr,
             self.pkg_icon_pixbuf,
-            rect.x + self.DRAW_PADDING_LEFT + (ICON_SIZE - self.pkg_icon_pixbuf.get_width()) / 2,
+            rect.x + self.DRAW_PADDING_LEFT + (ICON_SIZE - self.pkg_icon_width) / 2,
             rect.y + self.DRAW_PADDING_Y)    
         
         # Draw button.
@@ -1089,7 +1097,7 @@ class PkgIconItem(IconItem):
 
         
         # Draw name.
-        self.text_width = rect.width - self.DRAW_PADDING_LEFT - self.DRAW_PADDING_RIGHT - self.DRAW_INFO_PADDING_X - self.pkg_icon_pixbuf.get_width()
+        self.text_width = rect.width - self.DRAW_PADDING_LEFT - self.DRAW_PADDING_RIGHT - self.DRAW_INFO_PADDING_X - self.pkg_icon_width
         self.pkg_name_area.render(
             cr,
             self.alias_name,
@@ -1133,7 +1141,7 @@ class PkgIconItem(IconItem):
         
     def is_in_star_area(self, x, y):
         return is_in_rect((x, y),
-                          (self.DRAW_PADDING_LEFT + self.pkg_icon_pixbuf.get_width() + self.DRAW_INFO_PADDING_X,
+                          (self.DRAW_PADDING_LEFT + self.pkg_icon_width + self.DRAW_INFO_PADDING_X,
                            self.DRAW_STAR_PADDING_Y,
                            STAR_SIZE * 5,
                            STAR_SIZE
@@ -1148,19 +1156,18 @@ class PkgIconItem(IconItem):
                            ))
     
     def is_in_icon_area(self, x, y):
-        if self.pkg_icon_pixbuf == None:
-            self.pkg_icon_pixbuf = gtk.gdk.pixbuf_new_from_file(get_icon_pixbuf_path(self.pkg_name))        
+        self.init_pkg_icon_pixbuf()
             
         return is_in_rect((x, y),
                           (self.DRAW_PADDING_LEFT,
                            self.DRAW_PADDING_Y,
-                           self.pkg_icon_pixbuf.get_width(),
-                           self.pkg_icon_pixbuf.get_height()))
+                           self.pkg_icon_width,
+                           self.pkg_icon_height))
     
     def is_in_name_area(self, x, y):
         (text_width, text_height) = get_content_size(self.alias_name, text_size=NAME_SIZE)
         return is_in_rect((x, y),
-                          (self.DRAW_PADDING_LEFT + self.pkg_icon_pixbuf.get_width() + self.DRAW_INFO_PADDING_X,
+                          (self.DRAW_PADDING_LEFT + self.pkg_icon_width + self.DRAW_INFO_PADDING_X,
                            self.DRAW_PADDING_Y,
                            text_width,
                            NAME_SIZE))

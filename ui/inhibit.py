@@ -24,6 +24,7 @@ import os
 import dbus
 import dbus.service
 from nls import _
+import logging
 
 SYSTEMD_LOGIN1_NAME = "org.freedesktop.login1"
 SYSTEMD_LOGIN1_PATH = "/org/freedesktop/login1"
@@ -34,19 +35,29 @@ class InhibitObject(object):
         self.system_bus = dbus.SystemBus()
         self.bus_object = self.system_bus.get_object(SYSTEMD_LOGIN1_NAME, SYSTEMD_LOGIN1_PATH)
         self.bus_interface = dbus.Interface(self.bus_object, SYSTEMD_LOGIN1_IFCE)
-        self.inhibit_fd = None
+        self.inhibit_action = ["shutdown", "sleep", "idle", "handle-power-key", "handle-suspend-key", "handle-hibernate-key", "handle-lid-switch"]
+        self.inhibit_fd = {}
 
     def set_inhibit(self):
-        if not self.inhibit_fd:
-            self.inhibit_fd = self.bus_interface.Inhibit(
-                "shutdown:sleep:idle:handle-power-key:handle-suspend-key:handle-hibernate-key:handle-lid-switch",
-                "deepin-software-center",
-                _( "Please wait a moment while system update is being performed... Do not turn off your computer."),
-                "block"
-                )
-            print self.inhibit_fd
+        for action in self.inhibit_action:
+            if not self.inhibit_fd.get(action):
+                self.bus_interface.Inhibit(
+                    action,
+                    "deepin-software-center",
+                    _( "Please wait a moment while system update is being performed... Do not turn off your computer."),
+                    "block",
+                    reply_handler=lambda r: self.handle_set_inhibit(True, r, action),
+                    error_handler=lambda e: self.handle_set_inhibit(False, e, action),
+                    )
 
     def unset_inhibit(self):
-        if self.inhibit_fd:
-            os.close(self.inhibit_fd.take())
+        for key in self.inhibit_fd:
+            os.close(self.inhibit_fd[key].take())
+
+    def handle_set_inhibit(self, success, info, action):
+        if success:
+            self.inhibit_fd[action] = info
+        else:
+            logging.error("set Inhibit error!")
+            logging.error("Inhibit action: %s, Error Message: %s" % (action, str(info)))
 
