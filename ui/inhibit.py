@@ -33,22 +33,29 @@ SYSTEMD_LOGIN1_IFCE = "org.freedesktop.login1.Manager"
 class InhibitObject(object):
     def __init__(self):
         self.system_bus = dbus.SystemBus()
-        self.bus_object = self.system_bus.get_object(SYSTEMD_LOGIN1_NAME, SYSTEMD_LOGIN1_PATH)
-        self.bus_interface = dbus.Interface(self.bus_object, SYSTEMD_LOGIN1_IFCE)
+        self.bus_object = None
+        self.bus_interface = None
         self.inhibit_action = ["shutdown", "sleep", "idle", "handle-power-key", "handle-suspend-key", "handle-hibernate-key", "handle-lid-switch"]
         self.inhibit_fd = {}
 
+        try:
+            self.bus_object = self.system_bus.get_object(SYSTEMD_LOGIN1_NAME, SYSTEMD_LOGIN1_PATH)
+            self.bus_interface = dbus.Interface(self.bus_object, SYSTEMD_LOGIN1_IFCE)
+        except:
+            logging.warning("No systemd-services installed, can't inhibit.")
+
     def set_inhibit(self):
-        for action in self.inhibit_action:
-            if not self.inhibit_fd.get(action):
-                self.bus_interface.Inhibit(
-                    action,
-                    "deepin-software-center",
-                    _( "Please wait a moment while system update is being performed... Do not turn off your computer."),
-                    "block",
-                    reply_handler=lambda r: self.handle_set_inhibit(True, r, action),
-                    error_handler=lambda e: self.handle_set_inhibit(False, e, action),
-                    )
+        if self.bus_interface:
+            for action in self.inhibit_action:
+                if not self.inhibit_fd.get(action):
+                    self.bus_interface.Inhibit(
+                        action,
+                        "deepin-software-center",
+                        _( "Please wait a moment while system update is being performed... Do not turn off your computer."),
+                        "block",
+                        reply_handler=lambda r: self.handle_set_inhibit(True, r, action),
+                        error_handler=lambda e: self.handle_set_inhibit(False, e, action),
+                        )
 
     def unset_inhibit(self):
         for key in self.inhibit_fd:
