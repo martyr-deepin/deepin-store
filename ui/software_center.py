@@ -644,8 +644,8 @@ def clear_action_pages(bus_interface, upgrade_page, uninstall_page, install_page
         install_pkg_versions = bus_interface.request_pkgs_install_version(install_pkgs)
         install_pkg_infos = []
         for (pkg_name, pkg_version) in zip(install_pkgs, install_pkg_versions):
-            install_pkg_infos.append(str((str(pkg_name), str(pkg_version))))
-        uninstall_page.add_uninstall_items(install_pkg_infos)
+            install_pkg_infos.append([pkg_name, pkg_version])
+        uninstall_page.add_uninstall_items(json.dumps(install_pkg_infos))
         
     return True    
 

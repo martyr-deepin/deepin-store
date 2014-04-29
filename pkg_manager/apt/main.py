@@ -37,6 +37,8 @@ from Queue import Queue
 import apt_pkg
 import apt.progress.base as apb
 import aptsources.distro
+import logging
+logging.basicConfig(format='==> [%(levelname)s] %(message)s', level=logging.INFO)
 
 from deepin_utils.ipc import auth_with_policykit
 from deepin_utils.file import read_file, write_file
@@ -165,7 +167,6 @@ class ExitManager(td.Thread):
                     self.mainloop.quit()
                     utils.set_running_lock(False)
                 else:
-                    print "Pass"
                     self.loop()
 
 class ThreadMethod(td.Thread):

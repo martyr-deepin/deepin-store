@@ -20,7 +20,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import apt_pkg
 import apt.progress.base as apb
 from dtk.ui.thread_pool import MissionThread, MissionThreadPool
 import time
@@ -32,6 +31,30 @@ from utils import log
 from constant import ACTION_INSTALL, ACTION_UPGRADE, ACTION_UNINSTALL
 
 from update_list import UpdateList
+
+class OpenProgress(apb.OpProgress):
+    """Operation progress with GObject signals.
+
+    Signals:
+
+        * status-changed(str: operation, int: percent)
+        * status-started()  - Not Implemented yet
+        * status-finished()
+
+    """
+
+    def __init__(self, done_callback):
+        apb.OpProgress.__init__(self)
+        self.done_callback = done_callback
+
+    def update(self, percent=None):
+        """Called to update the percentage done"""
+        apb.OpProgress.update(self, percent)
+
+    def done(self):
+        """Called when all operation have finished."""
+        apb.OpProgress.done(self)
+        self.done_callback()
 
 class AptProcess(apb.InstallProgress):
     '''Install progress.'''
@@ -61,32 +84,6 @@ class AptProcess(apb.InstallProgress):
         '''Progress status change.'''
         global_event.emit("action-update", (self.pkg_name, self.action_type, int(percent), status))
         log((self.pkg_name, self.action_type, int(percent), status))
-
-class CommitProcess(apb.InstallProgress):
-    def __init__(self, pkg_names, action_type, upgrade_id):
-        '''Init for install progress.'''
-        # Init.
-        apb.InstallProgress.__init__(self)
-        self.pkg_names = pkg_names
-        self.action_type = action_type
-        self.upgrade_id = upgrade_id
-
-    def conffile(self, current, new):
-        #global_event.emit("action-conffile", (current, new))
-        log("conffile: %s %s" % (current, new))
-        
-    def error(self, pkg_name, errorstr):
-        #global_event.emit("action-error", (self.pkg_names, errorstr))
-        log("error: %s" % errorstr)
-
-    def start_update(self):
-        '''Start update.'''
-        log("start action...")
-        
-    def status_change(self, pkg, percent, status):
-        '''Progress status change.'''
-        global_event.emit("action-update", (self.upgrade_id, self.action_type, int(percent), status))
-        log((self.pkg_names, self.action_type, int(percent), status))
 
 class GInstallProgress(gobject.GObject, apb.InstallProgress):
     """Installation progress with global_event signals.
@@ -217,26 +214,13 @@ class AptActionThread(MissionThread):
         
         if len(pkg_info_list) > 0:
             global_event.emit("action-start", (self.pkg_name, self.action_type))
-            if self.simulate:
-                global_event.emit("action-update", (self.pkg_name, self.action_type, 10, ""))
-                time.sleep(2)
-                global_event.emit("action-update", (self.pkg_name, self.action_type, 30, ""))
-                time.sleep(2)
-                global_event.emit("action-update", (self.pkg_name, self.action_type, 50, ""))
-                time.sleep(2)
-                global_event.emit("action-update", (self.pkg_name, self.action_type, 70, ""))
-                time.sleep(2)
-                global_event.emit("action-update", (self.pkg_name, self.action_type, 100, ""))
-                global_event.emit("action-finish", (self.pkg_name, self.action_type, pkg_info_list))
-            else:
-                try:
-                    self.pkg_cache.commit(None, AptProcess(self.pkg_name, self.action_type))
-                    log("success")
-                    global_event.emit("action-finish", (self.pkg_name, self.action_type, pkg_info_list))
-                except Exception, e:
-                    log("Commit Failed: %s" % e)
-                    log(str(traceback.format_exc()))
-                    global_event.emit("action-failed", (self.pkg_name, self.action_type, pkg_info_list, str(e)))
+            try:
+                self.pkg_cache.commit(None, AptProcess(self.pkg_name, self.action_type))
+                self.pkg_cache.open(OpenProgress(lambda: global_event.emit("action-finish", (self.pkg_name, self.action_type, pkg_info_list))))
+            except Exception, e:
+                log("Commit Failed: %s" % e)
+                log(str(traceback.format_exc()))
+                global_event.emit("action-failed", (self.pkg_name, self.action_type, pkg_info_list, str(e)))
         else:
             log("nothing to change")
         log("end thread")
@@ -282,7 +266,7 @@ class MultiAptActionThread(MissionThread):
             try:
                 self.pkg_cache.commit(None, GInstallProgress(self.pkg_names, self.action_type, self.upgrade_id))
                 log("success")
-                global_event.emit('action-finish', (self.upgrade_id, self.action_type, pkg_info_list))
+                self.pkg_cache.open(OpenProgress(lambda: global_event.emit('action-finish', (self.upgrade_id, self.action_type, pkg_info_list))))
             except Exception, e:
                 log("Commit Failed: %s" % e)
                 log(str(traceback.format_exc()))
@@ -404,9 +388,6 @@ class AptActionPool(MissionThreadPool):
     def add_update_list_mission(self):
         missions = []
         thread = UpdateList(self.pkg_cache)
-        #self.uninstall_action_dict[pkg_name] = {
-            #"thread" : thread,
-            #"status" : "wait"}
         missions.append(thread)
             
         self.add_missions(missions)

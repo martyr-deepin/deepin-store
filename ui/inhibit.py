@@ -59,7 +59,10 @@ class InhibitObject(object):
 
     def unset_inhibit(self):
         for key in self.inhibit_fd:
-            os.close(self.inhibit_fd[key].take())
+            try:
+                os.close(self.inhibit_fd[key].take())
+            except:
+                pass
 
     def handle_set_inhibit(self, success, info, action):
         if success:

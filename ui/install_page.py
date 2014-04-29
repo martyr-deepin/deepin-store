@@ -23,6 +23,8 @@
 import pango
 import gtk
 import gobject
+import json
+
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
 from deepin_utils.file import format_file_size
 from dtk.ui.utils import is_in_rect, get_content_size, container_remove_all
@@ -301,7 +303,7 @@ class InstallItem(TreeItem):
         self.data_manager = data_manager
         self.icon_pixbuf = None
         
-        info = data_manager.get_item_pkg_info(self.pkg_name)
+        info = self.data_manager.get_item_pkg_info(self.pkg_name)
         self.alias_name = info[1]
         self.short_desc = info[2]
         self.star_level = get_star_level(5.0)
@@ -317,7 +319,17 @@ class InstallItem(TreeItem):
         (self.button_width, self.button_height) = button_pixbuf.get_width(), button_pixbuf.get_height()
         self.button_status = BUTTON_NORMAL
         
-        self.is_have_desktop_file = False
+        ### TODO: is_installed status
+        self.install_status = json.dumps([])
+        self.desktops = []
+
+    def handle_pkg_status(self, status, success):
+        if success:
+            self.install_status= str(status)
+            self.emit_redraw_request()
+        else:
+            utils.global_logger.logerror("%s: get_pkg_installed handle_dbus_error" % self.pkg_name)
+            utils.global_logger.logerror(status)
         
     def render_pkg_info(self, cr, rect):
         if self.row_index % 2 == 1:
@@ -461,13 +473,29 @@ class InstallItem(TreeItem):
             self.star_buffer.render(cr, gtk.gdk.Rectangle(rect.x, rect.y, ITEM_STAR_AREA_WIDTH, ITEM_HEIGHT))
             
             # Draw button.
-            if self.is_have_desktop_file:
+            name = ""
+            draw_str = ""
+            if self.install_status == "uninstalled":
+                name = "button/install"
+            elif self.install_status == "unknown":
+                draw_str = _("Not found")
+            else:
+                desktops = json.loads(self.install_status)
+                if desktops:
+                    name = "button/start"
+                    self.desktops = self.data_manager.get_pkg_desktop_info(desktops)
+                else:
+                    draw_str = _("Installed")
+
+            if name:
                 if self.button_status == BUTTON_NORMAL:
-                    pixbuf = app_theme.get_pixbuf("button/start_normal.png").get_pixbuf()
+                    status = "normal"
                 elif self.button_status == BUTTON_HOVER:
-                    pixbuf = app_theme.get_pixbuf("button/start_hover.png").get_pixbuf()
+                    status = "hover"
                 elif self.button_status == BUTTON_PRESS:
-                    pixbuf = app_theme.get_pixbuf("button/start_press.png").get_pixbuf()
+                    status = "press"
+
+                pixbuf = app_theme.get_pixbuf("%s_%s.png" % (name, status)).get_pixbuf()
                 draw_pixbuf(
                     cr,
                     pixbuf,
@@ -475,14 +503,14 @@ class InstallItem(TreeItem):
                     rect.y + (ITEM_HEIGHT - self.button_height) / 2,
                     )
             else:
-                pixbuf = app_theme.get_pixbuf("button/start_normal.png").get_pixbuf()
+                str_width, str_height = get_content_size(draw_str, 10)
                 draw_text(
                     cr,
-                    _("Successfully installed"),
-                    rect.x + rect.width - ITEM_BUTTON_PADDING_RIGHT - pixbuf.get_width(),
-                    rect.y + (rect.height - pixbuf.get_height()) / 2,
-                    pixbuf.get_width(),
-                    pixbuf.get_height(),
+                    draw_str,
+                    rect.x + rect.width - ITEM_BUTTON_PADDING_RIGHT - str_width,
+                    rect.y + (rect.height - str_height) / 2,
+                    str_width,
+                    str_height,
                     alignment=pango.ALIGN_CENTER,
                     )
         elif self.status == self.STATUS_PARSE_DOWNLOAD_FAILED:
@@ -531,7 +559,7 @@ class InstallItem(TreeItem):
                 global_event.emit("set-cursor", None)
         else:        
             if self.status == self.STATUS_INSTALL_FINISH:
-                if self.is_have_desktop_file:
+                if self.desktops:
                     if self.is_in_button_area(column, offset_x, offset_y):
                         self.button_status = BUTTON_HOVER
                         
@@ -629,14 +657,8 @@ class InstallItem(TreeItem):
                 if self.is_in_star_area(column, offset_x, offset_y):
                     global_event.emit("grade-pkg", self.pkg_name, self.grade_star)
                 elif self.is_in_button_area(column, offset_x, offset_y):
-                    if self.is_have_desktop_file:
-                        desktop_info = self.data_manager.get_pkg_desktop_info(self.pkg_name)
-                        global_event.emit("start-pkg", self.alias_name, desktop_info, self.get_offset_with_button(offset_x, offset_y))
-                        
-                        self.button_status = BUTTON_PRESS
-                            
-                        if self.redraw_request_callback:
-                            self.redraw_request_callback(self, True)
+                    if self.desktops:
+                        global_event.emit("start-pkg", self.alias_name, self.desktops, self.get_offset_with_button(offset_x, offset_y))
                     
     def get_offset_with_button(self, offset_x, offset_y):
         pixbuf = app_theme.get_pixbuf("button/start_normal.png").get_pixbuf()
@@ -746,11 +768,11 @@ class InstallItem(TreeItem):
         self.status = self.STATUS_INSTALL_FINISH
         self.progress_buffer.progress = 100
         self.status_text = _("Installation complete")
-        
-        self.is_have_desktop_file = self.data_manager.is_pkg_have_desktop_file(self.pkg_name) != None
-        
+
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
+
+        self.data_manager.get_pkg_installed(self.pkg_name, self.handle_pkg_status)
     
     def is_in_name_area(self, column, offset_x, offset_y):
         (name_width, name_height) = get_content_size(self.alias_name, NAME_SIZE)
