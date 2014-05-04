@@ -161,8 +161,9 @@ class DataManager(object):
         all_app_infos = gio.app_info_get_all()
         for desktop in desktops:
             app_info = gio.unix.desktop_app_info_new_from_filename(desktop)
-            if app_info in all_app_infos:
-                app_infos.append(app_info)
+            for item in all_app_infos:
+                if app_info.get_commandline() == item.get_commandline():
+                    app_infos.append(app_info)
         return app_infos
     
     def get_pkg_installed(self, pkg_name, callback):
