@@ -530,6 +530,10 @@ class GeneralBox(BaseBox):
 
 class MirrorsBox(BaseBox):
 
+    __gsignals__ = {
+        "mirror-clicked" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
+    }
+
     def __init__(self):
         BaseBox.__init__(self)
 
@@ -608,9 +612,6 @@ class MirrorsBox(BaseBox):
         
         global_event.register_event("mirror-changed", self.mirror_changed_handler)
 
-        #vbox.pack_start(main_table, False, False)
-        #vbox.pack_start(self.mirror_view, False, False)
-
         return main_table
 
     def mirror_changed_handler(self, item):
@@ -646,7 +647,7 @@ class MirrorsBox(BaseBox):
     def mirror_clicked_callback(self, item):
         if item != self.current_mirror_item:
             global_event.emit('change-mirror', item)
-            self.hide_all()
+            self.emit("mirror-clicked")
 
 class WinDir(gtk.FileChooserDialog):
     def __init__(self, return_uri=True, title=_("Select Directory")):
@@ -673,6 +674,7 @@ class DscPreferenceDialog(PreferenceDialog):
 
         self.general_box = GeneralBox()
         self.mirrors_box = MirrorsBox()
+        self.mirrors_box.connect("mirror-clicked", lambda w:self.hide())
         self.about_box = AboutBox()
 
         self.set_preference_items([
