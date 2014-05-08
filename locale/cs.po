@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-06 21:22+0800\n"
+"POT-Creation-Date: 2014-05-08 15:43+0800\n"
 "PO-Revision-Date: 2014-03-06 13:17+0000\n"
 "Last-Translator: electricface <songwentai@linuxdeepin.com>\n"
 "Language-Team: Czech (http://www.transifex.com/projects/p/deepin-software-"
@@ -21,207 +21,191 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: ../ui/install_page.py:138
-#, python-format
-msgid "%s applications are being installed"
-msgstr "Je instalováno %s programů"
+#: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
+#: ../ui/upgrade_page.py:446
+msgid " and try again."
+msgstr " a zkusit znovu."
 
-#: ../ui/install_page.py:312 ../ui/install_page.py:682
-#: ../ui/upgrade_page.py:1588
-msgid "Analyzing dependencies"
-msgstr "Provádí se rozbor závislostí"
+#: ../ui/preference.py:559
+msgid " hour"
+msgstr " hodina"
 
-#: ../ui/install_page.py:480 ../ui/detail_page.py:430 ../ui/search_page.py:285
-msgid "Successfully installed"
-msgstr "Úspěšně nainstalováno"
-
-#: ../ui/install_page.py:598 ../ui/install_page.py:610
-msgid "Download was interrupted"
-msgstr "Stahování bylo přerušeno"
-
-#: ../ui/install_page.py:620
-msgid "Installation was interrupted"
-msgstr "Instalace byla přerušena"
-
-#: ../ui/install_page.py:689 ../ui/upgrade_page.py:1476
-#: ../ui/upgrade_page.py:1595
-msgid "Waiting for download"
-msgstr "Čeká se na stahování"
-
-#: ../ui/install_page.py:696 ../ui/upgrade_page.py:1602
-msgid "Downloading"
-msgstr "Stahuje se"
-
-#: ../ui/install_page.py:712
-msgid "Waiting for installation"
-msgstr "Čeká se na instalaci"
-
-#: ../ui/install_page.py:722 ../ui/upgrade_page.py:1628
-msgid "Analyzing dependencies failed"
-msgstr "Nepodařilo se provést rozbor závislostí"
-
-#: ../ui/install_page.py:731 ../ui/install_page.py:738
-msgid "Installing"
-msgstr "Instaluje se"
-
-#: ../ui/install_page.py:747
-msgid "Installation complete"
-msgstr "Instalace dokončena"
-
-#: ../ui/home_page.py:485
-#, python-format
-msgid "%s: %s applications"
-msgstr "%s: %s programů"
-
-#: ../ui/home_page.py:674
+#: ../ui/home_page.py:654
 #, python-format
 msgid "%s > %s : %s applications"
 msgstr "%s > %s : %s programů"
 
-#: ../ui/home_page.py:730 ../ui/software_center.py:786
-msgid "Home"
-msgstr "Domovská složka"
-
-#: ../ui/home_page.py:770
-msgid "Hot applications"
-msgstr "Nejlepší programy"
-
-#: ../ui/home_page.py:770
-msgid "Topics"
-msgstr "Náměty"
-
-#: ../ui/home_page.py:770
-msgid "Download rank"
-msgstr "Žebříček stahování"
-
-#: ../ui/utils.py:321
-msgid "Running"
-msgstr "Běží"
-
-#: ../ui/utils.py:322
-msgid "Preparing"
-msgstr "Připravuje se"
-
-#: ../ui/utils.py:323
-msgid "Unpacking"
-msgstr "Rozbaluje se"
-
-#: ../ui/utils.py:324
-msgid "Preparing to configure"
-msgstr "Připravuje se nastavení"
-
-#: ../ui/utils.py:325
-msgid "Configuring"
-msgstr "Nastavuje se..."
-
-#: ../ui/utils.py:326
-msgid "Installed"
-msgstr "Nainstalováno"
-
-#: ../ui/utils.py:336
-msgid "Err"
-msgstr "Chyba"
-
-#: ../ui/utils.py:337
-msgid "Ign"
-msgstr "Přehlížet"
-
-#: ../ui/utils.py:338
-msgid "Get"
-msgstr "Získat"
-
-#: ../ui/utils.py:339
-msgid "Hit"
-msgstr "Nález"
-
-#: ../ui/item_render.py:44
-msgid "Unwatch"
-msgstr "Přestat sledovat"
-
-#: ../ui/item_render.py:46 ../ui/upgrade_page.py:236
-msgid "Watch again"
-msgstr "Sledovat opět"
-
-#: ../ui/upgrade_page.py:76 ../ui/upgrade_page.py:105
-#: ../ui/upgrade_page.py:330
-msgid "Last upgraded time: "
-msgstr "Doba posledního povýšení: "
-
-#: ../ui/upgrade_page.py:134 ../ui/upgrade_page.py:206
-#, python-format
-msgid "Unwatched (%s)"
-msgstr "Nesledováno (%s)"
-
-#: ../ui/upgrade_page.py:180
-msgid "Upgrade select items"
-msgstr "Povýšit vybrané položky"
-
-#: ../ui/upgrade_page.py:202
+#: ../ui/upgrade_page.py:204
 #, python-format
 msgid "%s applications are available for upgrade"
 msgstr "Pro povýšení je dostupných %s programů"
 
-#: ../ui/upgrade_page.py:270
+#: ../ui/install_page.py:139
+#, python-format
+msgid "%s applications are being installed"
+msgstr "Je instalováno %s programů"
+
+#: ../ui/upgrade_page.py:272
 #, python-format
 msgid "%s applications are not being watched"
 msgstr "%s programů není sledováno"
 
-#: ../ui/upgrade_page.py:287
-msgid "Shut down the computer after upgrade"
-msgstr "Po povýšení vypnout počítač"
+#: ../ui/uninstall_page.py:154
+#, python-format
+msgid "%s applications can be uninstalled"
+msgstr "Lze odinstalovat %s programů"
 
-#: ../ui/upgrade_page.py:299
-msgid "Deepin System Settings is not installed, this function is not work!"
-msgstr "Nastavení systému Deepin není nainstalováno. Tato funkce nepracuje!"
+#: ../ui/software_center.py:127
+#, python-format
+msgid "%s haven't any desktop file"
+msgstr "%s nemá žádný soubor plochy"
 
-#: ../ui/upgrade_page.py:318
-msgid "Downloading updates"
-msgstr "Stahují se aktualizace"
+#: ../ui/widgets.py:80
+#, python-format
+msgid "%s hours ago"
+msgstr "Před %s hodinami"
 
-#: ../ui/upgrade_page.py:325
-msgid "Last refresh app list time: "
-msgstr "Čas posledního obnovení seznamu programů: "
+#: ../ui/widgets.py:73
+#, python-format
+msgid "%s minutes ago"
+msgstr "Před %s minutami"
 
-#: ../ui/upgrade_page.py:335
-msgid "The source mirror: "
-msgstr "Zrcadlo zdroje: "
+#: ../ui/software_center.py:391
+#, python-format
+msgid "%s packages upgrade Successfully."
+msgstr "Povýšení %s balíčků proběhlo úspěšně."
 
-#: ../ui/upgrade_page.py:389
-msgid "Failed to download updates"
-msgstr "Nepodařilo se stáhnout aktualizace"
+#: ../ui/upgrade_page.py:666
+#, python-format
+msgid "%s updates are selected. %s will be downloaded."
+msgstr "Je vybráno %s aktualizací. %s bude staženo."
 
-#: ../ui/upgrade_page.py:391
-msgid "The requested package does not exsist on server."
-msgstr "Požadovaný balíček na serveru neexistuje."
+#: ../ui/home_page.py:472
+#, python-format
+msgid "%s: %s applications"
+msgstr "%s: %s programů"
 
-#: ../ui/upgrade_page.py:392 ../ui/upgrade_page.py:413
-#: ../ui/upgrade_page.py:434
-msgid "Suggest to "
-msgstr "Navrhnout"
+#: ../ui/search_page.py:108
+#, python-format
+msgid "%s: %s matched applications"
+msgstr "%s: %s odpovídajících programů"
 
-#: ../ui/upgrade_page.py:393 ../ui/upgrade_page.py:414
-#: ../ui/upgrade_page.py:435
-msgid "refresh applications lists"
-msgstr "Obnovení seznamu programů"
+#: ../ui/start_desktop_window.py:227 ../ui/software_center.py:131
+#, python-format
+msgid "%s: request for starting applications sent"
+msgstr "%s: žádá se o spuštění poslaných programů"
 
-#: ../ui/upgrade_page.py:394 ../ui/upgrade_page.py:415
-#: ../ui/upgrade_page.py:436
-msgid " and try again."
-msgstr " a zkusit znovu."
+#: ../ui/upgrade_page.py:483
+msgid "."
+msgstr "."
 
-#: ../ui/upgrade_page.py:409
-msgid "Failed to install updates"
-msgstr "Nepodařilo se nainstalovat aktualizace"
+#: ../ui/category_info.py:59
+msgid "2D graphics"
+msgstr "Dvojrozměrná grafika"
 
-#: ../ui/upgrade_page.py:411
-msgid "This may be because your local dependencies are corrupted."
-msgstr "To může být z důvodu poškození vašich místních závislostí."
+#: ../ui/category_info.py:60
+msgid "3D graphics"
+msgstr "Trojrozměrná grafika"
 
-#: ../ui/upgrade_page.py:430
-msgid "Warning"
-msgstr "Varování"
+#: ../ui/preference.py:683
+msgid "About"
+msgstr "O programu"
 
-#: ../ui/upgrade_page.py:432
+#: ../ui/category_info.py:94
+msgid "Accessories"
+msgstr "Příslušenství"
+
+#: ../ui/category_info.py:46
+msgid "Action games"
+msgstr "Bojové hry"
+
+#: ../ui/category_info.py:47
+msgid "Advernture games"
+msgstr "Dobrodružné hry"
+
+#: ../ui/detail_page.py:178
+msgid "Also in the category..."
+msgstr "Také ve skupině..."
+
+#: ../ui/install_page.py:315 ../ui/install_page.py:705
+#: ../ui/upgrade_page.py:1604
+msgid "Analyzing dependencies"
+msgstr "Provádí se rozbor závislostí"
+
+#: ../ui/install_page.py:745 ../ui/upgrade_page.py:1644
+msgid "Analyzing dependencies failed"
+msgstr "Nepodařilo se provést rozbor závislostí"
+
+#: ../ui/upgrade_page.py:1086
+msgid "Analyzing dependencies..."
+msgstr "Provádí se rozbor závislostí..."
+
+#: ../ui/category_info.py:48
+msgid "Arcade games"
+msgstr "Arkádové hry"
+
+#: ../ui/category_info.py:95
+msgid "Archiving"
+msgstr "Archivování"
+
+#: ../ui/category_info.py:36
+msgid "Audiovideo"
+msgstr "Zvuk a obraz"
+
+#: ../ui/category_info.py:37
+msgid "Audiovideo editing"
+msgstr "Upravování zvuku a obrazu"
+
+#: ../ui/category_info.py:49
+msgid "Board games"
+msgstr "Stolní hry"
+
+#: ../ui/category_info.py:27
+msgid "Browser"
+msgstr "Prohlížeč"
+
+#: ../ui/widgets.py:463
+msgid "Cancel"
+msgstr "Zrušit"
+
+#: ../ui/category_info.py:50
+msgid "Card games"
+msgstr "Karetní hry"
+
+#: ../ui/detail_page.py:386
+msgid "Category: "
+msgstr "Skupina: "
+
+#: ../ui/preference.py:503
+msgid "Change"
+msgstr "Změnit"
+
+#: ../ui/software_center.py:814
+msgid "Clear up cached packages"
+msgstr "Odstranit balíčky ve vyrovnávací paměti"
+
+#: ../ui/widgets.py:295 ../ui/widgets.py:369
+msgid "Click to refresh"
+msgstr "Klepněte pro obnovení"
+
+#: ../ui/software_center.py:220
+msgid "Comment was failed. Please check your network connection!"
+msgstr "Poznámku se nepodařilo přidat. Ověřte, prosím, své síťové spojení!"
+
+#: ../ui/software_center.py:204
+msgid "Comment was successful. Thanks for your involvement. :)"
+msgstr "Poznámku se podařilo přidat. Děkujeme vám za vaše zapojení."
+
+#: ../ui/upgrade_page.py:1098
+#, python-format
+msgid "Completed: %s/%s (%s/%s) Download rate: %s/s"
+msgstr "Dokončeno: %s/%s (%s/%s) Rychlost stahování: %s/s"
+
+#: ../ui/utils.py:338
+msgid "Configuring"
+msgstr "Nastavuje se..."
+
+#: ../ui/upgrade_page.py:442
 msgid ""
 "Crucial components will be uninstalled. This may be because your local "
 "dependencies are corrupted, or incorrect dependencies on server."
@@ -230,136 +214,20 @@ msgstr ""
 "místních závislostí. Nebo to může být nesprávnými závislostmi na straně "
 "serveru."
 
-#: ../ui/upgrade_page.py:471
-msgid "If the problem persists, you may wish to "
-msgstr "Pokud potíže přetrvávají, snad byste mohl chtít "
+#: ../ui/category_info.py:79
+msgid "Database"
+msgstr "Databáze"
 
-#: ../ui/upgrade_page.py:472 ../ui/upgrade_page.py:498
-msgid "Send Error Report"
-msgstr "Poslat zprávu o chybě"
+#: ../ui/category_info.py:80
+msgid "Debugging"
+msgstr "Ladění"
 
-#: ../ui/upgrade_page.py:473
-msgid "."
-msgstr "."
-
-#: ../ui/upgrade_page.py:486
-msgid "Uploading error log"
-msgstr "Nahrává se zápis o chybě"
-
-#: ../ui/upgrade_page.py:491
-msgid "The error was successfully reported and will be soon handled."
-msgstr "Chyba byla úspěšně nahlášena, a bude se brzy projednávat."
-
-#: ../ui/upgrade_page.py:497
-msgid "Failed to send the error report. You may wish to try again. "
-msgstr ""
-"Nepodařilo se poslat zprávu o chybě. Mohl byste chtít zkusit to znovu. "
-
-#: ../ui/upgrade_page.py:659
-#, python-format
-msgid "%s updates are selected. %s will be downloaded."
-msgstr "Je vybráno %s aktualizací. %s bude staženo."
-
-#: ../ui/upgrade_page.py:1073
-msgid "Analyzing dependencies..."
-msgstr "Provádí se rozbor závislostí..."
-
-#: ../ui/upgrade_page.py:1076
-msgid "Finished analyzing dependencies."
-msgstr "Dokončen rozbor závislostí."
-
-#: ../ui/upgrade_page.py:1079
-msgid "Download has started..."
-msgstr "Stahování začalo..."
-
-#: ../ui/upgrade_page.py:1085
-#, python-format
-msgid "Completed: %s/%s (%s/%s) Download rate: %s/s"
-msgstr "Dokončeno: %s/%s (%s/%s) Rychlost stahování: %s/s"
-
-#: ../ui/upgrade_page.py:1095
-msgid "Download finished."
-msgstr "Stahování skončeno."
-
-#: ../ui/upgrade_page.py:1099
-msgid "Download stopped."
-msgstr "Stahování zastaveno."
-
-#: ../ui/upgrade_page.py:1102
-msgid "Failed to analyze dependencies."
-msgstr "Nepodařilo se provést rozbor závislostí."
-
-#: ../ui/upgrade_page.py:1106
-msgid "Installing updates"
-msgstr "Instalují se aktualizace"
-
-#: ../ui/upgrade_page.py:1107
-msgid "Updating..."
-msgstr "Obnovuje se..."
-
-#: ../ui/upgrade_page.py:1114
-msgid "Upgrade finished."
-msgstr "Povýšení dokončeno."
-
-#: ../ui/upgrade_page.py:1618
-msgid "Waiting for upgrade"
-msgstr "Čeká se na povýšení"
-
-#: ../ui/upgrade_page.py:1637 ../ui/upgrade_page.py:1644
-msgid "Upgrading"
-msgstr "Povyšuje se"
-
-#: ../ui/upgrade_page.py:1653
-msgid "Upgrade complete"
-msgstr "Povýšení dokončeno"
-
-#: ../ui/widgets.py:66
-msgid "Just now"
-msgstr "Právě teď"
-
-#: ../ui/widgets.py:71
-msgid "One minute ago"
-msgstr "Před minutou"
-
-#: ../ui/widgets.py:73
-#, python-format
-msgid "%s minutes ago"
-msgstr "Před %s minutami"
-
-#: ../ui/widgets.py:78
-msgid "One hour ago"
-msgstr "Před hodinou"
-
-#: ../ui/widgets.py:80
-#, python-format
-msgid "%s hours ago"
-msgstr "Před %s hodinami"
-
-#: ../ui/widgets.py:84
-msgid "Yesterday"
-msgstr "Včera"
-
-#: ../ui/widgets.py:295 ../ui/widgets.py:369
-msgid "Click to refresh"
-msgstr "Klepněte pro obnovení"
-
-#: ../ui/widgets.py:462
-msgid "OK"
-msgstr "OK"
-
-#: ../ui/widgets.py:463 ../ui/preference.py:445
-msgid "Cancel"
-msgstr "Zrušit"
-
-#: ../ui/preference.py:463 ../ui/software_center.py:730
+#: ../ui/software_center.py:729 ../ui/preference.py:428
+#, fuzzy
 msgid "Deepin Software Center"
 msgstr "Středisko programů"
 
-#: ../ui/preference.py:468
-msgid "Version:"
-msgstr "Verze:"
-
-#: ../ui/preference.py:485
+#: ../ui/preference.py:447
 msgid ""
 "Deepin Software Center is a commonly used software center on Linux. It "
 "selected more than 2,600 decent applications and features easy installation "
@@ -376,452 +244,515 @@ msgstr ""
 "paměti. Jsou poskytovány náměty pro uvedení programů a jsou sdíleny dobré "
 "programy.\n"
 
-#: ../ui/preference.py:531
-msgid "General"
-msgstr "Obecné"
+#: ../ui/upgrade_page.py:304
+msgid "Deepin System Settings is not installed, this function is not work!"
+msgstr "Nastavení systému Deepin není nainstalováno. Tato funkce nepracuje!"
 
-#: ../ui/preference.py:532
-msgid "Mirrors"
-msgstr ""
-
-#: ../ui/preference.py:533
-msgid "About"
-msgstr "O programu"
-
-#: ../ui/preference.py:555
-msgid "Select mirror"
-msgstr "Vybrat zrcadlo"
-
-#: ../ui/preference.py:579
-msgid "Select best mirror"
-msgstr "Vybrat nejlepší zrcadlo"
-
-#: ../ui/preference.py:580
-msgid ""
-"Please wait. The process will take 30 seconds or more depending on your "
-"network connection"
-msgstr ""
-"Počkejte, prosím. Proces zabere 30 sekund či více v závislosti na vašem "
-"síťovém spojení"
-
-#: ../ui/preference.py:642
-msgid ""
-"Test for downloading mirror failed. Please check your network connection."
-msgstr ""
-"Zkouška stahovacího zrcadla nedopadla dobře. Prověřte, prosím své síťové "
-"spojení."
-
-#: ../ui/preference.py:643
-msgid "Close"
-msgstr "Zavřít"
-
-#: ../ui/preference.py:677
-msgid "Update applications lists"
-msgstr "Obnovit seznam programů"
-
-#: ../ui/preference.py:683
-msgid "Update automatically"
-msgstr "Aktualizovat automaticky"
-
-#: ../ui/preference.py:686
-msgid "Time interval: "
-msgstr "Časový interval: "
-
-#: ../ui/preference.py:689
-msgid " hour"
-msgstr " hodina"
-
-#: ../ui/preference.py:712
-msgid "Download settings"
-msgstr "Nastavení stahování"
-
-#: ../ui/preference.py:718
-msgid "Max download task number: "
-msgstr "Nejvyšší počet stahovacích úkolů: "
-
-#: ../ui/preference.py:728
-msgid "Download directory: "
-msgstr "Adresář pro stahování: "
-
-#: ../ui/preference.py:734
-msgid "Change"
-msgstr "Změnit"
-
-#: ../ui/preference.py:750
-msgid "On uninstall software"
-msgstr "Při odinstalování programu"
-
-#: ../ui/preference.py:755
+#: ../ui/preference.py:467
 msgid "Delete configuration files"
 msgstr "Smazat soubory s nastavením"
-
-#: ../ui/preference.py:792
-msgid "Select Directory"
-msgstr "Vybrat adresář"
-
-#: ../ui/uninstall_page.py:160
-#, python-format
-msgid "%s applications can be uninstalled"
-msgstr "Lze odinstalovat %s programů"
-
-#: ../ui/uninstall_page.py:464 ../ui/uninstall_page.py:547
-msgid "Waiting for uninstall"
-msgstr "Čeká se na odinstalaci"
-
-#: ../ui/uninstall_page.py:554 ../ui/uninstall_page.py:561
-msgid "Uninstalling"
-msgstr "Odinstalovává se"
-
-#: ../ui/uninstall_page.py:568
-msgid "Uninstall successful"
-msgstr "Odinstalování proběhlo úspěšně"
-
-#: ../ui/download_rank_page.py:68
-msgid "Top 25 weekly"
-msgstr "Prvních 25 každý týden"
-
-#: ../ui/download_rank_page.py:68
-msgid "Top 25 monthly"
-msgstr "Prvních 25 každý měsíc"
-
-#: ../ui/download_rank_page.py:68
-msgid "Top 25 of all time"
-msgstr "Prvních 25 všech dob"
-
-#: ../ui/detail_page.py:175
-msgid "Also in the category..."
-msgstr "Také ve skupině..."
-
-#: ../ui/detail_page.py:236 ../ui/detail_page.py:477
-msgid "Loading comments..."
-msgstr "Nahrávají se poznámky..."
-
-#: ../ui/detail_page.py:350
-#, python-format
-msgid "Download: %s"
-msgstr "Stahování: %s"
-
-#: ../ui/detail_page.py:383
-msgid "Category: "
-msgstr "Skupina: "
-
-#: ../ui/detail_page.py:387
-#, python-format
-msgid "Version: %s"
-msgstr "Verze: %s"
-
-#: ../ui/detail_page.py:388
-msgid "Download: 0"
-msgstr "Stahování: 0"
-
-#: ../ui/detail_page.py:389
-msgid "Size: calculating..."
-msgstr "Velikost: Počítá se..."
-
-#: ../ui/detail_page.py:393
-msgid "Visit Homepage"
-msgstr "Navštívit domovskou stránku"
-
-#: ../ui/detail_page.py:454
-#, python-format
-msgid "Size: %s"
-msgstr "Velikost: %s"
-
-#: ../ui/detail_page.py:594
-msgid "Powered by 又拍云存储"
-msgstr "Poháněno 又拍云存储"
-
-#: ../ui/category_info.py:26
-msgid "Internet"
-msgstr "Internet"
-
-#: ../ui/category_info.py:27
-msgid "Browser"
-msgstr "Prohlížeč"
-
-#: ../ui/category_info.py:28
-msgid "Instant messaging"
-msgstr "Okamžitá výměna zpráv"
-
-#: ../ui/category_info.py:29
-msgid "Email"
-msgstr "Elektronická pošta"
-
-#: ../ui/category_info.py:30
-msgid "File transfer"
-msgstr "Přenos souborů"
-
-#: ../ui/category_info.py:31
-msgid "News"
-msgstr "Novinky"
-
-#: ../ui/category_info.py:32
-msgid "Remote access"
-msgstr "Vzdálený přístup"
-
-#: ../ui/category_info.py:33
-msgid "Security"
-msgstr "Bezpečnost"
-
-#: ../ui/category_info.py:34
-msgid "Miscellaneous"
-msgstr "Různé"
-
-#: ../ui/category_info.py:35
-msgid "Multimedia"
-msgstr "Multimédia"
-
-#: ../ui/category_info.py:36
-msgid "Audiovideo"
-msgstr "Zvuk a obraz"
-
-#: ../ui/category_info.py:37
-msgid "Audiovideo editing"
-msgstr "Upravování zvuku a obrazu"
-
-#: ../ui/category_info.py:38
-msgid "Disc burner"
-msgstr "Vypalování disků"
-
-#: ../ui/category_info.py:39
-msgid "MIDI"
-msgstr "MIDI"
-
-#: ../ui/category_info.py:40
-msgid "Mixer"
-msgstr "Směšovač"
-
-#: ../ui/category_info.py:41
-msgid "Player"
-msgstr "Přehrávač"
-
-#: ../ui/category_info.py:42
-msgid "Recorder"
-msgstr "Nahrávač"
-
-#: ../ui/category_info.py:43
-msgid "Sequencer"
-msgstr "Sekvencer"
-
-#: ../ui/category_info.py:44
-msgid "Tuner"
-msgstr "Ladič"
-
-#: ../ui/category_info.py:45
-msgid "Games"
-msgstr "Hry"
-
-#: ../ui/category_info.py:46
-msgid "Action games"
-msgstr "Bojové hry"
-
-#: ../ui/category_info.py:47
-msgid "Advernture games"
-msgstr "Dobrodružné hry"
-
-#: ../ui/category_info.py:48
-msgid "Arcade games"
-msgstr "Arkádové hry"
-
-#: ../ui/category_info.py:49
-msgid "Board games"
-msgstr "Stolní hry"
-
-#: ../ui/category_info.py:50
-msgid "Card games"
-msgstr "Karetní hry"
-
-#: ../ui/category_info.py:51
-msgid "Emulator"
-msgstr "Emulátor"
-
-#: ../ui/category_info.py:52
-msgid "Kids games"
-msgstr "Dětské hry"
-
-#: ../ui/category_info.py:53
-msgid "Logic games"
-msgstr "Logické hry"
-
-#: ../ui/category_info.py:54
-msgid "Puzzle games"
-msgstr "Skládačky"
-
-#: ../ui/category_info.py:55
-msgid "Role-playing games"
-msgstr "Hraní rolí"
-
-#: ../ui/category_info.py:56
-msgid "Sports games"
-msgstr "Sportovní hry"
-
-#: ../ui/category_info.py:57
-msgid "Strategy games"
-msgstr "Strategické hry"
-
-#: ../ui/category_info.py:58
-msgid "Graphics"
-msgstr "Grafika"
-
-#: ../ui/category_info.py:59
-msgid "2D graphics"
-msgstr "Dvojrozměrná grafika"
-
-#: ../ui/category_info.py:60
-msgid "3D graphics"
-msgstr "Trojrozměrná grafika"
-
-#: ../ui/category_info.py:61
-msgid "Image processing"
-msgstr "Zpracování obrázků"
-
-#: ../ui/category_info.py:62
-msgid "Photography"
-msgstr "Fotografování"
-
-#: ../ui/category_info.py:63
-msgid "Vector graphics"
-msgstr "Vektorová grafika"
-
-#: ../ui/category_info.py:64
-msgid "Viewer"
-msgstr "Prohlížeč"
-
-#: ../ui/category_info.py:65
-msgid "Productivity"
-msgstr "Tvořivost"
-
-#: ../ui/category_info.py:66
-msgid "Office"
-msgstr "Kancelář"
-
-#: ../ui/category_info.py:67
-msgid "Scanning printing"
-msgstr "Snímání a tisk"
-
-#: ../ui/category_info.py:68
-msgid "Industry"
-msgstr "Průmysl"
-
-#: ../ui/category_info.py:69
-msgid "Engineering"
-msgstr "Strojírenství"
-
-#: ../ui/category_info.py:70
-msgid "Finance"
-msgstr "Peníze"
-
-#: ../ui/category_info.py:71
-msgid "Ham radio"
-msgstr "Amatérské rádio"
-
-#: ../ui/category_info.py:72
-msgid "Medical"
-msgstr "Lékařství"
-
-#: ../ui/category_info.py:73
-msgid "Publishing"
-msgstr "Vydávání knih a časopisů"
-
-#: ../ui/category_info.py:74
-msgid "Education"
-msgstr "Vzdělávání"
-
-#: ../ui/category_info.py:75
-msgid "Languages"
-msgstr "Jazyky"
-
-#: ../ui/category_info.py:76
-msgid "Religion"
-msgstr "Náboženství"
-
-#: ../ui/category_info.py:77
-msgid "Science"
-msgstr "Věda"
-
-#: ../ui/category_info.py:78
-msgid "Development"
-msgstr "Vývoj"
-
-#: ../ui/category_info.py:79
-msgid "Database"
-msgstr "Databáze"
-
-#: ../ui/category_info.py:80
-msgid "Debugging"
-msgstr "Ladění"
-
-#: ../ui/category_info.py:81
-msgid "IDE"
-msgstr "Vývojová prostředí"
-
-#: ../ui/category_info.py:82
-msgid "Software development"
-msgstr "Vývoj programů"
-
-#: ../ui/category_info.py:83
-msgid "Version control"
-msgstr "Správa verzí"
-
-#: ../ui/category_info.py:84
-msgid "Web development"
-msgstr "Webový vývoj"
-
-#: ../ui/category_info.py:85
-msgid "System"
-msgstr "Systém"
 
 #: ../ui/category_info.py:86
 msgid "Desktop environment"
 msgstr "Pracovní prostředí"
 
-#: ../ui/category_info.py:87
-msgid "Monitor"
-msgstr "Obrazovka"
+#: ../ui/category_info.py:78
+msgid "Development"
+msgstr "Vývoj"
 
-#: ../ui/category_info.py:88
-msgid "Network"
-msgstr "Síť"
+#: ../ui/category_info.py:38
+msgid "Disc burner"
+msgstr "Vypalování disků"
 
-#: ../ui/category_info.py:89
-msgid "Package manager"
-msgstr "Správce balíčků"
+#: ../ui/preference.py:497
+msgid "Download directory: "
+msgstr "Adresář pro stahování: "
 
-#: ../ui/category_info.py:90
-msgid "Settings"
-msgstr "Nastavení"
+#: ../ui/upgrade_page.py:1108
+msgid "Download finished."
+msgstr "Stahování skončeno."
 
-#: ../ui/category_info.py:91
-msgid "Virtualization"
-msgstr "Virtualizace"
+#: ../ui/upgrade_page.py:1092
+msgid "Download has started..."
+msgstr "Stahování začalo..."
 
-#: ../ui/category_info.py:92
-msgid "Window manager"
-msgstr "Správce oken"
+#: ../ui/home_page.py:750
+msgid "Download rank"
+msgstr "Žebříček stahování"
 
-#: ../ui/category_info.py:93
-msgid "Utilities"
-msgstr "Užitečné nástroje"
+#: ../ui/preference.py:481
+msgid "Download settings"
+msgstr "Nastavení stahování"
 
-#: ../ui/category_info.py:94
-msgid "Accessories"
-msgstr "Příslušenství"
+#: ../ui/upgrade_page.py:1112
+msgid "Download stopped."
+msgstr "Stahování zastaveno."
 
-#: ../ui/category_info.py:95
-msgid "Archiving"
-msgstr "Archivování"
+#: ../ui/install_page.py:627 ../ui/install_page.py:639
+msgid "Download was interrupted"
+msgstr "Stahování bylo přerušeno"
+
+#: ../ui/detail_page.py:355
+#, python-format
+msgid "Download: %s"
+msgstr "Stahování: %s"
+
+#: ../ui/detail_page.py:391
+msgid "Download: 0"
+msgstr "Stahování: 0"
+
+#: ../ui/install_page.py:719 ../ui/upgrade_page.py:1618
+msgid "Downloading"
+msgstr "Stahuje se"
+
+#: ../ui/upgrade_page.py:328
+msgid "Downloading updates"
+msgstr "Stahují se aktualizace"
+
+#: ../ui/category_info.py:74
+msgid "Education"
+msgstr "Vzdělávání"
+
+#: ../ui/category_info.py:29
+msgid "Email"
+msgstr "Elektronická pošta"
 
 #: ../ui/category_info.py:96
 msgid "Emulation"
 msgstr "Emulace"
 
+#: ../ui/category_info.py:51
+msgid "Emulator"
+msgstr "Emulátor"
+
+#: ../ui/category_info.py:69
+msgid "Engineering"
+msgstr "Strojírenství"
+
+#: ../ui/utils.py:349
+msgid "Err"
+msgstr "Chyba"
+
+#: ../ui/upgrade_page.py:1115
+msgid "Failed to analyze dependencies."
+msgstr "Nepodařilo se provést rozbor závislostí."
+
+#: ../ui/upgrade_page.py:399
+msgid "Failed to download updates"
+msgstr "Nepodařilo se stáhnout aktualizace"
+
+#: ../ui/upgrade_page.py:419
+msgid "Failed to install updates"
+msgstr "Nepodařilo se nainstalovat aktualizace"
+
+#: ../ui/software_center.py:454
+msgid "Failed to refresh applications lists."
+msgstr "Nepodařilo se obnovit seznamy programů."
+
+#: ../ui/upgrade_page.py:507
+msgid "Failed to send the error report. You may wish to try again. "
+msgstr ""
+"Nepodařilo se poslat zprávu o chybě. Mohl byste chtít zkusit to znovu. "
+
 #: ../ui/category_info.py:97
 msgid "File manager"
 msgstr "Správce souborů"
 
+#: ../ui/category_info.py:30
+msgid "File transfer"
+msgstr "Přenos souborů"
+
+#: ../ui/category_info.py:70
+msgid "Finance"
+msgstr "Peníze"
+
+#: ../ui/upgrade_page.py:1089
+msgid "Finished analyzing dependencies."
+msgstr "Dokončen rozbor závislostí."
+
+#: ../ui/category_info.py:45
+msgid "Games"
+msgstr "Hry"
+
+#: ../ui/preference.py:681
+msgid "General"
+msgstr "Obecné"
+
+#: ../ui/software_center.py:434
+msgid "Generating local package database..."
+msgstr "Vytváří se místní databáze balíčků..."
+
+#: ../ui/utils.py:351
+msgid "Get"
+msgstr "Získat"
+
+#: ../ui/category_info.py:58
+msgid "Graphics"
+msgstr "Grafika"
+
+#: ../ui/category_info.py:71
+msgid "Ham radio"
+msgstr "Amatérské rádio"
+
+#: ../ui/utils.py:352
+msgid "Hit"
+msgstr "Nález"
+
+#: ../ui/home_page.py:710 ../ui/software_center.py:785
+msgid "Home"
+msgstr "Domovská složka"
+
+#: ../ui/home_page.py:750
+msgid "Hot applications"
+msgstr "Nejlepší programy"
+
+#: ../ui/category_info.py:81
+msgid "IDE"
+msgstr "Vývojová prostředí"
+
+#: ../ui/upgrade_page.py:481
+msgid "If the problem persists, you may wish to "
+msgstr "Pokud potíže přetrvávají, snad byste mohl chtít "
+
+#: ../ui/utils.py:350
+msgid "Ign"
+msgstr "Přehlížet"
+
+#: ../ui/category_info.py:61
+msgid "Image processing"
+msgstr "Zpracování obrázků"
+
+#: ../ui/category_info.py:68
+msgid "Industry"
+msgstr "Průmysl"
+
+#: ../ui/software_center.py:394
+msgid "Install"
+msgstr "Instalovat"
+
+#: ../ui/software_center.py:394
+#, python-format
+msgid "Install %s Successfully."
+msgstr "Instalace %s byla úspěšná."
+
+#: ../ui/software_center.py:788
+#, fuzzy
+msgid "Installation"
+msgstr "Instaluje se"
+
+#: ../ui/install_page.py:770
+msgid "Installation complete"
+msgstr "Instalace dokončena"
+
+#: ../ui/install_page.py:649
+msgid "Installation was interrupted"
+msgstr "Instalace byla přerušena"
+
+#: ../ui/install_page.py:488 ../ui/download_rank_page.py:371
+#: ../ui/home_page.py:1070 ../ui/utils.py:339 ../ui/album_page.py:485
+#: ../ui/search_page.py:274
+msgid "Installed"
+msgstr "Nainstalováno"
+
+#: ../ui/install_page.py:754 ../ui/install_page.py:761
+msgid "Installing"
+msgstr "Instaluje se"
+
+#: ../ui/upgrade_page.py:1119
+msgid "Installing updates"
+msgstr "Instalují se aktualizace"
+
+#: ../ui/category_info.py:28
+msgid "Instant messaging"
+msgstr "Okamžitá výměna zpráv"
+
+#: ../ui/category_info.py:26
+msgid "Internet"
+msgstr "Internet"
+
+#: ../ui/software_center.py:766
+msgid "Join us"
+msgstr "Připojte se k nám"
+
+#: ../ui/widgets.py:66
+msgid "Just now"
+msgstr "Právě teď"
+
+#: ../ui/category_info.py:52
+msgid "Kids games"
+msgstr "Dětské hry"
+
+#: ../ui/category_info.py:75
+msgid "Languages"
+msgstr "Jazyky"
+
+#: ../ui/upgrade_page.py:335
+msgid "Last refresh app list time: "
+msgstr "Čas posledního obnovení seznamu programů: "
+
+#: ../ui/upgrade_page.py:78 ../ui/upgrade_page.py:107
+#: ../ui/upgrade_page.py:340
+msgid "Last upgraded time: "
+msgstr "Doba posledního povýšení: "
+
+#: ../ui/detail_page.py:239 ../ui/detail_page.py:491
+msgid "Loading comments..."
+msgstr "Nahrávají se poznámky..."
+
+#: ../ui/category_info.py:53
+msgid "Logic games"
+msgstr "Logické hry"
+
+#: ../ui/category_info.py:39
+msgid "MIDI"
+msgstr "MIDI"
+
+#: ../ui/preference.py:487
+msgid "Max download task number: "
+msgstr "Nejvyšší počet stahovacích úkolů: "
+
+#: ../ui/category_info.py:72
+msgid "Medical"
+msgstr "Lékařství"
+
+#: ../ui/preference.py:682
+msgid "Mirrors"
+msgstr ""
+
+#: ../ui/category_info.py:34
+msgid "Miscellaneous"
+msgstr "Různé"
+
+#: ../ui/category_info.py:40
+msgid "Mixer"
+msgstr "Směšovač"
+
+#: ../ui/category_info.py:87
+msgid "Monitor"
+msgstr "Obrazovka"
+
+#: ../ui/category_info.py:35
+msgid "Multimedia"
+msgstr "Multimédia"
+
+#: ../ui/category_info.py:88
+msgid "Network"
+msgstr "Síť"
+
+#: ../ui/category_info.py:31
+msgid "News"
+msgstr "Novinky"
+
+#: ../ui/detail_page.py:441 ../ui/install_page.py:481
+#: ../ui/download_rank_page.py:364 ../ui/home_page.py:1063
+#: ../ui/album_page.py:478 ../ui/search_page.py:267
+msgid "Not found"
+msgstr ""
+
+#: ../ui/widgets.py:462
+msgid "OK"
+msgstr "OK"
+
+#: ../ui/category_info.py:66
+msgid "Office"
+msgstr "Kancelář"
+
+#: ../ui/preference.py:464
+msgid "On uninstall software"
+msgstr "Při odinstalování programu"
+
+#: ../ui/widgets.py:78
+msgid "One hour ago"
+msgstr "Před hodinou"
+
+#: ../ui/widgets.py:71
+msgid "One minute ago"
+msgstr "Před minutou"
+
+#: ../ui/software_center.py:813
+msgid "Open download directory"
+msgstr "Otevřít adresář pro stahování"
+
+#: ../ui/category_info.py:89
+msgid "Package manager"
+msgstr "Správce balíčků"
+
+#: ../ui/category_info.py:62
+msgid "Photography"
+msgstr "Fotografování"
+
+#: ../ui/category_info.py:41
+msgid "Player"
+msgstr "Přehrávač"
+
+#: ../ui/inhibit.py:54
+msgid ""
+"Please wait a moment while system update is being performed... Do not turn "
+"off your computer."
+msgstr ""
+
+#: ../ui/detail_page.py:608
+msgid "Powered by 又拍云存储"
+msgstr "Poháněno 又拍云存储"
+
+#: ../ui/software_center.py:816
+msgid "Preferences"
+msgstr "Nastavení"
+
+#: ../ui/utils.py:335
+msgid "Preparing"
+msgstr "Připravuje se"
+
+#: ../ui/utils.py:337
+msgid "Preparing to configure"
+msgstr "Připravuje se nastavení"
+
+#: ../ui/software_center.py:465
+#, python-format
+msgid ""
+"Problem occurred when analyzing dependencies for %s. Installation aborted"
+msgstr "Při rozboru závislostí pro %s se vyskytly potíže. Instalace zrušena"
+
+#: ../ui/software_center.py:468
+#, python-format
+msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
+msgstr "Při rozboru závislostí pro %s se vyskytly potíže. Povyšování zrušeno"
+
+#: ../ui/category_info.py:65
+msgid "Productivity"
+msgstr "Tvořivost"
+
+#: ../ui/category_info.py:73
+msgid "Publishing"
+msgstr "Vydávání knih a časopisů"
+
+#: ../ui/category_info.py:54
+msgid "Puzzle games"
+msgstr "Skládačky"
+
+#: ../ui/software_center.py:817
+msgid "Quit"
+msgstr "Ukončit"
+
+#: ../ui/category_info.py:42
+msgid "Recorder"
+msgstr "Nahrávač"
+
+#: ../ui/software_center.py:812
+msgid "Refresh applications lists"
+msgstr "Obnovit seznam programů"
+
+#: ../ui/software_center.py:474
+msgid "Refresh the package list and try again."
+msgstr "Obnovit seznam balíčků a zkusit to znovu."
+
+#: ../ui/category_info.py:76
+msgid "Religion"
+msgstr "Náboženství"
+
+#: ../ui/category_info.py:32
+msgid "Remote access"
+msgstr "Vzdálený přístup"
+
+#: ../ui/category_info.py:55
+msgid "Role-playing games"
+msgstr "Hraní rolí"
+
+#: ../ui/utils.py:334
+msgid "Running"
+msgstr "Běží"
+
+#: ../ui/category_info.py:67
+msgid "Scanning printing"
+msgstr "Snímání a tisk"
+
+#: ../ui/category_info.py:77
+msgid "Science"
+msgstr "Věda"
+
 #: ../ui/category_info.py:98
 msgid "Screensaver"
 msgstr "Spořič obrazovky"
+
+#: ../ui/category_info.py:33
+msgid "Security"
+msgstr "Bezpečnost"
+
+#: ../ui/preference.py:653
+msgid "Select Directory"
+msgstr "Vybrat adresář"
+
+#: ../ui/preference.py:594
+msgid "Select mirror"
+msgstr "Vybrat zrcadlo"
+
+#: ../ui/upgrade_page.py:482 ../ui/upgrade_page.py:508
+msgid "Send Error Report"
+msgstr "Poslat zprávu o chybě"
+
+#: ../ui/software_center.py:194
+msgid "Sending comment..."
+msgstr "Posílá se poznámka..."
+
+#: ../ui/category_info.py:43
+msgid "Sequencer"
+msgstr "Sekvencer"
+
+#: ../ui/category_info.py:90
+msgid "Settings"
+msgstr "Nastavení"
+
+#: ../ui/upgrade_page.py:289
+msgid "Shut down the computer after upgrade"
+msgstr "Po povýšení vypnout počítač"
+
+#: ../ui/detail_page.py:470
+#, python-format
+msgid "Size: %s"
+msgstr "Velikost: %s"
+
+#: ../ui/detail_page.py:392
+msgid "Size: calculating..."
+msgstr "Velikost: Počítá se..."
+
+#: ../ui/dsc-daemon.py:291 ../ui/dsc-daemon.py:297
+#, fuzzy
+msgid "Software Center"
+msgstr "Středisko programů"
+
+#: ../ui/category_info.py:82
+msgid "Software development"
+msgstr "Vývoj programů"
+
+#: ../ui/category_info.py:56
+msgid "Sports games"
+msgstr "Sportovní hry"
+
+#: ../ui/upgrade_page.py:306
+#, fuzzy
+msgid "Startdde is not installed, this function is not work!"
+msgstr "Nastavení systému Deepin není nainstalováno. Tato funkce nepracuje!"
+
+#: ../ui/category_info.py:57
+msgid "Strategy games"
+msgstr "Strategické hry"
+
+#: ../ui/detail_page.py:447
+msgid "Successfully installed"
+msgstr "Úspěšně nainstalováno"
+
+#: ../ui/software_center.py:442
+msgid "Successfully refreshed applications lists."
+msgstr "Seznamy programů úspěšně obnoveny."
+
+#: ../ui/upgrade_page.py:402 ../ui/upgrade_page.py:423
+#: ../ui/upgrade_page.py:444
+msgid "Suggest to "
+msgstr "Navrhnout"
+
+#: ../ui/category_info.py:85
+msgid "System"
+msgstr "Systém"
 
 #: ../ui/category_info.py:99
 msgid "Terminal emulator"
@@ -831,137 +762,257 @@ msgstr "Emulátor terminálu"
 msgid "Text editor"
 msgstr "Textový editor"
 
-#: ../ui/search_page.py:109
-#, python-format
-msgid "%s: %s matched applications"
-msgstr "%s: %s odpovídajících programů"
+#: ../ui/upgrade_page.py:501
+msgid "The error was successfully reported and will be soon handled."
+msgstr "Chyba byla úspěšně nahlášena, a bude se brzy projednávat."
 
-#: ../ui/software_center.py:129
-#, python-format
-msgid "%s haven't any desktop file"
-msgstr "%s nemá žádný soubor plochy"
-
-#: ../ui/software_center.py:137
-#, python-format
-msgid "%s: request for starting applications sent"
-msgstr "%s: žádá se o spuštění poslaných programů"
-
-#: ../ui/software_center.py:198
-msgid "Sending comment..."
-msgstr "Posílá se poznámka..."
-
-#: ../ui/software_center.py:202
-msgid "You have already sent a comment ;)"
-msgstr "Poznámku jste už poslal"
-
-#: ../ui/software_center.py:208
-msgid "Comment was successful. Thanks for your involvement. :)"
-msgstr "Poznámku se podařilo přidat. Děkujeme vám za vaše zapojení."
-
-#: ../ui/software_center.py:224
-msgid "Comment was failed. Please check your network connection!"
-msgstr "Poznámku se nepodařilo přidat. Ověřte, prosím, své síťové spojení!"
-
-#: ../ui/software_center.py:388
-#, python-format
-msgid "Uninstall %s Successfully."
-msgstr "Odinstalace %s byla úspěšná."
-
-#: ../ui/software_center.py:388 ../ui/software_center.py:788
-msgid "Uninstall"
-msgstr "Odinstalovat"
-
-#: ../ui/software_center.py:394
-#, python-format
-msgid "%s packages upgrade Successfully."
-msgstr "Povýšení %s balíčků proběhlo úspěšně."
-
-#: ../ui/software_center.py:394 ../ui/software_center.py:787
-msgid "Upgrade"
-msgstr "Povýšit"
-
-#: ../ui/software_center.py:397
-#, python-format
-msgid "Install %s Successfully."
-msgstr "Instalace %s byla úspěšná."
-
-#: ../ui/software_center.py:397
-msgid "Install"
-msgstr "Instalovat"
-
-#: ../ui/software_center.py:435
-msgid "Generating local package database..."
-msgstr "Vytváří se místní databáze balíčků..."
-
-#: ../ui/software_center.py:443
-msgid "Successfully refreshed applications lists."
-msgstr "Seznamy programů úspěšně obnoveny."
-
-#: ../ui/software_center.py:455
-msgid "Failed to refresh applications lists."
-msgstr "Nepodařilo se obnovit seznamy programů."
-
-#: ../ui/software_center.py:456
-msgid "Try again"
-msgstr "Zkusit znovu"
-
-#: ../ui/software_center.py:466
-#, python-format
-msgid ""
-"Problem occurred when analyzing dependencies for %s. Installation aborted"
-msgstr "Při rozboru závislostí pro %s se vyskytly potíže. Instalace zrušena"
-
-#: ../ui/software_center.py:469
-#, python-format
-msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
-msgstr "Při rozboru závislostí pro %s se vyskytly potíže. Povyšování zrušeno"
-
-#: ../ui/software_center.py:474
+#: ../ui/software_center.py:473
 #, python-format
 msgid "The requested package \"%s\" was not found in the package list."
 msgstr "Požadovaný balíček \"%s\" nebyl nalezen v seznamu balíčků."
 
-#: ../ui/software_center.py:475
-msgid "Refresh the package list and try again."
-msgstr "Obnovit seznam balíčků a zkusit to znovu."
+#: ../ui/upgrade_page.py:401
+msgid "The requested package does not exsist on server."
+msgstr "Požadovaný balíček na serveru neexistuje."
 
-#: ../ui/software_center.py:767
-msgid "Join us"
-msgstr "Připojte se k nám"
+#: ../ui/upgrade_page.py:345
+msgid "The source mirror: "
+msgstr "Zrcadlo zdroje: "
 
-#: ../ui/software_center.py:789
-msgid "Installation"
+#: ../ui/upgrade_page.py:308
+#, fuzzy
+msgid "The system is not deepin, this function is not work!"
+msgstr "Nastavení systému Deepin není nainstalováno. Tato funkce nepracuje!"
+
+#: ../ui/dsc-daemon.py:288
+#, python-format
+msgid ""
+"There are %s packages need to upgrade in your system, please open the "
+"software center to upgrade!"
 msgstr ""
+"Ve vašem systému je %s balíčků, které je třeba povýšit. Otevřete, prosím, "
+"středisko programů, anyste je mohli povýšit!"
 
-#: ../ui/software_center.py:813
-msgid "Refresh applications lists"
+#: ../ui/dsc-daemon.py:294
+#, python-format
+msgid ""
+"There is %s package need to upgrade in your system, please open the software "
+"center to upgrade!"
+msgstr ""
+"Ve vašem systému je %s balíček, který je třeba povýšit. Otevřete, prosím, "
+"středisko programů, anyste je mohli povýšit!"
+
+#: ../ui/upgrade_page.py:662
+#, fuzzy
+msgid "There is a problem with your local apt dependence environment "
+msgstr "To může být z důvodu poškození vašich místních závislostí."
+
+#: ../ui/upgrade_page.py:421
+msgid "This may be because your local dependencies are corrupted."
+msgstr "To může být z důvodu poškození vašich místních závislostí."
+
+#: ../ui/preference.py:556
+msgid "Time interval: "
+msgstr "Časový interval: "
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 monthly"
+msgstr "Prvních 25 každý měsíc"
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 of all time"
+msgstr "Prvních 25 všech dob"
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 weekly"
+msgstr "Prvních 25 každý týden"
+
+#: ../ui/home_page.py:750
+msgid "Topics"
+msgstr "Náměty"
+
+#: ../ui/software_center.py:455
+msgid "Try again"
+msgstr "Zkusit znovu"
+
+#: ../ui/category_info.py:44
+msgid "Tuner"
+msgstr "Ladič"
+
+#: ../ui/software_center.py:385 ../ui/software_center.py:787
+msgid "Uninstall"
+msgstr "Odinstalovat"
+
+#: ../ui/software_center.py:385
+#, python-format
+msgid "Uninstall %s Successfully."
+msgstr "Odinstalace %s byla úspěšná."
+
+#: ../ui/uninstall_page.py:579
+msgid "Uninstall successful"
+msgstr "Odinstalování proběhlo úspěšně"
+
+#: ../ui/uninstall_page.py:565 ../ui/uninstall_page.py:572
+msgid "Uninstalling"
+msgstr "Odinstalovává se"
+
+#: ../ui/utils.py:336
+msgid "Unpacking"
+msgstr "Rozbaluje se"
+
+#: ../ui/item_render.py:44
+msgid "Unwatch"
+msgstr "Přestat sledovat"
+
+#: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
+#, python-format
+msgid "Unwatched (%s)"
+msgstr "Nesledováno (%s)"
+
+#: ../ui/preference.py:549
+msgid "Update applications lists"
 msgstr "Obnovit seznam programů"
 
-#: ../ui/software_center.py:814
-msgid "Open download directory"
-msgstr "Otevřít adresář pro stahování"
+#: ../ui/preference.py:552
+msgid "Update automatically"
+msgstr "Aktualizovat automaticky"
+
+#: ../ui/upgrade_page.py:1120
+msgid "Updating..."
+msgstr "Obnovuje se..."
+
+#: ../ui/dsc-daemon.py:227 ../ui/software_center.py:391
+#: ../ui/software_center.py:786
+msgid "Upgrade"
+msgstr "Povýšit"
+
+#: ../ui/upgrade_page.py:1669
+msgid "Upgrade complete"
+msgstr "Povýšení dokončeno"
+
+#: ../ui/upgrade_page.py:1127
+msgid "Upgrade finished."
+msgstr "Povýšení dokončeno."
+
+#: ../ui/upgrade_page.py:182
+msgid "Upgrade select items"
+msgstr "Povýšit vybrané položky"
+
+#: ../ui/upgrade_page.py:1653 ../ui/upgrade_page.py:1660
+msgid "Upgrading"
+msgstr "Povyšuje se"
+
+#: ../ui/upgrade_page.py:496
+msgid "Uploading error log"
+msgstr "Nahrává se zápis o chybě"
+
+#: ../ui/category_info.py:93
+msgid "Utilities"
+msgstr "Užitečné nástroje"
+
+#: ../ui/category_info.py:63
+msgid "Vector graphics"
+msgstr "Vektorová grafika"
+
+#: ../ui/category_info.py:83
+msgid "Version control"
+msgstr "Správa verzí"
+
+#: ../ui/preference.py:433
+msgid "Version:"
+msgstr "Verze:"
+
+#: ../ui/detail_page.py:390
+#, python-format
+msgid "Version: %s"
+msgstr "Verze: %s"
 
 #: ../ui/software_center.py:815
-msgid "Clear up cached packages"
-msgstr "Odstranit balíčky ve vyrovnávací paměti"
-
-#: ../ui/software_center.py:816
 msgid "View new features"
 msgstr "Zobrazit nové vlastnosti"
 
-#: ../ui/software_center.py:817
-msgid "Preferences"
-msgstr "Nastavení"
+#: ../ui/category_info.py:64
+msgid "Viewer"
+msgstr "Prohlížeč"
 
-#: ../ui/software_center.py:818
-msgid "Quit"
-msgstr "Ukončit"
+#: ../ui/category_info.py:91
+msgid "Virtualization"
+msgstr "Virtualizace"
 
-#: ../ui/software_center.py:1134
+#: ../ui/detail_page.py:396
+msgid "Visit Homepage"
+msgstr "Navštívit domovskou stránku"
+
+#: ../ui/install_page.py:712 ../ui/upgrade_page.py:1492
+#: ../ui/upgrade_page.py:1611
+msgid "Waiting for download"
+msgstr "Čeká se na stahování"
+
+#: ../ui/install_page.py:735
+msgid "Waiting for installation"
+msgstr "Čeká se na instalaci"
+
+#: ../ui/uninstall_page.py:475 ../ui/uninstall_page.py:558
+msgid "Waiting for uninstall"
+msgstr "Čeká se na odinstalaci"
+
+#: ../ui/upgrade_page.py:1634
+msgid "Waiting for upgrade"
+msgstr "Čeká se na povýšení"
+
+#: ../ui/upgrade_page.py:440
+msgid "Warning"
+msgstr "Varování"
+
+#: ../ui/upgrade_page.py:238 ../ui/item_render.py:46
+msgid "Watch again"
+msgstr "Sledovat opět"
+
+#: ../ui/category_info.py:84
+msgid "Web development"
+msgstr "Webový vývoj"
+
+#: ../ui/category_info.py:92
+msgid "Window manager"
+msgstr "Správce oken"
+
+#: ../ui/widgets.py:84
+msgid "Yesterday"
+msgstr "Včera"
+
+#: ../ui/software_center.py:198
+msgid "You have already sent a comment ;)"
+msgstr "Poznámku jste už poslal"
+
+#: ../ui/software_center.py:1126
 #, python-format
 msgid "You have cleared up %s pakcages and saved %s of space"
 msgstr "Odstranil jste %s balíčků a ušetřil %s místa"
 
-#: ../ui/software_center.py:1136
+#: ../ui/software_center.py:1128
 msgid "Your system is clean."
 msgstr "Váš systém je uklizený."
+
+#: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
+#: ../ui/upgrade_page.py:445
+msgid "refresh applications lists"
+msgstr "Obnovení seznamu programů"
+
+#~ msgid "Close"
+#~ msgstr "Zavřít"
+
+#~ msgid ""
+#~ "Please wait. The process will take 30 seconds or more depending on your "
+#~ "network connection"
+#~ msgstr ""
+#~ "Počkejte, prosím. Proces zabere 30 sekund či více v závislosti na vašem "
+#~ "síťovém spojení"
+
+#~ msgid "Select best mirror"
+#~ msgstr "Vybrat nejlepší zrcadlo"
+
+#~ msgid ""
+#~ "Test for downloading mirror failed. Please check your network connection."
+#~ msgstr ""
+#~ "Zkouška stahovacího zrcadla nedopadla dobře. Prověřte, prosím své síťové "
+#~ "spojení."

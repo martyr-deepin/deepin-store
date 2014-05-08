@@ -22,20 +22,16 @@
 
 import sys, os
 import subprocess
-import apt_pkg
 import gobject
-import signal
 import dbus
 import dbus.service
-import dbus.mainloop.glib
 from dbus.mainloop.glib import DBusGMainLoop
 from datetime import datetime
-import traceback
 import threading
 import urllib2
 import uuid
 from deepin_utils.ipc import is_dbus_name_exists
-from deepin_utils.file import get_parent_dir, touch_file
+from deepin_utils.file import touch_file
 from deepin_utils.config import Config
 from nls import _
 
@@ -45,8 +41,8 @@ DSC_SERVICE_PATH = "/com/linuxdeepin/softwarecenter"
 DSC_FRONTEND_NAME = "com.linuxdeepin.softwarecenter_frontend"
 DSC_FRONTEND_PATH = "/com/linuxdeepin/softwarecenter_frontend"
 
-DSC_UPDATE_DAEMON_NAME = "com.linuxdeepin.softwarecenter.update.daemon"
-DSC_UPDATE_DAEMON_PATH = "/com/linuxdeepin/softwarecenter/update/daemon"
+DSC_UPDATE_DAEMON_NAME = "com.deepin.softwarecenter.UpdateDaemon"
+DSC_UPDATE_DAEMON_PATH = "/com/deepin/softwarecenter/UpdateDaemon"
 
 DSC_UPDATER_NAME = "com.linuxdeepin.softwarecenterupdater"
 DSC_UPDATER_PATH = "/com/linuxdeepin/softwarecenterupdater"
@@ -57,16 +53,30 @@ NOTIFICATIONS_PATH = "/org/freedesktop/Notifications"
 LOG_PATH = "/tmp/dsc-update-daemon.log"
 DATA_CURRENT_ID_CONFIG_PATH = '/tmp/deepin-software-center/data_current_id.ini'
 
-CONFIG_DIR =  os.path.join(os.path.expanduser("~"), ".config", "deepin-software-center")
-CONFIG_INFO_PATH = os.path.join(CONFIG_DIR, "config_info.ini")
-
 DELAY_UPDATE_INTERVAL = 600
 
 SERVER_ADDRESS = "http://apis.linuxdeepin.com/dscapi/statistics/?uid="
 
-sys.path.insert(0, os.path.join(get_parent_dir(__file__, 3), 'ui'))
-from constant import NO_NOTIFY_FILE
-import utils
+from constant import NO_NOTIFY_FILE, dsc_root_dir, DEFAULT_UPDATE_INTERVAL, CONFIG_INFO_PATH
+if not os.path.exists(CONFIG_INFO_PATH):
+    touch_file(CONFIG_INFO_PATH)
+config = Config(CONFIG_INFO_PATH)
+config.load()
+
+
+def get_common_image(name):
+    return os.path.join(dsc_root_dir, "image", name)
+
+def is_auto_update():
+    if config.has_option('update', 'auto'):
+        if config.get('update', 'auto') == 'False':
+            return False
+    return True
+
+def get_update_interval():
+    if config.has_option('update', 'interval'):
+        return config.get('update', 'interval')
+    return DEFAULT_UPDATE_INTERVAL
 
 def log(message):
     if not os.path.exists(LOG_PATH):
@@ -91,40 +101,28 @@ def start_updater(loop=True):
     except Exception, e:
         log("got error: %s" % (e))
         print "got error: %s" % (e)
-        traceback.print_exc(file=sys.stdout)
 
     return loop
 
 class SendStatistics(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
-        self.config = self.init_config()
+        self.init_config()
         self.daemon = True
 
     def init_config(self):
-        if os.path.exists(CONFIG_INFO_PATH):
-            config = Config(CONFIG_INFO_PATH)
-            config.load()
-            uid = config.get("statistics", 'uid')
-            if not uid:
-                uid = uuid.uuid4().hex
-                config.set("statistics", 'uid', uid)
-                config.set("statistics", 'last_date', '')
-                config.write()
-        else:
-            touch_file(CONFIG_INFO_PATH)
+        global config
+        has_init = config.has_option("statistics", "uid") and config.get("statistics", "uid")
+        if not has_init:
             uid = uuid.uuid4().hex
-            config = Config(CONFIG_INFO_PATH)
-            config.load()
             config.set("statistics", 'uid', uid)
             config.set("statistics", 'last_date', '')
             config.write()
 
-        return config
-
     def run(self):
-        uid = self.config.get('statistics', 'uid')
-        last_date = self.config.get('statistics', 'last_date')
+        global config
+        uid = config.get('statistics', 'uid')
+        last_date = config.get('statistics', 'last_date')
         current_date = datetime.now().strftime("%Y-%m-%d")
         if last_date == current_date:
             return
@@ -135,13 +133,12 @@ class SendStatistics(threading.Thread):
                 log(msg)
                 print msg
                 if result == "OK":
-                    self.config.set('statistics', "last_date", current_date)
-                    self.config.write()
+                    config.set('statistics', "last_date", current_date)
+                    config.write()
             except Exception, e:
                 msg = "Error in SendStatistics: %s" % (e)
                 log(msg)
                 print msg
-                traceback.print_exc(file=sys.stdout)
 
 class NetworkDetector(gobject.GObject):
 
@@ -159,11 +156,6 @@ class NetworkDetector(gobject.GObject):
         self.network_status = self.NETWORK_STATUS_FAILED
 
     def start_detect_source_available(self):
-        apt_pkg.init_config()
-        apt_pkg.init_system()
-        source_list_obj = apt_pkg.SourceList()
-        source_list_obj.read_main_list()
-        uri = source_list_obj.list[0].uri.split("/")[2]
         uri = 'www.baidu.com'
         gobject.timeout_add(1000, self.network_detect_loop, uri)
 
@@ -193,9 +185,9 @@ class NetworkDetector(gobject.GObject):
             return True
 
 class Update(dbus.service.Object):
-    def __init__(self, session_bus, mainloop):
-        dbus.service.Object.__init__(self, session_bus, DSC_UPDATE_DAEMON_PATH)
+    def __init__(self, mainloop, session_bus):
         self.session_bus = session_bus
+        dbus.service.Object.__init__(self, self.session_bus)
         self.mainloop = mainloop
 
         self.exit_flag = False
@@ -231,7 +223,7 @@ class Update(dbus.service.Object):
     def send_notify(self, body, summary):
         app_name = "deepin-software-center"
         replaces_id = 0
-        app_icon = utils.get_common_image("logo48.png")
+        app_icon = get_common_image("logo48.png")
         actions = ["_id_default_", "default", "_id_open_update_", _("Upgrade")]
         hints = {"image-path": app_icon}
         timeout = 3500
@@ -253,7 +245,7 @@ class Update(dbus.service.Object):
     def set_delay_update(self, seconds):
         if self.delay_update_id:
             gobject.source_remove(self.delay_update_id)
-        if utils.is_auto_update() and seconds:
+        if is_auto_update() and seconds:
             self.delay_update_id = gobject.timeout_add_seconds(seconds, self.update_handler)
         else:
             self.mainloop.quit()
@@ -309,7 +301,7 @@ class Update(dbus.service.Object):
                 self.bus_interface.request_quit()
                 print "Quit dsc backend service."
                 log("Quit dsc backend service.")
-                self.set_delay_update(int(utils.get_update_interval())*3600)
+                self.set_delay_update(int(get_update_interval())*3600)
             elif signal_type == "update-list-failed":
                 self.is_in_update_list = False
                 self.update_status = "failed"
@@ -337,7 +329,7 @@ class Update(dbus.service.Object):
             print "Fontend is running, waite 10 minutes to try again!"
             log("Fontend is running, waite 10 minutes to try again!")
             self.set_delay_update(DELAY_UPDATE_INTERVAL)
-        elif not utils.is_auto_update():
+        elif not is_auto_update():
             print 'Auto update closed, exit...'
             log('Auto update closed, exit...')
             self.mainloop.quit()
@@ -381,28 +373,25 @@ class Update(dbus.service.Object):
         self.mainloop.quit()
 
 if __name__ == "__main__" :
-
     uid = os.geteuid()
     if uid == 0:
         sys.exit(0)
-
-    arguments = sys.argv[1::]
+    args = sys.argv[1::]
 
     DBusGMainLoop(set_as_default=True)
-    session_bus = dbus.SessionBus()
-    
     mainloop = gobject.MainLoop()
-    signal.signal(signal.SIGINT, lambda : mainloop.quit()) # capture "Ctrl + c" signal
 
-    if not is_dbus_name_exists(DSC_UPDATE_DAEMON_NAME, True):
+    session_bus = dbus.SessionBus()
+    if session_bus.name_has_owner(DSC_UPDATE_DAEMON_NAME):
+        print "dbus service \"%s\" is running..." % DSC_UPDATE_DAEMON_NAME
+        sys.exit(0)
+    else:
         bus_name = dbus.service.BusName(DSC_UPDATE_DAEMON_NAME, session_bus)
-            
-        update = Update(session_bus, mainloop)
-        try:
-            if '--debug' in arguments:
-                gobject.timeout_add_seconds(1, update.run)
-            else:
-                gobject.timeout_add_seconds(120, update.run)
-            mainloop.run()
-        except KeyboardInterrupt:
-            update.exit_loop()
+
+    update = Update(mainloop, session_bus)
+    update.add_to_connection(session_bus, DSC_UPDATE_DAEMON_PATH)
+    if '--debug' in args or "-d" in args:
+        gobject.timeout_add_seconds(1, update.run)
+    else:
+        gobject.timeout_add_seconds(120, update.run)
+    mainloop.run()
