@@ -267,7 +267,7 @@ class MultiAptActionThread(MissionThread):
             try:
                 self.pkg_cache.commit(None, GInstallProgress(self.pkg_names, self.action_type, self.upgrade_id))
                 self.pkg_cache.open(apb.OpProgress())
-                global_event.emit("action-finish", (self.pkg_name, self.action_type, pkg_info_list))
+                global_event.emit('action-finish', (self.upgrade_id, self.action_type, pkg_info_list))
             except Exception, e:
                 log("Commit Failed: %s" % e)
                 log(str(traceback.format_exc()))
