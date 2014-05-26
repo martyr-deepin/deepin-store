@@ -7,8 +7,8 @@
   <vendor_url>http://www.linuxdeepin.com/</vendor_url>
 
   <action id="com.linuxdeepin.softwarecenter.action">
-    <description>Mount an iso</description>
-    <message>Authentication is required to mount the iso</message>
+    <description>Run apt action</description>
+    <message>Authentication is required to run apt action.</message>
     <defaults>
       <allow_any>no</allow_any>
       <allow_inactive>no</allow_inactive>

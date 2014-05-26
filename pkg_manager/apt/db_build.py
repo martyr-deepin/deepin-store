@@ -43,7 +43,6 @@ class BuildSoftwareDB(object):
             pkg_name PRIMARY KEY NOT NULL, short_desc, long_desc, version, \
             homepage, size)")
 
-
         for pkg in self.cache:
             try:
                 self.cursor.execute(

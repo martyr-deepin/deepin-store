@@ -38,9 +38,9 @@ import apt_pkg
 import apt.progress.base as apb
 import aptsources.distro
 import logging
+import subprocess
 logging.basicConfig(format='==> [%(levelname)s] %(message)s', level=logging.INFO)
 
-from deepin_utils.ipc import auth_with_policykit
 from deepin_utils.file import read_file, write_file
 
 from download_manager import DownloadManager
@@ -640,6 +640,25 @@ class PackageManager(dbus.service.Object):
         else:
             self.update_signal([("pkg-not-in-cache", pkg_name)])
 
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="sb", out_signature="")
+    def uninstall_pkg_from_desktop(self, desktop_path, purge):
+        ThreadMethod(self.uninstall_pkg_from_desktop_thread, (desktop_path, purge)).start()
+
+    def uninstall_pkg_from_desktop_thread(self, path, purge):
+        pkg_name = self.get_pkg_name_from_path(path)
+        if pkg_name:
+            self.uninstall_pkg(pkg_name, purge)
+        else:
+            global_event.emit("action-failed", (path, ACTION_UNINSTALL, [], "no package found for path: %s" % path))
+
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="s")
+    def get_pkg_name_from_path(self, path):
+        result = subprocess.check_output(['dpkg', '-S', path]).strip().split(":")
+        if len(result) == 2 and result[1].strip() == path.strip():
+            return result[0].strip()
+        else:
+            return ""
+
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
     def upgrade_pkg(self, pkg_names):
         for pkg_name in pkg_names:
@@ -673,11 +692,11 @@ class PackageManager(dbus.service.Object):
         for pkg_name in pkg_names:
             self.download_manager.stop_wait_download(pkg_name)
             
-    @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="s")        
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="s")
     def request_pkg_short_desc(self, pkg_name):
         return self.pkg_cache.get_pkg_short_desc(pkg_name)
     
-    @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="as")        
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="as")
     def request_status(self):
         download_status = {
             ACTION_INSTALL : [],
@@ -772,16 +791,8 @@ if __name__ == "__main__":
     signal.signal(signal.SIGINT, lambda : mainloop.quit()) # capture "Ctrl + c" signal
     
     # Auth with root permission.
-    if not auth_with_policykit("com.linuxdeepin.softwarecenter.action",
-                               "org.freedesktop.PolicyKit1", 
-                               "/org/freedesktop/PolicyKit1/Authority", 
-                               "org.freedesktop.PolicyKit1.Authority",
-                               ):
+    if not utils.auth_with_policykit("com.linuxdeepin.softwarecenter.action"):
         log("Auth failed")
-        
-    # Remove log file.
-    #if os.path.exists(LOG_PATH):
-        #os.remove(LOG_PATH)
         
     # Remove lock file if it exist.
     if os.path.exists("/var/lib/apt/lists/lock"):

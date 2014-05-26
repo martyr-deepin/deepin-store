@@ -22,6 +22,7 @@
 import os
 from datetime import datetime
 import time
+import dbus
 from constant import LOG_PATH, SYS_CONFIG_INFO_PATH, BACKEND_PID
 
 from deepin_utils.config import Config
@@ -56,3 +57,27 @@ def get_config_info_config():
         config_info_config.load()
 
     return config_info_config
+
+def auth_with_policykit(action, interactive=1):
+    policykit_dbus_name = "org.freedesktop.PolicyKit1"
+    authority_dbus_path = "/org/freedesktop/PolicyKit1/Authority"
+    authority_dbus_iface = "org.freedesktop.PolicyKit1.Authority"
+    system_bus = dbus.SystemBus()
+    obj = system_bus.get_object(policykit_dbus_name, 
+            authority_dbus_path, authority_dbus_iface)
+
+    policykit = dbus.Interface(obj, authority_dbus_iface)
+    pid = os.getpid()
+
+    subject = ('unix-process', 
+                {
+                    'pid' : dbus.UInt32(pid, variant_level=1),
+                    'start-time' : dbus.UInt64(0),
+                }
+              )
+    details = { '' : '' }
+    flags = dbus.UInt32(interactive)
+    cancel_id = ''
+    (ok, notused, details) = policykit.CheckAuthorization(subject, action, details, flags, cancel_id)
+
+    return ok
