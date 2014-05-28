@@ -42,7 +42,7 @@ class Mirror(object):
         deepin_url = self.get_repo_urls()[1]
         _url_parse = urlparse(deepin_url)
         self._hostname = _url_parse.scheme + "://" + _url_parse.netloc
-        self._priority = int(self.config.get("mirror", "priority")) if self.config.has_option("mirror", "priority") else 100
+        self._priority = float(self.config.get("mirror", "priority")) if self.config.has_option("mirror", "priority") else 100
     
     @property
     def hostname(self):
