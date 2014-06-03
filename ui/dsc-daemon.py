@@ -243,6 +243,9 @@ class Update(dbus.service.Object):
                 self.dsc_interface.raise_to_top()
 
     def set_delay_update(self, seconds):
+        self.mainloop.quit()
+
+        ###
         if self.delay_update_id:
             gobject.source_remove(self.delay_update_id)
         if is_auto_update() and seconds:
