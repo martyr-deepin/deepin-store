@@ -190,6 +190,8 @@ class Update(dbus.service.Object):
         dbus.service.Object.__init__(self, self.session_bus)
         self.mainloop = mainloop
 
+        self.is_run_in_daemon = True
+
         self.exit_flag = False
         self.is_in_update_list = False
         self.update_status = None
@@ -206,7 +208,10 @@ class Update(dbus.service.Object):
 
         log("Start Update List Daemon")
 
-    def run(self):
+    def run(self, daemon):
+        self.is_run_in_daemon = daemon
+        print "run in daemon:", self.is_run_in_daemon
+
         self.update_handler()
         return False
 
@@ -243,7 +248,8 @@ class Update(dbus.service.Object):
                 self.dsc_interface.raise_to_top()
 
     def set_delay_update(self, seconds):
-        self.mainloop.quit()
+        if not self.is_run_in_daemon:
+            self.mainloop.quit()
 
         ###
         if self.delay_update_id:
@@ -338,7 +344,7 @@ class Update(dbus.service.Object):
             self.mainloop.quit()
         else:
             self.start_dsc_backend()
-            gobject.timeout_add_seconds(30, start_updater, False)
+            gobject.timeout_add_seconds(1, start_updater, False)
             gobject.timeout_add_seconds(1, self.start_update_list, self.bus_interface)
             SendStatistics().start()
         return True
@@ -393,8 +399,8 @@ if __name__ == "__main__" :
 
     update = Update(mainloop, session_bus)
     update.add_to_connection(session_bus, DSC_UPDATE_DAEMON_PATH)
-    if '--debug' in args or "-d" in args:
-        gobject.timeout_add_seconds(1, update.run)
+    if '--no-daemon' in args:
+        gobject.timeout_add_seconds(1, update.run, False )
     else:
-        gobject.timeout_add_seconds(120, update.run)
+        gobject.timeout_add_seconds(120, update.run, True)
     mainloop.run()
