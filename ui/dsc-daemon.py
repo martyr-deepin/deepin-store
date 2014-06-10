@@ -217,13 +217,17 @@ class Update(dbus.service.Object):
 
     def init_notify(self):
         self.notify_id = None
-        notify_obj = self.session_bus.get_object(NOTIFICATIONS_NAME, NOTIFICATIONS_PATH)
-        self.notify_interface = dbus.Interface(notify_obj, NOTIFICATIONS_NAME)
-        self.session_bus.add_signal_receiver(
-            handler_function=self.handle_notification_action,
-            signal_name="ActionInvoked",
-            dbus_interface=NOTIFICATIONS_NAME
-        )
+        self.notify_interface = None
+        try:
+            notify_obj = self.session_bus.get_object(NOTIFICATIONS_NAME, NOTIFICATIONS_PATH)
+            self.notify_interface = dbus.Interface(notify_obj, NOTIFICATIONS_NAME)
+            self.session_bus.add_signal_receiver(
+                handler_function=self.handle_notification_action,
+                signal_name="ActionInvoked",
+                dbus_interface=NOTIFICATIONS_NAME
+            )
+        except:
+            pass
 
     def send_notify(self, body, summary):
         app_name = "deepin-software-center"
@@ -232,8 +236,18 @@ class Update(dbus.service.Object):
         actions = ["_id_default_", "default", "_id_open_update_", _("Upgrade")]
         hints = {"image-path": app_icon}
         timeout = 3500
-        return self.notify_interface.Notify(app_name, replaces_id, app_icon,
-            summary, body, actions, hints, timeout)
+        if self.notify_interface:
+            self.notify_interface.Notify(app_name, replaces_id, app_icon,
+                summary, body, actions, hints, timeout,
+                reply_handler=lambda r:self.handle_dbus_reply(r, True), 
+                error_handler=lambda e:self.handle_dbus_reply(e, False)
+                )
+
+    def handle_dbus_reply(self, reply, success):
+        if success:
+            self.notify_id = int(reply)
+        else:
+            print "DBus Notify error:" % reply
 
     def handle_notification_action(self, notify_id, action_id):
         print(self.notify_id, notify_id, action_id)
@@ -293,13 +307,13 @@ class Update(dbus.service.Object):
                             (update_num, update_num-remind_num))
                 elif remind_num > 0 and remind_num != self.remind_num:
                     if remind_num != 1:
-                        self.notify_id = self.send_notify(_(
+                        self.send_notify(_(
                             "There are %s packages need to upgrade in your system,"
                             " please open the software center to upgrade!"
                             ) % remind_num,
                             _("Software Center"))
                     else:
-                        self.notify_id = self.send_notify(_(
+                        self.send_notify(_(
                             "There is %s package need to upgrade in your system,"
                             " please open the software center to upgrade!"
                             ) % remind_num,
