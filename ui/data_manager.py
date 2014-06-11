@@ -34,6 +34,10 @@ from category import CATEGORY_TYPE_DICT
 import logging
 import gio
 
+import peewee
+from db_models.software import Software
+from db_models.software import Language as SoftwareLanguage
+
 UPDATE_DATA_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID)
 CACHE_SOFT_DB_PATH = os.path.join(get_parent_dir(__file__, 2), "data", "cache_soft.db")
 
@@ -43,6 +47,10 @@ def db_path_exists(path):
     if not os.path.exists(path):
         print "Database not exist:", path
         sys.exit(1)
+
+def reset_database(db_path, cls):
+    db = peewee.SqliteDatabase(db_path)
+    cls._meta.database = db
 
 class DataManager(object):
     '''
@@ -57,11 +65,12 @@ class DataManager(object):
         self.debug_flag = debug_flag
 
         self.language = LANGUAGE if LANGUAGE in DATA_SUPPORT_LANGUAGE else 'en_US'
-        
-        software_db_path = os.path.join(UPDATE_DATA_DIR, "software", self.language, "software.db")
-        db_path_exists(software_db_path)
-        self.software_db_connect = sqlite3.connect(software_db_path)
-        self.software_db_cursor = self.software_db_connect.cursor()
+
+        software_db_path = os.path.join(UPDATE_DATA_DIR, "software", "software.db")
+        reset_database(software_db_path, Software)
+        reset_database(software_db_path, SoftwareLanguage)
+        self.default_lang_obj = SoftwareLanguage.select().where(SoftwareLanguage.language_code=="en_US").get()
+        self.current_lang_obj = SoftwareLanguage.select().where(SoftwareLanguage.language_code==self.language).get()
 
         self.init_cache_soft_db()
 
@@ -81,6 +90,13 @@ class DataManager(object):
         self.category_name_dict = {}
         
         #self.build_category_dict()
+
+    def get_software_obj(self, pkg_name):
+        try:
+            soft = Software.select().where(Software.pkg_name == pkg_name, Software.language == self.current_lang_obj).get()
+        except:
+            soft = None
+        return soft
 
     def init_cache_soft_db(self):
         if self.is_cache_soft_db_exists() and not hasattr(self, 'cache_soft_db_cursor'):
@@ -115,10 +131,11 @@ class DataManager(object):
             for (pkg_name, ) in cache_info:
                 pkg_names.append(pkg_name)
         else:
-            self.software_db_cursor.execute(*argv)
-            for (pkg_name, ) in self.software_db_cursor.fetchall():
-                pkg_names.append(pkg_name)
-            
+            search_key = "*%s*" % input_string
+            software_list = Software.select().where(Software.pkg_name % search_key, Software.language==self.default_lang_obj)
+            for soft in software_list:
+                pkg_names.append(soft.pkg_name)
+
         # Sort package name.
         pkg_names = sorted(
             pkg_names,
@@ -195,6 +212,8 @@ class DataManager(object):
         category_names = self.desktop_db_cursor.fetchone()
         if category_names and category_names[0] and category_names[1]:
             result['category'] = category_names
+
+            # TODO: recommend_pkgs
             """
             self.category_db_cursor.execute(
                 "SELECT recommend_pkgs FROM category_name WHERE first_category_name=? and second_category_name=?",
@@ -209,13 +228,10 @@ class DataManager(object):
             """
 
         # get long_desc, version, homepage, alias_name
-        self.software_db_cursor.execute(
-            "SELECT long_desc, alias_name FROM software WHERE pkg_name=?", [pkg_name])
-        info = self.software_db_cursor.fetchone()
-
-        if info:
-            result["long_desc"] = info[0]
-            result["alias_name"] = info[1]
+        soft = self.get_software_obj(pkg_name)
+        if soft:
+            result["long_desc"] = soft.long_desc
+            result["alias_name"] = soft.alias_name
 
         cache_info = self.get_info_from_cache_soft_db([
             "SELECT long_desc, version, homepage FROM software WHERE pkg_name=?",
@@ -228,10 +244,8 @@ class DataManager(object):
         return result
         
     def get_pkg_search_info(self, pkg_name):
-        self.software_db_cursor.execute(
-            "SELECT alias_name, short_desc, long_desc FROM software WHERE pkg_name=?", [pkg_name])
-        result = self.software_db_cursor.fetchone()
-        
+        result = self.get_software_obj(pkg_name)
+
         if result == None:
             cache_info = self.get_info_from_cache_soft_db([
                 "SELECT short_desc, long_desc FROM software WHERE pkg_name=?",
@@ -242,15 +256,17 @@ class DataManager(object):
             else:
                 return (pkg_name, "FIXME", "FIXME", 5.0)
         else:
-            (alias_name, short_desc, long_desc) = result
-            return (alias_name, short_desc, long_desc, 5.0)
+            #(alias_name, short_desc, long_desc) = result
+            return (result.alias_name, result.short_desc, result.long_desc, 5.0)
     
     def get_item_pkg_info(self, pkg_name):
-        self.software_db_cursor.execute(
-                "SELECT pkg_name, alias_name, short_desc, long_desc FROM software WHERE pkg_name=?",
-                (pkg_name,)
-                )
-        info = self.software_db_cursor.fetchone()
+        result = self.get_software_obj(pkg_name)
+        if result:
+            info = [result.pkg_name, result.alias_name, result.short_desc, result.long_desc]
+        else:
+            info = None
+
+
         if info != None and info[2] != "":
             return info
         else:
@@ -309,13 +325,10 @@ class DataManager(object):
         infos = []
 
         for pkg_name in pkg_names:
+            info =self.get_software_obj(pkg_name)
 
-            self.software_db_cursor.execute(
-                "SELECT alias_name FROM software WHERE pkg_name=?", [pkg_name])
-            r = self.software_db_cursor.fetchone()
-            if r != [] and r != None:
-                alias_name = r[0]
-            
+            if info:
+                alias_name = info.alias_name
                 self.desktop_db_cursor.execute(
                     "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
                 desktop_infos = self.desktop_db_cursor.fetchall()

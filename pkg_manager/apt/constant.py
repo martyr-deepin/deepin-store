@@ -45,7 +45,7 @@ LOG_PATH = "/tmp/dsc-backend.log"
 
 """Please note that modify the BACKEND_PID to notify the other testing program
 eg: deepin-software-center fontend, deepin-system-settings power module etc."""
-BACKEND_PID = "/tmp/deepin-software-center/backend_running.pid"  
+BACKEND_PID = "/var/run/dsc_backend_running.pid"  
 
 SYS_CONFIG_INFO_PATH = "/var/cache/deepin-software-center/config_info.ini"
 
