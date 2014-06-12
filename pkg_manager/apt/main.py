@@ -765,7 +765,7 @@ class PackageManager(dbus.service.Object):
                     desktops += self.get_desktops(name)
             return json.dumps(desktops)
 
-    @dbus.service.signal(DSC_SERVICE_NAME)    
+    @dbus.service.signal(DSC_SERVICE_NAME, signature='a(sv)')
     # Use below command for test:
     # dbus-monitor --system "type='signal', interface='com.linuxdeepin.softwarecenter'" 
     def update_signal(self, message):
