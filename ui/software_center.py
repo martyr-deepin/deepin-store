@@ -191,17 +191,17 @@ def grade_pkg(window, pkg, star):
         
     current_time = time.time()    
     if not grade_config.has_key(pkg_name) or (current_time - grade_config[pkg_name]) > ONE_DAY_SECONDS:
-        show_tooltip(window, _("Sending comment..."))
+        show_tooltip(window, _("Sending rating..."))
         SendVote(pkg_name, star, pkg[1]).start()
         
     else:
-        show_tooltip(window, _("You have already sent a comment ;)"))
+        show_tooltip(window, _("You have already scored.  ;)"))
 
 def vote_send_success_callback(infos, window):
     pkg_name = infos[0]
     grade_config_path, grade_config = get_grade_config()
 
-    global_event.emit("show-message", _("Comment was successful. Thanks for your involvement. :)"), 5000)
+    global_event.emit("show-message", _("Rating successfully. Thanks for your involvement."), 5000)
     tool_tip.hide_all()
     current_time = time.time()
     
@@ -217,7 +217,7 @@ def vote_send_success_callback(infos, window):
 
 def vote_send_failed_callback(pkg_name, window):
 
-    global_event.emit('show-message', _("Comment was failed. Please check your network connection!"))
+    global_event.emit('show-message', _("Rating failed. Please check your network connection!"))
     tool_tip.hide_all()
 
 def show_tooltip(window, message):
@@ -388,7 +388,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                     global_event.emit("upgrade-finish-action", pkg_info_list)
                     utils.set_last_upgrade_time()
                     upgrade_page.refresh_status(pkg_info_list)
-                    utils.show_notify(_("%s packages upgrade Successfully.") % len(pkg_info_list), _("Upgrade"))
+                    utils.show_notify(_("%s packages upgrade successfully.") % len(pkg_info_list), _("Upgrade"))
                 elif action_type == ACTION_INSTALL:
                     install_page.action_finish(pkg_name, pkg_info_list)
                     utils.show_notify(_("Install %s Successfully.") % pkg_name, _("Install"))
@@ -431,7 +431,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 global_event.emit("show-message", [percent + status, speed_str])
 
             elif signal_type == "update-list-merge":
-                global_event.emit("show-message", [_("Generating local package database..."), ''], 0)
+                global_event.emit("show-message", [_("Generating package list database..."), ''], 0)
 
             elif signal_type == "update-list-finish":
                 upgrade_page.fetch_upgrade_info()
@@ -439,7 +439,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                         reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
                         error_handler=lambda e:handle_dbus_error("request_status", e),
                         )
-                global_event.emit("show-message", [_("Successfully refreshed applications lists."), ''], 5000)
+                global_event.emit("show-message", [_("Package lists updated completely."), ''], 5000)
                 global_event.emit('update-list-finish')
                 global_event.emit("hide-update-list-dialog")
 
@@ -451,7 +451,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                         error_handler=lambda e:handle_dbus_error("request_status", e),
                         )
                 list_message = []
-                list_message.append(_("Failed to refresh applications lists."))
+                list_message.append(_("Failed to refresh package lists."))
                 list_message.append(_('Try again'))
                 list_message.append(lambda:global_event.emit('start-update-list'))
                 global_event.emit("show-message", list_message, 0)
@@ -462,16 +462,16 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 (pkg_name, action_type) = action_content
                 if action_type == ACTION_INSTALL:
                     install_page.download_parse_failed(pkg_name)
-                    global_event.emit("show-message", _("Problem occurred when analyzing dependencies for %s. Installation aborted") % pkg_name)
+                    global_event.emit("show-message", _("Problem occurred when analyzing dependencies for %s. Installation aborted.") % pkg_name)
                 elif action_type == ACTION_UPGRADE:
                     upgrade_page.download_parse_failed(pkg_name)
-                    global_event.emit("show-message", _("Problem occurred when analyzing dependencies for %s. Upgrade aborted") % pkg_name)
+                    global_event.emit("show-message", _("Problem occurred when analyzing dependencies for %s. Upgrade aborted.") % pkg_name)
 
             elif signal_type == "pkg-not-in-cache":
                 pkg_name = action_content
                 list_message = []
                 list_message.append(_('The requested package \"%s\" was not found in the package list.') % pkg_name)
-                list_message.append(_('Refresh the package list and try again.'))
+                list_message.append(_('Update package lists again and try again.'))
                 list_message.append(lambda:global_event.emit('start-update-list'))
                 global_event.emit("show-message", list_message, 0)
         except Exception, e:
@@ -726,7 +726,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
                 ["theme", "menu", "min", "close"],
                 show_title=False
                 )
-        self.application.window.set_title(_("Deepin Software Center"))
+        self.application.window.set_title(_("Deepin Store"))
         self.application.window.connect("delete-event", self.application_close_window)
 
         # Init page box.
@@ -809,7 +809,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
             menu_min_width = 150
         menu = Menu(
             [
-             (None, _("Refresh applications lists"), lambda:global_event.emit('start-update-list')),
+             (None, _("Update package lists"), lambda:global_event.emit('start-update-list')),
              (None, _("Open download directory"), self.open_download_directory),
              (None, _("Clear up cached packages"), self.clean_download_cache),
              (None, _("View new features"), lambda : self.show_wizard_win()),
@@ -1123,9 +1123,9 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
     def clean_download_cache_reply(obj, result):
         num, size = result
         if num != 0:
-            message = _("You have cleared up %s pakcages and saved %s of space") % (num, bit_to_human_str(size))
+            message = _("You have cleared up %s pakcages and saved %s of space.") % (num, bit_to_human_str(size))
         else:
-            message = _("Your system is clean.")
+            message = _("Your system cache is empty.")
         global_event.emit("show-message", message, 5000)
 
     def run(self):    

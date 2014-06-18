@@ -307,17 +307,13 @@ class Update(dbus.service.Object):
                             (update_num, update_num-remind_num))
                 elif remind_num > 0 and remind_num != self.remind_num:
                     if remind_num != 1:
-                        self.send_notify(_(
-                            "There are %s packages need to upgrade in your system,"
-                            " please open the software center to upgrade!"
-                            ) % remind_num,
-                            _("Software Center"))
+                        self.send_notify(_("There are %s packages needed to "
+                            "upgrade in your system, please use Deepin Store "
+                            "to upgrade.") % remind_num, _("Deepin Store"))
                     else:
-                        self.send_notify(_(
-                            "There is %s package need to upgrade in your system,"
-                            " please open the software center to upgrade!"
-                            ) % remind_num,
-                            _("Software Center"))
+                        self.send_notify(_("There is %s package needed to "
+                            "upgrade in your system, please use Deepin Store "
+                            "to upgrade.") % remind_num, _("Deepin Store"))
                 self.remind_num = remind_num
                 print "Finish update list."
                 log("Finish update list.")

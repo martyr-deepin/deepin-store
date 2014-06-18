@@ -75,7 +75,7 @@ class UpgradingBar(gtk.HBox):
         '''
         gtk.HBox.__init__(self)
 
-        self.message_label = Label(_("Last upgraded time: "))
+        self.message_label = Label(_("Last system upgraded time: "))
         self.message_time = widgets.HumanTimeTip(utils.get_last_update_time())
 
         self.message_box = gtk.HBox()
@@ -104,7 +104,7 @@ class NewestBar(gtk.HBox):
         '''
         gtk.HBox.__init__(self)
         
-        self.message_label = Label(_("Last upgraded time: "))
+        self.message_label = Label(_("Last system upgraded time: "))
         self.message_time = widgets.HumanTimeTip(utils.get_last_upgrade_time())
 
         self.message_box = gtk.HBox()
@@ -133,7 +133,7 @@ class NewestBar(gtk.HBox):
         
         container_remove_all(self.no_notify_label_align)
         if no_notify_num > 0:
-            self.no_notify_label.set_text(_("Unwatched (%s)") % no_notify_num)
+            self.no_notify_label.set_text(_("No reminder to update (%s)") % no_notify_num)
             self.no_notify_label_align.add(self.no_notify_label)
             
             self.show_all()
@@ -179,7 +179,7 @@ class UpgradeBar(gtk.HBox):
             app_theme.get_pixbuf("button/upgrade_all_press.png"),
             insensitive_dpixbuf=DynamicPixbuf(utils.get_common_image('button/upgrade_all_insensitive.png')),
             )
-        Tooltip.text(self.upgrade_selected_button, _("Upgrade select items"))
+        Tooltip.text(self.upgrade_selected_button, _("Upgrade applications selected"))
         self.upgrade_selected_button_align = gtk.Alignment()
         self.upgrade_selected_button_align.set(1.0, 0.5, 0, 0)
         self.upgrade_selected_button_align.set_padding(0, 0, 6, ITEM_BUTTON_PADDING_RIGHT)
@@ -205,7 +205,7 @@ class UpgradeBar(gtk.HBox):
         
         container_remove_all(self.no_notify_label_align)
         if no_notify_num > 0:
-            self.no_notify_label.set_text(_("Unwatched (%s)") % no_notify_num)
+            self.no_notify_label.set_text(_("No reminder to update (%s)") % no_notify_num)
             self.no_notify_label_align.add(self.no_notify_label)
             
             self.show_all()
@@ -235,7 +235,7 @@ class NoNotifyBar(gtk.HBox):
         self.message_label_align.set_padding(0, 0, 0, 0)
         self.message_label_align.add(self.message_label)
         self.notify_again_label = Label(
-            _("Watch again"),
+            _("Remind again"),
             hover_color=app_theme.get_color("homepage_hover")
             )
         self.notify_again_label.set_clickable()
@@ -286,7 +286,7 @@ class UpgradingTopBar(gtk.HBox):
         self.is_shutdown_button_align.set_padding(0, 0, 10, 0)
         self.is_shutdown_button_align.add(self.is_shutdown_button)
 
-        self.message_label = Label(_("Shut down the computer after upgrade"))
+        self.message_label = Label(_("Shut down the computer after upgraded"))
         self.message_label_align = gtk.Alignment()
         self.message_label_align.set(0.0, 0.5, 0, 0)
         self.message_label_align.set_padding(0, 0, 0, 0)
@@ -301,11 +301,11 @@ class UpgradingTopBar(gtk.HBox):
             if system_id == "linuxdeepin" or system_id == "deepin":
                 release_version = lsb_release.get_distro_information()["RELEASE"]
                 if release_version == "2013" and not os.path.exists(SHUT_DOWN_DIALOG_PATH):
-                    self.message_label.set_text(_("Deepin System Settings is not installed, this function is not work!"))
+                    self.message_label.set_text(_("This function is invalid without Deepin System Settings installed."))
                 elif release_version == "2014" and not os.path.exists(DDE_SHUTDOWN_PATH):
-                    self.message_label.set_text(_("Startdde is not installed, this function is not work!"))
+                    self.message_label.set_text(_("Deepin Desktop Environment is not installed, this function is invalid!"))
             else:
-                self.message_label.set_text(_("The system is not deepin, this function is not work!"))
+                self.message_label.set_text(_("The system is not Deepin, this function is invalid."))
 
     def shutdown_action(self):
         if self.is_shutdown_button.get_active():
@@ -332,17 +332,17 @@ class UpgradingBox(gtk.VBox):
         self.upgrading_progress_detail = Label("")
 
         bottom_info_box = gtk.Table(3, 2)
-        recent_update_time_label = utils.create_right_align_label(_("Last refresh app list time: "))
+        recent_update_time_label = utils.create_right_align_label(_("Last updated package lists time: "))
         self.recent_update_time = widgets.HumanTimeTip(utils.get_last_update_time())
         bottom_info_box.attach(recent_update_time_label, 0, 1, 0, 1, xoptions=gtk.FILL, xpadding=0, ypadding=4)
         bottom_info_box.attach(self.recent_update_time, 1, 2, 0, 1, xoptions=gtk.FILL, xpadding=0, ypadding=4)
 
-        recent_upgrade_time_label = utils.create_right_align_label(_("Last upgraded time: "))
+        recent_upgrade_time_label = utils.create_right_align_label(_("Last system upgraded time: "))
         self.recent_upgrade_time = widgets.HumanTimeTip(utils.get_last_upgrade_time())
         bottom_info_box.attach(recent_upgrade_time_label, 0, 1, 1, 2, xoptions=gtk.FILL, xpadding=0, ypadding=4)
         bottom_info_box.attach(self.recent_upgrade_time, 1, 2, 1, 2, xoptions=gtk.FILL, xpadding=0, ypadding=4)
 
-        software_mirror_label = utils.create_right_align_label(_("The source mirror: "))
+        software_mirror_label = utils.create_right_align_label(_("Mirror Receiving: "))
         if self.preference_dialog.mirrors_box.current_mirror_item:
             self.software_mirror = utils.create_left_align_label( 
                 self.preference_dialog.mirrors_box.current_mirror_item.mirror.name)
@@ -398,9 +398,9 @@ class UpgradingBox(gtk.VBox):
         download_failed_box.set_size_request(400, -1)
         error_title = Label(_("Failed to download updates"), text_color=DynamicColor('#ff0000'), text_size=16)
 
-        detail_info_start = Label(_("The requested package does not exsist on server."))
+        detail_info_start = Label(_("The requested package does not exist on server."))
         detail_info_start_2 = Label(_("Suggest to "))
-        detail_info_middle = widgets.ActionButton(_("refresh applications lists"), lambda:global_event.emit("start-update-list"))
+        detail_info_middle = widgets.ActionButton(_("update package lists"), lambda:global_event.emit("start-update-list"))
         detail_info_end = Label(_(" and try again."))
         detail_info_box = gtk.HBox()
         detail_info_box.pack_start(detail_info_start_2, False, False)
@@ -418,10 +418,10 @@ class UpgradingBox(gtk.VBox):
         install_failed_box.set_size_request(400, -1)
         error_title = Label(_("Failed to install updates"), text_color=DynamicColor('#ff0000'), text_size=16)
 
-        error_info = Label(_("This may be because your local dependencies are corrupted."), wrap_width=360)
+        error_info = Label(_("This problem occurs due to corrupted local apt dependency relationship."), wrap_width=360)
 
         detail_info_start = Label(_("Suggest to "))
-        detail_info_middle = widgets.ActionButton(_("refresh applications lists"), lambda:global_event.emit("start-update-list"))
+        detail_info_middle = widgets.ActionButton(_("update package lists"), lambda:global_event.emit("start-update-list"))
         detail_info_end = Label(_(" and try again."))
         detail_info_box = gtk.HBox()
         detail_info_box.pack_start(detail_info_start, False, False)
@@ -439,10 +439,12 @@ class UpgradingBox(gtk.VBox):
         marked_delete_box.set_size_request(400, -1)
         error_title = Label(_("Warning"), text_color=DynamicColor('#ff0000'), text_size=16)
 
-        error_info = Label(_("Crucial components will be uninstalled. This may be because your local dependencies are corrupted, or incorrect dependencies on server."), wrap_width=360)
+        error_info = Label(_("The update requires to uninstall crucial components "
+            "due to corrupted local dependencies or incorrect package dependencies "
+            "on server."), wrap_width=360)
     
         detail_info_start = Label(_("Suggest to "))
-        detail_info_middle = widgets.ActionButton(_("refresh applications lists"), lambda:global_event.emit("start-update-list"))
+        detail_info_middle = widgets.ActionButton(_("update package lists"), lambda:global_event.emit("start-update-list"))
         detail_info_end = Label(_(" and try again."))
         detail_info_box = gtk.HBox()
         detail_info_box.pack_start(detail_info_start, False, False)
@@ -478,8 +480,8 @@ class UpgradingBox(gtk.VBox):
 class UploadErrorLabelBox(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
-        upload_info_start = Label(_("If the problem persists, you may wish to "))
-        upload_info_middle = widgets.ActionButton(_("Send Error Report"), self.upload_error_log)
+        upload_info_start = Label(_("If the prompt occurs again, you could "))
+        upload_info_middle = widgets.ActionButton(_("send error report"), self.upload_error_log)
         upload_info_end = Label(_("."))
         
         action_info_box = gtk.HBox()
@@ -504,8 +506,8 @@ class UploadErrorLabelBox(gtk.VBox):
         self.show_all()
 
     def show_upload_failed(self, e):
-        upload_info_start = Label(_("Failed to send the error report. You may wish to try again. "))
-        upload_info_middle = widgets.ActionButton(_("Send Error Report"), self.upload_error_log)
+        upload_info_start = Label(_("Failed to send the error report. You could try again."))
+        upload_info_middle = widgets.ActionButton(_("send error report"), self.upload_error_log)
 
         action_info_box = gtk.HBox()
         action_info_box.pack_start(upload_info_start, False, False)
@@ -659,7 +661,7 @@ class UpgradePage(gtk.VBox):
         #self.upgrade_treeview.queue_draw()
 
         if size == -1:
-            self.upgrade_bar.message_label.set_text(_("There is a problem with your local apt dependence environment "))
+            self.upgrade_bar.message_label.set_text(_("This problem occurs due to corrupted local apt dependence relationship."))
             self.upgrade_bar.upgrade_selected_button.set_sensitive(False)
         else:
             select_pkg_names = self.get_current_selected_pkgs()
@@ -1083,19 +1085,19 @@ class UpgradePage(gtk.VBox):
         #global_event.emit("show-newest-view")
 
     def download_ready(self, pkg_name):
-        self.upgrading_view.upgrading_progress_detail.set_text(_("Analyzing dependencies..."))
+        self.upgrading_view.upgrading_progress_detail.set_text(_("Dependencies analyzing"))
 
     def download_wait(self, pkg_name):
         self.upgrading_view.upgrading_progress_detail.set_text(_("Finished analyzing dependencies."))
 
     def download_start(self, pkg_name):
-        self.upgrading_view.upgrading_progress_detail.set_text(_("Download has started..."))
+        self.upgrading_view.upgrading_progress_detail.set_text(_("Download has started"))
 
     def download_failed(self, pkg_name, error):
         self.upgrading_view.show_error("download_failed")
 
     def download_update(self, pkg_name, percent, speed, finish_number, total, downloaded_size, total_size):
-        self.upgrading_view.upgrading_progress_detail.set_text(_("Completed: %s/%s (%s/%s) Download rate: %s/s") % (
+        self.upgrading_view.upgrading_progress_detail.set_text(_("Completed: %s/%s (%s/%s) Download Rate: %s/s") % (
             utils.bit_to_human_str(downloaded_size),
             utils.bit_to_human_str(total_size),
             finish_number,
@@ -1124,7 +1126,7 @@ class UpgradePage(gtk.VBox):
         self.upgrading_view.upgrading_progressbar.set_progress(percent)
     
     def action_finish(self, pkg_name, pkg_info_list):
-        self.upgrading_view.upgrading_progress_detail.set_text(_("Upgrade finished."))
+        self.upgrading_view.upgrading_progress_detail.set_text(_("Upgrade completed"))
         self.upgrading_view.upgrading_progressbar.set_progress(100.0)
 
 gobject.type_register(UpgradePage)
@@ -1601,7 +1603,7 @@ class UpgradeItem(TreeItem):
     
     def download_ready(self):
         self.status = self.STATUS_READY_DOWNLOAD
-        self.status_text = _("Analyzing dependencies")
+        self.status_text = _("Dependencies analyzing")
     
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
@@ -1641,7 +1643,7 @@ class UpgradeItem(TreeItem):
             
     def download_parse_failed(self):
         self.status = self.STATUS_PARSE_DOWNLOAD_FAILED
-        self.status_text = _("Analyzing dependencies failed")
+        self.status_text = _("Dependencies analysis failed")
     
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
@@ -1666,7 +1668,7 @@ class UpgradeItem(TreeItem):
     def action_finish(self):
         self.status = self.STATUS_UPGRADE_FINISH
         self.progress_buffer.progress = 100
-        self.status_text = _("Upgrade complete")
+        self.status_text = _("Upgrade completed")
         
         if self.redraw_request_callback:
             self.redraw_request_callback(self)

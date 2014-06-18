@@ -747,7 +747,7 @@ class RecommendItem(TreeItem):
         self.slider_switcher.connect("leave-notify-index", lambda w, i: global_event.emit("set-cursor", None))
 
         self.recommend_infos = sort_for_home_page_data(data['recommend'])
-        self.tab_switcher = TabSwitcher([_("Hot applications"), _("Topics"), _("Download rank")], CATEGORY_ITEM_NAME_SIZE)
+        self.tab_switcher = TabSwitcher([_("Recommendations"), _("Topics"), _("Download rank")], CATEGORY_ITEM_NAME_SIZE)
         self.tab_switcher_align = gtk.Alignment()
         self.tab_switcher_align.set(0.5, 0.5, 1, 1)
         self.tab_switcher_align.set_padding(10, 0, 0, 9)

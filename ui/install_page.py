@@ -312,7 +312,7 @@ class InstallItem(TreeItem):
         self.grade_star = 0
         
         self.status = self.STATUS_READY_DOWNLOAD
-        self.status_text = _("Analyzing dependencies")
+        self.status_text = _("Dependencies analyzing")
         self.progress_buffer = ProgressBuffer()
         
         button_pixbuf = app_theme.get_pixbuf("button/start_normal.png").get_pixbuf()
@@ -702,7 +702,7 @@ class InstallItem(TreeItem):
     
     def download_ready(self):
         self.status = self.STATUS_READY_DOWNLOAD
-        self.status_text = _("Analyzing dependencies")
+        self.status_text = _("Dependencies analyzing")
 
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
@@ -742,7 +742,7 @@ class InstallItem(TreeItem):
     
     def download_parse_failed(self):
         self.status = self.STATUS_PARSE_DOWNLOAD_FAILED
-        self.status_text = _("Analyzing dependencies failed")
+        self.status_text = _("Dependencies analysis failed")
     
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
@@ -767,7 +767,7 @@ class InstallItem(TreeItem):
     def action_finish(self):
         self.status = self.STATUS_INSTALL_FINISH
         self.progress_buffer.progress = 100
-        self.status_text = _("Installation complete")
+        self.status_text = _("Installation completed")
 
         if self.redraw_request_callback:
             self.redraw_request_callback(self)

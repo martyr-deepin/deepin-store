@@ -105,7 +105,9 @@ class SearchPage(gtk.VBox):
         
     def update_message_bar(self, treeview):
         if len(treeview.visible_items) > 0:
-            self.message_bar.set_message(_("%s: %s matched applications") % (' '.join(self.keywords), len(self.all_pkg_names)))
+            self.message_bar.set_message(
+                    " ".join(self.keywords) + ": " +
+                    _("%s applications searched") % len(self.all_pkg_names))
             container_remove_all(self)
             self.pack_start(self.content_box)
             global_event.emit("update-current-status-pkg-page", treeview)

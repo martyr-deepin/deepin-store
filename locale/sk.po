@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-09 14:44+0800\n"
+"POT-Creation-Date: 2014-06-18 16:14+0800\n"
 "PO-Revision-Date: 2014-03-06 20:58+0000\n"
 "Last-Translator: ballmet <emkohencel@gmail.com>\n"
 "Language-Team: Slovak (http://www.transifex.com/projects/p/deepin-software-"
@@ -21,11 +21,11 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
-#: ../ui/upgrade_page.py:446
+#: ../ui/upgrade_page.py:448
 msgid " and try again."
 msgstr "a skúsiť znovu."
 
-#: ../ui/preference.py:559
+#: ../ui/preference.py:567
 msgid " hour"
 msgstr "hodina"
 
@@ -54,6 +54,11 @@ msgstr "%s programov nie je sledovaných"
 msgid "%s applications can be uninstalled"
 msgstr "Dá sa odinštalovať %s programov"
 
+#: ../ui/search_page.py:110
+#, fuzzy, python-format
+msgid "%s applications searched"
+msgstr "%s programov nie je sledovaných"
+
 #: ../ui/software_center.py:127
 #, python-format
 msgid "%s haven't any desktop file"
@@ -70,11 +75,11 @@ msgid "%s minutes ago"
 msgstr "Pred %s minútami"
 
 #: ../ui/software_center.py:391
-#, python-format
-msgid "%s packages upgrade Successfully."
+#, fuzzy, python-format
+msgid "%s packages upgrade successfully."
 msgstr "Povýšenie %s programov bolo úspešné."
 
-#: ../ui/upgrade_page.py:666
+#: ../ui/upgrade_page.py:668
 #, python-format
 msgid "%s updates are selected. %s will be downloaded."
 msgstr "Je vybraných %s aktualizácií. %s bude stiahnutých"
@@ -84,17 +89,12 @@ msgstr "Je vybraných %s aktualizácií. %s bude stiahnutých"
 msgid "%s: %s applications"
 msgstr "%s: %s programov"
 
-#: ../ui/search_page.py:108
-#, python-format
-msgid "%s: %s matched applications"
-msgstr "%s: %s odpovedajúcich programov"
-
 #: ../ui/start_desktop_window.py:227 ../ui/software_center.py:131
 #, python-format
 msgid "%s: request for starting applications sent"
 msgstr "%s: žiada sa o spustenie poslaných programov"
 
-#: ../ui/upgrade_page.py:483
+#: ../ui/upgrade_page.py:485
 msgid "."
 msgstr "."
 
@@ -106,7 +106,7 @@ msgstr "2D grafika"
 msgid "3D graphics"
 msgstr "3D grafika"
 
-#: ../ui/preference.py:683
+#: ../ui/preference.py:691
 msgid "About"
 msgstr "O programe"
 
@@ -122,23 +122,6 @@ msgstr "Akčné hry"
 msgid "Advernture games"
 msgstr "Dobrodružné hry"
 
-#: ../ui/detail_page.py:178
-msgid "Also in the category..."
-msgstr "Tiež v skupine..."
-
-#: ../ui/install_page.py:315 ../ui/install_page.py:705
-#: ../ui/upgrade_page.py:1604
-msgid "Analyzing dependencies"
-msgstr "Analyzujem závislosti"
-
-#: ../ui/install_page.py:745 ../ui/upgrade_page.py:1644
-msgid "Analyzing dependencies failed"
-msgstr "Nepodarilo sa analyzovať závislosti"
-
-#: ../ui/upgrade_page.py:1086
-msgid "Analyzing dependencies..."
-msgstr "Zisťujem závislosti..."
-
 #: ../ui/category_info.py:48
 msgid "Arcade games"
 msgstr "Arkádové hry"
@@ -150,10 +133,6 @@ msgstr "Archivovanie"
 #: ../ui/category_info.py:36
 msgid "Audiovideo"
 msgstr "Zvuk a obraz"
-
-#: ../ui/category_info.py:37
-msgid "Audiovideo editing"
-msgstr "Editovanie zvuku a obrazu"
 
 #: ../ui/category_info.py:49
 msgid "Board games"
@@ -175,7 +154,7 @@ msgstr "Kartové kry"
 msgid "Category: "
 msgstr "Kategória:"
 
-#: ../ui/preference.py:503
+#: ../ui/preference.py:511
 msgid "Change"
 msgstr "Vybrať"
 
@@ -187,32 +166,14 @@ msgstr "Odstrániť balíky vo vyrovnávacej pamäti"
 msgid "Click to refresh"
 msgstr "Kliknite pre obnovenie"
 
-#: ../ui/software_center.py:220
-msgid "Comment was failed. Please check your network connection!"
-msgstr ""
-"Poznámku sa nepodarilo pridať. Prosím, skontrolujte svoje internetové "
-"pripojenie!"
-
-#: ../ui/software_center.py:204
-msgid "Comment was successful. Thanks for your involvement. :)"
-msgstr "Poznámku sa podarilo pridať. Ďakujeme vám za zapojenie. ;)"
-
-#: ../ui/upgrade_page.py:1098
-#, python-format
-msgid "Completed: %s/%s (%s/%s) Download rate: %s/s"
+#: ../ui/upgrade_page.py:1100
+#, fuzzy, python-format
+msgid "Completed: %s/%s (%s/%s) Download Rate: %s/s"
 msgstr "Dokončené: %s/%s (%s/%s) Rýchlosť sťahovania %s/s"
 
 #: ../ui/utils.py:338
 msgid "Configuring"
 msgstr "Nastavovanie"
-
-#: ../ui/upgrade_page.py:442
-msgid ""
-"Crucial components will be uninstalled. This may be because your local "
-"dependencies are corrupted, or incorrect dependencies on server."
-msgstr ""
-"Zásadné súčasti budú odinštalované. Môže to byť z dôvodu poškodenia "
-"závislostí. Alebo to môže byť nesprávnymi závislosťami na našom serveri."
 
 #: ../ui/category_info.py:79
 msgid "Database"
@@ -222,18 +183,29 @@ msgstr "Databáza"
 msgid "Debugging"
 msgstr "Ladenie"
 
+#: ../ui/upgrade_page.py:306
+#, fuzzy
+msgid "Deepin Desktop Environment is not installed, this function is invalid!"
+msgstr ""
+"Nastavenie systému Deepin nie je nainštalované. Táto funkcia nefunguje!"
+
+#: ../ui/dsc-daemon.py:312 ../ui/dsc-daemon.py:316
 #: ../ui/software_center.py:729 ../ui/preference.py:428
-msgid "Deepin Software Center"
+#, fuzzy
+msgid "Deepin Store"
 msgstr "Centrum softvéru"
 
 #: ../ui/preference.py:447
+#, fuzzy
 msgid ""
-"Deepin Software Center is a commonly used software center on Linux. It "
-"selected more than 2,600 decent applications and features easy installation "
-"and uninstall, software repository and recommended applications. It supports "
-"1-click install, downloading packages with multi-thread and clearing up "
+"Deepin Store is a commonly used software center on Linux. It selected more "
+"than 2,600 excellent applications with many functions of installation and "
+"uninstalling, software repository and popular recommendations, which "
+"supports 1-click quick installation, multi-threaded download and clearing of "
 "cached packages. It provides topics for software introduction and shares "
-"good applications. \n"
+"good applications.\n"
+"\n"
+"Deepin Store is a free software licensed under GNU GPLv3."
 msgstr ""
 "Centrum programov Deepin je strediskom bežne používaných programov na "
 "Linuxe. Bolo vybraných viac než 2,600 pekných aplikácií. Inštaláciu a "
@@ -242,14 +214,19 @@ msgstr ""
 "1-click install, viacvláknové sťahovanie aplikácií a upratanie balíčkov "
 "ktoré sú uložené vo vyrovnávacej pamäti.\n"
 
-#: ../ui/upgrade_page.py:304
-msgid "Deepin System Settings is not installed, this function is not work!"
-msgstr ""
-"Nastavenie systému Deepin nie je nainštalované. Táto funkcia nefunguje!"
-
-#: ../ui/preference.py:467
+#: ../ui/preference.py:475
 msgid "Delete configuration files"
 msgstr "Vymazať súbory s nastavením"
+
+#: ../ui/install_page.py:745 ../ui/upgrade_page.py:1646
+#, fuzzy
+msgid "Dependencies analysis failed"
+msgstr "Nepodarilo sa analyzovať závislosti"
+
+#: ../ui/install_page.py:315 ../ui/install_page.py:705
+#: ../ui/upgrade_page.py:1088 ../ui/upgrade_page.py:1606
+msgid "Dependencies analyzing"
+msgstr ""
 
 #: ../ui/category_info.py:86
 msgid "Desktop environment"
@@ -263,27 +240,28 @@ msgstr "Vývoj"
 msgid "Disc burner"
 msgstr "Napaľovanie diskov"
 
-#: ../ui/preference.py:497
+#: ../ui/preference.py:505
 msgid "Download directory: "
 msgstr "Adresár pre sťahovanie:"
 
-#: ../ui/upgrade_page.py:1108
+#: ../ui/upgrade_page.py:1110
 msgid "Download finished."
 msgstr "Sťahovanie dokončené."
 
-#: ../ui/upgrade_page.py:1092
-msgid "Download has started..."
+#: ../ui/upgrade_page.py:1094
+#, fuzzy
+msgid "Download has started"
 msgstr "Sťahovanie sa začalo..."
 
 #: ../ui/home_page.py:750
 msgid "Download rank"
 msgstr "Rebríček sťahovaní"
 
-#: ../ui/preference.py:481
+#: ../ui/preference.py:489
 msgid "Download settings"
 msgstr "Stiahnuť nastavenia"
 
-#: ../ui/upgrade_page.py:1112
+#: ../ui/upgrade_page.py:1114
 msgid "Download stopped."
 msgstr "Sťahovanie bolo zastavené."
 
@@ -300,17 +278,13 @@ msgstr "Stiahnuté: %s"
 msgid "Download: 0"
 msgstr "Sťahovanie: 0"
 
-#: ../ui/install_page.py:719 ../ui/upgrade_page.py:1618
+#: ../ui/install_page.py:719 ../ui/upgrade_page.py:1620
 msgid "Downloading"
 msgstr "Sťahovanie"
 
 #: ../ui/upgrade_page.py:328
 msgid "Downloading updates"
 msgstr "Sťahovanie aktualizácií"
-
-#: ../ui/category_info.py:74
-msgid "Education"
-msgstr "Učenie"
 
 #: ../ui/category_info.py:29
 msgid "Email"
@@ -332,7 +306,7 @@ msgstr "Strojárstvo"
 msgid "Err"
 msgstr "Chyba"
 
-#: ../ui/upgrade_page.py:1115
+#: ../ui/upgrade_page.py:1117
 msgid "Failed to analyze dependencies."
 msgstr "Nepodarilo sa analyzovať závislosti."
 
@@ -345,11 +319,13 @@ msgid "Failed to install updates"
 msgstr "Nepodarilo sa nainštalovať aktualizácie"
 
 #: ../ui/software_center.py:454
-msgid "Failed to refresh applications lists."
+#, fuzzy
+msgid "Failed to refresh package lists."
 msgstr "Nepodarilo sa obnoviť zoznam aplikácií."
 
-#: ../ui/upgrade_page.py:507
-msgid "Failed to send the error report. You may wish to try again. "
+#: ../ui/upgrade_page.py:509
+#, fuzzy
+msgid "Failed to send the error report. You could try again."
 msgstr "Nepodarilo sa poslať záznam o chybu. Môžete to skúsiť znovu."
 
 #: ../ui/category_info.py:97
@@ -364,7 +340,7 @@ msgstr "Prenos súborov"
 msgid "Finance"
 msgstr "Peniaze"
 
-#: ../ui/upgrade_page.py:1089
+#: ../ui/upgrade_page.py:1091
 msgid "Finished analyzing dependencies."
 msgstr "Dokončil som analýzu závislostí."
 
@@ -372,12 +348,13 @@ msgstr "Dokončil som analýzu závislostí."
 msgid "Games"
 msgstr "Hry"
 
-#: ../ui/preference.py:681
+#: ../ui/preference.py:689
 msgid "General"
 msgstr "Obecné"
 
 #: ../ui/software_center.py:434
-msgid "Generating local package database..."
+#, fuzzy
+msgid "Generating package list database..."
 msgstr "Vytvára sa miesta databáza balíčkov..."
 
 #: ../ui/utils.py:351
@@ -400,17 +377,13 @@ msgstr "Nález"
 msgid "Home"
 msgstr "Domovská zložka"
 
-#: ../ui/home_page.py:750
-msgid "Hot applications"
-msgstr "Najlepšie programy"
-
 #: ../ui/category_info.py:81
 msgid "IDE"
 msgstr "IDE"
 
-#: ../ui/upgrade_page.py:481
-msgid "If the problem persists, you may wish to "
-msgstr "Pokiaľ problémy pretrvávajú, možno by ste chceli"
+#: ../ui/upgrade_page.py:483
+msgid "If the prompt occurs again, you could "
+msgstr ""
 
 #: ../ui/utils.py:350
 msgid "Ign"
@@ -438,7 +411,8 @@ msgid "Installation"
 msgstr "Inštalácia"
 
 #: ../ui/install_page.py:770
-msgid "Installation complete"
+#, fuzzy
+msgid "Installation completed"
 msgstr "Inštalácia dokončená"
 
 #: ../ui/install_page.py:649
@@ -447,7 +421,7 @@ msgstr "Inštalácia bola prerušená"
 
 #: ../ui/install_page.py:488 ../ui/download_rank_page.py:371
 #: ../ui/home_page.py:1070 ../ui/utils.py:339 ../ui/album_page.py:485
-#: ../ui/search_page.py:274
+#: ../ui/search_page.py:276
 msgid "Installed"
 msgstr "Nainštalované"
 
@@ -455,7 +429,7 @@ msgstr "Nainštalované"
 msgid "Installing"
 msgstr "Inštalujem"
 
-#: ../ui/upgrade_page.py:1119
+#: ../ui/upgrade_page.py:1121
 msgid "Installing updates"
 msgstr "Inštalovanie aktualizácií"
 
@@ -483,14 +457,16 @@ msgstr "Detské hry"
 msgid "Languages"
 msgstr "Jazyky"
 
-#: ../ui/upgrade_page.py:335
-msgid "Last refresh app list time: "
-msgstr "Čas posledného obnovenia listu programov:"
-
 #: ../ui/upgrade_page.py:78 ../ui/upgrade_page.py:107
 #: ../ui/upgrade_page.py:340
-msgid "Last upgraded time: "
+#, fuzzy
+msgid "Last system upgraded time: "
 msgstr "Doba posledného povýšenia:"
+
+#: ../ui/upgrade_page.py:335
+#, fuzzy
+msgid "Last updated package lists time: "
+msgstr "Čas posledného obnovenia listu programov:"
 
 #: ../ui/detail_page.py:239 ../ui/detail_page.py:491
 msgid "Loading comments..."
@@ -504,15 +480,23 @@ msgstr "Logické hry"
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../ui/preference.py:487
+#: ../ui/preference.py:495
 msgid "Max download task number: "
 msgstr "Najvyšší počet úloh, ktoré boli stiahnuté:"
+
+#: ../ui/category_info.py:37
+msgid "Media Editing"
+msgstr ""
 
 #: ../ui/category_info.py:72
 msgid "Medical"
 msgstr "Lekárstvo"
 
-#: ../ui/preference.py:682
+#: ../ui/upgrade_page.py:345
+msgid "Mirror Receiving: "
+msgstr ""
+
+#: ../ui/preference.py:690
 msgid "Mirrors"
 msgstr "Zrkadlá"
 
@@ -540,9 +524,18 @@ msgstr "Sieť"
 msgid "News"
 msgstr "Novinky"
 
+#: ../ui/item_render.py:44
+msgid "No reminder"
+msgstr ""
+
+#: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
+#, python-format
+msgid "No reminder to update (%s)"
+msgstr ""
+
 #: ../ui/detail_page.py:441 ../ui/install_page.py:481
 #: ../ui/download_rank_page.py:364 ../ui/home_page.py:1063
-#: ../ui/album_page.py:478 ../ui/search_page.py:267
+#: ../ui/album_page.py:478 ../ui/search_page.py:269
 msgid "Not found"
 msgstr ""
 
@@ -554,8 +547,9 @@ msgstr "OK"
 msgid "Office"
 msgstr "Kancelária"
 
-#: ../ui/preference.py:464
-msgid "On uninstall software"
+#: ../ui/preference.py:472
+#, fuzzy
+msgid "On uninstalling the software"
 msgstr "Pri odinštalácií programu"
 
 #: ../ui/widgets.py:78
@@ -569,6 +563,10 @@ msgstr "Pred jednou minutou"
 #: ../ui/software_center.py:813
 msgid "Open download directory"
 msgstr "Otvoriť adresár pre sťahovanie"
+
+#: ../ui/software_center.py:442
+msgid "Package lists updated completely."
+msgstr ""
 
 #: ../ui/category_info.py:89
 msgid "Package manager"
@@ -588,6 +586,10 @@ msgid ""
 "off your computer."
 msgstr ""
 
+#: ../ui/detail_page.py:178
+msgid "Popular recommendations"
+msgstr ""
+
 #: ../ui/detail_page.py:608
 msgid "Powered by 又拍云存储"
 msgstr "Poháňané 又拍云存储"
@@ -605,15 +607,15 @@ msgid "Preparing to configure"
 msgstr "Pripravuje sa nastavenie"
 
 #: ../ui/software_center.py:465
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"Problem occurred when analyzing dependencies for %s. Installation aborted"
+"Problem occurred when analyzing dependencies for %s. Installation aborted."
 msgstr ""
 "Pri zisťovaní závislostí pre %s sa vyskytli chyby. Inštalácia bola zrušená"
 
 #: ../ui/software_center.py:468
-#, python-format
-msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted"
+#, fuzzy, python-format
+msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
 msgstr ""
 "Pri zisťovaní závislostí pre %s sa vyskytli chyby. Povýšenie bolo zrušené"
 
@@ -633,21 +635,33 @@ msgstr "Puzzlové hry"
 msgid "Quit"
 msgstr "Zrušiť"
 
+#: ../ui/software_center.py:220
+#, fuzzy
+msgid "Rating failed. Please check your network connection!"
+msgstr ""
+"Poznámku sa nepodarilo pridať. Prosím, skontrolujte svoje internetové "
+"pripojenie!"
+
+#: ../ui/software_center.py:204
+#, fuzzy
+msgid "Rating successfully. Thanks for your involvement."
+msgstr "Poznámku sa podarilo pridať. Ďakujeme vám za zapojenie. ;)"
+
+#: ../ui/home_page.py:750
+msgid "Recommendations"
+msgstr ""
+
 #: ../ui/category_info.py:42
 msgid "Recorder"
 msgstr "Nahrávanie zvuku"
 
-#: ../ui/software_center.py:812
-msgid "Refresh applications lists"
-msgstr "Obnoviť zoznam balíkov"
-
-#: ../ui/software_center.py:474
-msgid "Refresh the package list and try again."
-msgstr "Obnovte zoznam balíkov a skúste to znovu."
-
 #: ../ui/category_info.py:76
 msgid "Religion"
 msgstr "Náboženstvo"
+
+#: ../ui/upgrade_page.py:238 ../ui/item_render.py:46
+msgid "Remind again"
+msgstr ""
 
 #: ../ui/category_info.py:32
 msgid "Remote access"
@@ -669,6 +683,11 @@ msgstr "Skenovanie a tlačenie"
 msgid "Science"
 msgstr "Veda"
 
+#: ../ui/category_info.py:74
+#, fuzzy
+msgid "Science Education"
+msgstr "Učenie"
+
 #: ../ui/category_info.py:98
 msgid "Screensaver"
 msgstr "Šporič obrazovky"
@@ -677,20 +696,17 @@ msgstr "Šporič obrazovky"
 msgid "Security"
 msgstr "Bezpečnosť"
 
-#: ../ui/preference.py:653
+#: ../ui/preference.py:661
 msgid "Select Directory"
 msgstr "Vybrať adresár"
 
-#: ../ui/preference.py:594
+#: ../ui/preference.py:602
 msgid "Select mirror"
 msgstr "Vyberte zrkadlo"
 
-#: ../ui/upgrade_page.py:482 ../ui/upgrade_page.py:508
-msgid "Send Error Report"
-msgstr "Poslať správu o chybe"
-
 #: ../ui/software_center.py:194
-msgid "Sending comment..."
+#, fuzzy
+msgid "Sending rating..."
 msgstr "Poznámka sa posiela..."
 
 #: ../ui/category_info.py:43
@@ -702,7 +718,8 @@ msgid "Settings"
 msgstr "Nastavenia"
 
 #: ../ui/upgrade_page.py:289
-msgid "Shut down the computer after upgrade"
+#, fuzzy
+msgid "Shut down the computer after upgraded"
 msgstr "Vypnúť počítač po dokončení povýšenia"
 
 #: ../ui/detail_page.py:470
@@ -714,11 +731,6 @@ msgstr "Veľkosť: %s"
 msgid "Size: calculating..."
 msgstr "Veľkosť: počíta sa..."
 
-#: ../ui/dsc-daemon.py:300 ../ui/dsc-daemon.py:306
-#, fuzzy
-msgid "Software Center"
-msgstr "Centrum softvéru"
-
 #: ../ui/category_info.py:82
 msgid "Software development"
 msgstr "Vývoj softvéru"
@@ -726,12 +738,6 @@ msgstr "Vývoj softvéru"
 #: ../ui/category_info.py:56
 msgid "Sports games"
 msgstr "Športové hry"
-
-#: ../ui/upgrade_page.py:306
-#, fuzzy
-msgid "Startdde is not installed, this function is not work!"
-msgstr ""
-"Nastavenie systému Deepin nie je nainštalované. Táto funkcia nefunguje!"
 
 #: ../ui/category_info.py:57
 msgid "Strategy games"
@@ -741,12 +747,8 @@ msgstr "Strategické hry"
 msgid "Successfully installed"
 msgstr "Úspešne nainštalované"
 
-#: ../ui/software_center.py:442
-msgid "Successfully refreshed applications lists."
-msgstr "Zoznam programov bol úspešne obnovený."
-
 #: ../ui/upgrade_page.py:402 ../ui/upgrade_page.py:423
-#: ../ui/upgrade_page.py:444
+#: ../ui/upgrade_page.py:446
 msgid "Suggest to "
 msgstr "Navrhúť"
 
@@ -762,7 +764,7 @@ msgstr "Emulátor terminálu"
 msgid "Text editor"
 msgstr "Textový editor"
 
-#: ../ui/upgrade_page.py:501
+#: ../ui/upgrade_page.py:503
 msgid "The error was successfully reported and will be soon handled."
 msgstr "Chyba bola úspešne nahlásená, a čoskoro sa bude riešiť."
 
@@ -772,43 +774,54 @@ msgid "The requested package \"%s\" was not found in the package list."
 msgstr "Požadovaný balíček \"%s\" nebol nájdený v zozname balíkov."
 
 #: ../ui/upgrade_page.py:401
-msgid "The requested package does not exsist on server."
+#, fuzzy
+msgid "The requested package does not exist on server."
 msgstr "Požadovaný balík neexistuje na serveri."
-
-#: ../ui/upgrade_page.py:345
-msgid "The source mirror: "
-msgstr "Zdroje zrkadiel:"
 
 #: ../ui/upgrade_page.py:308
 #, fuzzy
-msgid "The system is not deepin, this function is not work!"
+msgid "The system is not Deepin, this function is invalid."
 msgstr ""
 "Nastavenie systému Deepin nie je nainštalované. Táto funkcia nefunguje!"
 
-#: ../ui/dsc-daemon.py:297
-#, python-format
-msgid ""
-"There are %s packages need to upgrade in your system, please open the "
-"software center to upgrade!"
-msgstr ""
-
-#: ../ui/dsc-daemon.py:303
-#, python-format
-msgid ""
-"There is %s package need to upgrade in your system, please open the software "
-"center to upgrade!"
-msgstr ""
-
-#: ../ui/upgrade_page.py:662
+#: ../ui/upgrade_page.py:442
 #, fuzzy
-msgid "There is a problem with your local apt dependence environment "
+msgid ""
+"The update requires to uninstall crucial components due to corrupted local "
+"dependencies or incorrect package dependencies on server."
+msgstr ""
+"Zásadné súčasti budú odinštalované. Môže to byť z dôvodu poškodenia "
+"závislostí. Alebo to môže byť nesprávnymi závislosťami na našom serveri."
+
+#: ../ui/dsc-daemon.py:310
+#, python-format
+msgid ""
+"There are %s packages needed to upgrade in your system, please use Deepin "
+"Store to upgrade."
+msgstr ""
+
+#: ../ui/dsc-daemon.py:314
+#, python-format
+msgid ""
+"There is %s package needed to upgrade in your system, please use Deepin "
+"Store to upgrade."
+msgstr ""
+
+#: ../ui/upgrade_page.py:304
+msgid "This function is invalid without Deepin System Settings installed."
+msgstr ""
+
+#: ../ui/upgrade_page.py:664
+#, fuzzy
+msgid "This problem occurs due to corrupted local apt dependence relationship."
 msgstr "Môže to byť z dôvodu poškodenia závislostí."
 
 #: ../ui/upgrade_page.py:421
-msgid "This may be because your local dependencies are corrupted."
+#, fuzzy
+msgid "This problem occurs due to corrupted local apt dependency relationship."
 msgstr "Môže to byť z dôvodu poškodenia závislostí."
 
-#: ../ui/preference.py:556
+#: ../ui/preference.py:564
 msgid "Time interval: "
 msgstr "Časový interval:"
 
@@ -817,8 +830,9 @@ msgid "Top 25 monthly"
 msgstr "TOP 25 každý mesiac"
 
 #: ../ui/download_rank_page.py:61
-msgid "Top 25 of all time"
-msgstr "TOP 25 po celý čas"
+#, fuzzy
+msgid "Top 25 totally"
+msgstr "TOP 25 každý mesiac"
 
 #: ../ui/download_rank_page.py:61
 msgid "Top 25 weekly"
@@ -846,8 +860,9 @@ msgid "Uninstall %s Successfully."
 msgstr "Odinštalácia %s bola úspěšná."
 
 #: ../ui/uninstall_page.py:579
-msgid "Uninstall successful"
-msgstr "Odinštalácia bola dokončená"
+#, fuzzy
+msgid "Uninstallation completed"
+msgstr "Inštalácia dokončená"
 
 #: ../ui/uninstall_page.py:565 ../ui/uninstall_page.py:572
 msgid "Uninstalling"
@@ -857,49 +872,44 @@ msgstr "Odinštalováva sa"
 msgid "Unpacking"
 msgstr "Rozbaľuje sa"
 
-#: ../ui/item_render.py:44
-msgid "Unwatch"
-msgstr "Prestať sledovať"
-
-#: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
-#, python-format
-msgid "Unwatched (%s)"
-msgstr "Nesledované (%s)"
-
-#: ../ui/preference.py:549
-msgid "Update applications lists"
-msgstr "Obnoviť zoznam aplikácií"
-
-#: ../ui/preference.py:552
+#: ../ui/preference.py:560
 msgid "Update automatically"
 msgstr "Aktualizovať automaticky"
 
-#: ../ui/upgrade_page.py:1120
+#: ../ui/software_center.py:812 ../ui/preference.py:557
+#, fuzzy
+msgid "Update package lists"
+msgstr "Obnoviť zoznam aplikácií"
+
+#: ../ui/software_center.py:474
+#, fuzzy
+msgid "Update package lists again and try again."
+msgstr "Obnovte zoznam balíkov a skúste to znovu."
+
+#: ../ui/upgrade_page.py:1122
 msgid "Updating..."
 msgstr "Obnovuje sa..."
 
-#: ../ui/dsc-daemon.py:232 ../ui/software_center.py:391
+#: ../ui/dsc-daemon.py:236 ../ui/software_center.py:391
 #: ../ui/software_center.py:786
 msgid "Upgrade"
 msgstr "Povýšiť"
 
-#: ../ui/upgrade_page.py:1669
-msgid "Upgrade complete"
+#: ../ui/upgrade_page.py:182
+#, fuzzy
+msgid "Upgrade applications selected"
+msgstr "Obnoviť zoznam aplikácií"
+
+#: ../ui/upgrade_page.py:1129 ../ui/upgrade_page.py:1671
+#, fuzzy
+msgid "Upgrade completed"
 msgstr "Povýšenie dokončené"
 
-#: ../ui/upgrade_page.py:1127
-msgid "Upgrade finished."
-msgstr "Povýšenie bolo dokončené."
-
-#: ../ui/upgrade_page.py:182
-msgid "Upgrade select items"
-msgstr "Povýšiť vybrané položky"
-
-#: ../ui/upgrade_page.py:1653 ../ui/upgrade_page.py:1660
+#: ../ui/upgrade_page.py:1655 ../ui/upgrade_page.py:1662
 msgid "Upgrading"
 msgstr "Povyšovanie"
 
-#: ../ui/upgrade_page.py:496
+#: ../ui/upgrade_page.py:498
 msgid "Uploading error log"
 msgstr "Nahráva sa zápis o chybe"
 
@@ -940,8 +950,8 @@ msgstr "Virtualizácia"
 msgid "Visit Homepage"
 msgstr "Zobraziť domovskú stránku"
 
-#: ../ui/install_page.py:712 ../ui/upgrade_page.py:1492
-#: ../ui/upgrade_page.py:1611
+#: ../ui/install_page.py:712 ../ui/upgrade_page.py:1494
+#: ../ui/upgrade_page.py:1613
 msgid "Waiting for download"
 msgstr "Čaká sa na sťahovanie"
 
@@ -953,17 +963,13 @@ msgstr "Čakanie na inštaláciu"
 msgid "Waiting for uninstall"
 msgstr "Čakanie na odinštaláciu"
 
-#: ../ui/upgrade_page.py:1634
+#: ../ui/upgrade_page.py:1636
 msgid "Waiting for upgrade"
 msgstr "Čaká sa na povýšenie"
 
 #: ../ui/upgrade_page.py:440
 msgid "Warning"
 msgstr "Varovanie"
-
-#: ../ui/upgrade_page.py:238 ../ui/item_render.py:46
-msgid "Watch again"
-msgstr "Sledovať znovu"
 
 #: ../ui/category_info.py:84
 msgid "Web development"
@@ -978,25 +984,54 @@ msgid "Yesterday"
 msgstr "Včera"
 
 #: ../ui/software_center.py:198
-msgid "You have already sent a comment ;)"
+#, fuzzy
+msgid "You have already scored.  ;)"
 msgstr "Poznámku si už poslal ;-)"
 
 #: ../ui/software_center.py:1126
-#, python-format
-msgid "You have cleared up %s pakcages and saved %s of space"
+#, fuzzy, python-format
+msgid "You have cleared up %s pakcages and saved %s of space."
 msgstr "Odstranili ste %s balíčkov a ušetrili %s miesta"
 
 #: ../ui/software_center.py:1128
-msgid "Your system is clean."
+#, fuzzy
+msgid "Your system cache is empty."
 msgstr "Váš systém je uprataný."
 
+#: ../ui/upgrade_page.py:484 ../ui/upgrade_page.py:510
+#, fuzzy
+msgid "send error report"
+msgstr "Poslať správu o chybe"
+
 #: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
-#: ../ui/upgrade_page.py:445
-msgid "refresh applications lists"
-msgstr "obnoviť zoznam aplikácií"
+#: ../ui/upgrade_page.py:447
+#, fuzzy
+msgid "update package lists"
+msgstr "Obnoviť zoznam aplikácií"
+
+#~ msgid "%s: %s matched applications"
+#~ msgstr "%s: %s odpovedajúcich programov"
+
+#~ msgid "Also in the category..."
+#~ msgstr "Tiež v skupine..."
+
+#~ msgid "Analyzing dependencies"
+#~ msgstr "Analyzujem závislosti"
+
+#~ msgid "Analyzing dependencies..."
+#~ msgstr "Zisťujem závislosti..."
+
+#~ msgid "Audiovideo editing"
+#~ msgstr "Editovanie zvuku a obrazu"
 
 #~ msgid "Close"
 #~ msgstr "Zatvoriť."
+
+#~ msgid "Hot applications"
+#~ msgstr "Najlepšie programy"
+
+#~ msgid "If the problem persists, you may wish to "
+#~ msgstr "Pokiaľ problémy pretrvávajú, možno by ste chceli"
 
 #~ msgid ""
 #~ "Please wait. The process will take 30 seconds or more depending on your "
@@ -1005,11 +1040,59 @@ msgstr "obnoviť zoznam aplikácií"
 #~ "Počkajte prosím. Proces bude trvať viac 30 sekúnd alebo viac. Závisí to "
 #~ "od rýchlosti internetového pripojenia."
 
+#~ msgid "Refresh applications lists"
+#~ msgstr "Obnoviť zoznam balíkov"
+
 #~ msgid "Select best mirror"
 #~ msgstr "Vybrať najlepšie zrkadlo"
+
+#~ msgid "Send Error Report"
+#~ msgstr "Poslať správu o chybe"
+
+#, fuzzy
+#~ msgid "Software Center"
+#~ msgstr "Centrum softvéru"
+
+#, fuzzy
+#~ msgid "Startdde is not installed, this function is not work!"
+#~ msgstr ""
+#~ "Nastavenie systému Deepin nie je nainštalované. Táto funkcia nefunguje!"
+
+#~ msgid "Successfully refreshed applications lists."
+#~ msgstr "Zoznam programov bol úspešne obnovený."
 
 #~ msgid ""
 #~ "Test for downloading mirror failed. Please check your network connection."
 #~ msgstr ""
 #~ "Test sťahovania zo zrkadla bol neúspešný. Prosím, skontrolujte vaše "
 #~ "internetové pripojenie."
+
+#~ msgid "The source mirror: "
+#~ msgstr "Zdroje zrkadiel:"
+
+#~ msgid "This may be because your local dependencies are corrupted."
+#~ msgstr "Môže to byť z dôvodu poškodenia závislostí."
+
+#~ msgid "Top 25 of all time"
+#~ msgstr "TOP 25 po celý čas"
+
+#~ msgid "Uninstall successful"
+#~ msgstr "Odinštalácia bola dokončená"
+
+#~ msgid "Unwatch"
+#~ msgstr "Prestať sledovať"
+
+#~ msgid "Unwatched (%s)"
+#~ msgstr "Nesledované (%s)"
+
+#~ msgid "Upgrade finished."
+#~ msgstr "Povýšenie bolo dokončené."
+
+#~ msgid "Upgrade select items"
+#~ msgstr "Povýšiť vybrané položky"
+
+#~ msgid "Watch again"
+#~ msgstr "Sledovať znovu"
+
+#~ msgid "refresh applications lists"
+#~ msgstr "obnoviť zoznam aplikácií"

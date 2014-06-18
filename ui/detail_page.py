@@ -175,7 +175,7 @@ class DetailPage(gtk.HBox):
         self.left_recommend_box_align.set_padding(30, 0, 14, 0)
         self.left_recommend_box_align.add(self.left_recommend_box)
         
-        self.left_recommend_label = Label(_("Also in the category..."))
+        self.left_recommend_label = Label(_("Popular recommendations"))
         
         self.right_info_box = gtk.VBox()
         self.scrolled_window = ScrolledWindow(0, 0)

@@ -576,7 +576,7 @@ class UninstallItem(TreeItem):
             
     def action_finish(self):
         self.progress_buffer.progress = 100
-        self.status_text = _("Uninstall successful")
+        self.status_text = _("Uninstallation completed")
         
         if self.redraw_request_callback:
             self.redraw_request_callback(self)

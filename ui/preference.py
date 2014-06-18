@@ -425,7 +425,7 @@ class AboutBox(BaseBox):
         BaseBox.__init__(self)
 
         logo_image = gtk.image_new_from_pixbuf(gtk.gdk.pixbuf_new_from_file(os.path.join(get_parent_dir(__file__, 2), "image", "logo16.png")))
-        logo_name = Label(_("Deepin Software Center"), text_size=10)
+        logo_name = Label(_("Deepin Store"), text_size=10)
         logo_box = gtk.HBox(spacing=2)
         logo_box.pack_start(logo_image, False, False)
         logo_box.pack_start(logo_name, False, False)
@@ -444,7 +444,15 @@ class AboutBox(BaseBox):
         title_box.pack_start(align, True, True)
         title_box.pack_start(info_box, False, False)
         
-        describe = _("Deepin Software Center is a commonly used software center on Linux. It selected more than 2,600 decent applications and features easy installation and uninstall, software repository and recommended applications. It supports 1-click install, downloading packages with multi-thread and clearing up cached packages. It provides topics for software introduction and shares good applications. \n")
+        describe = _("Deepin Store is a commonly used software center on Linux. "
+                "It selected more than 2,600 excellent applications with many "
+                "functions of installation and uninstalling, software repository "
+                "and popular recommendations, which supports 1-click quick "
+                "installation, multi-threaded download and clearing of cached "
+                "packages. It provides topics for software introduction and "
+                "shares good applications.\n"
+                "\n"
+                "Deepin Store is a free software licensed under GNU GPLv3.")
         
         describe_label = Label(describe, enable_select=False, wrap_width=400, text_size=10)
         self.main_box.pack_start(title_box, False, False)
@@ -461,7 +469,7 @@ class GeneralBox(BaseBox):
     def create_uninstall_box(self):
         main_table = gtk.Table(2, 2)
         main_table.set_row_spacings(CONTENT_ROW_SPACING)
-        uninstall_title_label = Label(_("On uninstall software"))
+        uninstall_title_label = Label(_("On uninstalling the software"))
         
         # mini_check_button
         self.delete_check_button = CheckButton(_("Delete configuration files"))
@@ -546,7 +554,7 @@ class MirrorsBox(BaseBox):
         main_table = gtk.Table(3, 2)
         main_table.set_row_spacings(CONTENT_ROW_SPACING)
         
-        dir_title_label = Label(_("Update applications lists"))
+        dir_title_label = Label(_("Update package lists"))
 
         # auto update check button
         self.is_auto_update_button = CheckButton(label_text=_('Update automatically'))
