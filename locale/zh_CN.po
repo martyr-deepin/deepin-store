@@ -4,12 +4,12 @@
 #
 # Translators:
 # Automatically generated, 2013
-# electricface <songwentai@linuxdeepin.com>, 2014
 # iceleaf916 <iceleaf916@gmail.com>, 2013
-# "chenxiangbang@linuxdeepin.com"
+# electricface <songwentai@linuxdeepin.com>, 2014
+# cxbii <chenxiangbang@linuxdeepin.com>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: Deepin Software Center\n"
+"Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-18 16:14+0800\n"
 "PO-Revision-Date: 2014-03-06 13:20+0000\n"
