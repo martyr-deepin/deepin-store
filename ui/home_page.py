@@ -57,6 +57,9 @@ from widgets import LoadingBox, NetworkConnectFailed, NetworkConnectTimeout
 from server_action import FetchHomeData
 from utils import sort_for_home_page_data, global_logger
 
+import logging
+logger = logging.getLogger("home_page")
+
 NETWORK_TRY_TIMES = 1
 
 FIRST_CATEGORY_PADDING_X = 66
@@ -287,7 +290,7 @@ class HomePage(gtk.HBox):
     def popup_completion(self, press_id):
         if (not self.in_press) and (not self.press_return) and press_id == self.press_id and self.entry_changed:
             search_string = search_entry.get_text()
-            if len(search_string) >= 3:
+            if len(search_string.strip()) >= 3:
                 match_pkgs = self.data_manager.get_pkgs_match_input(search_string)
                 if len(match_pkgs) > 0:
                     completion_window.show(search_string, match_pkgs)
@@ -299,16 +302,19 @@ class HomePage(gtk.HBox):
             self.entry_changed = False
         
     def show_search_page(self, search_string, press_return=False):
-        self.category_view.unselect_all()
-        
-        self.press_return = press_return
-        
-        if self.press_return:
-            completion_grab_window.popup_grab_window_focus_out()
-        
-        search_page = SearchPage(self.data_manager)
-        self.show_pkg_view(search_page)
-        search_page.update(map(lambda word: word.encode("utf8"), search_string.split(" ")))
+        if search_string.strip() != "":
+            self.category_view.unselect_all()
+            
+            self.press_return = press_return
+            
+            if self.press_return:
+                completion_grab_window.popup_grab_window_focus_out()
+            
+            search_page = SearchPage(self.data_manager)
+            self.show_pkg_view(search_page)
+            search_page.update(map(lambda word: word.encode("utf8"), search_string.split(" ")))
+        else:
+            logger.warning("empty string in search text input")
         
     def show_pkg_view(self, widget):
         container_remove_all(self.page_box)

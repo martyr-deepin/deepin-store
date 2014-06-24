@@ -27,7 +27,7 @@ root_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 db_path = os.path.join(root_path, "data/desktop/desktop2014.db")
 
 #desktop_db = peewee.SqliteDatabase(db_path)
-desktop_db = peewee.SqliteDatabase(db_path, autocommit=False)
+desktop_db = peewee.SqliteDatabase(db_path, autocommit=False, check_same_thread=False)
 
 class Package(peewee.Model):
     pkg_name = peewee.CharField()

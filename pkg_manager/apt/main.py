@@ -19,10 +19,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import sys
 import os
 from deepin_utils.file import get_parent_dir, remove_file
-sys.path.append(os.path.join(get_parent_dir(__file__, 3), "download_manager", "deepin_storm"))
 
 import signal
 import uuid
@@ -30,7 +28,6 @@ import gobject
 import dbus
 import dbus.service
 import dbus.mainloop.glib
-import os
 import json
 import threading as td
 from Queue import Queue
@@ -39,7 +36,7 @@ import apt.progress.base as apb
 import aptsources.distro
 import logging
 import subprocess
-logging.basicConfig(format='==> [%(levelname)s] %(message)s', level=logging.INFO)
+logging.basicConfig(format='[%(levelname)s][%(name)s] %(message)s', level=logging.INFO)
 
 from deepin_utils.file import read_file, write_file
 
@@ -380,8 +377,6 @@ class PackageManager(dbus.service.Object):
                                             action_id,
                                             action_type,
                                             download_urls,
-                                            download_hash_infos,
-                                            pkg_sizes,
                                             all_pkg_names=pkg_names,
                                             all_change_pkgs=all_change_pkgs,
                                             file_save_dir=self.download_dir,
@@ -403,8 +398,6 @@ class PackageManager(dbus.service.Object):
                                         pkg_name, 
                                         action_type, 
                                         download_urls, 
-                                        download_hash_infos, 
-                                        file_sizes=pkg_sizes, 
                                         all_pkg_names=[pkg_name,],
                                         file_save_dir=self.download_dir)
 
@@ -469,7 +462,7 @@ class PackageManager(dbus.service.Object):
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="i", out_signature="")
     def init_download_manager(self, number):
-        self.download_manager = DownloadManager(global_event, number)
+        self.download_manager = DownloadManager(global_event, number, verbose=True)
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="")
     def set_download_dir(self, local_dir):
@@ -676,12 +669,12 @@ class PackageManager(dbus.service.Object):
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
     def stop_download_pkg(self, pkg_names):
         for pkg_name in pkg_names:
-            self.download_manager.stop_download(pkg_name)
+            self.download_manager.stop_wait_download(pkg_name)
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="")
     def cancel_upgrade_download(self):
         if getattr(self, 'upgrade_id'):
-            self.download_manager.stop_download(self.upgrade_id)
+            self.download_manager.stop_wait_download(self.upgrade_id)
             
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")    
     def remove_wait_missions(self, pkg_infos):

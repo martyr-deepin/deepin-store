@@ -22,17 +22,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from deepin_utils.file import get_parent_dir
 import os
+import gio
 import sys
 import sqlite3
-from collections import OrderedDict
 import xappy
+from collections import OrderedDict
+from deepin_utils.file import get_parent_dir
+import threading as td
+
 from data import DATA_ID
 from constant import LANGUAGE
 from category import CATEGORY_TYPE_DICT
-import logging
-import gio
 
 import peewee
 from db_models.software import Software
@@ -52,11 +53,7 @@ def reset_database(db_path, cls):
     db = peewee.SqliteDatabase(db_path)
     cls._meta.database = db
 
-class DataManager(object):
-    '''
-    class docs
-    '''
-	
+class DataManager(td.Thread):
     def __init__(self, bus_interface, debug_flag=False):
         '''
         init docs
@@ -76,12 +73,12 @@ class DataManager(object):
 
         desktop_db_path = os.path.join(UPDATE_DATA_DIR, "desktop", "desktop2014.db")
         db_path_exists(desktop_db_path)
-        self.desktop_db_connect = sqlite3.connect(desktop_db_path)
+        self.desktop_db_connect = sqlite3.connect(desktop_db_path, check_same_thread=False)
         self.desktop_db_cursor = self.desktop_db_connect.cursor()
         
         category_db_path = os.path.join(UPDATE_DATA_DIR, "category", "category.db")
         db_path_exists(category_db_path)
-        self.category_db_connect = sqlite3.connect(category_db_path)
+        self.category_db_connect = sqlite3.connect(category_db_path, check_same_thread=False)
         self.category_db_cursor = self.category_db_connect.cursor()
 
         self.icon_data_dir = os.path.join(UPDATE_DATA_DIR, "app_icon")
@@ -100,7 +97,7 @@ class DataManager(object):
 
     def init_cache_soft_db(self):
         if self.is_cache_soft_db_exists() and not hasattr(self, 'cache_soft_db_cursor'):
-            self.cache_soft_db_connect = sqlite3.connect(CACHE_SOFT_DB_PATH)
+            self.cache_soft_db_connect = sqlite3.connect(CACHE_SOFT_DB_PATH, check_same_thread=False)
             self.cache_soft_db_cursor = self.cache_soft_db_connect.cursor()
 
     def is_cache_soft_db_exists(self):
@@ -109,7 +106,7 @@ class DataManager(object):
     def get_info_from_cache_soft_db(self, argv):
         if self.is_cache_soft_db_exists():
             if not hasattr(self, 'cache_soft_db_cursor'):
-                self.cache_soft_db_connect = sqlite3.connect(CACHE_SOFT_DB_PATH)
+                self.cache_soft_db_connect = sqlite3.connect(CACHE_SOFT_DB_PATH, check_same_thread=False)
                 self.cache_soft_db_cursor = self.cache_soft_db_connect.cursor()
             self.cache_soft_db_cursor.execute(*argv)
             return self.cache_soft_db_cursor.fetchall()

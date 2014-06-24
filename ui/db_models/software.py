@@ -27,7 +27,7 @@ root_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
 db_path = os.path.join(root_path, "data/software/software.db")
 #software_db = peewee.SqliteDatabase(db_path, autocommit=False)
-software_db = peewee.SqliteDatabase(db_path)
+software_db = peewee.SqliteDatabase(db_path, check_same_thread=False)
 
 class Language(peewee.Model):
     language_code = peewee.CharField()

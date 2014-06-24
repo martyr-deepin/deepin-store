@@ -23,27 +23,32 @@
 import gtk
 import gobject
 import json
-from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS
-from dtk.ui.treeview import TreeView, TreeItem
-from dtk.ui.progressbar import ProgressBuffer
-from star_buffer import DscStarBuffer
-from dtk.ui.utils import is_in_rect, get_content_size
-from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
-from item_render import (render_pkg_info, STAR_SIZE, get_star_level, get_icon_pixbuf_path,
-                         ITEM_INFO_AREA_WIDTH, ITEM_CONFIRM_BUTTON_PADDING_RIGHT, ITEM_CANCEL_BUTTON_PADDING_RIGHT, ITEM_PADDING_X,
-                         ITEM_STAR_AREA_WIDTH, ITEM_STATUS_TEXT_PADDING_RIGHT, NAME_SIZE, ITEM_PADDING_Y, ICON_SIZE, ITEM_PADDING_MIDDLE,
-                         ITEM_BUTTON_AREA_WIDTH, ITEM_BUTTON_PADDING_RIGHT,
-                         ITEM_HEIGHT, PROGRESSBAR_HEIGHT, ITEM_PKG_OFFSET_X
-                         )
+import commands
+import time
+
 from skin import app_theme
 from events import global_event
-from constant import ACTION_UNINSTALL
+from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, ACTION_UNINSTALL
+from star_buffer import DscStarBuffer
+from utils import get_purg_flag, global_logger, ThreadMethod
+from nls import _
+from item_render import (render_pkg_info, STAR_SIZE, get_star_level, 
+        get_icon_pixbuf_path, ITEM_INFO_AREA_WIDTH, ITEM_CONFIRM_BUTTON_PADDING_RIGHT, 
+        ITEM_CANCEL_BUTTON_PADDING_RIGHT, ITEM_PADDING_X, ITEM_STAR_AREA_WIDTH, 
+        ITEM_STATUS_TEXT_PADDING_RIGHT, NAME_SIZE, ITEM_PADDING_Y, ICON_SIZE, 
+        ITEM_PADDING_MIDDLE, ITEM_BUTTON_AREA_WIDTH, ITEM_BUTTON_PADDING_RIGHT,
+        ITEM_HEIGHT, PROGRESSBAR_HEIGHT, ITEM_PKG_OFFSET_X
+        )
+
+from dtk.ui.treeview import TreeView, TreeItem
+from dtk.ui.progressbar import ProgressBuffer
+from dtk.ui.utils import is_in_rect, get_content_size
+from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
 from dtk.ui.entry import InputEntry
 from dtk.ui.button import ImageButton
 from dtk.ui.cycle_strip import CycleStrip
 from dtk.ui.label import Label
-from utils import handle_dbus_error, get_purg_flag, global_logger
-from nls import _
+from dtk.ui.threads import post_gui
 
 class MessageBar(CycleStrip):
     def __init__(self, padding_left=0,):
@@ -193,11 +198,11 @@ class UninstallPage(gtk.VBox):
         
     def fetch_uninstall_info(self):
         self.bus_interface.request_uninstall_pkgs(
-                        reply_handler=self.add_uninstall_items,
-                        error_handler=lambda e:handle_dbus_error("request_uninstall_pkgs", e))
+                reply_handler=lambda r:self.add_uninstall_items(r, True),
+                error_handler=lambda e:self.add_uninstall_items(e, False)
+                )
 
     def get_white_kernel_pkg_names(self):
-        import commands
         version = commands.getoutput("uname -r").split("-generic")[0]
         white_pkg_names = ["linux-image-generic", "linux-headers-generic"]
         white_pkg_names.append("linux-image-%s-generic" % version)
@@ -210,17 +215,27 @@ class UninstallPage(gtk.VBox):
         if pkg_name.startswith("linux-image") or pkg_name.startswith("linux-headers"):
             return pkg_name not in self.white_kernel_pkg_names
         
-    def add_uninstall_items(self, pkg_infos):
+    def add_uninstall_items(self, data, success):
+        if not success:
+            global_logger.logerror("request_uninstall_pkgs failed: %s" % data)
+            return
+
+        pkg_infos = str(data)
+        ThreadMethod(self.update_uninstall_list, (pkg_infos, )).start()
+
+    @post_gui
+    def update_uninstall_list(self, pkg_infos):
         items = []
         try:
-            uninstall_pkg_infos = json.loads(str(pkg_infos))
+            uninstall_pkg_infos = json.loads(pkg_infos)
             for pkg_info in uninstall_pkg_infos:
                 pkg_name, pkg_version = pkg_info
                 if self.is_uninstallable_kernel(pkg_name) or \
                     self.data_manager.is_pkg_display_in_uninstall_page(pkg_name):
                         items.append(UninstallItem(pkg_name, pkg_version, self.data_manager))
-        except:
-            global_logger.logerror("uninstall pkg_infos parse error: %s" % str(pkg_infos))
+        except Exception, e:
+            global_logger.logerror("Parse uninstall package information failed: %s" % pkg_infos)
+            global_logger.logerror("Error: %s" % str(e))
             
         if self.search_flag:
             self.uninstall_change_items["add"] += items
