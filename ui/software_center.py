@@ -354,8 +354,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 (pkg_name, action_type, error) = action_content
                 utils.write_log("download-failed:%s, action_type:%s" % (error, action_type))
                 if action_type == ACTION_INSTALL:
-                    #install_page.download_stop(pkg_name)
-                    pass
+                    install_page.download_failed(pkg_name)
                 elif action_type == ACTION_UPGRADE:
                     upgrade_page.download_failed(pkg_name, error)
 

@@ -256,6 +256,12 @@ class InstallPage(gtk.VBox):
             if item.pkg_name == pkg_name:
                 item.download_parse_failed()
                 break
+
+    def download_failed(self, pkg_name):
+        for item in self.treeview.visible_items:
+            if item.pkg_name == pkg_name:
+                item.download_failed()
+                break
             
     def action_start(self, pkg_name):
         self.get_action_item(pkg_name).action_start()
@@ -281,15 +287,18 @@ class InstallItem(TreeItem):
     class docs
     '''
     
-    STATUS_WAIT_DOWNLOAD = 1
-    STATUS_IN_DOWNLOAD = 2
-    STATUS_STOP_DOWNLOAD = 3
-    STATUS_WAIT_INSTALL = 4
-    STATUS_STOP_WAIT_INSTALL = 5 
-    STATUS_IN_INSTALL = 6
-    STATUS_INSTALL_FINISH = 7
-    STATUS_PARSE_DOWNLOAD_FAILED = 8
-    STATUS_READY_DOWNLOAD= 9
+    STATUS_READY_DOWNLOAD= 1
+    STATUS_PARSE_DOWNLOAD_FAILED = 2
+    STATUS_DOWNLOAD_FAILED = 3
+    STATUS_WAIT_DOWNLOAD = 4
+    STATUS_IN_DOWNLOAD = 5
+    STATUS_STOP_DOWNLOAD = 6
+
+    STATUS_WAIT_INSTALL = 7
+    STATUS_STOP_WAIT_INSTALL = 8
+    STATUS_IN_INSTALL = 9
+    STATUS_INSTALL_FINISH = 10
+    STATUS_INSTALL_FAILED = 11
 	
     STATUS_PADDING_X = 15
     
@@ -413,6 +422,19 @@ class InstallItem(TreeItem):
                 rect.y,
                 rect.width - ITEM_STAR_AREA_WIDTH - self.STATUS_PADDING_X,
                 ITEM_HEIGHT,
+                )
+        elif self.status == self.STATUS_DOWNLOAD_FAILED:
+            # Draw star.
+            self.star_buffer.render(cr, gtk.gdk.Rectangle(rect.x, rect.y, ITEM_STAR_AREA_WIDTH, ITEM_HEIGHT))
+            
+            draw_text(
+                cr,
+                self.status_text,
+                rect.x + rect.width - ITEM_STATUS_TEXT_PADDING_RIGHT,
+                rect.y,
+                rect.width - ITEM_STAR_AREA_WIDTH - self.STATUS_PADDING_X,
+                ITEM_HEIGHT,
+                text_color="#ff0000",
                 )
         elif self.status == self.STATUS_WAIT_INSTALL:
             self.progress_buffer.render(
@@ -717,6 +739,13 @@ class InstallItem(TreeItem):
     def download_start(self):
         self.status = self.STATUS_IN_DOWNLOAD
         self.status_text = _("Downloading")
+    
+        if self.redraw_request_callback:
+            self.redraw_request_callback(self)
+
+    def download_failed(self):
+        self.status = self.STATUS_DOWNLOAD_FAILED
+        self.status_text = _("Download failed")
     
         if self.redraw_request_callback:
             self.redraw_request_callback(self)

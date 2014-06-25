@@ -37,6 +37,7 @@ import aptsources.distro
 import logging
 import subprocess
 logging.basicConfig(format='[%(levelname)s][%(name)s] %(message)s', level=logging.INFO)
+logger = logging.getLogger("pkg_manager.apt.main")
 
 from deepin_utils.file import read_file, write_file
 
@@ -248,6 +249,7 @@ class PackageManager(dbus.service.Object):
         self.exit_manager.check()    
         
     def download_failed(self, pkg_name, action_type, e):
+        logger.error("%s download failed with %s" % (pkg_name, e))
         utils.set_running_lock(False)
         self.update_signal([("download-failed", (pkg_name, action_type, e))])
         
