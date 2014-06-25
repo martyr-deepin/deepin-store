@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-18 16:14+0800\n"
+"POT-Creation-Date: 2014-06-25 18:17+0800\n"
 "PO-Revision-Date: 2014-03-06 20:58+0000\n"
 "Last-Translator: ballmet <emkohencel@gmail.com>\n"
 "Language-Team: Slovak (http://www.transifex.com/projects/p/deepin-software-"
@@ -29,7 +29,7 @@ msgstr "a skúsiť znovu."
 msgid " hour"
 msgstr "hodina"
 
-#: ../ui/home_page.py:654
+#: ../ui/home_page.py:660
 #, python-format
 msgid "%s > %s : %s applications"
 msgstr "%s > %s : %s programov"
@@ -49,7 +49,7 @@ msgstr "Bolo nainštalovaných %s aplikácií"
 msgid "%s applications are not being watched"
 msgstr "%s programov nie je sledovaných"
 
-#: ../ui/uninstall_page.py:154
+#: ../ui/uninstall_page.py:159
 #, python-format
 msgid "%s applications can be uninstalled"
 msgstr "Dá sa odinštalovať %s programov"
@@ -74,7 +74,7 @@ msgstr "Pred %s hodinami"
 msgid "%s minutes ago"
 msgstr "Pred %s minútami"
 
-#: ../ui/software_center.py:391
+#: ../ui/software_center.py:390
 #, fuzzy, python-format
 msgid "%s packages upgrade successfully."
 msgstr "Povýšenie %s programov bolo úspešné."
@@ -84,7 +84,7 @@ msgstr "Povýšenie %s programov bolo úspešné."
 msgid "%s updates are selected. %s will be downloaded."
 msgstr "Je vybraných %s aktualizácií. %s bude stiahnutých"
 
-#: ../ui/home_page.py:472
+#: ../ui/home_page.py:478
 #, python-format
 msgid "%s: %s applications"
 msgstr "%s: %s programov"
@@ -158,7 +158,7 @@ msgstr "Kategória:"
 msgid "Change"
 msgstr "Vybrať"
 
-#: ../ui/software_center.py:814
+#: ../ui/software_center.py:813
 msgid "Clear up cached packages"
 msgstr "Odstrániť balíky vo vyrovnávacej pamäti"
 
@@ -190,7 +190,7 @@ msgstr ""
 "Nastavenie systému Deepin nie je nainštalované. Táto funkcia nefunguje!"
 
 #: ../ui/dsc-daemon.py:312 ../ui/dsc-daemon.py:316
-#: ../ui/software_center.py:729 ../ui/preference.py:428
+#: ../ui/software_center.py:728 ../ui/preference.py:428
 #, fuzzy
 msgid "Deepin Store"
 msgstr "Centrum softvéru"
@@ -218,12 +218,12 @@ msgstr ""
 msgid "Delete configuration files"
 msgstr "Vymazať súbory s nastavením"
 
-#: ../ui/install_page.py:745 ../ui/upgrade_page.py:1646
+#: ../ui/install_page.py:774 ../ui/upgrade_page.py:1646
 #, fuzzy
 msgid "Dependencies analysis failed"
 msgstr "Nepodarilo sa analyzovať závislosti"
 
-#: ../ui/install_page.py:315 ../ui/install_page.py:705
+#: ../ui/install_page.py:324 ../ui/install_page.py:727
 #: ../ui/upgrade_page.py:1088 ../ui/upgrade_page.py:1606
 msgid "Dependencies analyzing"
 msgstr ""
@@ -244,6 +244,11 @@ msgstr "Napaľovanie diskov"
 msgid "Download directory: "
 msgstr "Adresár pre sťahovanie:"
 
+#: ../ui/install_page.py:748
+#, fuzzy
+msgid "Download failed"
+msgstr "Sťahovanie dokončené."
+
 #: ../ui/upgrade_page.py:1110
 msgid "Download finished."
 msgstr "Sťahovanie dokončené."
@@ -253,7 +258,7 @@ msgstr "Sťahovanie dokončené."
 msgid "Download has started"
 msgstr "Sťahovanie sa začalo..."
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Download rank"
 msgstr "Rebríček sťahovaní"
 
@@ -265,7 +270,7 @@ msgstr "Stiahnuť nastavenia"
 msgid "Download stopped."
 msgstr "Sťahovanie bolo zastavené."
 
-#: ../ui/install_page.py:627 ../ui/install_page.py:639
+#: ../ui/install_page.py:649 ../ui/install_page.py:661
 msgid "Download was interrupted"
 msgstr "Sťahovanie bolo prerušené"
 
@@ -278,7 +283,7 @@ msgstr "Stiahnuté: %s"
 msgid "Download: 0"
 msgstr "Sťahovanie: 0"
 
-#: ../ui/install_page.py:719 ../ui/upgrade_page.py:1620
+#: ../ui/install_page.py:741 ../ui/upgrade_page.py:1620
 msgid "Downloading"
 msgstr "Sťahovanie"
 
@@ -318,7 +323,7 @@ msgstr "Nepodarilo sa stiahnuť aktualizácie"
 msgid "Failed to install updates"
 msgstr "Nepodarilo sa nainštalovať aktualizácie"
 
-#: ../ui/software_center.py:454
+#: ../ui/software_center.py:453
 #, fuzzy
 msgid "Failed to refresh package lists."
 msgstr "Nepodarilo sa obnoviť zoznam aplikácií."
@@ -352,7 +357,7 @@ msgstr "Hry"
 msgid "General"
 msgstr "Obecné"
 
-#: ../ui/software_center.py:434
+#: ../ui/software_center.py:433
 #, fuzzy
 msgid "Generating package list database..."
 msgstr "Vytvára sa miesta databáza balíčkov..."
@@ -373,7 +378,7 @@ msgstr "Amatérske rádia"
 msgid "Hit"
 msgstr "Nález"
 
-#: ../ui/home_page.py:710 ../ui/software_center.py:785
+#: ../ui/home_page.py:716 ../ui/software_center.py:784
 msgid "Home"
 msgstr "Domovská zložka"
 
@@ -397,35 +402,35 @@ msgstr "Spracovávanie obrázkov"
 msgid "Industry"
 msgstr "Priemysel"
 
-#: ../ui/software_center.py:394
+#: ../ui/software_center.py:393
 msgid "Install"
 msgstr "Inštalovať"
 
-#: ../ui/software_center.py:394
+#: ../ui/software_center.py:393
 #, python-format
 msgid "Install %s Successfully."
 msgstr "Inštalácia %s bola úspešná."
 
-#: ../ui/software_center.py:788
+#: ../ui/software_center.py:787
 msgid "Installation"
 msgstr "Inštalácia"
 
-#: ../ui/install_page.py:770
+#: ../ui/install_page.py:799
 #, fuzzy
 msgid "Installation completed"
 msgstr "Inštalácia dokončená"
 
-#: ../ui/install_page.py:649
+#: ../ui/install_page.py:671
 msgid "Installation was interrupted"
 msgstr "Inštalácia bola prerušená"
 
-#: ../ui/install_page.py:488 ../ui/download_rank_page.py:371
-#: ../ui/home_page.py:1070 ../ui/utils.py:339 ../ui/album_page.py:485
+#: ../ui/install_page.py:510 ../ui/download_rank_page.py:371
+#: ../ui/home_page.py:1076 ../ui/utils.py:339 ../ui/album_page.py:485
 #: ../ui/search_page.py:276
 msgid "Installed"
 msgstr "Nainštalované"
 
-#: ../ui/install_page.py:754 ../ui/install_page.py:761
+#: ../ui/install_page.py:783 ../ui/install_page.py:790
 msgid "Installing"
 msgstr "Inštalujem"
 
@@ -441,7 +446,7 @@ msgstr "Okamžitá výmena správ"
 msgid "Internet"
 msgstr "Internet"
 
-#: ../ui/software_center.py:766
+#: ../ui/software_center.py:765
 msgid "Join us"
 msgstr "Pripojte sa k nám"
 
@@ -533,8 +538,8 @@ msgstr ""
 msgid "No reminder to update (%s)"
 msgstr ""
 
-#: ../ui/detail_page.py:441 ../ui/install_page.py:481
-#: ../ui/download_rank_page.py:364 ../ui/home_page.py:1063
+#: ../ui/detail_page.py:441 ../ui/install_page.py:503
+#: ../ui/download_rank_page.py:364 ../ui/home_page.py:1069
 #: ../ui/album_page.py:478 ../ui/search_page.py:269
 msgid "Not found"
 msgstr ""
@@ -560,11 +565,11 @@ msgstr "Pred jednou hodinou"
 msgid "One minute ago"
 msgstr "Pred jednou minutou"
 
-#: ../ui/software_center.py:813
+#: ../ui/software_center.py:812
 msgid "Open download directory"
 msgstr "Otvoriť adresár pre sťahovanie"
 
-#: ../ui/software_center.py:442
+#: ../ui/software_center.py:441
 msgid "Package lists updated completely."
 msgstr ""
 
@@ -594,7 +599,7 @@ msgstr ""
 msgid "Powered by 又拍云存储"
 msgstr "Poháňané 又拍云存储"
 
-#: ../ui/software_center.py:816
+#: ../ui/software_center.py:815
 msgid "Preferences"
 msgstr "Nastavenia"
 
@@ -606,14 +611,14 @@ msgstr "Pripravuje sa"
 msgid "Preparing to configure"
 msgstr "Pripravuje sa nastavenie"
 
-#: ../ui/software_center.py:465
+#: ../ui/software_center.py:464
 #, fuzzy, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted."
 msgstr ""
 "Pri zisťovaní závislostí pre %s sa vyskytli chyby. Inštalácia bola zrušená"
 
-#: ../ui/software_center.py:468
+#: ../ui/software_center.py:467
 #, fuzzy, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
 msgstr ""
@@ -631,7 +636,7 @@ msgstr "Publikácia"
 msgid "Puzzle games"
 msgstr "Puzzlové hry"
 
-#: ../ui/software_center.py:817
+#: ../ui/software_center.py:816
 msgid "Quit"
 msgstr "Zrušiť"
 
@@ -647,7 +652,7 @@ msgstr ""
 msgid "Rating successfully. Thanks for your involvement."
 msgstr "Poznámku sa podarilo pridať. Ďakujeme vám za zapojenie. ;)"
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Recommendations"
 msgstr ""
 
@@ -768,7 +773,7 @@ msgstr "Textový editor"
 msgid "The error was successfully reported and will be soon handled."
 msgstr "Chyba bola úspešne nahlásená, a čoskoro sa bude riešiť."
 
-#: ../ui/software_center.py:473
+#: ../ui/software_center.py:472
 #, python-format
 msgid "The requested package \"%s\" was not found in the package list."
 msgstr "Požadovaný balíček \"%s\" nebol nájdený v zozname balíkov."
@@ -838,11 +843,11 @@ msgstr "TOP 25 každý mesiac"
 msgid "Top 25 weekly"
 msgstr "TOP 25 každý týždeň"
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Topics"
 msgstr "Námety"
 
-#: ../ui/software_center.py:455
+#: ../ui/software_center.py:454
 msgid "Try again"
 msgstr "Skúste to znovu"
 
@@ -850,21 +855,21 @@ msgstr "Skúste to znovu"
 msgid "Tuner"
 msgstr "Tuner"
 
-#: ../ui/software_center.py:385 ../ui/software_center.py:787
+#: ../ui/software_center.py:384 ../ui/software_center.py:786
 msgid "Uninstall"
 msgstr "Odinštalovať"
 
-#: ../ui/software_center.py:385
+#: ../ui/software_center.py:384
 #, python-format
 msgid "Uninstall %s Successfully."
 msgstr "Odinštalácia %s bola úspěšná."
 
-#: ../ui/uninstall_page.py:579
+#: ../ui/uninstall_page.py:594
 #, fuzzy
 msgid "Uninstallation completed"
 msgstr "Inštalácia dokončená"
 
-#: ../ui/uninstall_page.py:565 ../ui/uninstall_page.py:572
+#: ../ui/uninstall_page.py:580 ../ui/uninstall_page.py:587
 msgid "Uninstalling"
 msgstr "Odinštalováva sa"
 
@@ -876,12 +881,12 @@ msgstr "Rozbaľuje sa"
 msgid "Update automatically"
 msgstr "Aktualizovať automaticky"
 
-#: ../ui/software_center.py:812 ../ui/preference.py:557
+#: ../ui/software_center.py:811 ../ui/preference.py:557
 #, fuzzy
 msgid "Update package lists"
 msgstr "Obnoviť zoznam aplikácií"
 
-#: ../ui/software_center.py:474
+#: ../ui/software_center.py:473
 #, fuzzy
 msgid "Update package lists again and try again."
 msgstr "Obnovte zoznam balíkov a skúste to znovu."
@@ -890,8 +895,8 @@ msgstr "Obnovte zoznam balíkov a skúste to znovu."
 msgid "Updating..."
 msgstr "Obnovuje sa..."
 
-#: ../ui/dsc-daemon.py:236 ../ui/software_center.py:391
-#: ../ui/software_center.py:786
+#: ../ui/dsc-daemon.py:236 ../ui/software_center.py:390
+#: ../ui/software_center.py:785
 msgid "Upgrade"
 msgstr "Povýšiť"
 
@@ -934,7 +939,7 @@ msgstr "Verzia:"
 msgid "Version: %s"
 msgstr "Verzia: %s"
 
-#: ../ui/software_center.py:815
+#: ../ui/software_center.py:814
 msgid "View new features"
 msgstr "Pozrite si nové fukcie"
 
@@ -950,16 +955,16 @@ msgstr "Virtualizácia"
 msgid "Visit Homepage"
 msgstr "Zobraziť domovskú stránku"
 
-#: ../ui/install_page.py:712 ../ui/upgrade_page.py:1494
+#: ../ui/install_page.py:734 ../ui/upgrade_page.py:1494
 #: ../ui/upgrade_page.py:1613
 msgid "Waiting for download"
 msgstr "Čaká sa na sťahovanie"
 
-#: ../ui/install_page.py:735
+#: ../ui/install_page.py:764
 msgid "Waiting for installation"
 msgstr "Čakanie na inštaláciu"
 
-#: ../ui/uninstall_page.py:475 ../ui/uninstall_page.py:558
+#: ../ui/uninstall_page.py:490 ../ui/uninstall_page.py:573
 msgid "Waiting for uninstall"
 msgstr "Čakanie na odinštaláciu"
 
@@ -988,12 +993,12 @@ msgstr "Včera"
 msgid "You have already scored.  ;)"
 msgstr "Poznámku si už poslal ;-)"
 
-#: ../ui/software_center.py:1126
+#: ../ui/software_center.py:1125
 #, fuzzy, python-format
-msgid "You have cleared up %s pakcages and saved %s of space."
+msgid "You have cleared up %s packages and saved %s of space."
 msgstr "Odstranili ste %s balíčkov a ušetrili %s miesta"
 
-#: ../ui/software_center.py:1128
+#: ../ui/software_center.py:1127
 #, fuzzy
 msgid "Your system cache is empty."
 msgstr "Váš systém je uprataný."

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-18 16:14+0800\n"
+"POT-Creation-Date: 2014-06-25 18:17+0800\n"
 "PO-Revision-Date: 2014-05-08 13:42+0000\n"
 "Last-Translator: electricface <songwentai@linuxdeepin.com>\n"
 "Language-Team: Chinese (Hong Kong) (http://www.transifex.com/projects/p/"
@@ -29,7 +29,7 @@ msgstr "後，重試。"
 msgid " hour"
 msgstr " 小時"
 
-#: ../ui/home_page.py:654
+#: ../ui/home_page.py:660
 #, python-format
 msgid "%s > %s : %s applications"
 msgstr "%s > %s : %s 款應用程式"
@@ -49,7 +49,7 @@ msgstr "正在安裝 %s 款應用程式"
 msgid "%s applications are not being watched"
 msgstr "%s 款應用程式將不再提醒"
 
-#: ../ui/uninstall_page.py:154
+#: ../ui/uninstall_page.py:159
 #, python-format
 msgid "%s applications can be uninstalled"
 msgstr "有 %s 款應用程式可以解除安裝"
@@ -74,7 +74,7 @@ msgstr "%s 小時前"
 msgid "%s minutes ago"
 msgstr "%s 分鍾前"
 
-#: ../ui/software_center.py:391
+#: ../ui/software_center.py:390
 #, python-format
 msgid "%s packages upgrade successfully."
 msgstr ""
@@ -84,7 +84,7 @@ msgstr ""
 msgid "%s updates are selected. %s will be downloaded."
 msgstr "已經選中 %s 個更新，將下載 %s。"
 
-#: ../ui/home_page.py:472
+#: ../ui/home_page.py:478
 #, python-format
 msgid "%s: %s applications"
 msgstr "%s: %s 應用程式"
@@ -158,7 +158,7 @@ msgstr "分類："
 msgid "Change"
 msgstr "變更"
 
-#: ../ui/software_center.py:814
+#: ../ui/software_center.py:813
 msgid "Clear up cached packages"
 msgstr "清理快取套件"
 
@@ -188,7 +188,7 @@ msgid "Deepin Desktop Environment is not installed, this function is invalid!"
 msgstr ""
 
 #: ../ui/dsc-daemon.py:312 ../ui/dsc-daemon.py:316
-#: ../ui/software_center.py:729 ../ui/preference.py:428
+#: ../ui/software_center.py:728 ../ui/preference.py:428
 #, fuzzy
 msgid "Deepin Store"
 msgstr "深度軟體中心"
@@ -213,12 +213,12 @@ msgstr ""
 msgid "Delete configuration files"
 msgstr "刪除系統設定檔"
 
-#: ../ui/install_page.py:745 ../ui/upgrade_page.py:1646
+#: ../ui/install_page.py:774 ../ui/upgrade_page.py:1646
 #, fuzzy
 msgid "Dependencies analysis failed"
 msgstr "分析依賴關係失敗"
 
-#: ../ui/install_page.py:315 ../ui/install_page.py:705
+#: ../ui/install_page.py:324 ../ui/install_page.py:727
 #: ../ui/upgrade_page.py:1088 ../ui/upgrade_page.py:1606
 msgid "Dependencies analyzing"
 msgstr ""
@@ -239,6 +239,11 @@ msgstr "光碟燒錄"
 msgid "Download directory: "
 msgstr "下載目錄: "
 
+#: ../ui/install_page.py:748
+#, fuzzy
+msgid "Download failed"
+msgstr "下載結束。"
+
 #: ../ui/upgrade_page.py:1110
 msgid "Download finished."
 msgstr "下載結束。"
@@ -248,7 +253,7 @@ msgstr "下載結束。"
 msgid "Download has started"
 msgstr "已經開始下載..."
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Download rank"
 msgstr "下載排名"
 
@@ -260,7 +265,7 @@ msgstr "下載設定"
 msgid "Download stopped."
 msgstr "下載停止。"
 
-#: ../ui/install_page.py:627 ../ui/install_page.py:639
+#: ../ui/install_page.py:649 ../ui/install_page.py:661
 msgid "Download was interrupted"
 msgstr "下載被中斷"
 
@@ -273,7 +278,7 @@ msgstr "下載：%s"
 msgid "Download: 0"
 msgstr "下載：0"
 
-#: ../ui/install_page.py:719 ../ui/upgrade_page.py:1620
+#: ../ui/install_page.py:741 ../ui/upgrade_page.py:1620
 msgid "Downloading"
 msgstr "正在下載"
 
@@ -313,7 +318,7 @@ msgstr "無法下載更新"
 msgid "Failed to install updates"
 msgstr "無法安裝更新"
 
-#: ../ui/software_center.py:454
+#: ../ui/software_center.py:453
 #, fuzzy
 msgid "Failed to refresh package lists."
 msgstr "無法重新整理應用程式清單。"
@@ -347,7 +352,7 @@ msgstr "游戲娛樂"
 msgid "General"
 msgstr "一般"
 
-#: ../ui/software_center.py:434
+#: ../ui/software_center.py:433
 msgid "Generating package list database..."
 msgstr ""
 
@@ -367,7 +372,7 @@ msgstr "業餘無線電"
 msgid "Hit"
 msgstr ""
 
-#: ../ui/home_page.py:710 ../ui/software_center.py:785
+#: ../ui/home_page.py:716 ../ui/software_center.py:784
 msgid "Home"
 msgstr "首頁推薦"
 
@@ -391,35 +396,35 @@ msgstr "影像處理"
 msgid "Industry"
 msgstr "行業軟體"
 
-#: ../ui/software_center.py:394
+#: ../ui/software_center.py:393
 msgid "Install"
 msgstr "安裝管理"
 
-#: ../ui/software_center.py:394
+#: ../ui/software_center.py:393
 #, python-format
 msgid "Install %s Successfully."
 msgstr ""
 
-#: ../ui/software_center.py:788
+#: ../ui/software_center.py:787
 msgid "Installation"
 msgstr "安裝管理"
 
-#: ../ui/install_page.py:770
+#: ../ui/install_page.py:799
 #, fuzzy
 msgid "Installation completed"
 msgstr "安裝完成"
 
-#: ../ui/install_page.py:649
+#: ../ui/install_page.py:671
 msgid "Installation was interrupted"
 msgstr "安裝被中斷"
 
-#: ../ui/install_page.py:488 ../ui/download_rank_page.py:371
-#: ../ui/home_page.py:1070 ../ui/utils.py:339 ../ui/album_page.py:485
+#: ../ui/install_page.py:510 ../ui/download_rank_page.py:371
+#: ../ui/home_page.py:1076 ../ui/utils.py:339 ../ui/album_page.py:485
 #: ../ui/search_page.py:276
 msgid "Installed"
 msgstr "已安裝"
 
-#: ../ui/install_page.py:754 ../ui/install_page.py:761
+#: ../ui/install_page.py:783 ../ui/install_page.py:790
 msgid "Installing"
 msgstr "正在安裝"
 
@@ -435,7 +440,7 @@ msgstr "即時通訊"
 msgid "Internet"
 msgstr "網際網路"
 
-#: ../ui/software_center.py:766
+#: ../ui/software_center.py:765
 msgid "Join us"
 msgstr "加入我們"
 
@@ -527,8 +532,8 @@ msgstr ""
 msgid "No reminder to update (%s)"
 msgstr ""
 
-#: ../ui/detail_page.py:441 ../ui/install_page.py:481
-#: ../ui/download_rank_page.py:364 ../ui/home_page.py:1063
+#: ../ui/detail_page.py:441 ../ui/install_page.py:503
+#: ../ui/download_rank_page.py:364 ../ui/home_page.py:1069
 #: ../ui/album_page.py:478 ../ui/search_page.py:269
 msgid "Not found"
 msgstr ""
@@ -554,11 +559,11 @@ msgstr "一小時前"
 msgid "One minute ago"
 msgstr "一分鍾前"
 
-#: ../ui/software_center.py:813
+#: ../ui/software_center.py:812
 msgid "Open download directory"
 msgstr "開啟下載目錄"
 
-#: ../ui/software_center.py:442
+#: ../ui/software_center.py:441
 msgid "Package lists updated completely."
 msgstr ""
 
@@ -588,7 +593,7 @@ msgstr ""
 msgid "Powered by 又拍云存储"
 msgstr "Powered by 又拍云存储"
 
-#: ../ui/software_center.py:816
+#: ../ui/software_center.py:815
 msgid "Preferences"
 msgstr "偏好設定"
 
@@ -600,13 +605,13 @@ msgstr "正在準備"
 msgid "Preparing to configure"
 msgstr "正在準備設定"
 
-#: ../ui/software_center.py:465
+#: ../ui/software_center.py:464
 #, fuzzy, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted."
 msgstr "分析 %s 依賴關係時發生問題。安裝停止"
 
-#: ../ui/software_center.py:468
+#: ../ui/software_center.py:467
 #, fuzzy, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
 msgstr "分析 %s 依賴關係時發生問題。升級停止"
@@ -623,7 +628,7 @@ msgstr "出版"
 msgid "Puzzle games"
 msgstr "益智游戲"
 
-#: ../ui/software_center.py:817
+#: ../ui/software_center.py:816
 msgid "Quit"
 msgstr "退出"
 
@@ -637,7 +642,7 @@ msgstr "評分失敗。請檢查您的網路連線！"
 msgid "Rating successfully. Thanks for your involvement."
 msgstr "評分成功。感謝您的參與。:)"
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Recommendations"
 msgstr ""
 
@@ -757,7 +762,7 @@ msgstr "文字編輯器"
 msgid "The error was successfully reported and will be soon handled."
 msgstr "錯誤已成功報告，我們將盡快處理。"
 
-#: ../ui/software_center.py:473
+#: ../ui/software_center.py:472
 #, python-format
 msgid "The requested package \"%s\" was not found in the package list."
 msgstr ""
@@ -825,11 +830,11 @@ msgstr "月排行Top25"
 msgid "Top 25 weekly"
 msgstr "週排行Top25"
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Topics"
 msgstr "主題園地"
 
-#: ../ui/software_center.py:455
+#: ../ui/software_center.py:454
 msgid "Try again"
 msgstr "重試"
 
@@ -837,21 +842,21 @@ msgstr "重試"
 msgid "Tuner"
 msgstr "調諧器"
 
-#: ../ui/software_center.py:385 ../ui/software_center.py:787
+#: ../ui/software_center.py:384 ../ui/software_center.py:786
 msgid "Uninstall"
 msgstr "解除安裝"
 
-#: ../ui/software_center.py:385
+#: ../ui/software_center.py:384
 #, python-format
 msgid "Uninstall %s Successfully."
 msgstr ""
 
-#: ../ui/uninstall_page.py:579
+#: ../ui/uninstall_page.py:594
 #, fuzzy
 msgid "Uninstallation completed"
 msgstr "安裝完成"
 
-#: ../ui/uninstall_page.py:565 ../ui/uninstall_page.py:572
+#: ../ui/uninstall_page.py:580 ../ui/uninstall_page.py:587
 msgid "Uninstalling"
 msgstr "正在解除安裝"
 
@@ -863,12 +868,12 @@ msgstr "正在解開"
 msgid "Update automatically"
 msgstr "自動更新"
 
-#: ../ui/software_center.py:812 ../ui/preference.py:557
+#: ../ui/software_center.py:811 ../ui/preference.py:557
 #, fuzzy
 msgid "Update package lists"
 msgstr "更新應用程式清單"
 
-#: ../ui/software_center.py:474
+#: ../ui/software_center.py:473
 msgid "Update package lists again and try again."
 msgstr ""
 
@@ -876,8 +881,8 @@ msgstr ""
 msgid "Updating..."
 msgstr "正在更新..."
 
-#: ../ui/dsc-daemon.py:236 ../ui/software_center.py:391
-#: ../ui/software_center.py:786
+#: ../ui/dsc-daemon.py:236 ../ui/software_center.py:390
+#: ../ui/software_center.py:785
 msgid "Upgrade"
 msgstr "系統升級"
 
@@ -920,7 +925,7 @@ msgstr "版本："
 msgid "Version: %s"
 msgstr "版本：%s"
 
-#: ../ui/software_center.py:815
+#: ../ui/software_center.py:814
 msgid "View new features"
 msgstr "檢視新特點"
 
@@ -936,16 +941,16 @@ msgstr "虛擬化"
 msgid "Visit Homepage"
 msgstr "訪問首頁"
 
-#: ../ui/install_page.py:712 ../ui/upgrade_page.py:1494
+#: ../ui/install_page.py:734 ../ui/upgrade_page.py:1494
 #: ../ui/upgrade_page.py:1613
 msgid "Waiting for download"
 msgstr "等待下載"
 
-#: ../ui/install_page.py:735
+#: ../ui/install_page.py:764
 msgid "Waiting for installation"
 msgstr "等待安裝"
 
-#: ../ui/uninstall_page.py:475 ../ui/uninstall_page.py:558
+#: ../ui/uninstall_page.py:490 ../ui/uninstall_page.py:573
 msgid "Waiting for uninstall"
 msgstr "等待解除安裝"
 
@@ -974,12 +979,12 @@ msgstr "昨天"
 msgid "You have already scored.  ;)"
 msgstr "您已經評過分數了 ;)"
 
-#: ../ui/software_center.py:1126
+#: ../ui/software_center.py:1125
 #, fuzzy, python-format
-msgid "You have cleared up %s pakcages and saved %s of space."
+msgid "You have cleared up %s packages and saved %s of space."
 msgstr "恭喜您清理了 %s 個套件，共節約了 %s 磁碟空間"
 
-#: ../ui/software_center.py:1128
+#: ../ui/software_center.py:1127
 #, fuzzy
 msgid "Your system cache is empty."
 msgstr "您的系統已經很乾淨了，毋需進行清理。"

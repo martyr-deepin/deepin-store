@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-18 16:14+0800\n"
+"POT-Creation-Date: 2014-06-25 18:17+0800\n"
 "PO-Revision-Date: 2014-04-04 10:11+0000\n"
 "Last-Translator: kloki <klokimass@gmail.com>\n"
 "Language-Team: Slovenian (http://www.transifex.com/projects/p/deepin-"
@@ -29,7 +29,7 @@ msgstr "in poskusite ponovno."
 msgid " hour"
 msgstr "ura"
 
-#: ../ui/home_page.py:654
+#: ../ui/home_page.py:660
 #, python-format
 msgid "%s > %s : %s applications"
 msgstr "%s > %s : %s programi"
@@ -49,7 +49,7 @@ msgstr "%s aplikacij je bilo nameščenih"
 msgid "%s applications are not being watched"
 msgstr "%s programov še ni bilo pregledanih"
 
-#: ../ui/uninstall_page.py:154
+#: ../ui/uninstall_page.py:159
 #, python-format
 msgid "%s applications can be uninstalled"
 msgstr "%s programov je lahko odstranjenih"
@@ -74,7 +74,7 @@ msgstr "Pred %s urami"
 msgid "%s minutes ago"
 msgstr "Pred %s minut"
 
-#: ../ui/software_center.py:391
+#: ../ui/software_center.py:390
 #, fuzzy, python-format
 msgid "%s packages upgrade successfully."
 msgstr "%s paketov uspešno nadgrajenih."
@@ -84,7 +84,7 @@ msgstr "%s paketov uspešno nadgrajenih."
 msgid "%s updates are selected. %s will be downloaded."
 msgstr "%s posodobitev je izbranih. %s bo prenesenih."
 
-#: ../ui/home_page.py:472
+#: ../ui/home_page.py:478
 #, python-format
 msgid "%s: %s applications"
 msgstr "%s: %s programi"
@@ -158,7 +158,7 @@ msgstr "Kategorija:"
 msgid "Change"
 msgstr "Spremeni"
 
-#: ../ui/software_center.py:814
+#: ../ui/software_center.py:813
 msgid "Clear up cached packages"
 msgstr "Počisti predpomnjene pakete"
 
@@ -190,7 +190,7 @@ msgstr ""
 "Sistemske nastavitve Deepin niso nameščene, zato ta funkcija ne bo delovala."
 
 #: ../ui/dsc-daemon.py:312 ../ui/dsc-daemon.py:316
-#: ../ui/software_center.py:729 ../ui/preference.py:428
+#: ../ui/software_center.py:728 ../ui/preference.py:428
 #, fuzzy
 msgid "Deepin Store"
 msgstr "Programsko središče Deepin"
@@ -219,12 +219,12 @@ msgstr ""
 msgid "Delete configuration files"
 msgstr "Odstrani nastavitvene datoteke"
 
-#: ../ui/install_page.py:745 ../ui/upgrade_page.py:1646
+#: ../ui/install_page.py:774 ../ui/upgrade_page.py:1646
 #, fuzzy
 msgid "Dependencies analysis failed"
 msgstr "Preverjanje odvisnosti ni uspelo"
 
-#: ../ui/install_page.py:315 ../ui/install_page.py:705
+#: ../ui/install_page.py:324 ../ui/install_page.py:727
 #: ../ui/upgrade_page.py:1088 ../ui/upgrade_page.py:1606
 msgid "Dependencies analyzing"
 msgstr ""
@@ -245,6 +245,11 @@ msgstr "Zapisovalnik zgoščenk"
 msgid "Download directory: "
 msgstr "Imenik prenosov:"
 
+#: ../ui/install_page.py:748
+#, fuzzy
+msgid "Download failed"
+msgstr "Prenos končan."
+
 #: ../ui/upgrade_page.py:1110
 msgid "Download finished."
 msgstr "Prenos končan."
@@ -254,7 +259,7 @@ msgstr "Prenos končan."
 msgid "Download has started"
 msgstr "Pričetek prenosa..."
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Download rank"
 msgstr "Rang prenosov"
 
@@ -266,7 +271,7 @@ msgstr "Nastavitve prenosa"
 msgid "Download stopped."
 msgstr "Prenos zaustavljen."
 
-#: ../ui/install_page.py:627 ../ui/install_page.py:639
+#: ../ui/install_page.py:649 ../ui/install_page.py:661
 msgid "Download was interrupted"
 msgstr "Prenos je bil prekinjen"
 
@@ -279,7 +284,7 @@ msgstr "Prenos: %s"
 msgid "Download: 0"
 msgstr "Prenos: 0"
 
-#: ../ui/install_page.py:719 ../ui/upgrade_page.py:1620
+#: ../ui/install_page.py:741 ../ui/upgrade_page.py:1620
 msgid "Downloading"
 msgstr "Prenašanje"
 
@@ -319,7 +324,7 @@ msgstr "Prenos posodobitev ni uspel"
 msgid "Failed to install updates"
 msgstr "Namestitev posodobitev ni uspela"
 
-#: ../ui/software_center.py:454
+#: ../ui/software_center.py:453
 #, fuzzy
 msgid "Failed to refresh package lists."
 msgstr "Osveževanje seznama programja neuspešno. "
@@ -354,7 +359,7 @@ msgstr "Igre"
 msgid "General"
 msgstr "Splošno"
 
-#: ../ui/software_center.py:434
+#: ../ui/software_center.py:433
 #, fuzzy
 msgid "Generating package list database..."
 msgstr "Ustvarjanje lokalne baze podatkov..."
@@ -375,7 +380,7 @@ msgstr "Ham radio"
 msgid "Hit"
 msgstr "Zadetek"
 
-#: ../ui/home_page.py:710 ../ui/software_center.py:785
+#: ../ui/home_page.py:716 ../ui/software_center.py:784
 msgid "Home"
 msgstr "Dom"
 
@@ -399,35 +404,35 @@ msgstr "Obdelava slike"
 msgid "Industry"
 msgstr "Industrija"
 
-#: ../ui/software_center.py:394
+#: ../ui/software_center.py:393
 msgid "Install"
 msgstr "Namestitev"
 
-#: ../ui/software_center.py:394
+#: ../ui/software_center.py:393
 #, python-format
 msgid "Install %s Successfully."
 msgstr "Namestitev %s uspešna."
 
-#: ../ui/software_center.py:788
+#: ../ui/software_center.py:787
 msgid "Installation"
 msgstr "Namestitev"
 
-#: ../ui/install_page.py:770
+#: ../ui/install_page.py:799
 #, fuzzy
 msgid "Installation completed"
 msgstr "Namestitev končana"
 
-#: ../ui/install_page.py:649
+#: ../ui/install_page.py:671
 msgid "Installation was interrupted"
 msgstr "Namestitev je bila prekinjena"
 
-#: ../ui/install_page.py:488 ../ui/download_rank_page.py:371
-#: ../ui/home_page.py:1070 ../ui/utils.py:339 ../ui/album_page.py:485
+#: ../ui/install_page.py:510 ../ui/download_rank_page.py:371
+#: ../ui/home_page.py:1076 ../ui/utils.py:339 ../ui/album_page.py:485
 #: ../ui/search_page.py:276
 msgid "Installed"
 msgstr "Nameščeno"
 
-#: ../ui/install_page.py:754 ../ui/install_page.py:761
+#: ../ui/install_page.py:783 ../ui/install_page.py:790
 msgid "Installing"
 msgstr "Nameščanje"
 
@@ -443,7 +448,7 @@ msgstr "Takojšnje sporočanje"
 msgid "Internet"
 msgstr "Splet"
 
-#: ../ui/software_center.py:766
+#: ../ui/software_center.py:765
 msgid "Join us"
 msgstr "Pridruži se nam"
 
@@ -535,8 +540,8 @@ msgstr ""
 msgid "No reminder to update (%s)"
 msgstr ""
 
-#: ../ui/detail_page.py:441 ../ui/install_page.py:481
-#: ../ui/download_rank_page.py:364 ../ui/home_page.py:1063
+#: ../ui/detail_page.py:441 ../ui/install_page.py:503
+#: ../ui/download_rank_page.py:364 ../ui/home_page.py:1069
 #: ../ui/album_page.py:478 ../ui/search_page.py:269
 msgid "Not found"
 msgstr ""
@@ -562,11 +567,11 @@ msgstr "Pred eno uro"
 msgid "One minute ago"
 msgstr "Pred eno minuto"
 
-#: ../ui/software_center.py:813
+#: ../ui/software_center.py:812
 msgid "Open download directory"
 msgstr "Odpri imenik prenosov"
 
-#: ../ui/software_center.py:442
+#: ../ui/software_center.py:441
 msgid "Package lists updated completely."
 msgstr ""
 
@@ -596,7 +601,7 @@ msgstr ""
 msgid "Powered by 又拍云存储"
 msgstr "Podprto z 又拍云存储"
 
-#: ../ui/software_center.py:816
+#: ../ui/software_center.py:815
 msgid "Preferences"
 msgstr "Lastnosti"
 
@@ -608,14 +613,14 @@ msgstr "Pripravljanje"
 msgid "Preparing to configure"
 msgstr "Pripravljanje na konfiguracijo"
 
-#: ../ui/software_center.py:465
+#: ../ui/software_center.py:464
 #, fuzzy, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted."
 msgstr ""
 "Pri preverjanju odvisnosti za %s je prišlo do težave. Namestitev prekinjena"
 
-#: ../ui/software_center.py:468
+#: ../ui/software_center.py:467
 #, fuzzy, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
 msgstr ""
@@ -633,7 +638,7 @@ msgstr "Založništvo"
 msgid "Puzzle games"
 msgstr "Miselne igre"
 
-#: ../ui/software_center.py:817
+#: ../ui/software_center.py:816
 msgid "Quit"
 msgstr "Končaj"
 
@@ -647,7 +652,7 @@ msgstr "Komentar ni bil uspešno oddan. Prosim, preverite omrežno povezavo!"
 msgid "Rating successfully. Thanks for your involvement."
 msgstr "Komentar je bil uspešno oddan. Hvala za vaše sodelovanje. :)"
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Recommendations"
 msgstr ""
 
@@ -768,7 +773,7 @@ msgstr "Urejevalnik besedila"
 msgid "The error was successfully reported and will be soon handled."
 msgstr "Napaka je bila uspešno poročana in bo kmalu obravnavana."
 
-#: ../ui/software_center.py:473
+#: ../ui/software_center.py:472
 #, python-format
 msgid "The requested package \"%s\" was not found in the package list."
 msgstr "Zahtevani paket \"%s\" ni bil najden v seznamu paketov."
@@ -839,11 +844,11 @@ msgstr "Mesečnih najboljših 25"
 msgid "Top 25 weekly"
 msgstr "Tedenskih najboljših 25"
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Topics"
 msgstr "Teme"
 
-#: ../ui/software_center.py:455
+#: ../ui/software_center.py:454
 msgid "Try again"
 msgstr "Poskusi ponovno"
 
@@ -851,21 +856,21 @@ msgstr "Poskusi ponovno"
 msgid "Tuner"
 msgstr "Sprejemnik"
 
-#: ../ui/software_center.py:385 ../ui/software_center.py:787
+#: ../ui/software_center.py:384 ../ui/software_center.py:786
 msgid "Uninstall"
 msgstr "Odstranitev"
 
-#: ../ui/software_center.py:385
+#: ../ui/software_center.py:384
 #, python-format
 msgid "Uninstall %s Successfully."
 msgstr "Odstranitev %s uspešna."
 
-#: ../ui/uninstall_page.py:579
+#: ../ui/uninstall_page.py:594
 #, fuzzy
 msgid "Uninstallation completed"
 msgstr "Namestitev končana"
 
-#: ../ui/uninstall_page.py:565 ../ui/uninstall_page.py:572
+#: ../ui/uninstall_page.py:580 ../ui/uninstall_page.py:587
 msgid "Uninstalling"
 msgstr "Odstranjevanje"
 
@@ -877,12 +882,12 @@ msgstr "Razpakiranje"
 msgid "Update automatically"
 msgstr "Samodejno posodobi"
 
-#: ../ui/software_center.py:812 ../ui/preference.py:557
+#: ../ui/software_center.py:811 ../ui/preference.py:557
 #, fuzzy
 msgid "Update package lists"
 msgstr "Posodobi seznam programja"
 
-#: ../ui/software_center.py:474
+#: ../ui/software_center.py:473
 #, fuzzy
 msgid "Update package lists again and try again."
 msgstr "Osveži seznam paketov in poskusi ponovno."
@@ -891,8 +896,8 @@ msgstr "Osveži seznam paketov in poskusi ponovno."
 msgid "Updating..."
 msgstr "Posodabljanje..."
 
-#: ../ui/dsc-daemon.py:236 ../ui/software_center.py:391
-#: ../ui/software_center.py:786
+#: ../ui/dsc-daemon.py:236 ../ui/software_center.py:390
+#: ../ui/software_center.py:785
 msgid "Upgrade"
 msgstr "Nadgradnja"
 
@@ -935,7 +940,7 @@ msgstr "Različica:"
 msgid "Version: %s"
 msgstr "Različica: %s"
 
-#: ../ui/software_center.py:815
+#: ../ui/software_center.py:814
 msgid "View new features"
 msgstr "Poglej nove zmožnosti"
 
@@ -951,16 +956,16 @@ msgstr "Virtualizacija"
 msgid "Visit Homepage"
 msgstr "Obišči domačo stran"
 
-#: ../ui/install_page.py:712 ../ui/upgrade_page.py:1494
+#: ../ui/install_page.py:734 ../ui/upgrade_page.py:1494
 #: ../ui/upgrade_page.py:1613
 msgid "Waiting for download"
 msgstr "Čakanje na prenos"
 
-#: ../ui/install_page.py:735
+#: ../ui/install_page.py:764
 msgid "Waiting for installation"
 msgstr "Čakanje na namestitev"
 
-#: ../ui/uninstall_page.py:475 ../ui/uninstall_page.py:558
+#: ../ui/uninstall_page.py:490 ../ui/uninstall_page.py:573
 msgid "Waiting for uninstall"
 msgstr "Čakanje na odstranitev"
 
@@ -989,12 +994,12 @@ msgstr "Včeraj"
 msgid "You have already scored.  ;)"
 msgstr "Komentar ste že oddali. ;)"
 
-#: ../ui/software_center.py:1126
+#: ../ui/software_center.py:1125
 #, fuzzy, python-format
-msgid "You have cleared up %s pakcages and saved %s of space."
+msgid "You have cleared up %s packages and saved %s of space."
 msgstr "Počistili ste %s paketov in prihranili %s prostora na disku"
 
-#: ../ui/software_center.py:1128
+#: ../ui/software_center.py:1127
 #, fuzzy
 msgid "Your system cache is empty."
 msgstr "Vaš sistem je počiščen."

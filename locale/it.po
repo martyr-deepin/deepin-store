@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-18 16:14+0800\n"
+"POT-Creation-Date: 2014-06-25 18:17+0800\n"
 "PO-Revision-Date: 2014-04-12 08:10+0000\n"
 "Last-Translator: Massimo Antonio Carofano <massimo.carofano@gmail.com>\n"
 "Language-Team: Italian (http://www.transifex.com/projects/p/deepin-software-"
@@ -28,7 +28,7 @@ msgstr "e riprova."
 msgid " hour"
 msgstr "ora"
 
-#: ../ui/home_page.py:654
+#: ../ui/home_page.py:660
 #, python-format
 msgid "%s > %s : %s applications"
 msgstr "%s > %s : %s applicazioni"
@@ -48,7 +48,7 @@ msgstr "%s applicazioni sono state installate"
 msgid "%s applications are not being watched"
 msgstr "%s applicazioni non sono state visionate"
 
-#: ../ui/uninstall_page.py:154
+#: ../ui/uninstall_page.py:159
 #, python-format
 msgid "%s applications can be uninstalled"
 msgstr "%s applicazioni possono esser disinstallate"
@@ -73,7 +73,7 @@ msgstr "%s ore fa"
 msgid "%s minutes ago"
 msgstr "%s minuti fa"
 
-#: ../ui/software_center.py:391
+#: ../ui/software_center.py:390
 #, fuzzy, python-format
 msgid "%s packages upgrade successfully."
 msgstr "%s aggiornato con successo."
@@ -83,7 +83,7 @@ msgstr "%s aggiornato con successo."
 msgid "%s updates are selected. %s will be downloaded."
 msgstr "%s aggiornamenti selezionati. %s saranno scaricati."
 
-#: ../ui/home_page.py:472
+#: ../ui/home_page.py:478
 #, python-format
 msgid "%s: %s applications"
 msgstr "%s: %s applicazioni"
@@ -157,7 +157,7 @@ msgstr "Categoria:"
 msgid "Change"
 msgstr "Cambia"
 
-#: ../ui/software_center.py:814
+#: ../ui/software_center.py:813
 msgid "Clear up cached packages"
 msgstr "Pulisci la cache dei pacchetti"
 
@@ -190,7 +190,7 @@ msgstr ""
 "eseguita!"
 
 #: ../ui/dsc-daemon.py:312 ../ui/dsc-daemon.py:316
-#: ../ui/software_center.py:729 ../ui/preference.py:428
+#: ../ui/software_center.py:728 ../ui/preference.py:428
 #, fuzzy
 msgid "Deepin Store"
 msgstr "Deepin Software Center"
@@ -218,12 +218,12 @@ msgstr ""
 msgid "Delete configuration files"
 msgstr "Cancella file di configurazione"
 
-#: ../ui/install_page.py:745 ../ui/upgrade_page.py:1646
+#: ../ui/install_page.py:774 ../ui/upgrade_page.py:1646
 #, fuzzy
 msgid "Dependencies analysis failed"
 msgstr "Analisi dipendenze fallita"
 
-#: ../ui/install_page.py:315 ../ui/install_page.py:705
+#: ../ui/install_page.py:324 ../ui/install_page.py:727
 #: ../ui/upgrade_page.py:1088 ../ui/upgrade_page.py:1606
 msgid "Dependencies analyzing"
 msgstr ""
@@ -244,6 +244,11 @@ msgstr "Masterizzazione"
 msgid "Download directory: "
 msgstr "Cartella download:"
 
+#: ../ui/install_page.py:748
+#, fuzzy
+msgid "Download failed"
+msgstr "Download completato."
+
 #: ../ui/upgrade_page.py:1110
 msgid "Download finished."
 msgstr "Download completato."
@@ -253,7 +258,7 @@ msgstr "Download completato."
 msgid "Download has started"
 msgstr "Il download è iniziato..."
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Download rank"
 msgstr "Giudizio"
 
@@ -265,7 +270,7 @@ msgstr "Impostazioni download"
 msgid "Download stopped."
 msgstr "Download bloccato."
 
-#: ../ui/install_page.py:627 ../ui/install_page.py:639
+#: ../ui/install_page.py:649 ../ui/install_page.py:661
 msgid "Download was interrupted"
 msgstr "I download è stato interrotto"
 
@@ -278,7 +283,7 @@ msgstr "Download: %s"
 msgid "Download: 0"
 msgstr "Download: 0"
 
-#: ../ui/install_page.py:719 ../ui/upgrade_page.py:1620
+#: ../ui/install_page.py:741 ../ui/upgrade_page.py:1620
 msgid "Downloading"
 msgstr "Download"
 
@@ -318,7 +323,7 @@ msgstr "Download aggiornamenti fallito"
 msgid "Failed to install updates"
 msgstr "Installazione aggiornamenti fallita"
 
-#: ../ui/software_center.py:454
+#: ../ui/software_center.py:453
 #, fuzzy
 msgid "Failed to refresh package lists."
 msgstr "Aggiornamento della lista applicazioni fallito."
@@ -352,7 +357,7 @@ msgstr "Giochi"
 msgid "General"
 msgstr "Generali"
 
-#: ../ui/software_center.py:434
+#: ../ui/software_center.py:433
 #, fuzzy
 msgid "Generating package list database..."
 msgstr "Creazione del database locale..."
@@ -373,7 +378,7 @@ msgstr "Radio"
 msgid "Hit"
 msgstr "Hit"
 
-#: ../ui/home_page.py:710 ../ui/software_center.py:785
+#: ../ui/home_page.py:716 ../ui/software_center.py:784
 msgid "Home"
 msgstr "Hme"
 
@@ -397,35 +402,35 @@ msgstr "Elaborazione immagini"
 msgid "Industry"
 msgstr "Industria"
 
-#: ../ui/software_center.py:394
+#: ../ui/software_center.py:393
 msgid "Install"
 msgstr "Installa"
 
-#: ../ui/software_center.py:394
+#: ../ui/software_center.py:393
 #, python-format
 msgid "Install %s Successfully."
 msgstr "Installazione di %s completata."
 
-#: ../ui/software_center.py:788
+#: ../ui/software_center.py:787
 msgid "Installation"
 msgstr "Istallazione"
 
-#: ../ui/install_page.py:770
+#: ../ui/install_page.py:799
 #, fuzzy
 msgid "Installation completed"
 msgstr "Installazione completata"
 
-#: ../ui/install_page.py:649
+#: ../ui/install_page.py:671
 msgid "Installation was interrupted"
 msgstr "Installazione interrotta"
 
-#: ../ui/install_page.py:488 ../ui/download_rank_page.py:371
-#: ../ui/home_page.py:1070 ../ui/utils.py:339 ../ui/album_page.py:485
+#: ../ui/install_page.py:510 ../ui/download_rank_page.py:371
+#: ../ui/home_page.py:1076 ../ui/utils.py:339 ../ui/album_page.py:485
 #: ../ui/search_page.py:276
 msgid "Installed"
 msgstr "Installata"
 
-#: ../ui/install_page.py:754 ../ui/install_page.py:761
+#: ../ui/install_page.py:783 ../ui/install_page.py:790
 msgid "Installing"
 msgstr "Installazione"
 
@@ -441,7 +446,7 @@ msgstr "Messaggistica"
 msgid "Internet"
 msgstr "Internet"
 
-#: ../ui/software_center.py:766
+#: ../ui/software_center.py:765
 msgid "Join us"
 msgstr "Unisciti a Noi"
 
@@ -533,8 +538,8 @@ msgstr ""
 msgid "No reminder to update (%s)"
 msgstr ""
 
-#: ../ui/detail_page.py:441 ../ui/install_page.py:481
-#: ../ui/download_rank_page.py:364 ../ui/home_page.py:1063
+#: ../ui/detail_page.py:441 ../ui/install_page.py:503
+#: ../ui/download_rank_page.py:364 ../ui/home_page.py:1069
 #: ../ui/album_page.py:478 ../ui/search_page.py:269
 msgid "Not found"
 msgstr ""
@@ -560,11 +565,11 @@ msgstr "U ora fa"
 msgid "One minute ago"
 msgstr "U minuto fa"
 
-#: ../ui/software_center.py:813
+#: ../ui/software_center.py:812
 msgid "Open download directory"
 msgstr "Apri la cartella di download"
 
-#: ../ui/software_center.py:442
+#: ../ui/software_center.py:441
 msgid "Package lists updated completely."
 msgstr ""
 
@@ -594,7 +599,7 @@ msgstr ""
 msgid "Powered by 又拍云存储"
 msgstr "Powered by 又拍云存储"
 
-#: ../ui/software_center.py:816
+#: ../ui/software_center.py:815
 msgid "Preferences"
 msgstr "Preferenze"
 
@@ -606,7 +611,7 @@ msgstr "Preparazione"
 msgid "Preparing to configure"
 msgstr "Preparazione alla configurazione"
 
-#: ../ui/software_center.py:465
+#: ../ui/software_center.py:464
 #, fuzzy, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted."
@@ -614,7 +619,7 @@ msgstr ""
 "E' sorto un problema nell'analisi delle dipendenze di %s. Installazione "
 "fallita"
 
-#: ../ui/software_center.py:468
+#: ../ui/software_center.py:467
 #, fuzzy, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
 msgstr ""
@@ -633,7 +638,7 @@ msgstr "Pubblicazioni"
 msgid "Puzzle games"
 msgstr "Gochi puzzle"
 
-#: ../ui/software_center.py:817
+#: ../ui/software_center.py:816
 msgid "Quit"
 msgstr "Chiudi"
 
@@ -647,7 +652,7 @@ msgstr "Invio commento fallito, controlla la tua connessione ad internet!"
 msgid "Rating successfully. Thanks for your involvement."
 msgstr "Commento inviato, grazie per la partecipazione! :)"
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Recommendations"
 msgstr ""
 
@@ -768,7 +773,7 @@ msgstr "Editor di testo"
 msgid "The error was successfully reported and will be soon handled."
 msgstr "Errore segnalato, sarà presto preso in considerazione."
 
-#: ../ui/software_center.py:473
+#: ../ui/software_center.py:472
 #, python-format
 msgid "The requested package \"%s\" was not found in the package list."
 msgstr "I pacchetto \"%s\" non è stato trovato nella lista pacchetti."
@@ -839,11 +844,11 @@ msgstr "Top 25 del mese"
 msgid "Top 25 weekly"
 msgstr "Top 25 della settimana"
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Topics"
 msgstr "Argomenti"
 
-#: ../ui/software_center.py:455
+#: ../ui/software_center.py:454
 msgid "Try again"
 msgstr "Riprova"
 
@@ -851,21 +856,21 @@ msgstr "Riprova"
 msgid "Tuner"
 msgstr "Tuner"
 
-#: ../ui/software_center.py:385 ../ui/software_center.py:787
+#: ../ui/software_center.py:384 ../ui/software_center.py:786
 msgid "Uninstall"
 msgstr "Disinstalla"
 
-#: ../ui/software_center.py:385
+#: ../ui/software_center.py:384
 #, python-format
 msgid "Uninstall %s Successfully."
 msgstr "Disinstallazione di %s completata."
 
-#: ../ui/uninstall_page.py:579
+#: ../ui/uninstall_page.py:594
 #, fuzzy
 msgid "Uninstallation completed"
 msgstr "Installazione completata"
 
-#: ../ui/uninstall_page.py:565 ../ui/uninstall_page.py:572
+#: ../ui/uninstall_page.py:580 ../ui/uninstall_page.py:587
 msgid "Uninstalling"
 msgstr "Disinstallazione"
 
@@ -877,12 +882,12 @@ msgstr "Scompatto"
 msgid "Update automatically"
 msgstr "Aggiornamento automatico"
 
-#: ../ui/software_center.py:812 ../ui/preference.py:557
+#: ../ui/software_center.py:811 ../ui/preference.py:557
 #, fuzzy
 msgid "Update package lists"
 msgstr "Aggiorna la lista applicazioni"
 
-#: ../ui/software_center.py:474
+#: ../ui/software_center.py:473
 #, fuzzy
 msgid "Update package lists again and try again."
 msgstr "Aggiornare la lista pacchetti e riprovare."
@@ -891,8 +896,8 @@ msgstr "Aggiornare la lista pacchetti e riprovare."
 msgid "Updating..."
 msgstr "Aggiornamento..."
 
-#: ../ui/dsc-daemon.py:236 ../ui/software_center.py:391
-#: ../ui/software_center.py:786
+#: ../ui/dsc-daemon.py:236 ../ui/software_center.py:390
+#: ../ui/software_center.py:785
 msgid "Upgrade"
 msgstr "Aggiorna"
 
@@ -935,7 +940,7 @@ msgstr "Versione:"
 msgid "Version: %s"
 msgstr "Versione: %s"
 
-#: ../ui/software_center.py:815
+#: ../ui/software_center.py:814
 msgid "View new features"
 msgstr "Visualizza le nuove features"
 
@@ -951,16 +956,16 @@ msgstr "Virtualizzazione"
 msgid "Visit Homepage"
 msgstr "Visita la Homepage"
 
-#: ../ui/install_page.py:712 ../ui/upgrade_page.py:1494
+#: ../ui/install_page.py:734 ../ui/upgrade_page.py:1494
 #: ../ui/upgrade_page.py:1613
 msgid "Waiting for download"
 msgstr "In attesa del download"
 
-#: ../ui/install_page.py:735
+#: ../ui/install_page.py:764
 msgid "Waiting for installation"
 msgstr "I attesa dell'installazione"
 
-#: ../ui/uninstall_page.py:475 ../ui/uninstall_page.py:558
+#: ../ui/uninstall_page.py:490 ../ui/uninstall_page.py:573
 msgid "Waiting for uninstall"
 msgstr "In attesa della disinstallazione"
 
@@ -989,12 +994,12 @@ msgstr "Ieri"
 msgid "You have already scored.  ;)"
 msgstr "Hai già inviato un commento ;)"
 
-#: ../ui/software_center.py:1126
+#: ../ui/software_center.py:1125
 #, fuzzy, python-format
-msgid "You have cleared up %s pakcages and saved %s of space."
+msgid "You have cleared up %s packages and saved %s of space."
 msgstr "Hai pulito %s pacchetti e liberato %s di spazio"
 
-#: ../ui/software_center.py:1128
+#: ../ui/software_center.py:1127
 #, fuzzy
 msgid "Your system cache is empty."
 msgstr "I tuo sistema è pulito."

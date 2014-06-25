@@ -1122,7 +1122,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
     def clean_download_cache_reply(obj, result):
         num, size = result
         if num != 0:
-            message = _("You have cleared up %s pakcages and saved %s of space.") % (num, bit_to_human_str(size))
+            message = _("You have cleared up %s packages and saved %s of space.") % (num, bit_to_human_str(size))
         else:
             message = _("Your system cache is empty.")
         global_event.emit("show-message", message, 5000)

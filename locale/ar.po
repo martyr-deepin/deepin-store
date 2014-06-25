@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-18 16:14+0800\n"
+"POT-Creation-Date: 2014-06-25 18:17+0800\n"
 "PO-Revision-Date: 2014-04-20 17:51+0000\n"
 "Last-Translator: abs1515 <ayobbasher@gmail.com>\n"
 "Language-Team: Arabic (http://www.transifex.com/projects/p/deepin-software-"
@@ -30,7 +30,7 @@ msgstr "وحاول مرة أخرى."
 msgid " hour"
 msgstr "ساعة"
 
-#: ../ui/home_page.py:654
+#: ../ui/home_page.py:660
 #, python-format
 msgid "%s > %s : %s applications"
 msgstr "%s > %s : %s التطبيقات"
@@ -50,7 +50,7 @@ msgstr "%s يتم تثبيت التطبيقات"
 msgid "%s applications are not being watched"
 msgstr "%s تطبيقات غير مشاهدة"
 
-#: ../ui/uninstall_page.py:154
+#: ../ui/uninstall_page.py:159
 #, python-format
 msgid "%s applications can be uninstalled"
 msgstr "%s التطبيقات يمكن الغاء تثبيتها"
@@ -75,7 +75,7 @@ msgstr "%s ساعات مضة"
 msgid "%s minutes ago"
 msgstr "%s دقائق مضة"
 
-#: ../ui/software_center.py:391
+#: ../ui/software_center.py:390
 #, fuzzy, python-format
 msgid "%s packages upgrade successfully."
 msgstr "%s تم ترقية الحزم بنجاح."
@@ -85,7 +85,7 @@ msgstr "%s تم ترقية الحزم بنجاح."
 msgid "%s updates are selected. %s will be downloaded."
 msgstr "%s تم إختيار التحديثات. %s سيتم تنزيلها."
 
-#: ../ui/home_page.py:472
+#: ../ui/home_page.py:478
 #, python-format
 msgid "%s: %s applications"
 msgstr "%s: %s التطبيقات"
@@ -159,7 +159,7 @@ msgstr "الفئة :"
 msgid "Change"
 msgstr "تغيير"
 
-#: ../ui/software_center.py:814
+#: ../ui/software_center.py:813
 msgid "Clear up cached packages"
 msgstr "تنظيف الحزم المؤقته"
 
@@ -190,7 +190,7 @@ msgid "Deepin Desktop Environment is not installed, this function is invalid!"
 msgstr "إعدادات نظام دييبن غير مثبته ، هذه الوظيفة لا تعمل !"
 
 #: ../ui/dsc-daemon.py:312 ../ui/dsc-daemon.py:316
-#: ../ui/software_center.py:729 ../ui/preference.py:428
+#: ../ui/software_center.py:728 ../ui/preference.py:428
 #, fuzzy
 msgid "Deepin Store"
 msgstr "مركز برمجيات دييبن"
@@ -217,12 +217,12 @@ msgstr ""
 msgid "Delete configuration files"
 msgstr "حذف تشكيلة الملفات"
 
-#: ../ui/install_page.py:745 ../ui/upgrade_page.py:1646
+#: ../ui/install_page.py:774 ../ui/upgrade_page.py:1646
 #, fuzzy
 msgid "Dependencies analysis failed"
 msgstr "فشل في تحليل التبعيات"
 
-#: ../ui/install_page.py:315 ../ui/install_page.py:705
+#: ../ui/install_page.py:324 ../ui/install_page.py:727
 #: ../ui/upgrade_page.py:1088 ../ui/upgrade_page.py:1606
 msgid "Dependencies analyzing"
 msgstr ""
@@ -243,6 +243,11 @@ msgstr "حارق أقراص"
 msgid "Download directory: "
 msgstr "دليل التنزيل : "
 
+#: ../ui/install_page.py:748
+#, fuzzy
+msgid "Download failed"
+msgstr "إكتمل التنزيل."
+
 #: ../ui/upgrade_page.py:1110
 msgid "Download finished."
 msgstr "إكتمل التنزيل."
@@ -252,7 +257,7 @@ msgstr "إكتمل التنزيل."
 msgid "Download has started"
 msgstr "بدأ التنزيل..."
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Download rank"
 msgstr "معدل التنزيل"
 
@@ -264,7 +269,7 @@ msgstr "إعدادات التنزيل"
 msgid "Download stopped."
 msgstr "توقف التنزيل."
 
-#: ../ui/install_page.py:627 ../ui/install_page.py:639
+#: ../ui/install_page.py:649 ../ui/install_page.py:661
 msgid "Download was interrupted"
 msgstr "تم مقاطعة التنزيل"
 
@@ -277,7 +282,7 @@ msgstr "تنزيل : %s"
 msgid "Download: 0"
 msgstr "تنزيل : 0"
 
-#: ../ui/install_page.py:719 ../ui/upgrade_page.py:1620
+#: ../ui/install_page.py:741 ../ui/upgrade_page.py:1620
 msgid "Downloading"
 msgstr "يتم التنزيل"
 
@@ -317,7 +322,7 @@ msgstr "فشل في تحميل التحديثات"
 msgid "Failed to install updates"
 msgstr "فشل في تثبيت التحديثات"
 
-#: ../ui/software_center.py:454
+#: ../ui/software_center.py:453
 #, fuzzy
 msgid "Failed to refresh package lists."
 msgstr "فشل في تحديث قائمة التطبيقات."
@@ -351,7 +356,7 @@ msgstr "العاب"
 msgid "General"
 msgstr "عام"
 
-#: ../ui/software_center.py:434
+#: ../ui/software_center.py:433
 #, fuzzy
 msgid "Generating package list database..."
 msgstr "يتم توليد حزمة البيانات المحلية..."
@@ -372,7 +377,7 @@ msgstr "إذاعة هم"
 msgid "Hit"
 msgstr "أصب"
 
-#: ../ui/home_page.py:710 ../ui/software_center.py:785
+#: ../ui/home_page.py:716 ../ui/software_center.py:784
 msgid "Home"
 msgstr "المنزل"
 
@@ -396,35 +401,35 @@ msgstr "تحويل الصورة"
 msgid "Industry"
 msgstr "صناعة"
 
-#: ../ui/software_center.py:394
+#: ../ui/software_center.py:393
 msgid "Install"
 msgstr "تثبيت"
 
-#: ../ui/software_center.py:394
+#: ../ui/software_center.py:393
 #, python-format
 msgid "Install %s Successfully."
 msgstr "تم تثبيت %s بنجاح."
 
-#: ../ui/software_center.py:788
+#: ../ui/software_center.py:787
 msgid "Installation"
 msgstr "تنصيب"
 
-#: ../ui/install_page.py:770
+#: ../ui/install_page.py:799
 #, fuzzy
 msgid "Installation completed"
 msgstr "اكتمل التثبيت"
 
-#: ../ui/install_page.py:649
+#: ../ui/install_page.py:671
 msgid "Installation was interrupted"
 msgstr "تم مقاطعة التثبيت"
 
-#: ../ui/install_page.py:488 ../ui/download_rank_page.py:371
-#: ../ui/home_page.py:1070 ../ui/utils.py:339 ../ui/album_page.py:485
+#: ../ui/install_page.py:510 ../ui/download_rank_page.py:371
+#: ../ui/home_page.py:1076 ../ui/utils.py:339 ../ui/album_page.py:485
 #: ../ui/search_page.py:276
 msgid "Installed"
 msgstr "تم التثبيت"
 
-#: ../ui/install_page.py:754 ../ui/install_page.py:761
+#: ../ui/install_page.py:783 ../ui/install_page.py:790
 msgid "Installing"
 msgstr "جاري التثبيت"
 
@@ -440,7 +445,7 @@ msgstr "مراسلة فورية"
 msgid "Internet"
 msgstr "إنترنت"
 
-#: ../ui/software_center.py:766
+#: ../ui/software_center.py:765
 msgid "Join us"
 msgstr "إنظم إلينا"
 
@@ -532,8 +537,8 @@ msgstr ""
 msgid "No reminder to update (%s)"
 msgstr ""
 
-#: ../ui/detail_page.py:441 ../ui/install_page.py:481
-#: ../ui/download_rank_page.py:364 ../ui/home_page.py:1063
+#: ../ui/detail_page.py:441 ../ui/install_page.py:503
+#: ../ui/download_rank_page.py:364 ../ui/home_page.py:1069
 #: ../ui/album_page.py:478 ../ui/search_page.py:269
 msgid "Not found"
 msgstr ""
@@ -559,11 +564,11 @@ msgstr "قبل ساعة مضة"
 msgid "One minute ago"
 msgstr "قبل دقيقة مضة"
 
-#: ../ui/software_center.py:813
+#: ../ui/software_center.py:812
 msgid "Open download directory"
 msgstr "فتح دليل التنزيلات"
 
-#: ../ui/software_center.py:442
+#: ../ui/software_center.py:441
 msgid "Package lists updated completely."
 msgstr ""
 
@@ -593,7 +598,7 @@ msgstr ""
 msgid "Powered by 又拍云存储"
 msgstr "又拍云存储 مدعوم بواسطة "
 
-#: ../ui/software_center.py:816
+#: ../ui/software_center.py:815
 msgid "Preferences"
 msgstr "التفضيلات"
 
@@ -605,13 +610,13 @@ msgstr "جاري الإعداد"
 msgid "Preparing to configure"
 msgstr "جاري الإعداد للتكوين"
 
-#: ../ui/software_center.py:465
+#: ../ui/software_center.py:464
 #, fuzzy, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted."
 msgstr "حدث خطأ أثناء تحليل التبعيات لـ %s. أجهض التثبيت"
 
-#: ../ui/software_center.py:468
+#: ../ui/software_center.py:467
 #, fuzzy, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
 msgstr "حدث خطأ أثناء تحليل التبعيات لـ %s. أجهضت الترقية"
@@ -628,7 +633,7 @@ msgstr "طبع ونشر"
 msgid "Puzzle games"
 msgstr "العاب ألغاز"
 
-#: ../ui/software_center.py:817
+#: ../ui/software_center.py:816
 msgid "Quit"
 msgstr "خروج"
 
@@ -642,7 +647,7 @@ msgstr "!فشل التعليق. الرجاء التأكد من إتصال الش
 msgid "Rating successfully. Thanks for your involvement."
 msgstr "تم التعليق بنجاح. شكرا لمشاركة. :)"
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Recommendations"
 msgstr ""
 
@@ -763,7 +768,7 @@ msgstr "محرر النص"
 msgid "The error was successfully reported and will be soon handled."
 msgstr "تم إرسال تقرير المشكلة بنجاح وسيتم التعامل معه قريبا."
 
-#: ../ui/software_center.py:473
+#: ../ui/software_center.py:472
 #, python-format
 msgid "The requested package \"%s\" was not found in the package list."
 msgstr "الحزمة المطلوبة \"%s\" لم يتم العثور عليها في قائمة الحزم."
@@ -832,11 +837,11 @@ msgstr "أفضل 25 شهرياً"
 msgid "Top 25 weekly"
 msgstr "أفضل 25 أسبوعياً"
 
-#: ../ui/home_page.py:750
+#: ../ui/home_page.py:756
 msgid "Topics"
 msgstr "المواضيع"
 
-#: ../ui/software_center.py:455
+#: ../ui/software_center.py:454
 msgid "Try again"
 msgstr "حاول مرة أخرى"
 
@@ -844,21 +849,21 @@ msgstr "حاول مرة أخرى"
 msgid "Tuner"
 msgstr "مدوزن"
 
-#: ../ui/software_center.py:385 ../ui/software_center.py:787
+#: ../ui/software_center.py:384 ../ui/software_center.py:786
 msgid "Uninstall"
 msgstr "إلغاء التثبيت"
 
-#: ../ui/software_center.py:385
+#: ../ui/software_center.py:384
 #, python-format
 msgid "Uninstall %s Successfully."
 msgstr "تم إلغاء %s التثبيت بنجاح."
 
-#: ../ui/uninstall_page.py:579
+#: ../ui/uninstall_page.py:594
 #, fuzzy
 msgid "Uninstallation completed"
 msgstr "اكتمل التثبيت"
 
-#: ../ui/uninstall_page.py:565 ../ui/uninstall_page.py:572
+#: ../ui/uninstall_page.py:580 ../ui/uninstall_page.py:587
 msgid "Uninstalling"
 msgstr "يتم الغاء التثبيت"
 
@@ -870,12 +875,12 @@ msgstr "جاري التفريغ"
 msgid "Update automatically"
 msgstr "تحديث تلقائي"
 
-#: ../ui/software_center.py:812 ../ui/preference.py:557
+#: ../ui/software_center.py:811 ../ui/preference.py:557
 #, fuzzy
 msgid "Update package lists"
 msgstr "تحديث قائمة التطبيقات"
 
-#: ../ui/software_center.py:474
+#: ../ui/software_center.py:473
 #, fuzzy
 msgid "Update package lists again and try again."
 msgstr "حدث قائمة الحزمة وحاول مرة أخرى."
@@ -884,8 +889,8 @@ msgstr "حدث قائمة الحزمة وحاول مرة أخرى."
 msgid "Updating..."
 msgstr "يتم التحديث..."
 
-#: ../ui/dsc-daemon.py:236 ../ui/software_center.py:391
-#: ../ui/software_center.py:786
+#: ../ui/dsc-daemon.py:236 ../ui/software_center.py:390
+#: ../ui/software_center.py:785
 msgid "Upgrade"
 msgstr "ترقية"
 
@@ -928,7 +933,7 @@ msgstr "الإصدار :"
 msgid "Version: %s"
 msgstr "الإصدار : %s"
 
-#: ../ui/software_center.py:815
+#: ../ui/software_center.py:814
 msgid "View new features"
 msgstr "عرض الخصائص الجديدة"
 
@@ -944,16 +949,16 @@ msgstr "المحاكاة الإفتراضية"
 msgid "Visit Homepage"
 msgstr "زيارة الصفحة الرئيسية"
 
-#: ../ui/install_page.py:712 ../ui/upgrade_page.py:1494
+#: ../ui/install_page.py:734 ../ui/upgrade_page.py:1494
 #: ../ui/upgrade_page.py:1613
 msgid "Waiting for download"
 msgstr "في إنتظار التنزيل"
 
-#: ../ui/install_page.py:735
+#: ../ui/install_page.py:764
 msgid "Waiting for installation"
 msgstr "في إنتظار التثبيت"
 
-#: ../ui/uninstall_page.py:475 ../ui/uninstall_page.py:558
+#: ../ui/uninstall_page.py:490 ../ui/uninstall_page.py:573
 msgid "Waiting for uninstall"
 msgstr "في انتظار الغاء التثبيت"
 
@@ -982,12 +987,12 @@ msgstr "أمس"
 msgid "You have already scored.  ;)"
 msgstr "لقد قمت بأرسال تعليق مسبقاً ;)"
 
-#: ../ui/software_center.py:1126
+#: ../ui/software_center.py:1125
 #, fuzzy, python-format
-msgid "You have cleared up %s pakcages and saved %s of space."
+msgid "You have cleared up %s packages and saved %s of space."
 msgstr "قمت بتنظيف %s من الحزم وحفظ %s من المساحة"
 
-#: ../ui/software_center.py:1128
+#: ../ui/software_center.py:1127
 #, fuzzy
 msgid "Your system cache is empty."
 msgstr "النظام نظيف."
