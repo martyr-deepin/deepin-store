@@ -427,7 +427,11 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 status = str(action_content[1])
                 speed_str = str(action_content[2])
                 status = utils.update_l18n_status_info(status)
-                global_event.emit("show-message", [percent + status, speed_str])
+
+                list_message = []
+                list_message.append(percent + status)
+                list_message.append(speed_str)
+                global_event.emit("show-message", list_message)
 
             elif signal_type == "update-list-merge":
                 global_event.emit("show-message", [_("Generating package list database..."), ''], 0)
@@ -1088,7 +1092,10 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
     def update_status_bar_message(self, message, hide_timeout=0):
         if not self.paned_box.bottom_window.is_visible():
             self.paned_box.bottom_window.show()
-        if isinstance(message, list) and len(message) == 3:
+        if isinstance(message, list) and len(message) == 4:
+            self.bottom_tip_bar.update_info(message[0], message[2], message[3])
+            self.bottom_tip_bar.update_end_info(message[1])
+        elif isinstance(message, list) and len(message) == 3:
             self.bottom_tip_bar.update_info(*message)
             self.bottom_tip_bar.update_end_info("")
         elif isinstance(message, list) and len(message) == 2:

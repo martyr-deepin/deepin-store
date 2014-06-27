@@ -26,7 +26,9 @@ import gobject
 import pango
 import os
 import dbus
-from dtk.ui.dialog import PreferenceDialog, DialogBox, DIALOG_MASK_SINGLE_PAGE
+
+from dtk.ui.threads import post_gui
+from dtk.ui.dialog import PreferenceDialog
 from dtk.ui.entry import InputEntry
 from dtk.ui.button import Button, CheckButton
 from dtk.ui.label import Label
@@ -35,18 +37,19 @@ from dtk.ui.treeview import TreeView, TreeItem, get_background_color
 from dtk.ui.utils import get_content_size, is_in_rect, alpha_color_hex_to_cairo, color_hex_to_cairo
 from dtk.ui.draw import draw_text, draw_pixbuf
 from dtk.ui.spin import SpinBox
-from dtk.ui.progressbar import ProgressBar
-from dtk.ui.scrolled_window import ScrolledWindow
+#from dtk.ui.progressbar import ProgressBar
+#from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.theme import DynamicColor, ui_theme
 from dtk.ui.combo import ComboBox
 from deepin_utils.file import get_parent_dir
 from deepin_utils.ipc import is_dbus_name_exists
+
 from nls import _
 from utils import (
         get_purg_flag, 
         set_purge_flag, 
-        handle_dbus_reply, 
-        handle_dbus_error, 
+        #handle_dbus_reply, 
+        #handle_dbus_error, 
         get_update_interval, 
         set_update_interval,
         get_software_download_dir,
@@ -55,13 +58,13 @@ from utils import (
         set_download_number,
         )
 import utils
-from mirror_test import Mirror, MirrorTest
+from mirror_test import Mirror
 from events import global_event
-import aptsources
-import aptsources.distro
-from loading_widget import Loading
+#import aptsources
+#import aptsources.distro
+#from loading_widget import Loading
 from constant import PROGRAM_VERSION
-import time
+#import time
 import subprocess
 
 DSC_UPDATE_DAEMON_NAME = "com.linuxdeepin.softwarecenter.update.daemon"
@@ -547,6 +550,12 @@ class MirrorsBox(BaseBox):
 
         self.current_mirror_item = None
 
+        self.select_best_mirror_button_texts = {
+                "normal": _("Select the best mirror"),
+                "wait": _("Waiting"),
+                "success": _("Successfully")
+                }
+
         self.main_box.pack_start(self.create_mirror_select_table(), True, True)
         self.main_box.pack_start(self.create_source_update_frequency_table(), False, True)
 
@@ -595,11 +604,29 @@ class MirrorsBox(BaseBox):
             iface = dbus.Interface(dbus_obj, DSC_UPDATE_DAEMON_NAME)
             iface.quit()
 
+    def select_best_mirror(self, widget):
+        utils.ThreadMethod(self.change_to_nearest_mirror_thread, (widget, )).start()
+
+    @post_gui
+    def change_to_nearest_mirror_thread(self, widget):
+        widget.set_label(self.select_best_mirror_button_texts["wait"])
+        widget.set_sensitive(False)
+        from mirror_speed.ip_detect import get_nearest_mirror
+        hostname = "http://" + get_nearest_mirror()
+        for item in self.mirror_view.visible_items:
+            if item.mirror.hostname == hostname:
+                global_event.emit('change-mirror', item)
+                self.emit("mirror-clicked")
+        widget.set_sensitive(True)
+        widget.set_label(self.select_best_mirror_button_texts["normal"])
+
     def create_mirror_select_table(self):
         main_table = gtk.Table(3, 2)
         main_table.set_row_spacings(CONTENT_ROW_SPACING)
         
         mirror_select_title = Label(_("Select mirror"))
+        self.select_best_mirror_button = Button(self.select_best_mirror_button_texts["normal"])
+        self.select_best_mirror_button.connect("clicked", self.select_best_mirror)
 
         self.mirrors_dir = os.path.join(get_parent_dir(__file__, 2), 'mirrors')
         self.current_mirror_hostname = utils.get_current_mirror_hostname()
@@ -614,7 +641,8 @@ class MirrorsBox(BaseBox):
         self.mirror_view.set_size_request(-1, 280)
         self.mirror_view.draw_mask = self.mirror_treeview_draw_mask
 
-        main_table.attach(mirror_select_title, 0, 2, 0, 1, yoptions=gtk.FILL)
+        main_table.attach(mirror_select_title, 0, 1, 0, 1, yoptions=gtk.FILL)
+        main_table.attach(self.select_best_mirror_button, 1, 2, 0, 1, xoptions=gtk.FILL)
         main_table.attach(create_separator_box(), 0, 2, 1, 2, xoptions=gtk.FILL)
         main_table.attach(self.mirror_view, 0, 2, 2, 3, xoptions=gtk.FILL)
         
@@ -630,6 +658,7 @@ class MirrorsBox(BaseBox):
             elif i == item:
                 i.radio_button.active = True
         self.mirror_view.queue_draw()
+        self.mirror_view.visible_item(item)
 
     def mirror_treeview_draw_mask(self, cr, x, y, w, h):
         cr.set_source_rgba(1, 1, 1, 0.5)

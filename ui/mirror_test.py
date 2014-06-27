@@ -155,5 +155,4 @@ if __name__ == "__main__":
     mirrors_list = []
     for ini_file in os.listdir(mirrors_dir):
         m = Mirror(os.path.join(mirrors_dir, ini_file))
-        mirrors_list.append(m)
-    print test_mirrors(mirrors_list)
+        print m.hostname
