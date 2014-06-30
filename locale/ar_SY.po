@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-25 18:17+0800\n"
+"POT-Creation-Date: 2014-06-30 13:26+0800\n"
 "PO-Revision-Date: 2014-03-06 13:17+0000\n"
 "Last-Translator: electricface <songwentai@linuxdeepin.com>\n"
 "Language-Team: Arabic (Syria) (http://www.transifex.com/projects/p/deepin-"
@@ -24,7 +24,7 @@ msgstr ""
 msgid " and try again."
 msgstr ""
 
-#: ../ui/preference.py:567
+#: ../ui/preference.py:576
 msgid " hour"
 msgstr ""
 
@@ -105,7 +105,7 @@ msgstr ""
 msgid "3D graphics"
 msgstr ""
 
-#: ../ui/preference.py:691
+#: ../ui/preference.py:720
 msgid "About"
 msgstr ""
 
@@ -153,11 +153,11 @@ msgstr ""
 msgid "Category: "
 msgstr ""
 
-#: ../ui/preference.py:511
+#: ../ui/preference.py:514
 msgid "Change"
 msgstr ""
 
-#: ../ui/software_center.py:813
+#: ../ui/software_center.py:817
 msgid "Clear up cached packages"
 msgstr ""
 
@@ -187,11 +187,11 @@ msgid "Deepin Desktop Environment is not installed, this function is invalid!"
 msgstr ""
 
 #: ../ui/dsc-daemon.py:312 ../ui/dsc-daemon.py:316
-#: ../ui/software_center.py:728 ../ui/preference.py:428
+#: ../ui/software_center.py:732 ../ui/preference.py:431
 msgid "Deepin Store"
 msgstr ""
 
-#: ../ui/preference.py:447
+#: ../ui/preference.py:450
 msgid ""
 "Deepin Store is a commonly used software center on Linux. It selected more "
 "than 2,600 excellent applications with many functions of installation and "
@@ -203,7 +203,7 @@ msgid ""
 "Deepin Store is a free software licensed under GNU GPLv3."
 msgstr ""
 
-#: ../ui/preference.py:475
+#: ../ui/preference.py:478
 msgid "Delete configuration files"
 msgstr ""
 
@@ -228,7 +228,7 @@ msgstr ""
 msgid "Disc burner"
 msgstr ""
 
-#: ../ui/preference.py:505
+#: ../ui/preference.py:508
 msgid "Download directory: "
 msgstr ""
 
@@ -248,7 +248,7 @@ msgstr ""
 msgid "Download rank"
 msgstr ""
 
-#: ../ui/preference.py:489
+#: ../ui/preference.py:492
 msgid "Download settings"
 msgstr ""
 
@@ -309,7 +309,7 @@ msgstr ""
 msgid "Failed to install updates"
 msgstr ""
 
-#: ../ui/software_center.py:453
+#: ../ui/software_center.py:457
 msgid "Failed to refresh package lists."
 msgstr ""
 
@@ -337,11 +337,11 @@ msgstr ""
 msgid "Games"
 msgstr ""
 
-#: ../ui/preference.py:689
+#: ../ui/preference.py:718
 msgid "General"
 msgstr ""
 
-#: ../ui/software_center.py:433
+#: ../ui/software_center.py:437
 msgid "Generating package list database..."
 msgstr ""
 
@@ -361,7 +361,7 @@ msgstr ""
 msgid "Hit"
 msgstr ""
 
-#: ../ui/home_page.py:716 ../ui/software_center.py:784
+#: ../ui/home_page.py:716 ../ui/software_center.py:788
 msgid "Home"
 msgstr ""
 
@@ -394,7 +394,7 @@ msgstr ""
 msgid "Install %s Successfully."
 msgstr ""
 
-#: ../ui/software_center.py:787
+#: ../ui/software_center.py:791
 msgid "Installation"
 msgstr ""
 
@@ -428,7 +428,7 @@ msgstr ""
 msgid "Internet"
 msgstr ""
 
-#: ../ui/software_center.py:765
+#: ../ui/software_center.py:769
 msgid "Join us"
 msgstr ""
 
@@ -465,7 +465,7 @@ msgstr ""
 msgid "MIDI"
 msgstr ""
 
-#: ../ui/preference.py:495
+#: ../ui/preference.py:498
 msgid "Max download task number: "
 msgstr ""
 
@@ -481,7 +481,7 @@ msgstr ""
 msgid "Mirror Receiving: "
 msgstr ""
 
-#: ../ui/preference.py:690
+#: ../ui/preference.py:719
 msgid "Mirrors"
 msgstr ""
 
@@ -532,7 +532,7 @@ msgstr ""
 msgid "Office"
 msgstr ""
 
-#: ../ui/preference.py:472
+#: ../ui/preference.py:475
 msgid "On uninstalling the software"
 msgstr ""
 
@@ -544,11 +544,11 @@ msgstr ""
 msgid "One minute ago"
 msgstr ""
 
-#: ../ui/software_center.py:812
+#: ../ui/software_center.py:816
 msgid "Open download directory"
 msgstr ""
 
-#: ../ui/software_center.py:441
+#: ../ui/software_center.py:445
 msgid "Package lists updated completely."
 msgstr ""
 
@@ -578,7 +578,7 @@ msgstr ""
 msgid "Powered by 又拍云存储"
 msgstr ""
 
-#: ../ui/software_center.py:815
+#: ../ui/software_center.py:819
 msgid "Preferences"
 msgstr ""
 
@@ -590,13 +590,13 @@ msgstr ""
 msgid "Preparing to configure"
 msgstr ""
 
-#: ../ui/software_center.py:464
+#: ../ui/software_center.py:468
 #, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted."
 msgstr ""
 
-#: ../ui/software_center.py:467
+#: ../ui/software_center.py:471
 #, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
 msgstr ""
@@ -613,7 +613,7 @@ msgstr ""
 msgid "Puzzle games"
 msgstr ""
 
-#: ../ui/software_center.py:816
+#: ../ui/software_center.py:820
 msgid "Quit"
 msgstr ""
 
@@ -673,12 +673,16 @@ msgstr ""
 msgid "Security"
 msgstr ""
 
-#: ../ui/preference.py:661
+#: ../ui/preference.py:690
 msgid "Select Directory"
 msgstr ""
 
-#: ../ui/preference.py:602
+#: ../ui/preference.py:627
 msgid "Select mirror"
+msgstr ""
+
+#: ../ui/preference.py:554
+msgid "Select the best mirror"
 msgstr ""
 
 #: ../ui/software_center.py:194
@@ -718,6 +722,10 @@ msgstr ""
 msgid "Strategy games"
 msgstr ""
 
+#: ../ui/preference.py:556
+msgid "Successfully"
+msgstr ""
+
 #: ../ui/detail_page.py:447
 msgid "Successfully installed"
 msgstr ""
@@ -743,7 +751,7 @@ msgstr ""
 msgid "The error was successfully reported and will be soon handled."
 msgstr ""
 
-#: ../ui/software_center.py:472
+#: ../ui/software_center.py:476
 #, python-format
 msgid "The requested package \"%s\" was not found in the package list."
 msgstr ""
@@ -788,7 +796,7 @@ msgstr ""
 msgid "This problem occurs due to corrupted local apt dependency relationship."
 msgstr ""
 
-#: ../ui/preference.py:564
+#: ../ui/preference.py:573
 msgid "Time interval: "
 msgstr ""
 
@@ -808,7 +816,7 @@ msgstr ""
 msgid "Topics"
 msgstr ""
 
-#: ../ui/software_center.py:454
+#: ../ui/software_center.py:458
 msgid "Try again"
 msgstr ""
 
@@ -816,7 +824,7 @@ msgstr ""
 msgid "Tuner"
 msgstr ""
 
-#: ../ui/software_center.py:384 ../ui/software_center.py:786
+#: ../ui/software_center.py:384 ../ui/software_center.py:790
 msgid "Uninstall"
 msgstr ""
 
@@ -837,15 +845,15 @@ msgstr ""
 msgid "Unpacking"
 msgstr ""
 
-#: ../ui/preference.py:560
+#: ../ui/preference.py:569
 msgid "Update automatically"
 msgstr ""
 
-#: ../ui/software_center.py:811 ../ui/preference.py:557
+#: ../ui/software_center.py:815 ../ui/preference.py:566
 msgid "Update package lists"
 msgstr ""
 
-#: ../ui/software_center.py:473
+#: ../ui/software_center.py:477
 msgid "Update package lists again and try again."
 msgstr ""
 
@@ -854,7 +862,7 @@ msgid "Updating..."
 msgstr ""
 
 #: ../ui/dsc-daemon.py:236 ../ui/software_center.py:390
-#: ../ui/software_center.py:785
+#: ../ui/software_center.py:789
 msgid "Upgrade"
 msgstr ""
 
@@ -886,7 +894,7 @@ msgstr ""
 msgid "Version control"
 msgstr ""
 
-#: ../ui/preference.py:433
+#: ../ui/preference.py:436
 msgid "Version:"
 msgstr ""
 
@@ -895,7 +903,7 @@ msgstr ""
 msgid "Version: %s"
 msgstr ""
 
-#: ../ui/software_center.py:814
+#: ../ui/software_center.py:818
 msgid "View new features"
 msgstr ""
 
@@ -909,6 +917,10 @@ msgstr ""
 
 #: ../ui/detail_page.py:396
 msgid "Visit Homepage"
+msgstr ""
+
+#: ../ui/preference.py:555
+msgid "Waiting"
 msgstr ""
 
 #: ../ui/install_page.py:734 ../ui/upgrade_page.py:1494
@@ -948,12 +960,12 @@ msgstr ""
 msgid "You have already scored.  ;)"
 msgstr ""
 
-#: ../ui/software_center.py:1125
+#: ../ui/software_center.py:1132
 #, python-format
 msgid "You have cleared up %s packages and saved %s of space."
 msgstr ""
 
-#: ../ui/software_center.py:1127
+#: ../ui/software_center.py:1134
 msgid "Your system cache is empty."
 msgstr ""
 
