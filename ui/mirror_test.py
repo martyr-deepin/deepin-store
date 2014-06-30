@@ -20,20 +20,33 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import time
+import os
+import sys
 import threading
 import aptsources
 import aptsources.distro
-from aptsources.sourceslist import SourcesList
 import urllib2
-import os
+import time
+from urlparse import urlparse
+import traceback
+
 from deepin_utils.file import get_parent_dir
 from deepin_utils.config import Config
+
 from constant import LANGUAGE
-from urlparse import urlparse
+from logger import Logger
 
 root_dir = get_parent_dir(__file__, 2)
 mirrors_dir = os.path.join(root_dir, 'mirrors')
+
+def get_mirrors():
+    mirrors = []
+    for f in os.listdir(mirrors_dir):
+        if f.endswith(".ini"):
+            ini_file = os.path.join(mirrors_dir, f)
+            m = Mirror(ini_file)
+            mirrors.append(m)
+    return mirrors
 
 class Mirror(object):
     def __init__(self, ini_file):
@@ -62,97 +75,67 @@ class Mirror(object):
     def get_repo_urls(self):
         return (self.config.get('mirror', 'ubuntu_url'), self.config.get('mirror', 'deepin_url'))
 
-class MirrorTest(threading.Thread):
-    """Determines the best mirrors by perfoming ping and download test."""
+class MirrorTest(Logger):
+    def __init__(self, hostnames):
+        self.hostnames = hostnames
+        self._stop = False
+        self._mirrors = []
 
-    def __init__(self, mirrors, test_file):
-        threading.Thread.__init__(self)
-        self.action = ''
-        self.progress = (0, 0, 0.0) # cur, max, %
-        self.best = None
-        self.test_file = test_file
-        self.mirrors = mirrors
-        self.running = False
-        self.terminated = False
+    def init_mirrors(self):
+        all_mirrors_list = get_mirrors()
+        for hostname in self.hostnames:
+            url = "http://" + hostname
+            for m in all_mirrors_list:
+                if url in m.hostname:
+                    self._mirrors.append(m)
 
-    def report_action(self, text):
-        self.action = text
-
-    def report_progress(self, current, max):
-        self.progress = (current, 
-                         max,
-                         current*1.0/max)
-
-    def run_full_test(self):
-        results = self.run_download_test(self.mirrors)
-
-        if not results:
-            return None
-        else:
-            for r in results:
-                print "mirror: %s - time: %s" % (r[1].hostname, r[0])
-            print "winner:", results[0][1].hostname
-
-            return results[0]
-
-    def run_download_test(self, mirrors=None):
-
-        def test_download_speed(mirror):
-            url = "%s/%s" % (mirror.get_repo_urls()[0],
-                             self.test_file)
-            self.report_action("正在测试: %s" % mirror.get_repo_urls()[0])
-            start = time.time()
-            try:
-                urllib2.urlopen(url, timeout=2).read(102400)
-                return time.time() - start
-            except:
-                return 0
-
-        if mirrors == None:
-            mirrors = self.mirrors
-        results = []
-
-        for m in mirrors:
-            if self.terminated:
-                return []
-            download_time = test_download_speed(m)
-            if download_time > 0:
-                results.append([download_time, m])
-            self.report_progress(mirrors.index(m) + 1, len(mirrors))
-        results.sort()
-        return results
+    def timer_out_callback(self):
+        self._stop = True
 
     def run(self):
-        """Complete test exercise, set self.best when done"""
-        self.running = True
-        self.best = self.run_full_test()
-        self.running = False
+        self.init_mirrors()
+        result = []
+        for m in self._mirrors:
+            speed = self.get_speed(m)
+            result.append((speed, m.hostname))
+        sorted_result = sorted(result, key=lambda r: r[0])
+        best_hostname = sorted_result[-1][-1]
+        self.loginfo("Best hostname: %s" % best_hostname)
+        return best_hostname
 
-def test_mirrors(mirrors_list):
-    distro = aptsources.distro.get_distro()
-    distro.get_sources(SourcesList())
-    pipe = os.popen("dpkg --print-architecture")
-    arch = pipe.read().strip()
-    test_file = "dists/%s/%s/binary-%s/Packages.gz" % \
-                (
-                #distro.source_template.name,
-                "quantal",
-                distro.source_template.components[0].name,
-                arch)
-
-    app = MirrorTest(mirrors_list,
-                     test_file,
-                     )
-    results = app.run_download_test()
-    winner = [100, None]
-    print results
-    for r in results:
-        if r[0] < winner[0]:
-            winner = r
-    return winner
+    def get_speed(self, mirror):
+        deepin_url = mirror.get_repo_urls()[1]
+        if deepin_url.endswith("/"):
+            deepin_url = deepin_url[:-1]
+        distro = aptsources.distro.get_distro()
+        download_url = "%s/dists/%s/Contents-amd64" % (deepin_url, distro.codename)
+        request = urllib2.Request(download_url, None)
+        try:
+            conn = urllib2.urlopen(request, timeout=10)
+        except Exception, e:
+            self.logerror("Error for host: %s %s" % (mirror.hostname, e))
+            return 0
+        total_data = ""
+        self._stop = False
+        self._timer = threading.Timer(10, self.timer_out_callback)
+        self._timer.start()
+        start_time = time.time()
+        while True:
+            data = conn.read(1024)
+            if len(data) == 0 or self._stop:
+                break
+            else:
+                total_data += data
+        if self._timer.isAlive():
+            self._timer.cancel()
+        self._timer = None
+        total_time = time.time() - start_time
+        speed = len(total_data)/total_time
+        self.loginfo("Speed for host: %s %s" % (mirror.hostname, speed))
+        return speed
 
 if __name__ == "__main__":
-    mirrors_list = []
-    for ini_file in os.listdir(mirrors_dir):
-        m = Mirror(os.path.join(mirrors_dir, ini_file))
-        print m.hostname
+    now = time.time()
+    t = MirrorTest([u'mirrors.hust.edu.cn', u'packages.linuxdeepin.com', u'mirrors.ustc.edu.cn', u'test.packages.linuxdeepin.com', u'mirrors.jstvu.edu.cn'])
+    print t.run()
+    print "Total Time:", time.time() - now

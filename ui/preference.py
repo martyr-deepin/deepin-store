@@ -27,7 +27,7 @@ import pango
 import os
 import dbus
 
-from dtk.ui.threads import post_gui
+#from dtk.ui.threads import post_gui
 from dtk.ui.dialog import PreferenceDialog
 from dtk.ui.entry import InputEntry
 from dtk.ui.button import Button, CheckButton
@@ -58,7 +58,7 @@ from utils import (
         set_download_number,
         )
 import utils
-from mirror_test import Mirror
+from mirror_test import get_mirrors, MirrorTest
 from events import global_event
 #import aptsources
 #import aptsources.distro
@@ -559,6 +559,8 @@ class MirrorsBox(BaseBox):
         self.main_box.pack_start(self.create_mirror_select_table(), True, True)
         self.main_box.pack_start(self.create_source_update_frequency_table(), False, True)
 
+        global_event.register_event("mirror-test-finished", self.finish_mirror_test)
+
     def create_source_update_frequency_table(self):
         main_table = gtk.Table(3, 2)
         main_table.set_row_spacings(CONTENT_ROW_SPACING)
@@ -605,20 +607,24 @@ class MirrorsBox(BaseBox):
             iface.quit()
 
     def select_best_mirror(self, widget):
-        utils.ThreadMethod(self.change_to_nearest_mirror_thread, (widget, )).start()
-
-    @post_gui
-    def change_to_nearest_mirror_thread(self, widget):
         widget.set_label(self.select_best_mirror_button_texts["wait"])
         widget.set_sensitive(False)
-        from mirror_speed.ip_detect import get_nearest_mirror
-        hostname = "http://" + get_nearest_mirror()
+        utils.ThreadMethod(self.change_to_nearest_mirror_thread, (widget, )).start()
+
+    def change_to_nearest_mirror_thread(self, widget):
+        from mirror_speed.ip_detect import get_nearest_mirrors
+        hostnames = get_nearest_mirrors()
+        t = MirrorTest(hostnames)
+        hostname = t.run()
+        global_event.emit("mirror-test-finished", hostname)
+
+    def finish_mirror_test(self, hostname):
         for item in self.mirror_view.visible_items:
             if item.mirror.hostname == hostname:
                 global_event.emit('change-mirror', item)
                 self.emit("mirror-clicked")
-        widget.set_sensitive(True)
-        widget.set_label(self.select_best_mirror_button_texts["normal"])
+        self.select_best_mirror_button.set_sensitive(True)
+        self.select_best_mirror_button.set_label(self.select_best_mirror_button_texts["normal"])
 
     def create_mirror_select_table(self):
         main_table = gtk.Table(3, 2)
@@ -667,16 +673,13 @@ class MirrorsBox(BaseBox):
 
     def get_mirror_items(self):
         items = []
-        self.mirrors_list = []
-        for ini_file in os.listdir(self.mirrors_dir):
-            if ini_file.endswith(".ini"):
-                m = Mirror(os.path.join(self.mirrors_dir, ini_file))
-                item = MirrorItem(m, self.mirror_clicked_callback)
-                if m.hostname == self.current_mirror_hostname:
-                    item.radio_button.active = True
-                    self.current_mirror_item = item
-                self.mirrors_list.append(m)
-                items.append(item)
+        self.mirrors_list = get_mirrors()
+        for m in self.mirrors_list:
+            item = MirrorItem(m, self.mirror_clicked_callback)
+            if m.hostname == self.current_mirror_hostname:
+                item.radio_button.active = True
+                self.current_mirror_item = item
+            items.append(item)
 
         items.sort(key=lambda item:item.mirror.priority)
         return items
@@ -711,7 +714,7 @@ class DscPreferenceDialog(PreferenceDialog):
 
         self.general_box = GeneralBox()
         self.mirrors_box = MirrorsBox()
-        self.mirrors_box.connect("mirror-clicked", lambda w:self.hide())
+        self.mirrors_box.connect("mirror-clicked", self.mirror_changed_handler)
         self.about_box = AboutBox()
 
         self.set_preference_items([
@@ -719,6 +722,10 @@ class DscPreferenceDialog(PreferenceDialog):
             (_("Mirrors"), self.mirrors_box),
             (_("About"), self.about_box),
             ])
+
+    def mirror_changed_handler(self, w):
+        global_event.emit("start-update-list")
+        self.hide()
 
 if __name__ == '__main__':
     preference_dialog = DscPreferenceDialog()

@@ -58,7 +58,7 @@ def get_distance(lat1,lng1,lat2,lng2):
     else:
         return s
 
-def get_nearest_mirror(mirrors=MIRRORS):
+def get_nearest_mirrors(mirrors=MIRRORS):
     ip_addr = getip()
     print "Current user IP:", ip_addr
     gic = GeoIP.open(city_data_path, 1)
@@ -67,25 +67,29 @@ def get_nearest_mirror(mirrors=MIRRORS):
     longitude = record['longitude']
     
     if not (latitude and longitude):
-        return official_mirror.hostname
+        return [official_mirror.hostname]
 
-    nearest_mirror = official_mirror
-    distance = get_distance(latitude, longitude, nearest_mirror.latitude, nearest_mirror.longitude)
-
+    distance_list = []
     for mirror in mirrors:
         if mirror.latitude and mirror.longitude:
-            new_distance = get_distance(latitude, longitude, mirror.latitude, mirror.longitude)
-            if distance > new_distance:
-                nearest_mirror = mirror
+            distance = get_distance(latitude, longitude, mirror.latitude, mirror.longitude)
+            distance_list.append((distance, mirror.hostname))
 
-    return nearest_mirror.hostname
+    distance_list_sorted = sorted(distance_list, key=lambda distance: distance[0])[:5]
+    return_list = []
+    for (index, t) in enumerate(distance_list_sorted):
+        if index < 5:
+            return_list.append(t[1])
+        else:
+            break
+    return return_list
 
 def getip():  
     return re.search('\d+\.\d+\.\d+\.\d+',urllib2.urlopen("http://www.whereismyip.com").read()).group(0)
     #中间的那个http地址因不同的IP查询网站而group内容不一样，如果是http://whois.ipcn.org/的话，可能就group(1)了
 
 if __name__ == "__main__":
-    print get_nearest_mirror()
+    print get_nearest_mirrors()
 
 """
 @route("/")

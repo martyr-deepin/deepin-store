@@ -1087,7 +1087,6 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
 
     def handle_mirror_change_reply(self, item):
         global_event.emit("mirror-changed", item)
-        self.update_list_handler()
 
     def update_status_bar_message(self, message, hide_timeout=0):
         if not self.paned_box.bottom_window.is_visible():
