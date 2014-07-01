@@ -737,7 +737,7 @@ class WaitingDialog(DialogBox):
 
         self.waiting_box.connect("expose-event", self.expose_waiting)
         self.counter = 1
-        self.factor = math.pi/12
+        self.factor = math.pi/10
         gtk.timeout_add(50, self.on_timer)
 
         self.label = Label(
@@ -805,6 +805,8 @@ class DscPreferenceDialog(PreferenceDialog):
         self.hide()
 
 if __name__ == '__main__':
-    preference_dialog = DscPreferenceDialog()
-    preference_dialog.show_all()
+    d = WaitingDialog()
+    d.show_all()
+    #preference_dialog = DscPreferenceDialog()
+    #preference_dialog.show_all()
     gtk.main()
