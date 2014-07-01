@@ -26,16 +26,18 @@ import gobject
 import pango
 import os
 import dbus
+import math
 
 #from dtk.ui.threads import post_gui
-from dtk.ui.dialog import PreferenceDialog
+from dtk.ui.constant import ALIGN_MIDDLE
+from dtk.ui.dialog import PreferenceDialog, DialogBox
 from dtk.ui.entry import InputEntry
 from dtk.ui.button import Button, CheckButton
 from dtk.ui.label import Label
 from dtk.ui.line import HSeparator
 from dtk.ui.treeview import TreeView, TreeItem, get_background_color
 from dtk.ui.utils import get_content_size, is_in_rect, alpha_color_hex_to_cairo, color_hex_to_cairo
-from dtk.ui.draw import draw_text, draw_pixbuf
+from dtk.ui.draw import draw_text, draw_pixbuf, draw_round_rectangle
 from dtk.ui.spin import SpinBox
 #from dtk.ui.progressbar import ProgressBar
 #from dtk.ui.scrolled_window import ScrolledWindow
@@ -609,6 +611,7 @@ class MirrorsBox(BaseBox):
     def select_best_mirror(self, widget):
         widget.set_label(self.select_best_mirror_button_texts["wait"])
         widget.set_sensitive(False)
+        global_event.emit("toggle-waiting-dialog", True)
         utils.ThreadMethod(self.change_to_nearest_mirror_thread, (widget, )).start()
 
     def change_to_nearest_mirror_thread(self, widget):
@@ -619,6 +622,7 @@ class MirrorsBox(BaseBox):
         global_event.emit("mirror-test-finished", hostname)
 
     def finish_mirror_test(self, hostname):
+        global_event.emit("toggle-waiting-dialog", False)
         for item in self.mirror_view.visible_items:
             if item.mirror.hostname == hostname:
                 global_event.emit('change-mirror', item)
@@ -708,9 +712,76 @@ class WinDir(gtk.FileChooserDialog):
         self.destroy()    
         return folder
 
+class WaitingDialog(DialogBox):
+    def __init__(self):
+        DialogBox.__init__(
+                self,
+                title="", 
+                default_width=330,
+                default_height=145,
+                mask_type=0, 
+                close_callback=None,
+                modal=True,
+                window_hint=gtk.gdk.WINDOW_TYPE_HINT_DIALOG,
+                window_pos=None,
+                skip_taskbar_hint=True,
+                resizable=False,
+                window_type=gtk.WINDOW_TOPLEVEL,
+                )
+        self.titlebar.button_align.remove(self.titlebar.button_box)
+
+        self.waiting_box = gtk.VBox()
+        self.waiting_box.set_size_request(36, 36)
+        self.waiting_bg_pixbuf = utils.get_common_image_pixbuf("waiting/waiting_bg.png")
+        self.waiting_fg_pixbuf = utils.get_common_image_pixbuf("waiting/waiting_fg.png")
+
+        self.waiting_box.connect("expose-event", self.expose_waiting)
+        self.counter = 1
+        self.factor = math.pi/12
+        gtk.timeout_add(50, self.on_timer)
+
+        self.label = Label(
+            _("正在测速，请稍等一分钟"), 
+            text_x_align=ALIGN_MIDDLE, 
+            text_size=11,
+            )
+
+        hbox = gtk.HBox()
+        hbox.pack_start(self.waiting_box, False, False)
+        hbox.pack_start(self.label, False, False)
+
+        self.label_align = gtk.Alignment()
+        self.label_align.set(0.5, 0.5, 0, 0)
+        self.label_align.set_padding(0, 0, 8, 8)
+        self.label_align.add(hbox)
+
+        self.body_box.pack_start(self.label_align, True, True)
+
+    def on_timer(self):
+        if self.counter < 2 * math.pi/self.factor:
+            self.counter += 1
+        else:
+            self.counter = 1
+        self.waiting_box.queue_draw()
+        return True
+
+    def expose_waiting(self, widget, event):
+        cr = widget.window.cairo_create()
+        rect = widget.allocation
+
+        cr.translate(rect.x, rect.y)
+        draw_pixbuf(cr, self.waiting_bg_pixbuf)
+        cr.translate(rect.width/2, rect.height/2)
+        cr.rotate(self.counter * self.factor)
+        draw_pixbuf(cr, self.waiting_fg_pixbuf, -rect.width/2, -rect.height/2)
+
 class DscPreferenceDialog(PreferenceDialog):
     def __init__(self):
         PreferenceDialog.__init__(self, 566, 488)
+
+        self._waiting_dialog = WaitingDialog()
+        self._waiting_dialog.set_transient_for(self)
+        global_event.register_event("toggle-waiting-dialog", self.handle_toggle_waiting_dialog)
 
         self.general_box = GeneralBox()
         self.mirrors_box = MirrorsBox()
@@ -722,6 +793,12 @@ class DscPreferenceDialog(PreferenceDialog):
             (_("Mirrors"), self.mirrors_box),
             (_("About"), self.about_box),
             ])
+
+    def handle_toggle_waiting_dialog(self, show):
+        if show:
+            self._waiting_dialog.show_all()
+        else:
+            self._waiting_dialog.hide_all()
 
     def mirror_changed_handler(self, w):
         global_event.emit("start-update-list")
