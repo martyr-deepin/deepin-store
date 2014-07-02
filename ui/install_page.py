@@ -51,8 +51,6 @@ class InstallPage(gtk.VBox):
     class docs
     '''
 	
-    STATUS_INSTALL_FINISH = 7
-    
     def __init__(self, bus_interface, data_manager):
         '''
         init docs
@@ -106,10 +104,19 @@ class InstallPage(gtk.VBox):
         self.update_message_bar(self.treeview)
             
     def get_installing_pkgs_number(self):
-        return len(filter(lambda item: item.status != self.STATUS_INSTALL_FINISH, self.treeview.visible_items))
+        items = []
+        for item in self.treeview.visible_items:
+            if not (item.status == item.STATUS_INSTALL_FINISH or \
+                    item.status == item.STATUS_DOWNLOAD_FAILED):
+                items.append(item)
+        return len(items)
 
     def get_installed_pkgs_number(self):
-        return len(filter(lambda item: item.status == self.STATUS_INSTALL_FINISH, self.treeview.visible_items))
+        items = []
+        for item in self.treeview.visible_items:
+            if item.status == item.STATUS_INSTALL_FINISH:
+                items.append(item)
+        return len(items)
         
     def delete_item_match_pkgname(self, pkg_name):
         for install_item in self.treeview.visible_items:
