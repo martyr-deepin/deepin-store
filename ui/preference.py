@@ -307,7 +307,7 @@ class MirrorItem(TreeItem):
 
     def render_change_button(self, cr, rect):
         self.render_background(cr, rect)
-        if self.is_hover:
+        if self.is_hover and not self.radio_button.active:
             if self.button_status == self.BUTTON_NORMAL:
                 self.pixbuf = self.pixbuf_normal
             elif self.button_status == self.BUTTON_HOVER:
