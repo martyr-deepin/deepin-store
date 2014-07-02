@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-30 13:26+0800\n"
+"POT-Creation-Date: 2014-07-02 13:20+0800\n"
 "PO-Revision-Date: 2014-05-08 16:11+0000\n"
 "Last-Translator: corEr <baracus.de@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/deepin-software-"
@@ -24,7 +24,7 @@ msgstr ""
 msgid " and try again."
 msgstr "und versuchen Sie es erneut."
 
-#: ../ui/preference.py:576
+#: ../ui/preference.py:578
 msgid " hour"
 msgstr "Stunde"
 
@@ -105,7 +105,7 @@ msgstr "2D Grafik"
 msgid "3D graphics"
 msgstr "3D Grafik"
 
-#: ../ui/preference.py:720
+#: ../ui/preference.py:834
 msgid "About"
 msgstr "Über"
 
@@ -141,7 +141,7 @@ msgstr "Brettspiele"
 msgid "Browser"
 msgstr "Browser"
 
-#: ../ui/widgets.py:463
+#: ../ui/widgets.py:463 ../ui/preference.py:787
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -153,7 +153,7 @@ msgstr "Kartenspiele"
 msgid "Category: "
 msgstr "Kategorie:"
 
-#: ../ui/preference.py:514
+#: ../ui/preference.py:516
 msgid "Change"
 msgstr "Wechsel"
 
@@ -190,12 +190,12 @@ msgstr ""
 "funktioniert nicht!"
 
 #: ../ui/dsc-daemon.py:312 ../ui/dsc-daemon.py:316
-#: ../ui/software_center.py:732 ../ui/preference.py:431
+#: ../ui/software_center.py:732 ../ui/preference.py:433
 #, fuzzy
 msgid "Deepin Store"
 msgstr "Deepin Softwarezentrum"
 
-#: ../ui/preference.py:450
+#: ../ui/preference.py:452
 #, fuzzy
 msgid ""
 "Deepin Store is a commonly used software center on Linux. It selected more "
@@ -214,7 +214,7 @@ msgstr ""
 "mit Mehrprozessbearbeitung und Bereinigung gepufferter Pakete. Es verfügt "
 "über Themen für Anwendungseinführung und teilt hervorragende Anwendungen.\n"
 
-#: ../ui/preference.py:478
+#: ../ui/preference.py:480
 msgid "Delete configuration files"
 msgstr "Lösche Konfigurationsdateien"
 
@@ -240,7 +240,7 @@ msgstr "Entwicklung"
 msgid "Disc burner"
 msgstr "Disk Brenner"
 
-#: ../ui/preference.py:508
+#: ../ui/preference.py:510
 msgid "Download directory: "
 msgstr "Downloadverzeichnis:"
 
@@ -262,7 +262,7 @@ msgstr "Downloader wurde gestartet..."
 msgid "Download rank"
 msgstr "Anzahl der Downloads"
 
-#: ../ui/preference.py:492
+#: ../ui/preference.py:494
 msgid "Download settings"
 msgstr "Downloadeigenschaften"
 
@@ -354,7 +354,7 @@ msgstr "Abhänigkeiten wurden erfolgreich analysiert."
 msgid "Games"
 msgstr "Spiele"
 
-#: ../ui/preference.py:718
+#: ../ui/preference.py:832
 msgid "General"
 msgstr "Generelles"
 
@@ -486,7 +486,7 @@ msgstr "Logikspiele"
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../ui/preference.py:498
+#: ../ui/preference.py:500
 msgid "Max download task number: "
 msgstr "Maximale Downloadanzahl:"
 
@@ -502,7 +502,7 @@ msgstr "Medizinisches"
 msgid "Mirror Receiving: "
 msgstr ""
 
-#: ../ui/preference.py:719
+#: ../ui/preference.py:833
 msgid "Mirrors"
 msgstr "Spiegelserver"
 
@@ -545,7 +545,7 @@ msgstr ""
 msgid "Not found"
 msgstr ""
 
-#: ../ui/widgets.py:462
+#: ../ui/widgets.py:462 ../ui/preference.py:785
 msgid "OK"
 msgstr "OK"
 
@@ -553,7 +553,7 @@ msgstr "OK"
 msgid "Office"
 msgstr "Büro"
 
-#: ../ui/preference.py:475
+#: ../ui/preference.py:477
 #, fuzzy
 msgid "On uninstalling the software"
 msgstr "Deinstallationssoftware"
@@ -703,15 +703,15 @@ msgstr "Bildschirmschoner"
 msgid "Security"
 msgstr "Sicherheit"
 
-#: ../ui/preference.py:690
+#: ../ui/preference.py:706
 msgid "Select Directory"
 msgstr "Wähle Verzeichnis"
 
-#: ../ui/preference.py:627
+#: ../ui/preference.py:648
 msgid "Select mirror"
 msgstr "Wähle Spiegelserver aus"
 
-#: ../ui/preference.py:554
+#: ../ui/preference.py:551
 #, fuzzy
 msgid "Select the best mirror"
 msgstr "Wähle besten Spiegelserver aus"
@@ -747,6 +747,10 @@ msgstr "Größe: kalkuliere..."
 msgid "Software development"
 msgstr "Softwareentwicklung"
 
+#: ../ui/preference.py:752
+msgid "Speed testing will finish only after one minute, please wait."
+msgstr ""
+
 #: ../ui/category_info.py:56
 msgid "Sports games"
 msgstr "Sportspiele"
@@ -755,7 +759,7 @@ msgstr "Sportspiele"
 msgid "Strategy games"
 msgstr "Strategiespiele"
 
-#: ../ui/preference.py:556
+#: ../ui/preference.py:553
 #, fuzzy
 msgid "Successfully"
 msgstr "Erfolgreich installiert"
@@ -776,6 +780,11 @@ msgstr "System"
 #: ../ui/category_info.py:99
 msgid "Terminal emulator"
 msgstr "Terminalemulatoren"
+
+#: ../ui/preference.py:778
+#, python-format
+msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
+msgstr ""
 
 #: ../ui/category_info.py:100
 msgid "Text editor"
@@ -845,7 +854,7 @@ msgid "This problem occurs due to corrupted local apt dependency relationship."
 msgstr ""
 "Das könnte daran liegen, weil ihre lokalen Abhängigkeiten fehlerhaft sind."
 
-#: ../ui/preference.py:573
+#: ../ui/preference.py:575
 msgid "Time interval: "
 msgstr "Zeitintervall:"
 
@@ -896,11 +905,11 @@ msgstr "Deinstalliere"
 msgid "Unpacking"
 msgstr "Entpacken"
 
-#: ../ui/preference.py:569
+#: ../ui/preference.py:571
 msgid "Update automatically"
 msgstr "Aktualisiere automatisch"
 
-#: ../ui/software_center.py:815 ../ui/preference.py:566
+#: ../ui/software_center.py:815 ../ui/preference.py:568
 #, fuzzy
 msgid "Update package lists"
 msgstr "Aktualisiere Anwendungsliste"
@@ -949,7 +958,7 @@ msgstr "Vektorgrafiken"
 msgid "Version control"
 msgstr "Versionskontrolle"
 
-#: ../ui/preference.py:436
+#: ../ui/preference.py:438
 msgid "Version:"
 msgstr "Version:"
 
@@ -974,7 +983,7 @@ msgstr "Virtualisierung"
 msgid "Visit Homepage"
 msgstr "Besuche Homepage"
 
-#: ../ui/preference.py:555
+#: ../ui/preference.py:552
 msgid "Waiting"
 msgstr ""
 
@@ -1016,12 +1025,12 @@ msgstr "Gestern"
 msgid "You have already scored.  ;)"
 msgstr "Sie haben bereits einen Kommentar gesendet ;)"
 
-#: ../ui/software_center.py:1132
+#: ../ui/software_center.py:1131
 #, fuzzy, python-format
 msgid "You have cleared up %s packages and saved %s of space."
 msgstr "Sie haben %s Pakete bereinigt und %s an Speicherplatz gespart"
 
-#: ../ui/software_center.py:1134
+#: ../ui/software_center.py:1133
 #, fuzzy
 msgid "Your system cache is empty."
 msgstr "Ihr System ist bereinigt"

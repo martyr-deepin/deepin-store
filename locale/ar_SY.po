@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-30 13:26+0800\n"
+"POT-Creation-Date: 2014-07-02 13:20+0800\n"
 "PO-Revision-Date: 2014-03-06 13:17+0000\n"
 "Last-Translator: electricface <songwentai@linuxdeepin.com>\n"
 "Language-Team: Arabic (Syria) (http://www.transifex.com/projects/p/deepin-"
@@ -24,7 +24,7 @@ msgstr ""
 msgid " and try again."
 msgstr ""
 
-#: ../ui/preference.py:576
+#: ../ui/preference.py:578
 msgid " hour"
 msgstr ""
 
@@ -105,7 +105,7 @@ msgstr ""
 msgid "3D graphics"
 msgstr ""
 
-#: ../ui/preference.py:720
+#: ../ui/preference.py:834
 msgid "About"
 msgstr ""
 
@@ -141,7 +141,7 @@ msgstr ""
 msgid "Browser"
 msgstr ""
 
-#: ../ui/widgets.py:463
+#: ../ui/widgets.py:463 ../ui/preference.py:787
 msgid "Cancel"
 msgstr ""
 
@@ -153,7 +153,7 @@ msgstr ""
 msgid "Category: "
 msgstr ""
 
-#: ../ui/preference.py:514
+#: ../ui/preference.py:516
 msgid "Change"
 msgstr ""
 
@@ -187,11 +187,11 @@ msgid "Deepin Desktop Environment is not installed, this function is invalid!"
 msgstr ""
 
 #: ../ui/dsc-daemon.py:312 ../ui/dsc-daemon.py:316
-#: ../ui/software_center.py:732 ../ui/preference.py:431
+#: ../ui/software_center.py:732 ../ui/preference.py:433
 msgid "Deepin Store"
 msgstr ""
 
-#: ../ui/preference.py:450
+#: ../ui/preference.py:452
 msgid ""
 "Deepin Store is a commonly used software center on Linux. It selected more "
 "than 2,600 excellent applications with many functions of installation and "
@@ -203,7 +203,7 @@ msgid ""
 "Deepin Store is a free software licensed under GNU GPLv3."
 msgstr ""
 
-#: ../ui/preference.py:478
+#: ../ui/preference.py:480
 msgid "Delete configuration files"
 msgstr ""
 
@@ -228,7 +228,7 @@ msgstr ""
 msgid "Disc burner"
 msgstr ""
 
-#: ../ui/preference.py:508
+#: ../ui/preference.py:510
 msgid "Download directory: "
 msgstr ""
 
@@ -248,7 +248,7 @@ msgstr ""
 msgid "Download rank"
 msgstr ""
 
-#: ../ui/preference.py:492
+#: ../ui/preference.py:494
 msgid "Download settings"
 msgstr ""
 
@@ -337,7 +337,7 @@ msgstr ""
 msgid "Games"
 msgstr ""
 
-#: ../ui/preference.py:718
+#: ../ui/preference.py:832
 msgid "General"
 msgstr ""
 
@@ -465,7 +465,7 @@ msgstr ""
 msgid "MIDI"
 msgstr ""
 
-#: ../ui/preference.py:498
+#: ../ui/preference.py:500
 msgid "Max download task number: "
 msgstr ""
 
@@ -481,7 +481,7 @@ msgstr ""
 msgid "Mirror Receiving: "
 msgstr ""
 
-#: ../ui/preference.py:719
+#: ../ui/preference.py:833
 msgid "Mirrors"
 msgstr ""
 
@@ -524,7 +524,7 @@ msgstr ""
 msgid "Not found"
 msgstr ""
 
-#: ../ui/widgets.py:462
+#: ../ui/widgets.py:462 ../ui/preference.py:785
 msgid "OK"
 msgstr ""
 
@@ -532,7 +532,7 @@ msgstr ""
 msgid "Office"
 msgstr ""
 
-#: ../ui/preference.py:475
+#: ../ui/preference.py:477
 msgid "On uninstalling the software"
 msgstr ""
 
@@ -673,15 +673,15 @@ msgstr ""
 msgid "Security"
 msgstr ""
 
-#: ../ui/preference.py:690
+#: ../ui/preference.py:706
 msgid "Select Directory"
 msgstr ""
 
-#: ../ui/preference.py:627
+#: ../ui/preference.py:648
 msgid "Select mirror"
 msgstr ""
 
-#: ../ui/preference.py:554
+#: ../ui/preference.py:551
 msgid "Select the best mirror"
 msgstr ""
 
@@ -714,6 +714,10 @@ msgstr ""
 msgid "Software development"
 msgstr ""
 
+#: ../ui/preference.py:752
+msgid "Speed testing will finish only after one minute, please wait."
+msgstr ""
+
 #: ../ui/category_info.py:56
 msgid "Sports games"
 msgstr ""
@@ -722,7 +726,7 @@ msgstr ""
 msgid "Strategy games"
 msgstr ""
 
-#: ../ui/preference.py:556
+#: ../ui/preference.py:553
 msgid "Successfully"
 msgstr ""
 
@@ -741,6 +745,11 @@ msgstr ""
 
 #: ../ui/category_info.py:99
 msgid "Terminal emulator"
+msgstr ""
+
+#: ../ui/preference.py:778
+#, python-format
+msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
 msgstr ""
 
 #: ../ui/category_info.py:100
@@ -796,7 +805,7 @@ msgstr ""
 msgid "This problem occurs due to corrupted local apt dependency relationship."
 msgstr ""
 
-#: ../ui/preference.py:573
+#: ../ui/preference.py:575
 msgid "Time interval: "
 msgstr ""
 
@@ -845,11 +854,11 @@ msgstr ""
 msgid "Unpacking"
 msgstr ""
 
-#: ../ui/preference.py:569
+#: ../ui/preference.py:571
 msgid "Update automatically"
 msgstr ""
 
-#: ../ui/software_center.py:815 ../ui/preference.py:566
+#: ../ui/software_center.py:815 ../ui/preference.py:568
 msgid "Update package lists"
 msgstr ""
 
@@ -894,7 +903,7 @@ msgstr ""
 msgid "Version control"
 msgstr ""
 
-#: ../ui/preference.py:436
+#: ../ui/preference.py:438
 msgid "Version:"
 msgstr ""
 
@@ -919,7 +928,7 @@ msgstr ""
 msgid "Visit Homepage"
 msgstr ""
 
-#: ../ui/preference.py:555
+#: ../ui/preference.py:552
 msgid "Waiting"
 msgstr ""
 
@@ -960,12 +969,12 @@ msgstr ""
 msgid "You have already scored.  ;)"
 msgstr ""
 
-#: ../ui/software_center.py:1132
+#: ../ui/software_center.py:1131
 #, python-format
 msgid "You have cleared up %s packages and saved %s of space."
 msgstr ""
 
-#: ../ui/software_center.py:1134
+#: ../ui/software_center.py:1133
 msgid "Your system cache is empty."
 msgstr ""
 

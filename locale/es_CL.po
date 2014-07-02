@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-30 13:26+0800\n"
+"POT-Creation-Date: 2014-07-02 13:20+0800\n"
 "PO-Revision-Date: 2014-03-06 23:42+0000\n"
 "Last-Translator: Gnechen <benperezc@gmail.com>\n"
 "Language-Team: Spanish (Chile) (http://www.transifex.com/projects/p/deepin-"
@@ -25,7 +25,7 @@ msgstr ""
 msgid " and try again."
 msgstr "e intentar otra vez."
 
-#: ../ui/preference.py:576
+#: ../ui/preference.py:578
 msgid " hour"
 msgstr "hora"
 
@@ -106,7 +106,7 @@ msgstr "Gráficos 2D"
 msgid "3D graphics"
 msgstr "Gráficos 3D"
 
-#: ../ui/preference.py:720
+#: ../ui/preference.py:834
 msgid "About"
 msgstr "Información"
 
@@ -142,7 +142,7 @@ msgstr "Juegos de mesa"
 msgid "Browser"
 msgstr "Navegador"
 
-#: ../ui/widgets.py:463
+#: ../ui/widgets.py:463 ../ui/preference.py:787
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -154,7 +154,7 @@ msgstr "Juegos de carta"
 msgid "Category: "
 msgstr "Categoría"
 
-#: ../ui/preference.py:514
+#: ../ui/preference.py:516
 msgid "Change"
 msgstr "Cambiar"
 
@@ -190,12 +190,12 @@ msgstr ""
 "Las preferencias del sistema no estan instaladas, y por eso no funciona!"
 
 #: ../ui/dsc-daemon.py:312 ../ui/dsc-daemon.py:316
-#: ../ui/software_center.py:732 ../ui/preference.py:431
+#: ../ui/software_center.py:732 ../ui/preference.py:433
 #, fuzzy
 msgid "Deepin Store"
 msgstr "Centro de  aplicaciones Deepin"
 
-#: ../ui/preference.py:450
+#: ../ui/preference.py:452
 #, fuzzy
 msgid ""
 "Deepin Store is a commonly used software center on Linux. It selected more "
@@ -216,7 +216,7 @@ msgstr ""
 "Se organizan en categorias, con una breve presentacion y con buenas "
 "aplicaciones.\n"
 
-#: ../ui/preference.py:478
+#: ../ui/preference.py:480
 msgid "Delete configuration files"
 msgstr "Eliminar archivos de configuración"
 
@@ -242,7 +242,7 @@ msgstr "Desarrollo"
 msgid "Disc burner"
 msgstr "Grabador de disco"
 
-#: ../ui/preference.py:508
+#: ../ui/preference.py:510
 msgid "Download directory: "
 msgstr "Directorio de descargas:"
 
@@ -264,7 +264,7 @@ msgstr "La descarga ha comenzado..."
 msgid "Download rank"
 msgstr "Nivel de descargas"
 
-#: ../ui/preference.py:492
+#: ../ui/preference.py:494
 msgid "Download settings"
 msgstr "Ajustes de descarga"
 
@@ -355,7 +355,7 @@ msgstr "Se terminaron de analizar las dependencias."
 msgid "Games"
 msgstr "Juegos"
 
-#: ../ui/preference.py:718
+#: ../ui/preference.py:832
 msgid "General"
 msgstr "General"
 
@@ -487,7 +487,7 @@ msgstr "Juegos de lógica"
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../ui/preference.py:498
+#: ../ui/preference.py:500
 msgid "Max download task number: "
 msgstr "Número máximo de descargas simultáneas:"
 
@@ -503,7 +503,7 @@ msgstr "Médicas"
 msgid "Mirror Receiving: "
 msgstr ""
 
-#: ../ui/preference.py:719
+#: ../ui/preference.py:833
 msgid "Mirrors"
 msgstr "Repositorios  alternativos"
 
@@ -546,7 +546,7 @@ msgstr ""
 msgid "Not found"
 msgstr ""
 
-#: ../ui/widgets.py:462
+#: ../ui/widgets.py:462 ../ui/preference.py:785
 msgid "OK"
 msgstr "Aceptar"
 
@@ -554,7 +554,7 @@ msgstr "Aceptar"
 msgid "Office"
 msgstr "Oficina"
 
-#: ../ui/preference.py:475
+#: ../ui/preference.py:477
 #, fuzzy
 msgid "On uninstalling the software"
 msgstr "Acerca de la desinstalacion"
@@ -703,15 +703,15 @@ msgstr "Protectores de pantalla"
 msgid "Security"
 msgstr "Seguridad"
 
-#: ../ui/preference.py:690
+#: ../ui/preference.py:706
 msgid "Select Directory"
 msgstr "Elegir directorio"
 
-#: ../ui/preference.py:627
+#: ../ui/preference.py:648
 msgid "Select mirror"
 msgstr "Elegir mirror"
 
-#: ../ui/preference.py:554
+#: ../ui/preference.py:551
 #, fuzzy
 msgid "Select the best mirror"
 msgstr "Elegir el mejor mirror"
@@ -747,6 +747,10 @@ msgstr "Tamaño: calculando..."
 msgid "Software development"
 msgstr "Desarrollo de software"
 
+#: ../ui/preference.py:752
+msgid "Speed testing will finish only after one minute, please wait."
+msgstr ""
+
 #: ../ui/category_info.py:56
 msgid "Sports games"
 msgstr "Juegos de deportes"
@@ -755,7 +759,7 @@ msgstr "Juegos de deportes"
 msgid "Strategy games"
 msgstr "Juegos de estrategia"
 
-#: ../ui/preference.py:556
+#: ../ui/preference.py:553
 #, fuzzy
 msgid "Successfully"
 msgstr "Instalado satisfactoriamente"
@@ -776,6 +780,11 @@ msgstr "Sistema"
 #: ../ui/category_info.py:99
 msgid "Terminal emulator"
 msgstr "Emulador de terminal"
+
+#: ../ui/preference.py:778
+#, python-format
+msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
+msgstr ""
 
 #: ../ui/category_info.py:100
 msgid "Text editor"
@@ -841,7 +850,7 @@ msgstr "Esto puede ocurrir porque tus dependencias locales están corruptas."
 msgid "This problem occurs due to corrupted local apt dependency relationship."
 msgstr "Esto puede ocurrir porque tus dependencias locales están corruptas."
 
-#: ../ui/preference.py:573
+#: ../ui/preference.py:575
 msgid "Time interval: "
 msgstr "Intervalo de tiempo:"
 
@@ -892,11 +901,11 @@ msgstr "Desinstalando"
 msgid "Unpacking"
 msgstr "Desempaquetando"
 
-#: ../ui/preference.py:569
+#: ../ui/preference.py:571
 msgid "Update automatically"
 msgstr "Actualizar automáticamente"
 
-#: ../ui/software_center.py:815 ../ui/preference.py:566
+#: ../ui/software_center.py:815 ../ui/preference.py:568
 #, fuzzy
 msgid "Update package lists"
 msgstr "Actualizar lista de aplicaciones"
@@ -945,7 +954,7 @@ msgstr "Gráficos vectoriales"
 msgid "Version control"
 msgstr "Numero de version"
 
-#: ../ui/preference.py:436
+#: ../ui/preference.py:438
 msgid "Version:"
 msgstr "Versión:"
 
@@ -970,7 +979,7 @@ msgstr "Virtualización"
 msgid "Visit Homepage"
 msgstr "Visitar sitio web"
 
-#: ../ui/preference.py:555
+#: ../ui/preference.py:552
 msgid "Waiting"
 msgstr ""
 
@@ -1012,12 +1021,12 @@ msgstr "Ayer"
 msgid "You have already scored.  ;)"
 msgstr "Usted ya ha enviado un comentario :)"
 
-#: ../ui/software_center.py:1132
+#: ../ui/software_center.py:1131
 #, fuzzy, python-format
 msgid "You have cleared up %s packages and saved %s of space."
 msgstr "Usted ha limpiado %s paquetes y liberado %s de espacio"
 
-#: ../ui/software_center.py:1134
+#: ../ui/software_center.py:1133
 #, fuzzy
 msgid "Your system cache is empty."
 msgstr "Su sistema esta limpio."

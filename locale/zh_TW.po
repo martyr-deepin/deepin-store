@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-30 13:26+0800\n"
+"POT-Creation-Date: 2014-07-02 13:20+0800\n"
 "PO-Revision-Date: 2014-03-06 13:21+0000\n"
 "Last-Translator: electricface <songwentai@linuxdeepin.com>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/projects/p/deepin-"
@@ -27,7 +27,7 @@ msgstr ""
 msgid " and try again."
 msgstr "後，重試。"
 
-#: ../ui/preference.py:576
+#: ../ui/preference.py:578
 msgid " hour"
 msgstr " 小時"
 
@@ -108,7 +108,7 @@ msgstr "２Ｄ圖形"
 msgid "3D graphics"
 msgstr "３Ｄ圖形"
 
-#: ../ui/preference.py:720
+#: ../ui/preference.py:834
 msgid "About"
 msgstr "關於"
 
@@ -144,7 +144,7 @@ msgstr "棋盤遊戲"
 msgid "Browser"
 msgstr "瀏覽器"
 
-#: ../ui/widgets.py:463
+#: ../ui/widgets.py:463 ../ui/preference.py:787
 msgid "Cancel"
 msgstr "取消"
 
@@ -156,7 +156,7 @@ msgstr "紙牌遊戲"
 msgid "Category: "
 msgstr "分類："
 
-#: ../ui/preference.py:514
+#: ../ui/preference.py:516
 msgid "Change"
 msgstr "瀏覽"
 
@@ -191,12 +191,12 @@ msgid "Deepin Desktop Environment is not installed, this function is invalid!"
 msgstr "深度系統設定還沒被安裝！本功能無法執行。"
 
 #: ../ui/dsc-daemon.py:312 ../ui/dsc-daemon.py:316
-#: ../ui/software_center.py:732 ../ui/preference.py:431
+#: ../ui/software_center.py:732 ../ui/preference.py:433
 #, fuzzy
 msgid "Deepin Store"
 msgstr "深度軟體中心"
 
-#: ../ui/preference.py:450
+#: ../ui/preference.py:452
 #, fuzzy
 msgid ""
 "Deepin Store is a commonly used software center on Linux. It selected more "
@@ -214,7 +214,7 @@ msgstr ""
 "\n"
 "深度軟體中心是一款遵循GNU GPLv3（GNU通用公共授權條款）的自由軟體。\n"
 
-#: ../ui/preference.py:478
+#: ../ui/preference.py:480
 msgid "Delete configuration files"
 msgstr "刪除系統設定檔"
 
@@ -240,7 +240,7 @@ msgstr "開發"
 msgid "Disc burner"
 msgstr "光碟燒錄"
 
-#: ../ui/preference.py:508
+#: ../ui/preference.py:510
 msgid "Download directory: "
 msgstr "下載目錄: "
 
@@ -262,7 +262,7 @@ msgstr "已經開始下載..."
 msgid "Download rank"
 msgstr "下載排行"
 
-#: ../ui/preference.py:492
+#: ../ui/preference.py:494
 msgid "Download settings"
 msgstr "下載設定"
 
@@ -353,7 +353,7 @@ msgstr "相依性分析結束。"
 msgid "Games"
 msgstr "遊戲娛樂"
 
-#: ../ui/preference.py:718
+#: ../ui/preference.py:832
 msgid "General"
 msgstr "一般"
 
@@ -485,7 +485,7 @@ msgstr "邏輯遊戲"
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../ui/preference.py:498
+#: ../ui/preference.py:500
 msgid "Max download task number: "
 msgstr "最大下載工作數量: "
 
@@ -501,7 +501,7 @@ msgstr "醫療"
 msgid "Mirror Receiving: "
 msgstr ""
 
-#: ../ui/preference.py:719
+#: ../ui/preference.py:833
 msgid "Mirrors"
 msgstr "鏡像站"
 
@@ -544,7 +544,7 @@ msgstr ""
 msgid "Not found"
 msgstr ""
 
-#: ../ui/widgets.py:462
+#: ../ui/widgets.py:462 ../ui/preference.py:785
 msgid "OK"
 msgstr "確定"
 
@@ -552,7 +552,7 @@ msgstr "確定"
 msgid "Office"
 msgstr "辦公套件"
 
-#: ../ui/preference.py:475
+#: ../ui/preference.py:477
 #, fuzzy
 msgid "On uninstalling the software"
 msgstr "當解除安裝軟體時"
@@ -697,15 +697,15 @@ msgstr "螢幕保護程式"
 msgid "Security"
 msgstr "安全"
 
-#: ../ui/preference.py:690
+#: ../ui/preference.py:706
 msgid "Select Directory"
 msgstr "選擇目錄"
 
-#: ../ui/preference.py:627
+#: ../ui/preference.py:648
 msgid "Select mirror"
 msgstr "選擇鏡像"
 
-#: ../ui/preference.py:554
+#: ../ui/preference.py:551
 #, fuzzy
 msgid "Select the best mirror"
 msgstr "選擇最佳鏡像"
@@ -741,6 +741,10 @@ msgstr "大小：正在計算..."
 msgid "Software development"
 msgstr "軟體開發"
 
+#: ../ui/preference.py:752
+msgid "Speed testing will finish only after one minute, please wait."
+msgstr ""
+
 #: ../ui/category_info.py:56
 msgid "Sports games"
 msgstr "體育遊戲"
@@ -749,7 +753,7 @@ msgstr "體育遊戲"
 msgid "Strategy games"
 msgstr "策略遊戲"
 
-#: ../ui/preference.py:556
+#: ../ui/preference.py:553
 #, fuzzy
 msgid "Successfully"
 msgstr "已成功安裝"
@@ -770,6 +774,11 @@ msgstr "系統"
 #: ../ui/category_info.py:99
 msgid "Terminal emulator"
 msgstr "終端機模擬"
+
+#: ../ui/preference.py:778
+#, python-format
+msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
+msgstr ""
 
 #: ../ui/category_info.py:100
 msgid "Text editor"
@@ -831,7 +840,7 @@ msgstr "出現該情況的原因可能是本機相依性已被破壞。"
 msgid "This problem occurs due to corrupted local apt dependency relationship."
 msgstr "出現該情況的原因可能是本機相依性已被破壞。"
 
-#: ../ui/preference.py:573
+#: ../ui/preference.py:575
 msgid "Time interval: "
 msgstr "間隔時間: "
 
@@ -882,11 +891,11 @@ msgstr "正在解除安裝"
 msgid "Unpacking"
 msgstr "正在解開"
 
-#: ../ui/preference.py:569
+#: ../ui/preference.py:571
 msgid "Update automatically"
 msgstr "自動更新"
 
-#: ../ui/software_center.py:815 ../ui/preference.py:566
+#: ../ui/software_center.py:815 ../ui/preference.py:568
 #, fuzzy
 msgid "Update package lists"
 msgstr "更新應用程式清單"
@@ -935,7 +944,7 @@ msgstr "向量圖形"
 msgid "Version control"
 msgstr "版本控制"
 
-#: ../ui/preference.py:436
+#: ../ui/preference.py:438
 msgid "Version:"
 msgstr "版本："
 
@@ -960,7 +969,7 @@ msgstr "虛擬化"
 msgid "Visit Homepage"
 msgstr "造訪軟體首頁"
 
-#: ../ui/preference.py:555
+#: ../ui/preference.py:552
 msgid "Waiting"
 msgstr ""
 
@@ -1002,12 +1011,12 @@ msgstr "昨天"
 msgid "You have already scored.  ;)"
 msgstr "您已經評過分數了 ;)"
 
-#: ../ui/software_center.py:1132
+#: ../ui/software_center.py:1131
 #, fuzzy, python-format
 msgid "You have cleared up %s packages and saved %s of space."
 msgstr "恭喜您清理了%s個套件快取，為您節省了%s的硬碟空間。"
 
-#: ../ui/software_center.py:1134
+#: ../ui/software_center.py:1133
 #, fuzzy
 msgid "Your system cache is empty."
 msgstr "您的套件快取已經清理乾淨啦﹗不需要再次清理。"

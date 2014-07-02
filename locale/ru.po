@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-30 13:26+0800\n"
+"POT-Creation-Date: 2014-07-02 13:20+0800\n"
 "PO-Revision-Date: 2014-03-27 06:32+0000\n"
 "Last-Translator: Fox909 <ffox909@mail.ru>\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/deepin-software-"
@@ -26,7 +26,7 @@ msgstr ""
 msgid " and try again."
 msgstr "и попробуйте еще раз"
 
-#: ../ui/preference.py:576
+#: ../ui/preference.py:578
 msgid " hour"
 msgstr "час"
 
@@ -107,7 +107,7 @@ msgstr "2D графика"
 msgid "3D graphics"
 msgstr "3D графика"
 
-#: ../ui/preference.py:720
+#: ../ui/preference.py:834
 msgid "About"
 msgstr "О программе"
 
@@ -143,7 +143,7 @@ msgstr "Настольные игры"
 msgid "Browser"
 msgstr "Браузер"
 
-#: ../ui/widgets.py:463
+#: ../ui/widgets.py:463 ../ui/preference.py:787
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -155,7 +155,7 @@ msgstr "Карточные игры"
 msgid "Category: "
 msgstr "Категория:"
 
-#: ../ui/preference.py:514
+#: ../ui/preference.py:516
 msgid "Change"
 msgstr "Изменить"
 
@@ -190,12 +190,12 @@ msgid "Deepin Desktop Environment is not installed, this function is invalid!"
 msgstr "Deepin System Settings не установлен, эта функция не работает!"
 
 #: ../ui/dsc-daemon.py:312 ../ui/dsc-daemon.py:316
-#: ../ui/software_center.py:732 ../ui/preference.py:431
+#: ../ui/software_center.py:732 ../ui/preference.py:433
 #, fuzzy
 msgid "Deepin Store"
 msgstr "Deeping Центр Приложений"
 
-#: ../ui/preference.py:450
+#: ../ui/preference.py:452
 #, fuzzy
 msgid ""
 "Deepin Store is a commonly used software center on Linux. It selected more "
@@ -214,7 +214,7 @@ msgstr ""
 "многопоточную загрузку пакетов и очистку кэша. Способствует популяризации "
 "внедряемого программного обеспечения и распространению лучших приложений.\n"
 
-#: ../ui/preference.py:478
+#: ../ui/preference.py:480
 msgid "Delete configuration files"
 msgstr "Удалить файлы конфигурации"
 
@@ -240,7 +240,7 @@ msgstr "Разработка"
 msgid "Disc burner"
 msgstr "Прожиг дисков"
 
-#: ../ui/preference.py:508
+#: ../ui/preference.py:510
 msgid "Download directory: "
 msgstr "Папка для загрузки:"
 
@@ -262,7 +262,7 @@ msgstr "Загрузка началась..."
 msgid "Download rank"
 msgstr "Ранг загрузок"
 
-#: ../ui/preference.py:492
+#: ../ui/preference.py:494
 msgid "Download settings"
 msgstr "Настройки загрузки"
 
@@ -355,7 +355,7 @@ msgstr "Закончен анализ зависимостей"
 msgid "Games"
 msgstr "Игры"
 
-#: ../ui/preference.py:718
+#: ../ui/preference.py:832
 msgid "General"
 msgstr "Общее"
 
@@ -487,7 +487,7 @@ msgstr "Логические игры"
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../ui/preference.py:498
+#: ../ui/preference.py:500
 msgid "Max download task number: "
 msgstr "Максимальное значение очереди загрузки:"
 
@@ -503,7 +503,7 @@ msgstr "Медицина"
 msgid "Mirror Receiving: "
 msgstr ""
 
-#: ../ui/preference.py:719
+#: ../ui/preference.py:833
 msgid "Mirrors"
 msgstr "Зеркала"
 
@@ -546,7 +546,7 @@ msgstr ""
 msgid "Not found"
 msgstr ""
 
-#: ../ui/widgets.py:462
+#: ../ui/widgets.py:462 ../ui/preference.py:785
 msgid "OK"
 msgstr "ОК"
 
@@ -554,7 +554,7 @@ msgstr "ОК"
 msgid "Office"
 msgstr "Офис"
 
-#: ../ui/preference.py:475
+#: ../ui/preference.py:477
 #, fuzzy
 msgid "On uninstalling the software"
 msgstr "Удаляемые приложения:"
@@ -700,15 +700,15 @@ msgstr "Скринсейвер"
 msgid "Security"
 msgstr "Безопасность"
 
-#: ../ui/preference.py:690
+#: ../ui/preference.py:706
 msgid "Select Directory"
 msgstr "Выбор каталога"
 
-#: ../ui/preference.py:627
+#: ../ui/preference.py:648
 msgid "Select mirror"
 msgstr "Выберите зеркало"
 
-#: ../ui/preference.py:554
+#: ../ui/preference.py:551
 #, fuzzy
 msgid "Select the best mirror"
 msgstr "Выбрать лучшее зеркало"
@@ -744,6 +744,10 @@ msgstr "Размер: вычисляется..."
 msgid "Software development"
 msgstr "Разработка программного обеспечения"
 
+#: ../ui/preference.py:752
+msgid "Speed testing will finish only after one minute, please wait."
+msgstr ""
+
 #: ../ui/category_info.py:56
 msgid "Sports games"
 msgstr "Спортивные игры"
@@ -752,7 +756,7 @@ msgstr "Спортивные игры"
 msgid "Strategy games"
 msgstr "Стратегии"
 
-#: ../ui/preference.py:556
+#: ../ui/preference.py:553
 #, fuzzy
 msgid "Successfully"
 msgstr "Успешно установлено"
@@ -773,6 +777,11 @@ msgstr "Система"
 #: ../ui/category_info.py:99
 msgid "Terminal emulator"
 msgstr "Эмулятор терминала"
+
+#: ../ui/preference.py:778
+#, python-format
+msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
+msgstr ""
 
 #: ../ui/category_info.py:100
 msgid "Text editor"
@@ -834,7 +843,7 @@ msgstr "Это может произойти из-за того что нару�
 msgid "This problem occurs due to corrupted local apt dependency relationship."
 msgstr "Это может произойти из-за того что нарушены локальные зависимости"
 
-#: ../ui/preference.py:573
+#: ../ui/preference.py:575
 msgid "Time interval: "
 msgstr "Временной интервал:"
 
@@ -885,11 +894,11 @@ msgstr "Удаление"
 msgid "Unpacking"
 msgstr "Распаковка"
 
-#: ../ui/preference.py:569
+#: ../ui/preference.py:571
 msgid "Update automatically"
 msgstr "Обновлять автоматически"
 
-#: ../ui/software_center.py:815 ../ui/preference.py:566
+#: ../ui/software_center.py:815 ../ui/preference.py:568
 #, fuzzy
 msgid "Update package lists"
 msgstr "Актуализировать списки приложений"
@@ -938,7 +947,7 @@ msgstr "Векторная графика"
 msgid "Version control"
 msgstr "Контроль версий"
 
-#: ../ui/preference.py:436
+#: ../ui/preference.py:438
 msgid "Version:"
 msgstr "Версия:"
 
@@ -963,7 +972,7 @@ msgstr "Виртуализация"
 msgid "Visit Homepage"
 msgstr "Посетить домашнюю страницу"
 
-#: ../ui/preference.py:555
+#: ../ui/preference.py:552
 msgid "Waiting"
 msgstr ""
 
@@ -1005,12 +1014,12 @@ msgstr "Вчера"
 msgid "You have already scored.  ;)"
 msgstr "Вы уже отправили комментарий ;)"
 
-#: ../ui/software_center.py:1132
+#: ../ui/software_center.py:1131
 #, fuzzy, python-format
 msgid "You have cleared up %s packages and saved %s of space."
 msgstr "Вы удалили %s пакетов и освободили %s пространства"
 
-#: ../ui/software_center.py:1134
+#: ../ui/software_center.py:1133
 #, fuzzy
 msgid "Your system cache is empty."
 msgstr "Ваша система очищена."

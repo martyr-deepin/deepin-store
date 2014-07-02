@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-30 13:26+0800\n"
+"POT-Creation-Date: 2014-07-02 13:20+0800\n"
 "PO-Revision-Date: 2014-03-20 13:02+0000\n"
 "Last-Translator: fri <pavelfric@seznam.cz>\n"
 "Language-Team: Czech (http://www.transifex.com/projects/p/deepin-software-"
@@ -26,7 +26,7 @@ msgstr ""
 msgid " and try again."
 msgstr " a zkusit znovu."
 
-#: ../ui/preference.py:576
+#: ../ui/preference.py:578
 msgid " hour"
 msgstr " hodina"
 
@@ -107,7 +107,7 @@ msgstr "Dvojrozměrná grafika"
 msgid "3D graphics"
 msgstr "Trojrozměrná grafika"
 
-#: ../ui/preference.py:720
+#: ../ui/preference.py:834
 msgid "About"
 msgstr "O programu"
 
@@ -143,7 +143,7 @@ msgstr "Stolní hry"
 msgid "Browser"
 msgstr "Prohlížeč"
 
-#: ../ui/widgets.py:463
+#: ../ui/widgets.py:463 ../ui/preference.py:787
 msgid "Cancel"
 msgstr "Zrušit"
 
@@ -155,7 +155,7 @@ msgstr "Karetní hry"
 msgid "Category: "
 msgstr "Skupina: "
 
-#: ../ui/preference.py:514
+#: ../ui/preference.py:516
 msgid "Change"
 msgstr "Změnit"
 
@@ -190,12 +190,12 @@ msgid "Deepin Desktop Environment is not installed, this function is invalid!"
 msgstr "Nastavení systému Deepin není nainstalováno. Tato funkce nepracuje!"
 
 #: ../ui/dsc-daemon.py:312 ../ui/dsc-daemon.py:316
-#: ../ui/software_center.py:732 ../ui/preference.py:431
+#: ../ui/software_center.py:732 ../ui/preference.py:433
 #, fuzzy
 msgid "Deepin Store"
 msgstr "Středisko programů"
 
-#: ../ui/preference.py:450
+#: ../ui/preference.py:452
 #, fuzzy
 msgid ""
 "Deepin Store is a commonly used software center on Linux. It selected more "
@@ -215,7 +215,7 @@ msgstr ""
 "paměti. Jsou poskytovány náměty pro uvedení programů a jsou sdíleny dobré "
 "programy.\n"
 
-#: ../ui/preference.py:478
+#: ../ui/preference.py:480
 msgid "Delete configuration files"
 msgstr "Smazat soubory s nastavením"
 
@@ -241,7 +241,7 @@ msgstr "Vývoj"
 msgid "Disc burner"
 msgstr "Vypalování disků"
 
-#: ../ui/preference.py:508
+#: ../ui/preference.py:510
 msgid "Download directory: "
 msgstr "Adresář pro stahování: "
 
@@ -263,7 +263,7 @@ msgstr "Stahování začalo..."
 msgid "Download rank"
 msgstr "Žebříček stahování"
 
-#: ../ui/preference.py:492
+#: ../ui/preference.py:494
 msgid "Download settings"
 msgstr "Nastavení stahování"
 
@@ -355,7 +355,7 @@ msgstr "Dokončen rozbor závislostí."
 msgid "Games"
 msgstr "Hry"
 
-#: ../ui/preference.py:718
+#: ../ui/preference.py:832
 msgid "General"
 msgstr "Obecné"
 
@@ -487,7 +487,7 @@ msgstr "Logické hry"
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../ui/preference.py:498
+#: ../ui/preference.py:500
 msgid "Max download task number: "
 msgstr "Nejvyšší počet stahovacích úkolů: "
 
@@ -503,7 +503,7 @@ msgstr "Lékařství"
 msgid "Mirror Receiving: "
 msgstr ""
 
-#: ../ui/preference.py:719
+#: ../ui/preference.py:833
 msgid "Mirrors"
 msgstr "Zrcadla"
 
@@ -546,7 +546,7 @@ msgstr ""
 msgid "Not found"
 msgstr ""
 
-#: ../ui/widgets.py:462
+#: ../ui/widgets.py:462 ../ui/preference.py:785
 msgid "OK"
 msgstr "OK"
 
@@ -554,7 +554,7 @@ msgstr "OK"
 msgid "Office"
 msgstr "Kancelář"
 
-#: ../ui/preference.py:475
+#: ../ui/preference.py:477
 #, fuzzy
 msgid "On uninstalling the software"
 msgstr "Při odinstalování programu"
@@ -699,15 +699,15 @@ msgstr "Spořič obrazovky"
 msgid "Security"
 msgstr "Bezpečnost"
 
-#: ../ui/preference.py:690
+#: ../ui/preference.py:706
 msgid "Select Directory"
 msgstr "Vybrat adresář"
 
-#: ../ui/preference.py:627
+#: ../ui/preference.py:648
 msgid "Select mirror"
 msgstr "Vybrat zrcadlo"
 
-#: ../ui/preference.py:554
+#: ../ui/preference.py:551
 #, fuzzy
 msgid "Select the best mirror"
 msgstr "Vybrat nejlepší zrcadlo"
@@ -743,6 +743,10 @@ msgstr "Velikost: Počítá se..."
 msgid "Software development"
 msgstr "Vývoj programů"
 
+#: ../ui/preference.py:752
+msgid "Speed testing will finish only after one minute, please wait."
+msgstr ""
+
 #: ../ui/category_info.py:56
 msgid "Sports games"
 msgstr "Sportovní hry"
@@ -751,7 +755,7 @@ msgstr "Sportovní hry"
 msgid "Strategy games"
 msgstr "Strategické hry"
 
-#: ../ui/preference.py:556
+#: ../ui/preference.py:553
 #, fuzzy
 msgid "Successfully"
 msgstr "Úspěšně nainstalováno"
@@ -772,6 +776,11 @@ msgstr "Systém"
 #: ../ui/category_info.py:99
 msgid "Terminal emulator"
 msgstr "Emulátor terminálu"
+
+#: ../ui/preference.py:778
+#, python-format
+msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
+msgstr ""
 
 #: ../ui/category_info.py:100
 msgid "Text editor"
@@ -834,7 +843,7 @@ msgstr "To může být z důvodu poškození vašich místních závislostí."
 msgid "This problem occurs due to corrupted local apt dependency relationship."
 msgstr "To může být z důvodu poškození vašich místních závislostí."
 
-#: ../ui/preference.py:573
+#: ../ui/preference.py:575
 msgid "Time interval: "
 msgstr "Časový interval: "
 
@@ -885,11 +894,11 @@ msgstr "Odinstalovává se"
 msgid "Unpacking"
 msgstr "Rozbaluje se"
 
-#: ../ui/preference.py:569
+#: ../ui/preference.py:571
 msgid "Update automatically"
 msgstr "Aktualizovat automaticky"
 
-#: ../ui/software_center.py:815 ../ui/preference.py:566
+#: ../ui/software_center.py:815 ../ui/preference.py:568
 #, fuzzy
 msgid "Update package lists"
 msgstr "Obnovit seznam programů"
@@ -938,7 +947,7 @@ msgstr "Vektorová grafika"
 msgid "Version control"
 msgstr "Správa verzí"
 
-#: ../ui/preference.py:436
+#: ../ui/preference.py:438
 msgid "Version:"
 msgstr "Verze:"
 
@@ -963,7 +972,7 @@ msgstr "Virtualizace"
 msgid "Visit Homepage"
 msgstr "Navštívit domovskou stránku"
 
-#: ../ui/preference.py:555
+#: ../ui/preference.py:552
 msgid "Waiting"
 msgstr ""
 
@@ -1005,12 +1014,12 @@ msgstr "Včera"
 msgid "You have already scored.  ;)"
 msgstr "Poznámku jste už poslal"
 
-#: ../ui/software_center.py:1132
+#: ../ui/software_center.py:1131
 #, fuzzy, python-format
 msgid "You have cleared up %s packages and saved %s of space."
 msgstr "Odstranil jste %s balíčků a ušetřil %s místa"
 
-#: ../ui/software_center.py:1134
+#: ../ui/software_center.py:1133
 #, fuzzy
 msgid "Your system cache is empty."
 msgstr "Váš systém je uklizený."

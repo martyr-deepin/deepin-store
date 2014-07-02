@@ -373,7 +373,7 @@ class ThreadMethod(td.Thread):
     func: a method name
     args: arguments tuple
     '''
-    def __init__(self, func, args, daemon=False):
+    def __init__(self, func, args, daemon=True):
         td.Thread.__init__(self)
         self.func = func
         self.args = args

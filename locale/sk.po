@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-30 13:26+0800\n"
+"POT-Creation-Date: 2014-07-02 13:20+0800\n"
 "PO-Revision-Date: 2014-03-06 20:58+0000\n"
 "Last-Translator: ballmet <emkohencel@gmail.com>\n"
 "Language-Team: Slovak (http://www.transifex.com/projects/p/deepin-software-"
@@ -25,7 +25,7 @@ msgstr ""
 msgid " and try again."
 msgstr "a skúsiť znovu."
 
-#: ../ui/preference.py:576
+#: ../ui/preference.py:578
 msgid " hour"
 msgstr "hodina"
 
@@ -106,7 +106,7 @@ msgstr "2D grafika"
 msgid "3D graphics"
 msgstr "3D grafika"
 
-#: ../ui/preference.py:720
+#: ../ui/preference.py:834
 msgid "About"
 msgstr "O programe"
 
@@ -142,7 +142,7 @@ msgstr "Stolné hry"
 msgid "Browser"
 msgstr "Prehľadávač"
 
-#: ../ui/widgets.py:463
+#: ../ui/widgets.py:463 ../ui/preference.py:787
 msgid "Cancel"
 msgstr "Zrušiť"
 
@@ -154,7 +154,7 @@ msgstr "Kartové kry"
 msgid "Category: "
 msgstr "Kategória:"
 
-#: ../ui/preference.py:514
+#: ../ui/preference.py:516
 msgid "Change"
 msgstr "Vybrať"
 
@@ -190,12 +190,12 @@ msgstr ""
 "Nastavenie systému Deepin nie je nainštalované. Táto funkcia nefunguje!"
 
 #: ../ui/dsc-daemon.py:312 ../ui/dsc-daemon.py:316
-#: ../ui/software_center.py:732 ../ui/preference.py:431
+#: ../ui/software_center.py:732 ../ui/preference.py:433
 #, fuzzy
 msgid "Deepin Store"
 msgstr "Centrum softvéru"
 
-#: ../ui/preference.py:450
+#: ../ui/preference.py:452
 #, fuzzy
 msgid ""
 "Deepin Store is a commonly used software center on Linux. It selected more "
@@ -214,7 +214,7 @@ msgstr ""
 "1-click install, viacvláknové sťahovanie aplikácií a upratanie balíčkov "
 "ktoré sú uložené vo vyrovnávacej pamäti.\n"
 
-#: ../ui/preference.py:478
+#: ../ui/preference.py:480
 msgid "Delete configuration files"
 msgstr "Vymazať súbory s nastavením"
 
@@ -240,7 +240,7 @@ msgstr "Vývoj"
 msgid "Disc burner"
 msgstr "Napaľovanie diskov"
 
-#: ../ui/preference.py:508
+#: ../ui/preference.py:510
 msgid "Download directory: "
 msgstr "Adresár pre sťahovanie:"
 
@@ -262,7 +262,7 @@ msgstr "Sťahovanie sa začalo..."
 msgid "Download rank"
 msgstr "Rebríček sťahovaní"
 
-#: ../ui/preference.py:492
+#: ../ui/preference.py:494
 msgid "Download settings"
 msgstr "Stiahnuť nastavenia"
 
@@ -353,7 +353,7 @@ msgstr "Dokončil som analýzu závislostí."
 msgid "Games"
 msgstr "Hry"
 
-#: ../ui/preference.py:718
+#: ../ui/preference.py:832
 msgid "General"
 msgstr "Obecné"
 
@@ -485,7 +485,7 @@ msgstr "Logické hry"
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../ui/preference.py:498
+#: ../ui/preference.py:500
 msgid "Max download task number: "
 msgstr "Najvyšší počet úloh, ktoré boli stiahnuté:"
 
@@ -501,7 +501,7 @@ msgstr "Lekárstvo"
 msgid "Mirror Receiving: "
 msgstr ""
 
-#: ../ui/preference.py:719
+#: ../ui/preference.py:833
 msgid "Mirrors"
 msgstr "Zrkadlá"
 
@@ -544,7 +544,7 @@ msgstr ""
 msgid "Not found"
 msgstr ""
 
-#: ../ui/widgets.py:462
+#: ../ui/widgets.py:462 ../ui/preference.py:785
 msgid "OK"
 msgstr "OK"
 
@@ -552,7 +552,7 @@ msgstr "OK"
 msgid "Office"
 msgstr "Kancelária"
 
-#: ../ui/preference.py:475
+#: ../ui/preference.py:477
 #, fuzzy
 msgid "On uninstalling the software"
 msgstr "Pri odinštalácií programu"
@@ -701,15 +701,15 @@ msgstr "Šporič obrazovky"
 msgid "Security"
 msgstr "Bezpečnosť"
 
-#: ../ui/preference.py:690
+#: ../ui/preference.py:706
 msgid "Select Directory"
 msgstr "Vybrať adresár"
 
-#: ../ui/preference.py:627
+#: ../ui/preference.py:648
 msgid "Select mirror"
 msgstr "Vyberte zrkadlo"
 
-#: ../ui/preference.py:554
+#: ../ui/preference.py:551
 #, fuzzy
 msgid "Select the best mirror"
 msgstr "Vybrať najlepšie zrkadlo"
@@ -745,6 +745,10 @@ msgstr "Veľkosť: počíta sa..."
 msgid "Software development"
 msgstr "Vývoj softvéru"
 
+#: ../ui/preference.py:752
+msgid "Speed testing will finish only after one minute, please wait."
+msgstr ""
+
 #: ../ui/category_info.py:56
 msgid "Sports games"
 msgstr "Športové hry"
@@ -753,7 +757,7 @@ msgstr "Športové hry"
 msgid "Strategy games"
 msgstr "Strategické hry"
 
-#: ../ui/preference.py:556
+#: ../ui/preference.py:553
 #, fuzzy
 msgid "Successfully"
 msgstr "Úspešne nainštalované"
@@ -774,6 +778,11 @@ msgstr "Systém"
 #: ../ui/category_info.py:99
 msgid "Terminal emulator"
 msgstr "Emulátor terminálu"
+
+#: ../ui/preference.py:778
+#, python-format
+msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
+msgstr ""
 
 #: ../ui/category_info.py:100
 msgid "Text editor"
@@ -836,7 +845,7 @@ msgstr "Môže to byť z dôvodu poškodenia závislostí."
 msgid "This problem occurs due to corrupted local apt dependency relationship."
 msgstr "Môže to byť z dôvodu poškodenia závislostí."
 
-#: ../ui/preference.py:573
+#: ../ui/preference.py:575
 msgid "Time interval: "
 msgstr "Časový interval:"
 
@@ -887,11 +896,11 @@ msgstr "Odinštalováva sa"
 msgid "Unpacking"
 msgstr "Rozbaľuje sa"
 
-#: ../ui/preference.py:569
+#: ../ui/preference.py:571
 msgid "Update automatically"
 msgstr "Aktualizovať automaticky"
 
-#: ../ui/software_center.py:815 ../ui/preference.py:566
+#: ../ui/software_center.py:815 ../ui/preference.py:568
 #, fuzzy
 msgid "Update package lists"
 msgstr "Obnoviť zoznam aplikácií"
@@ -940,7 +949,7 @@ msgstr "Vektorová grafika"
 msgid "Version control"
 msgstr "Správa verzií"
 
-#: ../ui/preference.py:436
+#: ../ui/preference.py:438
 msgid "Version:"
 msgstr "Verzia:"
 
@@ -965,7 +974,7 @@ msgstr "Virtualizácia"
 msgid "Visit Homepage"
 msgstr "Zobraziť domovskú stránku"
 
-#: ../ui/preference.py:555
+#: ../ui/preference.py:552
 msgid "Waiting"
 msgstr ""
 
@@ -1007,12 +1016,12 @@ msgstr "Včera"
 msgid "You have already scored.  ;)"
 msgstr "Poznámku si už poslal ;-)"
 
-#: ../ui/software_center.py:1132
+#: ../ui/software_center.py:1131
 #, fuzzy, python-format
 msgid "You have cleared up %s packages and saved %s of space."
 msgstr "Odstranili ste %s balíčkov a ušetrili %s miesta"
 
-#: ../ui/software_center.py:1134
+#: ../ui/software_center.py:1133
 #, fuzzy
 msgid "Your system cache is empty."
 msgstr "Váš systém je uprataný."

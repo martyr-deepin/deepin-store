@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-30 13:26+0800\n"
+"POT-Creation-Date: 2014-07-02 13:20+0800\n"
 "PO-Revision-Date: 2014-04-04 10:11+0000\n"
 "Last-Translator: kloki <klokimass@gmail.com>\n"
 "Language-Team: Slovenian (http://www.transifex.com/projects/p/deepin-"
@@ -25,7 +25,7 @@ msgstr ""
 msgid " and try again."
 msgstr "in poskusite ponovno."
 
-#: ../ui/preference.py:576
+#: ../ui/preference.py:578
 msgid " hour"
 msgstr "ura"
 
@@ -106,7 +106,7 @@ msgstr "2D grafika"
 msgid "3D graphics"
 msgstr "3D grafika"
 
-#: ../ui/preference.py:720
+#: ../ui/preference.py:834
 msgid "About"
 msgstr "O programu"
 
@@ -142,7 +142,7 @@ msgstr "Namizne igre"
 msgid "Browser"
 msgstr "Brskalnik"
 
-#: ../ui/widgets.py:463
+#: ../ui/widgets.py:463 ../ui/preference.py:787
 msgid "Cancel"
 msgstr "Prekliči"
 
@@ -154,7 +154,7 @@ msgstr "Igre s kartami."
 msgid "Category: "
 msgstr "Kategorija:"
 
-#: ../ui/preference.py:514
+#: ../ui/preference.py:516
 msgid "Change"
 msgstr "Spremeni"
 
@@ -190,12 +190,12 @@ msgstr ""
 "Sistemske nastavitve Deepin niso nameščene, zato ta funkcija ne bo delovala."
 
 #: ../ui/dsc-daemon.py:312 ../ui/dsc-daemon.py:316
-#: ../ui/software_center.py:732 ../ui/preference.py:431
+#: ../ui/software_center.py:732 ../ui/preference.py:433
 #, fuzzy
 msgid "Deepin Store"
 msgstr "Programsko središče Deepin"
 
-#: ../ui/preference.py:450
+#: ../ui/preference.py:452
 #, fuzzy
 msgid ""
 "Deepin Store is a commonly used software center on Linux. It selected more "
@@ -215,7 +215,7 @@ msgstr ""
 "predpomnjenih paketov. Zagotavlja pregled programske opreme po vsebinskih "
 "sklopih in deljenje vašega mnenja z drugimi.\n"
 
-#: ../ui/preference.py:478
+#: ../ui/preference.py:480
 msgid "Delete configuration files"
 msgstr "Odstrani nastavitvene datoteke"
 
@@ -241,7 +241,7 @@ msgstr "Razvoj"
 msgid "Disc burner"
 msgstr "Zapisovalnik zgoščenk"
 
-#: ../ui/preference.py:508
+#: ../ui/preference.py:510
 msgid "Download directory: "
 msgstr "Imenik prenosov:"
 
@@ -263,7 +263,7 @@ msgstr "Pričetek prenosa..."
 msgid "Download rank"
 msgstr "Rang prenosov"
 
-#: ../ui/preference.py:492
+#: ../ui/preference.py:494
 msgid "Download settings"
 msgstr "Nastavitve prenosa"
 
@@ -355,7 +355,7 @@ msgstr "Preverjanje odvisnosti končano."
 msgid "Games"
 msgstr "Igre"
 
-#: ../ui/preference.py:718
+#: ../ui/preference.py:832
 msgid "General"
 msgstr "Splošno"
 
@@ -487,7 +487,7 @@ msgstr "Logične igre"
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../ui/preference.py:498
+#: ../ui/preference.py:500
 msgid "Max download task number: "
 msgstr "Maksimalno število prenosov:"
 
@@ -503,7 +503,7 @@ msgstr "Medicina"
 msgid "Mirror Receiving: "
 msgstr ""
 
-#: ../ui/preference.py:719
+#: ../ui/preference.py:833
 msgid "Mirrors"
 msgstr "Zrcalni strežniki"
 
@@ -546,7 +546,7 @@ msgstr ""
 msgid "Not found"
 msgstr ""
 
-#: ../ui/widgets.py:462
+#: ../ui/widgets.py:462 ../ui/preference.py:785
 msgid "OK"
 msgstr "Vredu"
 
@@ -554,7 +554,7 @@ msgstr "Vredu"
 msgid "Office"
 msgstr "Pisarna"
 
-#: ../ui/preference.py:475
+#: ../ui/preference.py:477
 #, fuzzy
 msgid "On uninstalling the software"
 msgstr "Ob odstranitvi programske opreme"
@@ -701,15 +701,15 @@ msgstr "Ohranjevalnik zaslona"
 msgid "Security"
 msgstr "Varnost"
 
-#: ../ui/preference.py:690
+#: ../ui/preference.py:706
 msgid "Select Directory"
 msgstr "Izberi imenik"
 
-#: ../ui/preference.py:627
+#: ../ui/preference.py:648
 msgid "Select mirror"
 msgstr "Izberi strežnik"
 
-#: ../ui/preference.py:554
+#: ../ui/preference.py:551
 #, fuzzy
 msgid "Select the best mirror"
 msgstr "Izberi najboljši strežnik"
@@ -745,6 +745,10 @@ msgstr "Velikost: preračunavanje..."
 msgid "Software development"
 msgstr "Razvoj programja"
 
+#: ../ui/preference.py:752
+msgid "Speed testing will finish only after one minute, please wait."
+msgstr ""
+
 #: ../ui/category_info.py:56
 msgid "Sports games"
 msgstr "Športne igre"
@@ -753,7 +757,7 @@ msgstr "Športne igre"
 msgid "Strategy games"
 msgstr "Strateške igre"
 
-#: ../ui/preference.py:556
+#: ../ui/preference.py:553
 #, fuzzy
 msgid "Successfully"
 msgstr "Uspešno nameščeno"
@@ -774,6 +778,11 @@ msgstr "Sistem"
 #: ../ui/category_info.py:99
 msgid "Terminal emulator"
 msgstr "Terminalski emulator"
+
+#: ../ui/preference.py:778
+#, python-format
+msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
+msgstr ""
 
 #: ../ui/category_info.py:100
 msgid "Text editor"
@@ -837,7 +846,7 @@ msgstr "To je lahko zato, ker so vaše lokalne odvisnosti pokvarjene."
 msgid "This problem occurs due to corrupted local apt dependency relationship."
 msgstr "To je lahko zato, ker so vaše lokalne odvisnosti pokvarjene."
 
-#: ../ui/preference.py:573
+#: ../ui/preference.py:575
 msgid "Time interval: "
 msgstr "Časovni interval:"
 
@@ -888,11 +897,11 @@ msgstr "Odstranjevanje"
 msgid "Unpacking"
 msgstr "Razpakiranje"
 
-#: ../ui/preference.py:569
+#: ../ui/preference.py:571
 msgid "Update automatically"
 msgstr "Samodejno posodobi"
 
-#: ../ui/software_center.py:815 ../ui/preference.py:566
+#: ../ui/software_center.py:815 ../ui/preference.py:568
 #, fuzzy
 msgid "Update package lists"
 msgstr "Posodobi seznam programja"
@@ -941,7 +950,7 @@ msgstr "Vektorska grafika"
 msgid "Version control"
 msgstr "Nadzor različic"
 
-#: ../ui/preference.py:436
+#: ../ui/preference.py:438
 msgid "Version:"
 msgstr "Različica:"
 
@@ -966,7 +975,7 @@ msgstr "Virtualizacija"
 msgid "Visit Homepage"
 msgstr "Obišči domačo stran"
 
-#: ../ui/preference.py:555
+#: ../ui/preference.py:552
 msgid "Waiting"
 msgstr ""
 
@@ -1008,12 +1017,12 @@ msgstr "Včeraj"
 msgid "You have already scored.  ;)"
 msgstr "Komentar ste že oddali. ;)"
 
-#: ../ui/software_center.py:1132
+#: ../ui/software_center.py:1131
 #, fuzzy, python-format
 msgid "You have cleared up %s packages and saved %s of space."
 msgstr "Počistili ste %s paketov in prihranili %s prostora na disku"
 
-#: ../ui/software_center.py:1134
+#: ../ui/software_center.py:1133
 #, fuzzy
 msgid "Your system cache is empty."
 msgstr "Vaš sistem je počiščen."

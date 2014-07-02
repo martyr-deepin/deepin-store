@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-30 13:26+0800\n"
+"POT-Creation-Date: 2014-07-02 13:20+0800\n"
 "PO-Revision-Date: 2014-04-20 17:51+0000\n"
 "Last-Translator: abs1515 <ayobbasher@gmail.com>\n"
 "Language-Team: Arabic (http://www.transifex.com/projects/p/deepin-software-"
@@ -26,7 +26,7 @@ msgstr ""
 msgid " and try again."
 msgstr "وحاول مرة أخرى."
 
-#: ../ui/preference.py:576
+#: ../ui/preference.py:578
 msgid " hour"
 msgstr "ساعة"
 
@@ -107,7 +107,7 @@ msgstr "2D رسومات"
 msgid "3D graphics"
 msgstr "3D رسومات"
 
-#: ../ui/preference.py:720
+#: ../ui/preference.py:834
 msgid "About"
 msgstr "عن"
 
@@ -143,7 +143,7 @@ msgstr "العاب لوحية"
 msgid "Browser"
 msgstr "متصفح"
 
-#: ../ui/widgets.py:463
+#: ../ui/widgets.py:463 ../ui/preference.py:787
 msgid "Cancel"
 msgstr "إلغاء"
 
@@ -155,7 +155,7 @@ msgstr "العاب كروت"
 msgid "Category: "
 msgstr "الفئة :"
 
-#: ../ui/preference.py:514
+#: ../ui/preference.py:516
 msgid "Change"
 msgstr "تغيير"
 
@@ -190,12 +190,12 @@ msgid "Deepin Desktop Environment is not installed, this function is invalid!"
 msgstr "إعدادات نظام دييبن غير مثبته ، هذه الوظيفة لا تعمل !"
 
 #: ../ui/dsc-daemon.py:312 ../ui/dsc-daemon.py:316
-#: ../ui/software_center.py:732 ../ui/preference.py:431
+#: ../ui/software_center.py:732 ../ui/preference.py:433
 #, fuzzy
 msgid "Deepin Store"
 msgstr "مركز برمجيات دييبن"
 
-#: ../ui/preference.py:450
+#: ../ui/preference.py:452
 #, fuzzy
 msgid ""
 "Deepin Store is a commonly used software center on Linux. It selected more "
@@ -213,7 +213,7 @@ msgstr ""
 "يوفر مواضيع لإدخال البرمجيات والتطبيقات أسهم جيدة.\n"
 "\n"
 
-#: ../ui/preference.py:478
+#: ../ui/preference.py:480
 msgid "Delete configuration files"
 msgstr "حذف تشكيلة الملفات"
 
@@ -239,7 +239,7 @@ msgstr "التطوير و التنمية"
 msgid "Disc burner"
 msgstr "حارق أقراص"
 
-#: ../ui/preference.py:508
+#: ../ui/preference.py:510
 msgid "Download directory: "
 msgstr "دليل التنزيل : "
 
@@ -261,7 +261,7 @@ msgstr "بدأ التنزيل..."
 msgid "Download rank"
 msgstr "معدل التنزيل"
 
-#: ../ui/preference.py:492
+#: ../ui/preference.py:494
 msgid "Download settings"
 msgstr "إعدادات التنزيل"
 
@@ -352,7 +352,7 @@ msgstr "تحليل التبعيات أنتهى."
 msgid "Games"
 msgstr "العاب"
 
-#: ../ui/preference.py:718
+#: ../ui/preference.py:832
 msgid "General"
 msgstr "عام"
 
@@ -484,7 +484,7 @@ msgstr "العاب منطقية"
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../ui/preference.py:498
+#: ../ui/preference.py:500
 msgid "Max download task number: "
 msgstr " الحد الأقصى لعدد مهمات التنزيل :"
 
@@ -500,7 +500,7 @@ msgstr "طبي"
 msgid "Mirror Receiving: "
 msgstr ""
 
-#: ../ui/preference.py:719
+#: ../ui/preference.py:833
 msgid "Mirrors"
 msgstr "المرايا"
 
@@ -543,7 +543,7 @@ msgstr ""
 msgid "Not found"
 msgstr ""
 
-#: ../ui/widgets.py:462
+#: ../ui/widgets.py:462 ../ui/preference.py:785
 msgid "OK"
 msgstr "موافق"
 
@@ -551,7 +551,7 @@ msgstr "موافق"
 msgid "Office"
 msgstr "مكتب"
 
-#: ../ui/preference.py:475
+#: ../ui/preference.py:477
 #, fuzzy
 msgid "On uninstalling the software"
 msgstr "على إلغاء تثبيت البرامج"
@@ -696,15 +696,15 @@ msgstr "شاشة التوقف"
 msgid "Security"
 msgstr "الأمان"
 
-#: ../ui/preference.py:690
+#: ../ui/preference.py:706
 msgid "Select Directory"
 msgstr "أختر دليل"
 
-#: ../ui/preference.py:627
+#: ../ui/preference.py:648
 msgid "Select mirror"
 msgstr "أختار مرآة"
 
-#: ../ui/preference.py:554
+#: ../ui/preference.py:551
 #, fuzzy
 msgid "Select the best mirror"
 msgstr "أختار أفضل مرآة"
@@ -740,6 +740,10 @@ msgstr "الحجم : يتم الحساب..."
 msgid "Software development"
 msgstr "تطوير البرمجيات"
 
+#: ../ui/preference.py:752
+msgid "Speed testing will finish only after one minute, please wait."
+msgstr ""
+
 #: ../ui/category_info.py:56
 msgid "Sports games"
 msgstr "العاب رياضية"
@@ -748,7 +752,7 @@ msgstr "العاب رياضية"
 msgid "Strategy games"
 msgstr "العاب استرتيجية"
 
-#: ../ui/preference.py:556
+#: ../ui/preference.py:553
 #, fuzzy
 msgid "Successfully"
 msgstr "تم التثبيت بنجاح"
@@ -769,6 +773,11 @@ msgstr "النظام"
 #: ../ui/category_info.py:99
 msgid "Terminal emulator"
 msgstr "محاكي الطرفية"
+
+#: ../ui/preference.py:778
+#, python-format
+msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
+msgstr ""
 
 #: ../ui/category_info.py:100
 msgid "Text editor"
@@ -830,7 +839,7 @@ msgstr "هذا قد يكون بسبب أن التبعيات المحلية ال�
 msgid "This problem occurs due to corrupted local apt dependency relationship."
 msgstr "هذا قد يكون بسبب أن التبعيات المحلية الخاصة بك معطوبة."
 
-#: ../ui/preference.py:573
+#: ../ui/preference.py:575
 msgid "Time interval: "
 msgstr "مدة الوقت : "
 
@@ -881,11 +890,11 @@ msgstr "يتم الغاء التثبيت"
 msgid "Unpacking"
 msgstr "جاري التفريغ"
 
-#: ../ui/preference.py:569
+#: ../ui/preference.py:571
 msgid "Update automatically"
 msgstr "تحديث تلقائي"
 
-#: ../ui/software_center.py:815 ../ui/preference.py:566
+#: ../ui/software_center.py:815 ../ui/preference.py:568
 #, fuzzy
 msgid "Update package lists"
 msgstr "تحديث قائمة التطبيقات"
@@ -934,7 +943,7 @@ msgstr "توجيه الرسومات"
 msgid "Version control"
 msgstr "التحكم في الإصدار"
 
-#: ../ui/preference.py:436
+#: ../ui/preference.py:438
 msgid "Version:"
 msgstr "الإصدار :"
 
@@ -959,7 +968,7 @@ msgstr "المحاكاة الإفتراضية"
 msgid "Visit Homepage"
 msgstr "زيارة الصفحة الرئيسية"
 
-#: ../ui/preference.py:555
+#: ../ui/preference.py:552
 msgid "Waiting"
 msgstr ""
 
@@ -1001,12 +1010,12 @@ msgstr "أمس"
 msgid "You have already scored.  ;)"
 msgstr "لقد قمت بأرسال تعليق مسبقاً ;)"
 
-#: ../ui/software_center.py:1132
+#: ../ui/software_center.py:1131
 #, fuzzy, python-format
 msgid "You have cleared up %s packages and saved %s of space."
 msgstr "قمت بتنظيف %s من الحزم وحفظ %s من المساحة"
 
-#: ../ui/software_center.py:1134
+#: ../ui/software_center.py:1133
 #, fuzzy
 msgid "Your system cache is empty."
 msgstr "النظام نظيف."

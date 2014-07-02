@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-30 13:26+0800\n"
+"POT-Creation-Date: 2014-07-02 13:20+0800\n"
 "PO-Revision-Date: 2014-04-29 11:45+0000\n"
 "Last-Translator: 648trindade <rafaelgt.mbin@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
@@ -26,7 +26,7 @@ msgstr ""
 msgid " and try again."
 msgstr "e tentar novamente."
 
-#: ../ui/preference.py:576
+#: ../ui/preference.py:578
 msgid " hour"
 msgstr "hora"
 
@@ -107,7 +107,7 @@ msgstr "Gráficos 2D"
 msgid "3D graphics"
 msgstr "Gráficos 3D"
 
-#: ../ui/preference.py:720
+#: ../ui/preference.py:834
 msgid "About"
 msgstr "Sobre"
 
@@ -143,7 +143,7 @@ msgstr "Jogos de mesa"
 msgid "Browser"
 msgstr "Navegador"
 
-#: ../ui/widgets.py:463
+#: ../ui/widgets.py:463 ../ui/preference.py:787
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -155,7 +155,7 @@ msgstr "Jogos de cartas"
 msgid "Category: "
 msgstr "Categoria:"
 
-#: ../ui/preference.py:514
+#: ../ui/preference.py:516
 msgid "Change"
 msgstr "Alterar"
 
@@ -190,12 +190,12 @@ msgid "Deepin Desktop Environment is not installed, this function is invalid!"
 msgstr "Deepin System Settings não está instalado, essa função não funcionará!"
 
 #: ../ui/dsc-daemon.py:312 ../ui/dsc-daemon.py:316
-#: ../ui/software_center.py:732 ../ui/preference.py:431
+#: ../ui/software_center.py:732 ../ui/preference.py:433
 #, fuzzy
 msgid "Deepin Store"
 msgstr "Deepin Software Center"
 
-#: ../ui/preference.py:450
+#: ../ui/preference.py:452
 #, fuzzy
 msgid ""
 "Deepin Store is a commonly used software center on Linux. It selected more "
@@ -215,7 +215,7 @@ msgstr ""
 "software e compartilha bons aplicativos. \n"
 "\n"
 
-#: ../ui/preference.py:478
+#: ../ui/preference.py:480
 msgid "Delete configuration files"
 msgstr "Deletar arquivos de configuração"
 
@@ -241,7 +241,7 @@ msgstr "Desenvolvimento"
 msgid "Disc burner"
 msgstr "Gravação de disco"
 
-#: ../ui/preference.py:508
+#: ../ui/preference.py:510
 msgid "Download directory: "
 msgstr "Pasta de download:"
 
@@ -263,7 +263,7 @@ msgstr "O download foi iniciado..."
 msgid "Download rank"
 msgstr "Ranking de download"
 
-#: ../ui/preference.py:492
+#: ../ui/preference.py:494
 msgid "Download settings"
 msgstr "Configurações de download"
 
@@ -354,7 +354,7 @@ msgstr "Análise de dependências finalizada."
 msgid "Games"
 msgstr "Jogos"
 
-#: ../ui/preference.py:718
+#: ../ui/preference.py:832
 msgid "General"
 msgstr "Geral"
 
@@ -486,7 +486,7 @@ msgstr "Jogos de lógica"
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../ui/preference.py:498
+#: ../ui/preference.py:500
 msgid "Max download task number: "
 msgstr "Número máx. de tarefas de download:"
 
@@ -502,7 +502,7 @@ msgstr "Médico"
 msgid "Mirror Receiving: "
 msgstr ""
 
-#: ../ui/preference.py:719
+#: ../ui/preference.py:833
 msgid "Mirrors"
 msgstr "Espelhos"
 
@@ -545,7 +545,7 @@ msgstr ""
 msgid "Not found"
 msgstr ""
 
-#: ../ui/widgets.py:462
+#: ../ui/widgets.py:462 ../ui/preference.py:785
 msgid "OK"
 msgstr "OK"
 
@@ -553,7 +553,7 @@ msgstr "OK"
 msgid "Office"
 msgstr "Escritório"
 
-#: ../ui/preference.py:475
+#: ../ui/preference.py:477
 #, fuzzy
 msgid "On uninstalling the software"
 msgstr "Ao desinstalar software"
@@ -702,15 +702,15 @@ msgstr "Descanso de tela"
 msgid "Security"
 msgstr "Segurança"
 
-#: ../ui/preference.py:690
+#: ../ui/preference.py:706
 msgid "Select Directory"
 msgstr "Selecionar Diretório"
 
-#: ../ui/preference.py:627
+#: ../ui/preference.py:648
 msgid "Select mirror"
 msgstr "Selecionar espelho"
 
-#: ../ui/preference.py:554
+#: ../ui/preference.py:551
 #, fuzzy
 msgid "Select the best mirror"
 msgstr "Selecionar melhor espelho"
@@ -746,6 +746,10 @@ msgstr "Tamanho: calculando..."
 msgid "Software development"
 msgstr "Desenvolvimento de software"
 
+#: ../ui/preference.py:752
+msgid "Speed testing will finish only after one minute, please wait."
+msgstr ""
+
 #: ../ui/category_info.py:56
 msgid "Sports games"
 msgstr "Jogos de esporte"
@@ -754,7 +758,7 @@ msgstr "Jogos de esporte"
 msgid "Strategy games"
 msgstr "Jogos de estratégia"
 
-#: ../ui/preference.py:556
+#: ../ui/preference.py:553
 #, fuzzy
 msgid "Successfully"
 msgstr "Instalado com sucesso"
@@ -775,6 +779,11 @@ msgstr "Sistema"
 #: ../ui/category_info.py:99
 msgid "Terminal emulator"
 msgstr "Emulador de terminal"
+
+#: ../ui/preference.py:778
+#, python-format
+msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
+msgstr ""
 
 #: ../ui/category_info.py:100
 msgid "Text editor"
@@ -840,7 +849,7 @@ msgid "This problem occurs due to corrupted local apt dependency relationship."
 msgstr ""
 "Isso pode ter ocorrido porque suas dependências locais estão corrompidas."
 
-#: ../ui/preference.py:573
+#: ../ui/preference.py:575
 msgid "Time interval: "
 msgstr "Intervalo de tempo:"
 
@@ -891,11 +900,11 @@ msgstr "Desinstalando"
 msgid "Unpacking"
 msgstr "Desempacotando"
 
-#: ../ui/preference.py:569
+#: ../ui/preference.py:571
 msgid "Update automatically"
 msgstr "Atualizar automaticamente"
 
-#: ../ui/software_center.py:815 ../ui/preference.py:566
+#: ../ui/software_center.py:815 ../ui/preference.py:568
 #, fuzzy
 msgid "Update package lists"
 msgstr "Atualizar lista de aplicações"
@@ -944,7 +953,7 @@ msgstr "Gráficos vetoriais"
 msgid "Version control"
 msgstr "Controle de versão"
 
-#: ../ui/preference.py:436
+#: ../ui/preference.py:438
 msgid "Version:"
 msgstr "Versão:"
 
@@ -969,7 +978,7 @@ msgstr "Virtualização"
 msgid "Visit Homepage"
 msgstr "Visitar Site"
 
-#: ../ui/preference.py:555
+#: ../ui/preference.py:552
 msgid "Waiting"
 msgstr ""
 
@@ -1011,12 +1020,12 @@ msgstr "Ontem"
 msgid "You have already scored.  ;)"
 msgstr "Você já enviou um comentário ;)"
 
-#: ../ui/software_center.py:1132
+#: ../ui/software_center.py:1131
 #, fuzzy, python-format
 msgid "You have cleared up %s packages and saved %s of space."
 msgstr "Você eliminou %s pacotes e liberou %s de espaço"
 
-#: ../ui/software_center.py:1134
+#: ../ui/software_center.py:1133
 #, fuzzy
 msgid "Your system cache is empty."
 msgstr "Seu sistema está limpo."

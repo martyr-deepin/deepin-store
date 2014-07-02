@@ -79,7 +79,11 @@ class MirrorTest(Logger):
     def __init__(self, hostnames):
         self.hostnames = hostnames
         self._stop = False
+        self._cancel = False
         self._mirrors = []
+
+    def cancel(self):
+        self._cancel = True
 
     def init_mirrors(self):
         all_mirrors_list = get_mirrors()
@@ -96,6 +100,8 @@ class MirrorTest(Logger):
         self.init_mirrors()
         result = []
         for m in self._mirrors:
+            if self._cancel:
+                return ""
             speed = self.get_speed(m)
             result.append((speed, m.hostname))
         sorted_result = sorted(result, key=lambda r: r[0])
@@ -120,12 +126,16 @@ class MirrorTest(Logger):
         self._timer = threading.Timer(10, self.timer_out_callback)
         self._timer.start()
         start_time = time.time()
-        while True:
-            data = conn.read(1024)
-            if len(data) == 0 or self._stop:
-                break
-            else:
-                total_data += data
+        try_times = 6
+        while not self._cancel and try_times > 0:
+            try:
+                data = conn.read(1024)
+                if len(data) == 0 or self._stop:
+                    break
+                else:
+                    total_data += data
+            except:
+                try_times -= 1
         if self._timer.isAlive():
             self._timer.cancel()
         self._timer = None

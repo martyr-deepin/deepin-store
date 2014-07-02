@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-30 13:26+0800\n"
+"POT-Creation-Date: 2014-07-02 13:20+0800\n"
 "PO-Revision-Date: 2014-03-06 13:20+0000\n"
 "Last-Translator: electricface <songwentai@linuxdeepin.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/deepin-"
@@ -27,7 +27,7 @@ msgstr ""
 msgid " and try again."
 msgstr " 后，重新更新。"
 
-#: ../ui/preference.py:576
+#: ../ui/preference.py:578
 msgid " hour"
 msgstr " 小时"
 
@@ -109,7 +109,7 @@ msgstr "二维图形"
 msgid "3D graphics"
 msgstr "三维图形"
 
-#: ../ui/preference.py:720
+#: ../ui/preference.py:834
 msgid "About"
 msgstr "关于"
 
@@ -145,7 +145,7 @@ msgstr "棋盘游戏"
 msgid "Browser"
 msgstr "浏览器"
 
-#: ../ui/widgets.py:463
+#: ../ui/widgets.py:463 ../ui/preference.py:787
 msgid "Cancel"
 msgstr "取消"
 
@@ -157,7 +157,7 @@ msgstr "纸牌游戏"
 msgid "Category: "
 msgstr "类别："
 
-#: ../ui/preference.py:514
+#: ../ui/preference.py:516
 msgid "Change"
 msgstr "更改"
 
@@ -192,11 +192,11 @@ msgid "Deepin Desktop Environment is not installed, this function is invalid!"
 msgstr "未安装深度桌面环境，本功能无效。"
 
 #: ../ui/dsc-daemon.py:312 ../ui/dsc-daemon.py:316
-#: ../ui/software_center.py:732 ../ui/preference.py:431
+#: ../ui/software_center.py:732 ../ui/preference.py:433
 msgid "Deepin Store"
 msgstr "深度商店"
 
-#: ../ui/preference.py:450
+#: ../ui/preference.py:452
 msgid ""
 "Deepin Store is a commonly used software center on Linux. It selected more "
 "than 2,600 excellent applications with many functions of installation and "
@@ -215,7 +215,7 @@ msgstr ""
 
 # "真实的功能里面没有删除依赖包的功能"
 # "Delete configuration files and redundant dependency packages"
-#: ../ui/preference.py:478
+#: ../ui/preference.py:480
 msgid "Delete configuration files"
 msgstr "删除配置文件"
 
@@ -240,7 +240,7 @@ msgstr "编程开发"
 msgid "Disc burner"
 msgstr "光盘刻录"
 
-#: ../ui/preference.py:508
+#: ../ui/preference.py:510
 msgid "Download directory: "
 msgstr "下载目录："
 
@@ -260,7 +260,7 @@ msgstr "开始下载"
 msgid "Download rank"
 msgstr "下载排行"
 
-#: ../ui/preference.py:492
+#: ../ui/preference.py:494
 msgid "Download settings"
 msgstr "下载设置"
 
@@ -349,7 +349,7 @@ msgstr "依赖分析完成。"
 msgid "Games"
 msgstr "游戏娱乐"
 
-#: ../ui/preference.py:718
+#: ../ui/preference.py:832
 msgid "General"
 msgstr "常规"
 
@@ -477,7 +477,7 @@ msgstr "逻辑游戏"
 msgid "MIDI"
 msgstr "乐器数字接口"
 
-#: ../ui/preference.py:498
+#: ../ui/preference.py:500
 msgid "Max download task number: "
 msgstr "最大下载任务数："
 
@@ -493,7 +493,7 @@ msgstr "医疗"
 msgid "Mirror Receiving: "
 msgstr "接收的软件源："
 
-#: ../ui/preference.py:719
+#: ../ui/preference.py:833
 msgid "Mirrors"
 msgstr "软件源"
 
@@ -536,7 +536,7 @@ msgstr "不再提醒升级(%s)"
 msgid "Not found"
 msgstr "未找到"
 
-#: ../ui/widgets.py:462
+#: ../ui/widgets.py:462 ../ui/preference.py:785
 msgid "OK"
 msgstr "确定"
 
@@ -544,7 +544,7 @@ msgstr "确定"
 msgid "Office"
 msgstr "办公套件"
 
-#: ../ui/preference.py:475
+#: ../ui/preference.py:477
 msgid "On uninstalling the software"
 msgstr "当卸载软件的时候"
 
@@ -685,15 +685,15 @@ msgstr "屏保"
 msgid "Security"
 msgstr "安全"
 
-#: ../ui/preference.py:690
+#: ../ui/preference.py:706
 msgid "Select Directory"
 msgstr "选择目录"
 
-#: ../ui/preference.py:627
+#: ../ui/preference.py:648
 msgid "Select mirror"
 msgstr "选择软件源"
 
-#: ../ui/preference.py:554
+#: ../ui/preference.py:551
 msgid "Select the best mirror"
 msgstr "选择最佳软件源"
 
@@ -726,6 +726,10 @@ msgstr "大小：计算中..."
 msgid "Software development"
 msgstr "软件开发"
 
+#: ../ui/preference.py:752
+msgid "Speed testing will finish only after one minute, please wait."
+msgstr "正在测速中，大约1分钟可以完成，请稍等。"
+
 #: ../ui/category_info.py:56
 msgid "Sports games"
 msgstr "体育游戏"
@@ -734,7 +738,7 @@ msgstr "体育游戏"
 msgid "Strategy games"
 msgstr "策略游戏"
 
-#: ../ui/preference.py:556
+#: ../ui/preference.py:553
 msgid "Successfully"
 msgstr "成功了"
 
@@ -754,6 +758,11 @@ msgstr "系统管理"
 #: ../ui/category_info.py:99
 msgid "Terminal emulator"
 msgstr "终端模拟器"
+
+#: ../ui/preference.py:778
+#, python-format
+msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
+msgstr "测试完成，最快的镜像源是\"%s\"，是否立即切换？"
 
 #: ../ui/category_info.py:100
 msgid "Text editor"
@@ -810,7 +819,7 @@ msgstr "出现这种情况的原因可能是本地依赖关系已经损坏。"
 msgid "This problem occurs due to corrupted local apt dependency relationship."
 msgstr "出现这种情况的原因可能是本地依赖关系已经损坏。"
 
-#: ../ui/preference.py:573
+#: ../ui/preference.py:575
 msgid "Time interval: "
 msgstr "间隔时间："
 
@@ -859,11 +868,11 @@ msgstr "卸载中"
 msgid "Unpacking"
 msgstr "正在解压缩"
 
-#: ../ui/preference.py:569
+#: ../ui/preference.py:571
 msgid "Update automatically"
 msgstr "自动更新"
 
-#: ../ui/software_center.py:815 ../ui/preference.py:566
+#: ../ui/software_center.py:815 ../ui/preference.py:568
 msgid "Update package lists"
 msgstr "刷新软件包列表"
 
@@ -908,7 +917,7 @@ msgstr "矢量图形"
 msgid "Version control"
 msgstr "版本控制"
 
-#: ../ui/preference.py:436
+#: ../ui/preference.py:438
 msgid "Version:"
 msgstr "版本："
 
@@ -933,7 +942,7 @@ msgstr "虚拟化"
 msgid "Visit Homepage"
 msgstr "访问首页"
 
-#: ../ui/preference.py:555
+#: ../ui/preference.py:552
 msgid "Waiting"
 msgstr "请稍等"
 
@@ -974,12 +983,12 @@ msgstr "昨天"
 msgid "You have already scored.  ;)"
 msgstr "您已经评过分了哟！ ;)"
 
-#: ../ui/software_center.py:1132
+#: ../ui/software_center.py:1131
 #, python-format
 msgid "You have cleared up %s packages and saved %s of space."
 msgstr "恭喜您清理了 %s 个软件包，共节约了 %s 空间。"
 
-#: ../ui/software_center.py:1134
+#: ../ui/software_center.py:1133
 msgid "Your system cache is empty."
 msgstr "您的系统已经很干净了，不需要清理。"
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-30 13:26+0800\n"
+"POT-Creation-Date: 2014-07-02 13:20+0800\n"
 "PO-Revision-Date: 2014-05-08 13:42+0000\n"
 "Last-Translator: Black_Scorpion <bscorpion@msn.com>\n"
 "Language-Team: Portuguese (Portugal) (http://www.transifex.com/projects/p/"
@@ -25,7 +25,7 @@ msgstr ""
 msgid " and try again."
 msgstr "e tente novamente."
 
-#: ../ui/preference.py:576
+#: ../ui/preference.py:578
 msgid " hour"
 msgstr "hora"
 
@@ -106,7 +106,7 @@ msgstr "Gráficos 2D"
 msgid "3D graphics"
 msgstr "Gráficos 3D"
 
-#: ../ui/preference.py:720
+#: ../ui/preference.py:834
 msgid "About"
 msgstr "Sobre"
 
@@ -142,7 +142,7 @@ msgstr "Jogos de Tabuleiro"
 msgid "Browser"
 msgstr "Navegador web"
 
-#: ../ui/widgets.py:463
+#: ../ui/widgets.py:463 ../ui/preference.py:787
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -154,7 +154,7 @@ msgstr "Jogos de Cartas"
 msgid "Category: "
 msgstr "Categoria:"
 
-#: ../ui/preference.py:514
+#: ../ui/preference.py:516
 msgid "Change"
 msgstr "Alterar"
 
@@ -190,12 +190,12 @@ msgstr ""
 "Definições do Sistema Deepin não instalado. Esta função não funcionará!"
 
 #: ../ui/dsc-daemon.py:312 ../ui/dsc-daemon.py:316
-#: ../ui/software_center.py:732 ../ui/preference.py:431
+#: ../ui/software_center.py:732 ../ui/preference.py:433
 #, fuzzy
 msgid "Deepin Store"
 msgstr "Gestor de Programas"
 
-#: ../ui/preference.py:450
+#: ../ui/preference.py:452
 #, fuzzy
 msgid ""
 "Deepin Store is a commonly used software center on Linux. It selected more "
@@ -215,7 +215,7 @@ msgstr ""
 "pacotes com múltiplos segmentos e eliminar os pacotes armazenados. Fornece "
 "tópicos para a apresentação de aplicações e partilha boas aplicações.\n"
 
-#: ../ui/preference.py:478
+#: ../ui/preference.py:480
 msgid "Delete configuration files"
 msgstr "Apagar ficheiros de configuração"
 
@@ -241,7 +241,7 @@ msgstr "Desenvolvimento"
 msgid "Disc burner"
 msgstr "Gravador de discos"
 
-#: ../ui/preference.py:508
+#: ../ui/preference.py:510
 msgid "Download directory: "
 msgstr "Pasta de descargas:"
 
@@ -263,7 +263,7 @@ msgstr "Descarga iniciada..."
 msgid "Download rank"
 msgstr "Classificação de Descargas"
 
-#: ../ui/preference.py:492
+#: ../ui/preference.py:494
 msgid "Download settings"
 msgstr "Configurações de descarga"
 
@@ -355,7 +355,7 @@ msgstr "Análise de dependências concluída."
 msgid "Games"
 msgstr "Jogos"
 
-#: ../ui/preference.py:718
+#: ../ui/preference.py:832
 msgid "General"
 msgstr "Geral"
 
@@ -487,7 +487,7 @@ msgstr "Jogos de Lógica"
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../ui/preference.py:498
+#: ../ui/preference.py:500
 msgid "Max download task number: "
 msgstr "Número máximo de transferências simultâneas:"
 
@@ -503,7 +503,7 @@ msgstr "Medicina"
 msgid "Mirror Receiving: "
 msgstr ""
 
-#: ../ui/preference.py:719
+#: ../ui/preference.py:833
 msgid "Mirrors"
 msgstr "Servidores"
 
@@ -546,7 +546,7 @@ msgstr ""
 msgid "Not found"
 msgstr ""
 
-#: ../ui/widgets.py:462
+#: ../ui/widgets.py:462 ../ui/preference.py:785
 msgid "OK"
 msgstr "OK"
 
@@ -554,7 +554,7 @@ msgstr "OK"
 msgid "Office"
 msgstr "Escritório"
 
-#: ../ui/preference.py:475
+#: ../ui/preference.py:477
 #, fuzzy
 msgid "On uninstalling the software"
 msgstr "Em Desinstalação de aplicações"
@@ -701,15 +701,15 @@ msgstr "Protecção de ecrã"
 msgid "Security"
 msgstr "Segurança"
 
-#: ../ui/preference.py:690
+#: ../ui/preference.py:706
 msgid "Select Directory"
 msgstr "Selecionar pasta"
 
-#: ../ui/preference.py:627
+#: ../ui/preference.py:648
 msgid "Select mirror"
 msgstr "Selecione mirror"
 
-#: ../ui/preference.py:554
+#: ../ui/preference.py:551
 #, fuzzy
 msgid "Select the best mirror"
 msgstr "Selecione o melhor mirror"
@@ -745,6 +745,10 @@ msgstr "Tamanho: a calcular..."
 msgid "Software development"
 msgstr "Desenvolvimento de Programas"
 
+#: ../ui/preference.py:752
+msgid "Speed testing will finish only after one minute, please wait."
+msgstr ""
+
 #: ../ui/category_info.py:56
 msgid "Sports games"
 msgstr "Jogos de Desporto"
@@ -753,7 +757,7 @@ msgstr "Jogos de Desporto"
 msgid "Strategy games"
 msgstr "Jogos de Estratégia"
 
-#: ../ui/preference.py:556
+#: ../ui/preference.py:553
 #, fuzzy
 msgid "Successfully"
 msgstr "Instalado com sucesso"
@@ -774,6 +778,11 @@ msgstr "Sistema"
 #: ../ui/category_info.py:99
 msgid "Terminal emulator"
 msgstr "Emulador de terminal"
+
+#: ../ui/preference.py:778
+#, python-format
+msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
+msgstr ""
 
 #: ../ui/category_info.py:100
 msgid "Text editor"
@@ -841,7 +850,7 @@ msgstr ""
 "Isto pode ter acontecido porque as suas dependências locais estão "
 "corrompidos."
 
-#: ../ui/preference.py:573
+#: ../ui/preference.py:575
 msgid "Time interval: "
 msgstr "Intervalo de tempo:"
 
@@ -892,11 +901,11 @@ msgstr "A desinstalar"
 msgid "Unpacking"
 msgstr "A descompactar"
 
-#: ../ui/preference.py:569
+#: ../ui/preference.py:571
 msgid "Update automatically"
 msgstr "Actualizar automaticamente"
 
-#: ../ui/software_center.py:815 ../ui/preference.py:566
+#: ../ui/software_center.py:815 ../ui/preference.py:568
 #, fuzzy
 msgid "Update package lists"
 msgstr "Actualizar Lista de Aplicações"
@@ -945,7 +954,7 @@ msgstr "Gráficos vetoriais"
 msgid "Version control"
 msgstr "Controlo de versões"
 
-#: ../ui/preference.py:436
+#: ../ui/preference.py:438
 msgid "Version:"
 msgstr "Versão:"
 
@@ -970,7 +979,7 @@ msgstr "Virtualização"
 msgid "Visit Homepage"
 msgstr "Visitar Página Principal"
 
-#: ../ui/preference.py:555
+#: ../ui/preference.py:552
 msgid "Waiting"
 msgstr ""
 
@@ -1012,12 +1021,12 @@ msgstr "Ontem"
 msgid "You have already scored.  ;)"
 msgstr "Já enviou um comentário ;-)"
 
-#: ../ui/software_center.py:1132
+#: ../ui/software_center.py:1131
 #, fuzzy, python-format
 msgid "You have cleared up %s packages and saved %s of space."
 msgstr "Eliminou %s pacotes e libertou %s de espaço no disco"
 
-#: ../ui/software_center.py:1134
+#: ../ui/software_center.py:1133
 #, fuzzy
 msgid "Your system cache is empty."
 msgstr "O sistema está limpo."

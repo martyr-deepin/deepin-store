@@ -987,7 +987,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         global_event.register_event("show-pkg-name-tooltip", lambda pkg_name: show_tooltip(self.application.window, pkg_name))
         global_event.register_event("hide-pkg-name-tooltip", lambda :tool_tip.hide())
         global_event.register_event("update-current-status-pkg-page", update_current_status_pkg_page)
-        global_event.register_event('change-mirror', self.change_mirror_action)
+        global_event.register_event('start-change-mirror', self.change_mirror_action)
         global_event.register_event('download-directory-changed', self.set_software_download_dir)
         global_event.register_event('vote-send-success', lambda p: vote_send_success_callback(p, self.application.window))
         global_event.register_event('vote-send-failed', lambda p: vote_send_failed_callback(p, self.application.window))
@@ -1018,11 +1018,11 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         #self.request_update_list()
         self.upgrade_page.fetch_upgrade_info(utils.get_backend_running())
 
-    def change_mirror_action(self, item):
-        repo_urls = item.mirror.get_repo_urls()
+    def change_mirror_action(self, mirror):
+        repo_urls = mirror.get_repo_urls()
         self.bus_interface.change_source_list(
             repo_urls, 
-            reply_handler=lambda :self.handle_mirror_change_reply(item),
+            reply_handler=lambda :self.handle_mirror_change_reply(mirror),
             error_handler=lambda e:handle_dbus_error("change_source_list", e)
             )
 
@@ -1085,8 +1085,8 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
     def show_dialog(self, name):
         getattr(self, name).show_all()
 
-    def handle_mirror_change_reply(self, item):
-        global_event.emit("mirror-changed", item)
+    def handle_mirror_change_reply(self, mirror):
+        global_event.emit("mirror-backend-changed", mirror)
 
     def update_status_bar_message(self, message, hide_timeout=0):
         if not self.paned_box.bottom_window.is_visible():
