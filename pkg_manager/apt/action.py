@@ -315,7 +315,7 @@ class AptActionPool(MissionThreadPool):
             if self.upgrade_action_dict.has_key(pkg_name):
                 self.upgrade_action_dict[pkg_name]["status"] = "start"
 
-    def update_action(self, (pkg_name, action_type, percent, status)):
+    def update_action(self, pkg_name, action_type, (percent, status)):
         if action_type == ACTION_INSTALL:
             if self.install_action_dict.has_key(pkg_name):
                 self.install_action_dict[pkg_name]["status"] = "update"

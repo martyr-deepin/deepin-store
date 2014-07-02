@@ -198,10 +198,13 @@ class PackageManager(dbus.service.Object):
         self.exit_flag = False
         self.simulate = False
         self.all_upgrade_pkg_names = []
+
+        self.is_upgrading = False
+        self.in_update_list = False
         
         self.apt_action_pool = AptActionPool(self.pkg_cache)
         self.apt_action_pool.start()
-        
+
         global_event.register_event('parse-download-error', self.send_parse_download_error)
 
         global_event.register_event("action-start", self.action_start)
@@ -209,14 +212,12 @@ class PackageManager(dbus.service.Object):
         global_event.register_event("action-finish", self.action_finish)
         global_event.register_event("action-failed", self.action_failed)
         
-        
         global_event.register_event("download-start", self.download_start)
         global_event.register_event("download-update", self.download_update)
         global_event.register_event("download-finish", self.download_finish)
         global_event.register_event("download-stop", self.download_stop)
         global_event.register_event("download-error", self.download_failed)
         
-        self.in_update_list = False
         global_event.register_event("update-list-start", self.update_list_start)
         global_event.register_event("update-list-finish", self.update_list_finish)
         global_event.register_event("update-list-failed", self.update_list_failed)
@@ -239,14 +240,20 @@ class PackageManager(dbus.service.Object):
     def download_start(self, pkg_name, action_type):
         utils.set_running_lock(True)
         self.update_signal([("download-start", (pkg_name, action_type))])
+        if action_type == ACTION_UPGRADE:
+            self.is_upgrading = True
 
-    def download_update(self, *argv):
-        self.update_signal([("download-update", argv)])
+    def download_update(self, pkg_name, action_type, data):
+        self.update_signal([("download-update", (pkg_name, action_type, data))])
+        if action_type == ACTION_UPGRADE:
+            self.is_upgrading = True
 
     def download_stop(self, pkg_name, action_type):
         self.update_signal([("download-stop", (pkg_name, action_type))])
-        
         self.exit_manager.check()    
+
+        if action_type == ACTION_UPGRADE:
+            self.is_upgrading = False
         
     def download_failed(self, pkg_name, action_type, e):
         logger.error("%s download failed with %s" % (pkg_name, e))
@@ -254,6 +261,9 @@ class PackageManager(dbus.service.Object):
         self.update_signal([("download-failed", (pkg_name, action_type, e))])
         
         self.exit_manager.check()    
+
+        if action_type == ACTION_UPGRADE:
+            self.is_upgrading = False
            
     def download_finish(self, action_id, action_type, all_pkg_names):
         utils.set_running_lock(False)
@@ -263,15 +273,21 @@ class PackageManager(dbus.service.Object):
             self.apt_action_pool.add_install_action(all_pkg_names)
         elif action_type == ACTION_UPGRADE:
             self.start_upgrade(all_pkg_names, action_id)
+            self.is_upgrading = False
             
         self.exit_manager.check()
 
     def action_start(self, signal_content):
         utils.set_running_lock(True)
         self.update_signal([("action-start", signal_content)])
+        if signal_content[1] == ACTION_UPGRADE:
+            self.is_upgrading = True
         
     def action_update(self, signal_content):
         self.update_signal([("action-update", signal_content)])
+
+        if signal_content[1] == ACTION_UPGRADE:
+            self.is_upgrading = True
         
     def action_finish(self, signal_content):
         utils.set_running_lock(False)
@@ -289,12 +305,17 @@ class PackageManager(dbus.service.Object):
         self.update_signal([("action-finish", signal_content)])
         self.exit_manager.check()
 
+        if signal_content[1] == ACTION_UPGRADE:
+            self.is_upgrading = False
+
     def action_failed(self, signal_content):
         utils.set_running_lock(False)
         self.update_signal([("action-failed", signal_content)])
         
         self.exit_manager.check()
-        
+        if signal_content[1] == ACTION_UPGRADE:
+            self.is_upgrading = False
+
     def is_update_list_running(self):
         return self.in_update_list
     
@@ -572,13 +593,25 @@ class PackageManager(dbus.service.Object):
         with open(SOURCE_LIST, 'w') as fp:
             fp.write(new_source_list_content)
         
-    @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="as")    
-    def request_upgrade_pkgs(self):
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="(sas)")
+    # def request_upgrade_pkgs(self):  // old api name
+    def RequestUpgradeStatus(self):
+        """
+        Get upgrade status
+        
+        @return: Return (status_code, [json.dumps(pkg_name, pkg_version)]), 
+        status code is in below constants:
+            - normal: no dpkg action, just return packages that need to upgrade;
+            - upgrading: in upgrading packages;
+            - cache-updating: in updating apt cache;
+        """
         if self.in_update_list:
-            return []
+            return ("cache-updating", [])
+        elif self.is_upgrading:
+            return ("upgrading", [])
         else:
             cache_upgrade_pkgs = self.pkg_cache.get_upgrade_pkgs()
-            return cache_upgrade_pkgs
+            return ("normal", cache_upgrade_pkgs)
     
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="s")
     def request_uninstall_pkgs(self):
@@ -767,7 +800,7 @@ class PackageManager(dbus.service.Object):
         # The signal is emitted when this method exits
         # You can have code here if you wish
         pass
-        
+
 if __name__ == "__main__":
     # dpkg will failed if not set TERM and PATH environment variable.  
     os.environ["TERM"] = "xterm"

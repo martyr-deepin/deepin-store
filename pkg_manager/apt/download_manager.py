@@ -88,8 +88,8 @@ class DownloadManager(Logger):
                 finish_number = 0
 
             self.global_event.emit("download-update", pkg_name, action_type, 
-                    data.progress, data.speed, finish_number, total, data.downloaded,
-                    data.filesize)
+                    (data.progress, data.speed, finish_number, total, data.downloaded,
+                    data.filesize))
             if self.verbose:
                 self.print_update(task, data)
 

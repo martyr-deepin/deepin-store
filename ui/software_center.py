@@ -330,7 +330,8 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                     upgrade_page.download_start(pkg_name)
 
             elif signal_type == "download-update":
-                (pkg_name, action_type, percent, speed, finish_number, total, downloaded_size, total_size) = action_content
+                (pkg_name, action_type, data) = action_content
+                (percent, speed, finish_number, total, downloaded_size, total_size) = data
                 if action_type == ACTION_INSTALL:
                     install_page.download_update(pkg_name, percent, speed)
                 elif action_type == ACTION_UPGRADE:

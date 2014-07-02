@@ -55,7 +55,7 @@ class BuildSoftwareDB(object):
                     unicode(pkg.candidate.size)
                     ))
             except Exception, e:
-                print "Error in db_build: %s" % e
+                print "Error in db_build: %s %s" % (e, pkg.name)
 
         self.connect.commit()
         self.connect.close()

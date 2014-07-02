@@ -22,6 +22,7 @@
 
 import apt
 import apt_pkg
+import json
 
 class AptCache(apt.Cache):
     '''
@@ -49,7 +50,7 @@ class AptCache(apt.Cache):
         for pkg in self:
             if self.is_pkg_upgradable(pkg.name):
                 pkg_version = pkg.versions[0].version
-                pkg_infos.append(str((pkg.name, pkg_version)))
+                pkg_infos.append(json.dumps((pkg.name, pkg_version)))
         return pkg_infos
     
     def set_pkg_status(self, pkg_name, status):

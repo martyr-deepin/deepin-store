@@ -33,13 +33,14 @@ from constant import UPDATE_LIST_LOG_PATH
 
 _ = lambda s:s
 
-class AcquireProgress(apt.progress.text.AcquireProgress):
+class AcquireProgress(apt.progress.base.AcquireProgress):
     """AcquireProgress for the text interface."""
 
     def __init__(self, outfile=None):
-        apt.progress.text.AcquireProgress.__init__(self, outfile)
+        apt.progress.base.AcquireProgress.__init__(self)
         self.percent = 0
         self.status_message = ''
+        self._id = long(1)
 
     def ims_hit(self, item):
         """Called when an item is update (e.g. not modified on the server)."""
@@ -48,18 +49,14 @@ class AcquireProgress(apt.progress.text.AcquireProgress):
         if item.owner.filesize:
             line += ' [%sB]' % apt_pkg.size_to_str(item.owner.filesize)
         self.status_message = line
-        self._write(self.status_message)
 
     def fail(self, item):
         """Called when an item is failed."""
         apt.progress.base.AcquireProgress.fail(self, item)
         if item.owner.status == item.owner.STAT_DONE:
             self.status_message = _("Ign ") + item.description
-            self._write(self.status_message)
         else:
             self.status_message =  _("Err ") + item.description
-            self._write(self.status_message)
-            self._write("  %s" % item.owner.error_text)
 
     def fetch(self, item):
         """Called when some of the item's data is fetched."""
@@ -74,7 +71,6 @@ class AcquireProgress(apt.progress.text.AcquireProgress):
             line += (" [%sB]" % apt_pkg.size_to_str(item.owner.filesize))
 
         self.status_message = line
-        self._write(self.status_message)
 
     def pulse(self, owner):
         """Periodically invoked while the Acquire process is underway.
@@ -123,7 +119,6 @@ class UpdateList(MissionThread):
             global_event.emit("update-list-failed")
             failed_message = "Cache update list failed: %s" % e
             utils.log(failed_message)
-            progress._write(failed_message)
     
 if __name__ == "__main__":
     import gtk

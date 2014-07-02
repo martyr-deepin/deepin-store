@@ -28,7 +28,6 @@ import gobject
 import json
 import subprocess
 import lsb_release
-import logging
 
 from skin import app_theme
 
@@ -63,6 +62,7 @@ from item_render import (render_pkg_info, STAR_SIZE, get_star_level, ITEM_PADDIN
         ITEM_NOTIFY_AGAIN_STRING, ITEM_NOTIFY_AGAIN_WIDTH, ITEM_NOTIFY_AGAIN_HEIGHT,
     )
 from utils import handle_dbus_error, handle_dbus_reply
+from logger import Logger
 
 class UpgradingBar(gtk.HBox):
     '''
@@ -534,7 +534,7 @@ class UploadErrorLabelBox(gtk.VBox):
         self.show_uploading()
         global_event.emit("upload-error-log")
 
-class UpgradePage(gtk.VBox):
+class UpgradePage(gtk.VBox, Logger):
     '''
     class docs
     '''
@@ -545,6 +545,7 @@ class UpgradePage(gtk.VBox):
         '''
         # Init.
         gtk.VBox.__init__(self)
+        Logger.__init__(self)
         self.bus_interface = bus_interface        
         self.data_manager = data_manager
         
@@ -615,8 +616,6 @@ class UpgradePage(gtk.VBox):
         
         self.upgrade_treeview.draw_mask = self.draw_mask
         self.no_notify_treeview.draw_mask = self.draw_mask
-        
-        global_event.emit("show-updating-view")
 
     def cancel_upgrade_download(self, widget):
         self.bus_interface.cancel_upgrade_download(
@@ -990,9 +989,9 @@ class UpgradePage(gtk.VBox):
     
     def fetch_upgrade_info(self, in_upgrading=False):
         self.show_loading_page()
-        self.bus_interface.request_upgrade_pkgs(
-                reply_handler=lambda pkg_infos:self.render_upgrade_info(pkg_infos, in_upgrading), 
-                error_handler=lambda e:handle_dbus_error("request_upgrade_pkgs", e))
+        self.bus_interface.RequestUpgradeStatus(
+                reply_handler=lambda r: self.handle_upgrade_page_status(r, True), 
+                error_handler=lambda e: self.handle_upgrade_page_status(e, False))
 
     def refresh_status(self, pkg_info_list):
         gtk.timeout_add(2000, self.upgrading_top_bar.shutdown_action)
@@ -1023,33 +1022,36 @@ class UpgradePage(gtk.VBox):
             self.pack_start(self.cycle_strip, False, False)
             self.pack_start(self.upgrade_treeview, True, True)
         
-    def render_upgrade_info(self, pkg_infos, in_upgrading):
-        self.upgrade_treeview.clear()
-        if in_upgrading:
+    def handle_upgrade_page_status(self, reply, success):
+        if not success:
+            self.logerror("invoke dbus method %s with error: %s" % ("RequestUpgradeStatus", reply))
+            return
+
+        status, pkg_infos = reply
+        if status == "cache-updating":
+            global_event.emit("show-updating-view")
+            return 
+        if status == "upgrading":
             global_event.emit("show-upgrading-view")
             return 
 
+        self.upgrade_treeview.clear()
         if len(pkg_infos) > 0:
             if self.update_list_pixbuf:
                 del self.update_list_pixbuf
                 self.update_list_pixbuf = None
-            
-            (desktop_pkg_infos, library_pkg_infos) = split_with(
-                pkg_infos, 
-                lambda pkg_info: self.data_manager.is_pkg_have_desktop_file((eval(pkg_info)[0])))
-                
-            no_notify_config = self.read_no_notify_config()    
+
+            no_notify_config = self.read_no_notify_config()
                 
             exists_upgrade_pkg_names = map(lambda item: item.pkg_name, self.upgrade_treeview.visible_items)
             exists_no_notify_pkg_names = map(lambda item: item.pkg_name, self.no_notify_treeview.visible_items)
             
             upgrade_items = []
             no_notify_items = []
-            for pkg_info in desktop_pkg_infos + library_pkg_infos:
-                (pkg_name, pkg_version) = eval(pkg_info)
-                
+            for pkg_info in pkg_infos:
+                (pkg_name, pkg_version) = json.loads(pkg_info)
                 self.pkg_info_dict[pkg_name] = pkg_version
-                
+
                 if pkg_name in no_notify_config:
                     if pkg_name not in exists_no_notify_pkg_names:
                         self.no_notify_pkg_num += 1
@@ -1059,10 +1061,13 @@ class UpgradePage(gtk.VBox):
                         self.upgrade_pkg_num += 1
                         upgrade_items.append(UpgradeItem(pkg_name, pkg_version, self.data_manager))
                 
-            #self.upgrade_bar.set_upgrade_info(len(self.upgrade_treeview.visible_items), self.no_notify_pkg_num)
             
-            if len(upgrade_items) == 0 and len(self.upgrade_treeview.visible_items) == 0:
-                self.upgrade_treeview.clear()
+            self.no_notify_treeview.add_items(no_notify_items)
+            self.upgrade_treeview.add_items(upgrade_items)    
+
+            #self.upgrade_bar.set_upgrade_info(len(self.upgrade_treeview.visible_items), self.no_notify_pkg_num)
+
+            if len(self.upgrade_treeview.visible_items) == 0:
                 global_event.emit("show-newest-view")
             else:
                 if len(self.get_children()) == 0 or self.get_children()[0] != self.upgrade_treeview:
@@ -1073,10 +1078,6 @@ class UpgradePage(gtk.VBox):
                     
                     self.pack_start(self.cycle_strip, False, False)
                     self.pack_start(self.upgrade_treeview, True, True)
-
-                self.upgrade_treeview.add_items(upgrade_items)    
-                
-            self.no_notify_treeview.add_items(no_notify_items)
         else:
             self.upgrade_treeview.clear()
             global_event.emit("show-newest-view")
