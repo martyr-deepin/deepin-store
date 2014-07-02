@@ -773,7 +773,7 @@ class WaitingDialog(DialogBox):
     def show_result(self, mirror):
         container_remove_all(self.center_align)
         message = Label(
-                _('Test is completed, the fastest mirror source is "%s", switch now?' % mirror.name),
+                _('Test is completed, the fastest mirror source is "%s", switch now?') % mirror.name,
                 text_size=10,
                 wrap_width=self.dialog_width - 100,
                 )
