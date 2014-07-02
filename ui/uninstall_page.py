@@ -226,9 +226,9 @@ class UninstallPage(gtk.VBox):
             uninstall_pkg_infos = json.loads(pkg_infos)
             for pkg_info in uninstall_pkg_infos:
                 pkg_name, pkg_version = pkg_info
-                #if self.is_uninstallable_kernel(pkg_name) or \
-                    #self.data_manager.is_pkg_display_in_uninstall_page(pkg_name):
-                        #items.append(UninstallItem(pkg_name, pkg_version, self.data_manager))
+                if self.is_uninstallable_kernel(pkg_name) or \
+                    self.data_manager.is_pkg_display_in_uninstall_page(pkg_name):
+                        items.append(UninstallItem(pkg_name, pkg_version, self.data_manager))
         except Exception, e:
             global_logger.logerror("Parse uninstall package information failed: %s" % pkg_infos)
             global_logger.logerror("Error: %s" % str(e))
