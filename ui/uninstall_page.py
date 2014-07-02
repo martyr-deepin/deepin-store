@@ -219,12 +219,8 @@ class UninstallPage(gtk.VBox):
         if not success:
             global_logger.logerror("request_uninstall_pkgs failed: %s" % data)
             return
-
         pkg_infos = str(data)
-        ThreadMethod(self.update_uninstall_list, (pkg_infos, )).start()
 
-    @post_gui
-    def update_uninstall_list(self, pkg_infos):
         items = []
         try:
             uninstall_pkg_infos = json.loads(pkg_infos)

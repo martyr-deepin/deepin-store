@@ -26,8 +26,7 @@ import peewee
 root_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 db_path = os.path.join(root_path, "data/category/category.db")
 
-#category_db = peewee.SqliteDatabase(db_path, autocommit=False)
-category_db = peewee.SqliteDatabase(db_path, check_same_thread=False)
+category_db = peewee.SqliteDatabase(db_path)
 
 class FirstCategory(peewee.Model):
     name = peewee.CharField()

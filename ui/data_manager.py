@@ -73,12 +73,12 @@ class DataManager(td.Thread):
 
         desktop_db_path = os.path.join(UPDATE_DATA_DIR, "desktop", "desktop2014.db")
         db_path_exists(desktop_db_path)
-        self.desktop_db_connect = sqlite3.connect(desktop_db_path, check_same_thread=False)
+        self.desktop_db_connect = sqlite3.connect(desktop_db_path)
         self.desktop_db_cursor = self.desktop_db_connect.cursor()
         
         category_db_path = os.path.join(UPDATE_DATA_DIR, "category", "category.db")
         db_path_exists(category_db_path)
-        self.category_db_connect = sqlite3.connect(category_db_path, check_same_thread=False)
+        self.category_db_connect = sqlite3.connect(category_db_path)
         self.category_db_cursor = self.category_db_connect.cursor()
 
         self.icon_data_dir = os.path.join(UPDATE_DATA_DIR, "app_icon")
@@ -97,7 +97,7 @@ class DataManager(td.Thread):
 
     def init_cache_soft_db(self):
         if self.is_cache_soft_db_exists() and not hasattr(self, 'cache_soft_db_cursor'):
-            self.cache_soft_db_connect = sqlite3.connect(CACHE_SOFT_DB_PATH, check_same_thread=False)
+            self.cache_soft_db_connect = sqlite3.connect(CACHE_SOFT_DB_PATH)
             self.cache_soft_db_cursor = self.cache_soft_db_connect.cursor()
 
     def is_cache_soft_db_exists(self):
@@ -106,7 +106,7 @@ class DataManager(td.Thread):
     def get_info_from_cache_soft_db(self, argv):
         if self.is_cache_soft_db_exists():
             if not hasattr(self, 'cache_soft_db_cursor'):
-                self.cache_soft_db_connect = sqlite3.connect(CACHE_SOFT_DB_PATH, check_same_thread=False)
+                self.cache_soft_db_connect = sqlite3.connect(CACHE_SOFT_DB_PATH)
                 self.cache_soft_db_cursor = self.cache_soft_db_connect.cursor()
             self.cache_soft_db_cursor.execute(*argv)
             return self.cache_soft_db_cursor.fetchall()
