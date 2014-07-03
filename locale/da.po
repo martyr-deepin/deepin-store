@@ -3,200 +3,194 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# Snubbi <carl@manjaro.dk>, 2014
+# Carl Andersen <carl@manjaro.dk>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: Deepin Software Center\n"
+"Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-02 13:20+0800\n"
-"PO-Revision-Date: 2014-03-09 09:54+0000\n"
-"Last-Translator: Snubbi <carl@manjaro.dk>\n"
-"Language-Team: Danish (http://www.transifex.com/projects/p/deepin-software-"
-"center/language/da/)\n"
+"POT-Creation-Date: 2014-07-03 13:10+0800\n"
+"PO-Revision-Date: 2014-07-02 06:03+0000\n"
+"Last-Translator: iceleaf <iceleaf916@gmail.com>\n"
+"Language-Team: Danish (http://www.transifex.com/projects/p/deepin-store/"
+"language/da/)\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
-#: ../ui/upgrade_page.py:448
+#: ui/upgrade_page.py:404 ui/upgrade_page.py:425 ui/upgrade_page.py:448
 msgid " and try again."
 msgstr "og prøv igen."
 
-#: ../ui/preference.py:578
+#: ui/preference.py:578
 msgid " hour"
 msgstr "time"
 
-#: ../ui/home_page.py:660
+#: ui/home_page.py:660
 #, python-format
 msgid "%s > %s : %s applications"
 msgstr "%s > %s : %s programmer"
 
-#: ../ui/upgrade_page.py:204
+#: ui/upgrade_page.py:204
 #, python-format
 msgid "%s applications are available for upgrade"
 msgstr "%s programmer er tilgængelig for opgradering"
 
-#: ../ui/install_page.py:139
+#: ui/install_page.py:146
 #, python-format
 msgid "%s applications are being installed"
 msgstr "%s programmer bliver installeret"
 
-#: ../ui/upgrade_page.py:272
+#: ui/upgrade_page.py:272
 #, python-format
 msgid "%s applications are not being watched"
 msgstr "%s programmer er ikke blevet gennemset"
 
-#: ../ui/uninstall_page.py:159
+#: ui/uninstall_page.py:159
 #, python-format
 msgid "%s applications can be uninstalled"
 msgstr "%s programmerne kan afinstalleres"
 
-#: ../ui/search_page.py:110
-#, fuzzy, python-format
+#: ui/search_page.py:110
+#, python-format
 msgid "%s applications searched"
-msgstr "%s programmer er ikke blevet gennemset"
+msgstr ""
 
-#: ../ui/software_center.py:127
+#: ui/software_center.py:127
 #, python-format
 msgid "%s haven't any desktop file"
 msgstr "%s har ikke nogen desktopfil"
 
-#: ../ui/widgets.py:80
+#: ui/widgets.py:80
 #, python-format
 msgid "%s hours ago"
 msgstr "%s timer siden"
 
-#: ../ui/widgets.py:73
+#: ui/widgets.py:73
 #, python-format
 msgid "%s minutes ago"
 msgstr "%s minuter siden"
 
-#: ../ui/software_center.py:390
-#, fuzzy, python-format
+#: ui/software_center.py:391
+#, python-format
 msgid "%s packages upgrade successfully."
-msgstr "%s pakker opgraderet vellykket."
+msgstr ""
 
-#: ../ui/upgrade_page.py:668
+#: ui/upgrade_page.py:667
 #, python-format
 msgid "%s updates are selected. %s will be downloaded."
 msgstr "%s opdateringer er valgt. %s vil blive downloadet."
 
-#: ../ui/home_page.py:478
+#: ui/home_page.py:478
 #, python-format
 msgid "%s: %s applications"
 msgstr "%s: %s programmer"
 
-#: ../ui/start_desktop_window.py:227 ../ui/software_center.py:131
+#: ui/start_desktop_window.py:227 ui/software_center.py:131
 #, python-format
 msgid "%s: request for starting applications sent"
 msgstr "%s: anmodning om at starte program hentning"
 
-#: ../ui/upgrade_page.py:485
+#: ui/upgrade_page.py:485
 msgid "."
 msgstr "."
 
-#: ../ui/category_info.py:59
+#: ui/category_info.py:59
 msgid "2D graphics"
 msgstr "2D grafik"
 
-#: ../ui/category_info.py:60
+#: ui/category_info.py:60
 msgid "3D graphics"
 msgstr "3D grafik"
 
-#: ../ui/preference.py:834
+#: ui/preference.py:831
 msgid "About"
 msgstr "Om"
 
-#: ../ui/category_info.py:94
+#: ui/category_info.py:94
 msgid "Accessories"
 msgstr "Tilbehør"
 
-#: ../ui/category_info.py:46
+#: ui/category_info.py:46
 msgid "Action games"
 msgstr "Actionspil"
 
-#: ../ui/category_info.py:47
+#: ui/category_info.py:47
 msgid "Advernture games"
 msgstr "Advernture spil"
 
-#: ../ui/category_info.py:48
+#: ui/category_info.py:48
 msgid "Arcade games"
 msgstr "Arkadespil"
 
-#: ../ui/category_info.py:95
+#: ui/category_info.py:95
 msgid "Archiving"
 msgstr "Arkivering "
 
-#: ../ui/category_info.py:36
+#: ui/category_info.py:36
 msgid "Audiovideo"
 msgstr "Audiovideo"
 
-#: ../ui/category_info.py:49
+#: ui/category_info.py:49
 msgid "Board games"
 msgstr "Brætspil"
 
-#: ../ui/category_info.py:27
+#: ui/category_info.py:27
 msgid "Browser"
 msgstr "Browser"
 
-#: ../ui/widgets.py:463 ../ui/preference.py:787
+#: ui/widgets.py:463 ui/preference.py:784
 msgid "Cancel"
 msgstr "Annullere"
 
-#: ../ui/category_info.py:50
+#: ui/category_info.py:50
 msgid "Card games"
 msgstr "Kortspil"
 
-#: ../ui/detail_page.py:386
+#: ui/detail_page.py:386
 msgid "Category: "
 msgstr "Kategori:"
 
-#: ../ui/preference.py:516
+#: ui/preference.py:516
 msgid "Change"
 msgstr "Ændr"
 
-#: ../ui/software_center.py:817
+#: ui/software_center.py:818
 msgid "Clear up cached packages"
 msgstr "Fjern opgemte pakker"
 
-#: ../ui/widgets.py:295 ../ui/widgets.py:369
+#: ui/widgets.py:295 ui/widgets.py:369
 msgid "Click to refresh"
 msgstr "Klik for at genopfriske"
 
-#: ../ui/upgrade_page.py:1100
-#, fuzzy, python-format
+#: ui/upgrade_page.py:1101
+#, python-format
 msgid "Completed: %s/%s (%s/%s) Download Rate: %s/s"
-msgstr "Færdiggjort: %s/%s (%s/%s) Download hastighed: %s/s"
+msgstr ""
 
-#: ../ui/utils.py:338
+#: ui/utils.py:359
 msgid "Configuring"
 msgstr " Konfigurerer"
 
-#: ../ui/category_info.py:79
+#: ui/category_info.py:79
 msgid "Database"
 msgstr "Database"
 
-#: ../ui/category_info.py:80
+#: ui/category_info.py:80
 msgid "Debugging"
 msgstr "Debugging"
 
-#: ../ui/upgrade_page.py:306
-#, fuzzy
+#: ui/upgrade_page.py:306
 msgid "Deepin Desktop Environment is not installed, this function is invalid!"
 msgstr ""
-"Deepin System Indstillinger er ikke installeret, denne funktion vil ikke "
-"virke!"
 
-#: ../ui/dsc-daemon.py:312 ../ui/dsc-daemon.py:316
-#: ../ui/software_center.py:732 ../ui/preference.py:433
-#, fuzzy
+#: ui/dsc-daemon.py:312 ui/dsc-daemon.py:316 ui/preference.py:433
+#: ui/software_center.py:733
 msgid "Deepin Store"
-msgstr "Deepin Software Center"
+msgstr ""
 
-#: ../ui/preference.py:452
-#, fuzzy
+#: ui/preference.py:452
 msgid ""
 "Deepin Store is a commonly used software center on Linux. It selected more "
 "than 2,600 excellent applications with many functions of installation and "
@@ -207,919 +201,782 @@ msgid ""
 "\n"
 "Deepin Store is a free software licensed under GNU GPLv3."
 msgstr ""
-"Deepin Software Center er et normalt brugt softwareprogram på Linux. Det "
-"indeholder over 2.600 ordentlige programmer og tilbyder nem installation og "
-"afinstallering, softwarearkiv og anbefalede programmer. Det understøtter 1-"
-"klik installering, downloader pakker med multi-tråd og ryder op efter "
-"installering. Det giver en god softwareintroduktion og tilbyder gode "
-"programmer\n"
 
-#: ../ui/preference.py:480
+#: ui/preference.py:480
 msgid "Delete configuration files"
 msgstr "Slet konfigurationsfiler"
 
-#: ../ui/install_page.py:774 ../ui/upgrade_page.py:1646
-#, fuzzy
+#: ui/install_page.py:781 ui/upgrade_page.py:1647
 msgid "Dependencies analysis failed"
-msgstr "Analysering af afhængigheder fejlede"
+msgstr ""
 
-#: ../ui/install_page.py:324 ../ui/install_page.py:727
-#: ../ui/upgrade_page.py:1088 ../ui/upgrade_page.py:1606
+#: ui/install_page.py:331 ui/install_page.py:734 ui/upgrade_page.py:1089
+#: ui/upgrade_page.py:1607
 msgid "Dependencies analyzing"
 msgstr ""
 
-#: ../ui/category_info.py:86
+#: ui/category_info.py:86
 msgid "Desktop environment"
 msgstr "Skrivebordsmiljø"
 
-#: ../ui/category_info.py:78
+#: ui/category_info.py:78
 msgid "Development"
 msgstr "Udvikling"
 
-#: ../ui/category_info.py:38
+#: ui/category_info.py:38
 msgid "Disc burner"
 msgstr "Brænderprogram"
 
-#: ../ui/preference.py:510
+#: ui/preference.py:510
 msgid "Download directory: "
 msgstr "Download mappe: "
 
-#: ../ui/install_page.py:748
-#, fuzzy
+#: ui/install_page.py:755
 msgid "Download failed"
-msgstr "Download færdiggjort."
+msgstr ""
 
-#: ../ui/upgrade_page.py:1110
+#: ui/upgrade_page.py:1111
 msgid "Download finished."
 msgstr "Download færdiggjort."
 
-#: ../ui/upgrade_page.py:1094
-#, fuzzy
+#: ui/upgrade_page.py:1095
 msgid "Download has started"
-msgstr "Download er startet..."
+msgstr ""
 
-#: ../ui/home_page.py:756
+#: ui/home_page.py:756
 msgid "Download rank"
 msgstr "Download rang"
 
-#: ../ui/preference.py:494
+#: ui/preference.py:494
 msgid "Download settings"
 msgstr "Download indstillinger"
 
-#: ../ui/upgrade_page.py:1114
+#: ui/upgrade_page.py:1115
 msgid "Download stopped."
 msgstr "Download stoppede."
 
-#: ../ui/install_page.py:649 ../ui/install_page.py:661
+#: ui/install_page.py:656 ui/install_page.py:668
 msgid "Download was interrupted"
 msgstr "Download blev afbrudt"
 
-#: ../ui/detail_page.py:355
+#: ui/detail_page.py:355
 #, python-format
 msgid "Download: %s"
 msgstr "Download: %s"
 
-#: ../ui/detail_page.py:391
+#: ui/detail_page.py:391
 msgid "Download: 0"
 msgstr "Download: 0"
 
-#: ../ui/install_page.py:741 ../ui/upgrade_page.py:1620
+#: ui/install_page.py:748 ui/upgrade_page.py:1621
 msgid "Downloading"
 msgstr "Downloader"
 
-#: ../ui/upgrade_page.py:328
+#: ui/upgrade_page.py:328
 msgid "Downloading updates"
 msgstr "Downloader opdateringer"
 
-#: ../ui/category_info.py:29
+#: ui/category_info.py:29
 msgid "Email"
 msgstr "Email"
 
-#: ../ui/category_info.py:96
+#: ui/category_info.py:96
 msgid "Emulation"
 msgstr "Emulering"
 
-#: ../ui/category_info.py:51
+#: ui/category_info.py:51
 msgid "Emulator"
 msgstr "Emulering"
 
-#: ../ui/category_info.py:69
+#: ui/category_info.py:69
 msgid "Engineering"
 msgstr "Ingeniørarbejde"
 
-#: ../ui/utils.py:349
+#: ui/utils.py:370
 msgid "Err"
 msgstr "Err"
 
-#: ../ui/upgrade_page.py:1117
+#: ui/upgrade_page.py:1118
 msgid "Failed to analyze dependencies."
 msgstr "Fejlede i at analysere afhængigheder"
 
-#: ../ui/upgrade_page.py:399
+#: ui/upgrade_page.py:399
 msgid "Failed to download updates"
 msgstr "Fejlede i download af opdateringer"
 
-#: ../ui/upgrade_page.py:419
+#: ui/upgrade_page.py:419
 msgid "Failed to install updates"
 msgstr "Fejlede i at installere opdateringer"
 
-#: ../ui/software_center.py:457
-#, fuzzy
+#: ui/software_center.py:458
 msgid "Failed to refresh package lists."
-msgstr "Fejlede i opdatering af program-lister."
+msgstr ""
 
-#: ../ui/upgrade_page.py:509
-#, fuzzy
+#: ui/upgrade_page.py:509
 msgid "Failed to send the error report. You could try again."
-msgstr "Fejlede i at sende fejlreport. Du ønsker måske at prøve igen."
+msgstr ""
 
-#: ../ui/category_info.py:97
+#: ui/category_info.py:97
 msgid "File manager"
 msgstr "Filhåndterer"
 
-#: ../ui/category_info.py:30
+#: ui/category_info.py:30
 msgid "File transfer"
 msgstr "Filoverførsel"
 
-#: ../ui/category_info.py:70
+#: ui/category_info.py:70
 msgid "Finance"
 msgstr "Finans"
 
-#: ../ui/upgrade_page.py:1091
+#: ui/upgrade_page.py:1092
 msgid "Finished analyzing dependencies."
 msgstr "Færdig med at analysere afhængigheder..."
 
-#: ../ui/category_info.py:45
+#: ui/category_info.py:45
 msgid "Games"
 msgstr "Spil"
 
-#: ../ui/preference.py:832
+#: ui/preference.py:829
 msgid "General"
 msgstr "General"
 
-#: ../ui/software_center.py:437
-#, fuzzy
+#: ui/software_center.py:438
 msgid "Generating package list database..."
-msgstr "Genererer lokal pakkedatabase..."
+msgstr ""
 
-#: ../ui/utils.py:351
+#: ui/utils.py:372
 msgid "Get"
 msgstr "Get"
 
-#: ../ui/category_info.py:58
+#: ui/category_info.py:58
 msgid "Graphics"
 msgstr "Grafik"
 
-#: ../ui/category_info.py:71
+#: ui/category_info.py:71
 msgid "Ham radio"
 msgstr "Ham radio"
 
-#: ../ui/utils.py:352
+#: ui/utils.py:373
 msgid "Hit"
 msgstr "Hit"
 
-#: ../ui/home_page.py:716 ../ui/software_center.py:788
+#: ui/home_page.py:716 ui/software_center.py:789
 msgid "Home"
 msgstr "Hjem"
 
-#: ../ui/category_info.py:81
+#: ui/category_info.py:81
 msgid "IDE"
 msgstr "IDE"
 
-#: ../ui/upgrade_page.py:483
+#: ui/upgrade_page.py:483
 msgid "If the prompt occurs again, you could "
 msgstr ""
 
-#: ../ui/utils.py:350
+#: ui/utils.py:371
 msgid "Ign"
 msgstr "Ign"
 
-#: ../ui/category_info.py:61
+#: ui/category_info.py:61
 msgid "Image processing"
 msgstr "Billedeforarbejdning"
 
-#: ../ui/category_info.py:68
+#: ui/category_info.py:68
 msgid "Industry"
 msgstr "Industri"
 
-#: ../ui/software_center.py:393
+#: ui/software_center.py:394
 msgid "Install"
 msgstr "Installer"
 
-#: ../ui/software_center.py:393
+#: ui/software_center.py:394
 #, python-format
 msgid "Install %s Successfully."
 msgstr "Installering %s Vellykket."
 
-#: ../ui/software_center.py:791
+#: ui/software_center.py:792
 msgid "Installation"
 msgstr "Installation"
 
-#: ../ui/install_page.py:799
-#, fuzzy
+#: ui/install_page.py:806
 msgid "Installation completed"
-msgstr "Installation færdig"
+msgstr ""
 
-#: ../ui/install_page.py:671
+#: ui/install_page.py:678
 msgid "Installation was interrupted"
 msgstr "Installation blev afbrudt"
 
-#: ../ui/install_page.py:510 ../ui/download_rank_page.py:371
-#: ../ui/home_page.py:1076 ../ui/utils.py:339 ../ui/album_page.py:485
-#: ../ui/search_page.py:276
+#: ui/install_page.py:517 ui/home_page.py:1076 ui/utils.py:360
+#: ui/album_page.py:485 ui/download_rank_page.py:371 ui/search_page.py:276
 msgid "Installed"
 msgstr "Installeret"
 
-#: ../ui/install_page.py:783 ../ui/install_page.py:790
+#: ui/install_page.py:790 ui/install_page.py:797
 msgid "Installing"
 msgstr "Installerer"
 
-#: ../ui/upgrade_page.py:1121
+#: ui/upgrade_page.py:1122
 msgid "Installing updates"
 msgstr "Installerer opdateringer"
 
-#: ../ui/category_info.py:28
+#: ui/category_info.py:28
 msgid "Instant messaging"
 msgstr "Instant messaging"
 
-#: ../ui/category_info.py:26
+#: ui/category_info.py:26
 msgid "Internet"
 msgstr "Internet"
 
-#: ../ui/software_center.py:769
+#: ui/software_center.py:770
 msgid "Join us"
 msgstr "Mød os"
 
-#: ../ui/widgets.py:66
+#: ui/widgets.py:66
 msgid "Just now"
 msgstr "Lige nu"
 
-#: ../ui/category_info.py:52
+#: ui/category_info.py:52
 msgid "Kids games"
 msgstr "Børnespil"
 
-#: ../ui/category_info.py:75
+#: ui/category_info.py:75
 msgid "Languages"
 msgstr "Sprog"
 
-#: ../ui/upgrade_page.py:78 ../ui/upgrade_page.py:107
-#: ../ui/upgrade_page.py:340
-#, fuzzy
+#: ui/upgrade_page.py:78 ui/upgrade_page.py:107 ui/upgrade_page.py:340
 msgid "Last system upgraded time: "
-msgstr "Sidst opgraderet tidspunkt:"
+msgstr ""
 
-#: ../ui/upgrade_page.py:335
-#, fuzzy
+#: ui/upgrade_page.py:335
 msgid "Last updated package lists time: "
-msgstr "Sidste tidspunkt for opdatering af programliste:"
+msgstr ""
 
-#: ../ui/detail_page.py:239 ../ui/detail_page.py:491
+#: ui/detail_page.py:239 ui/detail_page.py:491
 msgid "Loading comments..."
 msgstr "Indlæser kommenterer..."
 
-#: ../ui/category_info.py:53
+#: ui/category_info.py:53
 msgid "Logic games"
 msgstr "Logikspil"
 
-#: ../ui/category_info.py:39
+#: ui/category_info.py:39
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../ui/preference.py:500
+#: ui/preference.py:500
 msgid "Max download task number: "
 msgstr "Max download opgaveantal:"
 
-#: ../ui/category_info.py:37
+#: ui/category_info.py:37
 msgid "Media Editing"
 msgstr ""
 
-#: ../ui/category_info.py:72
+#: ui/category_info.py:72
 msgid "Medical"
 msgstr "Medicinsk"
 
-#: ../ui/upgrade_page.py:345
+#: ui/upgrade_page.py:345
 msgid "Mirror Receiving: "
 msgstr ""
 
-#: ../ui/preference.py:833
+#: ui/preference.py:830
 msgid "Mirrors"
 msgstr "Mirrors"
 
-#: ../ui/category_info.py:34
+#: ui/category_info.py:34
 msgid "Miscellaneous"
 msgstr "Diverse"
 
-#: ../ui/category_info.py:40
+#: ui/category_info.py:40
 msgid "Mixer"
 msgstr "Mixer"
 
-#: ../ui/category_info.py:87
+#: ui/category_info.py:87
 msgid "Monitor"
 msgstr "Skærm"
 
-#: ../ui/category_info.py:35
+#: ui/category_info.py:35
 msgid "Multimedia"
 msgstr "Multimedia"
 
-#: ../ui/category_info.py:88
+#: ui/category_info.py:88
 msgid "Network"
 msgstr "Netværk"
 
-#: ../ui/category_info.py:31
+#: ui/category_info.py:31
 msgid "News"
 msgstr "Nyheder"
 
-#: ../ui/item_render.py:44
+#: ui/item_render.py:44
 msgid "No reminder"
 msgstr ""
 
-#: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
+#: ui/upgrade_page.py:136 ui/upgrade_page.py:208
 #, python-format
 msgid "No reminder to update (%s)"
 msgstr ""
 
-#: ../ui/detail_page.py:441 ../ui/install_page.py:503
-#: ../ui/download_rank_page.py:364 ../ui/home_page.py:1069
-#: ../ui/album_page.py:478 ../ui/search_page.py:269
+#: ui/install_page.py:510 ui/home_page.py:1069 ui/album_page.py:478
+#: ui/download_rank_page.py:364 ui/detail_page.py:441 ui/search_page.py:269
 msgid "Not found"
-msgstr ""
+msgstr "Ikke fundet"
 
-#: ../ui/widgets.py:462 ../ui/preference.py:785
+#: ui/widgets.py:462 ui/preference.py:782
 msgid "OK"
 msgstr "OK"
 
-#: ../ui/category_info.py:66
+#: ui/category_info.py:66
 msgid "Office"
 msgstr "Kontor"
 
-#: ../ui/preference.py:477
-#, fuzzy
+#: ui/preference.py:477
 msgid "On uninstalling the software"
-msgstr "på ikke installeret software"
+msgstr ""
 
-#: ../ui/widgets.py:78
+#: ui/widgets.py:78
 msgid "One hour ago"
 msgstr "En time siden"
 
-#: ../ui/widgets.py:71
+#: ui/widgets.py:71
 msgid "One minute ago"
 msgstr "Et minut siden"
 
-#: ../ui/software_center.py:816
+#: ui/software_center.py:817
 msgid "Open download directory"
 msgstr "Åbn download filkatalog"
 
-#: ../ui/software_center.py:445
+#: ui/software_center.py:446
 msgid "Package lists updated completely."
 msgstr ""
 
-#: ../ui/category_info.py:89
+#: ui/category_info.py:89
 msgid "Package manager"
 msgstr "Pakkehåndterer"
 
-#: ../ui/category_info.py:62
+#: ui/category_info.py:62
 msgid "Photography"
 msgstr "Fotografering"
 
-#: ../ui/category_info.py:41
+#: ui/category_info.py:41
 msgid "Player"
 msgstr "Afpillere"
 
-#: ../ui/inhibit.py:54
+#: ui/inhibit.py:54
 msgid ""
 "Please wait a moment while system update is being performed... Do not turn "
 "off your computer."
 msgstr ""
+"Vent et øjeblik, mens systemopdatering udføres ... Du må ikke slukke "
+"computeren."
 
-#: ../ui/detail_page.py:178
+#: ui/detail_page.py:178
 msgid "Popular recommendations"
 msgstr ""
 
-#: ../ui/detail_page.py:608
+#: ui/detail_page.py:608
 msgid "Powered by 又拍云存储"
 msgstr "Drevet af 又拍云存储"
 
-#: ../ui/software_center.py:819
+#: ui/software_center.py:820
 msgid "Preferences"
 msgstr "Præferencer"
 
-#: ../ui/utils.py:335
+#: ui/utils.py:356
 msgid "Preparing"
 msgstr "Forbereder"
 
-#: ../ui/utils.py:337
+#: ui/utils.py:358
 msgid "Preparing to configure"
 msgstr "Forbereder sig på at konfigurere"
 
-#: ../ui/software_center.py:468
-#, fuzzy, python-format
+#: ui/software_center.py:469
+#, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted."
 msgstr ""
-"Problem forekom under analysering af afhængiheder for %s. Installation "
-"afbrudt"
 
-#: ../ui/software_center.py:471
-#, fuzzy, python-format
+#: ui/software_center.py:472
+#, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
 msgstr ""
-"Problem forekom under analysering af afhængiheder for %s. Opgradering afbrudt"
 
-#: ../ui/category_info.py:65
+#: ui/category_info.py:65
 msgid "Productivity"
 msgstr "Produktivitet"
 
-#: ../ui/category_info.py:73
+#: ui/category_info.py:73
 msgid "Publishing"
 msgstr "Udgivning"
 
-#: ../ui/category_info.py:54
+#: ui/category_info.py:54
 msgid "Puzzle games"
 msgstr "Puslespil"
 
-#: ../ui/software_center.py:820
+#: ui/software_center.py:821
 msgid "Quit"
 msgstr "Afslut"
 
-#: ../ui/software_center.py:220
-#, fuzzy
+#: ui/software_center.py:220
 msgid "Rating failed. Please check your network connection!"
 msgstr ""
-"Afsendelse af kommentar fejlede. Tjek venligst din internet forbindelse!"
 
-#: ../ui/software_center.py:204
-#, fuzzy
+#: ui/software_center.py:204
 msgid "Rating successfully. Thanks for your involvement."
-msgstr "Kommentar var vellykket. Tak for din involvering :)"
+msgstr ""
 
-#: ../ui/home_page.py:756
+#: ui/home_page.py:756
 msgid "Recommendations"
 msgstr ""
 
-#: ../ui/category_info.py:42
+#: ui/category_info.py:42
 msgid "Recorder"
 msgstr "Optager"
 
-#: ../ui/category_info.py:76
+#: ui/category_info.py:76
 msgid "Religion"
 msgstr "Religion"
 
-#: ../ui/upgrade_page.py:238 ../ui/item_render.py:46
+#: ui/item_render.py:46 ui/upgrade_page.py:238
 msgid "Remind again"
 msgstr ""
 
-#: ../ui/category_info.py:32
+#: ui/category_info.py:32
 msgid "Remote access"
 msgstr "fjernadgang"
 
-#: ../ui/category_info.py:55
+#: ui/category_info.py:55
 msgid "Role-playing games"
 msgstr "Rollespil"
 
-#: ../ui/utils.py:334
+#: ui/utils.py:355
 msgid "Running"
 msgstr "Kører"
 
-#: ../ui/category_info.py:67
+#: ui/category_info.py:67
 msgid "Scanning printing"
 msgstr "Scanning & Printning"
 
-#: ../ui/category_info.py:77
+#: ui/category_info.py:77
 msgid "Science"
 msgstr "Videnskab"
 
-#: ../ui/category_info.py:74
-#, fuzzy
+#: ui/category_info.py:74
 msgid "Science Education"
-msgstr "Uddannelse"
+msgstr ""
 
-#: ../ui/category_info.py:98
+#: ui/category_info.py:98
 msgid "Screensaver"
 msgstr "Skærmskåner"
 
-#: ../ui/category_info.py:33
+#: ui/category_info.py:33
 msgid "Security"
 msgstr "Sikkerhed"
 
-#: ../ui/preference.py:706
+#: ui/preference.py:705
 msgid "Select Directory"
 msgstr "Vælg mappe"
 
-#: ../ui/preference.py:648
+#: ui/preference.py:642
 msgid "Select mirror"
 msgstr "Vælg mirror"
 
-#: ../ui/preference.py:551
-#, fuzzy
+#: ui/preference.py:551
 msgid "Select the best mirror"
-msgstr "Vælg bedste mirror"
+msgstr ""
 
-#: ../ui/software_center.py:194
-#, fuzzy
+#: ui/software_center.py:194
 msgid "Sending rating..."
-msgstr "Sender kommentar..."
+msgstr ""
 
-#: ../ui/category_info.py:43
+#: ui/category_info.py:43
 msgid "Sequencer"
 msgstr "Optage og afsplingsredegering"
 
-#: ../ui/category_info.py:90
+#: ui/category_info.py:90
 msgid "Settings"
 msgstr "Instillinger"
 
-#: ../ui/upgrade_page.py:289
-#, fuzzy
+#: ui/upgrade_page.py:289
 msgid "Shut down the computer after upgraded"
-msgstr "Luk ned for computeren efter opgradering"
+msgstr ""
 
-#: ../ui/detail_page.py:470
+#: ui/detail_page.py:470
 #, python-format
 msgid "Size: %s"
 msgstr "Størelse: %s"
 
-#: ../ui/detail_page.py:392
+#: ui/detail_page.py:392
 msgid "Size: calculating..."
 msgstr "Størelse: beregner..."
 
-#: ../ui/category_info.py:82
+#: ui/category_info.py:82
 msgid "Software development"
 msgstr "Software udvikling"
 
-#: ../ui/preference.py:752
+#: ui/preference.py:751
 msgid "Speed testing will finish only after one minute, please wait."
 msgstr ""
 
-#: ../ui/category_info.py:56
+#: ui/category_info.py:56
 msgid "Sports games"
 msgstr "Sportsspil"
 
-#: ../ui/category_info.py:57
+#: ui/category_info.py:57
 msgid "Strategy games"
 msgstr "Strategispil"
 
-#: ../ui/preference.py:553
-#, fuzzy
+#: ui/preference.py:553
 msgid "Successfully"
-msgstr "Succesfuldt installeret"
+msgstr ""
 
-#: ../ui/detail_page.py:447
+#: ui/detail_page.py:447
 msgid "Successfully installed"
 msgstr "Succesfuldt installeret"
 
-#: ../ui/upgrade_page.py:402 ../ui/upgrade_page.py:423
-#: ../ui/upgrade_page.py:446
+#: ui/upgrade_page.py:402 ui/upgrade_page.py:423 ui/upgrade_page.py:446
 msgid "Suggest to "
 msgstr "Foreslag til"
 
-#: ../ui/category_info.py:85
+#: ui/category_info.py:85
 msgid "System"
 msgstr "System"
 
-#: ../ui/category_info.py:99
+#: ui/category_info.py:99
 msgid "Terminal emulator"
 msgstr "Terminal emulator"
 
-#: ../ui/preference.py:778
+#: ui/preference.py:776
 #, python-format
 msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
 msgstr ""
 
-#: ../ui/category_info.py:100
+#: ui/category_info.py:100
 msgid "Text editor"
 msgstr "Tekst editor"
 
-#: ../ui/upgrade_page.py:503
+#: ui/upgrade_page.py:503
 msgid "The error was successfully reported and will be soon handled."
 msgstr "Fejlen blev succesfuldt rapporteret og vil snart  blive behandlet."
 
-#: ../ui/software_center.py:476
+#: ui/software_center.py:477
 #, python-format
 msgid "The requested package \"%s\" was not found in the package list."
 msgstr "Den udbedte pakke \"%s\" blev ikke fundet i pakkelisten."
 
-#: ../ui/upgrade_page.py:401
-#, fuzzy
+#: ui/upgrade_page.py:401
 msgid "The requested package does not exist on server."
-msgstr "Den udbedte pakke eksisterer ikke på serveren."
+msgstr ""
 
-#: ../ui/upgrade_page.py:308
-#, fuzzy
+#: ui/upgrade_page.py:308
 msgid "The system is not Deepin, this function is invalid."
 msgstr ""
-"Deepin System Indstillinger er ikke installeret, denne funktion vil ikke "
-"virke!"
 
-#: ../ui/upgrade_page.py:442
-#, fuzzy
+#: ui/upgrade_page.py:442
 msgid ""
 "The update requires to uninstall crucial components due to corrupted local "
 "dependencies or incorrect package dependencies on server."
 msgstr ""
-"Afgørende komponenter vil ikke blive installeret. Dette kan være fordi dine "
-"lokale afhængigheder er ødelagte, eller der er ukorrekte afhængigheder på "
-"serveren."
 
-#: ../ui/dsc-daemon.py:310
+#: ui/dsc-daemon.py:310
 #, python-format
 msgid ""
 "There are %s packages needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
 msgstr ""
 
-#: ../ui/dsc-daemon.py:314
+#: ui/dsc-daemon.py:314
 #, python-format
 msgid ""
 "There is %s package needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
 msgstr ""
 
-#: ../ui/upgrade_page.py:304
+#: ui/upgrade_page.py:304
 msgid "This function is invalid without Deepin System Settings installed."
 msgstr ""
 
-#: ../ui/upgrade_page.py:664
-#, fuzzy
+#: ui/upgrade_page.py:663
 msgid "This problem occurs due to corrupted local apt dependence relationship."
-msgstr "Dette kan være fordi dine lokale afhængigheder er ødelagte."
+msgstr ""
 
-#: ../ui/upgrade_page.py:421
-#, fuzzy
+#: ui/upgrade_page.py:421
 msgid "This problem occurs due to corrupted local apt dependency relationship."
-msgstr "Dette kan være fordi dine lokale afhængigheder er ødelagte."
+msgstr ""
 
-#: ../ui/preference.py:575
+#: ui/preference.py:575
 msgid "Time interval: "
 msgstr "Tidsinterval:"
 
-#: ../ui/download_rank_page.py:61
+#: ui/download_rank_page.py:61
 msgid "Top 25 monthly"
 msgstr "Top 25 måndentligt"
 
-#: ../ui/download_rank_page.py:61
-#, fuzzy
+#: ui/download_rank_page.py:61
 msgid "Top 25 totally"
-msgstr "Top 25 måndentligt"
+msgstr ""
 
-#: ../ui/download_rank_page.py:61
+#: ui/download_rank_page.py:61
 msgid "Top 25 weekly"
 msgstr "Top 25 ugentlig"
 
-#: ../ui/home_page.py:756
+#: ui/home_page.py:756
 msgid "Topics"
 msgstr "Emner"
 
-#: ../ui/software_center.py:458
+#: ui/software_center.py:459
 msgid "Try again"
 msgstr "Prøv igen"
 
-#: ../ui/category_info.py:44
+#: ui/category_info.py:44
 msgid "Tuner"
 msgstr "Tuner"
 
-#: ../ui/software_center.py:384 ../ui/software_center.py:790
+#: ui/software_center.py:385 ui/software_center.py:791
 msgid "Uninstall"
 msgstr "Afinstaller"
 
-#: ../ui/software_center.py:384
+#: ui/software_center.py:385
 #, python-format
 msgid "Uninstall %s Successfully."
 msgstr "Afinstallering %s Vellykket."
 
-#: ../ui/uninstall_page.py:594
-#, fuzzy
+#: ui/uninstall_page.py:590
 msgid "Uninstallation completed"
-msgstr "Installation færdig"
+msgstr ""
 
-#: ../ui/uninstall_page.py:580 ../ui/uninstall_page.py:587
+#: ui/uninstall_page.py:576 ui/uninstall_page.py:583
 msgid "Uninstalling"
 msgstr "Afinstallerer"
 
-#: ../ui/utils.py:336
+#: ui/utils.py:357
 msgid "Unpacking"
 msgstr "Udpakker"
 
-#: ../ui/preference.py:571
+#: ui/preference.py:571
 msgid "Update automatically"
 msgstr "Opdater automatisk"
 
-#: ../ui/software_center.py:815 ../ui/preference.py:568
-#, fuzzy
+#: ui/preference.py:568 ui/software_center.py:816
 msgid "Update package lists"
-msgstr "Opdater programlister"
+msgstr ""
 
-#: ../ui/software_center.py:477
-#, fuzzy
+#: ui/software_center.py:478
 msgid "Update package lists again and try again."
-msgstr "Genopfrisk pakkelisten og prøv igen. "
+msgstr ""
 
-#: ../ui/upgrade_page.py:1122
+#: ui/upgrade_page.py:1123
 msgid "Updating..."
 msgstr "Opdatering..."
 
-#: ../ui/dsc-daemon.py:236 ../ui/software_center.py:390
-#: ../ui/software_center.py:789
+#: ui/dsc-daemon.py:236 ui/software_center.py:391 ui/software_center.py:790
 msgid "Upgrade"
 msgstr "Opgrader"
 
-#: ../ui/upgrade_page.py:182
-#, fuzzy
+#: ui/upgrade_page.py:182
 msgid "Upgrade applications selected"
-msgstr "Opdater programlister"
+msgstr ""
 
-#: ../ui/upgrade_page.py:1129 ../ui/upgrade_page.py:1671
-#, fuzzy
+#: ui/upgrade_page.py:1130 ui/upgrade_page.py:1672
 msgid "Upgrade completed"
-msgstr "Opgradering færdiggjort"
+msgstr ""
 
-#: ../ui/upgrade_page.py:1655 ../ui/upgrade_page.py:1662
+#: ui/upgrade_page.py:1656 ui/upgrade_page.py:1663
 msgid "Upgrading"
 msgstr "Opgraderer"
 
-#: ../ui/upgrade_page.py:498
+#: ui/upgrade_page.py:498
 msgid "Uploading error log"
 msgstr "Uploader fejllog"
 
-#: ../ui/category_info.py:93
+#: ui/category_info.py:93
 msgid "Utilities"
 msgstr "Redskaber"
 
-#: ../ui/category_info.py:63
+#: ui/category_info.py:63
 msgid "Vector graphics"
 msgstr "Vector grafik"
 
-#: ../ui/category_info.py:83
+#: ui/category_info.py:83
 msgid "Version control"
 msgstr "Versionskontrol"
 
-#: ../ui/preference.py:438
+#: ui/preference.py:438
 msgid "Version:"
 msgstr "Version:"
 
-#: ../ui/detail_page.py:390
+#: ui/detail_page.py:390
 #, python-format
 msgid "Version: %s"
 msgstr "Version: %s"
 
-#: ../ui/software_center.py:818
+#: ui/software_center.py:819
 msgid "View new features"
 msgstr "Se nye funktioner"
 
-#: ../ui/category_info.py:64
+#: ui/category_info.py:64
 msgid "Viewer"
 msgstr "Fremviser"
 
-#: ../ui/category_info.py:91
+#: ui/category_info.py:91
 msgid "Virtualization"
 msgstr "Virtuelisering"
 
-#: ../ui/detail_page.py:396
+#: ui/detail_page.py:396
 msgid "Visit Homepage"
 msgstr "Besøg Hjemmeside"
 
-#: ../ui/preference.py:552
+#: ui/preference.py:552
 msgid "Waiting"
 msgstr ""
 
-#: ../ui/install_page.py:734 ../ui/upgrade_page.py:1494
-#: ../ui/upgrade_page.py:1613
+#: ui/install_page.py:741 ui/upgrade_page.py:1495 ui/upgrade_page.py:1614
 msgid "Waiting for download"
 msgstr "Venter på download"
 
-#: ../ui/install_page.py:764
+#: ui/install_page.py:771
 msgid "Waiting for installation"
 msgstr "Venter på installation"
 
-#: ../ui/uninstall_page.py:490 ../ui/uninstall_page.py:573
+#: ui/uninstall_page.py:486 ui/uninstall_page.py:569
 msgid "Waiting for uninstall"
 msgstr "Venter for afinstallering"
 
-#: ../ui/upgrade_page.py:1636
+#: ui/upgrade_page.py:1637
 msgid "Waiting for upgrade"
 msgstr "Venter på opgradering"
 
-#: ../ui/upgrade_page.py:440
+#: ui/upgrade_page.py:440
 msgid "Warning"
 msgstr "Advarsel"
 
-#: ../ui/category_info.py:84
+#: ui/category_info.py:84
 msgid "Web development"
 msgstr "Web udvikling"
 
-#: ../ui/category_info.py:92
+#: ui/category_info.py:92
 msgid "Window manager"
 msgstr "Vindueshåndterer"
 
-#: ../ui/widgets.py:84
+#: ui/widgets.py:84
 msgid "Yesterday"
 msgstr "Igår"
 
-#: ../ui/software_center.py:198
-#, fuzzy
+#: ui/software_center.py:198
 msgid "You have already scored.  ;)"
-msgstr "Du har allerede sendt en kommentar ;)"
+msgstr ""
 
-#: ../ui/software_center.py:1131
-#, fuzzy, python-format
+#: ui/software_center.py:1132
+#, python-format
 msgid "You have cleared up %s packages and saved %s of space."
-msgstr "Du har fjernet  %s pakker og frigivet %s harddiskplads"
+msgstr ""
 
-#: ../ui/software_center.py:1133
-#, fuzzy
+#: ui/software_center.py:1134
 msgid "Your system cache is empty."
-msgstr "Dit system er rent."
+msgstr ""
 
-#: ../ui/upgrade_page.py:484 ../ui/upgrade_page.py:510
-#, fuzzy
+#: ui/upgrade_page.py:484 ui/upgrade_page.py:510
 msgid "send error report"
-msgstr "sende en fejlreport"
+msgstr ""
 
-#: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
-#: ../ui/upgrade_page.py:447
-#, fuzzy
+#: ui/upgrade_page.py:403 ui/upgrade_page.py:424 ui/upgrade_page.py:447
 msgid "update package lists"
-msgstr "Opdater programlister"
-
-#~ msgid "%s: %s matched applications"
-#~ msgstr "%s: %s matchende programmer"
-
-#~ msgid "Also in the category..."
-#~ msgstr "Også i kategorien..."
-
-#~ msgid "Analyzing dependencies"
-#~ msgstr " Analyserer afhængigheder"
-
-#~ msgid "Analyzing dependencies..."
-#~ msgstr "Analyserer afhængigheder..."
-
-#~ msgid "Audiovideo editing"
-#~ msgstr "Audiovideo redigering"
-
-#~ msgid "Close"
-#~ msgstr "Luk"
-
-#~ msgid "Hot applications"
-#~ msgstr "Hotte programmer"
-
-#~ msgid "If the problem persists, you may wish to "
-#~ msgstr "Hvis problemet varer ved, ønsker du måske at"
-
-#~ msgid ""
-#~ "Please wait. The process will take 30 seconds or more depending on your "
-#~ "network connection"
-#~ msgstr ""
-#~ "Vent venligst. Processen vil tage 30 sekunder eller mere afhængig af din "
-#~ "netværksforbindelse"
-
-#~ msgid "Refresh applications lists"
-#~ msgstr "Genofrisk program-lister"
-
-#~ msgid "Send Error Report"
-#~ msgstr "sende en fejlreport"
-
-#, fuzzy
-#~ msgid "Software Center"
-#~ msgstr "Deepin Software Center"
-
-#, fuzzy
-#~ msgid "Startdde is not installed, this function is not work!"
-#~ msgstr ""
-#~ "Deepin System Indstillinger er ikke installeret, denne funktion vil ikke "
-#~ "virke!"
-
-#~ msgid "Successfully refreshed applications lists."
-#~ msgstr "Succesfuldt opdateret program-lister."
-
-#~ msgid ""
-#~ "Test for downloading mirror failed. Please check your network connection."
-#~ msgstr ""
-#~ "Test for download spejl mislykkes. Tjek venligst din netværksforbindelse."
-
-#~ msgid "The source mirror: "
-#~ msgstr "Kildespejlet:"
-
-#~ msgid "This may be because your local dependencies are corrupted."
-#~ msgstr "Dette kan være fordi dine lokale afhængigheder er ødelagte."
-
-#~ msgid "Top 25 of all time"
-#~ msgstr "Top25  nogensinde"
-
-#~ msgid "Uninstall successful"
-#~ msgstr "Afinstalleringen var vellykket"
-
-#~ msgid "Unwatch"
-#~ msgstr "Ikke gennemset"
-
-#~ msgid "Unwatched (%s)"
-#~ msgstr "Ikke gennemset (%s)"
-
-#~ msgid "Upgrade finished."
-#~ msgstr "Opgradering færdig."
-
-#~ msgid "Upgrade select items"
-#~ msgstr "Opgrader valgte emner"
-
-#~ msgid "Watch again"
-#~ msgstr "Gennemse igen"
-
-#~ msgid "refresh applications lists"
-#~ msgstr "opdater programlisten"
+msgstr ""

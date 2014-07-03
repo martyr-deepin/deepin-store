@@ -1,0 +1,984 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# samson <sambelet@yahoo.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Deepin Store\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-02 13:20+0800\n"
+"PO-Revision-Date: 2014-07-02 06:03+0000\n"
+"Last-Translator: iceleaf <iceleaf916@gmail.com>\n"
+"Language-Team: Amharic (http://www.transifex.com/projects/p/deepin-store/language/am/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: am\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ../ui/detail_page.py:178
+msgid "Popular recommendations"
+msgstr ""
+
+#: ../ui/detail_page.py:239 ../ui/detail_page.py:491
+msgid "Loading comments..."
+msgstr "አስተያየቶች በመጫን ላይ..."
+
+#: ../ui/detail_page.py:355
+#, python-format
+msgid "Download: %s"
+msgstr "የወረዱ: %s"
+
+#: ../ui/detail_page.py:386
+msgid "Category: "
+msgstr "ምድብ: "
+
+#: ../ui/detail_page.py:390
+#, python-format
+msgid "Version: %s"
+msgstr "እትም: %s"
+
+#: ../ui/detail_page.py:391
+msgid "Download: 0"
+msgstr "የወረዱ: 0"
+
+#: ../ui/detail_page.py:392
+msgid "Size: calculating..."
+msgstr "መጠን: በማስላት ላይ..."
+
+#: ../ui/detail_page.py:396
+msgid "Visit Homepage"
+msgstr "ድህረ ገጽ ይጎብኙ"
+
+#: ../ui/detail_page.py:441 ../ui/install_page.py:503
+#: ../ui/download_rank_page.py:364 ../ui/home_page.py:1069
+#: ../ui/album_page.py:478 ../ui/search_page.py:269
+msgid "Not found"
+msgstr "አልተገኘም"
+
+#: ../ui/detail_page.py:447
+msgid "Successfully installed"
+msgstr "መግጠሙ ተሳክቷል"
+
+#: ../ui/detail_page.py:470
+#, python-format
+msgid "Size: %s"
+msgstr "መጠን: %s"
+
+#: ../ui/detail_page.py:608
+msgid "Powered by 又拍云存储"
+msgstr "Powered by 又拍云存储"
+
+#: ../ui/uninstall_page.py:159
+#, python-format
+msgid "%s applications can be uninstalled"
+msgstr "%s መተግበሪያዎችን ማጥፋት ይቻላል"
+
+#: ../ui/uninstall_page.py:490 ../ui/uninstall_page.py:573
+msgid "Waiting for uninstall"
+msgstr "ማጥፊያውን በመጠበቅ ላይ"
+
+#: ../ui/uninstall_page.py:580 ../ui/uninstall_page.py:587
+msgid "Uninstalling"
+msgstr "በማጥፋት ላይ"
+
+#: ../ui/uninstall_page.py:594
+msgid "Uninstallation completed"
+msgstr "ማጥፋት ጨርሷል"
+
+#: ../ui/start_desktop_window.py:227 ../ui/software_center.py:131
+#, python-format
+msgid "%s: request for starting applications sent"
+msgstr "%s: መተግበሪያውን ለማስጀመር ጥያቄው ተልኳል"
+
+#: ../ui/inhibit.py:54
+msgid ""
+"Please wait a moment while system update is being performed... Do not turn "
+"off your computer."
+msgstr "እባክዎን ትንሽ ይቆዩ ማሻሻያው እስከሚገጠም ድረስ... እባክዎን ኮምፒዩተሩን አያጥፉ "
+
+#: ../ui/dsc-daemon.py:236 ../ui/software_center.py:390
+#: ../ui/software_center.py:789
+msgid "Upgrade"
+msgstr "ማሻሻያ"
+
+#: ../ui/dsc-daemon.py:310
+#, python-format
+msgid ""
+"There are %s packages needed to upgrade in your system, please use Deepin "
+"Store to upgrade."
+msgstr ""
+
+#: ../ui/dsc-daemon.py:312 ../ui/dsc-daemon.py:316
+#: ../ui/software_center.py:732 ../ui/preference.py:433
+msgid "Deepin Store"
+msgstr ""
+
+#: ../ui/dsc-daemon.py:314
+#, python-format
+msgid ""
+"There is %s package needed to upgrade in your system, please use Deepin "
+"Store to upgrade."
+msgstr ""
+
+#: ../ui/install_page.py:139
+#, python-format
+msgid "%s applications are being installed"
+msgstr "%s መተግበሪያዎች በመግጠም ላይ"
+
+#: ../ui/install_page.py:324 ../ui/install_page.py:727
+#: ../ui/upgrade_page.py:1088 ../ui/upgrade_page.py:1606
+msgid "Dependencies analyzing"
+msgstr "ጥገኞችን በመርመር ላይ"
+
+#: ../ui/install_page.py:510 ../ui/download_rank_page.py:371
+#: ../ui/home_page.py:1076 ../ui/utils.py:339 ../ui/album_page.py:485
+#: ../ui/search_page.py:276
+msgid "Installed"
+msgstr "ተገጥሟል"
+
+#: ../ui/install_page.py:649 ../ui/install_page.py:661
+msgid "Download was interrupted"
+msgstr "ማውረዱ ተቋርጧል"
+
+#: ../ui/install_page.py:671
+msgid "Installation was interrupted"
+msgstr "መግጠሙ ተቋርጧል"
+
+#: ../ui/install_page.py:734 ../ui/upgrade_page.py:1494
+#: ../ui/upgrade_page.py:1613
+msgid "Waiting for download"
+msgstr "ለማውረድ በመጠበቅ ላይ"
+
+#: ../ui/install_page.py:741 ../ui/upgrade_page.py:1620
+msgid "Downloading"
+msgstr "በማውረድ ላይ"
+
+#: ../ui/install_page.py:748
+msgid "Download failed"
+msgstr ""
+
+#: ../ui/install_page.py:764
+msgid "Waiting for installation"
+msgstr "መግጠሚያውን በመጠበቅ ላይ"
+
+#: ../ui/install_page.py:774 ../ui/upgrade_page.py:1646
+msgid "Dependencies analysis failed"
+msgstr "ጥገኞችን መርመር አልተሳካም "
+
+#: ../ui/install_page.py:783 ../ui/install_page.py:790
+msgid "Installing"
+msgstr "በመግጠም ላይ"
+
+#: ../ui/install_page.py:799
+msgid "Installation completed"
+msgstr "መግጠሙ ጨርሷል"
+
+#: ../ui/upgrade_page.py:78 ../ui/upgrade_page.py:107
+#: ../ui/upgrade_page.py:340
+msgid "Last system upgraded time: "
+msgstr "ስርአቱ መጨረሻ የተሻሻለበት ሰአት: "
+
+#: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
+#, python-format
+msgid "No reminder to update (%s)"
+msgstr "ለማሻሻል አስታዋሽ የለም (%s)"
+
+#: ../ui/upgrade_page.py:182
+msgid "Upgrade applications selected"
+msgstr "መተግበሪያዎች ማሻሻያ ተመርጧል"
+
+#: ../ui/upgrade_page.py:204
+#, python-format
+msgid "%s applications are available for upgrade"
+msgstr "%s ለመተግበሪያዎች ማሻሻያ ዝግጁ ነው"
+
+#: ../ui/upgrade_page.py:238 ../ui/item_render.py:46
+msgid "Remind again"
+msgstr "በድጋሚ አስታውሰኝ"
+
+#: ../ui/upgrade_page.py:272
+#, python-format
+msgid "%s applications are not being watched"
+msgstr ""
+
+#: ../ui/upgrade_page.py:289
+msgid "Shut down the computer after upgraded"
+msgstr "ማሻሻሉ ከ ጨረሰ በኋል ኮምፒዩተሩን ማጥፊያ"
+
+#: ../ui/upgrade_page.py:304
+msgid "This function is invalid without Deepin System Settings installed."
+msgstr ""
+
+#: ../ui/upgrade_page.py:306
+msgid "Deepin Desktop Environment is not installed, this function is invalid!"
+msgstr ""
+
+#: ../ui/upgrade_page.py:308
+msgid "The system is not Deepin, this function is invalid."
+msgstr ""
+
+#: ../ui/upgrade_page.py:328
+msgid "Downloading updates"
+msgstr "ማሻሻያ በማውረድ ላይ"
+
+#: ../ui/upgrade_page.py:335
+msgid "Last updated package lists time: "
+msgstr ""
+
+#: ../ui/upgrade_page.py:345
+msgid "Mirror Receiving: "
+msgstr ""
+
+#: ../ui/upgrade_page.py:399
+msgid "Failed to download updates"
+msgstr "ማሻሻያ ማውረድ አልተቻለም"
+
+#: ../ui/upgrade_page.py:401
+msgid "The requested package does not exist on server."
+msgstr ""
+
+#: ../ui/upgrade_page.py:402 ../ui/upgrade_page.py:423
+#: ../ui/upgrade_page.py:446
+msgid "Suggest to "
+msgstr " የቀረበው ሀሳብ ለ"
+
+#: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
+#: ../ui/upgrade_page.py:447
+msgid "update package lists"
+msgstr "የጥቅል ዝርዝር ማሻሻያ"
+
+#: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
+#: ../ui/upgrade_page.py:448
+msgid " and try again."
+msgstr "እና እንደገና ይሞክሩ"
+
+#: ../ui/upgrade_page.py:419
+msgid "Failed to install updates"
+msgstr "ማሻሻያውን መግጠም አልተቻለም"
+
+#: ../ui/upgrade_page.py:421
+msgid ""
+"This problem occurs due to corrupted local apt dependency relationship."
+msgstr ""
+
+#: ../ui/upgrade_page.py:440
+msgid "Warning"
+msgstr "ማስጠንቀቂያ"
+
+#: ../ui/upgrade_page.py:442
+msgid ""
+"The update requires to uninstall crucial components due to corrupted local "
+"dependencies or incorrect package dependencies on server."
+msgstr ""
+
+#: ../ui/upgrade_page.py:483
+msgid "If the prompt occurs again, you could "
+msgstr ""
+
+#: ../ui/upgrade_page.py:484 ../ui/upgrade_page.py:510
+msgid "send error report"
+msgstr "የ ስህተት መግለጫ መላኪያ"
+
+#: ../ui/upgrade_page.py:485
+msgid "."
+msgstr "."
+
+#: ../ui/upgrade_page.py:498
+msgid "Uploading error log"
+msgstr "የ ስህተት መግለጫ በመላክ ላይ"
+
+#: ../ui/upgrade_page.py:503
+msgid "The error was successfully reported and will be soon handled."
+msgstr "ስህተቱ በሚገባ ተሳክቶ ተልኳል እና መፍትሄ ይፈልግለታል"
+
+#: ../ui/upgrade_page.py:509
+msgid "Failed to send the error report. You could try again."
+msgstr "የስህተት መግለጫ መላክ አልተሳካም እባክዎን እንደ ገና ይሞክሩ"
+
+#: ../ui/upgrade_page.py:664
+msgid ""
+"This problem occurs due to corrupted local apt dependence relationship."
+msgstr ""
+
+#: ../ui/upgrade_page.py:668
+#, python-format
+msgid "%s updates are selected. %s will be downloaded."
+msgstr "%s ማሻሻያዎች ተመርጠዋል %s አሁን ይወርዳሉ"
+
+#: ../ui/upgrade_page.py:1091
+msgid "Finished analyzing dependencies."
+msgstr "ጥገኞችን መመርመሩ ተጠናቋል"
+
+#: ../ui/upgrade_page.py:1094
+msgid "Download has started"
+msgstr "ማውረድ ጀምሯል"
+
+#: ../ui/upgrade_page.py:1100
+#, python-format
+msgid "Completed: %s/%s (%s/%s) Download Rate: %s/s"
+msgstr "ተፈጽሟል: %s/%s (%s/%s) የማውረድ ፍጥነት: %s/s"
+
+#: ../ui/upgrade_page.py:1110
+msgid "Download finished."
+msgstr "ማውረዱ ተጠናቋል"
+
+#: ../ui/upgrade_page.py:1114
+msgid "Download stopped."
+msgstr "ማውረዱ ተቋርጧል"
+
+#: ../ui/upgrade_page.py:1117
+msgid "Failed to analyze dependencies."
+msgstr "ጥገኞችን መመርመሩ አልተሳካም"
+
+#: ../ui/upgrade_page.py:1121
+msgid "Installing updates"
+msgstr "ማሻሻያ በመግጠም ላይ"
+
+#: ../ui/upgrade_page.py:1122
+msgid "Updating..."
+msgstr "በማሻሻል ላይ..."
+
+#: ../ui/upgrade_page.py:1129 ../ui/upgrade_page.py:1671
+msgid "Upgrade completed"
+msgstr "ማሻሻሉ ተፈጽሟል"
+
+#: ../ui/upgrade_page.py:1636
+msgid "Waiting for upgrade"
+msgstr "ማሻሻያ በመጠበቅ ላይ"
+
+#: ../ui/upgrade_page.py:1655 ../ui/upgrade_page.py:1662
+msgid "Upgrading"
+msgstr "በማሻሻል ላይ"
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 weekly"
+msgstr "25 የሳምንቱ ከፍተኛ"
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 monthly"
+msgstr "25 የወሩ ከፍተኛ"
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 totally"
+msgstr "ባጠቃላይ 25 ከፍተኛ"
+
+#: ../ui/category_info.py:26
+msgid "Internet"
+msgstr "ኢንተርኔት"
+
+#: ../ui/category_info.py:27
+msgid "Browser"
+msgstr "መቃኛ"
+
+#: ../ui/category_info.py:28
+msgid "Instant messaging"
+msgstr "አስቸኳይ መልእክተኛ"
+
+#: ../ui/category_info.py:29
+msgid "Email"
+msgstr "ኢሜይል"
+
+#: ../ui/category_info.py:30
+msgid "File transfer"
+msgstr "ፋይል ማስተላለፊያ"
+
+#: ../ui/category_info.py:31
+msgid "News"
+msgstr "ዜናዎች"
+
+#: ../ui/category_info.py:32
+msgid "Remote access"
+msgstr "በርቀት መድረሻ"
+
+#: ../ui/category_info.py:33
+msgid "Security"
+msgstr "ደህንነት"
+
+#: ../ui/category_info.py:34
+msgid "Miscellaneous"
+msgstr "የተለያዩ"
+
+#: ../ui/category_info.py:35
+msgid "Multimedia"
+msgstr "በርካታ መገናኛ"
+
+#: ../ui/category_info.py:36
+msgid "Audiovideo"
+msgstr "ድምፅ እና ቪዲዮ"
+
+#: ../ui/category_info.py:37
+msgid "Media Editing"
+msgstr ""
+
+#: ../ui/category_info.py:38
+msgid "Disc burner"
+msgstr "ዲስክ ማቃጠያ"
+
+#: ../ui/category_info.py:39
+msgid "MIDI"
+msgstr "MIDI"
+
+#: ../ui/category_info.py:40
+msgid "Mixer"
+msgstr "መደባለቂያ"
+
+#: ../ui/category_info.py:41
+msgid "Player"
+msgstr "ማጫወቻ"
+
+#: ../ui/category_info.py:42
+msgid "Recorder"
+msgstr "መቅረጫ"
+
+#: ../ui/category_info.py:43
+msgid "Sequencer"
+msgstr "ቅደም ተከተል"
+
+#: ../ui/category_info.py:44
+msgid "Tuner"
+msgstr ""
+
+#: ../ui/category_info.py:45
+msgid "Games"
+msgstr "ጨዋታዎች"
+
+#: ../ui/category_info.py:46
+msgid "Action games"
+msgstr "የ ተግባር ጨዋታዎች"
+
+#: ../ui/category_info.py:47
+msgid "Advernture games"
+msgstr ""
+
+#: ../ui/category_info.py:48
+msgid "Arcade games"
+msgstr ""
+
+#: ../ui/category_info.py:49
+msgid "Board games"
+msgstr "የ ሰንጠረዥ ጨዋታዎች"
+
+#: ../ui/category_info.py:50
+msgid "Card games"
+msgstr "የ ካርታ ጨዋታዎች"
+
+#: ../ui/category_info.py:51
+msgid "Emulator"
+msgstr ""
+
+#: ../ui/category_info.py:52
+msgid "Kids games"
+msgstr "የ ልጆች ጨዋታዎች"
+
+#: ../ui/category_info.py:53
+msgid "Logic games"
+msgstr ""
+
+#: ../ui/category_info.py:54
+msgid "Puzzle games"
+msgstr ""
+
+#: ../ui/category_info.py:55
+msgid "Role-playing games"
+msgstr ""
+
+#: ../ui/category_info.py:56
+msgid "Sports games"
+msgstr "የ ስፖርት ጨዋታዎች"
+
+#: ../ui/category_info.py:57
+msgid "Strategy games"
+msgstr ""
+
+#: ../ui/category_info.py:58
+msgid "Graphics"
+msgstr "ንድፎች"
+
+#: ../ui/category_info.py:59
+msgid "2D graphics"
+msgstr "2ዲ ንድፎች"
+
+#: ../ui/category_info.py:60
+msgid "3D graphics"
+msgstr "3ዲ ንድፎች"
+
+#: ../ui/category_info.py:61
+msgid "Image processing"
+msgstr "ምስል ማቀናበሪያ"
+
+#: ../ui/category_info.py:62
+msgid "Photography"
+msgstr "ፎቶግራፍ"
+
+#: ../ui/category_info.py:63
+msgid "Vector graphics"
+msgstr ""
+
+#: ../ui/category_info.py:64
+msgid "Viewer"
+msgstr "መመልከቻ"
+
+#: ../ui/category_info.py:65
+msgid "Productivity"
+msgstr ""
+
+#: ../ui/category_info.py:66
+msgid "Office"
+msgstr "ቢሮ"
+
+#: ../ui/category_info.py:67
+msgid "Scanning printing"
+msgstr "ማሰሻ እና ማተሚያ"
+
+#: ../ui/category_info.py:68
+msgid "Industry"
+msgstr "ኢንዱስትሪ"
+
+#: ../ui/category_info.py:69
+msgid "Engineering"
+msgstr "መሀንዲስ"
+
+#: ../ui/category_info.py:70
+msgid "Finance"
+msgstr "ገንዘብ"
+
+#: ../ui/category_info.py:71
+msgid "Ham radio"
+msgstr "ሀም ራዲዮ"
+
+#: ../ui/category_info.py:72
+msgid "Medical"
+msgstr "ሕክምና"
+
+#: ../ui/category_info.py:73
+msgid "Publishing"
+msgstr "ሕትመት"
+
+#: ../ui/category_info.py:74
+msgid "Science Education"
+msgstr "የሳይንስ ትምህርት"
+
+#: ../ui/category_info.py:75
+msgid "Languages"
+msgstr "ቋንቋዎች"
+
+#: ../ui/category_info.py:76
+msgid "Religion"
+msgstr "ሐይማኖት"
+
+#: ../ui/category_info.py:77
+msgid "Science"
+msgstr "ሳይንስ"
+
+#: ../ui/category_info.py:78
+msgid "Development"
+msgstr "ብልጽግና"
+
+#: ../ui/category_info.py:79
+msgid "Database"
+msgstr "ዳታቤዝ"
+
+#: ../ui/category_info.py:80
+msgid "Debugging"
+msgstr "Debugging"
+
+#: ../ui/category_info.py:81
+msgid "IDE"
+msgstr "IDE"
+
+#: ../ui/category_info.py:82
+msgid "Software development"
+msgstr "ሶፍትዌር ማበልጸጊያ"
+
+#: ../ui/category_info.py:83
+msgid "Version control"
+msgstr "እትም መቆጣጠሪያ"
+
+#: ../ui/category_info.py:84
+msgid "Web development"
+msgstr "ዌብ ማበልጸጊያ"
+
+#: ../ui/category_info.py:85
+msgid "System"
+msgstr "ስርአት"
+
+#: ../ui/category_info.py:86
+msgid "Desktop environment"
+msgstr "የ ደስክቶፕ አካባቢ"
+
+#: ../ui/category_info.py:87
+msgid "Monitor"
+msgstr ""
+
+#: ../ui/category_info.py:88
+msgid "Network"
+msgstr "ኔትዎርክ"
+
+#: ../ui/category_info.py:89
+msgid "Package manager"
+msgstr "የጥቅል አስተዳዳሪ"
+
+#: ../ui/category_info.py:90
+msgid "Settings"
+msgstr "ማሰናጃዎች"
+
+#: ../ui/category_info.py:91
+msgid "Virtualization"
+msgstr ""
+
+#: ../ui/category_info.py:92
+msgid "Window manager"
+msgstr "የ መስኮት አስተዳዳሪ"
+
+#: ../ui/category_info.py:93
+msgid "Utilities"
+msgstr "የተለያዩ"
+
+#: ../ui/category_info.py:94
+msgid "Accessories"
+msgstr "ተጨማሪዎች"
+
+#: ../ui/category_info.py:95
+msgid "Archiving"
+msgstr "ማህደር"
+
+#: ../ui/category_info.py:96
+msgid "Emulation"
+msgstr ""
+
+#: ../ui/category_info.py:97
+msgid "File manager"
+msgstr "የፋይል አስተዳዳሪ"
+
+#: ../ui/category_info.py:98
+msgid "Screensaver"
+msgstr "መመልከቻውን ማዳኛ"
+
+#: ../ui/category_info.py:99
+msgid "Terminal emulator"
+msgstr ""
+
+#: ../ui/category_info.py:100
+msgid "Text editor"
+msgstr "የጽሁፍ ማረሚያ"
+
+#: ../ui/home_page.py:478
+#, python-format
+msgid "%s: %s applications"
+msgstr "%s: %s መተግበሪያዎች"
+
+#: ../ui/home_page.py:660
+#, python-format
+msgid "%s > %s : %s applications"
+msgstr "%s > %s : %s  መተግበሪያዎች"
+
+#: ../ui/home_page.py:716 ../ui/software_center.py:788
+msgid "Home"
+msgstr "ቤት"
+
+#: ../ui/home_page.py:756
+msgid "Recommendations"
+msgstr "የተጠቆመው"
+
+#: ../ui/home_page.py:756
+msgid "Topics"
+msgstr "አርእስቶች"
+
+#: ../ui/home_page.py:756
+msgid "Download rank"
+msgstr "የወረዱ ደረጃቸው"
+
+#: ../ui/widgets.py:66
+msgid "Just now"
+msgstr "አሁኑኑ"
+
+#: ../ui/widgets.py:71
+msgid "One minute ago"
+msgstr "ከ አንድ ደቂቃ በፊት"
+
+#: ../ui/widgets.py:73
+#, python-format
+msgid "%s minutes ago"
+msgstr "%s ደቂቆች በፊት"
+
+#: ../ui/widgets.py:78
+msgid "One hour ago"
+msgstr "ከ አንድ ሰአት በፊት"
+
+#: ../ui/widgets.py:80
+#, python-format
+msgid "%s hours ago"
+msgstr "%s ሰአቶች በፊት"
+
+#: ../ui/widgets.py:84
+msgid "Yesterday"
+msgstr "ትናንትና"
+
+#: ../ui/widgets.py:295 ../ui/widgets.py:369
+msgid "Click to refresh"
+msgstr "ለማነቃቃት ይጫኑ"
+
+#: ../ui/widgets.py:462 ../ui/preference.py:785
+msgid "OK"
+msgstr "እሺ"
+
+#: ../ui/widgets.py:463 ../ui/preference.py:787
+msgid "Cancel"
+msgstr "መሰረዣ"
+
+#: ../ui/utils.py:334
+msgid "Running"
+msgstr "በማስኬድ ላይ"
+
+#: ../ui/utils.py:335
+msgid "Preparing"
+msgstr "በማሰናዳት ላይ"
+
+#: ../ui/utils.py:336
+msgid "Unpacking"
+msgstr "በመክፈት ላይ"
+
+#: ../ui/utils.py:337
+msgid "Preparing to configure"
+msgstr "ለማዋቀር በማሰናዳት ላይ"
+
+#: ../ui/utils.py:338
+msgid "Configuring"
+msgstr "በማዋቀር ላይ"
+
+#: ../ui/utils.py:349
+msgid "Err"
+msgstr "Err"
+
+#: ../ui/utils.py:350
+msgid "Ign"
+msgstr "Ign"
+
+#: ../ui/utils.py:351
+msgid "Get"
+msgstr "Get"
+
+#: ../ui/utils.py:352
+msgid "Hit"
+msgstr "Hit"
+
+#: ../ui/software_center.py:127
+#, python-format
+msgid "%s haven't any desktop file"
+msgstr "%s የዴስክቶፕ ፋይል የለም"
+
+#: ../ui/software_center.py:194
+msgid "Sending rating..."
+msgstr "ደረጃውን በ መላክ ላይ..."
+
+#: ../ui/software_center.py:198
+msgid "You have already scored.  ;)"
+msgstr ""
+
+#: ../ui/software_center.py:204
+msgid "Rating successfully. Thanks for your involvement."
+msgstr ""
+
+#: ../ui/software_center.py:220
+msgid "Rating failed. Please check your network connection!"
+msgstr ""
+
+#: ../ui/software_center.py:384
+#, python-format
+msgid "Uninstall %s Successfully."
+msgstr "ማጥፋቱ %s ተሳክቷል"
+
+#: ../ui/software_center.py:384 ../ui/software_center.py:790
+msgid "Uninstall"
+msgstr "ማጥፊያ"
+
+#: ../ui/software_center.py:390
+#, python-format
+msgid "%s packages upgrade successfully."
+msgstr "%s ጥቅሎች ማሻሻሉ ተሳክቷል"
+
+#: ../ui/software_center.py:393
+#, python-format
+msgid "Install %s Successfully."
+msgstr "መግጠሙ %s ተሳክቷል"
+
+#: ../ui/software_center.py:393
+msgid "Install"
+msgstr "መግጠሚያ"
+
+#: ../ui/software_center.py:437
+msgid "Generating package list database..."
+msgstr "የጥቅል ዝርዝር ዳታቤዝ በማመንጨት ላይ..."
+
+#: ../ui/software_center.py:445
+msgid "Package lists updated completely."
+msgstr "የጥቅል ዝርዝር ማሻሽል ጨርሷል"
+
+#: ../ui/software_center.py:457
+msgid "Failed to refresh package lists."
+msgstr "የጥቅል ዝርዝር ማነቃቃት አልተቻለም"
+
+#: ../ui/software_center.py:458
+msgid "Try again"
+msgstr "እንደገና መሞከሪያ"
+
+#: ../ui/software_center.py:468
+#, python-format
+msgid ""
+"Problem occurred when analyzing dependencies for %s. Installation aborted."
+msgstr ""
+
+#: ../ui/software_center.py:471
+#, python-format
+msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
+msgstr ""
+
+#: ../ui/software_center.py:476
+#, python-format
+msgid "The requested package \"%s\" was not found in the package list."
+msgstr "ዬተጠየቀውን ጥቅል \"%s\" በጥቅል ዝርዝር ውስጥ ማግኘት አልተቻለም"
+
+#: ../ui/software_center.py:477
+msgid "Update package lists again and try again."
+msgstr ""
+
+#: ../ui/software_center.py:769
+msgid "Join us"
+msgstr ""
+
+#: ../ui/software_center.py:791
+msgid "Installation"
+msgstr "መግጠሚያ"
+
+#: ../ui/software_center.py:815 ../ui/preference.py:568
+msgid "Update package lists"
+msgstr "የጥቅል ዝርዝር ማሻሻያ"
+
+#: ../ui/software_center.py:816
+msgid "Open download directory"
+msgstr "የ ወረዱ ዳይሬክቶሪ"
+
+#: ../ui/software_center.py:817
+msgid "Clear up cached packages"
+msgstr ""
+
+#: ../ui/software_center.py:818
+msgid "View new features"
+msgstr "አዲስ ገጽታዎች መመልከቻ"
+
+#: ../ui/software_center.py:819
+msgid "Preferences"
+msgstr "ምርጫዎች"
+
+#: ../ui/software_center.py:820
+msgid "Quit"
+msgstr "ማጥፊያ"
+
+#: ../ui/software_center.py:1131
+#, python-format
+msgid "You have cleared up %s packages and saved %s of space."
+msgstr "ጥቅሎችን አጽድተውp %s አድነዋል %s ነፃ ቦታ"
+
+#: ../ui/software_center.py:1133
+msgid "Your system cache is empty."
+msgstr ""
+
+#: ../ui/item_render.py:44
+msgid "No reminder"
+msgstr "አስታዋሽ የለም"
+
+#: ../ui/preference.py:438
+msgid "Version:"
+msgstr "እትም: "
+
+#: ../ui/preference.py:452
+msgid ""
+"Deepin Store is a commonly used software center on Linux. It selected more than 2,600 excellent applications with many functions of installation and uninstalling, software repository and popular recommendations, which supports 1-click quick installation, multi-threaded download and clearing of cached packages. It provides topics for software introduction and shares good applications.\n"
+"\n"
+"Deepin Store is a free software licensed under GNU GPLv3."
+msgstr ""
+
+#: ../ui/preference.py:477
+msgid "On uninstalling the software"
+msgstr "ሶፍትዌር በማስወገድ ላይ"
+
+#: ../ui/preference.py:480
+msgid "Delete configuration files"
+msgstr "የማወቀሪያ ፋይሎች ማጥፊያ"
+
+#: ../ui/preference.py:494
+msgid "Download settings"
+msgstr "የሚወርዱ ማሰናጃ"
+
+#: ../ui/preference.py:500
+msgid "Max download task number: "
+msgstr "ከፍተኛ የማውረድ ስራ ቁጥር: "
+
+#: ../ui/preference.py:510
+msgid "Download directory: "
+msgstr "የ ወረዱ ዳይሬክቶሪ: "
+
+#: ../ui/preference.py:516
+msgid "Change"
+msgstr "መቀየሪያ"
+
+#: ../ui/preference.py:551
+msgid "Select the best mirror"
+msgstr ""
+
+#: ../ui/preference.py:552
+msgid "Waiting"
+msgstr ""
+
+#: ../ui/preference.py:553
+msgid "Successfully"
+msgstr ""
+
+#: ../ui/preference.py:571
+msgid "Update automatically"
+msgstr "ራሱ በራሱ ማሻሻያ"
+
+#: ../ui/preference.py:575
+msgid "Time interval: "
+msgstr "የ ሰአት ክፍተት: "
+
+#: ../ui/preference.py:578
+msgid " hour"
+msgstr "ሰአት"
+
+#: ../ui/preference.py:648
+msgid "Select mirror"
+msgstr "አንጸባራቂ ይምረጡ"
+
+#: ../ui/preference.py:706
+msgid "Select Directory"
+msgstr "ዳይሬክቶሪ ይምረጡ"
+
+#: ../ui/preference.py:752
+msgid "Speed testing will finish only after one minute, please wait."
+msgstr ""
+
+#: ../ui/preference.py:778
+#, python-format
+msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
+msgstr ""
+
+#: ../ui/preference.py:832
+msgid "General"
+msgstr "ባጠቃላይ"
+
+#: ../ui/preference.py:833
+msgid "Mirrors"
+msgstr "አንጸባራቂ"
+
+#: ../ui/preference.py:834
+msgid "About"
+msgstr "ስለ"
+
+#: ../ui/search_page.py:110
+#, python-format
+msgid "%s applications searched"
+msgstr "%s መተግበሪያዎች ተፈልገዋል"
