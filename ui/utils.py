@@ -29,6 +29,7 @@ import threading as td
 import time
 from tempfile import mkstemp
 from zipfile import ZipFile
+from urlparse import urlparse
 
 from dtk.ui.label import Label
 from deepin_utils.config import Config
@@ -102,8 +103,28 @@ def get_current_mirror_hostname():
     apt_pkg.init_system()
     source_list_obj = apt_pkg.SourceList()
     source_list_obj.read_main_list()
-    url = source_list_obj.list[0].uri
-    hostname = url.split(":")[0] + "://" + url.split("/")[2]
+    urls = source_list_obj.list
+    all_uris = [url.uri for url in urls]
+    filter_results = filter(lambda url: url.endswith("deepin/"), all_uris)
+    if len(filter_results) > 0:
+        return get_hostname(filter_results[0])
+    else:
+        filter_results = filter(lambda url: in_string("/deepin", url), all_uris)
+        if len(filter_results) > 0:
+            return get_hostname(filter_results[0])
+        else:
+            filter_results = filter(lambda url: in_string("deepin", url), all_uris)
+            if len(filter_results) > 0:
+                return get_hostname(filter_results[0])
+            else:
+                return get_hostname(all_uris[0])
+
+def in_string(s, long_s):
+    return s in long_s
+
+def get_hostname(uri):
+    _url_parse = urlparse(uri)
+    hostname = _url_parse.scheme + "://" + _url_parse.netloc
     return hostname
 
 def create_right_align_label(strings):
@@ -383,8 +404,4 @@ class ThreadMethod(td.Thread):
         self.func(*self.args)
 
 if __name__ == '__main__':
-    show_notify(
-            "您的系统有12个软件包需要更新",
-            "软件中心",
-            ["_id_default_", "default", "_id_open_update_", "更新"]
-            )
+    print get_current_mirror_hostname()

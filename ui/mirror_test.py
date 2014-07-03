@@ -73,7 +73,15 @@ class Mirror(object):
         return self._priority
 
     def get_repo_urls(self):
-        return (self.config.get('mirror', 'ubuntu_url'), self.config.get('mirror', 'deepin_url'))
+        return (self.remove_slash(self.config.get('mirror', 'ubuntu_url')), 
+                self.remove_slash(self.config.get('mirror', 'deepin_url')))
+
+    @staticmethod
+    def remove_slash(s):
+        if s.endswith("/"):
+            return s[:-1]
+        else:
+            return s
 
 class MirrorTest(Logger):
     def __init__(self, hostnames):
@@ -145,7 +153,9 @@ class MirrorTest(Logger):
         return speed
 
 if __name__ == "__main__":
-    now = time.time()
-    t = MirrorTest([u'mirrors.hust.edu.cn', u'packages.linuxdeepin.com', u'mirrors.ustc.edu.cn', u'test.packages.linuxdeepin.com', u'mirrors.jstvu.edu.cn'])
-    print t.run()
-    print "Total Time:", time.time() - now
+    for mirror in get_mirrors():
+        print mirror.get_repo_urls()
+    #now = time.time()
+    #t = MirrorTest([u'mirrors.hust.edu.cn', u'packages.linuxdeepin.com', u'mirrors.ustc.edu.cn', u'test.packages.linuxdeepin.com', u'mirrors.jstvu.edu.cn'])
+    #print t.run()
+    #print "Total Time:", time.time() - now
