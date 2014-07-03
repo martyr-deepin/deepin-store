@@ -54,7 +54,7 @@ msgstr ""
 
 #: ui/search_page.py:110
 msgid "%s applications searched"
-msgstr "%s: %s applicaties"
+msgstr ""
 
 #: ui/software_center.py:127
 #, python-format
@@ -723,7 +723,7 @@ msgstr ""
 
 #: ui/preference.py:553
 msgid "Successfully"
-msgstr "Installatie %s succesvol."
+msgstr "Succesvol."
 
 #: ui/detail_page.py:447
 msgid "Successfully installed"
