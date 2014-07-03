@@ -1,0 +1,37 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# halbares <pablo.alvarez.flores@gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Deepin Software Center\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-01-17 04:51+0800\n"
+"PO-Revision-Date: 2014-03-21 18:51+0000\n"
+"Last-Translator: halbares <pablo.alvarez.flores@gmail.com>\n"
+"Language-Team: Spanish (Chile) (http://www.transifex.com/projects/p/deepin-software-center/language/es_CL/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_CL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../apt/dsc-daemon.py:259
+#, python-format
+msgid ""
+"There are %s packages need to upgrade in your system, please open the "
+"software center to upgrade!"
+msgstr "Hay paquet%s que se necesitan actualizar en tu sistema. Por favor, ve al Centro de Software para actualizar."
+
+#: ../apt/dsc-daemon.py:262
+#, python-format
+msgid ""
+"There is %s package need to upgrade in your system, please open the software"
+" center to upgrade!"
+msgstr "Hay paquet%s que se necesitan actualizar en tu sistema. Por favor, ve al Centro de Software para actualizar."
+
+#: ../apt/dsc-daemon.py:339
+msgid "Upgrade Info"
+msgstr "Actualiza información."

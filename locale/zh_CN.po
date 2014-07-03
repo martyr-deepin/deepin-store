@@ -4,199 +4,199 @@
 #
 # Translators:
 # Automatically generated, 2013
-# iceleaf916 <iceleaf916@gmail.com>, 2013
-# electricface <songwentai@linuxdeepin.com>, 2014
 # cxbii <chenxiangbang@linuxdeepin.com>, 2014
+# electricface <songwentai@linuxdeepin.com>, 2014
+# Hetinwei <findme@hoslab.org>, 2014
+# Hetinwei <findme@hoslab.org>, 2014
+# iceleaf <iceleaf916@gmail.com>, 2013
+# iceleaf <iceleaf916@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-02 13:20+0800\n"
-"PO-Revision-Date: 2014-03-06 13:20+0000\n"
-"Last-Translator: electricface <songwentai@linuxdeepin.com>\n"
+"POT-Creation-Date: 2014-07-03 13:10+0800\n"
+"PO-Revision-Date: 2014-07-03 03:31+0000\n"
+"Last-Translator: iceleaf <iceleaf916@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/deepin-"
-"software-center/language/zh_CN/)\n"
+"store/language/zh_CN/)\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
-#: ../ui/upgrade_page.py:448
+#: ui/upgrade_page.py:404 ui/upgrade_page.py:425 ui/upgrade_page.py:448
 msgid " and try again."
 msgstr " 后，重新更新。"
 
-#: ../ui/preference.py:578
+#: ui/preference.py:578
 msgid " hour"
 msgstr " 小时"
 
-#: ../ui/home_page.py:660
+#: ui/home_page.py:660
 #, python-format
 msgid "%s > %s : %s applications"
 msgstr "%s > %s: %s款软件"
 
-#: ../ui/upgrade_page.py:204
+#: ui/upgrade_page.py:204
 #, python-format
 msgid "%s applications are available for upgrade"
 msgstr "当前可升级软件共 %s 款"
 
-#: ../ui/install_page.py:139
+#: ui/install_page.py:146
 #, python-format
 msgid "%s applications are being installed"
 msgstr " %s 款软件正在安装"
 
-#: ../ui/upgrade_page.py:272
+#: ui/upgrade_page.py:272
 #, python-format
 msgid "%s applications are not being watched"
 msgstr "有 %s 款软件不再提醒"
 
-#: ../ui/uninstall_page.py:159
+#: ui/uninstall_page.py:159
 #, python-format
 msgid "%s applications can be uninstalled"
 msgstr " %s 款软件可以卸载"
 
-#
-#: ../ui/search_page.py:110
+#: ui/search_page.py:110
 #, python-format
 msgid "%s applications searched"
 msgstr "搜索到 %s 款软件"
 
-#: ../ui/software_center.py:127
+#: ui/software_center.py:127
 #, python-format
 msgid "%s haven't any desktop file"
 msgstr "%s 没有可启动的桌面文件"
 
-#: ../ui/widgets.py:80
+#: ui/widgets.py:80
 #, python-format
 msgid "%s hours ago"
 msgstr " %s 小时之前"
 
-#: ../ui/widgets.py:73
+#: ui/widgets.py:73
 #, python-format
 msgid "%s minutes ago"
 msgstr " %s 分钟之前"
 
-#: ../ui/software_center.py:390
+#: ui/software_center.py:391
 #, python-format
 msgid "%s packages upgrade successfully."
 msgstr " %s 个软件包升级成功啦。"
 
-#: ../ui/upgrade_page.py:668
+#: ui/upgrade_page.py:667
 #, python-format
 msgid "%s updates are selected. %s will be downloaded."
 msgstr "已经选择 %s 个更新，将会下载 %s 。"
 
-#: ../ui/home_page.py:478
+#: ui/home_page.py:478
 #, python-format
 msgid "%s: %s applications"
 msgstr " %s : %s 款软件"
 
-#: ../ui/start_desktop_window.py:227 ../ui/software_center.py:131
+#: ui/start_desktop_window.py:227 ui/software_center.py:131
 #, python-format
 msgid "%s: request for starting applications sent"
 msgstr " %s : 已经发送启动请求"
 
-#: ../ui/upgrade_page.py:485
+#: ui/upgrade_page.py:485
 msgid "."
 msgstr "。"
 
-#: ../ui/category_info.py:59
+#: ui/category_info.py:59
 msgid "2D graphics"
 msgstr "二维图形"
 
-#: ../ui/category_info.py:60
+#: ui/category_info.py:60
 msgid "3D graphics"
 msgstr "三维图形"
 
-#: ../ui/preference.py:834
+#: ui/preference.py:831
 msgid "About"
 msgstr "关于"
 
-#: ../ui/category_info.py:94
+#: ui/category_info.py:94
 msgid "Accessories"
 msgstr "附件"
 
-#: ../ui/category_info.py:46
+#: ui/category_info.py:46
 msgid "Action games"
 msgstr "动作游戏"
 
-#: ../ui/category_info.py:47
+#: ui/category_info.py:47
 msgid "Advernture games"
 msgstr "探险游戏"
 
-#: ../ui/category_info.py:48
+#: ui/category_info.py:48
 msgid "Arcade games"
 msgstr "街机游戏"
 
-#: ../ui/category_info.py:95
+#: ui/category_info.py:95
 msgid "Archiving"
 msgstr "压缩归档"
 
-#: ../ui/category_info.py:36
+#: ui/category_info.py:36
 msgid "Audiovideo"
 msgstr "音频视频"
 
-#: ../ui/category_info.py:49
+#: ui/category_info.py:49
 msgid "Board games"
 msgstr "棋盘游戏"
 
-#: ../ui/category_info.py:27
+#: ui/category_info.py:27
 msgid "Browser"
 msgstr "浏览器"
 
-#: ../ui/widgets.py:463 ../ui/preference.py:787
+#: ui/widgets.py:463 ui/preference.py:784
 msgid "Cancel"
 msgstr "取消"
 
-#: ../ui/category_info.py:50
+#: ui/category_info.py:50
 msgid "Card games"
 msgstr "纸牌游戏"
 
-#: ../ui/detail_page.py:386
+#: ui/detail_page.py:386
 msgid "Category: "
 msgstr "类别："
 
-#: ../ui/preference.py:516
+#: ui/preference.py:516
 msgid "Change"
 msgstr "更改"
 
-# "Clear caches"
-#: ../ui/software_center.py:817
+#: ui/software_center.py:818
 msgid "Clear up cached packages"
 msgstr "清理缓存"
 
-#: ../ui/widgets.py:295 ../ui/widgets.py:369
+#: ui/widgets.py:295 ui/widgets.py:369
 msgid "Click to refresh"
 msgstr "点击此处刷新"
 
-#: ../ui/upgrade_page.py:1100
+#: ui/upgrade_page.py:1101
 #, python-format
 msgid "Completed: %s/%s (%s/%s) Download Rate: %s/s"
 msgstr "已完成：%s/%s (%s/%s) 下载速度：%s/s "
 
-#: ../ui/utils.py:338
+#: ui/utils.py:359
 msgid "Configuring"
 msgstr "正在配置"
 
-#: ../ui/category_info.py:79
+#: ui/category_info.py:79
 msgid "Database"
 msgstr "数据库"
 
-#: ../ui/category_info.py:80
+#: ui/category_info.py:80
 msgid "Debugging"
 msgstr "调试"
 
-#: ../ui/upgrade_page.py:306
+#: ui/upgrade_page.py:306
 msgid "Deepin Desktop Environment is not installed, this function is invalid!"
 msgstr "未安装深度桌面环境，本功能无效。"
 
-#: ../ui/dsc-daemon.py:312 ../ui/dsc-daemon.py:316
-#: ../ui/software_center.py:732 ../ui/preference.py:433
+#: ui/dsc-daemon.py:312 ui/dsc-daemon.py:316 ui/preference.py:433
+#: ui/software_center.py:733
 msgid "Deepin Store"
 msgstr "深度商店"
 
-#: ../ui/preference.py:452
+#: ui/preference.py:452
 msgid ""
 "Deepin Store is a commonly used software center on Linux. It selected more "
 "than 2,600 excellent applications with many functions of installation and "
@@ -213,579 +213,573 @@ msgstr ""
 "\n"
 "深度商店是自由软件，遵循自由软件基金会发布的GNU通用公共许可证第三版。"
 
-# "真实的功能里面没有删除依赖包的功能"
-# "Delete configuration files and redundant dependency packages"
-#: ../ui/preference.py:480
+#: ui/preference.py:480
 msgid "Delete configuration files"
 msgstr "删除配置文件"
 
-#: ../ui/install_page.py:774 ../ui/upgrade_page.py:1646
+#: ui/install_page.py:781 ui/upgrade_page.py:1647
 msgid "Dependencies analysis failed"
 msgstr "分析依赖失败"
 
-#: ../ui/install_page.py:324 ../ui/install_page.py:727
-#: ../ui/upgrade_page.py:1088 ../ui/upgrade_page.py:1606
+#: ui/install_page.py:331 ui/install_page.py:734 ui/upgrade_page.py:1089
+#: ui/upgrade_page.py:1607
 msgid "Dependencies analyzing"
 msgstr "分析依赖中"
 
-#: ../ui/category_info.py:86
+#: ui/category_info.py:86
 msgid "Desktop environment"
 msgstr "桌面环境"
 
-#: ../ui/category_info.py:78
+#: ui/category_info.py:78
 msgid "Development"
 msgstr "编程开发"
 
-#: ../ui/category_info.py:38
+#: ui/category_info.py:38
 msgid "Disc burner"
 msgstr "光盘刻录"
 
-#: ../ui/preference.py:510
+#: ui/preference.py:510
 msgid "Download directory: "
 msgstr "下载目录："
 
-#: ../ui/install_page.py:748
+#: ui/install_page.py:755
 msgid "Download failed"
 msgstr "下载失败"
 
-#: ../ui/upgrade_page.py:1110
+#: ui/upgrade_page.py:1111
 msgid "Download finished."
 msgstr "下载完成。"
 
-#: ../ui/upgrade_page.py:1094
+#: ui/upgrade_page.py:1095
 msgid "Download has started"
 msgstr "开始下载"
 
-#: ../ui/home_page.py:756
+#: ui/home_page.py:756
 msgid "Download rank"
 msgstr "下载排行"
 
-#: ../ui/preference.py:494
+#: ui/preference.py:494
 msgid "Download settings"
 msgstr "下载设置"
 
-#: ../ui/upgrade_page.py:1114
+#: ui/upgrade_page.py:1115
 msgid "Download stopped."
 msgstr "下载停止！"
 
-#: ../ui/install_page.py:649 ../ui/install_page.py:661
+#: ui/install_page.py:656 ui/install_page.py:668
 msgid "Download was interrupted"
 msgstr "下载被终止。"
 
-#: ../ui/detail_page.py:355
+#: ui/detail_page.py:355
 #, python-format
 msgid "Download: %s"
 msgstr "下载：%s "
 
-#: ../ui/detail_page.py:391
+#: ui/detail_page.py:391
 msgid "Download: 0"
 msgstr "下载：0"
 
-#: ../ui/install_page.py:741 ../ui/upgrade_page.py:1620
+#: ui/install_page.py:748 ui/upgrade_page.py:1621
 msgid "Downloading"
 msgstr "下载中"
 
-#: ../ui/upgrade_page.py:328
+#: ui/upgrade_page.py:328
 msgid "Downloading updates"
 msgstr "正在下载更新"
 
-#: ../ui/category_info.py:29
+#: ui/category_info.py:29
 msgid "Email"
 msgstr "电子邮件"
 
-#: ../ui/category_info.py:96
+#: ui/category_info.py:96
 msgid "Emulation"
 msgstr "模拟"
 
-#: ../ui/category_info.py:51
+#: ui/category_info.py:51
 msgid "Emulator"
 msgstr "模拟器"
 
-#: ../ui/category_info.py:69
+#: ui/category_info.py:69
 msgid "Engineering"
 msgstr "工程"
 
-#: ../ui/utils.py:349
+#: ui/utils.py:370
 msgid "Err"
 msgstr "错误"
 
-#: ../ui/upgrade_page.py:1117
+#: ui/upgrade_page.py:1118
 msgid "Failed to analyze dependencies."
 msgstr "安装更新失败。"
 
-#: ../ui/upgrade_page.py:399
+#: ui/upgrade_page.py:399
 msgid "Failed to download updates"
 msgstr "更新下载失败。"
 
-#: ../ui/upgrade_page.py:419
+#: ui/upgrade_page.py:419
 msgid "Failed to install updates"
 msgstr "安装更新失败。"
 
-#: ../ui/software_center.py:457
+#: ui/software_center.py:458
 msgid "Failed to refresh package lists."
 msgstr "软件包列表更新失败。"
 
-#: ../ui/upgrade_page.py:509
+#: ui/upgrade_page.py:509
 msgid "Failed to send the error report. You could try again."
 msgstr "错误上报失败，您可以再次尝试。"
 
-#: ../ui/category_info.py:97
+#: ui/category_info.py:97
 msgid "File manager"
 msgstr "文件管理器"
 
-#: ../ui/category_info.py:30
+#: ui/category_info.py:30
 msgid "File transfer"
 msgstr "文件传输"
 
-#: ../ui/category_info.py:70
+#: ui/category_info.py:70
 msgid "Finance"
 msgstr "金融"
 
-#: ../ui/upgrade_page.py:1091
+#: ui/upgrade_page.py:1092
 msgid "Finished analyzing dependencies."
 msgstr "依赖分析完成。"
 
-#: ../ui/category_info.py:45
+#: ui/category_info.py:45
 msgid "Games"
 msgstr "游戏娱乐"
 
-#: ../ui/preference.py:832
+#: ui/preference.py:829
 msgid "General"
 msgstr "常规"
 
-#: ../ui/software_center.py:437
+#: ui/software_center.py:438
 msgid "Generating package list database..."
 msgstr "正在生成软件包列表数据库..."
 
-#: ../ui/utils.py:351
+#: ui/utils.py:372
 msgid "Get"
 msgstr "获取"
 
-#: ../ui/category_info.py:58
+#: ui/category_info.py:58
 msgid "Graphics"
 msgstr "图形图像"
 
-#: ../ui/category_info.py:71
+#: ui/category_info.py:71
 msgid "Ham radio"
 msgstr "业余电台"
 
-#: ../ui/utils.py:352
+#: ui/utils.py:373
 msgid "Hit"
 msgstr "命中"
 
-#: ../ui/home_page.py:716 ../ui/software_center.py:788
+#: ui/home_page.py:716 ui/software_center.py:789
 msgid "Home"
 msgstr "首页推荐"
 
-#: ../ui/category_info.py:81
+#: ui/category_info.py:81
 msgid "IDE"
 msgstr "集成开发环境"
 
-#: ../ui/upgrade_page.py:483
+#: ui/upgrade_page.py:483
 msgid "If the prompt occurs again, you could "
 msgstr "根据上面的建议，如果您尝试后依然看到本提示，您可以"
 
-#: ../ui/utils.py:350
+#: ui/utils.py:371
 msgid "Ign"
 msgstr "忽略"
 
-#: ../ui/category_info.py:61
+#: ui/category_info.py:61
 msgid "Image processing"
 msgstr "图像处理"
 
-#: ../ui/category_info.py:68
+#: ui/category_info.py:68
 msgid "Industry"
 msgstr "行业软件"
 
-#: ../ui/software_center.py:393
+#: ui/software_center.py:394
 msgid "Install"
 msgstr "安装软件"
 
-#: ../ui/software_center.py:393
+#: ui/software_center.py:394
 #, python-format
 msgid "Install %s Successfully."
 msgstr "安装 %s 完成啦。"
 
-#: ../ui/software_center.py:791
+#: ui/software_center.py:792
 msgid "Installation"
 msgstr "安装管理"
 
-#: ../ui/install_page.py:799
+#: ui/install_page.py:806
 msgid "Installation completed"
 msgstr "安装完成"
 
-#: ../ui/install_page.py:671
+#: ui/install_page.py:678
 msgid "Installation was interrupted"
 msgstr "安装被终止"
 
-#: ../ui/install_page.py:510 ../ui/download_rank_page.py:371
-#: ../ui/home_page.py:1076 ../ui/utils.py:339 ../ui/album_page.py:485
-#: ../ui/search_page.py:276
+#: ui/install_page.py:517 ui/home_page.py:1076 ui/utils.py:360
+#: ui/album_page.py:485 ui/download_rank_page.py:371 ui/search_page.py:276
 msgid "Installed"
 msgstr "已安装"
 
-#: ../ui/install_page.py:783 ../ui/install_page.py:790
+#: ui/install_page.py:790 ui/install_page.py:797
 msgid "Installing"
 msgstr "安装中"
 
-#: ../ui/upgrade_page.py:1121
+#: ui/upgrade_page.py:1122
 msgid "Installing updates"
 msgstr "正在安装更新"
 
-#: ../ui/category_info.py:28
+#: ui/category_info.py:28
 msgid "Instant messaging"
 msgstr "即时通讯"
 
-#: ../ui/category_info.py:26
+#: ui/category_info.py:26
 msgid "Internet"
 msgstr "网络应用"
 
-#: ../ui/software_center.py:769
+#: ui/software_center.py:770
 msgid "Join us"
 msgstr "加入我们"
 
-#: ../ui/widgets.py:66
+#: ui/widgets.py:66
 msgid "Just now"
 msgstr "刚刚"
 
-#: ../ui/category_info.py:52
+#: ui/category_info.py:52
 msgid "Kids games"
 msgstr "儿童游戏"
 
-#: ../ui/category_info.py:75
+#: ui/category_info.py:75
 msgid "Languages"
 msgstr "语言"
 
-#: ../ui/upgrade_page.py:78 ../ui/upgrade_page.py:107
-#: ../ui/upgrade_page.py:340
+#: ui/upgrade_page.py:78 ui/upgrade_page.py:107 ui/upgrade_page.py:340
 msgid "Last system upgraded time: "
 msgstr "最近更新系统的时间："
 
-#: ../ui/upgrade_page.py:335
+#: ui/upgrade_page.py:335
 msgid "Last updated package lists time: "
 msgstr "最近刷新软件包列表的时间："
 
-#: ../ui/detail_page.py:239 ../ui/detail_page.py:491
+#: ui/detail_page.py:239 ui/detail_page.py:491
 msgid "Loading comments..."
 msgstr "正在加载评论..."
 
-#: ../ui/category_info.py:53
+#: ui/category_info.py:53
 msgid "Logic games"
 msgstr "逻辑游戏"
 
-#: ../ui/category_info.py:39
+#: ui/category_info.py:39
 msgid "MIDI"
 msgstr "乐器数字接口"
 
-#: ../ui/preference.py:500
+#: ui/preference.py:500
 msgid "Max download task number: "
 msgstr "最大下载任务数："
 
-#: ../ui/category_info.py:37
+#: ui/category_info.py:37
 msgid "Media Editing"
 msgstr "媒体编辑"
 
-#: ../ui/category_info.py:72
+#: ui/category_info.py:72
 msgid "Medical"
 msgstr "医疗"
 
-#: ../ui/upgrade_page.py:345
+#: ui/upgrade_page.py:345
 msgid "Mirror Receiving: "
 msgstr "接收的软件源："
 
-#: ../ui/preference.py:833
+#: ui/preference.py:830
 msgid "Mirrors"
 msgstr "软件源"
 
-#: ../ui/category_info.py:34
+#: ui/category_info.py:34
 msgid "Miscellaneous"
 msgstr "杂项"
 
-#: ../ui/category_info.py:40
+#: ui/category_info.py:40
 msgid "Mixer"
 msgstr "混音器"
 
-#: ../ui/category_info.py:87
+#: ui/category_info.py:87
 msgid "Monitor"
 msgstr "监视器"
 
-#: ../ui/category_info.py:35
+#: ui/category_info.py:35
 msgid "Multimedia"
 msgstr "影音播放"
 
-#: ../ui/category_info.py:88
+#: ui/category_info.py:88
 msgid "Network"
 msgstr "网络"
 
-#: ../ui/category_info.py:31
+#: ui/category_info.py:31
 msgid "News"
 msgstr "新闻"
 
-#: ../ui/item_render.py:44
+#: ui/item_render.py:44
 msgid "No reminder"
 msgstr "不再提醒"
 
-#: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
+#: ui/upgrade_page.py:136 ui/upgrade_page.py:208
 #, python-format
 msgid "No reminder to update (%s)"
 msgstr "不再提醒升级(%s)"
 
-#: ../ui/detail_page.py:441 ../ui/install_page.py:503
-#: ../ui/download_rank_page.py:364 ../ui/home_page.py:1069
-#: ../ui/album_page.py:478 ../ui/search_page.py:269
+#: ui/install_page.py:510 ui/home_page.py:1069 ui/album_page.py:478
+#: ui/download_rank_page.py:364 ui/detail_page.py:441 ui/search_page.py:269
 msgid "Not found"
 msgstr "未找到"
 
-#: ../ui/widgets.py:462 ../ui/preference.py:785
+#: ui/widgets.py:462 ui/preference.py:782
 msgid "OK"
 msgstr "确定"
 
-#: ../ui/category_info.py:66
+#: ui/category_info.py:66
 msgid "Office"
 msgstr "办公套件"
 
-#: ../ui/preference.py:477
+#: ui/preference.py:477
 msgid "On uninstalling the software"
 msgstr "当卸载软件的时候"
 
-#: ../ui/widgets.py:78
+#: ui/widgets.py:78
 msgid "One hour ago"
 msgstr "一个小时之前"
 
-#: ../ui/widgets.py:71
+#: ui/widgets.py:71
 msgid "One minute ago"
 msgstr "一分钟之前"
 
-#: ../ui/software_center.py:816
+#: ui/software_center.py:817
 msgid "Open download directory"
 msgstr "打开下载目录"
 
-#: ../ui/software_center.py:445
+#: ui/software_center.py:446
 msgid "Package lists updated completely."
 msgstr "软件包列表刷新完成。"
 
-#: ../ui/category_info.py:89
+#: ui/category_info.py:89
 msgid "Package manager"
 msgstr "软件包管理器"
 
-#: ../ui/category_info.py:62
+#: ui/category_info.py:62
 msgid "Photography"
 msgstr "摄影艺术"
 
-#: ../ui/category_info.py:41
+#: ui/category_info.py:41
 msgid "Player"
 msgstr "播放器"
 
-#: ../ui/inhibit.py:54
+#: ui/inhibit.py:54
 msgid ""
 "Please wait a moment while system update is being performed... Do not turn "
 "off your computer."
 msgstr "系统更新请稍后...不要关闭电脑。"
 
-#: ../ui/detail_page.py:178
+#: ui/detail_page.py:178
 msgid "Popular recommendations"
 msgstr "同类热门推荐"
 
-#: ../ui/detail_page.py:608
+#: ui/detail_page.py:608
 msgid "Powered by 又拍云存储"
 msgstr "Powered by 又拍云存储"
 
-#: ../ui/software_center.py:819
+#: ui/software_center.py:820
 msgid "Preferences"
 msgstr "选项"
 
-#: ../ui/utils.py:335
+#: ui/utils.py:356
 msgid "Preparing"
 msgstr "正在准备"
 
-#: ../ui/utils.py:337
+#: ui/utils.py:358
 msgid "Preparing to configure"
 msgstr "正在准备配置"
 
-#: ../ui/software_center.py:468
+#: ui/software_center.py:469
 #, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted."
 msgstr "分析 %s 依赖出现问题，安装停止。"
 
-#: ../ui/software_center.py:471
+#: ui/software_center.py:472
 #, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
 msgstr "分析 %s 依赖出现问题，升级停止。"
 
-#: ../ui/category_info.py:65
+#: ui/category_info.py:65
 msgid "Productivity"
 msgstr "办公软件"
 
-#: ../ui/category_info.py:73
+#: ui/category_info.py:73
 msgid "Publishing"
 msgstr "出版"
 
-#: ../ui/category_info.py:54
+#: ui/category_info.py:54
 msgid "Puzzle games"
 msgstr "益智游戏"
 
-#: ../ui/software_center.py:820
+#: ui/software_center.py:821
 msgid "Quit"
 msgstr "退出"
 
-#: ../ui/software_center.py:220
+#: ui/software_center.py:220
 msgid "Rating failed. Please check your network connection!"
 msgstr "评分失败，请检查您的网络连接。"
 
-#: ../ui/software_center.py:204
+#: ui/software_center.py:204
 msgid "Rating successfully. Thanks for your involvement."
 msgstr "评分成功，感谢您的参与！"
 
-#: ../ui/home_page.py:756
+#: ui/home_page.py:756
 msgid "Recommendations"
 msgstr "热门推荐"
 
-#: ../ui/category_info.py:42
+#: ui/category_info.py:42
 msgid "Recorder"
 msgstr "录音机"
 
-#: ../ui/category_info.py:76
+#: ui/category_info.py:76
 msgid "Religion"
 msgstr "宗教"
 
-#: ../ui/upgrade_page.py:238 ../ui/item_render.py:46
+#: ui/item_render.py:46 ui/upgrade_page.py:238
 msgid "Remind again"
 msgstr "重新提醒"
 
-#: ../ui/category_info.py:32
+#: ui/category_info.py:32
 msgid "Remote access"
 msgstr "远程访问"
 
-#: ../ui/category_info.py:55
+#: ui/category_info.py:55
 msgid "Role-playing games"
 msgstr "角色扮演游戏"
 
-#: ../ui/utils.py:334
+#: ui/utils.py:355
 msgid "Running"
 msgstr "正在运行"
 
-#: ../ui/category_info.py:67
+#: ui/category_info.py:67
 msgid "Scanning printing"
 msgstr "扫描打印"
 
-#: ../ui/category_info.py:77
+#: ui/category_info.py:77
 msgid "Science"
 msgstr "科学"
 
-#: ../ui/category_info.py:74
+#: ui/category_info.py:74
 msgid "Science Education"
 msgstr "科学教育"
 
-#: ../ui/category_info.py:98
+#: ui/category_info.py:98
 msgid "Screensaver"
 msgstr "屏保"
 
-#: ../ui/category_info.py:33
+#: ui/category_info.py:33
 msgid "Security"
 msgstr "安全"
 
-#: ../ui/preference.py:706
+#: ui/preference.py:705
 msgid "Select Directory"
 msgstr "选择目录"
 
-#: ../ui/preference.py:648
+#: ui/preference.py:642
 msgid "Select mirror"
 msgstr "选择软件源"
 
-#: ../ui/preference.py:551
+#: ui/preference.py:551
 msgid "Select the best mirror"
 msgstr "选择最佳软件源"
 
-#: ../ui/software_center.py:194
+#: ui/software_center.py:194
 msgid "Sending rating..."
 msgstr "发送评分中..."
 
-#: ../ui/category_info.py:43
+#: ui/category_info.py:43
 msgid "Sequencer"
 msgstr "音序器"
 
-#: ../ui/category_info.py:90
+#: ui/category_info.py:90
 msgid "Settings"
 msgstr "设置"
 
-#: ../ui/upgrade_page.py:289
+#: ui/upgrade_page.py:289
 msgid "Shut down the computer after upgraded"
 msgstr "更新完成后关闭计算机"
 
-#: ../ui/detail_page.py:470
+#: ui/detail_page.py:470
 #, python-format
 msgid "Size: %s"
 msgstr "大小：%s "
 
-#: ../ui/detail_page.py:392
+#: ui/detail_page.py:392
 msgid "Size: calculating..."
 msgstr "大小：计算中..."
 
-#: ../ui/category_info.py:82
+#: ui/category_info.py:82
 msgid "Software development"
 msgstr "软件开发"
 
-#: ../ui/preference.py:752
+#: ui/preference.py:751
 msgid "Speed testing will finish only after one minute, please wait."
 msgstr "正在测速中，大约1分钟可以完成，请稍等。"
 
-#: ../ui/category_info.py:56
+#: ui/category_info.py:56
 msgid "Sports games"
 msgstr "体育游戏"
 
-#: ../ui/category_info.py:57
+#: ui/category_info.py:57
 msgid "Strategy games"
 msgstr "策略游戏"
 
-#: ../ui/preference.py:553
+#: ui/preference.py:553
 msgid "Successfully"
 msgstr "成功了"
 
-#: ../ui/detail_page.py:447
+#: ui/detail_page.py:447
 msgid "Successfully installed"
 msgstr "已安装"
 
-#: ../ui/upgrade_page.py:402 ../ui/upgrade_page.py:423
-#: ../ui/upgrade_page.py:446
+#: ui/upgrade_page.py:402 ui/upgrade_page.py:423 ui/upgrade_page.py:446
 msgid "Suggest to "
 msgstr "建议"
 
-#: ../ui/category_info.py:85
+#: ui/category_info.py:85
 msgid "System"
 msgstr "系统管理"
 
-#: ../ui/category_info.py:99
+#: ui/category_info.py:99
 msgid "Terminal emulator"
 msgstr "终端模拟器"
 
-#: ../ui/preference.py:778
+#: ui/preference.py:776
 #, python-format
 msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
 msgstr "测试完成，最快的镜像源是\"%s\"，是否立即切换？"
 
-#: ../ui/category_info.py:100
+#: ui/category_info.py:100
 msgid "Text editor"
 msgstr "文本编辑器"
 
-#: ../ui/upgrade_page.py:503
+#: ui/upgrade_page.py:503
 msgid "The error was successfully reported and will be soon handled."
 msgstr "错误上报成功，感谢您的支持，我们会尽快修复您上报的错误。"
 
-#: ../ui/software_center.py:476
+#: ui/software_center.py:477
 #, python-format
 msgid "The requested package \"%s\" was not found in the package list."
 msgstr "请求软件包\"%s\"在当前系统软件包列表中不存在。"
 
-#: ../ui/upgrade_page.py:401
+#: ui/upgrade_page.py:401
 msgid "The requested package does not exist on server."
 msgstr "请求的软件包不在服务器上。"
 
-#: ../ui/upgrade_page.py:308
+#: ui/upgrade_page.py:308
 msgid "The system is not Deepin, this function is invalid."
 msgstr "系统不是 Deepin，本功能无效。"
 
-#: ../ui/upgrade_page.py:442
+#: ui/upgrade_page.py:442
 msgid ""
 "The update requires to uninstall crucial components due to corrupted local "
 "dependencies or incorrect package dependencies on server."
@@ -793,210 +787,207 @@ msgstr ""
 "本次升级要卸载重要的系统组件，出现这种情况的原因可能是本地依赖被破坏，或者服"
 "务端软件包依赖不正确"
 
-#: ../ui/dsc-daemon.py:310
+#: ui/dsc-daemon.py:310
 #, python-format
 msgid ""
 "There are %s packages needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
 msgstr "您的系统有 %s 个软件包需要升级，请使用深度软件商店进行升级。"
 
-#: ../ui/dsc-daemon.py:314
+#: ui/dsc-daemon.py:314
 #, python-format
 msgid ""
 "There is %s package needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
 msgstr "您的系统有 %s 个软件包需要升级，请使用深度软件商店进行升级。"
 
-#: ../ui/upgrade_page.py:304
+#: ui/upgrade_page.py:304
 msgid "This function is invalid without Deepin System Settings installed."
 msgstr "未安装深度系统设置，本功能无效。"
 
-#: ../ui/upgrade_page.py:664
+#: ui/upgrade_page.py:663
 msgid "This problem occurs due to corrupted local apt dependence relationship."
 msgstr "出现这种情况的原因可能是本地依赖关系已经损坏。"
 
-#: ../ui/upgrade_page.py:421
+#: ui/upgrade_page.py:421
 msgid "This problem occurs due to corrupted local apt dependency relationship."
 msgstr "出现这种情况的原因可能是本地依赖关系已经损坏。"
 
-#: ../ui/preference.py:575
+#: ui/preference.py:575
 msgid "Time interval: "
 msgstr "间隔时间："
 
-#: ../ui/download_rank_page.py:61
+#: ui/download_rank_page.py:61
 msgid "Top 25 monthly"
 msgstr "月排行Top25"
 
-#: ../ui/download_rank_page.py:61
+#: ui/download_rank_page.py:61
 msgid "Top 25 totally"
 msgstr "总排行Top25"
 
-#: ../ui/download_rank_page.py:61
+#: ui/download_rank_page.py:61
 msgid "Top 25 weekly"
 msgstr "周排行Top25"
 
-#: ../ui/home_page.py:756
+#: ui/home_page.py:756
 msgid "Topics"
 msgstr "专题介绍"
 
-#: ../ui/software_center.py:458
+#: ui/software_center.py:459
 msgid "Try again"
 msgstr "重试"
 
-#: ../ui/category_info.py:44
+#: ui/category_info.py:44
 msgid "Tuner"
 msgstr "调谐器"
 
-#: ../ui/software_center.py:384 ../ui/software_center.py:790
+#: ui/software_center.py:385 ui/software_center.py:791
 msgid "Uninstall"
 msgstr "卸载软件"
 
-#: ../ui/software_center.py:384
+#: ui/software_center.py:385
 #, python-format
 msgid "Uninstall %s Successfully."
 msgstr "卸载 %s 成功。"
 
-#: ../ui/uninstall_page.py:594
+#: ui/uninstall_page.py:590
 msgid "Uninstallation completed"
 msgstr "卸载完成"
 
-#: ../ui/uninstall_page.py:580 ../ui/uninstall_page.py:587
+#: ui/uninstall_page.py:576 ui/uninstall_page.py:583
 msgid "Uninstalling"
 msgstr "卸载中"
 
-#: ../ui/utils.py:336
+#: ui/utils.py:357
 msgid "Unpacking"
 msgstr "正在解压缩"
 
-#: ../ui/preference.py:571
+#: ui/preference.py:571
 msgid "Update automatically"
 msgstr "自动更新"
 
-#: ../ui/software_center.py:815 ../ui/preference.py:568
+#: ui/preference.py:568 ui/software_center.py:816
 msgid "Update package lists"
 msgstr "刷新软件包列表"
 
-#: ../ui/software_center.py:477
+#: ui/software_center.py:478
 msgid "Update package lists again and try again."
 msgstr "再次刷新软件包列表后重试。"
 
-#: ../ui/upgrade_page.py:1122
+#: ui/upgrade_page.py:1123
 msgid "Updating..."
 msgstr "正在更新"
 
-#: ../ui/dsc-daemon.py:236 ../ui/software_center.py:390
-#: ../ui/software_center.py:789
+#: ui/dsc-daemon.py:236 ui/software_center.py:391 ui/software_center.py:790
 msgid "Upgrade"
 msgstr "系统升级"
 
-#: ../ui/upgrade_page.py:182
+#: ui/upgrade_page.py:182
 msgid "Upgrade applications selected"
 msgstr "升级所选软件"
 
-#: ../ui/upgrade_page.py:1129 ../ui/upgrade_page.py:1671
+#: ui/upgrade_page.py:1130 ui/upgrade_page.py:1672
 msgid "Upgrade completed"
 msgstr "升级完成"
 
-#: ../ui/upgrade_page.py:1655 ../ui/upgrade_page.py:1662
+#: ui/upgrade_page.py:1656 ui/upgrade_page.py:1663
 msgid "Upgrading"
 msgstr "升级中"
 
-#: ../ui/upgrade_page.py:498
+#: ui/upgrade_page.py:498
 msgid "Uploading error log"
 msgstr "正在上传错误日志"
 
-#: ../ui/category_info.py:93
+#: ui/category_info.py:93
 msgid "Utilities"
 msgstr "实用工具"
 
-#: ../ui/category_info.py:63
+#: ui/category_info.py:63
 msgid "Vector graphics"
 msgstr "矢量图形"
 
-#: ../ui/category_info.py:83
+#: ui/category_info.py:83
 msgid "Version control"
 msgstr "版本控制"
 
-#: ../ui/preference.py:438
+#: ui/preference.py:438
 msgid "Version:"
 msgstr "版本："
 
-#: ../ui/detail_page.py:390
+#: ui/detail_page.py:390
 #, python-format
 msgid "Version: %s"
 msgstr "版本：%s"
 
-#: ../ui/software_center.py:818
+#: ui/software_center.py:819
 msgid "View new features"
 msgstr "查看新功能"
 
-#: ../ui/category_info.py:64
+#: ui/category_info.py:64
 msgid "Viewer"
 msgstr "图片查看"
 
-#: ../ui/category_info.py:91
+#: ui/category_info.py:91
 msgid "Virtualization"
 msgstr "虚拟化"
 
-#: ../ui/detail_page.py:396
+#: ui/detail_page.py:396
 msgid "Visit Homepage"
 msgstr "访问首页"
 
-#: ../ui/preference.py:552
+#: ui/preference.py:552
 msgid "Waiting"
 msgstr "请稍等"
 
-#: ../ui/install_page.py:734 ../ui/upgrade_page.py:1494
-#: ../ui/upgrade_page.py:1613
+#: ui/install_page.py:741 ui/upgrade_page.py:1495 ui/upgrade_page.py:1614
 msgid "Waiting for download"
 msgstr "等待下载"
 
-#: ../ui/install_page.py:764
+#: ui/install_page.py:771
 msgid "Waiting for installation"
 msgstr "等待安装"
 
-#: ../ui/uninstall_page.py:490 ../ui/uninstall_page.py:573
+#: ui/uninstall_page.py:486 ui/uninstall_page.py:569
 msgid "Waiting for uninstall"
 msgstr "等待卸载"
 
-#: ../ui/upgrade_page.py:1636
+#: ui/upgrade_page.py:1637
 msgid "Waiting for upgrade"
 msgstr "等待升级"
 
-#: ../ui/upgrade_page.py:440
+#: ui/upgrade_page.py:440
 msgid "Warning"
 msgstr "警告"
 
-#: ../ui/category_info.py:84
+#: ui/category_info.py:84
 msgid "Web development"
 msgstr "网络开发"
 
-#: ../ui/category_info.py:92
+#: ui/category_info.py:92
 msgid "Window manager"
 msgstr "窗口管理器"
 
-#: ../ui/widgets.py:84
+#: ui/widgets.py:84
 msgid "Yesterday"
 msgstr "昨天"
 
-#: ../ui/software_center.py:198
+#: ui/software_center.py:198
 msgid "You have already scored.  ;)"
 msgstr "您已经评过分了哟！ ;)"
 
-#: ../ui/software_center.py:1131
+#: ui/software_center.py:1132
 #, python-format
 msgid "You have cleared up %s packages and saved %s of space."
 msgstr "恭喜您清理了 %s 个软件包，共节约了 %s 空间。"
 
-#: ../ui/software_center.py:1133
+#: ui/software_center.py:1134
 msgid "Your system cache is empty."
 msgstr "您的系统已经很干净了，不需要清理。"
 
-#: ../ui/upgrade_page.py:484 ../ui/upgrade_page.py:510
+#: ui/upgrade_page.py:484 ui/upgrade_page.py:510
 msgid "send error report"
 msgstr "上报错误"
 
-#: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
-#: ../ui/upgrade_page.py:447
+#: ui/upgrade_page.py:403 ui/upgrade_page.py:424 ui/upgrade_page.py:447
 msgid "update package lists"
 msgstr "刷新软件包列表"
