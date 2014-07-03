@@ -53,7 +53,6 @@ msgid "%s applications can be uninstalled"
 msgstr ""
 
 #: ui/search_page.py:110
-#, fuzzy, python-format
 msgid "%s applications searched"
 msgstr "%s: %s applicaties"
 
@@ -73,7 +72,6 @@ msgid "%s minutes ago"
 msgstr ""
 
 #: ui/software_center.py:391
-#, fuzzy, python-format
 msgid "%s packages upgrade successfully."
 msgstr "%s pakketten succesvol geupgrade."
 
@@ -187,7 +185,6 @@ msgstr ""
 
 #: ui/dsc-daemon.py:312 ui/dsc-daemon.py:316 ui/preference.py:433
 #: ui/software_center.py:733
-#, fuzzy
 msgid "Deepin Store"
 msgstr "Deepin Software Center"
 
@@ -310,7 +307,6 @@ msgid "Failed to install updates"
 msgstr ""
 
 #: ui/software_center.py:458
-#, fuzzy
 msgid "Failed to refresh package lists."
 msgstr "Verversen van applicatie lijsten gefaald."
 
@@ -343,7 +339,6 @@ msgid "General"
 msgstr ""
 
 #: ui/software_center.py:438
-#, fuzzy
 msgid "Generating package list database..."
 msgstr "Genereren van lokale pakketten database..."
 
@@ -590,14 +585,12 @@ msgid "Preparing to configure"
 msgstr ""
 
 #: ui/software_center.py:469
-#, fuzzy, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted."
 msgstr ""
 "Probleem bij analyseren van afhankelijkheden voor %s. Installatie afgebroken"
 
 #: ui/software_center.py:472
-#, fuzzy, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
 msgstr ""
 "Probleem bij analyseren van afhankelijkheden voor %s. Upgrade afgebroken"
@@ -619,13 +612,11 @@ msgid "Quit"
 msgstr "Afsluiten"
 
 #: ui/software_center.py:220
-#, fuzzy
 msgid "Rating failed. Please check your network connection!"
 msgstr ""
 "Commentaar sturen gefaald. Controleer uw netwerkverbinding alstublieft!"
 
 #: ui/software_center.py:204
-#, fuzzy
 msgid "Rating successfully. Thanks for your involvement."
 msgstr "Commentaar sturen succesvol. Bedankt voor uw betrokkenheid. :)"
 
@@ -690,7 +681,6 @@ msgid "Select the best mirror"
 msgstr ""
 
 #: ui/software_center.py:194
-#, fuzzy
 msgid "Sending rating..."
 msgstr "Commentaar aan het versturen..."
 
@@ -732,7 +722,6 @@ msgid "Strategy games"
 msgstr ""
 
 #: ui/preference.py:553
-#, fuzzy
 msgid "Successfully"
 msgstr "Installatie %s succesvol."
 
@@ -771,7 +760,6 @@ msgid "The requested package \"%s\" was not found in the package list."
 msgstr "Het gevraagde pakket \"%s\" is niet gevonden in de pakketten lijst."
 
 #: ui/upgrade_page.py:401
-#, fuzzy
 msgid "The requested package does not exist on server."
 msgstr "Het gevraagde pakket \"%s\" is niet gevonden in de pakketten lijst."
 
@@ -869,7 +857,6 @@ msgid "Update package lists"
 msgstr ""
 
 #: ui/software_center.py:478
-#, fuzzy
 msgid "Update package lists again and try again."
 msgstr "Ververs de pakketten lijst en probeer opnieuw."
 
@@ -882,7 +869,6 @@ msgid "Upgrade"
 msgstr "Upgrade"
 
 #: ui/upgrade_page.py:182
-#, fuzzy
 msgid "Upgrade applications selected"
 msgstr "Ververs applicatie lijsten"
 
@@ -972,17 +958,14 @@ msgid "Yesterday"
 msgstr ""
 
 #: ui/software_center.py:198
-#, fuzzy
 msgid "You have already scored.  ;)"
 msgstr "U heeft al commentaar verstuurd ;)"
 
 #: ui/software_center.py:1132
-#, fuzzy, python-format
 msgid "You have cleared up %s packages and saved %s of space."
 msgstr "U heeft %s pakketten opgeschoond en %s ruimte vrijgemaakt"
 
 #: ui/software_center.py:1134
-#, fuzzy
 msgid "Your system cache is empty."
 msgstr "Uw systeem is opgeschoond"
 
