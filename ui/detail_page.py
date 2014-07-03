@@ -338,9 +338,9 @@ class DetailPage(gtk.HBox):
     def button_press_start_button(self, widget, event, desktops):
         pixbuf = app_theme.get_pixbuf("button/start_normal.png").get_pixbuf()
         desktop_infos = self.data_manager.get_pkg_desktop_info(desktops)
-        global_event.emit("start-pkg", 
-                          self.alias_name, 
-                          desktop_infos, 
+        global_event.emit("start-pkg",
+                          self.alias_name,
+                          desktop_infos,
                           (int(event.x), int(event.y), pixbuf.get_width() / 2, 0))
 
     @post_gui

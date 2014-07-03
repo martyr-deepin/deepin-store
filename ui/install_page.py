@@ -50,7 +50,7 @@ class InstallPage(gtk.VBox):
     '''
     class docs
     '''
-	
+
     def __init__(self, bus_interface, data_manager):
         '''
         init docs
@@ -81,8 +81,8 @@ class InstallPage(gtk.VBox):
         self.treeview.connect("items-change", lambda treeview: global_event.emit("update-install-notify-number", self.get_installing_pkgs_number()))
 
         #self.get_action_item("deepin-webapps-baidu-map")
-        #self.download_finish("deepin-webapps-baidu-map")
-        
+        #self.download_failed("deepin-webapps-baidu-map")
+
     def expose_cute_message_image(self, widget, event):
         if self.cute_message_pixbuf:
             cr = widget.window.cairo_create()
@@ -244,46 +244,28 @@ class InstallPage(gtk.VBox):
         self.get_action_item(pkg_name).download_start()
 
     def download_update(self, pkg_name, percent, speed):
-        for item in self.treeview.visible_items:
-            if item.pkg_name == pkg_name:
-                item.download_update(percent, speed)
-                break
+        self.get_action_item(pkg_name).download_update(percent, speed)
         
     def download_finish(self, pkg_name):
-        for item in self.treeview.visible_items:
-            if item.pkg_name == pkg_name:
-                item.download_finish()
-                break
+        self.get_action_item(pkg_name).download_finish()
 
     def download_stop(self, pkg_name):
-        pass
+        self.get_action_item(pkg_name).download_stop()
     
     def download_parse_failed(self, pkg_name):
-        for item in self.treeview.visible_items:
-            if item.pkg_name == pkg_name:
-                item.download_parse_failed()
-                break
+        self.get_action_item(pkg_name).download_parse_failed()
 
     def download_failed(self, pkg_name):
-        for item in self.treeview.visible_items:
-            if item.pkg_name == pkg_name:
-                item.download_failed()
-                break
+        self.get_action_item(pkg_name).download_failed()
             
     def action_start(self, pkg_name):
         self.get_action_item(pkg_name).action_start()
 
     def action_update(self, pkg_name, percent):
-        for item in self.treeview.visible_items:
-            if item.pkg_name == pkg_name:
-                item.action_update(percent)
-                break
+        self.get_action_item(pkg_name).action_update(percent)
     
     def action_finish(self, pkg_name, pkg_info_list):
-        for item in self.treeview.visible_items:
-            if item.pkg_name == pkg_name:
-                item.action_finish()
-                break
+        self.get_action_item(pkg_name).action_finish()
             
 gobject.type_register(InstallPage)
 
@@ -385,7 +367,7 @@ class InstallItem(TreeItem):
                 rect.width - ITEM_STAR_AREA_WIDTH - self.STATUS_PADDING_X,
                 ITEM_HEIGHT,
                 )
-            
+
             pixbuf = app_theme.get_pixbuf("button/stop.png").get_pixbuf()
             draw_pixbuf(
                 cr,
@@ -401,7 +383,7 @@ class InstallItem(TreeItem):
                     rect.y + (ITEM_HEIGHT - PROGRESSBAR_HEIGHT) / 2, 
                     ITEM_STAR_AREA_WIDTH, 
                     PROGRESSBAR_HEIGHT))
-            
+
             draw_text(
                 cr,
                 self.status_text,
@@ -410,7 +392,7 @@ class InstallItem(TreeItem):
                 rect.width - ITEM_STAR_AREA_WIDTH - self.STATUS_PADDING_X,
                 ITEM_HEIGHT,
                 )
-            
+
             pixbuf = app_theme.get_pixbuf("button/stop.png").get_pixbuf()
             draw_pixbuf(
                 cr,
@@ -421,7 +403,7 @@ class InstallItem(TreeItem):
         elif self.status == self.STATUS_STOP_DOWNLOAD:
             # Draw star.
             self.star_buffer.render(cr, gtk.gdk.Rectangle(rect.x, rect.y, ITEM_STAR_AREA_WIDTH, ITEM_HEIGHT))
-            
+
             draw_text(
                 cr,
                 self.status_text,
@@ -432,17 +414,31 @@ class InstallItem(TreeItem):
                 )
         elif self.status == self.STATUS_DOWNLOAD_FAILED:
             # Draw star.
-            self.star_buffer.render(cr, gtk.gdk.Rectangle(rect.x, rect.y, ITEM_STAR_AREA_WIDTH, ITEM_HEIGHT))
-            
             draw_text(
                 cr,
                 self.status_text,
-                rect.x + rect.width - ITEM_STATUS_TEXT_PADDING_RIGHT,
+                rect.x,
                 rect.y,
-                rect.width - ITEM_STAR_AREA_WIDTH - self.STATUS_PADDING_X,
+                get_content_size(self.status_text)[0],
                 ITEM_HEIGHT,
                 text_color="#ff0000",
                 )
+
+            if self.button_status == BUTTON_NORMAL:
+                status = "normal"
+            elif self.button_status == BUTTON_HOVER:
+                status = "hover"
+            elif self.button_status == BUTTON_PRESS:
+                status = "press"
+
+            pixbuf = app_theme.get_pixbuf("button/install_%s.png" % (status, )).get_pixbuf()
+            draw_pixbuf(
+                cr,
+                pixbuf,
+                rect.x + rect.width - ITEM_BUTTON_PADDING_RIGHT - pixbuf.get_width(),
+                rect.y + (rect.height - pixbuf.get_height()) / 2
+                )
+
         elif self.status == self.STATUS_WAIT_INSTALL:
             self.progress_buffer.render(
                 cr, 
@@ -500,7 +496,7 @@ class InstallItem(TreeItem):
         elif self.status == self.STATUS_INSTALL_FINISH:
             # Draw star.
             self.star_buffer.render(cr, gtk.gdk.Rectangle(rect.x, rect.y, ITEM_STAR_AREA_WIDTH, ITEM_HEIGHT))
-            
+
             # Draw button.
             name = ""
             draw_str = ""
@@ -586,20 +582,20 @@ class InstallItem(TreeItem):
                 global_event.emit("set-cursor", gtk.gdk.HAND2)    
             else:
                 global_event.emit("set-cursor", None)
-        else:        
+        else:
             if self.status == self.STATUS_INSTALL_FINISH:
                 if self.desktops:
                     if self.is_in_button_area(column, offset_x, offset_y):
                         self.button_status = BUTTON_HOVER
-                        
+
                         if self.redraw_request_callback:
                             self.redraw_request_callback(self)
                     elif self.button_status != BUTTON_NORMAL:
                         self.button_status = BUTTON_NORMAL
-                        
+
                         if self.redraw_request_callback:
                             self.redraw_request_callback(self)
-                
+
                 if self.is_in_star_area(column, offset_x, offset_y):
                     global_event.emit("set-cursor", gtk.gdk.HAND2)
                     
@@ -619,7 +615,17 @@ class InstallItem(TreeItem):
                         
                         if self.redraw_request_callback:
                             self.redraw_request_callback(self)
-                            
+
+            elif self.status == self.STATUS_DOWNLOAD_FAILED:
+                if self.is_in_button_area(column, offset_x, offset_y):
+                    self.button_status = BUTTON_HOVER
+                    if self.redraw_request_callback:
+                        self.redraw_request_callback(self)
+                elif self.button_status != BUTTON_NORMAL:
+                    self.button_status = BUTTON_NORMAL
+                    if self.redraw_request_callback:
+                        self.redraw_request_callback(self)
+
             elif self.status == self.STATUS_READY_DOWNLOAD:
                 if self.is_in_star_area(column, offset_x, offset_y):
                     global_event.emit("set-cursor", gtk.gdk.HAND2)
@@ -654,41 +660,42 @@ class InstallItem(TreeItem):
                 if self.is_stop_button_can_click(column, offset_x, offset_y):
                     self.status = self.STATUS_STOP_DOWNLOAD
                     self.status_text = _("Download was interrupted")
-                    
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
-                        
                     global_event.emit("remove-wait-download", [self.pkg_name])
                     global_event.emit("request-stop-install-actions", [self.pkg_name])
                 elif self.is_in_star_area(column, offset_x, offset_y):
                     global_event.emit("grade-pkg", self.pkg_name, self.grade_star)
+
             elif self.status == self.STATUS_IN_DOWNLOAD:
                 if self.is_stop_button_can_click(column, offset_x, offset_y):
                     self.status = self.STATUS_STOP_DOWNLOAD
                     self.status_text = _("Download was interrupted")
-                    
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
-                        
                     global_event.emit("stop-download-pkg", [self.pkg_name])
                     global_event.emit("request-stop-install-actions", [self.pkg_name])
+
+            elif self.status == self.STATUS_DOWNLOAD_FAILED:
+                if self.is_in_button_area(column, offset_x, offset_y):
+                    global_event.emit("install-pkg", [self.pkg_name])
+
             elif self.status == self.STATUS_WAIT_INSTALL:
                 if self.is_stop_button_can_click(column, offset_x, offset_y):
                     self.status = self.STATUS_STOP_WAIT_INSTALL
                     self.status_text = _("Installation was interrupted")
-                    
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
-                        
                     global_event.emit("remove-wait-action", [(str((self.pkg_name, ACTION_INSTALL)))])
                     global_event.emit("request-stop-install-actions", [self.pkg_name])
+
             elif self.status == self.STATUS_INSTALL_FINISH:
                 if self.is_in_star_area(column, offset_x, offset_y):
                     global_event.emit("grade-pkg", self.pkg_name, self.grade_star)
                 elif self.is_in_button_area(column, offset_x, offset_y):
                     if self.desktops:
                         global_event.emit("start-pkg", self.alias_name, self.desktops, self.get_offset_with_button(offset_x, offset_y))
-                    
+
     def get_offset_with_button(self, offset_x, offset_y):
         pixbuf = app_theme.get_pixbuf("button/start_normal.png").get_pixbuf()
         popup_x = self.get_column_widths()[1] - ITEM_BUTTON_PADDING_RIGHT - pixbuf.get_width() / 2
@@ -711,7 +718,7 @@ class InstallItem(TreeItem):
                                 (ITEM_HEIGHT - STAR_SIZE) / 2,
                                 ITEM_STAR_AREA_WIDTH,
                                 STAR_SIZE)))
-    
+
     def is_in_button_area(self, column, offset_x, offset_y):
         return (column == 1
                 and is_in_rect((offset_x, offset_y), 
@@ -719,7 +726,7 @@ class InstallItem(TreeItem):
                                 (ITEM_HEIGHT - self.button_height) / 2,
                                 self.button_width,
                                 self.button_height)))
-    
+
     def is_stop_button_can_click(self, column, offset_x, offset_y):
         pixbuf = app_theme.get_pixbuf("button/stop.png").get_pixbuf()
         return (column == 1
@@ -783,7 +790,7 @@ class InstallItem(TreeItem):
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
             
-        global_event.emit("request-clear-failed-action", self.pkg_name, ACTION_INSTALL)    
+        global_event.emit("request-clear-failed-action", self.pkg_name, ACTION_INSTALL)
         
     def action_start(self):
         self.status = self.STATUS_IN_INSTALL
@@ -791,15 +798,15 @@ class InstallItem(TreeItem):
     
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
-                
+
     def action_update(self, percent):
         self.status = self.STATUS_IN_INSTALL
         self.status_text = _("Installing")
         self.progress_buffer.progress = percent
-        
+
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
-            
+
     def action_finish(self):
         self.status = self.STATUS_INSTALL_FINISH
         self.progress_buffer.progress = 100
@@ -809,7 +816,7 @@ class InstallItem(TreeItem):
             self.redraw_request_callback(self)
 
         self.data_manager.get_pkg_installed(self.pkg_name, self.handle_pkg_status)
-    
+
     def is_in_name_area(self, column, offset_x, offset_y):
         (name_width, name_height) = get_content_size(self.alias_name, NAME_SIZE)
         return (column == 0
@@ -818,7 +825,7 @@ class InstallItem(TreeItem):
                                 ITEM_PADDING_Y,
                                 name_width,
                                 NAME_SIZE)))
-    
+
     def is_in_icon_area(self, column, offset_x, offset_y):
         return (column == 0
                 and self.icon_pixbuf != None
@@ -827,7 +834,7 @@ class InstallItem(TreeItem):
                                 ITEM_PADDING_Y,
                                 self.icon_pixbuf.get_width(),
                                 self.icon_pixbuf.get_height())))
-    
+
     def release_resource(self):
         '''
         Release item resource.
@@ -841,16 +848,16 @@ class InstallItem(TreeItem):
         >>> return True
 
         This is TreeView interface, you should implement it.
-        
+
         @return: Return True if do release work, otherwise return False.
-        
+
         When this function return True, TreeView will call function gc.collect() to release object to release memory.
         '''
         if self.icon_pixbuf:
             del self.icon_pixbuf
             self.icon_pixbuf = None
 
-        return True    
-    
-gobject.type_register(InstallItem)        
+        return True
+
+gobject.type_register(InstallItem)
 

@@ -506,10 +506,10 @@ def clear_install_stop_list(install_page):
 
 def install_pkg(bus_interface, install_page, pkg_names, window):
     for install_item in install_page.treeview.visible_items:
-        if install_item.pkg_name in pkg_names:
+        if install_item.pkg_name in pkg_names and install_item.status != install_item.STATUS_DOWNLOAD_FAILED:
             pkg_names.remove(install_item.pkg_name)
     if pkg_names == []:
-        return 
+        return
 
     # Add install animation.
     (screen, px, py, modifier_type) = window.get_display().get_pointer()
