@@ -48,14 +48,13 @@ class InhibitObject(object):
         if self.bus_interface:
             for action in self.inhibit_action:
                 if not self.inhibit_fd.get(action):
-                    self.bus_interface.Inhibit(
+                    fd = self.bus_interface.Inhibit(
                         action,
                         "deepin-software-center",
                         _( "Please wait a moment while system update is being performed... Do not turn off your computer."),
                         "block",
-                        reply_handler=lambda r: self.handle_set_inhibit(True, r, action),
-                        error_handler=lambda e: self.handle_set_inhibit(False, e, action),
                         )
+                    self.inhibit_fd[action] = fd
 
     def unset_inhibit(self):
         for key in self.inhibit_fd:
@@ -63,6 +62,7 @@ class InhibitObject(object):
                 os.close(self.inhibit_fd[key].take())
             except:
                 pass
+        self.inhibit_fd = {}
 
     def handle_set_inhibit(self, success, info, action):
         if success:
@@ -70,4 +70,10 @@ class InhibitObject(object):
         else:
             logging.error("set Inhibit error!")
             logging.error("Inhibit action: %s, Error Message: %s" % (action, str(info)))
+
+if __name__ == "__main__":
+    import gtk
+    inhibit_obj = InhibitObject()
+    inhibit_obj.set_inhibit()
+    gtk.main()
 

@@ -247,7 +247,7 @@ class Update(dbus.service.Object):
         if success:
             self.notify_id = int(reply)
         else:
-            print "DBus Notify error:" % reply
+            print "DBus Notify error:", reply
 
     def handle_notification_action(self, notify_id, action_id):
         print(self.notify_id, notify_id, action_id)
@@ -263,7 +263,7 @@ class Update(dbus.service.Object):
 
     def set_delay_update(self, seconds):
         if not self.is_run_in_daemon:
-            self.mainloop.quit()
+            gobject.timeout_add_seconds(5, self.mainloop.quit)
 
         ###
         if self.delay_update_id:
@@ -299,7 +299,8 @@ class Update(dbus.service.Object):
                         signal_name="update_signal", 
                         dbus_interface=DSC_SERVICE_NAME, 
                         path=DSC_SERVICE_PATH)
-                update_num = len(self.bus_interface.request_upgrade_pkgs())
+                (upgrade_state, pkg_infos) = self.bus_interface.RequestUpgradeStatus()
+                update_num = len(pkg_infos)
                 remind_num = update_num - len(self.bus_interface.read_no_notify_config(NO_NOTIFY_FILE))
                 print "Remind update number:", remind_num
                 if remind_num < 0: 
@@ -380,9 +381,6 @@ class Update(dbus.service.Object):
         else:
             False
 
-    def exit_loop(self):
-        self.exit_flag = True
-
     @dbus.service.method(DSC_UPDATE_DAEMON_NAME, in_signature="", out_signature="b")    
     def get_update_list_status(self):
         return self.is_in_update_list
@@ -409,6 +407,7 @@ if __name__ == "__main__" :
 
     update = Update(mainloop, session_bus)
     update.add_to_connection(session_bus, DSC_UPDATE_DAEMON_PATH)
+    #update.send_notify("body", "message")
     if '--no-daemon' in args:
         gobject.timeout_add_seconds(1, update.run, False )
     else:
