@@ -30,7 +30,8 @@ from skin import app_theme
 from events import global_event
 from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, ACTION_UNINSTALL
 from star_buffer import DscStarBuffer
-from utils import get_purg_flag, global_logger, ThreadMethod
+from utils import get_purg_flag, global_logger, ThreadMethod, create_align
+from widgets import LoadingBox
 from nls import _
 from item_render import (render_pkg_info, STAR_SIZE, get_star_level, 
         get_icon_pixbuf_path, ITEM_INFO_AREA_WIDTH, ITEM_CONFIRM_BUTTON_PADDING_RIGHT, 
@@ -42,7 +43,7 @@ from item_render import (render_pkg_info, STAR_SIZE, get_star_level,
 
 from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.progressbar import ProgressBuffer
-from dtk.ui.utils import is_in_rect, get_content_size
+from dtk.ui.utils import is_in_rect, get_content_size, container_remove_all
 from dtk.ui.draw import draw_pixbuf, draw_text, draw_vlinear
 from dtk.ui.entry import InputEntry
 from dtk.ui.button import ImageButton
@@ -94,24 +95,39 @@ class UninstallPage(gtk.VBox):
         self.search_flag = False
         self.uninstall_change_items = {"add": [], "delete": []}
         
+        ### init UI widgets
         self.message_bar = MessageBar(32)
         self.message_bar.search_entry.entry.connect("changed", self.search_cb)
         self.message_bar.search_button.connect("clicked", self.search_cb)
+
+        self.top_hbox = gtk.HBox()
+        self.top_hbox.pack_start(self.message_bar)
+
         self.treeview = TreeView(enable_drag_drop=False)
         self.treeview.set_expand_column(0)
-
-        top_hbox = gtk.HBox()
-        top_hbox.pack_start(self.message_bar)
-
-        self.pack_start(top_hbox, False, False)
-        self.pack_start(self.treeview, True, True)
-        
         self.treeview.connect("items-change", self.update_message_bar)
+
+        self.loading_box = LoadingBox()
+        self.loading_box_align = create_align((0.5, 0.5, 1, 1), (10, 10, 10, 10))
+        self.loading_box_align.add(self.loading_box)
+        ### init UI widgets
         
         self.white_kernel_pkg_names = self.get_white_kernel_pkg_names()
+
+        global_event.register_event("uninstall-items-filtered", self.load_uninstall_items)
+        self.show_loading_page()
         self.fetch_uninstall_info()
-        
+
         self.treeview.draw_mask = self.draw_mask
+
+    def show_loading_page(self):
+        container_remove_all(self)
+        self.pack_start(self.loading_box_align, True, True)
+
+    def show_uninstall_page(self):
+        container_remove_all(self)
+        self.pack_start(self.top_hbox, False, False)
+        self.pack_start(self.treeview, True, True)
 
     def search_cb(self, widget, event=None):
         if not self.search_flag:
@@ -221,22 +237,35 @@ class UninstallPage(gtk.VBox):
             return
         pkg_infos = str(data)
 
-        items = []
         try:
             uninstall_pkg_infos = json.loads(pkg_infos)
-            for pkg_info in uninstall_pkg_infos:
-                pkg_name, pkg_version = pkg_info
-                if self.is_uninstallable_kernel(pkg_name) or \
-                    self.data_manager.is_pkg_display_in_uninstall_page(pkg_name):
-                        items.append(UninstallItem(pkg_name, pkg_version, self.data_manager))
         except Exception, e:
             global_logger.logerror("Parse uninstall package information failed: %s" % pkg_infos)
             global_logger.logerror("Error: %s" % str(e))
+            uninstall_pkg_infos = []
+
+        ThreadMethod(self.filter_uninstall_pkg_infos, (uninstall_pkg_infos, )).start()
+
+    def load_uninstall_items(self, uninstall_pkg_infos):
+        items = []
+        for (pkg_name, pkg_version) in uninstall_pkg_infos:
+            item = UninstallItem(pkg_name, pkg_version, self.data_manager)
+            items.append(item)
             
         if self.search_flag:
             self.uninstall_change_items["add"] += items
         else:
             self.treeview.add_items(items)
+        self.show_uninstall_page()
+
+    def filter_uninstall_pkg_infos(self, uninstall_pkg_infos):
+        pkg_infos = []
+        for pkg_info in uninstall_pkg_infos:
+            pkg_name, pkg_version = pkg_info
+            if self.is_uninstallable_kernel(pkg_name) or \
+                self.data_manager.is_pkg_display_in_uninstall_page(pkg_name):
+                    pkg_infos.append((pkg_name, pkg_version))
+        global_event.emit("uninstall-items-filtered", pkg_infos)
 
     def delete_uninstall_items(self, items):
         if self.search_flag:
