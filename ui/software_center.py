@@ -843,9 +843,6 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
                 )
 
     def application_close_window(self, widget=None, event=None):
-        if utils.get_backend_running():
-            global_event.emit("show-status-icon")
-
         self.application.window.hide_all()
         gtk.main_quit()
             
@@ -996,7 +993,6 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         global_event.register_event('update-list-finish', self.update_list_finish)
         global_event.register_event('start-update-list', self.update_list_handler)
         global_event.register_event("upgrade-finish-action", self.upgrade_finish_action)
-        global_event.register_event("show-status-icon", self.show_status_icon)
         global_event.register_event("upload-error-log", self.exec_upload_error_log)
 
         self.bus_interface.connect_to_signal(
@@ -1029,11 +1025,6 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
 
     def exec_upload_error_log(self):
         SendErrorLog().start()
-
-    def show_status_icon(self):
-        status_icon_window_path = os.path.join(get_parent_dir(__file__), 'vtk/window.py')
-        command = ['python', status_icon_window_path]
-        subprocess.Popen(command, stderr=subprocess.STDOUT, shell=False)
 
     @dbus.service.method(DSC_FRONTEND_NAME, in_signature="sb", out_signature="")
     def uninstall_pkg(self, pkg_name, purge_flag):
