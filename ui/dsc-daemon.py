@@ -34,6 +34,7 @@ from deepin_utils.ipc import is_dbus_name_exists
 from deepin_utils.file import touch_file
 from deepin_utils.config import Config
 from nls import _
+from logger import Logger
 
 DSC_SERVICE_NAME = "com.linuxdeepin.softwarecenter"
 DSC_SERVICE_PATH = "/com/linuxdeepin/softwarecenter"
@@ -85,24 +86,6 @@ def log(message):
     with open(LOG_PATH, "a") as file_handler:
         now = datetime.now().strftime("[%Y-%m-%d %H:%M:%S]")
         file_handler.write("%s %s\n" % (now, message))
-
-# for deepin software center data update
-def start_updater(loop=True):
-    try:
-        if is_dbus_name_exists(DSC_UPDATER_NAME, False):
-            log("Deepin software center updater has running!")
-            print "Deepin software center updater has running!"
-        else:
-            system_bus = dbus.SystemBus()
-            bus_object = system_bus.get_object(DSC_UPDATER_NAME, DSC_UPDATER_PATH)
-            dbus.Interface(bus_object, DSC_UPDATER_NAME)
-            log("Start dsc data update service.")
-            print "Start dsc data update service."
-    except Exception, e:
-        log("got error: %s" % (e))
-        print "got error: %s" % (e)
-
-    return loop
 
 class SendStatistics(threading.Thread):
     def __init__(self):
@@ -184,10 +167,11 @@ class NetworkDetector(gobject.GObject):
             fnull.close()
             return True
 
-class Update(dbus.service.Object):
+class Update(dbus.service.Object, Logger):
     def __init__(self, mainloop, session_bus):
         self.session_bus = session_bus
         dbus.service.Object.__init__(self, self.session_bus)
+        Logger.__init__(self)
         self.mainloop = mainloop
 
         self.is_run_in_daemon = True
@@ -204,18 +188,17 @@ class Update(dbus.service.Object):
         self.remind_num = 0
 
         self.net_detector = NetworkDetector()
-        self.init_notify()
 
-        log("Start Update List Daemon")
+        self.loginfo("Start Update List Daemon")
 
     def run(self, daemon):
         self.is_run_in_daemon = daemon
-        print "run in daemon:", self.is_run_in_daemon
+        self.loginfo("run in daemon: %s" % self.is_run_in_daemon)
 
         self.update_handler()
         return False
 
-    def init_notify(self):
+    def send_notify(self, body, summary):
         self.notify_id = None
         self.notify_interface = None
         try:
@@ -229,7 +212,6 @@ class Update(dbus.service.Object):
         except:
             pass
 
-    def send_notify(self, body, summary):
         app_name = "deepin-software-center"
         replaces_id = 0
         app_icon = get_common_image("logo48.png")
@@ -237,20 +219,12 @@ class Update(dbus.service.Object):
         hints = {"image-path": app_icon}
         timeout = 3500
         if self.notify_interface:
-            self.notify_interface.Notify(app_name, replaces_id, app_icon,
+            r = self.notify_interface.Notify(app_name, replaces_id, app_icon,
                 summary, body, actions, hints, timeout,
-                reply_handler=lambda r:self.handle_dbus_reply(r, True), 
-                error_handler=lambda e:self.handle_dbus_reply(e, False)
                 )
-
-    def handle_dbus_reply(self, reply, success):
-        if success:
-            self.notify_id = int(reply)
-        else:
-            print "DBus Notify error:", reply
+            self.notify_id = int(r)
 
     def handle_notification_action(self, notify_id, action_id):
-        print(self.notify_id, notify_id, action_id)
         if self.notify_id == notify_id:
             dsc_obj = self.session_bus.get_object(DSC_FRONTEND_NAME, DSC_FRONTEND_PATH)
             self.dsc_interface = dbus.Interface(dsc_obj, DSC_FRONTEND_NAME)
@@ -274,7 +248,7 @@ class Update(dbus.service.Object):
             self.mainloop.quit()
 
     def start_dsc_backend(self):
-        print "Start dsc backend service"
+        self.loginfo("Start dsc backend service")
         self.system_bus = dbus.SystemBus()
         bus_object = self.system_bus.get_object(DSC_SERVICE_NAME, DSC_SERVICE_PATH)
         self.bus_interface = dbus.Interface(bus_object, DSC_SERVICE_NAME)
@@ -287,24 +261,19 @@ class Update(dbus.service.Object):
     def signal_receiver(self, messages):
         for message in messages:
             (signal_type, action_content) = message
-            
             if signal_type == "update-list-update":
                 self.is_in_update_list = True
                 self.update_status = "update"
             elif signal_type == "update-list-finish":
                 self.is_in_update_list = False
                 self.update_status = "finish"
-                self.system_bus.remove_signal_receiver(
-                        self.signal_receiver, 
-                        signal_name="update_signal", 
-                        dbus_interface=DSC_SERVICE_NAME, 
-                        path=DSC_SERVICE_PATH)
                 (upgrade_state, pkg_infos) = self.bus_interface.RequestUpgradeStatus()
                 update_num = len(pkg_infos)
                 remind_num = update_num - len(self.bus_interface.read_no_notify_config(NO_NOTIFY_FILE))
-                print "Remind update number:", remind_num
+                self.loginfo("Remind update number: %s" % remind_num)
                 if remind_num < 0: 
-                    log("Error for no notify function\nUpdate number: %s\nNo notify number: %s" % 
+                    self.logerror("Error for no notify function\nUpdate number: \
+                            %s\nNo notify number: %s" % 
                             (update_num, update_num-remind_num))
                 elif remind_num > 0 and remind_num != self.remind_num:
                     if remind_num != 1:
@@ -315,25 +284,20 @@ class Update(dbus.service.Object):
                         self.send_notify(_("There is %s package needed to "
                             "upgrade in your system, please use Deepin Store "
                             "to upgrade.") % remind_num, _("Deepin Store"))
+
                 self.remind_num = remind_num
-                print "Finish update list."
-                log("Finish update list.")
+                self.loginfo("Finish update list.")
+
                 self.bus_interface.request_quit()
-                print "Quit dsc backend service."
-                log("Quit dsc backend service.")
+                self.loginfo("Quit dsc backend service.")
+
                 self.set_delay_update(int(get_update_interval())*3600)
             elif signal_type == "update-list-failed":
                 self.is_in_update_list = False
                 self.update_status = "failed"
-                self.system_bus.remove_signal_receiver(
-                        self.signal_receiver, 
-                        signal_name="update_signal", 
-                        dbus_interface=DSC_SERVICE_NAME, 
-                        path=DSC_SERVICE_PATH)
                 self.bus_interface.request_quit()
                 self.start_detector()
-                print "update failed, daemon will try when network is OK!"
-                log("update failed, daemon will try when network is OK!")
+                self.loginfo("update failed, daemon will try when network is OK!")
         return True
 
     def start_detector(self):
@@ -346,27 +310,24 @@ class Update(dbus.service.Object):
 
     def update_handler(self):
         if self.is_fontend_running():
-            print "Fontend is running, waite 10 minutes to try again!"
-            log("Fontend is running, waite 10 minutes to try again!")
+            self.logwarn("Fontend is running, waite 10 minutes to try again!")
             self.set_delay_update(DELAY_UPDATE_INTERVAL)
         elif not is_auto_update():
-            print 'Auto update closed, exit...'
-            log('Auto update closed, exit...')
+            self.loginfo('Auto update closed, exit...')
             self.mainloop.quit()
         else:
             self.start_dsc_backend()
-            gobject.timeout_add_seconds(1, start_updater, False)
+            gobject.timeout_add_seconds(1, self.start_updater, False)
             gobject.timeout_add_seconds(1, self.start_update_list, self.bus_interface)
             SendStatistics().start()
         return True
 
     def start_update_list(self, bus_interface):
         if not self.is_in_update_list:
-            print "Start update list..."
-            log("Start update list...")
+            self.loginfo("Start update list...")
             bus_interface.start_update_list()
         else:
-            log("other app is running update list")
+            self.loginfo("other app is running update list")
         return False
 
     def is_fontend_running(self):
@@ -385,9 +346,20 @@ class Update(dbus.service.Object):
     def get_update_list_status(self):
         return self.is_in_update_list
 
-    @dbus.service.method(DSC_UPDATE_DAEMON_NAME, in_signature="", out_signature="")    
-    def quit(self):
-        self.mainloop.quit()
+    # for deepin software center data update
+    def start_updater(self, loop=True):
+        try:
+            if is_dbus_name_exists(DSC_UPDATER_NAME, False):
+                self.logwarn("Deepin software center updater has running!")
+            else:
+                system_bus = dbus.SystemBus()
+                bus_object = system_bus.get_object(DSC_UPDATER_NAME, DSC_UPDATER_PATH)
+                dbus.Interface(bus_object, DSC_UPDATER_NAME)
+                self.loginfo("Start dsc data update service.")
+        except Exception, e:
+            self.logerror("got error: %s" % (e))
+
+        return loop
 
 if __name__ == "__main__" :
     uid = os.geteuid()
