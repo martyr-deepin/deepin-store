@@ -207,35 +207,29 @@ class DataManager(td.Thread):
         if category_names and category_names[0] and category_names[1]:
             result['category'] = category_names
 
-            # TODO: recommend_pkgs
-            """
-            self.category_db_cursor.execute(
-                "SELECT recommend_pkgs FROM category_name WHERE first_category_name=? and second_category_name=?",
-                [category_names[0], category_names[1]])
-            names = eval(self.category_db_cursor.fetchone()[0])
-            for name in names:
-                if name != pkg_name:
-                    self.software_db_cursor.execute(
-                        "SELECT alias_name FROM software WHERE pkg_name=?", [name])
-                    alias_name = self.software_db_cursor.fetchone()[0]
-                    result['recommend_pkgs'].append((name, alias_name, 5.0))
-            """
-
         # get long_desc, version, homepage, alias_name
         soft = self.get_software_obj(pkg_name)
         if soft:
             result["long_desc"] = soft.long_desc
             result["alias_name"] = soft.alias_name
 
-        cache_info = self.get_info_from_cache_soft_db([
-            "SELECT long_desc, version, homepage FROM software WHERE pkg_name=?",
-            [pkg_name]])
+        cache_info = self.get_cache_info(pkg_name)
         if cache_info:
             if result['long_desc'] == 'Unknown':
                 result['long_desc'] = cache_info[0][0]
             result['version'] = cache_info[0][1]
             result['homepage'] = cache_info[0][2]
         return result
+
+    def get_cache_info(self, pkg_name):
+        cache_info = None
+        for name in [pkg_name, pkg_name + ":i386"]:
+            cache_info = self.get_info_from_cache_soft_db([
+                "SELECT long_desc, version, homepage FROM software WHERE pkg_name=?",
+                [name]])
+            if cache_info:
+                return cache_info
+        return cache_info
         
     def get_pkg_search_info(self, pkg_name):
         result = self.get_software_obj(pkg_name)
