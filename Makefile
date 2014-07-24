@@ -21,7 +21,7 @@ install:
 	cp com.linuxdeepin.softwarecenter_frontend.service ${DESTDIR}${PREFIX}/share/dbus-1/services
 	cp image/deepin-software-center.svg ${DESTDIR}${PREFIX}/share/icons/hicolor/scalable/apps
 	cp deepin-software-center.desktop ${DESTDIR}${PREFIX}/share/applications
-	ln -sf ${DESTDIR}${PREFIX}/share/deepin-software-center/pkg_manager/apt/main.py ${DESTDIR}${PREFIX}/bin/deepin-software-center-backend.py
-	ln -sf ${DESTDIR}${PREFIX}/share/deepin-software-center/ui/main.py ${DESTDIR}${PREFIX}/bin/deepin-software-center
-	ln -sf ${DESTDIR}${PREFIX}/share/deepin-software-center/ui/dsc-daemon.py ${DESTDIR}${PREFIX}/bin/dsc-daemon
+	ln -sf ${PREFIX}/share/deepin-software-center/pkg_manager/apt/main.py ${DESTDIR}${PREFIX}/bin/deepin-software-center-backend.py
+	ln -sf ${PREFIX}/share/deepin-software-center/ui/main.py ${DESTDIR}${PREFIX}/bin/deepin-software-center
+	ln -sf ${PREFIX}/share/deepin-software-center/ui/dsc-daemon.py ${DESTDIR}${PREFIX}/bin/dsc-daemon
 
