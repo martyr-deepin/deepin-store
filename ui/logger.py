@@ -48,7 +48,7 @@ logger.setLevel(logging.DEBUG)
 logging.addLevelName(100,"DEPRECATED")
 
 # formatter = logging.Formatter('%(levelname)-8s %(name)-30s %(message)s')
-formatter = logging.Formatter('[%(levelname)s][%(name)s] %(message)s')
+formatter = logging.Formatter('[%(levelname)s][%(name)s:%(lineno)d] %(message)s')
 
 handler = logging.StreamHandler()
 handler.setFormatter(formatter)

@@ -102,26 +102,31 @@ class SendStatistics(threading.Thread):
             config.set("statistics", 'last_date', '')
             config.write()
 
-    def run(self):
-        global config
-        uid = config.get('statistics', 'uid')
+    @staticmethod
+    def has_running():
         last_date = config.get('statistics', 'last_date')
         current_date = datetime.now().strftime("%Y-%m-%d")
-        if last_date == current_date:
-            return
-        else:
-            try:
-                result = urllib2.urlopen(SERVER_ADDRESS+uid).read()
-                msg = "SendStatistics:", result
-                log(msg)
-                print msg
-                if result == "OK":
-                    config.set('statistics', "last_date", current_date)
-                    config.write()
-            except Exception, e:
-                msg = "Error in SendStatistics: %s" % (e)
-                log(msg)
-                print msg
+        return last_date == current_date
+
+    def run(self):
+        if self.has_running():
+            return 
+
+        global config
+        uid = config.get('statistics', 'uid')
+        current_date = datetime.now().strftime("%Y-%m-%d")
+        try:
+            result = urllib2.urlopen(SERVER_ADDRESS+uid).read()
+            msg = "SendStatistics:", result
+            log(msg)
+            print msg
+            if result == "OK":
+                config.set('statistics', "last_date", current_date)
+                config.write()
+        except Exception, e:
+            msg = "Error in SendStatistics: %s" % (e)
+            log(msg)
+            print msg
 
 class NetworkDetector(gobject.GObject):
 
@@ -192,10 +197,14 @@ class Update(dbus.service.Object, Logger):
         self.loginfo("Start Update List Daemon")
 
     def run(self, daemon):
-        self.is_run_in_daemon = daemon
-        self.loginfo("run in daemon: %s" % self.is_run_in_daemon)
+        if not SendStatistics.has_running():
+            self.is_run_in_daemon = daemon
+            self.loginfo("run in daemon: %s" % self.is_run_in_daemon)
 
-        self.update_handler()
+            self.update_handler()
+        else:
+            self.loginfo("update has running today")
+            gobject.timeout_add_seconds(5, self.mainloop.quit)
         return False
 
     def send_notify(self, body, summary):
