@@ -201,7 +201,7 @@ def vote_send_success_callback(infos, window):
     pkg_name = infos[0]
     grade_config_path, grade_config = get_grade_config()
 
-    global_event.emit("show-message", _("Rating successfully. Thanks for your involvement."), 5000)
+    global_event.emit("show-message", _("Rated successfully. Thanks for your involvement."), 5000)
     tool_tip.hide_all()
     current_time = time.time()
     

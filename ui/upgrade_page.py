@@ -500,7 +500,7 @@ class UploadErrorLabelBox(gtk.VBox):
         self.show_all()
 
     def show_upload_sucess(self):
-        uploading = Label(_("The error was successfully reported and will be soon handled."))
+        uploading = Label(_("The error was successfully reported and will be handled soon."))
         container_remove_all(self)
         self.pack_start(uploading, False, False)
         self.show_all()

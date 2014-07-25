@@ -450,7 +450,7 @@ class AboutBox(BaseBox):
         title_box.pack_start(info_box, False, False)
         
         describe = _("Deepin Store is a commonly used software center on Linux. "
-                "It selected more than 2,600 excellent applications with many "
+                "We selected more than 2,600 excellent applications with many "
                 "functions of installation and uninstalling, software repository "
                 "and popular recommendations, which supports 1-click quick "
                 "installation, multi-threaded download and clearing of cached "
@@ -497,7 +497,7 @@ class GeneralBox(BaseBox):
         label_align.set_padding(0, 0, 0, 0)
         label_align.add(dir_title_label)
 
-        download_number_label = Label(_('Max download task number: '))
+        download_number_label = Label(_('Maximum number of download tasks: '))
         self.download_number_comobox = ComboBox(
                 items = [(str(i+1), i+1) for i in range(10)],
                 select_index = int(get_download_number())-1,
