@@ -197,14 +197,9 @@ class Update(dbus.service.Object, Logger):
         self.loginfo("Start Update List Daemon")
 
     def run(self, daemon):
-        if not SendStatistics.has_running():
-            self.is_run_in_daemon = daemon
-            self.loginfo("run in daemon: %s" % self.is_run_in_daemon)
-
-            self.update_handler()
-        else:
-            self.loginfo("update has running today")
-            gobject.timeout_add_seconds(5, self.mainloop.quit)
+        self.is_run_in_daemon = daemon
+        self.loginfo("run in daemon: %s" % self.is_run_in_daemon)
+        self.update_handler()
         return False
 
     def send_notify(self, body, summary):
