@@ -34,7 +34,7 @@ import utils
 
 DEBUG = False
 
-BAIDU_SERVER_ADDRESS = 'http://dschomedata.duapp.com/' if not DEBUG else 'http://127.0.0.1:8000/'
+BAIDU_SERVER_ADDRESS = 'http://apis.linuxdeepin.com/dschome/' if not DEBUG else 'http://127.0.0.1:8000/dschome/'
 UPYUN_SERVER_ADDRESS = 'http://dsc-home-data.b0.upaiyun.com/'
 
 CACHE_DIR = os.path.join(os.path.expanduser("~"), '.cache', 'deepin-software-center')
