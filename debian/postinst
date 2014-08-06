@@ -1,0 +1,6 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = "configure" ];then
+	[ -e /etc/xdg/autostart/deepin-software-center-autostart.desktop ] && rm -f /etc/xdg/autostart/deepin-software-center-autostart.desktop || true
+fi
