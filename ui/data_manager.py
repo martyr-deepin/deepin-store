@@ -78,7 +78,7 @@ class DataManager(td.Thread):
         self.category_db_connect = sqlite3.connect(category_db_path, check_same_thread = False)
         self.category_db_cursor = self.category_db_connect.cursor()
 
-        self.icon_data_dir = os.path.join(UPDATE_DATA_DIR, "app_icon")
+        self.icon_data_dir = os.path.join(UPDATE_DATA_DIR, "icon")
         
         self.category_dict = {}
         self.category_name_dict = {}

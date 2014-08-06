@@ -72,7 +72,7 @@ SHORT_DESC_PADDING_Y = 4
 
 PROGRESSBAR_HEIGHT = 12
 
-ICON_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "app_icon")
+ICON_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "icon")
 
 def get_icon_pixbuf_path(pkg_name):
     if os.path.exists(os.path.join(ICON_DIR, "%s.png" % pkg_name)):
