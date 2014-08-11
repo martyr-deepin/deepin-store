@@ -4,21 +4,21 @@
 # Copyright (C) 2011 ~ 2012 Deepin, Inc.
 #               2011 ~ 2012 Wang Yong
 #               2012 ~ 2013 Kaisheng Ye
-# 
+#
 # Author:     Wang Yong <lazycat.manatee@gmail.com>
 # Maintainer: Wang Yong <lazycat.manatee@gmail.com>
 #             Kaisheng Ye <kaisheng.ye@gmail.com>
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -51,12 +51,12 @@ from events import global_event
 from star_buffer import DscStarBuffer
 from constant import (BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, NO_NOTIFY_FILE,
         CHECK_BUTTON_PADDING_X, SHUT_DOWN_DIALOG_PATH, ACTION_UPGRADE, DDE_SHUTDOWN_PATH )
-from item_render import (render_pkg_info, STAR_SIZE, get_star_level, ITEM_PADDING_Y, 
+from item_render import (render_pkg_info, STAR_SIZE, get_star_level, ITEM_PADDING_Y,
         get_icon_pixbuf_path, ITEM_INFO_AREA_WIDTH, ITEM_CANCEL_BUTTON_PADDING_RIGHT,
-        NAME_SIZE, ICON_SIZE, ITEM_PADDING_MIDDLE, ITEM_STAR_AREA_WIDTH, 
-        ITEM_STATUS_TEXT_PADDING_RIGHT, ITEM_BUTTON_AREA_WIDTH, 
-        ITEM_BUTTON_PADDING_RIGHT, ITEM_PADDING_X, ITEM_HEIGHT, 
-        ITEM_CHECKBUTTON_WIDTH, ITEM_CHECKBUTTON_PADDING_X, 
+        NAME_SIZE, ICON_SIZE, ITEM_PADDING_MIDDLE, ITEM_STAR_AREA_WIDTH,
+        ITEM_STATUS_TEXT_PADDING_RIGHT, ITEM_BUTTON_AREA_WIDTH,
+        ITEM_BUTTON_PADDING_RIGHT, ITEM_PADDING_X, ITEM_HEIGHT,
+        ITEM_CHECKBUTTON_WIDTH, ITEM_CHECKBUTTON_PADDING_X,
         ITEM_CHECKBUTTON_PADDING_Y, PROGRESSBAR_HEIGHT, ITEM_NO_NOTIFY_AREA_WIDTH,
         ITEM_NO_NOTIFY_STRING, ITEM_NO_NOTIFY_WIDTH, ITEM_NO_NOTIFY_HEIGHT,
         ITEM_NOTIFY_AGAIN_STRING, ITEM_NOTIFY_AGAIN_WIDTH, ITEM_NOTIFY_AGAIN_HEIGHT,
@@ -68,7 +68,7 @@ class UpgradingBar(gtk.HBox):
     '''
     class docs
     '''
-	
+
     def __init__(self):
         '''
         init docs
@@ -86,24 +86,24 @@ class UpgradingBar(gtk.HBox):
         self.message_label_align.set(0.0, 0.5, 0, 0)
         self.message_label_align.set_padding(0, 0, 8, 0)
         self.message_label_align.add(self.message_box)
-        
+
         self.pack_start(self.message_label_align, True, True)
-        
+
     def set_upgrading_message(self, message):
         #self.message_label.set_text(message)
         pass
-        
+
 class NewestBar(gtk.HBox):
     '''
     class docs
     '''
-	
+
     def __init__(self):
         '''
         init docs
         '''
         gtk.HBox.__init__(self)
-        
+
         self.message_label = Label(_("Last system upgraded time: "))
         self.message_time = widgets.HumanTimeTip(utils.get_last_upgrade_time())
 
@@ -115,7 +115,7 @@ class NewestBar(gtk.HBox):
         self.message_box_align.set(0.0, 0.5, 0, 0)
         self.message_box_align.set_padding(0, 0, 8, 0)
         self.message_box_align.add(self.message_box)
-        
+
         self.no_notify_label = Label(
             hover_color=app_theme.get_color("homepage_hover")
             )
@@ -123,35 +123,35 @@ class NewestBar(gtk.HBox):
         self.no_notify_label_align = gtk.Alignment()
         self.no_notify_label_align.set(1.0, 0.5, 0, 0)
         self.no_notify_label_align.set_padding(0, 0, 0, 40)
-        
+
         self.pack_start(self.message_box_align, False, False)
         self.pack_start(self.no_notify_label_align, True, True)
-        
+
         self.no_notify_label.connect("button-press-event", lambda w, e: global_event.emit("show-no-notify-page"))
-        
+
     def set_no_notify_num(self, no_notify_num):
-        
+
         container_remove_all(self.no_notify_label_align)
         if no_notify_num > 0:
             self.no_notify_label.set_text(_("No reminder to update (%s)") % no_notify_num)
             self.no_notify_label_align.add(self.no_notify_label)
-            
+
             self.show_all()
 
     def set_update_time(self):
         self.message_time.timestamp = utils.get_last_upgrade_time()
-        
+
 class UpgradeBar(gtk.HBox):
     '''
     class docs
     '''
-	
+
     def __init__(self):
         '''
         init docs
         '''
         gtk.HBox.__init__(self)
-        
+
         self.select_button = CheckAllButton()
         self.select_button.set_active(True)
         self.select_button_align = gtk.Alignment()
@@ -162,9 +162,9 @@ class UpgradeBar(gtk.HBox):
         self.message_label = Label()
         self.message_label_align = gtk.Alignment()
         self.message_label_align.set(0.0, 0.5, 0, 0)
-        self.message_label_align.set_padding(0, 0, 0, 0)
+        self.message_label_align.set_padding(0, 0, 30, 0)
         self.message_label_align.add(self.message_label)
-        
+
         self.no_notify_label = Label(
             hover_color=app_theme.get_color("homepage_hover")
             )
@@ -184,45 +184,45 @@ class UpgradeBar(gtk.HBox):
         self.upgrade_selected_button_align.set(1.0, 0.5, 0, 0)
         self.upgrade_selected_button_align.set_padding(0, 0, 6, ITEM_BUTTON_PADDING_RIGHT)
         self.upgrade_selected_button_align.add(self.upgrade_selected_button)
-        
-        self.pack_start(self.select_button_align, False, False)
+
+        #self.pack_start(self.select_button_align, False, False)
         self.pack_start(self.message_label_align, False, False)
         self.pack_start(self.no_notify_label_align, True, True)
         self.pack_start(self.upgrade_selected_button_align, False, False)
-        
+
         self.no_notify_label.connect("button-press-event", lambda w, e: global_event.emit("show-no-notify-page"))
         self.select_button.connect("active-changed", self.handle_active_changed)
         self.upgrade_selected_button.connect("clicked", lambda w: global_event.emit("upgrade-selected-pkg"))
-        
+
     def handle_active_changed(self, widget, state):
         if state:
             global_event.emit("select-all-upgrade-pkg")
         else:
             global_event.emit("unselect-all-upgrade-pkg")
-        
+
     def set_upgrade_info(self, upgrade_num, no_notify_num):
         self.message_label.set_text(_("%s applications are available for upgrade") % upgrade_num)
-        
+
         container_remove_all(self.no_notify_label_align)
         if no_notify_num > 0:
             self.no_notify_label.set_text(_("No reminder to update (%s)") % no_notify_num)
             self.no_notify_label_align.add(self.no_notify_label)
-            
+
             self.show_all()
-            
-gobject.type_register(UpgradeBar)        
+
+gobject.type_register(UpgradeBar)
 
 class NoNotifyBar(gtk.HBox):
     '''
     class docs
     '''
-	
+
     def __init__(self):
         '''
         init docs
         '''
         gtk.HBox.__init__(self)
-        
+
         self.select_button = CheckAllButton()
         self.select_button.set_active(True)
         self.select_button_align = gtk.Alignment()
@@ -252,28 +252,28 @@ class NoNotifyBar(gtk.HBox):
         self.return_align.set(0.5, 0.5, 0, 0)
         self.return_align.set_padding(0, 0, 5, 5)
         self.return_align.add(self.return_button)
-        
+
         self.pack_start(self.select_button_align, False, False)
         self.pack_start(self.message_label_align, True, True)
         self.pack_start(self.notify_again_label_align, False, False)
         self.pack_start(self.return_align, False, False)
-        
+
         self.select_button.connect("active-changed", self.handle_active_changed)
         self.notify_again_label.connect("button-press-event", lambda w, e: global_event.emit("notify-selected-pkg"))
         self.return_button.connect("clicked", lambda w: global_event.emit("show-upgrade-page"))
-        
+
     def handle_active_changed(self, widget, state):
         if state:
             global_event.emit("select-all-notify-pkg")
         else:
             global_event.emit("unselect-all-notify-pkg")
-        
+
     def set_notify_info(self, notify_again_num):
         self.message_label.set_text(_("%s applications are not being watched") % notify_again_num)
-        
+
         self.message_label_align.show_all()
-        
-gobject.type_register(NoNotifyBar)        
+
+gobject.type_register(NoNotifyBar)
 
 class UpgradingTopBar(gtk.HBox):
     def __init__(self):
@@ -291,7 +291,7 @@ class UpgradingTopBar(gtk.HBox):
         self.message_label_align.set(0.0, 0.5, 0, 0)
         self.message_label_align.set_padding(0, 0, 0, 0)
         self.message_label_align.add(self.message_label)
-        
+
         self.pack_start(self.is_shutdown_button_align, False, False)
         self.pack_start(self.message_label_align, False, False)
 
@@ -344,7 +344,7 @@ class UpgradingBox(gtk.VBox):
 
         software_mirror_label = utils.create_right_align_label(_("Mirror Receiving: "))
         if self.preference_dialog.mirrors_box.current_mirror_item:
-            self.software_mirror = utils.create_left_align_label( 
+            self.software_mirror = utils.create_left_align_label(
                 self.preference_dialog.mirrors_box.current_mirror_item.mirror.name)
         else:
             self.software_mirror = utils.create_left_align_label(utils.get_current_mirror_hostname())
@@ -412,7 +412,7 @@ class UpgradingBox(gtk.VBox):
         download_failed_box.pack_start(detail_info_box, False, False)
         download_failed_box.pack_start(UploadErrorLabelBox(), False, False)
         return download_failed_box
-    
+
     def create_install_failed_box(self):
         install_failed_box = gtk.VBox(spacing=10)
         install_failed_box.set_size_request(400, -1)
@@ -442,7 +442,7 @@ class UpgradingBox(gtk.VBox):
         error_info = Label(_("The update requires to uninstall crucial components "
             "due to corrupted local dependencies or incorrect package dependencies "
             "on server."), wrap_width=360)
-    
+
         detail_info_start = Label(_("Suggest to "))
         detail_info_middle = widgets.ActionButton(_("update package lists"), lambda:global_event.emit("start-update-list"))
         detail_info_end = Label(_(" and try again."))
@@ -468,7 +468,7 @@ class UpgradingBox(gtk.VBox):
         self.recent_upgrade_time.timestamp = utils.get_last_upgrade_time()
         """
         if self.preference_dialog.current_mirror_item:
-            self.software_mirror = utils.create_left_align_label( 
+            self.software_mirror = utils.create_left_align_label(
                 self.preference_dialog.current_mirror_item.mirror.name)
         else:
             self.software_mirror = utils.create_left_align_label(utils.get_current_mirror_hostname())
@@ -483,7 +483,7 @@ class UploadErrorLabelBox(gtk.VBox):
         upload_info_start = Label(_("If the prompt occurs again, you could "))
         upload_info_middle = widgets.ActionButton(_("send error report"), self.upload_error_log)
         upload_info_end = Label(_("."))
-        
+
         action_info_box = gtk.HBox()
         action_info_box.pack_start(upload_info_start, False, False)
         action_info_box.pack_start(upload_info_middle, False, False)
@@ -538,7 +538,7 @@ class UpgradePage(gtk.VBox, Logger):
     '''
     class docs
     '''
-	
+
     def __init__(self, bus_interface, data_manager, preference_dialog):
         '''
         init docs
@@ -546,27 +546,27 @@ class UpgradePage(gtk.VBox, Logger):
         # Init.
         gtk.VBox.__init__(self)
         Logger.__init__(self)
-        self.bus_interface = bus_interface        
+        self.bus_interface = bus_interface
         self.data_manager = data_manager
-        
+
         self.upgrade_pkg_num = 0
         self.no_notify_pkg_num = 0
-        
+
         self.current_progress = 0
         self.upgrade_progress_status = []
-        
+
         self.upgrade_bar = UpgradeBar()
         self.no_notify_bar = NoNotifyBar()
         self.newest_bar = NewestBar()
         self.upgrading_bar = UpgradingBar()
         self.upgrading_top_bar = UpgradingTopBar()
-        
+
         self.cycle_strip = CycleStrip(app_theme.get_pixbuf("strip/background.png"))
-        
+
         self.update_view = gtk.VBox()
         self.update_list_pixbuf = None
         self.update_view.connect("expose-event", self.expose_update_view)
-        
+
         self.newest_view = gtk.VBox()
         self.newest_pixbuf = None
         self.newest_view.connect("expose-event", self.expose_newest_view)
@@ -577,43 +577,43 @@ class UpgradePage(gtk.VBox, Logger):
 
         self.upgrading_view = UpgradingBox(preference_dialog)
         self.create_init_box()
-        
+
         self.upgrade_treeview = TreeView(enable_drag_drop=False)
         self.upgrade_treeview.set_expand_column(1)
         self.upgrade_treeview.connect("items-change", self.monitor_upgrade_view)
         self.upgrade_treeview.connect("items-change", lambda treeview: global_event.emit(
             "update-upgrade-notify-number", len(treeview.visible_items)))
-        
-        
+
+
         self.no_notify_treeview = TreeView(enable_drag_drop=False)
         self.no_notify_treeview.set_expand_column(1)
         self.no_notify_treeview.connect("items-change", self.monitor_no_notify_view)
-        
+
         self.in_no_notify_page = False
         self.in_upgrading_view = False
-        
+
         self.pkg_info_dict = {}
-        
+
         global_event.register_event("select-all-upgrade-pkg", self.select_all_pkg)
         global_event.register_event("unselect-all-upgrade-pkg", self.unselect_all_pkg)
         global_event.register_event("upgrade-selected-pkg", self.upgrade_selected_pkg)
         global_event.register_event("show-no-notify-page", self.show_no_notify_page)
         global_event.register_event("no-notify-pkg", self.no_notify_pkg)
-        
+
         global_event.register_event("select-all-notify-pkg", self.select_all_notify_pkg)
         global_event.register_event("unselect-all-notify-pkg", self.unselect_all_notify_pkg)
         global_event.register_event("notify-selected-pkg", self.notify_selected_pkg)
         global_event.register_event("show-upgrade-page", self.show_upgrade_page)
         global_event.register_event("notify-again-pkg", self.notify_again_pkg)
-        
+
         global_event.register_event("show-updating-view", self.show_updating_view)
         global_event.register_event("show-newest-view", self.show_newest_view)
         global_event.register_event("show-network-disable-view", self.show_network_disable_view)
         global_event.register_event("show-upgrading-view", self.show_upgrading_view)
-        
+
         global_event.register_event("click-upgrade-check-button", self.click_upgrade_check_button)
         global_event.register_event("click-notify-check-button", self.click_notify_check_button)
-        
+
         self.upgrade_treeview.draw_mask = self.draw_mask
         self.no_notify_treeview.draw_mask = self.draw_mask
 
@@ -645,7 +645,7 @@ class UpgradePage(gtk.VBox, Logger):
                 select_pkg_names.append(item.pkg_name)
         return select_pkg_names
 
-        #self.upgrade_bar.select_button.update_status(map(lambda item: 
+        #self.upgrade_bar.select_button.update_status(map(lambda item:
             #item.check_button_buffer.active, self.upgrade_treeview.visible_items))
 
     def update_download_size_info(self, info):
@@ -664,46 +664,48 @@ class UpgradePage(gtk.VBox, Logger):
             self.upgrade_bar.upgrade_selected_button.set_sensitive(False)
         else:
             select_pkg_names = self.get_current_selected_pkgs()
-            self.upgrade_bar.message_label.set_text(_("%s updates are selected. %s will be downloaded.") % (
-                len(select_pkg_names), utils.bit_to_human_str(size)))
-            if select_pkg_names:
-                self.upgrade_bar.upgrade_selected_button.set_sensitive(True)
-                self.upgrade_bar.upgrade_selected_button.set_state(gtk.STATE_NORMAL)
-            else:
-                self.upgrade_bar.upgrade_selected_button.set_sensitive(False)
+            self.upgrade_bar.message_label.set_text(
+                _("%s package(s) are available for upgrade, %s will be downloaded.") %
+                (len(select_pkg_names), utils.bit_to_human_str(size)))
+
+            #if select_pkg_names:
+                #self.upgrade_bar.upgrade_selected_button.set_sensitive(True)
+                #self.upgrade_bar.upgrade_selected_button.set_state(gtk.STATE_NORMAL)
+            #else:
+                #self.upgrade_bar.upgrade_selected_button.set_sensitive(False)
 
         global_event.emit("set-cursor", None)
-        
+
     def click_notify_check_button(self):
-        self.no_notify_bar.select_button.update_status(map(lambda item: 
+        self.no_notify_bar.select_button.update_status(map(lambda item:
             item.check_button_buffer.active, self.no_notify_treeview.visible_items))
-    
+
     def show_init_page(self):
         if len(self.upgrade_treeview.visible_items) == 0:
             global_event.emit("show-newest-view")
         else:
             global_event.emit("show-upgrade-page")
-        
+
     def monitor_upgrade_view(self, treeview):
         if len(treeview.visible_items) == 0:
             global_event.emit("show-newest-view")
         else:
             self.upgrade_bar.set_upgrade_info(len(treeview.visible_items), self.no_notify_pkg_num)
             self.click_upgrade_check_button()
-            
+
     def monitor_no_notify_view(self, treeview):
         if len(treeview.visible_items) == 0:
             global_event.emit("show-upgrade-page")
-        
+
     def show_updating_view(self):
         if is_network_connected():
             container_remove_all(self)
             container_remove_all(self.cycle_strip)
-            
+
             self.cycle_strip.add(self.upgrading_bar)
             self.pack_start(self.cycle_strip, False, False)
             self.pack_start(self.update_view, True, True)
-            
+
             self.show_all()
         else:
             global_event.emit("show-network-disable-view")
@@ -719,12 +721,12 @@ class UpgradePage(gtk.VBox, Logger):
 
         #self.in_upgrading_view = True
         self.show_all()
-            
+
     def show_newest_view(self):
         self.in_upgrading_view = False
         container_remove_all(self)
         container_remove_all(self.cycle_strip)
-        
+
         self.newest_bar.set_update_time()
         self.newest_bar.set_no_notify_num(self.no_notify_pkg_num)
         self.cycle_strip.add(self.newest_bar)
@@ -735,13 +737,13 @@ class UpgradePage(gtk.VBox, Logger):
         self.in_upgrading_view = False
         container_remove_all(self)
         self.pack_start(self.network_disable_view, True, True)
-        
+
         self.show_all()
-        
+
     def draw_mask(self, cr, x, y, w, h):
         '''
         Draw mask interface.
-        
+
         @param cr: Cairo context.
         @param x: X coordiante of draw area.
         @param y: Y coordiante of draw area.
@@ -752,61 +754,61 @@ class UpgradePage(gtk.VBox, Logger):
                      [(0, ("#FFFFFF", 0.9)),
                       (1, ("#FFFFFF", 0.9)),]
                      )
-        
+
     def select_all_pkg(self):
         for item in self.upgrade_treeview.visible_items:
             item.check_button_buffer.active = True
-            
+
         self.upgrade_treeview.queue_draw()
         self.click_upgrade_check_button()
-    
+
     def unselect_all_pkg(self):
         for item in self.upgrade_treeview.visible_items:
             item.check_button_buffer.active = False
-            
+
         self.upgrade_treeview.queue_draw()
         self.click_upgrade_check_button()
-        
+
     def upgrade_selected_pkg(self):
         global_event.emit("upgrade-pkg", self.get_current_selected_pkgs())
         self.show_upgrading_view()
-        
+
     def select_all_notify_pkg(self):
         for item in self.no_notify_treeview.visible_items:
             item.check_button_buffer.active = True
-            
+
         self.no_notify_treeview.queue_draw()
-    
+
     def unselect_all_notify_pkg(self):
         for item in self.no_notify_treeview.visible_items:
             item.check_button_buffer.active = False
-            
+
         self.no_notify_treeview.queue_draw()
-        
+
     def notify_selected_pkg(self):
         pkg_names = []
         for item in self.no_notify_treeview.visible_items:
             if item.check_button_buffer.active:
                 pkg_names.append(item.pkg_name)
-                
+
         for pkg_name in pkg_names:
             global_event.emit("notify-again-pkg", pkg_name)
-        
+
     def no_notify_pkg(self, pkg_name):
         self.add_no_notify_pkg(pkg_name)
         self.upgrade_pkg_num -= 1
         self.no_notify_pkg_num += 1
-        
+
         self.upgrade_bar.set_upgrade_info(self.upgrade_pkg_num, self.no_notify_pkg_num)
         self.no_notify_bar.set_notify_info(self.no_notify_pkg_num)
-        
+
         for item in self.upgrade_treeview.visible_items:
             if item.pkg_name == pkg_name:
                 self.upgrade_treeview.delete_items([item])
                 break
-            
+
         self.no_notify_treeview.add_items([NoNotifyItem(pkg_name, self.pkg_info_dict[pkg_name], self.data_manager)])
-        
+
     def notify_again_pkg(self, pkg_name):
         self.remove_no_notify_pkg(pkg_name)
         self.upgrade_pkg_num += 1
@@ -814,39 +816,39 @@ class UpgradePage(gtk.VBox, Logger):
 
         self.upgrade_bar.set_upgrade_info(self.upgrade_pkg_num, self.no_notify_pkg_num)
         self.no_notify_bar.set_notify_info(self.no_notify_pkg_num)
-        
+
         for item in self.no_notify_treeview.visible_items:
             if item.pkg_name == pkg_name:
                 self.no_notify_treeview.delete_items([item])
                 break
-            
+
         self.upgrade_treeview.add_items([UpgradeItem(pkg_name, self.pkg_info_dict[pkg_name], self.data_manager)])
-            
+
     def show_no_notify_page(self):
         self.in_no_notify_page = True
-        
+
         container_remove_all(self)
         container_remove_all(self.cycle_strip)
-        
+
         self.no_notify_bar.set_notify_info(self.no_notify_pkg_num)
         self.cycle_strip.add(self.no_notify_bar)
         self.pack_start(self.cycle_strip, False, False)
         self.pack_start(self.no_notify_treeview, True, True)
-        
+
         self.show_all()
-        
+
     def show_upgrade_page(self):
         self.in_no_notify_page = False
-        
+
         container_remove_all(self)
         container_remove_all(self.cycle_strip)
-        
+
         self.cycle_strip.add(self.upgrade_bar)
         self.pack_start(self.cycle_strip, False, False)
         self.pack_start(self.upgrade_treeview, True, True)
-        
+
         self.show_all()
-            
+
     def update_download_status(self, pkg_infos):
         pkg_items = []
         for (pkg_name, download_status) in pkg_infos:
@@ -860,7 +862,7 @@ class UpgradePage(gtk.VBox, Logger):
 
             if pkg_item == None:
                 pkg_item = UpgradeItem(pkg_name, self.bus_interface.request_pkgs_install_version([pkg_name])[0], self.data_manager)
-                
+
             if download_status == "wait":
                 pkg_item.download_wait()
             elif download_status == "start":
@@ -868,10 +870,10 @@ class UpgradePage(gtk.VBox, Logger):
             elif download_status == "update":
                 pkg_item.download_update(0, 0)
             pkg_items.append(pkg_item)
-                
+
         pkg_items = filter(lambda item: item not in self.upgrade_treeview.visible_items, pkg_items)
-        self.upgrade_treeview.add_items(pkg_items)        
-    
+        self.upgrade_treeview.add_items(pkg_items)
+
     def update_action_status(self, pkg_infos):
         pkg_items = []
         for (pkg_name, action_status) in pkg_infos:
@@ -885,7 +887,7 @@ class UpgradePage(gtk.VBox, Logger):
 
             if pkg_item == None:
                 pkg_item = UpgradeItem(pkg_name, self.bus_interface.request_pkgs_install_version([pkg_name])[0], self.data_manager)
-                
+
             if action_status == "wait":
                 pkg_item.download_finish()
             elif action_status == "start":
@@ -893,40 +895,40 @@ class UpgradePage(gtk.VBox, Logger):
             elif action_status == "update":
                 pkg_item.action_update(0)
             pkg_items.append(pkg_item)
-                
+
         pkg_items = filter(lambda item: item not in self.upgrade_treeview.visible_items, pkg_items)
-        self.upgrade_treeview.add_items(pkg_items)        
-        
+        self.upgrade_treeview.add_items(pkg_items)
+
     def expose_update_view(self, widget, event):
         # Init.
         cr = widget.window.cairo_create()
         rect = widget.allocation
-        
+
         if self.update_list_pixbuf == None:
             self.update_list_pixbuf = utils.get_common_locale_image_pixbuf("info", "upgrading.png")
-        
+
         cr.set_source_rgb(1, 1, 1)
         cr.rectangle(rect.x, rect.y, rect.width, rect.height)
         cr.fill()
-        
+
         draw_pixbuf(
             cr,
             self.update_list_pixbuf,
             rect.x + (rect.width - self.update_list_pixbuf.get_width()) / 2,
             rect.y + (rect.height - self.update_list_pixbuf.get_height()) / 2)
-        
+
     def expose_newest_view(self, widget, event):
         # Init.
         cr = widget.window.cairo_create()
         rect = widget.allocation
-        
+
         if self.newest_pixbuf == None:
             self.newest_pixbuf = utils.get_common_locale_image_pixbuf("info", "newest.png")
-        
+
         cr.set_source_rgb(1, 1, 1)
         cr.rectangle(rect.x, rect.y, rect.width, rect.height)
         cr.fill()
-        
+
         draw_pixbuf(
             cr,
             self.newest_pixbuf,
@@ -937,41 +939,41 @@ class UpgradePage(gtk.VBox, Logger):
         # Init.
         cr = widget.window.cairo_create()
         rect = widget.allocation
-        
+
         if self.network_disable_pixbuf == None:
             self.network_disable_pixbuf = utils.get_common_locale_image_pixbuf("info", "network_disable.png")
-        
+
         cr.set_source_rgb(1, 1, 1)
         cr.rectangle(rect.x, rect.y, rect.width, rect.height)
         cr.fill()
-        
+
         draw_pixbuf(
             cr,
             self.network_disable_pixbuf,
             rect.x + (rect.width - self.network_disable_pixbuf.get_width()) / 2,
             rect.y + (rect.height - self.network_disable_pixbuf.get_height()) / 2)
-        
+
     def read_no_notify_config(self):
         no_notify_config_path = NO_NOTIFY_FILE
         if os.path.exists(no_notify_config_path):
            no_notify_config_str = read_file(no_notify_config_path)
            try:
                no_notify_config = eval(no_notify_config_str)
-               
+
                if type(no_notify_config).__name__ != "list":
                    no_notify_config = []
            except Exception:
                no_notify_config = []
-               
+
            return no_notify_config
         else:
             return []
-        
+
     def add_no_notify_pkg(self, pkg_name):
         self.bus_interface.add_no_notify_pkg((pkg_name, NO_NOTIFY_FILE),
                 reply_handler=lambda :handle_dbus_reply("add_no_notify_pkg-> %s" % pkg_name),
                 error_handler=lambda e:handle_dbus_error('add_no_notify_pkg-> %s' % pkg_name, e))
-    
+
     def remove_no_notify_pkg(self, pkg_name):
         self.bus_interface.remove_no_notify_pkg((pkg_name, NO_NOTIFY_FILE),
                 reply_handler=lambda :handle_dbus_reply("remove_no_notify_pkg-> %s" % pkg_name),
@@ -986,11 +988,11 @@ class UpgradePage(gtk.VBox, Logger):
         container_remove_all(self)
 
         self.pack_start(self.loading_box_align)
-    
+
     def fetch_upgrade_info(self, in_upgrading=False):
         self.show_loading_page()
         self.bus_interface.RequestUpgradeStatus(
-                reply_handler=lambda r: self.handle_upgrade_page_status(r, True), 
+                reply_handler=lambda r: self.handle_upgrade_page_status(r, True),
                 error_handler=lambda e: self.handle_upgrade_page_status(e, False))
 
     def refresh_status(self, pkg_info_list):
@@ -1011,17 +1013,17 @@ class UpgradePage(gtk.VBox, Logger):
                         if item.pkg_name == pkg_name:
                             upgraded_items.append(item)
                             break
-                        
+
             self.upgrade_treeview.delete_items(upgraded_items)
         if len(self.upgrade_treeview.visible_items) > 0:
             container_remove_all(self)
             container_remove_all(self.cycle_strip)
-            
+
             self.cycle_strip.add(self.upgrade_bar)
-            
+
             self.pack_start(self.cycle_strip, False, False)
             self.pack_start(self.upgrade_treeview, True, True)
-        
+
     def handle_upgrade_page_status(self, reply, success):
         if not success:
             self.logerror("invoke dbus method %s with error: %s" % ("RequestUpgradeStatus", reply))
@@ -1030,10 +1032,10 @@ class UpgradePage(gtk.VBox, Logger):
         status, pkg_infos = reply
         if status == "cache-updating":
             global_event.emit("show-updating-view")
-            return 
+            return
         if status == "upgrading":
             global_event.emit("show-upgrading-view")
-            return 
+            return
 
         self.upgrade_treeview.clear()
         if len(pkg_infos) > 0:
@@ -1042,10 +1044,10 @@ class UpgradePage(gtk.VBox, Logger):
                 self.update_list_pixbuf = None
 
             no_notify_config = self.read_no_notify_config()
-                
+
             exists_upgrade_pkg_names = map(lambda item: item.pkg_name, self.upgrade_treeview.visible_items)
             exists_no_notify_pkg_names = map(lambda item: item.pkg_name, self.no_notify_treeview.visible_items)
-            
+
             upgrade_items = []
             no_notify_items = []
             for pkg_info in pkg_infos:
@@ -1060,10 +1062,10 @@ class UpgradePage(gtk.VBox, Logger):
                     if pkg_name not in exists_upgrade_pkg_names:
                         self.upgrade_pkg_num += 1
                         upgrade_items.append(UpgradeItem(pkg_name, pkg_version, self.data_manager))
-                
-            
+
+
             self.no_notify_treeview.add_items(no_notify_items)
-            self.upgrade_treeview.add_items(upgrade_items)    
+            self.upgrade_treeview.add_items(upgrade_items)
 
             #self.upgrade_bar.set_upgrade_info(len(self.upgrade_treeview.visible_items), self.no_notify_pkg_num)
 
@@ -1073,9 +1075,9 @@ class UpgradePage(gtk.VBox, Logger):
                 if len(self.get_children()) == 0 or self.get_children()[0] != self.upgrade_treeview:
                     container_remove_all(self)
                     container_remove_all(self.cycle_strip)
-                    
+
                     self.cycle_strip.add(self.upgrade_bar)
-                    
+
                     self.pack_start(self.cycle_strip, False, False)
                     self.pack_start(self.upgrade_treeview, True, True)
         else:
@@ -1106,26 +1108,26 @@ class UpgradePage(gtk.VBox, Logger):
             utils.bit_to_human_str(speed),
             ))
         self.upgrading_view.upgrading_progressbar.set_progress(percent)
-        
+
     def download_finish(self, pkg_name):
         self.upgrading_view.upgrading_progress_detail.set_text(_("Download finished."))
         self.upgrading_view.upgrading_progressbar.set_progress(100.0)
 
     def download_stop(self, pkg_name):
         self.upgrading_view.upgrading_progress_detail.set_text(_("Download stopped."))
-            
+
     def download_parse_failed(self, pkg_name):
         self.upgrading_view.upgrading_progress_detail.set_text(_("Failed to analyze dependencies."))
-            
+
     def action_start(self, pkg_name):
         self.upgrading_view.upgrade_page_logo.change_image(utils.get_common_image("upgrade/upgrade.png"))
         self.upgrading_view.upgrading_progress_title.change_text(_("Installing updates"))
         self.upgrading_view.upgrading_progress_detail.set_text(_("Updating..."))
-    
+
     def action_update(self, pkg_name, percent, status):
         self.upgrading_view.upgrading_progress_detail.set_text(str(status))
         self.upgrading_view.upgrading_progressbar.set_progress(percent)
-    
+
     def action_finish(self, pkg_name, pkg_info_list):
         self.upgrading_view.upgrading_progress_detail.set_text(_("Upgrade completed"))
         self.upgrading_view.upgrading_progressbar.set_progress(100.0)
@@ -1136,7 +1138,7 @@ class UpgradeItem(TreeItem):
     '''
     class docs
     '''
-    
+
     STATUS_NORMAL = 1
     STATUS_WAIT_DOWNLOAD = 2
     STATUS_IN_DOWNLOAD = 3
@@ -1145,9 +1147,9 @@ class UpgradeItem(TreeItem):
     STATUS_UPGRADE_FINISH = 6
     STATUS_PARSE_DOWNLOAD_FAILED = 7
     STATUS_READY_DOWNLOAD = 8
-    
+
     STATUS_PADDING_X = 15
-    
+
     def __init__(self, pkg_name, pkg_version, data_manager):
         '''
         init docs
@@ -1157,61 +1159,61 @@ class UpgradeItem(TreeItem):
         self.pkg_version = pkg_version
         self.data_manager = data_manager
         self.icon_pixbuf = None
-        
+
         info = data_manager.get_item_pkg_info(self.pkg_name)
         self.alias_name = info[1]
         self.short_desc = info[2]
         star = 5.0
         self.star_level = get_star_level(star)
         self.star_buffer = DscStarBuffer(pkg_name)
-        
+
         self.grade_star = 0
-        
+
         button_pixbuf = app_theme.get_pixbuf("button/upgrade_normal.png").get_pixbuf()
         (self.button_width, self.button_height) = button_pixbuf.get_width(), button_pixbuf.get_height()
         self.button_status = BUTTON_NORMAL
-        
+
         self.status = self.STATUS_NORMAL
         self.status_text = ""
         self.progress_buffer = ProgressBuffer()
-        
+
         self.check_button_buffer = CheckButtonBuffer(
             True,
             ITEM_CHECKBUTTON_PADDING_X,
             ITEM_CHECKBUTTON_PADDING_Y)
         self.notify_button_hover = False
-        
+
     def render_check_button(self, cr, rect):
         if self.row_index % 2 == 1:
             cr.set_source_rgba(1, 1, 1, 0.5)
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
-        
-        self.check_button_buffer.render(cr, rect)
-        
+
+        #self.check_button_buffer.render(cr, rect)
+
     def render_pkg_info(self, cr, rect):
         if self.row_index % 2 == 1:
             cr.set_source_rgba(1, 1, 1, 0.5)
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
-        
+
         if self.icon_pixbuf == None:
-            self.icon_pixbuf = gtk.gdk.pixbuf_new_from_file(get_icon_pixbuf_path(self.pkg_name))        
-            
+            self.icon_pixbuf = gtk.gdk.pixbuf_new_from_file(get_icon_pixbuf_path(self.pkg_name))
+
         render_pkg_info(cr, rect, self.alias_name, self.pkg_name, self.icon_pixbuf, self.pkg_version, self.short_desc, -ITEM_PADDING_X)
-        
+
     def render_no_notify(self, cr, rect):
         if self.row_index % 2 == 1:
             cr.set_source_rgba(1, 1, 1, 0.5)
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
-            
+
         if self.status == self.STATUS_NORMAL:
             if self.notify_button_hover:
                 text_color = "#00AAFF"
             else:
                 text_color = "#000000"
-            
+
             draw_text(
                 cr,
                 ITEM_NO_NOTIFY_STRING,
@@ -1221,13 +1223,13 @@ class UpgradeItem(TreeItem):
                 ITEM_NO_NOTIFY_HEIGHT,
                 text_color=text_color,
                 )
-        
+
     def render_pkg_status(self, cr, rect):
         if self.row_index % 2 == 1:
             cr.set_source_rgba(1, 1, 1, 0.5)
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
-        
+
         if self.status == self.STATUS_READY_DOWNLOAD:
             draw_text(
                 cr,
@@ -1240,7 +1242,7 @@ class UpgradeItem(TreeItem):
         elif self.status == self.STATUS_WAIT_DOWNLOAD:
             # Draw star.
             self.star_buffer.render(cr, gtk.gdk.Rectangle(rect.x, rect.y, ITEM_STAR_AREA_WIDTH, ITEM_HEIGHT))
-            
+
             draw_text(
                 cr,
                 self.status_text,
@@ -1249,7 +1251,7 @@ class UpgradeItem(TreeItem):
                 rect.width - ITEM_STAR_AREA_WIDTH - self.STATUS_PADDING_X,
                 ITEM_HEIGHT,
                 )
-            
+
             pixbuf = app_theme.get_pixbuf("button/stop.png").get_pixbuf()
             draw_pixbuf(
                 cr,
@@ -1259,13 +1261,13 @@ class UpgradeItem(TreeItem):
                 )
         elif self.status == self.STATUS_IN_DOWNLOAD:
             self.progress_buffer.render(
-                cr, 
+                cr,
                 gtk.gdk.Rectangle(
-                    rect.x, 
-                    rect.y + (ITEM_HEIGHT - PROGRESSBAR_HEIGHT) / 2, 
-                    ITEM_STAR_AREA_WIDTH, 
+                    rect.x,
+                    rect.y + (ITEM_HEIGHT - PROGRESSBAR_HEIGHT) / 2,
+                    ITEM_STAR_AREA_WIDTH,
                     PROGRESSBAR_HEIGHT))
-            
+
             draw_text(
                 cr,
                 self.status_text,
@@ -1274,7 +1276,7 @@ class UpgradeItem(TreeItem):
                 rect.width - ITEM_STAR_AREA_WIDTH - self.STATUS_PADDING_X,
                 ITEM_HEIGHT,
                 )
-            
+
             pixbuf = app_theme.get_pixbuf("button/stop.png").get_pixbuf()
             draw_pixbuf(
                 cr,
@@ -1284,13 +1286,13 @@ class UpgradeItem(TreeItem):
                 )
         elif self.status == self.STATUS_WAIT_UPGRADE:
             self.progress_buffer.render(
-                cr, 
+                cr,
                 gtk.gdk.Rectangle(
-                    rect.x, 
-                    rect.y + (ITEM_HEIGHT - PROGRESSBAR_HEIGHT) / 2, 
-                    ITEM_STAR_AREA_WIDTH, 
+                    rect.x,
+                    rect.y + (ITEM_HEIGHT - PROGRESSBAR_HEIGHT) / 2,
+                    ITEM_STAR_AREA_WIDTH,
                     PROGRESSBAR_HEIGHT))
-            
+
             draw_text(
                 cr,
                 self.status_text,
@@ -1299,7 +1301,7 @@ class UpgradeItem(TreeItem):
                 rect.width - ITEM_STAR_AREA_WIDTH - self.STATUS_PADDING_X,
                 ITEM_HEIGHT,
                 )
-            
+
             pixbuf = app_theme.get_pixbuf("button/stop.png").get_pixbuf()
             draw_pixbuf(
                 cr,
@@ -1309,13 +1311,13 @@ class UpgradeItem(TreeItem):
                 )
         elif self.status == self.STATUS_IN_UPGRADE:
             self.progress_buffer.render(
-                cr, 
+                cr,
                 gtk.gdk.Rectangle(
-                    rect.x, 
-                    rect.y + (ITEM_HEIGHT - PROGRESSBAR_HEIGHT) / 2, 
-                    ITEM_STAR_AREA_WIDTH, 
+                    rect.x,
+                    rect.y + (ITEM_HEIGHT - PROGRESSBAR_HEIGHT) / 2,
+                    ITEM_STAR_AREA_WIDTH,
                     PROGRESSBAR_HEIGHT))
-            
+
             draw_text(
                 cr,
                 self.status_text,
@@ -1327,13 +1329,13 @@ class UpgradeItem(TreeItem):
         elif self.status == self.STATUS_UPGRADE_FINISH:
             # Draw progress.
             self.progress_buffer.render(
-                cr, 
+                cr,
                 gtk.gdk.Rectangle(
-                    rect.x, 
-                    rect.y + (ITEM_HEIGHT - PROGRESSBAR_HEIGHT) / 2, 
-                    ITEM_STAR_AREA_WIDTH, 
+                    rect.x,
+                    rect.y + (ITEM_HEIGHT - PROGRESSBAR_HEIGHT) / 2,
+                    ITEM_STAR_AREA_WIDTH,
                     PROGRESSBAR_HEIGHT))
-            
+
             draw_text(
                 cr,
                 self.status_text,
@@ -1345,7 +1347,7 @@ class UpgradeItem(TreeItem):
         elif self.status == self.STATUS_NORMAL:
             # Draw star.
             self.star_buffer.render(cr, gtk.gdk.Rectangle(rect.x, rect.y, ITEM_STAR_AREA_WIDTH, ITEM_HEIGHT))
-            
+
             # Draw button.
             if self.button_status == BUTTON_NORMAL:
                 pixbuf = app_theme.get_pixbuf("button/upgrade_normal.png").get_pixbuf()
@@ -1362,7 +1364,7 @@ class UpgradeItem(TreeItem):
         elif self.status == self.STATUS_PARSE_DOWNLOAD_FAILED:
             # Draw star.
             self.star_buffer.render(cr, gtk.gdk.Rectangle(rect.x, rect.y, ITEM_STAR_AREA_WIDTH, ITEM_HEIGHT))
-            
+
             draw_text(
                 cr,
                 self.status_text,
@@ -1371,100 +1373,100 @@ class UpgradeItem(TreeItem):
                 rect.width - ITEM_STAR_AREA_WIDTH - self.STATUS_PADDING_X,
                 ITEM_HEIGHT,
                 )
-        
+
     def get_height(self):
         return ITEM_HEIGHT
-    
+
     def get_column_widths(self):
         return [ITEM_CHECKBUTTON_WIDTH,
                 ITEM_INFO_AREA_WIDTH,
                 ITEM_NO_NOTIFY_AREA_WIDTH,
                 #ITEM_STAR_AREA_WIDTH + ITEM_BUTTON_AREA_WIDTH,
                 ]
-    
+
     def get_column_renders(self):
         return [self.render_check_button,
                 self.render_pkg_info,
                 self.render_no_notify,
                 #self.render_pkg_status,
                 ]
-    
+
     def unselect(self):
         pass
-    
+
     def select(self):
         pass
-    
+
     def unhover(self, column, offset_x, offset_y):
         pass
 
     def hover(self, column, offset_x, offset_y):
         pass
-    
+
     def motion_notify(self, column, offset_x, offset_y):
         if column == 0:
             if self.check_button_buffer.motion_button(offset_x, offset_y):
                 if self.redraw_request_callback:
                     self.redraw_request_callback(self)
-                    
-            global_event.emit("set-cursor", None)    
+
+            global_event.emit("set-cursor", None)
         elif column == 1:
             if self.is_in_icon_area(column, offset_x, offset_y):
-                global_event.emit("set-cursor", gtk.gdk.HAND2)    
+                global_event.emit("set-cursor", gtk.gdk.HAND2)
             elif self.is_in_name_area(column, offset_x, offset_y):
-                global_event.emit("set-cursor", gtk.gdk.HAND2)    
+                global_event.emit("set-cursor", gtk.gdk.HAND2)
             else:
-                global_event.emit("set-cursor", None)    
+                global_event.emit("set-cursor", None)
         elif column == 2:
-            global_event.emit("set-cursor", None)    
-            
+            global_event.emit("set-cursor", None)
+
             if self.status == self.STATUS_NORMAL:
                 if self.is_in_no_notify_area(column, offset_x, offset_y):
                     if not self.notify_button_hover:
                         self.notify_button_hover = True
-                
+
                         if self.redraw_request_callback:
                             self.redraw_request_callback(self)
-                            
-                        global_event.emit("set-cursor", gtk.gdk.HAND2)    
+
+                        global_event.emit("set-cursor", gtk.gdk.HAND2)
                 else:
                     if self.notify_button_hover:
                         self.notify_button_hover = False
-                
+
                         if self.redraw_request_callback:
                             self.redraw_request_callback(self)
-                            
-                        global_event.emit("set-cursor", None)    
+
+                        global_event.emit("set-cursor", None)
         elif column == 3:
             if self.status == self.STATUS_NORMAL:
                 if self.is_in_button_area(column, offset_x, offset_y):
                     self.button_status = BUTTON_HOVER
-                    
+
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
                 elif self.button_status != BUTTON_NORMAL:
                     self.button_status = BUTTON_NORMAL
-                    
+
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
-                        
+
                 if self.is_in_star_area(column, offset_x, offset_y):
                     global_event.emit("set-cursor", gtk.gdk.HAND2)
-                    
-                    times = offset_x / STAR_SIZE 
+
+                    times = offset_x / STAR_SIZE
                     self.grade_star = times * 2 + 2
-                        
-                    self.grade_star = min(self.grade_star, 10)    
+
+                    self.grade_star = min(self.grade_star, 10)
                     self.star_buffer.star_level = self.grade_star
-                    
+
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
                 else:
                     global_event.emit("set-cursor", None)
-                    
+
                     if self.star_buffer.star_level != self.star_level:
                         self.star_buffer.star_level = self.star_level
-                        
+
                         if self.redraw_request_callback:
                             self.redraw_request_callback(self)
             elif self.status == self.STATUS_WAIT_UPGRADE:
@@ -1472,7 +1474,7 @@ class UpgradeItem(TreeItem):
                     global_event.emit("set-cursor", gtk.gdk.HAND2)
                 else:
                     global_event.emit("set-cursor", None)
-    
+
     def button_press(self, column, offset_x, offset_y):
         if column == 0:
             if self.check_button_buffer.press_button(offset_x, offset_y):
@@ -1493,10 +1495,10 @@ class UpgradeItem(TreeItem):
                 if self.is_in_button_area(column, offset_x, offset_y):
                     self.status = self.STATUS_WAIT_DOWNLOAD
                     self.status_text = _("Waiting for download")
-                    
+
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
-                        
+
                     global_event.emit("upgrade-pkg", [self.pkg_name])
                 elif self.is_in_star_area(column, offset_x, offset_y):
                     global_event.emit("grade-pkg", self.pkg_name, self.grade_star)
@@ -1505,23 +1507,23 @@ class UpgradeItem(TreeItem):
                     self.status = self.STATUS_NORMAL
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
-                        
+
                     global_event.emit("remove-wait-download", [self.pkg_name])
             elif self.status == self.STATUS_IN_DOWNLOAD:
                 if self.is_stop_button_can_click(column, offset_x, offset_y):
                     self.status = self.STATUS_NORMAL
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
-                        
+
                     global_event.emit("stop-download-pkg", [self.pkg_name])
             elif self.status == self.STATUS_WAIT_UPGRADE:
                 if self.is_stop_button_can_click(column, offset_x, offset_y):
                     self.status = self.STATUS_NORMAL
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
-                        
+
                     global_event.emit("remove-wait-action", [(str((self.pkg_name, ACTION_UPGRADE)))])
-                
+
     def button_release(self, column, offset_x, offset_y):
         if column == 0 and self.check_button_buffer.release_button(offset_x, offset_y):
             if self.redraw_request_callback:
@@ -1531,42 +1533,42 @@ class UpgradeItem(TreeItem):
                 if self.is_in_no_notify_area(column, offset_x, offset_y):
                     if not self.notify_button_hover:
                         self.notify_button_hover = True
-                
+
                         if self.redraw_request_callback:
                             self.redraw_request_callback(self)
-                            
-                        global_event.emit("set-cursor", gtk.gdk.HAND2)    
+
+                        global_event.emit("set-cursor", gtk.gdk.HAND2)
                 else:
                     if self.notify_button_hover:
                         self.notify_button_hover = False
-                
+
                         if self.redraw_request_callback:
                             self.redraw_request_callback(self)
-                            
-                        global_event.emit("set-cursor", None)    
-                    
+
+                        global_event.emit("set-cursor", None)
+
     def single_click(self, column, offset_x, offset_y):
-        pass        
+        pass
 
     def double_click(self, column, offset_x, offset_y):
-        pass        
-    
+        pass
+
     def is_in_star_area(self, column, offset_x, offset_y):
         return (column == 3
-                and is_in_rect((offset_x, offset_y), 
+                and is_in_rect((offset_x, offset_y),
                                (0,
                                 (ITEM_HEIGHT - STAR_SIZE) / 2,
                                 ITEM_STAR_AREA_WIDTH,
                                 STAR_SIZE)))
-    
+
     def is_in_button_area(self, column, offset_x, offset_y):
-        return (column == 3 
-                and is_in_rect((offset_x, offset_y), 
+        return (column == 3
+                and is_in_rect((offset_x, offset_y),
                                (self.get_column_widths()[column] - ITEM_BUTTON_PADDING_RIGHT - self.button_width,
                                 (ITEM_HEIGHT - self.button_height) / 2,
                                 self.button_width,
                                 self.button_height)))
-    
+
     def is_stop_button_can_click(self, column, offset_x, offset_y):
         pixbuf = app_theme.get_pixbuf("button/stop.png").get_pixbuf()
         return (column == 3
@@ -1575,7 +1577,7 @@ class UpgradeItem(TreeItem):
                                 (ITEM_HEIGHT - pixbuf.get_height()) / 2,
                                 pixbuf.get_width(),
                                 pixbuf.get_height())))
-    
+
     def is_in_no_notify_area(self, column, offset_x, offset_y):
         return (column == 2
                 and is_in_rect((offset_x, offset_y),
@@ -1583,7 +1585,7 @@ class UpgradeItem(TreeItem):
                                 (ITEM_HEIGHT - ITEM_NO_NOTIFY_HEIGHT) / 2,
                                 ITEM_NO_NOTIFY_WIDTH,
                                 ITEM_NO_NOTIFY_HEIGHT)))
-            
+
     def is_in_name_area(self, column, offset_x, offset_y):
         (name_width, name_height) = get_content_size(self.alias_name, NAME_SIZE)
         return (column == 1
@@ -1592,7 +1594,7 @@ class UpgradeItem(TreeItem):
                                 ITEM_PADDING_Y,
                                 name_width,
                                 NAME_SIZE)))
-    
+
     def is_in_icon_area(self, column, offset_x, offset_y):
         return (column == 1
                 and self.icon_pixbuf != None
@@ -1601,33 +1603,33 @@ class UpgradeItem(TreeItem):
                                 ITEM_PADDING_Y,
                                 self.icon_pixbuf.get_width(),
                                 self.icon_pixbuf.get_height())))
-    
+
     def download_ready(self):
         self.status = self.STATUS_READY_DOWNLOAD
         self.status_text = _("Dependencies analyzing")
-    
+
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
-                
+
     def download_wait(self):
         self.status = self.STATUS_WAIT_DOWNLOAD
         self.status_text = _("Waiting for download")
 
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
-    
+
     def download_start(self):
         self.status = self.STATUS_IN_DOWNLOAD
         self.status_text = _("Downloading")
-    
+
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
-            
+
     def download_update(self, percent, speed):
         self.status = self.STATUS_IN_DOWNLOAD
         self.progress_buffer.progress = percent
         self.status_text = "%s/s" % (format_file_size(speed))
-        
+
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
 
@@ -1635,45 +1637,45 @@ class UpgradeItem(TreeItem):
         self.status = self.STATUS_WAIT_UPGRADE
         self.progress_buffer.progress = 0
         self.status_text = _("Waiting for upgrade")
-    
+
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
 
     def download_stop(self):
         pass
-            
+
     def download_parse_failed(self):
         self.status = self.STATUS_PARSE_DOWNLOAD_FAILED
         self.status_text = _("Dependencies analysis failed")
-    
+
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
-            
-        global_event.emit("request-clear-failed-action", self.pkg_name, ACTION_UPGRADE)    
-            
+
+        global_event.emit("request-clear-failed-action", self.pkg_name, ACTION_UPGRADE)
+
     def action_start(self):
         self.status = self.STATUS_IN_UPGRADE
         self.status_text = _("Upgrading")
-    
+
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
-                
+
     def action_update(self, percent):
         self.status = self.STATUS_IN_UPGRADE
         self.status_text = _("Upgrading")
         self.progress_buffer.progress = percent
-        
+
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
-            
+
     def action_finish(self):
         self.status = self.STATUS_UPGRADE_FINISH
         self.progress_buffer.progress = 100
         self.status_text = _("Upgrade completed")
-        
+
         if self.redraw_request_callback:
             self.redraw_request_callback(self)
-            
+
     def release_resource(self):
         '''
         Release item resource.
@@ -1687,33 +1689,33 @@ class UpgradeItem(TreeItem):
         >>> return True
 
         This is TreeView interface, you should implement it.
-        
+
         @return: Return True if do release work, otherwise return False.
-        
+
         When this function return True, TreeView will call function gc.collect() to release object to release memory.
         '''
         if self.icon_pixbuf:
             del self.icon_pixbuf
             self.icon_pixbuf = None
 
-        return True    
-    
-gobject.type_register(UpgradeItem)        
+        return True
+
+gobject.type_register(UpgradeItem)
 
 class NoNotifyItem(TreeItem):
     '''
     class docs
     '''
-    
+
     STATUS_NORMAL = 1
     STATUS_WAIT_DOWNLOAD = 2
     STATUS_IN_DOWNLOAD = 3
     STATUS_WAIT_UPGRADE = 4
     STATUS_IN_UPGRADE = 5
     STATUS_UPGRADE_FINISH = 6
-    
+
     STATUS_PADDING_X = 15
-    
+
     def __init__(self, pkg_name, pkg_version, data_manager):
         '''
         init docs
@@ -1723,55 +1725,55 @@ class NoNotifyItem(TreeItem):
         self.pkg_version = pkg_version
         self.data_manager = data_manager
         self.icon_pixbuf = None
-        
+
         info = data_manager.get_item_pkg_info(self.pkg_name)
         self.alias_name = info[1]
         self.short_desc = info[2]
         star = 5.0
         self.star_level = get_star_level(star)
         self.star_buffer = DscStarBuffer(pkg_name)
-        
+
         self.grade_star = 0
-        
+
         button_pixbuf = app_theme.get_pixbuf("button/upgrade_normal.png").get_pixbuf()
         (self.button_width, self.button_height) = button_pixbuf.get_width(), button_pixbuf.get_height()
         self.button_status = BUTTON_NORMAL
-        
+
         self.status = self.STATUS_NORMAL
         self.status_text = ""
         self.progress_buffer = ProgressBuffer()
-        
+
         self.check_button_buffer = CheckButtonBuffer(
             True,
             ITEM_CHECKBUTTON_PADDING_X,
             ITEM_CHECKBUTTON_PADDING_Y)
         self.notify_button_hover = False
-        
+
     def render_check_button(self, cr, rect):
         if self.row_index % 2 == 1:
             cr.set_source_rgba(1, 1, 1, 0.5)
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
-        
+
         self.check_button_buffer.render(cr, rect)
-        
+
     def render_pkg_info(self, cr, rect):
         if self.row_index % 2 == 1:
             cr.set_source_rgba(1, 1, 1, 0.5)
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
-        
+
         if self.icon_pixbuf == None:
-            self.icon_pixbuf = gtk.gdk.pixbuf_new_from_file(get_icon_pixbuf_path(self.pkg_name))        
-            
+            self.icon_pixbuf = gtk.gdk.pixbuf_new_from_file(get_icon_pixbuf_path(self.pkg_name))
+
         render_pkg_info(cr, rect, self.alias_name, self.pkg_name, self.icon_pixbuf, self.pkg_version, self.short_desc, -ITEM_PADDING_X)
-        
+
     def render_notify_again(self, cr, rect):
         if self.notify_button_hover:
             text_color = "#00AAFF"
         else:
             text_color = "#000000"
-        
+
         pixbuf = app_theme.get_pixbuf("button/upgrade_press.png").get_pixbuf()
         draw_text(
             cr,
@@ -1782,100 +1784,100 @@ class NoNotifyItem(TreeItem):
             ITEM_NOTIFY_AGAIN_HEIGHT,
             text_color=text_color,
             )
-        
+
     def render_pkg_status(self, cr, rect):
         if self.row_index % 2 == 1:
             cr.set_source_rgba(1, 1, 1, 0.5)
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
-        
+
         if self.status == self.STATUS_NORMAL:
             # Draw star.
             #self.star_buffer.render(cr, gtk.gdk.Rectangle(rect.x, rect.y, ITEM_STAR_AREA_WIDTH, ITEM_HEIGHT))
-            
+
             self.render_notify_again(cr, rect)
-        
+
     def get_height(self):
         return ITEM_HEIGHT
-    
+
     def get_column_widths(self):
         return [ITEM_CHECKBUTTON_WIDTH,
                 ITEM_INFO_AREA_WIDTH,
                 ITEM_STAR_AREA_WIDTH + ITEM_BUTTON_AREA_WIDTH]
-    
+
     def get_column_renders(self):
         return [self.render_check_button,
                 self.render_pkg_info,
                 self.render_pkg_status]
-    
+
     def unselect(self):
         pass
-    
+
     def select(self):
         pass
-    
+
     def unhover(self, column, offset_x, offset_y):
         pass
 
     def hover(self, column, offset_x, offset_y):
         pass
-    
+
     def motion_notify(self, column, offset_x, offset_y):
         if column == 0:
             if self.check_button_buffer.motion_button(offset_x, offset_y):
                 if self.redraw_request_callback:
                     self.redraw_request_callback(self)
-        elif column == 1:            
+        elif column == 1:
             if self.is_in_icon_area(column, offset_x, offset_y):
-                global_event.emit("set-cursor", gtk.gdk.HAND2)    
+                global_event.emit("set-cursor", gtk.gdk.HAND2)
             elif self.is_in_name_area(column, offset_x, offset_y):
-                global_event.emit("set-cursor", gtk.gdk.HAND2)    
+                global_event.emit("set-cursor", gtk.gdk.HAND2)
             else:
-                global_event.emit("set-cursor", None)    
+                global_event.emit("set-cursor", None)
         elif column == 2:
             if self.status == self.STATUS_NORMAL:
                 if self.is_in_star_area(column, offset_x, offset_y):
                     global_event.emit("set-cursor", gtk.gdk.HAND2)
-                    
-                    times = offset_x / STAR_SIZE 
+
+                    times = offset_x / STAR_SIZE
                     self.grade_star = times * 2 + 2
-                        
-                    self.grade_star = min(self.grade_star, 10)    
+
+                    self.grade_star = min(self.grade_star, 10)
                     self.star_buffer.star_level = self.grade_star
-                    
+
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
                 else:
                     global_event.emit("set-cursor", None)
-                    
+
                     if self.star_buffer.star_level != self.star_level:
                         self.star_buffer.star_level = self.star_level
-                        
+
                         if self.redraw_request_callback:
                             self.redraw_request_callback(self)
-                            
+
             if self.is_in_notify_again_area(column, offset_x, offset_y):
                 if not self.notify_button_hover:
                     self.notify_button_hover = True
 
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
-                        
-                    global_event.emit("set-cursor", gtk.gdk.HAND2)    
+
+                    global_event.emit("set-cursor", gtk.gdk.HAND2)
             else:
                 if self.notify_button_hover:
                     self.notify_button_hover = False
 
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
-                        
-                    global_event.emit("set-cursor", None)    
-                    
+
+                    global_event.emit("set-cursor", None)
+
     def button_press(self, column, offset_x, offset_y):
         if column == 0:
             if self.check_button_buffer.press_button(offset_x, offset_y):
                 global_event.emit("click-notify-check-button")
-                
+
                 if self.redraw_request_callback:
                     self.redraw_request_callback(self)
         elif column == 1:
@@ -1888,7 +1890,7 @@ class NoNotifyItem(TreeItem):
                 global_event.emit("grade-pkg", self.pkg_name, self.grade_star)
             elif self.is_in_notify_again_area(column, offset_x, offset_y):
                 global_event.emit("notify-again-pkg", self.pkg_name)
-                
+
     def button_release(self, column, offset_x, offset_y):
         if column == 0 and self.check_button_buffer.release_button(offset_x, offset_y):
             if self.redraw_request_callback:
@@ -1900,31 +1902,31 @@ class NoNotifyItem(TreeItem):
 
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
-                        
-                    global_event.emit("set-cursor", gtk.gdk.HAND2)    
+
+                    global_event.emit("set-cursor", gtk.gdk.HAND2)
             else:
                 if self.notify_button_hover:
                     self.notify_button_hover = False
 
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
-                        
-                    global_event.emit("set-cursor", None)    
-                    
+
+                    global_event.emit("set-cursor", None)
+
     def single_click(self, column, offset_x, offset_y):
-        pass        
+        pass
 
     def double_click(self, column, offset_x, offset_y):
-        pass        
-    
+        pass
+
     def is_in_star_area(self, column, offset_x, offset_y):
         return (column == 2
-                and is_in_rect((offset_x, offset_y), 
+                and is_in_rect((offset_x, offset_y),
                                (0,
                                 (ITEM_HEIGHT - STAR_SIZE) / 2,
                                 ITEM_STAR_AREA_WIDTH,
                                 STAR_SIZE)))
-    
+
     def is_in_notify_again_area(self, column, offset_x, offset_y):
         pixbuf = app_theme.get_pixbuf("button/upgrade_press.png").get_pixbuf()
         return (column == 2
@@ -1935,7 +1937,7 @@ class NoNotifyItem(TreeItem):
                                 ITEM_NOTIFY_AGAIN_HEIGHT,
                                 )
                                ))
-            
+
     def is_in_name_area(self, column, offset_x, offset_y):
         (name_width, name_height) = get_content_size(self.alias_name, NAME_SIZE)
         return (column == 1
@@ -1944,7 +1946,7 @@ class NoNotifyItem(TreeItem):
                                 ITEM_PADDING_Y,
                                 name_width,
                                 NAME_SIZE)))
-    
+
     def is_in_icon_area(self, column, offset_x, offset_y):
         return (column == 1
                 and self.icon_pixbuf != None
@@ -1953,7 +1955,7 @@ class NoNotifyItem(TreeItem):
                                 ITEM_PADDING_Y,
                                 self.icon_pixbuf.get_width(),
                                 self.icon_pixbuf.get_height())))
-    
+
     def release_resource(self):
         '''
         Release item resource.
@@ -1967,15 +1969,15 @@ class NoNotifyItem(TreeItem):
         >>> return True
 
         This is TreeView interface, you should implement it.
-        
+
         @return: Return True if do release work, otherwise return False.
-        
+
         When this function return True, TreeView will call function gc.collect() to release object to release memory.
         '''
         if self.icon_pixbuf:
             del self.icon_pixbuf
             self.icon_pixbuf = None
 
-        return True    
-    
+        return True
+
 gobject.type_register(NoNotifyItem)
