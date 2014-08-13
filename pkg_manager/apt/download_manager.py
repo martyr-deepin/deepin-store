@@ -22,144 +22,176 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from deepin_storm.tasks import MultiTaskObject
-from deepin_storm.services import FetchService
 from deepin_storm.logger import Logger
-from deepin_storm.report import parse_bytes, parse_time
 
 import sys
+import dbus
+
+DOWNLOAD_DBUS_NAME = "com.deepin.download.service"
+DOWNLOAD_DBUS_PATH = "/com/deepin/download/service"
+DOWNLOAD_DBUS_INTERFACE = "com.deepin.download.service"
 
 class DownloadManager(Logger):
-    def __init__(self, global_event=None, number=5, verbose=False):
+    def __init__(self, global_event=None, verbose=False):
 
         self.global_event = global_event
-        self.fetch_service_thread = FetchService(number)
-        self.fetch_service_thread.start()
         self.verbose = verbose
 
-        self.fetch_files_dict = {}
+        system_bus = dbus.SystemBus()
+        bus_object = system_bus.get_object(DOWNLOAD_DBUS_NAME, DOWNLOAD_DBUS_PATH)
+        self.download_dbus_interface = dbus.Interface(bus_object, DOWNLOAD_DBUS_INTERFACE)
 
-    def add_download(self, pkg_name, action_type, download_urls, all_pkg_names=[], 
-            all_change_pkgs=[], file_save_dir="/var/cache/apt/archives"):
+        self.download_dbus_interface.connect_to_signal(
+                signal_name="Start",
+                handler_function=self.start_download
+                )
+        self.download_dbus_interface.connect_to_signal(
+                signal_name="Update",
+                handler_function=self.update_download
+                )
+        self.download_dbus_interface.connect_to_signal(
+                signal_name="Finish",
+                handler_function=self.finish_download
+                )
+        self.download_dbus_interface.connect_to_signal(
+                signal_name="Stop",
+                handler_function=self.stop_download
+                )
+        self.download_dbus_interface.connect_to_signal(
+                signal_name="Pause",
+                handler_function=self.pause_download
+                )
+        self.download_dbus_interface.connect_to_signal(
+                signal_name="Error",
+                handler_function=self.download_error
+                )
 
-        self.loginfo("add download: %s" % download_urls)
-        fetch_files = MultiTaskObject(download_urls, output_dir=file_save_dir,
-                task_name=pkg_name)
+        self.download_task_info = {}
+        self.task_name_to_id = {}
 
-        if self.global_event:
-            fetch_files.connect("start", self.start_download)
-            fetch_files.connect("update", self.update_download)
-            fetch_files.connect("finish", self.finish_download)
-            fetch_files.connect("pause", self.pause_download)
-            fetch_files.connect("stop", self.stop_download)
-            fetch_files.connect("error", self.download_error)
+    def add_download(self,
+            task_name,
+            action_type,
+            download_urls,
+            download_sizes=[],
+            download_md5s=[],
+            all_task_names=[],
+            all_change_pkgs=[],
+            file_save_dir="/var/cache/apt/archives"
+            ):
 
-        self.fetch_files_dict[pkg_name] = {
-            "fetch_files" : fetch_files,
+        task_id = self.download_dbus_interface.AddTask(
+            task_name,
+            download_urls,
+            download_sizes,
+            download_md5s,
+            file_save_dir,
+            )
+
+        self.download_task_info[task_id] = {
+            "task_name": task_name,
             "action_type" : action_type,
-            "all_pkg_names": all_pkg_names,
+            "all_task_names": all_task_names,
             "all_change_pkgs": all_change_pkgs,
             "status" : "wait"
             }
-        self.fetch_service_thread.add_missions([fetch_files,])
+        if self.task_name_to_id.has_key(task_name):
+            self.logwarn("repeat task name:", task_name)
+        self.task_name_to_id[task_name] = task_id
 
-    def start_download(self, task, data=None):
-        pkg_name = task.task_name
-        if self.fetch_files_dict.has_key(pkg_name):
-            task_info = self.fetch_files_dict[pkg_name]
+        if self.verbose:
+            self.loginfo("Add download for %s urls:" % len(download_urls))
+            for url in download_urls:
+                self.loginfo(">>> " + url)
+
+    def start_download(self, task_id):
+        if self.download_task_info.has_key(task_id):
+            task_info = self.download_task_info[task_id]
+
             task_info["status"] = "start"
             action_type = task_info["action_type"]
+            task_name = task_info["task_name"]
 
-            self.global_event.emit("download-start", pkg_name, action_type)
+            self.global_event.emit("download-start", task_name, action_type)
             if self.verbose:
-                self.loginfo("%s download start" % pkg_name)
+                self.loginfo("%s download start" % task_name)
 
-    def update_download(self, task, data):
-        pkg_name = task.task_name
-        if self.fetch_files_dict.has_key(pkg_name):
-            task_info = self.fetch_files_dict[pkg_name]
+    def update_download(self, task_id, progress, speed, finish_number,
+            total_number, downloaded_size, total_size):
+        if self.download_task_info.has_key(task_id):
+
+            task_info = self.download_task_info[task_id]
+
             task_info["status"] = "update"
-            total = len(task_info["all_change_pkgs"])
             action_type = task_info["action_type"]
+            task_name = task_info["task_name"]
 
-            if isinstance(task, MultiTaskObject):
-                finish_number = len(task.task_finish_list)
-            else:
-                finish_number = 0
-
-            self.global_event.emit("download-update", pkg_name, action_type, 
-                    (data.progress, data.speed, finish_number, total, data.downloaded,
-                    data.filesize))
+            self.global_event.emit("download-update", task_name, action_type,
+                    (progress, speed, finish_number, total_number,
+                    downloaded_size, total_size))
             if self.verbose:
-                self.print_update(task, data)
+                pass
 
-    def print_update(self, task, data):
-        return 
-        progress = "%d%%" % data.progress
-        speed = parse_bytes(data.speed)
-        remaining = parse_time(data.remaining)
-        filesize = parse_bytes(data.filesize)
-        downloaded = parse_bytes(data.downloaded)
+    def download_error(self, task_id, error_code, error_string):
+        if self.download_task_info.has_key(task_id):
+            task_info = self.download_task_info[task_id]
 
-        sys.stdout.flush()
-        s = "\r%s: %s/s - %s, progress: %s, total: %s, remaining time: %s"
-        print s % (task.task_name, speed, downloaded, progress, filesize, remaining),
-
-    def download_error(self, task, error_info):
-        pkg_name = task.task_name
-        if self.fetch_files_dict.has_key(pkg_name):
-            task_info = self.fetch_files_dict[pkg_name]
-            self.fetch_files_dict.pop(pkg_name)
             action_type = task_info["action_type"]
+            task_name = task_info['task_name']
 
-            if isinstance(error_info, list):
-                #sub_task = error_info[1]
-                error_info = error_info[0]
+            self.download_task_info.pop(task_id)
 
-            self.global_event.emit("download-error", pkg_name, action_type, error_info)
+            self.global_event.emit("download-error", task_name, action_type,
+                    error_string)
             if self.verbose:
-                self.logerror("%s download error: %s" % (pkg_name, error_info))
+                self.logerror("%s download error: %s" % (task_name, error_string))
 
-    def finish_download(self, task, data=None):
-        pkg_name = task.task_name
-        if self.fetch_files_dict.has_key(pkg_name):
-            task_info = self.fetch_files_dict[pkg_name]
-            self.fetch_files_dict.pop(pkg_name)
+    def finish_download(self, task_id):
+        if self.download_task_info.has_key(task_id):
+            task_info = self.download_task_info[task_id]
+
             action_type = task_info["action_type"]
-            all_pkg_names = task_info["all_pkg_names"]
+            all_task_names = task_info["all_task_names"]
+            task_name = task_info['task_name']
 
-            self.global_event.emit("download-finish", pkg_name, action_type,
-                    all_pkg_names)
+            self.download_task_info.pop(task_id)
+
+            self.global_event.emit("download-finish", task_name, action_type,
+                    all_task_names)
             if self.verbose:
                 sys.stdout.flush()
-                self.loginfo("%s download finish" % (pkg_name,))
+                self.loginfo("%s download finish" % (task_name,))
 
-    def pause_download(self, task, data=None):
-        pkg_name = task.task_name
-        if self.fetch_files_dict.has_key(pkg_name):
-            task_info = self.fetch_files_dict[pkg_name]
+    def pause_download(self, task_id):
+        if self.download_task_info.has_key(task_id):
+            task_info = self.download_task_info[task_id]
+
             task_info["status"] = "stop"
             action_type = task_info['action_type']
+            task_name = task_info['task_name']
 
-            self.global_event.emit("download-stop", pkg_name, action_type)
+            self.global_event.emit("download-stop", task_name, action_type)
             if self.verbose:
-                self.loginfo("%s download pause" % (pkg_name,))
+                self.loginfo("%s download pause" % (task_name,))
 
-    def stop_download(self, task, data=None):
-        pkg_name = task.task_name
-        if self.fetch_files_dict.has_key(pkg_name):
-            task_info = self.fetch_files_dict[pkg_name]
+    def stop_download(self, task_id):
+        if self.download_task_info.has_key(task_id):
+            task_info = self.download_task_info[task_id]
+
             task_info["status"] = "stop"
             action_type = task_info["action_type"]
+            task_name = task_info['task_name']
 
-            self.global_event.emit("download-stop", pkg_name, action_type)
+            self.global_event.emit("download-stop", task_name, action_type)
             if self.verbose:
-                self.loginfo("%s download stop" % (pkg_name,))
+                self.loginfo("%s download stop" % (task_name,))
 
-    def stop_wait_download(self, pkg_name):
-        if self.fetch_files_dict.has_key(pkg_name):
-            self.fetch_files_dict[pkg_name]["fetch_files"].stop()
-            self.fetch_files_dict.pop(pkg_name)
+    def stop_wait_download(self, task_name):
+        if self.task_name_to_id.has_key(task_name):
+            task_id = self.task_name_to_id[task_name]
+            self.download_dbus_interface.CancelTask(task_id)
+            self.download_task_info.pop(task_id)
+            self.task_name_to_id.pop(task_name)
 
 if __name__ == "__main__":
     import gtk
