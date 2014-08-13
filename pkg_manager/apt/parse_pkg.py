@@ -3,20 +3,20 @@
 
 # Copyright (C) 2011 ~ 2012 Deepin, Inc.
 #               2011 ~ 2012 Wang Yong
-# 
+#
 # Author:     Wang Yong <lazycat.manatee@gmail.com>
 # Maintainer: Wang Yong <lazycat.manatee@gmail.com>
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -127,7 +127,7 @@ def get_pkg_dependence(cache, pkg_name):
         pkg.mark_upgrade()
     elif not cache.is_pkg_installed(pkg_name):
         pkg.mark_install()
-        
+
     # Get package information.
     pkgs = sorted(cache.get_changes(), key=lambda pkg: pkg.name)
     cache._depcache.init()
@@ -146,12 +146,12 @@ def get_pkg_own_size(cache, pkg_name):
             return int(version.installed_size)
         except:
             return 0
-    
+
 def check_pkg_download_info(pkgs):
     total = len(pkgs)
     if total >= 1:
         pkgs = [pkg for pkg in pkgs if not pkg.marked_delete and not pkg_file_has_exist(pkg)]
-        
+
         if len(pkgs) == 0:
             return (DOWNLOAD_STATUS_NOTNEED, None)
         else:
@@ -160,27 +160,27 @@ def check_pkg_download_info(pkgs):
                 hash_infos = []
                 pkg_sizes = []
                 names = []
-                
+
                 for pkg in pkgs:
                     version = pkg.candidate
-                    hashtype, hashvalue = get_hash(version)
+                    md5value = version.md5 if version.md5 else ""
                     pkg_uris = version.uris
                     pkg_size = int(version.size)
-                    
+
                     urls.append(pkg_uris[0])
-                    hash_infos.append((hashtype, hashvalue))
+                    hash_infos.append(md5value)
                     pkg_sizes.append(pkg_size)
                     names.append(pkg.name)
-                    
+
                 return (names, urls, hash_infos, pkg_sizes)
             except Exception, e:
                 print "get_pkg_download_info error: %s" % (e)
                 return (DOWNLOAD_STATUS_ERROR, e)
     else:
         return (DOWNLOAD_STATUS_NOTNEED, None)
-    
+
 def get_cache_archive_dir():
-    return apt_pkg.config.find_dir("Dir::Cache::Archives")    
+    return apt_pkg.config.find_dir("Dir::Cache::Archives")
 
 def get_filename(version):
     '''Get file name.'''
@@ -193,8 +193,8 @@ def pkg_file_has_exist(pkg):
     pkg_path = os.path.join(get_cache_archive_dir(), pkg_name)
     if not os.path.exists(pkg_path) or os.stat(pkg_path).st_size != candidate.size:
         return False
-    
-    # Hash check 
+
+    # Hash check
     hash_type, hash_value = get_hash(pkg.candidate)
     try:
         return check_hash(pkg_path, hash_type, hash_value)
@@ -202,18 +202,18 @@ def pkg_file_has_exist(pkg):
         if e.errno != errno.ENOENT:
             print "Failed to check hash for %s: %s" % (pkg_name, e)
         return False
-    
+
 def get_hash(version):
     '''Get hash value.'''
-    if version.sha256:
+    if version.md5:
+        return ("md5", version.md5)
+    elif version.sha256:
         return ("sha256", version.sha256)
     elif version.sha1:
         return ("sha1", version.sha1)
-    elif version.md5:
-        return ("md5", version.md5)
     else:
         return (None, None)
-    
+
 def check_hash(path, hash_type, hash_value):
     '''Check hash value.'''
     hash_fun = hashlib.new(hash_type)
@@ -242,7 +242,7 @@ def get_pkg_dependence_file_path(cache, pkg_name):
         pkg.mark_upgrade()
     elif not cache.is_pkg_installed(pkg_name):
         pkg.mark_install()
-        
+
     # Get package information.
     pkgs = sorted(cache.get_changes(), key=lambda pkg: pkg.name)
     cache._depcache.init()
@@ -254,7 +254,7 @@ def get_pkg_dependence_file_path(cache, pkg_name):
 if __name__ == "__main__":
     from apt_cache import AptCache
     cache = AptCache()
-    
+
     # deb_package = debfile.DebPackage("/test/Download/geany_1.22+dfsg-2_amd64.deb", cache)
     # print deb_package.VERSION_NONE, deb_package.VERSION_OUTDATED, deb_package.VERSION_SAME, deb_package.VERSION_NEWER
     # print deb_package.compare_to_version_in_cache()
