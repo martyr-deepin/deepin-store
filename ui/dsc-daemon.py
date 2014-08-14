@@ -3,20 +3,20 @@
 
 # Copyright (C) 2012 ~ 2013 Deepin, Inc.
 #               2012 ~ 2013 Kaisheng Ye
-# 
+#
 # Author:     Kaisheng Ye <kaisheng.ye@gmail.com>
 # Maintainer: Kaisheng Ye <kaisheng.ye@gmail.com>
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -110,7 +110,7 @@ class SendStatistics(threading.Thread):
 
     def run(self):
         if self.has_running():
-            return 
+            return
 
         global config
         uid = config.get('statistics', 'uid')
@@ -134,7 +134,7 @@ class NetworkDetector(gobject.GObject):
     NETWORK_STATUS_FAILED = 1
 
     __gsignals__ = {
-            "network-status-changed":(gobject.SIGNAL_RUN_LAST, 
+            "network-status-changed":(gobject.SIGNAL_RUN_LAST,
                                       gobject.TYPE_NONE,
                                       (gobject.TYPE_INT, ))
         }
@@ -257,9 +257,9 @@ class Update(dbus.service.Object, Logger):
         bus_object = self.system_bus.get_object(DSC_SERVICE_NAME, DSC_SERVICE_PATH)
         self.bus_interface = dbus.Interface(bus_object, DSC_SERVICE_NAME)
         self.system_bus.add_signal_receiver(
-                self.signal_receiver, 
-                signal_name="update_signal", 
-                dbus_interface=DSC_SERVICE_NAME, 
+                self.signal_receiver,
+                signal_name="update_signal",
+                dbus_interface=DSC_SERVICE_NAME,
                 path=DSC_SERVICE_PATH)
 
     def signal_receiver(self, messages):
@@ -275,9 +275,9 @@ class Update(dbus.service.Object, Logger):
                 update_num = len(pkg_infos)
                 remind_num = update_num - len(self.bus_interface.read_no_notify_config(NO_NOTIFY_FILE))
                 self.loginfo("Remind update number: %s" % remind_num)
-                if remind_num < 0: 
+                if remind_num < 0:
                     self.logerror("Error for no notify function\nUpdate number: \
-                            %s\nNo notify number: %s" % 
+                            %s\nNo notify number: %s" %
                             (update_num, update_num-remind_num))
                 elif remind_num > 0 and remind_num != self.remind_num:
                     if remind_num != 1:
@@ -346,7 +346,7 @@ class Update(dbus.service.Object, Logger):
         else:
             False
 
-    @dbus.service.method(DSC_UPDATE_DAEMON_NAME, in_signature="", out_signature="b")    
+    @dbus.service.method(DSC_UPDATE_DAEMON_NAME, in_signature="", out_signature="b")
     def get_update_list_status(self):
         return self.is_in_update_list
 

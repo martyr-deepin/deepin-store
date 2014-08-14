@@ -36,10 +36,10 @@ from deepin_utils.config import Config
 from deepin_utils.file import touch_file
 
 from constant import (
-        CONFIG_INFO_PATH, 
-        DEFAULT_UPDATE_INTERVAL, 
-        DEFAULT_DOWNLOAD_DIRECTORY, 
-        DEFAULT_DOWNLOAD_NUMBER, 
+        CONFIG_INFO_PATH,
+        DEFAULT_UPDATE_INTERVAL,
+        DEFAULT_DOWNLOAD_DIRECTORY,
+        DEFAULT_DOWNLOAD_NUMBER,
         PROGRAM_NAME,
         dsc_root_dir,
         LANGUAGE
@@ -75,9 +75,9 @@ def show_notify(body, summary=None, actions=[]):
             replaces_id,
             app_icon,
             summary,
-            body, 
-            actions, 
-            hints, 
+            body,
+            actions,
+            hints,
             timeout
         )
     except:
@@ -216,7 +216,7 @@ def write_log(message):
 
 def handle_dbus_reply(obj=None):
     global_logger.loginfo("Dbus Reply OK: %s", obj)
-    
+
 def handle_dbus_error(obj, error=None):
     global_logger.logerror("Dbus Reply Error: %s", obj)
     global_logger.logerror("ERROR MESSAGE: %s", error)
@@ -258,7 +258,7 @@ def is_first_started():
 
 def set_first_started():
     config = get_config_info_config()
-    config.set("settings", "first_started", "false")    
+    config.set("settings", "first_started", "false")
     config.write()
 
 def get_purg_flag():
@@ -324,7 +324,7 @@ def get_software_download_dir():
         return config_info_config.get('download', 'directory')
     else:
         return DEFAULT_DOWNLOAD_DIRECTORY
-    
+
 def set_software_download_dir(local_dir):
     config_info_config = get_config_info_config()
     config_info_config.set('download', 'directory', local_dir)
@@ -336,7 +336,7 @@ def get_download_number():
         return config_info_config.get('download', 'number')
     else:
         return DEFAULT_DOWNLOAD_NUMBER
-    
+
 def set_download_number(number):
     config_info_config = get_config_info_config()
     config_info_config.set('download', 'number', number)

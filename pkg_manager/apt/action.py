@@ -70,16 +70,16 @@ class AptProcess(apb.InstallProgress):
         global_event.emit("action-conffile", (current, new))
 
         log("conffile: %s %s" % (current, new))
-        
+
     def error(self, pkg_name, errorstr):
         global_event.emit("action-error", (self.pkg_name, errorstr))
-        
+
         log("error: %s" % errorstr)
 
     def start_update(self):
         '''Start update.'''
         log("start action...")
-        
+
     def status_change(self, pkg, percent, status):
         '''Progress status change.'''
         global_event.emit("action-update", (self.pkg_name, self.action_type, int(percent), status))
@@ -176,20 +176,20 @@ class AptActionThread(MissionThread):
     '''
     class docs
     '''
-	
+
     def __init__(self, pkg_cache, pkg_name, action_type, simulate=False, deb_file="", purge_flag=False):
         '''
         init docs
         '''
         MissionThread.__init__(self)
-        
+
         self.pkg_cache = pkg_cache
         self.pkg_name = pkg_name
         self.action_type = action_type
         self.simulate = simulate
         self.deb_file = deb_file
         self.purge_flag = purge_flag
-        
+
     def start_mission(self):
         log("start thread")
         start = time.time()
@@ -202,16 +202,16 @@ class AptActionThread(MissionThread):
             self.pkg_cache[self.pkg_name].mark_upgrade()
         elif self.action_type == ACTION_UNINSTALL:
             self.pkg_cache[self.pkg_name].mark_delete(purge=self.purge_flag)
-            
+
         '''
         for pkg in self.pkg_cache:
             if pkg.is_auto_removable:
                 pkg.mark_delete()
         '''
 
-        pkg_info_list = map(lambda pkg: (pkg.name, pkg.marked_delete, pkg.marked_install, pkg.marked_upgrade), 
+        pkg_info_list = map(lambda pkg: (pkg.name, pkg.marked_delete, pkg.marked_install, pkg.marked_upgrade),
                             self.pkg_cache.get_changes())
-        
+
         if len(pkg_info_list) > 0:
             global_event.emit("action-start", (self.pkg_name, self.action_type))
             try:
@@ -225,7 +225,7 @@ class AptActionThread(MissionThread):
         else:
             log("nothing to change")
         log("end thread")
-        
+
     def get_mission_result(self):
         '''Get misssion retsult.'''
         return [(self.pkg_name, self.action_type)]
@@ -236,13 +236,13 @@ class MultiAptActionThread(MissionThread):
         init docs
         '''
         MissionThread.__init__(self)
-        
+
         self.pkg_cache = pkg_cache
         self.pkg_names = pkg_names
         self.action_type = action_type
         self.purge_flag = purge_flag
         self.upgrade_id = upgrade_id
-        
+
     def start_mission(self):
         log("start thread")
         start = time.time()
@@ -256,10 +256,10 @@ class MultiAptActionThread(MissionThread):
                 self.pkg_cache[pkg_name].mark_upgrade()
             elif self.action_type == ACTION_UNINSTALL:
                 self.pkg_cache[self.pkg_name].mark_delete(purge=self.purge_flag)
-            
-        pkg_info_list = map(lambda pkg: (pkg.name, pkg.marked_delete, pkg.marked_install, pkg.marked_upgrade), 
+
+        pkg_info_list = map(lambda pkg: (pkg.name, pkg.marked_delete, pkg.marked_install, pkg.marked_upgrade),
                             self.pkg_cache.get_changes())
-        
+
         if len(pkg_info_list) > 0:
             for pkg_info in pkg_info_list:
                 global_event.emit("action-start", (pkg_info[0], self.action_type))
@@ -275,7 +275,7 @@ class MultiAptActionThread(MissionThread):
         else:
             log("nothing to change")
         log("end thread")
-        
+
     def get_mission_result(self):
         '''Get misssion retsult.'''
         return [(pkg_name, self.action_type) for pkg_name in self.pkg_names]
@@ -284,26 +284,26 @@ class AptActionPool(MissionThreadPool):
     '''
     class docs
     '''
-	
+
     def __init__(self, pkg_cache):
         '''
         init docs
         '''
         MissionThreadPool.__init__(
-            self, 
+            self,
             1,
             1,
             self.clean_action,
             )
-        
+
         self.pkg_cache = pkg_cache
         self.install_action_dict = {}
         self.uninstall_action_dict = {}
         self.upgrade_action_dict = {}
-        
+
         global_event.register_event("action-start", self.start_action)
         global_event.register_event("action-update", self.update_action)
-        
+
     def start_action(self, (pkg_name, action_type)):
         if action_type == ACTION_INSTALL:
             if self.install_action_dict.has_key(pkg_name):
@@ -325,7 +325,7 @@ class AptActionPool(MissionThreadPool):
         elif action_type == ACTION_UPGRADE:
             if self.upgrade_action_dict.has_key(pkg_name):
                 self.upgrade_action_dict[pkg_name]["status"] = "update"
-        
+
     def clean_action(self, mission_result_list):
         for result in mission_result_list:
             if result:
@@ -340,7 +340,7 @@ class AptActionPool(MissionThreadPool):
                     elif action_type == ACTION_UPGRADE:
                         if self.upgrade_action_dict.has_key(pkg_name):
                             self.upgrade_action_dict.pop(pkg_name)
-        
+
     def add_install_action(self, pkg_names, simulate=False, deb_file=""):
         missions = []
         for pkg_name in pkg_names:
@@ -349,9 +349,9 @@ class AptActionPool(MissionThreadPool):
                 "thread" : thread,
                 "status" : "wait"}
             missions.append(thread)
-            
+
         self.add_missions(missions)
-        
+
     def add_uninstall_action(self, pkg_name, simulate=False, purge=False):
         missions = []
         thread = AptActionThread(self.pkg_cache, pkg_name, ACTION_UNINSTALL, simulate, purge)
@@ -359,9 +359,9 @@ class AptActionPool(MissionThreadPool):
             "thread" : thread,
             "status" : "wait"}
         missions.append(thread)
-            
+
         self.add_missions(missions)
-        
+
     def add_upgrade_action(self, pkg_names, simulate=False):
         missions = []
         for pkg_name in pkg_names:
@@ -370,7 +370,7 @@ class AptActionPool(MissionThreadPool):
                 "thread" : thread,
                 "status" : "wait"}
             missions.append(thread)
-            
+
         self.add_missions(missions)
 
     def add_multi_upgrade_mission(self, pkg_names, upgrade_id):
@@ -382,14 +382,14 @@ class AptActionPool(MissionThreadPool):
                 "thread" : thread,
                 "status" : "wait"}
         missions.append(thread)
-            
+
         self.add_missions(missions)
 
     def add_update_list_mission(self):
         missions = []
         thread = UpdateList(self.pkg_cache)
         missions.append(thread)
-            
+
         self.add_missions(missions)
 
     def remove_wait_missions(self, pkg_infos):
@@ -397,9 +397,9 @@ class AptActionPool(MissionThreadPool):
         for pkg_info in pkg_infos:
             (pkg_name, action_type) = eval(pkg_info)
             self.clean_action([(pkg_name, action_type)])
-            
+
             for wait_mission in self.wait_mission_list:
                 if wait_mission.pkg_name == pkg_name and wait_mission.action_type == action_type:
                     remove_missions.append(wait_mission)
-                    
+
         self.remove_from_wait_missions(remove_missions)

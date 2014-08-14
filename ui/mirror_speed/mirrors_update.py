@@ -20,7 +20,7 @@ def add_mirror(mirror_hostname, db=mirrors_db_path):
     db_cursor.execute(sql_select, sql_args)
     if db_cursor.fetchone():
         print "data exists for hostname:", mirror_hostname
-        return 
+        return
 
     # get mirror info from geoip
     print "fetch ip address for hostname:", mirror_hostname

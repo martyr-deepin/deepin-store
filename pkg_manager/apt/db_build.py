@@ -29,7 +29,7 @@ locale.setlocale(locale.LC_ALL, '')
 class BuildSoftwareDB(object):
     def __init__(self, cache):
         self.cache = cache
-        self.db_path = os.path.join(get_parent_dir(__file__, 3), 
+        self.db_path = os.path.join(get_parent_dir(__file__, 3),
                 "data/cache_soft.db")
 
         remove_file(self.db_path)
@@ -47,7 +47,7 @@ class BuildSoftwareDB(object):
             try:
                 self.cursor.execute(
                     "INSERT INTO software VALUES(?,?,?,?,?,?)",
-                    (pkg.name, 
+                    (pkg.name,
                     unicode(pkg.candidate.summary),
                     unicode(pkg.candidate.description),
                     unicode(pkg.candidate.version),

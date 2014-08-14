@@ -53,72 +53,72 @@ def switch_tab(notebook_box, tab_box):
 def draw_alpha_mask(cr, x, y, width, height, color_name):
     if not isinstance(color_name, tuple):
         color_info = app_theme.get_alpha_color(color_name).get_color_info()
-    else:    
+    else:
         color_info = color_name
 
     cr.set_source_rgba(*alpha_color_hex_to_cairo(color_info))
     cr.rectangle(x, y, width, height)
     cr.fill()
-    
+
 def draw_single_mask(cr, x, y, width, height, color_name):
     if color_name.startswith("#"):
         color = color_name
-    else:    
+    else:
         color = app_theme.get_color(color_name).get_color()
     cairo_color = color_hex_to_cairo(color)
     cr.set_source_rgb(*cairo_color)
     cr.rectangle(x, y, width, height)
     cr.fill()
-    
+
 def get_font_families():
     '''Get all font families in system.'''
     fontmap = pangocairo.cairo_font_map_get_default()
     return sorted(map(lambda f: f.get_name(), fontmap.list_families()))
 
-def draw_item_mask(cr, x, y, width, height, name):    
+def draw_item_mask(cr, x, y, width, height, name):
     draw_vlinear(cr, x, y, width, height,
                  app_theme.get_shadow_color(name).get_color_info())
-    
-def render_text(cr, content, rect, color, font_size, align=pango.ALIGN_CENTER):    
+
+def render_text(cr, content, rect, color, font_size, align=pango.ALIGN_CENTER):
     draw_text(cr, content, rect.x, rect.y, rect.width, rect.height, font_size, color, alignment=align)
-    
+
 def render_item_text(cr, content, rect, in_select, in_highlight, align=pango.ALIGN_LEFT, font_size=9, error=False):
     if in_highlight:
         color = app_theme.get_color("simpleSelectItem").get_color()
-    else:    
+    else:
         # color = app_theme.get_color("labelText").get_color()
         color = "#707070"
 
-    if error:    
-        color = "#ff0000"        
-        
-    content = utils.xmlescape(content)    
-    draw_text(cr, content, rect.x, rect.y, rect.width, rect.height, font_size, color, alignment=align)    
-    
-def create_separator_box(padding_x=0, padding_y=0):    
+    if error:
+        color = "#ff0000"
+
+    content = utils.xmlescape(content)
+    draw_text(cr, content, rect.x, rect.y, rect.width, rect.height, font_size, color, alignment=align)
+
+def create_separator_box(padding_x=0, padding_y=0):
     separator_box = HSeparator(
         app_theme.get_shadow_color("hSeparator").get_color_info(),
         padding_x, padding_y)
     return separator_box
 
 def draw_separator(cr, x, y, width, height):
-    draw_hlinear(cr, x, y, width, height, 
+    draw_hlinear(cr, x, y, width, height,
                  app_theme.get_shadow_color("hSeparator").get_color_info())
-    
-def create_right_align(paddings=None):    
+
+def create_right_align(paddings=None):
     align = gtk.Alignment()
     if paddings:
         align.set_padding(*paddings)
     align.set(0, 0, 0, 1)
     return align
-    
+
 def create_left_align(paddings=None):
     align = gtk.Alignment()
     if paddings:
         align.set_padding(*paddings)
     align.set(0, 0, 1, 0)
     return align
-    
+
 def create_upper_align(paddings=None):
     align = gtk.Alignment()
     if paddings:
@@ -139,7 +139,7 @@ def set_widget_gravity(widget, gravity=(0, 0, 0, 0), paddings=(0, 0, 0, 0)):
     align.set_padding(*paddings)
     align.add(widget)
     return align
-    
+
 def set_widget_hcenter(widget):
     hbox = gtk.HBox()
     hbox.pack_start(create_right_align(), True, True)
@@ -159,7 +159,7 @@ def set_widget_vcenter(widget):
 #     align.set(0.5, 0.5, 0, 0)
 #     align.add(widget)
 #     return align
-    
+
 def set_widget_left(widget, paddings=None):
     hbox = gtk.HBox()
     hbox.pack_start(widget, False, False)
@@ -170,15 +170,15 @@ def set_widget_left(widget, paddings=None):
 def set_widget_right(widget, paddings=None):
     hbox = gtk.HBox()
     hbox.pack_start(create_right_align(paddings), True, True)
-    hbox.pack_start(widget, False, False)    
+    hbox.pack_start(widget, False, False)
     return hbox
 
 def draw_range(cr, x, y, width, height, color_name):
     if color_name.startswith("#"):
         color = color_name
-    else:    
+    else:
         color = app_theme.get_color(color_name).get_color()
-    cairo_color = color_hex_to_cairo(color)        
+    cairo_color = color_hex_to_cairo(color)
     with cairo_disable_antialias(cr):
         cr.set_line_width(1)
         cr.set_source_rgb(*cairo_color)
@@ -188,9 +188,9 @@ def draw_range(cr, x, y, width, height, color_name):
 def draw_line(cr, start, end, color_name):
     if color_name.startswith("#"):
         color = color_name
-    else:    
+    else:
         color = app_theme.get_color(color_name).get_color()
-    cairo_color = color_hex_to_cairo(color)        
+    cairo_color = color_hex_to_cairo(color)
     with cairo_disable_antialias(cr):
         cr.set_line_width(1)
         cr.set_source_rgb(*cairo_color)
@@ -201,7 +201,7 @@ def draw_line(cr, start, end, color_name):
 def cairo_color_to_hex(cairo_color):
     '''
     Convert cairo color to hex color.
-    
+
     @param rgb_color: (red, green, blue)
     @return: Return hex color.
     '''
@@ -213,13 +213,13 @@ def set_widget_resize(widget1, widget2, sizes1=(80, 22), sizes2=(175, 22), spaci
     sub_box1.set_size_request(*sizes1)
     sub_box1.add(set_widget_right(widget1))
     main_box.pack_start(sub_box1)
-    
+
     sub_box = gtk.HBox()
     sub_box.set_size_request(*sizes2)
     sub_box.add(set_widget_left(widget2))
     main_box.pack_start(sub_box)
     return main_box
-    
-    
-    
+
+
+
 

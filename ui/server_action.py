@@ -3,20 +3,20 @@
 
 # Copyright (C) 2012 ~ 2013 Deepin, Inc.
 #               2012 ~ 2013 Kaisheng Ye
-# 
+#
 # Author:     Kaisheng Ye <kaisheng.ye@gmail.com>
 # Maintainer: Kaisheng Ye <kaisheng.ye@gmail.com>
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -68,7 +68,7 @@ class FetchAlbumData(td.Thread):
                 request_url,
                 timeout=POST_TIMEOUT,
             )
-            json_data = json.loads(connection.read())            
+            json_data = json.loads(connection.read())
         except Exception, e:
             traceback.print_exc(file=sys.stdout)
             print "Fetch album data failed: %s." % (e)
@@ -109,7 +109,7 @@ class FetchHomeData(td.Thread):
         global_event.emit("download-home-infos-finish", json_data)
 
 class FetchImageFromUpyun(td.Thread):
-    
+
     def __init__(self, image_path, callback_method=None):
         td.Thread.__init__(self)
         self.callback_method = callback_method
@@ -150,7 +150,7 @@ class FetchVoteInfo(td.Thread):
                 data=urllib.urlencode(args),
                 timeout=POST_TIMEOUT
                 )
-            voteJson = json.loads(connection.read())            
+            voteJson = json.loads(connection.read())
             self.updateVoteCallback(voteJson[self.pkgName])
         except Exception, e:
             print "Fetch vote data failed: %s." % (e)
@@ -183,7 +183,7 @@ class SendVote(td.Thread):
 
 class SendUninstallCount(td.Thread):
     '''Send uninstall count.'''
-	
+
     def __init__(self, pkgName):
         '''Init for vote.'''
         td.Thread.__init__(self)
@@ -194,7 +194,7 @@ class SendUninstallCount(td.Thread):
         '''Run'''
         try:
             args = {'a' : 'u', 'n' : self.pkgName}
-            
+
             urllib2.urlopen(
                 "%s/softcenter/v1/analytics" % (SERVER_ADDRESS),
                 data=urllib.urlencode(args),
@@ -208,20 +208,20 @@ class SendUninstallCount(td.Thread):
 
 class SendDownloadCount(td.Thread):
     '''Send download count.'''
-	
+
     def __init__(self, pkgName):
         '''Init for vote.'''
         td.Thread.__init__(self)
-        self.setDaemon(True) # make thread exit when main program exit 
+        self.setDaemon(True) # make thread exit when main program exit
         self.pkgName = pkgName
 
     def run(self):
         '''Run'''
         try:
             args = {
-                'a' : 'd', 
+                'a' : 'd',
                 'n' : self.pkgName}
-            
+
             result = urllib2.urlopen(
                 "%s/softcenter/v1/analytics" % (SERVER_ADDRESS),
                 data=urllib.urlencode(args),

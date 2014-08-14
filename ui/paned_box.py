@@ -56,7 +56,7 @@ class PanedBox(gtk.Bin):
             colormap=self.get_colormap(),
             wclass=gtk.gdk.INPUT_OUTPUT,
             visual=self.get_visual(),
-            event_mask=(self.get_events() 
+            event_mask=(self.get_events()
                       | gtk.gdk.EXPOSURE_MASK
                       | gtk.gdk.BUTTON_MOTION_MASK
                       | gtk.gdk.ENTER_NOTIFY_MASK
@@ -78,9 +78,9 @@ class PanedBox(gtk.Bin):
                 wclass=gtk.gdk.INPUT_OUTPUT,
                 x=0,
                 y=0 + self.allocation.height - self.control_box_height,
-                width=self.allocation.width, 
+                width=self.allocation.width,
                 height=self.control_box_height,
-                event_mask=(self.get_events() 
+                event_mask=(self.get_events()
                           | gtk.gdk.EXPOSURE_MASK
                           | gtk.gdk.BUTTON_PRESS_MASK
                           | gtk.gdk.BUTTON_RELEASE_MASK
@@ -134,7 +134,7 @@ class PanedBox(gtk.Bin):
         min_x = 0
         max_x = 0 + self.bottom_window.get_size()[0]
         min_y = 0 + self.allocation.height - self.control_box_height
-        max_y = 0 + self.allocation.height 
+        max_y = 0 + self.allocation.height
         return (min_y <= int(e.y) <= max_y and min_x <= int(e.x) <= max_x)
 
     def __in_bottom_win(self, e):
@@ -142,7 +142,7 @@ class PanedBox(gtk.Bin):
         min_x = 0
         max_x = 0 + width
         min_y = 0 + height - self.control_box_height
-        max_y = 0 + height 
+        max_y = 0 + height
         return (min_y <= int(e.y) <= max_y and min_x <= int(e.x) <= max_x)
 
     def add_bottom_widget(self, widget):
@@ -175,7 +175,7 @@ class PanedBox(gtk.Bin):
         self.allocation = allocation
         self.allocation.x = 0
         self.allocation.y = 0
-        # 
+        #
         self.set_all_size()
 
     def set_all_size(self):
@@ -183,16 +183,16 @@ class PanedBox(gtk.Bin):
             self.window.move_resize(*self.allocation)
         if self.content_box:
             child1_allocation = gtk.gdk.Rectangle()
-            child1_allocation.x = 0 
-            child1_allocation.y = 0 
+            child1_allocation.x = 0
+            child1_allocation.y = 0
             child1_allocation.width = self.allocation.width
             child1_allocation.height = self.allocation.height
             self.content_box.size_allocate(child1_allocation)
             # top and bottom window move resize.
             if self.flags() & gtk.REALIZED:
-                self.bottom_window.move_resize(0, 
-                                               0 + self.allocation.height - self.control_box_height, 
-                                               child1_allocation.width, 
+                self.bottom_window.move_resize(0,
+                                               0 + self.allocation.height - self.control_box_height,
+                                               child1_allocation.width,
                                                self.control_box_height)
                 if self.control_box:
                     bottom_child_allocation = gtk.gdk.Rectangle()

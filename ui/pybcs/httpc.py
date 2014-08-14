@@ -40,19 +40,19 @@ try:
 except:
     pass
 
-#this is a function decorator, 
+#this is a function decorator,
 def network(func):
     '''
     这是一个decorator, 表示该函数会发出http 操作.
     '''
-    if not hasattr(func, 'attr') : 
+    if not hasattr(func, 'attr') :
         func.attr = []
     func.attr += ['network']
     return func
 
 ###########################################################
 # http client
-# there is no unicode in this lib 
+# there is no unicode in this lib
 ###########################################################
 
 class HTTPException(Exception):
@@ -60,7 +60,7 @@ class HTTPException(Exception):
     描述一个HTTP 异常. 包含如下字段:
     e.status
     e.header
-    e.body   
+    e.body
     '''
     def __init__(self, resp, msg=None):
         Exception.__init__(self)
@@ -68,7 +68,7 @@ class HTTPException(Exception):
         self.header = resp['header']
         self.body   = resp['body']
         self.msg    = msg
-        
+
         try:
             body = json.loads(self.body)
             self.errno = body['Error']['code']
@@ -76,7 +76,7 @@ class HTTPException(Exception):
         except Exception,e:
             self.errno = None
             self.errmsg= None
-            
+
     def __str__(self):
         return "status:[%d]\nheader:%serrno:[%s]\nerrmsg:%s(%s)"%(self.status,self.header,self.errno,self.errmsg, str(self.msg))
 
@@ -106,7 +106,7 @@ class HTTPC:
     ''' define the http client interface'''
     def __init__(self):
         pass
-        
+
     def get(self, url, headers={}):
         '''
         发起HTTP GET 请求
@@ -152,7 +152,7 @@ class HTTPC:
     def post_multipart(self, url, local_file, filename='file1', fields={}, headers={}):
         '''
         发起HTTP Multipart POST 请求
-        if local_file is None, 
+        if local_file is None,
         we will just post fields
         '''
         raise NotImplementException()
@@ -179,7 +179,7 @@ class PyCurlHTTPC(HTTPC):
     def __init__(self, proxy = None, limit_rate = 0):
         # limit rate
         pass
-		
+
     def get(self, url, headers={}):
         logger.info('pycurl -X GET "%s" ', url)
         self._init_curl('GET', url, headers)
@@ -205,13 +205,13 @@ class PyCurlHTTPC(HTTPC):
         logger.info('pycurl -X PUT -d "%s" "%s" ', shorten(body, 100), url)
         self._init_curl('PUT', url, headers)
         req_buf =  StringIO(body)
-        self.c.setopt(pycurl.INFILESIZE, len(body)) 
+        self.c.setopt(pycurl.INFILESIZE, len(body))
         self.c.setopt(pycurl.READFUNCTION, req_buf.read)
         return self._do_request()
 
     def post(self, url, body='', headers={}, log=True):
         headers = copy.deepcopy(headers)
-        if log: 
+        if log:
             logger.info('pycurl -X POST "%s" ', url)
         headersnew = { 'Content-Length': str(len(body))}
         headers.update(headersnew)
@@ -223,25 +223,25 @@ class PyCurlHTTPC(HTTPC):
     def put_file(self, url, local_file, headers={}):
         logger.info('pycurl -X PUT -T"%s" "%s" ', local_file, url)
         self._init_curl('PUT', url, headers)
-        filesize = os.path.getsize(local_file) 
-        self.c.setopt(pycurl.INFILESIZE, filesize) 
-        self.c.setopt(pycurl.INFILE, open(local_file, 'rb')) 
+        filesize = os.path.getsize(local_file)
+        self.c.setopt(pycurl.INFILESIZE, filesize)
+        self.c.setopt(pycurl.INFILE, open(local_file, 'rb'))
         return self._do_request()
 
     #just for PyCurl
     def put_file_part(self, url, local_file, start, length, headers={}):
         logger.info('pycurl -X PUT -T"%s[%d->%d]" "%s" ', local_file, start, length, url)
         self._init_curl('PUT', url, headers)
-        filesize = os.path.getsize(local_file) 
+        filesize = os.path.getsize(local_file)
 
-        self.c.setopt(pycurl.INFILESIZE, length) 
+        self.c.setopt(pycurl.INFILESIZE, length)
         self.c.setopt(pycurl.READFUNCTION, FilePartReader(open(local_file, 'rb'), start, length).read_callback)
 
         return self._do_request()
 
     def post_multipart(self, url, local_file, filename='file1', fields={}, headers={}):
         post_info = ' '.join( ['-F "%s=%s"' % (k,urllib.quote(v)) for (k,v) in fields.items()])
-        if local_file: 
+        if local_file:
             post_info += ' -F "%s=@%s" ' % (filename, local_file)
         logger.info('pycurl -X POST %s "%s" ', post_info, url)
         self._init_curl('POST', url, headers)
@@ -255,10 +255,10 @@ class PyCurlHTTPC(HTTPC):
         try:
             self.c.perform()
         except pycurl.error, e:
-            resp = {'status': 0, 
-                    'header' : {}, 
-                    'body': '', 
-                    'body_file': '', 
+            resp = {'status': 0,
+                    'header' : {},
+                    'body': '',
+                    'body_file': '',
                     }
             msg = str(e)
             raise HTTPException(resp, msg)
@@ -269,18 +269,18 @@ class PyCurlHTTPC(HTTPC):
 
         status, headers = self._parse_resp_headers(resp_header)
         self.c.close()
-        
-        rst = { 'status': status, 
-                'header' : headers, 
-                'body': resp_body, 
-                'body_file': self.c.resp_body_file, 
+
+        rst = { 'status': status,
+                'header' : headers,
+                'body': resp_body,
+                'body_file': self.c.resp_body_file,
                 }
-        if (status in [200, 206]): 
+        if (status in [200, 206]):
             return rst
         else:
             raise HTTPException(rst)
 
-    def _init_curl(self, verb, url, headers, 
+    def _init_curl(self, verb, url, headers,
             resp_body_file=None):
         self.c = pycurl.Curl()
         self.c.resp_header_buf = None
@@ -316,13 +316,13 @@ class PyCurlHTTPC(HTTPC):
         self.c.resp_body_buf = StringIO()
         self.c.setopt(pycurl.HEADERFUNCTION,    self.c.resp_header_buf.write)
 
-        if resp_body_file: 
-            self.c.resp_body_file = resp_body_file 
+        if resp_body_file:
+            self.c.resp_body_file = resp_body_file
             f = open(resp_body_file, "wb")
             self.c.setopt(pycurl.WRITEDATA, f)
         else:
             self.c.setopt(pycurl.WRITEFUNCTION,     self.c.resp_body_buf.write)
-    
+
     def _curl_log(self, debug_type, debug_msg):
         curl_out = [    pycurl.INFOTYPE_HEADER_OUT,         #2  find this out from pycurl.c
                         pycurl.INFOTYPE_DATA_OUT,           #4
@@ -330,7 +330,7 @@ class PyCurlHTTPC(HTTPC):
         curl_in  =  [   pycurl.INFOTYPE_HEADER_IN,          #1
                         pycurl.INFOTYPE_DATA_IN,            #3
                         pycurl.INFOTYPE_SSL_DATA_IN]        #5
-        curl_info = [   pycurl.INFOTYPE_TEXT]               #0 
+        curl_info = [   pycurl.INFOTYPE_TEXT]               #0
 
         if debug_type in curl_out:
             logger.debug("> %s" % debug_msg.strip())
@@ -342,11 +342,11 @@ class PyCurlHTTPC(HTTPC):
 
 class HttplibHTTPC(HTTPC):
     '''
-    HTTPC 的httplib 实现, 
+    HTTPC 的httplib 实现,
     '''
     def __init__(self):
         pass
-        
+
     #used by small response (get/put), not get_file
     def _request(self, verb, url, data, headers={}):
         response = self.send_request(verb, url, data, headers)
@@ -360,13 +360,13 @@ class HttplibHTTPC(HTTPC):
 
         logger.debug('< ' + shorten(data, 1024))
         response_headers = dict(response.getheaders())
-        rst = { 'status': response.status, 
-                'header' : response_headers, 
-                'body': resp_body, 
-                'body_file': None, 
+        rst = { 'status': response.status,
+                'header' : response_headers,
+                'body': resp_body,
+                'body_file': None,
                 }
 
-        if (response.status in [200, 206]): 
+        if (response.status in [200, 206]):
             return rst
         else:
             raise HTTPException(rst)
@@ -376,13 +376,13 @@ class HttplibHTTPC(HTTPC):
             return self._request(verb, url, data, headers)
         except httplib.IncompleteRead, e:
             rst = { 'status': 0,
-                   'header' : {}, 
-                   'body': '', 
-                   'body_file': '', 
+                   'header' : {},
+                   'body': '',
+                   'body_file': '',
                   }
             raise HTTPException(rst, 'transfer closed with bytes remaining to read !!! ' + str(e))
 
-    #used by all 
+    #used by all
     def send_request(self, verb, url, data, headers={}):
         logger.info('ll httplibcurl -X "%s" "%s" ', verb, url)
         for (k, v) in headers.items():
@@ -392,7 +392,7 @@ class HttplibHTTPC(HTTPC):
         o = urlparse(url)
         host = o.netloc
         path = o.path
-        if o.query: 
+        if o.query:
             path+='?'
             path+=o.query
 
@@ -440,10 +440,10 @@ class HttplibHTTPC(HTTPC):
         fout.close()
         response_headers = dict(response.getheaders())
 
-        rst = { 'status':  response.status, 
-                'header' : response_headers, 
-                'body':    None, 
-                'body_file': local_file, 
+        rst = { 'status':  response.status,
+                'header' : response_headers,
+                'body':    None,
+                'body_file': local_file,
                 }
 
         #check if read all response
@@ -453,7 +453,7 @@ class HttplibHTTPC(HTTPC):
         if bytes_remaining:
             raise HTTPException(rst, 'transfer closed with bytes remaining to read!!! %d bytes readed, %d bytes remained ' % (bytes_readed, bytes_remaining))
 
-        if (response.status in [200, 206]): 
+        if (response.status in [200, 206]):
             return rst
         else:
             raise HTTPException(rst)
@@ -475,7 +475,7 @@ class HttplibHTTPC(HTTPC):
                 'Content-Length': str(len(body))}
         headers.update(headersnew)
         #req = urllib2.Request(url, body, headers)
-        return self.post(url, body, headers) 
+        return self.post(url, body, headers)
 
     def put_file_part(self, url, local_file, start, length, headers={}):
         logger.warn('it is a tragedy to use `put_file_part` by httplib , YoU NeeD pycurl installed! ')
@@ -505,7 +505,7 @@ def encode_multipart_formdata(fields, files):
     L.append('--' + BOUNDARY + '--')
     L.append('')
     body = CRLF.join(L)
-    content_type = 'multipart/form-data; boundary=%s' % BOUNDARY                                                                                             
+    content_type = 'multipart/form-data; boundary=%s' % BOUNDARY
     return content_type, body
 
 def _get_content_type(filename):

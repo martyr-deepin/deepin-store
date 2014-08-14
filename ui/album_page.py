@@ -3,20 +3,20 @@
 
 # Copyright (C) 2011 ~ 2012 Deepin, Inc.
 #               2011 ~ 2012 Wang Yong
-# 
+#
 # Author:     Wang Yong <lazycat.manatee@gmail.com>
 # Maintainer: Wang Yong <lazycat.manatee@gmail.com>
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -54,7 +54,7 @@ class AlbumPage(gtk.VBox):
     '''
     class docs
     '''
-	
+
     def __init__(self, data_manager):
         '''
         init docs
@@ -67,7 +67,7 @@ class AlbumPage(gtk.VBox):
         self.album_summary_align = gtk.Alignment()
         self.album_summary_align.set(0.5, 0.5, 1, 1)
         self.album_summary_align.set_padding(0, 0, 0, 10)
-        
+
         self.album_detail_align = gtk.Alignment()
         self.album_detail_align.set(0.5, 0.5, 1, 1)
         self.album_detail_align.set_padding(5, 0, 0, 10)
@@ -89,7 +89,7 @@ class AlbumPage(gtk.VBox):
             self.network_connected_flag = True
             self.switch_page_view(self.loading_box)
             self.album_summary_view.try_fetch_data()
-        else:    
+        else:
             self.network_connected_flag = False
             self.switch_page_view(self.network_failed_box)
 
@@ -103,31 +103,31 @@ class AlbumPage(gtk.VBox):
 
     def switch_to_network_problem_view(self):
         self.switch_page_view(self.network_failed_box)
-        
+
     def switch_to_album_summary_view(self):
         self.in_detail_view = False
-        
+
         container_remove_all(self)
         container_remove_all(self.album_summary_align)
         self.album_summary_align.add(self.album_summary_view)
-        
+
         self.pack_start(self.album_summary_align, True, True)
-        
+
         self.show_all()
 
     def switch_to_album_detail_view(self, album_info):
         self.in_detail_view = True
-        
+
         container_remove_all(self)
         container_remove_all(self.album_detail_align)
         album_detail_page = AlbumDetailPage(self.data_manager, album_info)
         self.album_detail_align.add(album_detail_page)
-        
+
         self.pack_start(self.album_detail_align, True, True)
-        
+
         self.show_all()
         global_event.emit("update-current-status-pkg-page", album_detail_page.treeview)
-        
+
 gobject.type_register(AlbumPage)
 
 class AlbumSummaryView(gtk.VBox):
@@ -141,10 +141,10 @@ class AlbumSummaryView(gtk.VBox):
         '''
         gtk.VBox.__init__(self)
         self.scrolled_window = ScrolledWindow()
-        
+
         self.iconview = IconView()
         self.iconview.draw_mask = self.draw_mask
-        
+
         self.scrolled_window.add_child(self.iconview)
         self.pack_start(self.scrolled_window, True, True)
 
@@ -159,17 +159,17 @@ class AlbumSummaryView(gtk.VBox):
         if data:
             for album_info in data:
                 items.append(AlbumSummaryItem(album_info))
-            
+
             items.sort(key=attrgetter('album_order'), reverse=True)
             self.iconview.add_items(items)
             global_event.emit('switch-to-album-summary-view')
         else:
             global_event.emit('switch-to-network-problem-view')
-        
+
     def draw_mask(self, cr, x, y, w, h):
         '''
         Draw mask interface.
-        
+
         @param cr: Cairo context.
         @param x: X coordiante of draw area.
         @param y: Y coordiante of draw area.
@@ -180,28 +180,28 @@ class AlbumSummaryView(gtk.VBox):
                      [(0, ("#FFFFFF", 0.9)),
                       (1, ("#FFFFFF", 0.9)),]
                      )
-        
+
 gobject.type_register(AlbumSummaryView)
 
 class AlbumSummaryItem(IconItem):
     '''
     Icon item.
     '''
-    
+
     PICTURE_PADDING_X = 10
     PICTURE_PADDING_Y = 15
-    
+
     TITLE_PADDING_LEFT = 20
     TITLE_PADDING_RIGHT = 10
     TITLE_SIZE = 10
-    
+
     SUMMARY_PADDING_Y = 5
     SUMMARY_SIZE = 9
-	
+
     def __init__(self, album_info):
         '''
         Initialize ItemIcon class.
-        
+
         @param pixbuf: Icon pixbuf.
         '''
         super(AlbumSummaryItem, self).__init__()
@@ -223,43 +223,43 @@ class AlbumSummaryItem(IconItem):
     def emit_redraw_request(self):
         '''
         Emit `redraw-request` signal.
-        
+
         This is IconView interface, you should implement it.
         '''
         self.emit("redraw-request")
-        
+
     def get_width(self):
         '''
         Get item width.
-        
+
         This is IconView interface, you should implement it.
         '''
         return 355
-        
+
     def get_height(self):
         '''
         Get item height.
-        
+
         This is IconView interface, you should implement it.
         '''
         return 110
-    
+
     def render(self, cr, rect):
         '''
         Render item.
-        
+
         This is IconView interface, you should implement it.
         '''
         # Draw album picture.
         if self.pixbuf == None:
             self.pixbuf = gtk.gdk.pixbuf_new_from_file(DEFAULT_CACHE_IMAGE_PATH)
-            
+
         draw_pixbuf(cr,
                     self.pixbuf,
                     rect.x + self.PICTURE_PADDING_X,
                     rect.y + self.PICTURE_PADDING_Y,
-                    )    
-        
+                    )
+
         # Draw album title.
         text_width = rect.width - self.PICTURE_PADDING_X - self.pixbuf.get_width() - self.TITLE_PADDING_LEFT - self.TITLE_PADDING_RIGHT
         draw_text(cr,
@@ -273,10 +273,10 @@ class AlbumSummaryItem(IconItem):
                   vertical_alignment=TEXT_ALIGN_TOP,
                   wrap_width=text_width,
                   )
-        
+
         # Draw album summary.
         text_height = rect.height - self.PICTURE_PADDING_Y * 2 - self.TITLE_SIZE - self.SUMMARY_PADDING_Y
-        
+
         draw_text(cr,
                   self.album_summary,
                   rect.x + self.PICTURE_PADDING_X + self.pixbuf.get_width() + self.TITLE_PADDING_LEFT,
@@ -289,15 +289,15 @@ class AlbumSummaryItem(IconItem):
                   vertical_alignment=TEXT_ALIGN_TOP,
                   clip_line_count=3
                   )
-        
+
     def icon_item_button_press(self, x, y):
         '''
         Handle button-press event.
-        
+
         This is IconView interface, you should implement it.
         '''
         global_event.emit("switch-to-album-detail-view", self.album_info)
-    
+
     def icon_item_release_resource(self):
         '''
         Release item resource.
@@ -311,43 +311,43 @@ class AlbumSummaryItem(IconItem):
         >>> return True
 
         This is IconView interface, you should implement it.
-        
+
         @return: Return True if do release work, otherwise return False.
-        
+
         When this function return True, IconView will call function gc.collect() to release object to release memory.
         '''
         if self.pixbuf:
             del self.pixbuf
             self.pixbuf = None
-        
+
         return True
-        
+
 gobject.type_register(AlbumSummaryItem)
 
 class AlbumDetailPage(gtk.VBox):
     '''
     class docs
     '''
-	
+
     def __init__(self, data_manager, album_info):
         '''
         init docs
         '''
         gtk.VBox.__init__(self)
         self.treeview = TreeView(enable_drag_drop=False, expand_column=1)
-        
+
         items = []
         for software_info in album_info['softwares']:
             items.append(AlbumDetailItem(software_info, data_manager))
         self.treeview.add_items(items)
         self.treeview.draw_mask = self.draw_mask
-                
+
         self.pack_start(self.treeview, True, True)
-        
+
     def draw_mask(self, cr, x, y, w, h):
         '''
         Draw mask interface.
-        
+
         @param cr: Cairo context.
         @param x: X coordiante of draw area.
         @param y: Y coordiante of draw area.
@@ -358,34 +358,34 @@ class AlbumDetailPage(gtk.VBox):
                      [(0, ("#FFFFFF", 0.9)),
                       (1, ("#FFFFFF", 0.9)),]
                      )
-        
+
 gobject.type_register(AlbumDetailPage)
 
 class AlbumDetailItem(TreeItem):
     '''
     class docs
     '''
-    
+
     PICTURE_PADDING_X = 10
     PICTURE_PADDING_Y = 15
-    
+
     if LANGUAGE == 'en_US':
         TITLE_PADDING_LEFT = 20
         TITLE_SIZE = 9
-        
+
         SUMMARY_PADDING_Y = 30
         SUMMARY_SIZE = 8
     else:
         TITLE_PADDING_LEFT = 20
         TITLE_SIZE = 10
-        
+
         SUMMARY_PADDING_Y = 30
         SUMMARY_SIZE = 9
-    
+
     SUMMARY_WIDTH = 440
-    
+
     BUTTON_PADDING_X = 30
-	
+
     def __init__(self, software_info, data_manager):
         '''
         init docs
@@ -406,9 +406,9 @@ class AlbumDetailItem(TreeItem):
 
         FetchImageFromUpyun(self.software_pic, self.update_software_pic).start()
         self.pixbuf = None
-        
+
         self.height = 100
-        
+
         self.button_status = BUTTON_NORMAL
 
     @post_gui
@@ -429,16 +429,16 @@ class AlbumDetailItem(TreeItem):
         else:
             global_logger.logerror("%s: get_pkg_installed handle_dbus_error" % self.pkg_name)
             global_logger.logerror(status)
-        
+
     def render_pkg_picture(self, cr, rect):
         if self.pixbuf == None:
             self.pixbuf = gtk.gdk.pixbuf_new_from_file(DEFAULT_CACHE_IMAGE_PATH)
-            
+
         draw_pixbuf(cr,
                     self.pixbuf,
                     rect.x + self.PICTURE_PADDING_X,
                     rect.y + self.PICTURE_PADDING_Y)
-    
+
     def render_pkg_summary(self, cr, rect):
         # Draw album title.
         text_width = self.SUMMARY_WIDTH
@@ -452,7 +452,7 @@ class AlbumDetailItem(TreeItem):
                   text_color="#000000",
                   vertical_alignment=TEXT_ALIGN_TOP,
                   )
-    
+
         # Draw album summary.
         text_height = rect.height
         draw_text(cr,
@@ -467,7 +467,7 @@ class AlbumDetailItem(TreeItem):
                   vertical_alignment=TEXT_ALIGN_TOP,
                   clip_line_count=3,
                   )
-        
+
     def render_pkg_action(self, cr, rect):
         # Render button.
         name = ""
@@ -491,7 +491,7 @@ class AlbumDetailItem(TreeItem):
                 status = "hover"
             elif self.button_status == BUTTON_PRESS:
                 status = "press"
-                
+
             pixbuf = app_theme.get_pixbuf("%s_%s.png" % (name, status)).get_pixbuf()
             draw_pixbuf(
                 cr,
@@ -509,7 +509,7 @@ class AlbumDetailItem(TreeItem):
                 str_height,
                 wrap_width=rect.width,
             )
-        
+
     def is_in_button_area(self, column, offset_x, offset_y):
 
         pixbuf = app_theme.get_pixbuf("button/start_normal.png").get_pixbuf()
@@ -520,15 +520,15 @@ class AlbumDetailItem(TreeItem):
                                 pixbuf.get_width(),
                                 pixbuf.get_height()
                                 )))
-    
+
     def is_in_picture_area(self, column, offset_x, offset_y):
         return (column == 0
                 and is_in_rect((offset_x, offset_y),
-                               (self.PICTURE_PADDING_X, 
+                               (self.PICTURE_PADDING_X,
                                 self.PICTURE_PADDING_Y,
                                 self.pixbuf.get_width(),
                                 self.pixbuf.get_height())))
-    
+
     def is_in_name_area(self, column, offset_x, offset_y):
         (name_with, name_height) = get_content_size(self.pkg_title, self.TITLE_SIZE)
         return (column == 1
@@ -537,38 +537,38 @@ class AlbumDetailItem(TreeItem):
                                 self.PICTURE_PADDING_Y,
                                 name_with,
                                 name_height)))
-        
+
     def motion_notify(self, column, offset_x, offset_y):
         if column == 0:
             if self.is_in_picture_area(column, offset_x, offset_y):
-                global_event.emit("set-cursor", gtk.gdk.HAND2)    
+                global_event.emit("set-cursor", gtk.gdk.HAND2)
             else:
-                global_event.emit("set-cursor", None)    
+                global_event.emit("set-cursor", None)
         elif column == 1:
             if self.is_in_name_area(column, offset_x, offset_y):
-                global_event.emit("set-cursor", gtk.gdk.HAND2)    
+                global_event.emit("set-cursor", gtk.gdk.HAND2)
             else:
-                global_event.emit("set-cursor", None)    
+                global_event.emit("set-cursor", None)
         else:
             global_event.emit("set-cursor", None)
-                
+
             if self.is_in_button_area(column, offset_x, offset_y):
                 self.button_status = BUTTON_HOVER
-                
+
                 if self.redraw_request_callback:
                     self.redraw_request_callback(self, True)
             else:
                 self.button_status = BUTTON_NORMAL
-                
+
                 if self.redraw_request_callback:
                     self.redraw_request_callback(self, True)
-            
+
     def get_offset_with_button(self, offset_x, offset_y):
         pixbuf = app_theme.get_pixbuf("button/start_normal.png").get_pixbuf()
         popup_x = self.BUTTON_PADDING_X
         popup_y = (self.height - pixbuf.get_height()) / 2
         return (offset_x, offset_y, popup_x, popup_y)
-    
+
     def button_press(self, column, offset_x, offset_y):
         if column == 0:
             if self.is_in_picture_area(column, offset_x, offset_y):
@@ -577,62 +577,62 @@ class AlbumDetailItem(TreeItem):
         elif column == 1:
             if self.is_in_name_area(column, offset_x, offset_y):
                 global_event.emit("switch-to-detail-page", self.pkg_name)
-                global_event.emit("set-cursor", gtk.gdk.HAND2)    
-        else:        
+                global_event.emit("set-cursor", gtk.gdk.HAND2)
+        else:
             if self.is_in_button_area(column, offset_x, offset_y):
                 if self.desktops:
                     global_event.emit("start-pkg", self.alias_name, self.desktops, self.get_offset_with_button(offset_x, offset_y))
                 else:
                     global_event.emit("install-pkg", [self.pkg_name])
-                    
+
                 self.button_status = BUTTON_PRESS
-                    
+
                 if self.redraw_request_callback:
                     self.redraw_request_callback(self, True)
-                
+
     def button_release(self, column, offset_x, offset_y):
         if self.is_in_button_area(column, offset_x, offset_y):
             if self.button_status != BUTTON_HOVER:
                 self.button_status = BUTTON_HOVER
-                
+
                 if self.redraw_request_callback:
                     self.redraw_request_callback(self, True)
         else:
             if self.button_status != BUTTON_NORMAL:
                 self.button_status = BUTTON_NORMAL
-                
+
                 if self.redraw_request_callback:
                     self.redraw_request_callback(self, True)
-    
+
     def get_height(self):
         return self.height
-    
+
     def get_column_widths(self):
         return [160, -1, 110]
-    
+
     def get_column_renders(self):
         return [self.render_pkg_picture,
                 self.render_pkg_summary,
                 self.render_pkg_action]
-    
+
     def unselect(self):
         pass
-    
+
     def select(self):
         pass
-    
+
     def unhover(self, column, offset_x, offset_y):
         pass
-    
+
     def hover(self, column, offset_x, offset_y):
         pass
-    
+
     def single_click(self, column, offset_x, offset_y):
-        pass        
+        pass
 
     def double_click(self, column, offset_x, offset_y):
-        pass        
-    
+        pass
+
     def release_resource(self):
         '''
         Release item resource.
@@ -646,15 +646,15 @@ class AlbumDetailItem(TreeItem):
         >>> return True
 
         This is TreeView interface, you should implement it.
-        
+
         @return: Return True if do release work, otherwise return False.
-        
+
         When this function return True, TreeView will call function gc.collect() to release object to release memory.
         '''
         if self.pixbuf:
             del self.pixbuf
             self.pixbuf = None
 
-        return True    
-    
-gobject.type_register(AlbumDetailItem)        
+        return True
+
+gobject.type_register(AlbumDetailItem)

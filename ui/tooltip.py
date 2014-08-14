@@ -28,10 +28,10 @@ import math
 from dtk_cairo_blur import gaussian_blur
 from dtk.ui.constant import DEFAULT_FONT, DEFAULT_FONT_SIZE
 
-def cairo_popover_rectangle(widget, 
-                   surface_context, 
-                   trayicon_x, trayicon_y, 
-                   trayicon_w, trayicon_h, 
+def cairo_popover_rectangle(widget,
+                   surface_context,
+                   trayicon_x, trayicon_y,
+                   trayicon_w, trayicon_h,
                    radius):
     cr = surface_context
     x = trayicon_x
@@ -55,13 +55,13 @@ def cairo_popover_rectangle(widget,
            radius,
            0,
            math.pi * 0.5)
-        
+
     cr.arc(x + radius,
            y + h - radius,
            radius,
            math.pi * 0.5,
            math.pi)
-    
+
     cr.close_path()
 
 def new_surface(width, height):
@@ -72,7 +72,7 @@ def new_surface(width, height):
 def propagate_expose(widget, event):
     if hasattr(widget, "get_child") and widget.get_child() != None:
         widget.propagate_expose(widget.get_child(), event)
-        
+
 def get_text_size(text, text_size=DEFAULT_FONT_SIZE, text_font=DEFAULT_FONT):
     try:
         surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
@@ -93,14 +93,14 @@ def draw_text(cr, text, x, y, w=0, h=0,
               alignment=None,
               pango_list=None,
               markup=None):
-    cr.set_source_rgb(*color_hex_to_cairo(text_color)) 
+    cr.set_source_rgb(*color_hex_to_cairo(text_color))
 
     context = pangocairo.CairoContext(cr)
     layout = context.create_layout()
     # 设置字体.
     layout.set_font_description(pango.FontDescription("%s %s" % (text_font, text_size)))
     # 设置文本.
-    layout.set_text(text) 
+    layout.set_text(text)
     # add pango list attributes.
     if pango_list:
         layout.set_attributes(pango_list)
@@ -130,14 +130,14 @@ def draw_text(cr, text, x, y, w=0, h=0,
 def alpha_color_hex_to_cairo((color, alpha)):
     (r, g, b) = color_hex_to_cairo(color)
     return (r, g, b, alpha)
-    
+
 def color_hex_to_cairo(color):
     # 将 #FF0000 转换成 set_source_rgb 适应的值. 范围是 0.0 ~ 1.0
     gdk_color = gtk.gdk.color_parse(color)
     return (gdk_color.red / 65535.0, gdk_color.green / 65535.0, gdk_color.blue / 65535.0)
 
 
-SAHOW_VALUE = 2 
+SAHOW_VALUE = 2
 ARROW_WIDTH = 10
 
 DRAW_WIN_TYPE_BG = "bg"
@@ -157,11 +157,11 @@ class Window(gtk.Window):
         self.old_w = 0
         self.old_h = 0
         self.old_offset = 0
-        self.trayicon_x = SAHOW_VALUE * 2  
+        self.trayicon_x = SAHOW_VALUE * 2
         self.trayicon_y = SAHOW_VALUE * 2
         self.trayicon_border = 3
-        self.radius = 5 
-        self.ali_left = 8 
+        self.radius = 5
+        self.ali_left = 8
         self.ali_right = 8
         self.ali_top  = 8
         self.ali_bottom = 7
@@ -182,7 +182,7 @@ class Window(gtk.Window):
         self.set_decorated(False)
         self.set_app_paintable(True)
         #
-        
+
     def __init_widgets(self):
         self.__draw = gtk.EventBox()
         self.main_ali  = gtk.Alignment(1, 1, 1, 1)
@@ -221,17 +221,17 @@ class Window(gtk.Window):
         if self.draw_win_type == DRAW_WIN_TYPE_FG:
             self.draw_background(cr, rect)
         #
-        propagate_expose(widget, event)    
+        propagate_expose(widget, event)
         return True
 
     def draw_background(self, cr, rect):
         x, y, w, h = rect
         cr.save()
-        cairo_popover_rectangle(self, cr, 
-                      self.trayicon_x + self.trayicon_border + 1, 
-                      self.trayicon_y + self.trayicon_border + 1, 
-                      w, h + 1, 
-                      self.radius) 
+        cairo_popover_rectangle(self, cr,
+                      self.trayicon_x + self.trayicon_border + 1,
+                      self.trayicon_y + self.trayicon_border + 1,
+                      w, h + 1,
+                      self.radius)
         cr.clip()
         if self.bg_pixbuf:
             cr.set_source_pixbuf(self.bg_pixbuf, self.bg_x, self.bg_y)
@@ -247,7 +247,7 @@ class Window(gtk.Window):
         # !! no expose and blur.
         if ((self.old_w == w and self.old_h == h)):
             return False
-        # 
+        #
         self.surface, self.surface_cr = new_surface(w, h)
         self.__compute_shadow(w, h)
         self.old_w = w
@@ -255,8 +255,8 @@ class Window(gtk.Window):
 
     def __compute_shadow(self, w, h):
         # sahow.
-        cairo_popover_rectangle(self, self.surface_cr, 
-                      self.trayicon_x, self.trayicon_y, 
+        cairo_popover_rectangle(self, self.surface_cr,
+                      self.trayicon_x, self.trayicon_y,
                       w, h,
                       self.radius)
         self.surface_cr.set_source_rgba( # set sahow color.
@@ -267,11 +267,11 @@ class Window(gtk.Window):
         if self.draw_rectangle_bool:
             # out border.
             self.surface_cr.clip()
-            cairo_popover_rectangle(self, self.surface_cr, 
-                          self.trayicon_x + self.trayicon_border, 
-                          self.trayicon_y + self.trayicon_border, 
-                          w, h + 1, 
-                          self.radius) 
+            cairo_popover_rectangle(self, self.surface_cr,
+                          self.trayicon_x + self.trayicon_border,
+                          self.trayicon_y + self.trayicon_border,
+                          w, h + 1,
+                          self.radius)
             self.surface_cr.set_source_rgba( # set out border color.
                     *alpha_color_hex_to_cairo(self.border_out_color))
             self.surface_cr.set_line_width(self.border_width)
@@ -281,11 +281,11 @@ class Window(gtk.Window):
     def draw_in_border(self, w, h):
         # in border.
         self.surface_cr.reset_clip()
-        cairo_popover_rectangle(self, self.surface_cr, 
-                      self.trayicon_x + self.trayicon_border + 1, 
-                      self.trayicon_y + self.trayicon_border + 1, 
-                      w, h + 1, 
-                      self.radius) 
+        cairo_popover_rectangle(self, self.surface_cr,
+                      self.trayicon_x + self.trayicon_border + 1,
+                      self.trayicon_y + self.trayicon_border + 1,
+                      w, h + 1,
+                      self.radius)
         self.surface_cr.set_source_rgba(1, 1, 1, 1.0) # set in border color.
         self.surface_cr.set_line_width(self.border_width)
         self.surface_cr.fill()
@@ -330,7 +330,7 @@ class ToolTip(Window):
         height_padding = 15
         self.resize(1, 1)
         text_size = get_text_size("我们", text_size=self.text_size)
-        self.set_size_request(size[0] + width_padding + 17, 
+        self.set_size_request(size[0] + width_padding + 17,
                               text_size[1] + height_padding + 10)
 
     def __draw_btn_expose_event(self, widget, event):
@@ -339,9 +339,9 @@ class ToolTip(Window):
         # draw background.
         b_x_padding, b_y_padding, b_w_padding, b_h_padding = 2, 2, 4, 4
         cr.set_source_rgb(0, 0, 0)
-        cr.rectangle(rect.x + b_x_padding, 
-                     rect.y + b_y_padding, 
-                     rect.width - b_w_padding, 
+        cr.rectangle(rect.x + b_x_padding,
+                     rect.y + b_y_padding,
+                     rect.width - b_w_padding,
                      rect.height - b_h_padding)
         cr.fill()
         # draw text.
@@ -349,12 +349,12 @@ class ToolTip(Window):
         text = widget.get_label()
         size = get_text_size(text, text_size=self.text_size)
         x_padding = 5
-        draw_text(cr, text, 
+        draw_text(cr, text,
                   rect.x + x_padding,
                   rect.y + rect.height/2 - size[1]/2, text_color=text_color, text_size=self.text_size)
         '''
         self.resize(1, 1)
-        self.set_size_request(win_width, 
+        self.set_size_request(win_width,
                               win_height)
         '''
         return True

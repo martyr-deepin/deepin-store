@@ -10,7 +10,7 @@ except:
                  console = True,
                  log_file_path = None):
         common.init_logging(httpc.logger, set_level, console, log_file_path)
-    
+
 from bcs import BCS
 from bucket import Bucket
 

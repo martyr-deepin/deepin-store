@@ -4,21 +4,21 @@
 # Copyright (C) 2011 ~ 2012 Deepin, Inc.
 #               2011 ~ 2012 Wang Yong
 #               2012 ~ 2013 Kaisheng Ye
-# 
+#
 # Author:     Wang Yong <lazycat.manatee@gmail.com>
 # Maintainer: Wang Yong <lazycat.manatee@gmail.com>
 #             Kaisheng Ye <kaisheng.ye@gmail.com>
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -72,17 +72,17 @@ class DataManager(td.Thread):
         db_path_exists(desktop_db_path)
         self.desktop_db_connect = sqlite3.connect(desktop_db_path, check_same_thread = False)
         self.desktop_db_cursor = self.desktop_db_connect.cursor()
-        
+
         category_db_path = os.path.join(UPDATE_DATA_DIR, "category", "category.db")
         db_path_exists(category_db_path)
         self.category_db_connect = sqlite3.connect(category_db_path, check_same_thread = False)
         self.category_db_cursor = self.category_db_connect.cursor()
 
         self.icon_data_dir = os.path.join(UPDATE_DATA_DIR, "icon")
-        
+
         self.category_dict = {}
         self.category_name_dict = {}
-        
+
         #self.build_category_dict()
 
     def get_software_obj(self, pkg_name):
@@ -133,14 +133,14 @@ class DataManager(td.Thread):
         # Sort package name.
         pkg_names = sorted(
             pkg_names,
-            cmp=lambda pkg_name_a, pkg_name_b: self.sort_match_pkgs(pkg_name_a, pkg_name_b, input_string))    
-            
+            cmp=lambda pkg_name_a, pkg_name_b: self.sort_match_pkgs(pkg_name_a, pkg_name_b, input_string))
+
         return pkg_names
-    
+
     def sort_match_pkgs(self, pkg_name_a, pkg_name_b, input_string):
         start_with_a = pkg_name_a.startswith(input_string)
         start_with_b = pkg_name_b.startswith(input_string)
-        
+
         if start_with_a and start_with_b:
             return cmp(pkg_name_a, pkg_name_b)
         elif start_with_a:
@@ -156,17 +156,17 @@ class DataManager(td.Thread):
                 )
     def get_pkg_icon_path(self, pkg_name):
         pass
-        
+
     def get_search_pkgs_info(self, pkg_names):
         pkg_infos = []
         for (index, pkg_name) in enumerate(pkg_names):
             self.desktop_db_cursor.execute(
-                "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
+                "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])
             desktop_infos = self.desktop_db_cursor.fetchall()
             pkg_infos.append([pkg_name, desktop_infos])
-        
+
         return pkg_infos
-    
+
     def get_pkg_desktop_info(self, desktops):
         app_infos = []
         all_app_infos = gio.app_info_get_all()
@@ -177,7 +177,7 @@ class DataManager(td.Thread):
                     if app_info.get_commandline() == item.get_commandline():
                         app_infos.append(app_info)
         return app_infos
-    
+
     def get_pkg_installed(self, pkg_name, callback):
         self.desktop_db_cursor.execute("SELECT start_pkg_names FROM package WHERE pkg_name=?", (pkg_name,))
         start_pkg_names = self.desktop_db_cursor.fetchone()
@@ -189,7 +189,7 @@ class DataManager(td.Thread):
                 reply_handler=lambda r: callback(r, True),
                 error_handler=lambda e: callback(e, False)
                 )
-        
+
     def get_pkg_detail_info(self, pkg_name):
         result = {
                 'category': None,
@@ -230,7 +230,7 @@ class DataManager(td.Thread):
             if cache_info:
                 return cache_info
         return cache_info
-        
+
     def get_pkg_search_info(self, pkg_name):
         result = self.get_software_obj(pkg_name)
 
@@ -246,7 +246,7 @@ class DataManager(td.Thread):
         else:
             #(alias_name, short_desc, long_desc) = result
             return (result.alias_name, result.short_desc, result.long_desc, 5.0)
-    
+
     def get_item_pkg_info(self, pkg_name):
         result = self.get_software_obj(pkg_name)
         if result:
@@ -263,13 +263,13 @@ class DataManager(td.Thread):
                 return [pkg_name, pkg_name, r[0][0], r[0][1]]
             else:
                 return [pkg_name, pkg_name, "", ""]
-    
+
     def get_item_pkgs_info(self, pkg_names):
         infos = []
         for (index, pkg_name) in enumerate(pkg_names):
             infos.append(self.get_item_pkg_info(pkg_name))
-        return infos    
-    
+        return infos
+
     def is_pkg_have_desktop_file(self, pkg_name):
         self.desktop_db_cursor.execute(
             "SELECT id FROM package WHERE pkg_name=?", [pkg_name])
@@ -303,12 +303,12 @@ class DataManager(td.Thread):
                 return self.get_display_flag(pkg_name)
             else:
                 return False
-    
+
     def get_album_info(self):
         self.album_db_cursor.execute(
             "SELECT album_id, album_name, album_summary FROM album ORDER BY album_id")
         return self.album_db_cursor.fetchall()
-    
+
     def get_download_rank_info(self, pkg_names):
         infos = []
 
@@ -318,11 +318,11 @@ class DataManager(td.Thread):
             if info:
                 alias_name = info.alias_name
                 self.desktop_db_cursor.execute(
-                    "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])    
+                    "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])
                 desktop_infos = self.desktop_db_cursor.fetchall()
-                
+
                 infos.append([pkg_name, alias_name, 5.0, desktop_infos])
-            
+
         return infos
 
     def get_recommend_info(self):
@@ -338,19 +338,19 @@ class DataManager(td.Thread):
             for line in fp:
                 pkgs.append(line.strip())
         return pkgs
-    
+
     def build_category_dict(self):
         # Build OrderedDict of first category.
         self.category_db_cursor.execute(
             "SELECT DISTINCT first_category_name FROM category_name ORDER BY first_category_index")
         self.category_dict = OrderedDict(map(lambda names: (names[0], []), self.category_db_cursor.fetchall()))
-        
-        # Build list of second category. 
+
+        # Build list of second category.
         self.category_db_cursor.execute(
             "SELECT DISTINCT first_category_name, second_category_name FROM category_name ORDER BY second_category_index")
         for (first_category, second_category) in self.category_db_cursor.fetchall():
             self.category_dict[first_category] = self.category_dict[first_category] + [(second_category, OrderedDict())]
-            
+
         # Bulid OrderedDict of second category.
         for (first_category, second_category_list) in self.category_dict.items():
             self.category_dict[first_category] = OrderedDict(second_category_list)
@@ -379,7 +379,7 @@ class DataManager(td.Thread):
             "SELECT pkg_name FROM package WHERE second_category_name=? ORDER BY pkg_name", (second_category_name,))
         r = self.desktop_db_cursor.fetchall()
         return map(lambda s: s[0], r)
-                
+
     def search_query(self, keywords):
         '''
         init docs
@@ -387,12 +387,12 @@ class DataManager(td.Thread):
         # Init search connect.
         search_db_path = os.path.join(UPDATE_DATA_DIR, "search", "zh_CN", "search_db")
         sconn = xappy.SearchConnection(search_db_path)
-        
+
         # Do search.
         search = ' '.join(keywords).lower()
         q = sconn.query_parse(search, default_op=sconn.OP_AND)
         results = sconn.search(q, 0, sconn.get_doccount(), sortby="have_desktop_file")
-        
+
         all_results = map(lambda result: result.data["pkg_name"][0], results)
         for keyword in keywords:
             match_names = self.get_pkgs_match_input(keyword)
@@ -403,9 +403,9 @@ class DataManager(td.Thread):
 
     def change_source_list(self, repo_urls, reply_handler, error_handler):
         self.bus_interface.change_source_list(repo_urls,
-                reply_handler=reply_handler, 
+                reply_handler=reply_handler,
                 error_handler=error_handler)
-        
+
 if __name__ == "__main__":
     import dbus
     from constant import DSC_SERVICE_NAME, DSC_SERVICE_PATH

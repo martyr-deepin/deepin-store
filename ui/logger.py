@@ -29,8 +29,8 @@ classfilter = []
 def setLevelNo(n):
     global levelno
     levelno = ( 100 - (n * 10) )
-    
-def setFilter(filter_list):    
+
+def setFilter(filter_list):
     global classfilter
     classfilter = filter_list
 
@@ -72,27 +72,27 @@ class Logger(object):
         else:
             return "%s.%s"%(self.__module__,self.__class__.__name__)
 
-    def logdebug(self, msg, *args, **kwargs): 
+    def logdebug(self, msg, *args, **kwargs):
         # msg = "%s %s"%(objaddr(self),msg)
         mylogger = logging.getLogger(self.get_logname())
         mylogger.debug(msg, *args, **kwargs)
 
-    def loginfo(self, msg, *args, **kwargs): 
+    def loginfo(self, msg, *args, **kwargs):
         # msg = "%s  %s"%(objaddr(self),msg)
         mylogger = logging.getLogger(self.get_logname())
         mylogger.info(msg, *args, **kwargs)
 
-    def logwarn(self, msg, *args, **kwargs): 
+    def logwarn(self, msg, *args, **kwargs):
         # msg = "%s  %s"%(objaddr(self),msg)
         mylogger = logging.getLogger(self.get_logname())
         mylogger.warn(msg, *args, **kwargs)
 
-    def logerror(self, msg, *args, **kwargs): 
+    def logerror(self, msg, *args, **kwargs):
         # msg = "%s  %s"%(objaddr(self),msg)
         mylogger = logging.getLogger(self.get_logname())
         mylogger.error(msg, *args, **kwargs)
 
-    def logcritical(self, msg, *args, **kwargs): 
+    def logcritical(self, msg, *args, **kwargs):
         # msg = "%s  %s"%(objaddr(self),msg)
         mylogger = logging.getLogger(self.get_logname())
         mylogger.critical(msg, *args, **kwargs)
@@ -111,4 +111,4 @@ def newLogger(name):
     l = Logger()
     l.set_logname(name)
     return l
-    
+

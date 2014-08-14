@@ -3,20 +3,20 @@
 #
 # Copyright (C) 2011 ~ 2012 Deepin, Inc.
 #               2011 ~ 2012 Wang Yong
-# 
+#
 # Author:     Wang Yong <lazycat.manatee@gmail.com>
 # Maintainer: Wang Yong <lazycat.manatee@gmail.com>
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -76,8 +76,8 @@ from paned_box import PanedBox
 from widgets import BottomTipBar
 from star_buffer import StarView, DscStarBuffer
 from constant import (
-            DSC_SERVICE_NAME, DSC_SERVICE_PATH, 
-            DSC_FRONTEND_NAME, DSC_FRONTEND_PATH, 
+            DSC_SERVICE_NAME, DSC_SERVICE_PATH,
+            DSC_FRONTEND_NAME, DSC_FRONTEND_PATH,
             ACTION_INSTALL, ACTION_UNINSTALL, ACTION_UPGRADE,
             CONFIG_DIR, ONE_DAY_SECONDS,
             LANGUAGE,
@@ -146,25 +146,25 @@ def show_message(statusbar, message_label, message, hide_timeout=0):
 
     hide_message(message_label)
 
-    message_label.set_text(message) 
+    message_label.set_text(message)
     statusbar.show_all()
 
     if hide_timeout:
         hide_timeout_id = gtk.timeout_add(hide_timeout, lambda : hide_message(message_label))
-    
+
 def hide_message(message_label):
     message_label.set_text("")
     return False
 
 def request_status_reply_hander(result, install_page, upgrade_page, uninstall_page, pkg_info_list=None):
     (download_status, action_status) = map(eval, result)
-    
+
     install_page.update_download_status(download_status[ACTION_INSTALL])
     install_page.update_action_status(action_status[ACTION_INSTALL])
-    
+
     upgrade_page.update_download_status(download_status[ACTION_UPGRADE])
     upgrade_page.update_action_status(action_status[ACTION_UPGRADE])
-    
+
     uninstall_page.update_action_status(action_status[ACTION_UNINSTALL])
 
     if pkg_info_list:
@@ -174,7 +174,7 @@ def get_grade_config():
     grade_config_path = os.path.join(CONFIG_DIR, "grade_pkgs")
     if not os.path.exists(grade_config_path):
         touch_file(grade_config_path)
-        
+
     grade_config_str = read_file(grade_config_path)
     try:
         grade_config = eval(grade_config_str)
@@ -188,12 +188,12 @@ def get_grade_config():
 def grade_pkg(window, pkg, star):
     pkg_name = pkg[0]
     grade_config = get_grade_config()[1]
-        
-    current_time = time.time()    
+
+    current_time = time.time()
     if not grade_config.has_key(pkg_name) or (current_time - grade_config[pkg_name]) > ONE_DAY_SECONDS:
         show_tooltip(window, _("Sending rating..."))
         SendVote(pkg_name, star, pkg[1]).start()
-        
+
     else:
         show_tooltip(window, _("You have already scored.  ;)"))
 
@@ -204,7 +204,7 @@ def vote_send_success_callback(infos, window):
     global_event.emit("show-message", _("Rated successfully. Thanks for your involvement."), 5000)
     tool_tip.hide_all()
     current_time = time.time()
-    
+
     grade_config[pkg_name] = current_time
     write_file(grade_config_path, str(grade_config))
     if infos[1] != None:
@@ -231,10 +231,10 @@ def show_tooltip(window, message):
         gobject.source_remove(tooltip_timeout_id)
     tooltip_timeout_id = gtk.timeout_add(2000, tool_tip.hide_all)
     gtk.timeout_add(2000, tool_tip.hide_all)
-    
+
 def switch_from_detail_page(page_switcher, detail_page, page_box):
     page_switcher.slide_to_page(page_box, "left")
-    
+
 def switch_to_detail_page(page_switcher, detail_page, pkg_name):
     log("start switch to detail_page")
     page_switcher.slide_to_page(detail_page, "right")
@@ -249,21 +249,21 @@ def switch_page(page_switcher, page_box, page, detail_page):
         page_switcher.slide_to_page(page_box, "left")
     else:
         page_switcher.slide_to_page(page_box, "right")
-        
+
     log("remove widgets from page_box")
     container_remove_all(page_box)
-    
+
     log("page_box pack widgets")
     page_box.pack_start(page, True, True)
-    
+
     log("page_box show all")
     page_box.show_all()
-    
+
     log("init widget in page_box")
     if isinstance(page, HomePage):
         log("page.recommend_item.show_page()")
         page.recommend_item.show_page()
-            
+
         log("page.category_view.select_first_item()")
         page.category_view.select_first_item()
     #elif isinstance(page, UpgradePage):
@@ -393,7 +393,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                     install_page.action_finish(pkg_name, pkg_info_list)
                     utils.show_notify(_("Install %s Successfully.") % pkg_name, _("Install"))
                 inhibit_obj.unset_inhibit()
-                
+
                 refresh_current_page_status(pkg_name, pkg_info_list, bus_interface)
                 if action_type != ACTION_UPGRADE:
                     bus_interface.request_status(
@@ -415,7 +415,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 elif action_type == ACTION_INSTALL:
                     install_page.action_finish(pkg_name, pkg_info_list)
                 inhibit_obj.unset_inhibit()
-                
+
                 refresh_current_page_status(pkg_name, pkg_info_list, bus_interface)
                 bus_interface.request_status(
                         reply_handler=lambda reply: request_status_reply_hander(
@@ -481,28 +481,28 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
         except Exception, e:
             traceback.print_exc(file=sys.stdout)
             print "Message Handler Error:", e
-    
+
     return True
 
 install_stop_list = []
 def request_stop_install_actions(pkg_names):
     global install_stop_list
-    
+
     install_stop_list += pkg_names
-    
+
 def clear_install_stop_list(install_page):
     global install_stop_list
-    
+
     if len(install_stop_list) > 0:
         for pkg_name in install_stop_list:
             for item in install_page.treeview.visible_items:
                 if item.pkg_name == pkg_name:
                     install_page.treeview.delete_items([item])
                     break
-                
-        install_stop_list = []        
-        
-    return True    
+
+        install_stop_list = []
+
+    return True
 
 def install_pkg(bus_interface, install_page, pkg_names, window):
     for install_item in install_page.treeview.visible_items:
@@ -514,67 +514,67 @@ def install_pkg(bus_interface, install_page, pkg_names, window):
     # Add install animation.
     (screen, px, py, modifier_type) = window.get_display().get_pointer()
     ax, ay = px, py
-    
+
     (wx, wy) = window.window.get_origin()
     offset_bx = 430
     offset_by = -20
     bx, by = wx + offset_bx, wy + offset_by
-    
+
     offset_cx = 10
     offset_cy = 10
     if ax < bx:
         cx, cy = wx + offset_bx + offset_cx, wy + offset_by + offset_cy
     else:
         cx, cy = wx + offset_bx - offset_cx, wy + offset_by + offset_cy
-    
+
     [[a], [b], [c]] = solve_parabola((ax, ay), (bx, by), (cx, cy))
-    
+
     icon_window = IconWindow(pkg_names[0])
     icon_window.move(ax, ay)
     icon_window.show_all()
-    
+
     timeline = Timeline(500, CURVE_SINE)
     timeline.connect("update", lambda source, status: update(source, status, icon_window, (ax, ay), (bx, by), (cx, cy), (a, b, c)))
     timeline.connect("completed", lambda source: finish(source, icon_window, bus_interface, pkg_names))
     timeline.run()
-    
+
     # Add to install page.
     #install_page.add_install_actions(pkg_names)
 
-    
+
 def update(source, status, icon_window, (ax, ay), (bx, by), (cx, cy), (a, b, c)):
     move_x = ax + (cx - ax) * status
     move_y = a * pow(move_x, 2) + b * move_x + c
-    
+
     icon_window.move(int(move_x), int(move_y))
     icon_window.show_all()
-    
+
 def finish(source, icon_window, bus_interface, pkg_names):
     icon_window.destroy()
 
     # Send install command.
     create_thread(lambda : bus_interface.install_pkg(
-                                pkg_names, 
-                                reply_handler=lambda :handle_dbus_reply("install_pkg"), 
+                                pkg_names,
+                                reply_handler=lambda :handle_dbus_reply("install_pkg"),
                                 error_handler=lambda e:handle_dbus_error("install_pkg", e))).start()
     for pkg_name in pkg_names:
         SendDownloadCount(pkg_name).start()
-    
+
 clear_failed_action_dict = {
     ACTION_INSTALL : [],
     ACTION_UPGRADE : [],
     }
 def request_clear_failed_action(pkg_name, action_type):
     global clear_failed_action_dict
-    
+
     if action_type == ACTION_INSTALL:
         clear_failed_action_dict[ACTION_INSTALL].append(pkg_name)
     elif action_type == ACTION_UPGRADE:
         clear_failed_action_dict[ACTION_UPGRADE].append(pkg_name)
-        
+
 def clear_failed_action(install_page, upgrade_page):
     global clear_failed_action_dict
-    
+
     install_items = []
     upgrade_items = []
 
@@ -587,17 +587,17 @@ def clear_failed_action(install_page, upgrade_page):
         for item in upgrade_page.upgrade_treeview.visible_items:
             if item.pkg_name == pkg_name:
                 upgrade_items.append(item)
-                
-    install_page.treeview.delete_items(install_items)            
-    upgrade_page.upgrade_treeview.delete_items(upgrade_items)            
-    
+
+    install_page.treeview.delete_items(install_items)
+    upgrade_page.upgrade_treeview.delete_items(upgrade_items)
+
     clear_failed_action_dict = {
         ACTION_INSTALL : [],
         ACTION_UPGRADE : [],
         }
-    
+
     return True
-    
+
 clear_action_list = []
 def request_clear_action_pages(pkg_info_list):
     global clear_action_list
@@ -613,7 +613,7 @@ def clear_action_pages(bus_interface, upgrade_page, uninstall_page, install_page
         uninstalled_items = []
         upgraded_items = []
         install_pkgs = []
-        
+
         for (pkg_name, marked_delete, marked_install, marked_upgrade) in clear_action_list:
             if marked_delete:
                 for item in uninstall_page.treeview.visible_items:
@@ -624,22 +624,22 @@ def clear_action_pages(bus_interface, upgrade_page, uninstall_page, install_page
                 for item in install_page.treeview.visible_items:
                     if item.pkg_name == pkg_name:
                         installed_items.append(item)
-                        
+
                         install_pkgs.append(pkg_name)
                         break
             elif marked_upgrade:
                 for item in upgrade_page.upgrade_treeview.visible_items:
                     if item.pkg_name == pkg_name:
                         upgraded_items.append(item)
-                        
+
                         install_pkgs.append(pkg_name)
                         break
         clear_action_list = []
-                    
+
         uninstall_page.delete_uninstall_items(uninstalled_items)
         install_page.update_install_status()
         upgrade_page.upgrade_treeview.delete_items(upgraded_items)
-        
+
         # Add installed package in uninstall page.
         for item in uninstall_page.treeview.visible_items:
             if item.pkg_name in install_pkgs:
@@ -650,14 +650,14 @@ def clear_action_pages(bus_interface, upgrade_page, uninstall_page, install_page
         for (pkg_name, pkg_version) in zip(install_pkgs, install_pkg_versions):
             install_pkg_infos.append([pkg_name, pkg_version])
         uninstall_page.add_uninstall_items(json.dumps(install_pkg_infos), True)
-        
-    return True    
+
+    return True
 
 def action_finish_handle_dbus_error(pkg_info_list):
     if pkg_info_list:
         global_event.emit("request-clear-action-pages", pkg_info_list)
-    
-debug_flag = False                
+
+debug_flag = False
 
 class DeepinSoftwareCenter(dbus.service.Object, Logger):
     '''
@@ -672,9 +672,9 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         '''
         dbus.service.Object.__init__(self, session_bus, DSC_FRONTEND_PATH)
         Logger.__init__(self)
-        
+
         self.simulate = "--simulate" in arguments
-        
+
         global debug_flag
         debug_flag = "--debug" in arguments
         self.in_wizard_showing = False
@@ -682,25 +682,25 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
 
     def exit(self):
         gtk.main_quit()
-        
+
     def open_download_directory(self):
         run_command("xdg-open %s" % get_software_download_dir())
-        
+
     def switch_page(self, page):
         switch_page(self.page_switcher, self.page_box, page, self.detail_page)
-        
+
     def show_home_page(self):
         if self.detail_page and self.home_page:
             self.switch_page(self.home_page)
-    
+
     def show_upgrade_page(self):
         if self.detail_page and self.upgrade_page:
             self.switch_page(self.upgrade_page)
-    
+
     def show_uninstall_page(self):
         if self.detail_page and self.uninstall_page:
             self.switch_page(self.uninstall_page)
-    
+
     def show_install_page(self):
         if self.detail_page and self.install_page:
             self.switch_page(self.install_page)
@@ -715,12 +715,12 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
                 self.navigatebar.set_index(index)
         except:
             print "Unknow page:", key
-        
+
     def init_ui(self):
         self.loginfo("Init ui")
         # Init application.
         self.application = Application(
-            resizable=False, 
+            resizable=False,
             destroy_func=self.application_close_window,
             )
         self.application.set_default_size(888, 634)
@@ -735,17 +735,17 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
 
         # Init page box.
         self.page_box = gtk.VBox()
-        
+
         # Init page switcher.
         self.page_switcher = HSlider(200)
         self.page_switcher.append_page(self.page_box)
         self.page_switcher.set_to_page(self.page_box)
-        
+
         # Init page align.
         self.page_align = gtk.Alignment()
         self.page_align.set(0.5, 0.5, 1, 1)
         self.page_align.set_padding(0, 0, 2, 2)
-        
+
         # Append page to switcher.
         self.paned_box = PanedBox(24)
         self.paned_box.add_content_widget(self.page_switcher)
@@ -754,7 +754,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         self.paned_box.add_bottom_widget(self.bottom_tip_bar)
         self.page_align.add(self.paned_box)
         self.application.main_box.pack_start(self.page_align, True, True)
-        
+
         # Init status bar.
         self.statusbar = Statusbar(24)
         status_box = gtk.HBox()
@@ -776,14 +776,14 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         status_box.pack_start(join_us_button_align, False, False)
         self.statusbar.status_box.pack_start(status_box, True, True)
         self.application.main_box.pack_start(self.statusbar, False, False)
-        
+
         # Init navigatebar.
         self.detail_page = None
         self.home_page = None
         self.upgrade_page = None
         self.uninstall_page = None
         self.install_page = None
-        
+
         self.navigatebar = Navigatebar(
                 [
                 (DynamicPixbuf(utils.get_common_image("navigatebar/nav_home.png")), _("Home"), self.show_home_page),
@@ -805,7 +805,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         self.application.titlebar.set_size_request(-1, 56)
         self.application.titlebar.left_box.pack_start(self.navigatebar_align, True, True)
         self.application.window.add_move_event(self.navigatebar)
-        
+
         # Init menu.
         if LANGUAGE == 'en_US':
             menu_min_width = 185
@@ -845,7 +845,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
     def application_close_window(self, widget=None, event=None):
         self.application.window.hide_all()
         gtk.main_quit()
-            
+
         return True
 
     def upgrade_finish_action(self, pkg_info_list):
@@ -854,13 +854,13 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         if len(pkg_info_list) > 0:
             # Delete items from treeview.
             upgraded_items = []
-            
+
             for (pkg_name, marked_delete, marked_install, marked_upgrade) in pkg_info_list:
                 for item in self.upgrade_page.upgrade_treeview.visible_items:
                     if item.pkg_name == pkg_name:
                         upgraded_items.append(item)
                         break
-                        
+
             print upgraded_items
             self.upgrade_page.upgrade_treeview.delete_items(upgraded_items)
             print len(self.upgrade_page.upgrade_treeview.visible_items)
@@ -869,32 +869,32 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
     def show_preference_dialog(self):
         self.preference_dialog.show_all()
 
-    def ready_show(self):    
+    def ready_show(self):
         if utils.is_first_started():
             utils.set_first_started()
             self.in_wizard_showing = True
             self.show_wizard_win(True, callback=self.wizard_callback)
             self.init_ui()
-        else:    
+        else:
             self.init_ui()
             if not self.init_hide:
                 self.application.window.show_all()
         #self.paned_box.bottom_window.set_composited(True)
-        
-    def show_wizard_win(self, show_button=False, callback=None):    
+
+    def show_wizard_win(self, show_button=False, callback=None):
         program_dir = get_parent_dir(__file__, 2)
         wizard_dir = os.path.join(program_dir, 'wizard', LANGUAGE)
         if not os.path.exists(wizard_dir):
             wizard_dir = os.path.join(program_dir, 'wizard', 'en_US')
-        wizard_root_dir = os.path.dirname(wizard_dir)            
-            
+        wizard_root_dir = os.path.dirname(wizard_dir)
+
         self.wizard = Wizard(
             [os.path.join(wizard_dir, "%d.png" % i) for i in range(3)],
             (os.path.join(wizard_root_dir, "dot_normal.png"),
-             os.path.join(wizard_root_dir, "dot_active.png"),             
+             os.path.join(wizard_root_dir, "dot_active.png"),
              ),
             (os.path.join(wizard_dir, "start_normal.png"),
-             os.path.join(wizard_dir, "start_press.png"),             
+             os.path.join(wizard_dir, "start_press.png"),
              ),
             show_button,
             callback
@@ -902,58 +902,58 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         self.wizard.set_icon(utils.get_common_image_pixbuf("logo48.png"))
         if not self.init_hide:
             self.wizard.show_all()
-        
+
     def wizard_callback(self):
         self.in_wizard_showing = False
         self.application.window.show_all()
         gtk.timeout_add(200, self.application.raise_to_top)
-        
+
     def init_home_page(self, recommend_status="publish"):
-        
+
         # Init DBus.
         self.system_bus = dbus.SystemBus()
         bus_object = self.system_bus.get_object(DSC_SERVICE_NAME, DSC_SERVICE_PATH)
         self.bus_interface = dbus.Interface(bus_object, DSC_SERVICE_NAME)
-        # Say hello to backend. 
+        # Say hello to backend.
         #self.bus_interface.say_hello(self.simulate)
         self.set_software_download_dir()
         self.inhibit_obj = InhibitObject()
-        
+
         self.loginfo("Init data manager")
-        
+
         # Init data manager.
         self.data_manager = DataManager(self.bus_interface, debug_flag)
 
         # Init packages status
         self.packages_status = {}
-        
+
         # Init home page.
         self.home_page = HomePage(self.data_manager, recommend_status)
-        
+
         # Init switch page.
         self.switch_page(self.home_page)
 
         self.in_update_list = False
-        
+
         self.init_backend()
-        
+
     def init_backend(self):
-        
+
         # Init detail view.
         self.detail_page = DetailPage(self.data_manager)
-        
+
         self.page_switcher.append_page(self.detail_page)
-        
+
         log("Init pages.")
-        
+
         self.loginfo("Init pages")
         self.upgrade_page = UpgradePage(self.bus_interface, self.data_manager, self.preference_dialog)
         self.uninstall_page = UninstallPage(self.bus_interface, self.data_manager)
         self.install_page = InstallPage(self.bus_interface, self.data_manager)
 
-        
+
         log("Handle global event.")
-        
+
         # Handle global event.
         global_event.register_event("install-pkg", lambda pkg_names: install_pkg(
             self.bus_interface, self.install_page, pkg_names, self.application.window))
@@ -967,15 +967,15 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         global_event.register_event("request-clear-action-pages", request_clear_action_pages)
         global_event.register_event("request-stop-install-actions", request_stop_install_actions)
         global_event.register_event("request-clear-failed-action", request_clear_failed_action)
-        global_event.register_event("update-upgrade-notify-number", lambda number: update_navigatebar_number(self.navigatebar, 1, number))        
-        global_event.register_event("update-install-notify-number", lambda number: update_navigatebar_number(self.navigatebar, 3, number))        
-        global_event.register_event("jump-to-category", 
-                                    lambda first_category_name, second_category_name: 
-                                    jump_to_category(self.page_switcher, 
-                                                     self.page_box, 
-                                                     self.home_page, 
-                                                     self.detail_page, 
-                                                     first_category_name, 
+        global_event.register_event("update-upgrade-notify-number", lambda number: update_navigatebar_number(self.navigatebar, 1, number))
+        global_event.register_event("update-install-notify-number", lambda number: update_navigatebar_number(self.navigatebar, 3, number))
+        global_event.register_event("jump-to-category",
+                                    lambda first_category_name, second_category_name:
+                                    jump_to_category(self.page_switcher,
+                                                     self.page_box,
+                                                     self.home_page,
+                                                     self.detail_page,
+                                                     first_category_name,
                                                      second_category_name))
         global_event.register_event("grade-pkg", lambda pkg, star: grade_pkg(self.application.window, pkg, star))
         global_event.register_event("set-cursor", lambda cursor: set_cursor(self.application.window, cursor))
@@ -998,9 +998,9 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         self.bus_interface.connect_to_signal(
                 signal_name="update_signal",
                 handler_function=lambda messages: message_handler(messages,
-                                         self.bus_interface, 
-                                         self.upgrade_page, 
-                                         self.uninstall_page, 
+                                         self.bus_interface,
+                                         self.upgrade_page,
+                                         self.uninstall_page,
                                          self.install_page,
                                          self.home_page,
                                          self.inhibit_obj,
@@ -1018,7 +1018,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
     def change_mirror_action(self, mirror):
         repo_urls = mirror.get_repo_urls()
         self.bus_interface.change_source_list(
-            repo_urls, 
+            repo_urls,
             reply_handler=lambda :self.handle_mirror_change_reply(mirror),
             error_handler=lambda e:handle_dbus_error("change_source_list", e)
             )
@@ -1032,12 +1032,12 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
                 reply_handler=lambda :handle_dbus_reply("uninstall_pkg"),
                 error_handler=lambda e:handle_dbus_error("uninstall_pkg", e))
         SendUninstallCount(pkg_name).start()
-        
+
         self.install_page.delete_item_match_pkgname(pkg_name)
 
     def init_download_manager(self, v=5):
         self.bus_interface.init_download_manager(
-                v, 
+                v,
                 reply_handler=lambda :self.init_download_manager_handler(),
                 error_handler=lambda e:handle_dbus_error("init_download_manager", e))
 
@@ -1053,8 +1053,8 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
 
     def set_software_download_dir(self):
         self.bus_interface.set_download_dir(
-                get_software_download_dir(), 
-                reply_handler=lambda :handle_dbus_reply("set_download_dir"), 
+                get_software_download_dir(),
+                reply_handler=lambda :handle_dbus_reply("set_download_dir"),
                 error_handler=lambda e:handle_dbus_error("set_download_dir", e))
 
     def update_list_handler(self):
@@ -1097,7 +1097,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
             self.bottom_tip_bar.update_end_info("")
         if hide_timeout != 0:
             gtk.timeout_add(hide_timeout, lambda:self.paned_box.bottom_window.hide())
-    
+
     def request_update_list(self):
         self.in_update_list = True
         self.bus_interface.start_update_list(
@@ -1106,14 +1106,14 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
 
     def upgrade_pkgs(self, pkg_names):
         self.bus_interface.upgrade_pkgs_with_new_policy(
-                pkg_names, 
-                reply_handler=lambda :handle_dbus_reply("upgrade_pkgs"), 
+                pkg_names,
+                reply_handler=lambda :handle_dbus_reply("upgrade_pkgs"),
                 error_handler=lambda e:handle_dbus_error("upgrade_pkgs", e))
         return False
 
     def clean_download_cache(self):
         self.bus_interface.clean_download_cache(
-                reply_handler=self.clean_download_cache_reply, 
+                reply_handler=self.clean_download_cache_reply,
                 error_handler=lambda e:handle_dbus_error("clean_download_cache", e),
                 )
 
@@ -1125,15 +1125,15 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
             message = _("Your system cache is empty.")
         global_event.emit("show-message", message, 5000)
 
-    def run(self):    
+    def run(self):
         self.ready_show()
-        gtk.main()    
-        
+        gtk.main()
+
         # Send exit request to backend when frontend exit.
         self.bus_interface.request_quit(
-                reply_handler=lambda :handle_dbus_reply("request_quit"), 
+                reply_handler=lambda :handle_dbus_reply("request_quit"),
                 error_handler=lambda e:handle_dbus_error("request_quit", e))
-        
+
         # Remove id from config file.
         data_exit()
         self.loginfo('Data id removed')
@@ -1142,7 +1142,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
     def request_exit(self):
         self.exit()
         self.bus_interface.request_quit(
-                reply_handler=lambda :handle_dbus_reply("request_quit"), 
+                reply_handler=lambda :handle_dbus_reply("request_quit"),
                 error_handler=lambda e:handle_dbus_error("request_quit", e))
         data_exit()
         self.loginfo('Data id removed')
@@ -1152,8 +1152,8 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         for pkg_name in pkg_names:
             self.install_page.download_wait(pkg_name)
         create_thread(lambda : self.bus_interface.install_pkg(
-                                    pkg_names, 
-                                    reply_handler=lambda :handle_dbus_reply("install_pkg"), 
+                                    pkg_names,
+                                    reply_handler=lambda :handle_dbus_reply("install_pkg"),
                                     error_handler=lambda e:handle_dbus_error("install_pkg", e))).start()
         for pkg_name in pkg_names:
             SendDownloadCount(pkg_name).start()
@@ -1165,7 +1165,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
             self.application.raise_to_top()
         else:
             self.wizard.present()
-        
+
     @dbus.service.signal(DSC_FRONTEND_NAME)
     def update_signal(self, message):
         pass

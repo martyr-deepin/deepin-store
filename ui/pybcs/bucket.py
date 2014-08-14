@@ -4,7 +4,7 @@
 import time
 import urllib
 
-import common 
+import common
 from httpc import *
 from object import Object, Superfile
 
@@ -14,15 +14,15 @@ except:
     import simplejson as json
 
 class Bucket:
-    ''' 
-     bucket.create/ bucket.delete / bucket.setacl 
+    '''
+     bucket.create/ bucket.delete / bucket.setacl
      建议到yun.baidu.com 操作，create 后还需要设置quota等才能使用.
     '''
     def __init__(self, bcs, bucket_name):
         self.bcs = bcs
         self.host = bcs.host
-        self.ak = bcs.ak 
-        self.sk = bcs.sk 
+        self.ak = bcs.ak
+        self.sk = bcs.sk
         self.bucket_name = bucket_name
         self.sleep = 1 # sleep 1 second after upload
 
@@ -97,14 +97,14 @@ class Bucket:
         """
         '''return parsed object list'''
         lst = self.list_objects_raw(prefix, start, limit)
-        return [self.object(o['object'].encode('utf-8')) 
-                for o in lst] 
-        
+        return [self.object(o['object'].encode('utf-8'))
+                for o in lst]
+
     #acl : string like: {statements':[{'user':['joe'],'resource':['bucket/object'],'action':['*'],'effect':'allow'}]}
     @network
     def set_acl(self, acl):
         """
-        设置acl, 
+        设置acl,
             acl: acl 描述串
         """
         return self.c.put(self.put_url+'&acl=1', acl)
@@ -133,10 +133,10 @@ class Bucket:
         self.set_acl(acl)
 
     @network
-    def enable_logging(self, target_bucket, target_prefix='', headers=None): 
+    def enable_logging(self, target_bucket, target_prefix='', headers=None):
         pass
 
-    def disable_logging(self, target_bucket, target_prefix='', headers=None): 
+    def disable_logging(self, target_bucket, target_prefix='', headers=None):
         pass
 
 

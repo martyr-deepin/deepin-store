@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
-import pybcs 
+import pybcs
 
 #设置日志级别
 #pybcs.init_logging(logging.INFO)

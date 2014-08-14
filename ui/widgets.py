@@ -133,12 +133,12 @@ class TextLoading(gtk.VBox):
     def on_expose_event(self, widget, event):
         cr = widget.window.cairo_create()
         rect = widget.get_allocation()
-        draw_text(cr, 
-                self.draw_text, 
-                rect.x, 
-                rect.y, 
-                rect.width, 
-                rect.height, 
+        draw_text(cr,
+                self.draw_text,
+                rect.x,
+                rect.y,
+                rect.width,
+                rect.height,
                 text_color=self.text_color,
                 text_size=self.text_size,
                 )
@@ -150,7 +150,7 @@ class ImageBox(gtk.VBox):
 
         self.img_path = img_path
         self.pixbuf = gtk.gdk.pixbuf_new_from_file(self.img_path)
-        
+
         if not width:
             width = self.pixbuf.get_width()
         if not height:
@@ -170,19 +170,19 @@ class ImageBox(gtk.VBox):
                     self.pixbuf,
                     rect.x,
                     rect.y,
-                    )    
+                    )
         return True
 
 class ActionButton(Label):
-    def __init__(self, 
-                 text, 
+    def __init__(self,
+                 text,
                  callback_action=None,
-                 enable_gaussian=False, 
+                 enable_gaussian=False,
                  text_color=ui_theme.get_color("link_text"),
                  ):
         '''
         Initialize LinkButton class.
-        
+
         @param text: Link content.
         @param link: Link address.
         @param enable_gaussian: To enable gaussian effect on link, default is True.
@@ -202,7 +202,7 @@ class ActionButton(Label):
 class BottomTipBar(gtk.HBox):
     def __init__(self):
         gtk.HBox.__init__(self)
-        
+
         self.info_image_box = gtk.VBox()
         self.info_image_box.set_size_request(24, 24)
         self.info_image_box.connect('expose-event', self.expose_info_image_box)
@@ -259,20 +259,20 @@ class BottomTipBar(gtk.HBox):
         self.info_callback_button.callback_action = callback_action
 
 class LoadingBox(gtk.VBox):
-    
+
     def __init__(self):
         super(LoadingBox, self).__init__()
-        
+
         loading_pixbuf = gtk.gdk.PixbufAnimation(get_common_image("loading.gif"))
         loading_image = gtk.Image()
         loading_image.set_from_animation(loading_pixbuf)
-        
+
         main_box = gtk.VBox(spacing=5)
         main_box.pack_start(loading_image)
         self.add(set_widget_vcenter(main_box))
 
 class NetworkConnectFailed(gtk.EventBox):
-    
+
     def __init__(self, callback=None):
         gtk.EventBox.__init__(self)
         self.set_visible_window(False)
@@ -283,13 +283,13 @@ class NetworkConnectFailed(gtk.EventBox):
                         gtk.gdk.LEAVE_NOTIFY_MASK
                         )
 
-        
+
         self.connect("expose-event", self.on_expose_event)
 
         self.failed_dpixbuf = get_common_locale_image_pixbuf("network", "failed.png")
         self.connect("motion-notify-event", self.on_motion_notify)
         self.connect("button-press-event", self.on_button_press)
-        
+
         self.normal_text_dcolor = app_theme.get_color("labelText")
         self.hover_text_dcolor = app_theme.get_color("globalItemHighlight")
         self.prompt_text = _("Click to refresh")
@@ -298,55 +298,55 @@ class NetworkConnectFailed(gtk.EventBox):
         self.text_rect = None
         self.is_hover = False
         self.press_callback = callback
-        
-    def on_expose_event(self, widget, event):    
+
+    def on_expose_event(self, widget, event):
         cr = widget.window.cairo_create()
         rect = widget.allocation
         failed_pixbuf = self.failed_dpixbuf
         #draw_alpha_mask(cr, rect.x, rect.y, rect.width, rect.height, "layoutLeft")
-        pixbuf_offset_x = (rect.width - failed_pixbuf.get_width()) / 2 
+        pixbuf_offset_x = (rect.width - failed_pixbuf.get_width()) / 2
         pixbuf_offset_y = (rect.height - failed_pixbuf.get_height()) / 2 - 20
         icon_x = rect.x + pixbuf_offset_x
         icon_y = rect.y + pixbuf_offset_y
         draw_pixbuf(cr, failed_pixbuf, icon_x, icon_y)
-        
+
         text_y = icon_y + failed_pixbuf.get_height() + self.text_padding_y
         text_x = icon_x + self.text_padding_x
-        
+
         _width, _height = dutils.get_content_size(self.prompt_text)
-        
+
         self.text_rect = gtk.gdk.Rectangle(text_x - rect.x, text_y - rect.y,
                                            rect.x + rect.width -  text_x - pixbuf_offset_x,
                                            _height)
-        
-        if self.is_hover:        
+
+        if self.is_hover:
             text_color = self.hover_text_dcolor.get_color()
-        else:    
+        else:
             text_color = self.normal_text_dcolor.get_color()
-            
+
         draw_text(cr, self.prompt_text, text_x, text_y, self.text_rect.width, _height,
-                  text_color=text_color, 
-                  underline=True, 
+                  text_color=text_color,
+                  underline=True,
                   alignment=pango.ALIGN_CENTER)
         return True
-    
+
     def on_motion_notify(self, widget, event):
         if self.text_rect is not None:
             if dutils.is_in_rect((event.x, event.y), self.text_rect):
                 self.is_hover = True
-            else:    
+            else:
                 self.is_hover = False
-            self.queue_draw()  
-            
-    def on_button_press(self, widget, event):        
+            self.queue_draw()
+
+    def on_button_press(self, widget, event):
         if self.is_hover:
             if self.press_callback:
                 self.press_callback()
                 self.is_hover = False
                 self.queue_draw()
-                
+
 class NetworkConnectTimeout(gtk.EventBox):
-    
+
     def __init__(self, callback=None):
         gtk.EventBox.__init__(self)
         self.set_visible_window(False)
@@ -357,13 +357,13 @@ class NetworkConnectTimeout(gtk.EventBox):
                         gtk.gdk.LEAVE_NOTIFY_MASK
                         )
 
-        
+
         self.connect("expose-event", self.on_expose_event)
-        
+
         self.failed_dpixbuf = get_common_locale_image_pixbuf("network", "timeout.png")
         self.connect("motion-notify-event", self.on_motion_notify)
         self.connect("button-press-event", self.on_button_press)
-        
+
         self.normal_text_dcolor = app_theme.get_color("labelText")
         self.hover_text_dcolor = app_theme.get_color("globalItemHighlight")
         self.prompt_text = _("Click to refresh")
@@ -372,47 +372,47 @@ class NetworkConnectTimeout(gtk.EventBox):
         self.text_rect = None
         self.is_hover = False
         self.press_callback = callback
-        
-    def on_expose_event(self, widget, event):    
+
+    def on_expose_event(self, widget, event):
         cr = widget.window.cairo_create()
         rect = widget.allocation
         failed_pixbuf = self.failed_dpixbuf
         #draw_alpha_mask(cr, rect.x, rect.y, rect.width, rect.height, "layoutLeft")
-        pixbuf_offset_x = (rect.width - failed_pixbuf.get_width()) / 2 
+        pixbuf_offset_x = (rect.width - failed_pixbuf.get_width()) / 2
         pixbuf_offset_y = (rect.height - failed_pixbuf.get_height()) / 2 - 20
         icon_x = rect.x + pixbuf_offset_x
         icon_y = rect.y + pixbuf_offset_y
         draw_pixbuf(cr, failed_pixbuf, icon_x, icon_y)
-        
+
         text_y = icon_y + failed_pixbuf.get_height() + self.text_padding_y
         text_x = icon_x + self.text_padding_x
-        
+
         _width, _height = dutils.get_content_size(self.prompt_text)
-        
+
         self.text_rect = gtk.gdk.Rectangle(text_x - rect.x, text_y - rect.y,
                                            rect.x + rect.width -  text_x - pixbuf_offset_x,
                                            _height)
-        
-        if self.is_hover:        
+
+        if self.is_hover:
             text_color = self.hover_text_dcolor.get_color()
-        else:    
+        else:
             text_color = self.normal_text_dcolor.get_color()
-            
+
         draw_text(cr, self.prompt_text, text_x, text_y, self.text_rect.width, _height,
-                  text_color=text_color, 
-                  underline=True, 
+                  text_color=text_color,
+                  underline=True,
                   alignment=pango.ALIGN_CENTER)
         return True
-    
+
     def on_motion_notify(self, widget, event):
         if self.text_rect is not None:
             if dutils.is_in_rect((event.x, event.y), self.text_rect):
                 self.is_hover = True
-            else:    
+            else:
                 self.is_hover = False
-            self.queue_draw()  
-            
-    def on_button_press(self, widget, event):        
+            self.queue_draw()
+
+    def on_button_press(self, widget, event):
         if self.is_hover:
             if self.press_callback:
                 self.press_callback()
@@ -422,24 +422,24 @@ class NetworkConnectTimeout(gtk.EventBox):
 class ConfirmDialog(DialogBox):
     '''
     Simple message confirm dialog.
-    
+
     @undocumented: click_confirm_button
     @undocumented: click_cancel_button
     '''
-	
-    def __init__(self, 
-                 title, 
-                 message, 
+
+    def __init__(self,
+                 title,
+                 message,
                  default_width=330,
                  default_height=145,
-                 confirm_callback=None, 
-                 cancel_callback=None, 
-                 cancel_first=True, 
+                 confirm_callback=None,
+                 cancel_callback=None,
+                 cancel_first=True,
                  message_text_size=9,
                  ):
         '''
         Initialize ConfirmDialog class.
-        
+
         @param title: Title for confirm dialog.
         @param message: Confirm message.
         @param default_width: Dialog width, default is 330 pixel.
@@ -453,42 +453,42 @@ class ConfirmDialog(DialogBox):
         DialogBox.__init__(self, title, default_width, default_height, DIALOG_MASK_SINGLE_PAGE, close_callback=self.hide)
         self.confirm_callback = confirm_callback
         self.cancel_callback = cancel_callback
-        
+
         self.label_align = gtk.Alignment()
         self.label_align.set(0.5, 0.5, 0, 0)
         self.label_align.set_padding(0, 0, 8, 8)
         self.label = Label(message, text_x_align=ALIGN_MIDDLE, text_size=message_text_size)
-        
+
         self.confirm_button = Button(_("OK"))
         self.cancel_button = Button(_("Cancel"))
-        
+
         self.confirm_button.connect("clicked", lambda w: self.click_confirm_button())
         self.cancel_button.connect("clicked", lambda w: self.click_cancel_button())
-        
+
         # Connect widgets.
         self.body_box.pack_start(self.label_align, True, True)
         self.label_align.add(self.label)
-        
+
         if cancel_first:
             self.right_button_box.set_buttons([self.cancel_button, self.confirm_button])
         else:
             self.right_button_box.set_buttons([self.confirm_button, self.cancel_button])
-        
+
     def click_confirm_button(self):
         '''
         Internal function to handle click confirm button.
         '''
         if self.confirm_callback != None:
-            self.confirm_callback()        
-        
+            self.confirm_callback()
+
         self.hide()
-        
+
     def click_cancel_button(self):
         '''
         Internal function to handle click cancel button.
         '''
         if self.cancel_callback != None:
             self.cancel_callback()
-        
+
         self.hide()
 

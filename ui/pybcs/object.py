@@ -15,15 +15,15 @@ class NameException(Exception):
     def __str__(self):
         return 'NameExecption: ' + str(self.msg)
 
-    
+
 class Object:
     def __init__(self, bucket, object_name):
         if object_name[0] != '/':
             raise NameException('object name must start with "/"')
-        
+
         self.bcs = bucket.bcs
         self.bucket = bucket
-        
+
         self.object_name = object_name
         #self.c = self.bcs.c
         self.c = self.bcs.httpclient_class()
@@ -38,7 +38,7 @@ class Object:
         self.head_url=bcs.sign('HEAD', bucket_name, object_name)
         self.del_url=bcs.sign('DELETE', bucket_name, object_name)
 
-        self.public_get_url = '%s/%s%s' % ( self.bcs.host, bucket_name, 
+        self.public_get_url = '%s/%s%s' % ( self.bcs.host, bucket_name,
                                                   '/' + urllib.quote(object_name[1:]) )
 
 
@@ -49,7 +49,7 @@ class Object:
         return '%s/%s%s' % ('bs:/', self.bucket.bucket_name, self.object_name)
 
     def assert_file_writeable(self, path):
-        if os.path.isdir(path): 
+        if os.path.isdir(path):
             raise FileSystemException(path + ' is not a file')
 
     def handle_response(self, r):
@@ -65,7 +65,7 @@ class Object:
         r = self.c.put(self.put_url, content, headers)
         return self.handle_response(r)
 
-    
+
     @network
     def put_file(self, local_file, headers={}):
         """
@@ -80,7 +80,7 @@ class Object:
     def put_file_part(self, local_file, start, length, headers={}):
         """
         以PUT的方式上传文件片段
-        参数： 
+        参数：
             local_file: 要上传的文件
             start:      文件内容起始位置
             length:     文件内容长度
@@ -89,7 +89,7 @@ class Object:
         r = self.c.put_file_part(self.put_url, local_file, start, length, headers)
         return self.handle_response(r)
 
-    
+
     def post(self, content, headers={}):
         ''' we can't create a object by post content
         Use put content instead
@@ -114,7 +114,7 @@ class Object:
         下载object对应的文件
         参数：
             local_file:  文件下载后保存的名称
-        """ 
+        """
         self.assert_file_writeable(local_file)
         r = self.c.get_file(self.get_url, local_file, headers)
         return self.handle_response(r)
@@ -212,9 +212,9 @@ class Object:
 class Superfile(Object):
     def __init__(self, bucket, object_name, object_list):
         Object.__init__(self, bucket, object_name)
-        self.object_list = object_list 
+        self.object_list = object_list
 
-    
+
     def assertSubObjectExist(self):
         for o in self.object_list:
             if not o.etag:
@@ -226,9 +226,9 @@ class Superfile(Object):
         根据子文件生成superfile
         """
         self.assertSubObjectExist()
-        tmp_list = ['"part_%d": {"url": "%s", "etag":"%s"}' % (idx, o.ref_str(), o.etag)  
+        tmp_list = ['"part_%d": {"url": "%s", "etag":"%s"}' % (idx, o.ref_str(), o.etag)
                 for idx, o in enumerate(self.object_list)]
-        tmp_list = ','.join(tmp_list)  
+        tmp_list = ','.join(tmp_list)
         self.superfile_meta = '{"object_list": {%s}}' % tmp_list
         url = '%s&superfile=1' % self.put_url
 

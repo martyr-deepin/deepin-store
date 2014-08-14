@@ -87,7 +87,7 @@ def shorten(s, l=80):
     if len(s)<=l:
         return s
     return s[:l-3] + '...'
-	
+
 def md5_for_file(f, block_size=2**20):
     f = open(f, 'rb')
     md5 = hashlib.md5()

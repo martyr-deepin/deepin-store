@@ -3,20 +3,20 @@
 
 # Copyright (C) 2011 ~ 2012 Deepin, Inc.
 #               2011 ~ 2012 Wang Yong
-# 
+#
 # Author:     Wang Yong <lazycat.manatee@gmail.com>
 # Maintainer: Wang Yong <lazycat.manatee@gmail.com>
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -38,10 +38,10 @@ def start_main():
     gtk.gdk.threads_init()
     session_bus = dbus.SessionBus()
     options, arguments = get_parser()
-    
+
     # Send hello message if updater has running.
     if is_dbus_name_exists(DSC_FRONTEND_NAME, True):
-        
+
         bus_object = session_bus.get_object(DSC_FRONTEND_NAME, DSC_FRONTEND_PATH)
         bus_interface = dbus.Interface(bus_object, DSC_FRONTEND_NAME)
         bus_interface.raise_to_top()
@@ -50,7 +50,7 @@ def start_main():
     else:
         # Init dbus.
         bus_name = dbus.service.BusName(DSC_FRONTEND_NAME, session_bus)
-            
+
         software_center = DeepinSoftwareCenter(session_bus, arguments)
         if options.show_page:
             gtk.timeout_add(500, lambda:software_center.show_page(options.show_page))

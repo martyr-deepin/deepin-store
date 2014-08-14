@@ -3,20 +3,20 @@
 
 # Copyright (C) 2011 ~ 2012 Deepin, Inc.
 #               2011 ~ 2012 Wang Yong
-# 
+#
 # Author:     Wang Yong <lazycat.manatee@gmail.com>
 # Maintainer: Wang Yong <lazycat.manatee@gmail.com>
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -92,18 +92,18 @@ class AcquireProgress(apt.progress.base.AcquireProgress):
 
 class UpdateList(MissionThread):
     '''Update package list.'''
-	
+
     def __init__(self, pkg_cache, simulate=False):
         '''Init for UpdateList.'''
         MissionThread.__init__(self)
         self.pkg_cache = pkg_cache
-        
+
     def start_mission(self):
         '''Update package list.'''
         global_event.emit("update-list-start")
         utils.set_last_update_time()
         utils.log("Cache update list start!")
-        
+
         log_file = open(UPDATE_LIST_LOG_PATH, 'ab')
         progress = AcquireProgress(log_file)
         try:
@@ -119,7 +119,7 @@ class UpdateList(MissionThread):
             global_event.emit("update-list-failed")
             failed_message = "Cache update list failed: %s" % e
             utils.log(failed_message)
-    
+
 if __name__ == "__main__":
     import gtk
     gtk.gdk.threads_init()

@@ -2,20 +2,20 @@
 # -*- coding: utf-8 -*-
 # Copyright (C) 2011 ~ 2012 Deepin, Inc.
 #               2011 ~ 2012 Wang Yong
-# 
+#
 # Author:     Wang Yong <lazycat.manatee@gmail.com>
 # Maintainer: Wang Yong <lazycat.manatee@gmail.com>
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -63,13 +63,13 @@ def auth_with_policykit(action, interactive=1):
     authority_dbus_path = "/org/freedesktop/PolicyKit1/Authority"
     authority_dbus_iface = "org.freedesktop.PolicyKit1.Authority"
     system_bus = dbus.SystemBus()
-    obj = system_bus.get_object(policykit_dbus_name, 
+    obj = system_bus.get_object(policykit_dbus_name,
             authority_dbus_path, authority_dbus_iface)
 
     policykit = dbus.Interface(obj, authority_dbus_iface)
     pid = os.getpid()
 
-    subject = ('unix-process', 
+    subject = ('unix-process',
                 {
                     'pid' : dbus.UInt32(pid, variant_level=1),
                     'start-time' : dbus.UInt64(0),

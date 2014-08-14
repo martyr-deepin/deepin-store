@@ -3,20 +3,20 @@
 
 # Copyright (C) 2012 ~ 2013 Deepin, Inc.
 #               2012 ~ 2013 Kaisheng Ye
-# 
+#
 # Author:     Kaisheng Ye <kaisheng.ye@gmail.com>
 # Maintainer: Kaisheng Ye <kaisheng.ye@gmail.com>
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -48,11 +48,11 @@ from deepin_utils.ipc import is_dbus_name_exists
 
 from nls import _
 from utils import (
-        get_purg_flag, 
-        set_purge_flag, 
-        #handle_dbus_reply, 
-        #handle_dbus_error, 
-        get_update_interval, 
+        get_purg_flag,
+        set_purge_flag,
+        #handle_dbus_reply,
+        #handle_dbus_error,
+        get_update_interval,
         set_update_interval,
         get_software_download_dir,
         set_software_download_dir,
@@ -75,16 +75,16 @@ DSC_UPDATE_DAEMON_PATH = "/" + DSC_UPDATE_DAEMON_NAME.replace(".", "/")
 class SelectedButtonBuffer(gobject.GObject):
     '''
     RaidoButtonBuffer class.
-    
+
     Use to render RaidoButton in TreeView widget.
-    
+
     @undocumented: render
     '''
 
     STATE_NORMAL = 1
     STATE_PRELIGHT = 2
     STATE_ACTIVE = 3
-	
+
     def __init__(self,
                  active=False,
                  render_padding_x=0,
@@ -92,7 +92,7 @@ class SelectedButtonBuffer(gobject.GObject):
                  ):
         '''
         Initialize RadioButtonBuffer class.
-        
+
         @param active: Set True to active buffer status, default is False.
         @param render_padding_x: Horizontal padding value, default is 0.
         @param render_padding_y: Vertical padding value, default is 0.
@@ -105,21 +105,21 @@ class SelectedButtonBuffer(gobject.GObject):
         #self.inactive_press_dpixbuf = ui_theme.get_pixbuf("button/radio_button_inactive_press.png")
         #self.active_press_dpixbuf = ui_theme.get_pixbuf("button/radio_button_active_press.png")
         self.active_dpixbuf = app_theme.get_pixbuf("mirror/check_box-2.png")
-        
+
         self.render_padding_x = render_padding_x
         self.render_padding_y = render_padding_y
 
         pixbuf = self.active_dpixbuf.get_pixbuf()
         self.render_width = pixbuf.get_width()
         self.render_height = pixbuf.get_height()
-        
+
         self.active = active
         self.button_state = self.STATE_NORMAL
-        
+
     def get_active(self):
         '''
         Get active status of raido button buffer.
-        
+
         @return: Return True if buffer is in active status.
         '''
         return self.active
@@ -129,41 +129,41 @@ class SelectedButtonBuffer(gobject.GObject):
         self.button_press_flag = False
         self.active = True
         #self.queue_draw()
-        
+
     def is_in_button_area(self, x, y):
         '''
         Helper function to detect button event is in button area.
-        
-        You can add this function in callback function of TreeItem, such as: 
+
+        You can add this function in callback function of TreeItem, such as:
          - hover/unhover
          - motion_notify
          - button_press/button_release
          - single_click/double_click
-                
-        @param x: X coordinate of button event.        
+
+        @param x: X coordinate of button event.
         @param y: Y coordiante of button event.
         '''
         return is_in_rect((x, y), (self.render_padding_x, self.render_padding_y, self.render_width, self.render_height))
-    
+
     def press_button(self, x, y):
         '''
         Helper function to handle button-press-event.
 
-        You can add this function in callback function of TreeItem, such as: 
+        You can add this function in callback function of TreeItem, such as:
          - hover/unhover
          - motion_notify
          - button_press/button_release
          - single_click/double_click
-                
-        @param x: X coordinate of button event.        
+
+        @param x: X coordinate of button event.
         @param y: Y coordiante of button event.
         '''
         if self.is_in_button_area(x, y) and self.active == False:
             self.button_state = self.STATE_ACTIVE
             self.button_press_flag = True
-                
+
             self.active = True
-                
+
             return True
         else:
             return False
@@ -172,19 +172,19 @@ class SelectedButtonBuffer(gobject.GObject):
         '''
         Helper function to handle button-release-event.
 
-        You can add this function in callback function of TreeItem, such as: 
+        You can add this function in callback function of TreeItem, such as:
          - hover/unhover
          - motion_notify
          - button_press/button_release
          - single_click/double_click
-                
-        @param x: X coordinate of button event.        
+
+        @param x: X coordinate of button event.
         @param y: Y coordiante of button event.
         '''
         if self.is_in_button_area(x, y):
             self.button_state = self.STATE_ACTIVE
             self.button_press_flag = False
-            
+
             return True
         else:
             return False
@@ -193,30 +193,30 @@ class SelectedButtonBuffer(gobject.GObject):
         '''
         Helper function to handle motion-notify event.
 
-        You can add this function in callback function of TreeItem, such as: 
+        You can add this function in callback function of TreeItem, such as:
          - hover/unhover
          - motion_notify
          - button_press/button_release
          - single_click/double_click
-                
-        @param x: X coordinate of button event.        
+
+        @param x: X coordinate of button event.
         @param y: Y coordiante of button event.
         '''
         if self.is_in_button_area(x, y):
             if self.button_state != self.STATE_PRELIGHT:
                 self.button_state = self.STATE_PRELIGHT
-                
+
                 return True
             else:
                 return False
         else:
             if self.button_state != self.STATE_NORMAL:
                 self.button_state = self.STATE_NORMAL
-                
+
                 return True
             else:
                 return False
-            
+
     def render(self, cr, rect):
         # Get pixbuf along with button's sate.
         image = None
@@ -225,16 +225,16 @@ class SelectedButtonBuffer(gobject.GObject):
                 image = self.active_dpixbuf.get_pixbuf()
             else:
                 image = None
-        
+
         # Draw button.
         if image:
             draw_pixbuf(
-                cr, 
-                image, 
+                cr,
+                image,
                 rect.x + (rect.width - image.get_width())/2,
                 rect.y + (rect.height - image.get_height())/2
                 )
-            
+
 gobject.type_register(SelectedButtonBuffer)
 
 class MirrorItem(TreeItem):
@@ -277,7 +277,7 @@ class MirrorItem(TreeItem):
 
     def is_in_button_area(self, column, offset_x, offset_y):
         return (column == 2
-                and is_in_rect((offset_x, offset_y), 
+                and is_in_rect((offset_x, offset_y),
                                (self.get_column_widths()[column] - self.ITEM_BUTTON_PADDING_RIGHT - self.button_width,
                                 (self.ITEM_HEIGHT - self.button_height) / 2,
                                 self.button_width,
@@ -321,7 +321,7 @@ class MirrorItem(TreeItem):
                 rect.x,
                 rect.y + (rect.height - self.pixbuf.get_height())/2,
                 )
-        
+
     def get_column_renders(self):
         return [self.render_radio_button, self.render_url, self.render_change_button]
 
@@ -345,7 +345,7 @@ class MirrorItem(TreeItem):
     def unhighlight(self):
         self.is_highlight = False
         self.redraw()
-    
+
     def highlight(self):
         self.is_highlight = True
         self.redraw()
@@ -353,7 +353,7 @@ class MirrorItem(TreeItem):
     def unhover(self, column, offset_x, offset_y):
         self.is_hover = False
         self.redraw()
-    
+
     def hover(self, column, offset_x, offset_y):
         self.is_hover = True
         self.redraw()
@@ -363,7 +363,7 @@ class MirrorItem(TreeItem):
             if self.radio_button.release_button(x,y):
                 self.radio_button.get_active()
                 #self.set_autorun_state(state)
-    
+
     def single_click(self, column, offset_x, offset_y):
         self.is_select = True
         self.redraw()
@@ -383,19 +383,19 @@ class MirrorItem(TreeItem):
 
         background_color = get_background_color(self.is_highlight, False, self.is_hover)
         if background_color:
-            cr.set_source_rgb(*color_hex_to_cairo(ui_theme.get_color(background_color).get_color()))    
+            cr.set_source_rgb(*color_hex_to_cairo(ui_theme.get_color(background_color).get_color()))
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
 
     def motion_notify(self, column, offset_x, offset_y):
         if self.is_in_button_area(column, offset_x, offset_y):
             self.button_status = self.BUTTON_HOVER
-            
+
             if self.redraw_request_callback:
                 self.redraw_request_callback(self)
         elif self.button_status != self.BUTTON_NORMAL:
             self.button_status = self.BUTTON_NORMAL
-            
+
             if self.redraw_request_callback:
                 self.redraw_request_callback(self)
 
@@ -403,7 +403,7 @@ class MirrorItem(TreeItem):
         if self.is_in_button_area(column, offset_x, offset_y):
             self.emit("item-clicked")
 
-def create_separator_box(padding_x=0, padding_y=0):    
+def create_separator_box(padding_x=0, padding_y=0):
     separator_box = HSeparator(
         app_theme.get_shadow_color("hSeparator").get_color_info(),
         padding_x, padding_y)
@@ -424,8 +424,8 @@ class BaseBox(gtk.VBox):
         self.main_box_align.add(self.main_box)
         self.add(self.main_box_align)
 
-class AboutBox(BaseBox):    
-    
+class AboutBox(BaseBox):
+
     def __init__(self):
         BaseBox.__init__(self)
 
@@ -434,13 +434,13 @@ class AboutBox(BaseBox):
         logo_box = gtk.HBox(spacing=2)
         logo_box.pack_start(logo_image, False, False)
         logo_box.pack_start(logo_name, False, False)
-        
+
         version_label = Label(_("Version:"))
         version_content = Label(PROGRAM_VERSION, DynamicColor('#4D5154'))
         info_box = gtk.HBox(spacing=5)
         info_box.pack_start(version_label, False, False)
         info_box.pack_start(version_content, False, False)
-        
+
         align = gtk.Alignment()
         align.set(0, 0, 0, 1)
 
@@ -448,7 +448,7 @@ class AboutBox(BaseBox):
         title_box.pack_start(logo_box, False, False)
         title_box.pack_start(align, True, True)
         title_box.pack_start(info_box, False, False)
-        
+
         describe = _("Deepin Store is a commonly used software center on Linux. "
                 "We selected more than 2,600 excellent applications with many "
                 "functions of installation and uninstalling, software repository "
@@ -458,7 +458,7 @@ class AboutBox(BaseBox):
                 "shares good applications.\n"
                 "\n"
                 "Deepin Store is a free software licensed under GNU GPLv3.")
-        
+
         describe_label = Label(describe, enable_select=False, wrap_width=400, text_size=10)
         self.main_box.pack_start(title_box, False, False)
         self.main_box.pack_start(create_separator_box(), False, True)
@@ -475,22 +475,22 @@ class GeneralBox(BaseBox):
         main_table = gtk.Table(2, 2)
         main_table.set_row_spacings(CONTENT_ROW_SPACING)
         uninstall_title_label = Label(_("On uninstalling the software"))
-        
+
         # mini_check_button
         self.delete_check_button = CheckButton(_("Delete configuration files"))
         self.delete_check_button.set_active(get_purg_flag())
         self.delete_check_button.connect("toggled", lambda w: set_purge_flag(self.delete_check_button.get_active()))
-        
+
         main_table.attach(uninstall_title_label, 0, 2, 0, 1, yoptions=gtk.FILL)
         main_table.attach(create_separator_box(), 0, 2, 1, 2, yoptions=gtk.FILL)
         main_table.attach(self.delete_check_button, 0, 1, 2, 3, yoptions=gtk.FILL)
-        
+
         return main_table
 
-    def create_download_dir_table(self):    
+    def create_download_dir_table(self):
         main_table = gtk.Table(4, 2)
         main_table.set_row_spacings(CONTENT_ROW_SPACING)
-        
+
         dir_title_label = Label(_("Download settings"))
         dir_title_label.set_size_request(200, 12)
         label_align = gtk.Alignment()
@@ -506,20 +506,20 @@ class GeneralBox(BaseBox):
         download_number_hbox = gtk.HBox(spacing=5)
         download_number_hbox.pack_start(download_number_label, False, False)
         download_number_hbox.pack_start(self.download_number_comobox, False, False)
-        
+
         change_download_dir_label = Label(_("Download directory: "))
         self.dir_entry = InputEntry()
         self.dir_entry.set_text(get_software_download_dir())
         self.dir_entry.set_editable(False)
         self.dir_entry.set_size(200, 25)
-        
+
         modify_button = Button(_("Change"))
         modify_button.connect("clicked", self.change_download_save_dir)
         download_dir_hbox = gtk.HBox(spacing=5)
         download_dir_hbox.pack_start(change_download_dir_label, False, False)
         download_dir_hbox.pack_start(self.dir_entry, False, False)
         download_dir_hbox.pack_start(modify_button, False, False)
-        
+
         main_table.attach(label_align, 0, 2, 0, 1, yoptions=gtk.FILL)
         main_table.attach(create_separator_box(), 0, 2, 1, 2, yoptions=gtk.FILL)
         main_table.attach(download_number_hbox, 0, 2, 2, 3, xoptions=gtk.FILL)
@@ -535,7 +535,7 @@ class GeneralBox(BaseBox):
         if local_dir:
             local_dir = os.path.expanduser(local_dir)
             if local_dir != get_software_download_dir():
-                self.dir_entry.set_editable(True)        
+                self.dir_entry.set_editable(True)
                 self.dir_entry.set_text(local_dir)
                 self.dir_entry.set_editable(False)
                 set_software_download_dir(local_dir)
@@ -564,14 +564,14 @@ class MirrorsBox(BaseBox):
     def create_source_update_frequency_table(self):
         main_table = gtk.Table(3, 2)
         main_table.set_row_spacings(CONTENT_ROW_SPACING)
-        
+
         dir_title_label = Label(_("Update package lists"))
 
         # auto update check button
         self.is_auto_update_button = CheckButton(label_text=_('Update automatically'))
         self.is_auto_update_button.connect('released', self.change_auto_update)
         self.is_auto_update_button.set_active(utils.is_auto_update())
-        
+
         self.update_label = Label(_("Time interval: "))
         self.update_spin = SpinBox(int(get_update_interval()), 0, 168, 1)
         self.update_spin.connect("value-changed", lambda w, v: set_update_interval(v))
@@ -638,7 +638,7 @@ class MirrorsBox(BaseBox):
     def create_mirror_select_table(self):
         main_table = gtk.Table(3, 2)
         main_table.set_row_spacings(CONTENT_ROW_SPACING)
-        
+
         mirror_select_title = Label(_("Select mirror"))
         self.select_best_mirror_button = Button(self.select_best_mirror_button_texts["normal"])
         self.select_best_mirror_button.connect("clicked", self.select_best_mirror)
@@ -659,7 +659,7 @@ class MirrorsBox(BaseBox):
         main_table.attach(self.select_best_mirror_button, 1, 2, 0, 1, xoptions=gtk.FILL)
         main_table.attach(create_separator_box(), 0, 2, 1, 2, xoptions=gtk.FILL)
         main_table.attach(self.mirror_view, 0, 2, 2, 3, xoptions=gtk.FILL)
-        
+
 
         return main_table
 
@@ -708,8 +708,8 @@ class FolderChooseDialog(gtk.FileChooserDialog):
                                         gtk.STOCK_OPEN, gtk.RESPONSE_OK))
         self.return_uri = return_uri
         self.set_modal(True)
-        
-    def run(self):    
+
+    def run(self):
         response = gtk.FileChooserDialog.run(self)
         folder = None
         if response == gtk.RESPONSE_OK:
@@ -717,7 +717,7 @@ class FolderChooseDialog(gtk.FileChooserDialog):
                 folder = self.get_uri()
             else:
                 folder = self.get_filename()
-        self.destroy()    
+        self.destroy()
         return folder
 
 class WaitingDialog(DialogBox):
@@ -725,10 +725,10 @@ class WaitingDialog(DialogBox):
         self.dialog_width = 330
         DialogBox.__init__(
                 self,
-                title="", 
+                title="",
                 default_width=self.dialog_width,
                 default_height=145,
-                mask_type=0, 
+                mask_type=0,
                 close_callback=self.close_action,
                 modal=True,
                 window_hint=gtk.gdk.WINDOW_TYPE_HINT_DIALOG,

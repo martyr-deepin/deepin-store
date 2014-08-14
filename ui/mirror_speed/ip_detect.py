@@ -7,7 +7,7 @@ import GeoIP
 import math
 import sqlite3
 import re
-import urllib2  
+import urllib2
 
 current_dir = os.path.dirname(os.path.realpath(__file__))
 mirrors_db_path = os.path.join(current_dir, "mirrors.db")
@@ -65,7 +65,7 @@ def get_nearest_mirrors(mirrors=MIRRORS):
     record = gic.record_by_addr(ip_addr)
     latitude = record['latitude']
     longitude = record['longitude']
-    
+
     if not (latitude and longitude):
         return [official_mirror.hostname]
 
@@ -84,7 +84,7 @@ def get_nearest_mirrors(mirrors=MIRRORS):
             break
     return return_list
 
-def getip():  
+def getip():
     return re.search('\d+\.\d+\.\d+\.\d+',urllib2.urlopen("http://www.whereismyip.com").read()).group(0)
     #中间的那个http地址因不同的IP查询网站而group内容不一样，如果是http://whois.ipcn.org/的话，可能就group(1)了
 

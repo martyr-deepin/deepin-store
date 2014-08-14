@@ -36,7 +36,7 @@ class BCS:
             self.host = host[:-1]
         if not self.host.startswith('http'):
             self.host = "http://" + self.host
-        
+
         self.c = self.httpclient_class()
         self.get_url=self.sign('GET', '', '/')
 
@@ -79,15 +79,15 @@ class BCS:
         """
         flag = ''
         s =  ''
-        flag+='M'; s += 'Method=%s\n' % M; 
-        flag+='B'; s += 'Bucket=%s\n' % B; 
-        flag+='O'; s += 'Object=%s\n' % O; 
-        if T :   flag+='T'; s += 'Time=%s\n'   % T; 
-        if I :   flag+='I'; s += 'Ip=%s\n'     % I; 
-        if S :   flag+='S'; s += 'Size=%s\n'   % S; 
+        flag+='M'; s += 'Method=%s\n' % M;
+        flag+='B'; s += 'Bucket=%s\n' % B;
+        flag+='O'; s += 'Object=%s\n' % O;
+        if T :   flag+='T'; s += 'Time=%s\n'   % T;
+        if I :   flag+='I'; s += 'Ip=%s\n'     % I;
+        if S :   flag+='S'; s += 'Size=%s\n'   % S;
 
         s = '\n'.join([flag, s])
-        
+
         def h(sk, body):
             digest = hmac.new(sk, body, hashlib.sha1).digest()
             t = base64.encodestring(digest)
@@ -95,9 +95,9 @@ class BCS:
 
         sign = h(self.sk, s)
         url = '%s/%s%s?sign=%s:%s:%s' % (
-                self.host, B, '/' + urllib.quote(O[1:]), 
+                self.host, B, '/' + urllib.quote(O[1:]),
                 flag, self.ak, sign)
         if T :      url += '&time=%s'   % T;
-        if I :      url += '&ip=%s'     % I; 
-        if S :      url += '&size=%s'   % S; 
+        if I :      url += '&ip=%s'     % I;
+        if S :      url += '&size=%s'   % S;
         return url
