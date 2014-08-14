@@ -20,6 +20,7 @@ Depends: ${shlibs:Depends},
  python-deepin-storm,
  xdelta3,
  python-geoip,
+ deepin-download-service,
 Description: Software center for linux deepin
  Linux Deepin (formerly Hiweed GNU/Linux) is an easy-to-use Chinese
  distribution based on Ubuntu. 
