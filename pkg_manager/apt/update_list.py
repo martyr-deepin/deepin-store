@@ -112,9 +112,9 @@ class UpdateList(MissionThread):
                 global_event.emit("update-list-failed")
                 utils.log("update list failed!")
             else:
+                self.pkg_cache.open(None)
                 global_event.emit("update-list-finish")
                 utils.log("update list finish")
-                self.pkg_cache.open(None)
         except apt.cache.FetchFailedException, e:
             global_event.emit("update-list-failed")
             failed_message = "Cache update list failed: %s" % e
