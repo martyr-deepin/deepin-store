@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-25 10:47+0800\n"
+"POT-Creation-Date: 2014-08-15 09:59+0800\n"
 "PO-Revision-Date: 2014-07-02 20:21+0000\n"
 "Last-Translator: Fox909 <ffox909@mail.ru>\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/deepin-store/"
@@ -77,15 +77,15 @@ msgstr "%s часов назад"
 msgid "%s minutes ago"
 msgstr "%s минут(ы) назад"
 
+#: ../ui/upgrade_page.py:668
+#, fuzzy, python-format
+msgid "%s package(s) are available for upgrade, %s will be downloaded."
+msgstr "%s обновления выбраны. %s будут загружены."
+
 #: ../ui/software_center.py:391
 #, python-format
 msgid "%s packages upgrade successfully."
 msgstr "%s пакетов успешно обновлены."
-
-#: ../ui/upgrade_page.py:667
-#, python-format
-msgid "%s updates are selected. %s will be downloaded."
-msgstr "%s обновления выбраны. %s будут загружены."
 
 #: ../ui/home_page.py:478
 #, python-format
@@ -169,7 +169,7 @@ msgstr "Очистить кэширование пакетов"
 msgid "Click to refresh"
 msgstr "Кликните, чтобы обновить"
 
-#: ../ui/upgrade_page.py:1101
+#: ../ui/upgrade_page.py:1103
 #, python-format
 msgid "Completed: %s/%s (%s/%s) Download Rate: %s/s"
 msgstr "Завершено: %s/%s (%s/%s) Скорость загрузки: %s/s"
@@ -191,7 +191,7 @@ msgid "Deepin Desktop Environment is not installed, this function is invalid!"
 msgstr ""
 "Окружение Рабочего стола Deepin не установлено, эта функция не работает!"
 
-#: ../ui/dsc-daemon.py:291 ../ui/dsc-daemon.py:295
+#: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
 #: ../ui/software_center.py:733 ../ui/preference.py:433
 msgid "Deepin Store"
 msgstr "Deepin Store"
@@ -221,12 +221,12 @@ msgstr ""
 msgid "Delete configuration files"
 msgstr "Удалить файлы конфигурации"
 
-#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1647
+#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1649
 msgid "Dependencies analysis failed"
 msgstr "Ошибка анализа зависимостей"
 
 #: ../ui/install_page.py:313 ../ui/install_page.py:741
-#: ../ui/upgrade_page.py:1089 ../ui/upgrade_page.py:1607
+#: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1609
 msgid "Dependencies analyzing"
 msgstr "Анализ зависимостей"
 
@@ -250,11 +250,11 @@ msgstr "Папка загрузки:"
 msgid "Download failed"
 msgstr "Ошибка загрузки"
 
-#: ../ui/upgrade_page.py:1111
+#: ../ui/upgrade_page.py:1113
 msgid "Download finished."
 msgstr "Загрузка завершена."
 
-#: ../ui/upgrade_page.py:1095
+#: ../ui/upgrade_page.py:1097
 msgid "Download has started"
 msgstr "Загрузка началась"
 
@@ -266,7 +266,7 @@ msgstr "Рейтинг загрузки"
 msgid "Download settings"
 msgstr "Настройки загрузки"
 
-#: ../ui/upgrade_page.py:1115
+#: ../ui/upgrade_page.py:1117
 msgid "Download stopped."
 msgstr "Загрузка остановлена."
 
@@ -283,7 +283,7 @@ msgstr "Загрузка: %s"
 msgid "Download: 0"
 msgstr "Загрузка: 0"
 
-#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1621
+#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1623
 msgid "Downloading"
 msgstr "Загрузка"
 
@@ -311,7 +311,7 @@ msgstr "Проектирование"
 msgid "Err"
 msgstr "Ошбк."
 
-#: ../ui/upgrade_page.py:1118
+#: ../ui/upgrade_page.py:1120
 msgid "Failed to analyze dependencies."
 msgstr "Неудачный анализ зависимостей."
 
@@ -344,7 +344,7 @@ msgstr "Передача файлов"
 msgid "Finance"
 msgstr "Финансы"
 
-#: ../ui/upgrade_page.py:1092
+#: ../ui/upgrade_page.py:1094
 msgid "Finished analyzing dependencies."
 msgstr "Завершён анализ зависимостей."
 
@@ -431,7 +431,7 @@ msgstr "Установлено"
 msgid "Installing"
 msgstr "Установка"
 
-#: ../ui/upgrade_page.py:1122
+#: ../ui/upgrade_page.py:1124
 msgid "Installing updates"
 msgstr "Установка обновлений"
 
@@ -803,7 +803,7 @@ msgstr ""
 "Обновление требует удалить важные компоненты в связи с повреждением "
 "локальных зависимостей или неверных зависимостей пакета на сервере."
 
-#: ../ui/dsc-daemon.py:289
+#: ../ui/dsc-daemon.py:284
 #, python-format
 msgid ""
 "There are %s packages needed to upgrade in your system, please use Deepin "
@@ -812,7 +812,7 @@ msgstr ""
 "%s пакетов приложений нуждаются в обновление, пожалуйста используйте "
 "менеджер обновлений"
 
-#: ../ui/dsc-daemon.py:293
+#: ../ui/dsc-daemon.py:288
 #, python-format
 msgid ""
 "There is %s package needed to upgrade in your system, please use Deepin "
@@ -894,11 +894,11 @@ msgstr "Обновить списки приложений"
 msgid "Update package lists again and try again."
 msgstr "Обновите список пакетов и попробуйте еще раз."
 
-#: ../ui/upgrade_page.py:1123
+#: ../ui/upgrade_page.py:1125
 msgid "Updating..."
 msgstr "Обновление..."
 
-#: ../ui/dsc-daemon.py:227 ../ui/software_center.py:391
+#: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
 #: ../ui/software_center.py:790
 msgid "Upgrade"
 msgstr "Обновить"
@@ -907,11 +907,11 @@ msgstr "Обновить"
 msgid "Upgrade applications selected"
 msgstr "Обновить выделенные приложения"
 
-#: ../ui/upgrade_page.py:1130 ../ui/upgrade_page.py:1672
+#: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1674
 msgid "Upgrade completed"
 msgstr "Обновление завершено"
 
-#: ../ui/upgrade_page.py:1656 ../ui/upgrade_page.py:1663
+#: ../ui/upgrade_page.py:1658 ../ui/upgrade_page.py:1665
 msgid "Upgrading"
 msgstr "Обновление"
 
@@ -960,8 +960,8 @@ msgstr "Посетить домашнюю страницу"
 msgid "Waiting"
 msgstr "Ожидание"
 
-#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1495
-#: ../ui/upgrade_page.py:1614
+#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1497
+#: ../ui/upgrade_page.py:1616
 msgid "Waiting for download"
 msgstr "Ожидание загрузки"
 
@@ -973,7 +973,7 @@ msgstr "Ожидание установки"
 msgid "Waiting for uninstall"
 msgstr "Ожидание удаления"
 
-#: ../ui/upgrade_page.py:1637
+#: ../ui/upgrade_page.py:1639
 msgid "Waiting for upgrade"
 msgstr "Ожидание обновления"
 
