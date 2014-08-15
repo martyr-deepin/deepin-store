@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Software Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-25 10:47+0800\n"
+"POT-Creation-Date: 2014-08-15 09:59+0800\n"
 "PO-Revision-Date: 2014-03-06 13:17+0000\n"
 "Last-Translator: electricface <songwentai@linuxdeepin.com>\n"
 "Language-Team: Armenian (http://www.transifex.com/projects/p/deepin-software-"
@@ -72,14 +72,14 @@ msgstr ""
 msgid "%s minutes ago"
 msgstr ""
 
+#: ../ui/upgrade_page.py:668
+#, python-format
+msgid "%s package(s) are available for upgrade, %s will be downloaded."
+msgstr ""
+
 #: ../ui/software_center.py:391
 #, python-format
 msgid "%s packages upgrade successfully."
-msgstr ""
-
-#: ../ui/upgrade_page.py:667
-#, python-format
-msgid "%s updates are selected. %s will be downloaded."
 msgstr ""
 
 #: ../ui/home_page.py:478
@@ -164,7 +164,7 @@ msgstr ""
 msgid "Click to refresh"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1101
+#: ../ui/upgrade_page.py:1103
 #, python-format
 msgid "Completed: %s/%s (%s/%s) Download Rate: %s/s"
 msgstr ""
@@ -185,7 +185,7 @@ msgstr ""
 msgid "Deepin Desktop Environment is not installed, this function is invalid!"
 msgstr ""
 
-#: ../ui/dsc-daemon.py:291 ../ui/dsc-daemon.py:295
+#: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
 #: ../ui/software_center.py:733 ../ui/preference.py:433
 msgid "Deepin Store"
 msgstr ""
@@ -206,12 +206,12 @@ msgstr ""
 msgid "Delete configuration files"
 msgstr ""
 
-#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1647
+#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1649
 msgid "Dependencies analysis failed"
 msgstr ""
 
 #: ../ui/install_page.py:313 ../ui/install_page.py:741
-#: ../ui/upgrade_page.py:1089 ../ui/upgrade_page.py:1607
+#: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1609
 msgid "Dependencies analyzing"
 msgstr ""
 
@@ -235,11 +235,11 @@ msgstr ""
 msgid "Download failed"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1111
+#: ../ui/upgrade_page.py:1113
 msgid "Download finished."
 msgstr ""
 
-#: ../ui/upgrade_page.py:1095
+#: ../ui/upgrade_page.py:1097
 msgid "Download has started"
 msgstr ""
 
@@ -251,7 +251,7 @@ msgstr ""
 msgid "Download settings"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1115
+#: ../ui/upgrade_page.py:1117
 msgid "Download stopped."
 msgstr ""
 
@@ -268,7 +268,7 @@ msgstr ""
 msgid "Download: 0"
 msgstr ""
 
-#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1621
+#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1623
 msgid "Downloading"
 msgstr ""
 
@@ -296,7 +296,7 @@ msgstr ""
 msgid "Err"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1118
+#: ../ui/upgrade_page.py:1120
 msgid "Failed to analyze dependencies."
 msgstr ""
 
@@ -328,7 +328,7 @@ msgstr ""
 msgid "Finance"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1092
+#: ../ui/upgrade_page.py:1094
 msgid "Finished analyzing dependencies."
 msgstr ""
 
@@ -415,7 +415,7 @@ msgstr ""
 msgid "Installing"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1122
+#: ../ui/upgrade_page.py:1124
 msgid "Installing updates"
 msgstr ""
 
@@ -778,14 +778,14 @@ msgid ""
 "dependencies or incorrect package dependencies on server."
 msgstr ""
 
-#: ../ui/dsc-daemon.py:289
+#: ../ui/dsc-daemon.py:284
 #, python-format
 msgid ""
 "There are %s packages needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
 msgstr ""
 
-#: ../ui/dsc-daemon.py:293
+#: ../ui/dsc-daemon.py:288
 #, python-format
 msgid ""
 "There is %s package needed to upgrade in your system, please use Deepin "
@@ -865,11 +865,11 @@ msgstr ""
 msgid "Update package lists again and try again."
 msgstr ""
 
-#: ../ui/upgrade_page.py:1123
+#: ../ui/upgrade_page.py:1125
 msgid "Updating..."
 msgstr ""
 
-#: ../ui/dsc-daemon.py:227 ../ui/software_center.py:391
+#: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
 #: ../ui/software_center.py:790
 msgid "Upgrade"
 msgstr ""
@@ -878,11 +878,11 @@ msgstr ""
 msgid "Upgrade applications selected"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1130 ../ui/upgrade_page.py:1672
+#: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1674
 msgid "Upgrade completed"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1656 ../ui/upgrade_page.py:1663
+#: ../ui/upgrade_page.py:1658 ../ui/upgrade_page.py:1665
 msgid "Upgrading"
 msgstr ""
 
@@ -931,8 +931,8 @@ msgstr ""
 msgid "Waiting"
 msgstr ""
 
-#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1495
-#: ../ui/upgrade_page.py:1614
+#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1497
+#: ../ui/upgrade_page.py:1616
 msgid "Waiting for download"
 msgstr ""
 
@@ -944,7 +944,7 @@ msgstr ""
 msgid "Waiting for uninstall"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1637
+#: ../ui/upgrade_page.py:1639
 msgid "Waiting for upgrade"
 msgstr ""
 

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-25 10:47+0800\n"
+"POT-Creation-Date: 2014-08-15 09:59+0800\n"
 "PO-Revision-Date: 2014-07-03 03:31+0000\n"
 "Last-Translator: iceleaf <iceleaf916@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/deepin-"
@@ -79,15 +79,15 @@ msgstr " %s 小时之前"
 msgid "%s minutes ago"
 msgstr " %s 分钟之前"
 
+#: ../ui/upgrade_page.py:668
+#, python-format
+msgid "%s package(s) are available for upgrade, %s will be downloaded."
+msgstr "当前可升级软件共 %s 款，需要下载 %s。"
+
 #: ../ui/software_center.py:391
 #, python-format
 msgid "%s packages upgrade successfully."
 msgstr " %s 个软件包升级成功啦。"
-
-#: ../ui/upgrade_page.py:667
-#, python-format
-msgid "%s updates are selected. %s will be downloaded."
-msgstr "已经选择 %s 个更新，将会下载 %s 。"
 
 #: ../ui/home_page.py:478
 #, python-format
@@ -171,7 +171,7 @@ msgstr "清理缓存"
 msgid "Click to refresh"
 msgstr "点击此处刷新"
 
-#: ../ui/upgrade_page.py:1101
+#: ../ui/upgrade_page.py:1103
 #, python-format
 msgid "Completed: %s/%s (%s/%s) Download Rate: %s/s"
 msgstr "已完成：%s/%s (%s/%s) 下载速度：%s/s "
@@ -192,7 +192,7 @@ msgstr "调试"
 msgid "Deepin Desktop Environment is not installed, this function is invalid!"
 msgstr "未安装深度桌面环境，本功能无效。"
 
-#: ../ui/dsc-daemon.py:291 ../ui/dsc-daemon.py:295
+#: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
 #: ../ui/software_center.py:733 ../ui/preference.py:433
 msgid "Deepin Store"
 msgstr "深度商店"
@@ -218,12 +218,12 @@ msgstr ""
 msgid "Delete configuration files"
 msgstr "删除配置文件"
 
-#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1647
+#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1649
 msgid "Dependencies analysis failed"
 msgstr "分析依赖失败"
 
 #: ../ui/install_page.py:313 ../ui/install_page.py:741
-#: ../ui/upgrade_page.py:1089 ../ui/upgrade_page.py:1607
+#: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1609
 msgid "Dependencies analyzing"
 msgstr "分析依赖中"
 
@@ -247,11 +247,11 @@ msgstr "下载目录："
 msgid "Download failed"
 msgstr "下载失败"
 
-#: ../ui/upgrade_page.py:1111
+#: ../ui/upgrade_page.py:1113
 msgid "Download finished."
 msgstr "下载完成。"
 
-#: ../ui/upgrade_page.py:1095
+#: ../ui/upgrade_page.py:1097
 msgid "Download has started"
 msgstr "开始下载"
 
@@ -263,7 +263,7 @@ msgstr "下载排行"
 msgid "Download settings"
 msgstr "下载设置"
 
-#: ../ui/upgrade_page.py:1115
+#: ../ui/upgrade_page.py:1117
 msgid "Download stopped."
 msgstr "下载停止！"
 
@@ -280,7 +280,7 @@ msgstr "下载：%s "
 msgid "Download: 0"
 msgstr "下载：0"
 
-#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1621
+#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1623
 msgid "Downloading"
 msgstr "下载中"
 
@@ -308,7 +308,7 @@ msgstr "工程"
 msgid "Err"
 msgstr "错误"
 
-#: ../ui/upgrade_page.py:1118
+#: ../ui/upgrade_page.py:1120
 msgid "Failed to analyze dependencies."
 msgstr "安装更新失败。"
 
@@ -340,7 +340,7 @@ msgstr "文件传输"
 msgid "Finance"
 msgstr "金融"
 
-#: ../ui/upgrade_page.py:1092
+#: ../ui/upgrade_page.py:1094
 msgid "Finished analyzing dependencies."
 msgstr "依赖分析完成。"
 
@@ -427,7 +427,7 @@ msgstr "已安装"
 msgid "Installing"
 msgstr "安装中"
 
-#: ../ui/upgrade_page.py:1122
+#: ../ui/upgrade_page.py:1124
 msgid "Installing updates"
 msgstr "正在安装更新"
 
@@ -792,14 +792,14 @@ msgstr ""
 "本次升级要卸载重要的系统组件，出现这种情况的原因可能是本地依赖被破坏，或者服"
 "务端软件包依赖不正确"
 
-#: ../ui/dsc-daemon.py:289
+#: ../ui/dsc-daemon.py:284
 #, python-format
 msgid ""
 "There are %s packages needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
 msgstr "您的系统有 %s 个软件包需要升级，请使用深度软件商店进行升级。"
 
-#: ../ui/dsc-daemon.py:293
+#: ../ui/dsc-daemon.py:288
 #, python-format
 msgid ""
 "There is %s package needed to upgrade in your system, please use Deepin "
@@ -879,11 +879,11 @@ msgstr "刷新软件包列表"
 msgid "Update package lists again and try again."
 msgstr "再次刷新软件包列表后重试。"
 
-#: ../ui/upgrade_page.py:1123
+#: ../ui/upgrade_page.py:1125
 msgid "Updating..."
 msgstr "正在更新"
 
-#: ../ui/dsc-daemon.py:227 ../ui/software_center.py:391
+#: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
 #: ../ui/software_center.py:790
 msgid "Upgrade"
 msgstr "系统升级"
@@ -892,11 +892,11 @@ msgstr "系统升级"
 msgid "Upgrade applications selected"
 msgstr "升级所选软件"
 
-#: ../ui/upgrade_page.py:1130 ../ui/upgrade_page.py:1672
+#: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1674
 msgid "Upgrade completed"
 msgstr "升级完成"
 
-#: ../ui/upgrade_page.py:1656 ../ui/upgrade_page.py:1663
+#: ../ui/upgrade_page.py:1658 ../ui/upgrade_page.py:1665
 msgid "Upgrading"
 msgstr "升级中"
 
@@ -945,8 +945,8 @@ msgstr "访问首页"
 msgid "Waiting"
 msgstr "请稍等"
 
-#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1495
-#: ../ui/upgrade_page.py:1614
+#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1497
+#: ../ui/upgrade_page.py:1616
 msgid "Waiting for download"
 msgstr "等待下载"
 
@@ -958,7 +958,7 @@ msgstr "等待安装"
 msgid "Waiting for uninstall"
 msgstr "等待卸载"
 
-#: ../ui/upgrade_page.py:1637
+#: ../ui/upgrade_page.py:1639
 msgid "Waiting for upgrade"
 msgstr "等待升级"
 
