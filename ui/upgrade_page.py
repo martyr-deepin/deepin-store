@@ -182,7 +182,7 @@ class UpgradeBar(gtk.HBox):
         Tooltip.text(self.upgrade_selected_button, _("Upgrade applications selected"))
         self.upgrade_selected_button_align = gtk.Alignment()
         self.upgrade_selected_button_align.set(1.0, 0.5, 0, 0)
-        self.upgrade_selected_button_align.set_padding(0, 0, 6, ITEM_BUTTON_PADDING_RIGHT)
+        self.upgrade_selected_button_align.set_padding(0, 0, 6, ITEM_NO_NOTIFY_AREA_WIDTH - self.upgrade_selected_button.size_request()[0])
         self.upgrade_selected_button_align.add(self.upgrade_selected_button)
 
         #self.pack_start(self.select_button_align, False, False)
@@ -1217,7 +1217,7 @@ class UpgradeItem(TreeItem):
             draw_text(
                 cr,
                 ITEM_NO_NOTIFY_STRING,
-                rect.x + rect.width - ITEM_BUTTON_PADDING_RIGHT - ITEM_NO_NOTIFY_WIDTH,
+                rect.x + rect.width - ITEM_NO_NOTIFY_AREA_WIDTH,
                 rect.y + (ITEM_HEIGHT - ITEM_NO_NOTIFY_HEIGHT) / 2,
                 ITEM_NO_NOTIFY_WIDTH,
                 ITEM_NO_NOTIFY_HEIGHT,
@@ -1418,8 +1418,6 @@ class UpgradeItem(TreeItem):
             else:
                 global_event.emit("set-cursor", None)
         elif column == 2:
-            global_event.emit("set-cursor", None)
-
             if self.status == self.STATUS_NORMAL:
                 if self.is_in_no_notify_area(column, offset_x, offset_y):
                     if not self.notify_button_hover:
@@ -1581,7 +1579,7 @@ class UpgradeItem(TreeItem):
     def is_in_no_notify_area(self, column, offset_x, offset_y):
         return (column == 2
                 and is_in_rect((offset_x, offset_y),
-                               ((ITEM_NO_NOTIFY_AREA_WIDTH - ITEM_NO_NOTIFY_WIDTH) / 2,
+                               (0,
                                 (ITEM_HEIGHT - ITEM_NO_NOTIFY_HEIGHT) / 2,
                                 ITEM_NO_NOTIFY_WIDTH,
                                 ITEM_NO_NOTIFY_HEIGHT)))
