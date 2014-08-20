@@ -503,7 +503,7 @@ class InstallItem(TreeItem):
             if self.install_status == "uninstalled":
                 name = "button/install"
             elif self.install_status == "unknown":
-                draw_str = _("Not found")
+                draw_str = _("Installed")
             else:
                 desktops = json.loads(self.install_status)
                 if desktops:
