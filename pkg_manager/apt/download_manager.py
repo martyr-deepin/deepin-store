@@ -189,7 +189,7 @@ class DownloadManager(Logger):
     def stop_wait_download(self, task_name):
         if self.task_name_to_id.has_key(task_name):
             task_id = self.task_name_to_id[task_name]
-            self.download_dbus_interface.CancelTask(task_id)
+            self.download_dbus_interface.StopTask(task_id)
             self.download_task_info.pop(task_id)
             self.task_name_to_id.pop(task_name)
 

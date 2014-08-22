@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-15 09:59+0800\n"
+"POT-Creation-Date: 2014-08-22 11:20+0800\n"
 "PO-Revision-Date: 2014-07-02 12:04+0000\n"
 "Last-Translator: trid <tristan.denni@viacesi.fr>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/deepin-store/"
@@ -224,12 +224,12 @@ msgstr ""
 msgid "Delete configuration files"
 msgstr "Supprimer les fichiers de configuration"
 
-#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1649
+#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1647
 msgid "Dependencies analysis failed"
 msgstr "Échec de l'analyse des dépendances"
 
 #: ../ui/install_page.py:313 ../ui/install_page.py:741
-#: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1609
+#: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
 msgid "Dependencies analyzing"
 msgstr "Analyse des dépendances"
 
@@ -286,12 +286,13 @@ msgstr "Téléchargement: %s"
 msgid "Download: 0"
 msgstr "Téléchargement: 0"
 
-#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1623
+#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1621
 msgid "Downloading"
 msgstr "Téléchargement"
 
 #: ../ui/upgrade_page.py:328
-msgid "Downloading updates"
+#, fuzzy
+msgid "Downloading upgrade packages"
 msgstr "Téléchargement des mises à jour"
 
 #: ../ui/category_info.py:29
@@ -314,16 +315,14 @@ msgstr "Technique"
 msgid "Err"
 msgstr "Err"
 
-#: ../ui/upgrade_page.py:1120
-msgid "Failed to analyze dependencies."
-msgstr "Échec de la vérification des dépendances."
-
 #: ../ui/upgrade_page.py:399
-msgid "Failed to download updates"
+#, fuzzy
+msgid "Failed to download upgrade packages"
 msgstr "Échec du téléchargement des mises à jour"
 
-#: ../ui/upgrade_page.py:419
-msgid "Failed to install updates"
+#: ../ui/upgrade_page.py:419 ../ui/upgrade_page.py:1120
+#, fuzzy
+msgid "Failed to install upgrade packages"
 msgstr "L'installation des mise à jours a échoué"
 
 #: ../ui/software_center.py:458
@@ -434,7 +433,8 @@ msgid "Installing"
 msgstr "Installation en cours"
 
 #: ../ui/upgrade_page.py:1124
-msgid "Installing updates"
+#, fuzzy
+msgid "Installing upgrade packages"
 msgstr "Installation des mises à jour"
 
 #: ../ui/category_info.py:28
@@ -467,8 +467,9 @@ msgid "Last system upgraded time: "
 msgstr "Date de la dernière mise à jour système : "
 
 #: ../ui/upgrade_page.py:335
-msgid "Last updated package lists time: "
-msgstr "Date de la dernière mise à jour de la liste des paquets :"
+#, fuzzy
+msgid "Last time of refreshed package lists: "
+msgstr "Échec du rafraîchissement de la liste des paquets."
 
 #: ../ui/detail_page.py:239 ../ui/detail_page.py:491
 msgid "Loading comments..."
@@ -532,8 +533,8 @@ msgid "No reminder"
 msgstr "Pas de rappel"
 
 #: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
-#, python-format
-msgid "No reminder to update (%s)"
+#, fuzzy, python-format
+msgid "No reminder to upgrade (%s)"
 msgstr "Aucun rappel de mise à jour (%s)"
 
 #: ../ui/detail_page.py:441 ../ui/install_page.py:506
@@ -567,7 +568,8 @@ msgid "Open download directory"
 msgstr "Ouvrir le dossier de téléchargements"
 
 #: ../ui/software_center.py:446
-msgid "Package lists updated completely."
+#, fuzzy
+msgid "Package lists refreshed completely."
 msgstr "Liste des paquets mise à jour avec succès."
 
 #: ../ui/category_info.py:89
@@ -583,8 +585,9 @@ msgid "Player"
 msgstr "Lecteur multimédia"
 
 #: ../ui/inhibit.py:54
+#, fuzzy
 msgid ""
-"Please wait a moment while system update is being performed... Do not turn "
+"Please wait a moment while system upgrade is being performed... Do not turn "
 "off your computer."
 msgstr ""
 "Veuillez patienter un moment pendant le déroulement de la mise à jour du "
@@ -658,6 +661,16 @@ msgstr "Recommendations"
 #: ../ui/category_info.py:42
 msgid "Recorder"
 msgstr "Enregistreur"
+
+#: ../ui/software_center.py:816 ../ui/preference.py:568
+#, fuzzy
+msgid "Refresh package lists"
+msgstr "Échec du rafraîchissement de la liste des paquets."
+
+#: ../ui/software_center.py:478
+#, fuzzy
+msgid "Refresh package lists again and try again."
+msgstr "Remettre à jour la liste des paquets et réessayer."
 
 #: ../ui/category_info.py:76
 msgid "Religion"
@@ -805,8 +818,9 @@ msgid "The system is not Deepin, this function is invalid."
 msgstr "Le système n'est pas Deepin, cette fonction est invalide."
 
 #: ../ui/upgrade_page.py:442
+#, fuzzy
 msgid ""
-"The update requires to uninstall crucial components due to corrupted local "
+"The upgrade requires to uninstall crucial components due to corrupted local "
 "dependencies or incorrect package dependencies on server."
 msgstr ""
 "La mise à jour requiert de désinstaller des composants cruciaux du fait "
@@ -896,22 +910,6 @@ msgstr "Désinstallation en cours"
 msgid "Unpacking"
 msgstr "Décompression"
 
-#: ../ui/preference.py:571
-msgid "Update automatically"
-msgstr "Mettre à jour automatiquement "
-
-#: ../ui/software_center.py:816 ../ui/preference.py:568
-msgid "Update package lists"
-msgstr "Mettre à jour la liste des paquets."
-
-#: ../ui/software_center.py:478
-msgid "Update package lists again and try again."
-msgstr "Remettre à jour la liste des paquets et réessayer."
-
-#: ../ui/upgrade_page.py:1125
-msgid "Updating..."
-msgstr "Mise à jour..."
-
 #: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
 #: ../ui/software_center.py:790
 msgid "Upgrade"
@@ -921,12 +919,22 @@ msgstr "Mettre à jour"
 msgid "Upgrade applications selected"
 msgstr "Mettre à jour les applications sélectionnées"
 
-#: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1674
+#: ../ui/preference.py:571
+#, fuzzy
+msgid "Upgrade automatically"
+msgstr "Mettre à jour automatiquement "
+
+#: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
 msgid "Upgrade completed"
 msgstr "Mise à jour terminée"
 
-#: ../ui/upgrade_page.py:1658 ../ui/upgrade_page.py:1665
+#: ../ui/upgrade_page.py:1656 ../ui/upgrade_page.py:1663
 msgid "Upgrading"
+msgstr "Mise à niveau"
+
+#: ../ui/upgrade_page.py:1125
+#, fuzzy
+msgid "Upgrading..."
 msgstr "Mise à niveau"
 
 #: ../ui/upgrade_page.py:498
@@ -974,8 +982,8 @@ msgstr "Accéder à la page d'accueil"
 msgid "Waiting"
 msgstr "En attente"
 
-#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1497
-#: ../ui/upgrade_page.py:1616
+#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1495
+#: ../ui/upgrade_page.py:1614
 msgid "Waiting for download"
 msgstr "En attente de téléchargement"
 
@@ -987,7 +995,7 @@ msgstr "En attente d'installation"
 msgid "Waiting for uninstall"
 msgstr "En attente de désinstallation"
 
-#: ../ui/upgrade_page.py:1639
+#: ../ui/upgrade_page.py:1637
 msgid "Waiting for upgrade"
 msgstr "En attente de mise à jour"
 
@@ -1020,11 +1028,27 @@ msgstr "Vous avez nettoyé %s paquets et libéré %s d'espace."
 msgid "Your system cache is empty."
 msgstr "Votre cache système est vide."
 
+#: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
+#: ../ui/upgrade_page.py:447
+#, fuzzy
+msgid "refresh package lists"
+msgstr "Échec du rafraîchissement de la liste des paquets."
+
 #: ../ui/upgrade_page.py:484 ../ui/upgrade_page.py:510
 msgid "send error report"
 msgstr "envoyer le rapport d'erreur"
 
-#: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
-#: ../ui/upgrade_page.py:447
-msgid "update package lists"
-msgstr "Mise à jour de la liste des paquets"
+#~ msgid "Failed to analyze dependencies."
+#~ msgstr "Échec de la vérification des dépendances."
+
+#~ msgid "Last updated package lists time: "
+#~ msgstr "Date de la dernière mise à jour de la liste des paquets :"
+
+#~ msgid "Update package lists"
+#~ msgstr "Mettre à jour la liste des paquets."
+
+#~ msgid "Updating..."
+#~ msgstr "Mise à jour..."
+
+#~ msgid "update package lists"
+#~ msgstr "Mise à jour de la liste des paquets"

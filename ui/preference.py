@@ -565,10 +565,10 @@ class MirrorsBox(BaseBox):
         main_table = gtk.Table(3, 2)
         main_table.set_row_spacings(CONTENT_ROW_SPACING)
 
-        dir_title_label = Label(_("Update package lists"))
+        dir_title_label = Label(_("Refresh package lists"))
 
         # auto update check button
-        self.is_auto_update_button = CheckButton(label_text=_('Update automatically'))
+        self.is_auto_update_button = CheckButton(label_text=_('Upgrade automatically'))
         self.is_auto_update_button.connect('released', self.change_auto_update)
         self.is_auto_update_button.set_active(utils.is_auto_update())
 

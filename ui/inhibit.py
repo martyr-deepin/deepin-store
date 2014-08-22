@@ -51,7 +51,7 @@ class InhibitObject(object):
                     fd = self.bus_interface.Inhibit(
                         action,
                         "deepin-software-center",
-                        _( "Please wait a moment while system update is being performed... Do not turn off your computer."),
+                        _("Please wait a moment while system upgrade is being performed... Do not turn off your computer."),
                         "block",
                         )
                     self.inhibit_fd[action] = fd

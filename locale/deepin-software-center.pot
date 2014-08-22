@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-15 09:59+0800\n"
+"POT-Creation-Date: 2014-08-22 11:20+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,7 +94,7 @@ msgstr ""
 
 #: ../ui/inhibit.py:54
 msgid ""
-"Please wait a moment while system update is being performed... Do not turn "
+"Please wait a moment while system upgrade is being performed... Do not turn "
 "off your computer."
 msgstr ""
 
@@ -128,7 +128,7 @@ msgid "%s applications are being installed"
 msgstr ""
 
 #: ../ui/install_page.py:313 ../ui/install_page.py:741
-#: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1609
+#: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
 msgid "Dependencies analyzing"
 msgstr ""
 
@@ -146,12 +146,12 @@ msgstr ""
 msgid "Installation was interrupted"
 msgstr ""
 
-#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1497
-#: ../ui/upgrade_page.py:1616
+#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1495
+#: ../ui/upgrade_page.py:1614
 msgid "Waiting for download"
 msgstr ""
 
-#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1623
+#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1621
 msgid "Downloading"
 msgstr ""
 
@@ -163,7 +163,7 @@ msgstr ""
 msgid "Waiting for installation"
 msgstr ""
 
-#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1649
+#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1647
 msgid "Dependencies analysis failed"
 msgstr ""
 
@@ -182,7 +182,7 @@ msgstr ""
 
 #: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
 #, python-format
-msgid "No reminder to update (%s)"
+msgid "No reminder to upgrade (%s)"
 msgstr ""
 
 #: ../ui/upgrade_page.py:182
@@ -220,11 +220,11 @@ msgid "The system is not Deepin, this function is invalid."
 msgstr ""
 
 #: ../ui/upgrade_page.py:328
-msgid "Downloading updates"
+msgid "Downloading upgrade packages"
 msgstr ""
 
 #: ../ui/upgrade_page.py:335
-msgid "Last updated package lists time: "
+msgid "Last time of refreshed package lists: "
 msgstr ""
 
 #: ../ui/upgrade_page.py:345
@@ -232,7 +232,7 @@ msgid "Mirror Receiving: "
 msgstr ""
 
 #: ../ui/upgrade_page.py:399
-msgid "Failed to download updates"
+msgid "Failed to download upgrade packages"
 msgstr ""
 
 #: ../ui/upgrade_page.py:401
@@ -246,7 +246,7 @@ msgstr ""
 
 #: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
 #: ../ui/upgrade_page.py:447
-msgid "update package lists"
+msgid "refresh package lists"
 msgstr ""
 
 #: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
@@ -254,8 +254,8 @@ msgstr ""
 msgid " and try again."
 msgstr ""
 
-#: ../ui/upgrade_page.py:419
-msgid "Failed to install updates"
+#: ../ui/upgrade_page.py:419 ../ui/upgrade_page.py:1120
+msgid "Failed to install upgrade packages"
 msgstr ""
 
 #: ../ui/upgrade_page.py:421
@@ -268,7 +268,7 @@ msgstr ""
 
 #: ../ui/upgrade_page.py:442
 msgid ""
-"The update requires to uninstall crucial components due to corrupted local "
+"The upgrade requires to uninstall crucial components due to corrupted local "
 "dependencies or incorrect package dependencies on server."
 msgstr ""
 
@@ -326,27 +326,23 @@ msgstr ""
 msgid "Download stopped."
 msgstr ""
 
-#: ../ui/upgrade_page.py:1120
-msgid "Failed to analyze dependencies."
-msgstr ""
-
 #: ../ui/upgrade_page.py:1124
-msgid "Installing updates"
+msgid "Installing upgrade packages"
 msgstr ""
 
 #: ../ui/upgrade_page.py:1125
-msgid "Updating..."
+msgid "Upgrading..."
 msgstr ""
 
-#: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1674
+#: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
 msgid "Upgrade completed"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1639
+#: ../ui/upgrade_page.py:1637
 msgid "Waiting for upgrade"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1658 ../ui/upgrade_page.py:1665
+#: ../ui/upgrade_page.py:1656 ../ui/upgrade_page.py:1663
 msgid "Upgrading"
 msgstr ""
 
@@ -811,7 +807,7 @@ msgid "Generating package list database..."
 msgstr ""
 
 #: ../ui/software_center.py:446
-msgid "Package lists updated completely."
+msgid "Package lists refreshed completely."
 msgstr ""
 
 #: ../ui/software_center.py:458
@@ -839,7 +835,7 @@ msgid "The requested package \"%s\" was not found in the package list."
 msgstr ""
 
 #: ../ui/software_center.py:478
-msgid "Update package lists again and try again."
+msgid "Refresh package lists again and try again."
 msgstr ""
 
 #: ../ui/software_center.py:770
@@ -851,7 +847,7 @@ msgid "Installation"
 msgstr ""
 
 #: ../ui/software_center.py:816 ../ui/preference.py:568
-msgid "Update package lists"
+msgid "Refresh package lists"
 msgstr ""
 
 #: ../ui/software_center.py:817
@@ -940,7 +936,7 @@ msgid "Successfully"
 msgstr ""
 
 #: ../ui/preference.py:571
-msgid "Update automatically"
+msgid "Upgrade automatically"
 msgstr ""
 
 #: ../ui/preference.py:575

@@ -133,7 +133,7 @@ class NewestBar(gtk.HBox):
 
         container_remove_all(self.no_notify_label_align)
         if no_notify_num > 0:
-            self.no_notify_label.set_text(_("No reminder to update (%s)") % no_notify_num)
+            self.no_notify_label.set_text(_("No reminder to upgrade (%s)") % no_notify_num)
             self.no_notify_label_align.add(self.no_notify_label)
 
             self.show_all()
@@ -205,7 +205,7 @@ class UpgradeBar(gtk.HBox):
 
         container_remove_all(self.no_notify_label_align)
         if no_notify_num > 0:
-            self.no_notify_label.set_text(_("No reminder to update (%s)") % no_notify_num)
+            self.no_notify_label.set_text(_("No reminder to upgrade (%s)") % no_notify_num)
             self.no_notify_label_align.add(self.no_notify_label)
 
             self.show_all()
@@ -325,14 +325,14 @@ class UpgradingBox(gtk.VBox):
 
         self.progress_box = gtk.VBox(spacing=6)
         self.progress_box.set_size_request(400, -1)
-        self.upgrading_progress_title = widgets.TextLoading(_("Downloading updates"), text_size=16)
+        self.upgrading_progress_title = widgets.TextLoading(_("Downloading upgrade packages"), text_size=16)
         self.upgrading_progressbar = ProgressBar()
         self.upgrading_progressbar.set_size_request(360, 12)
         self.upgrading_progressbar.progress_buffer.progress = 0.0
         self.upgrading_progress_detail = Label("")
 
         bottom_info_box = gtk.Table(3, 2)
-        recent_update_time_label = utils.create_right_align_label(_("Last updated package lists time: "))
+        recent_update_time_label = utils.create_right_align_label(_("Last time of refreshed package lists: "))
         self.recent_update_time = widgets.HumanTimeTip(utils.get_last_update_time())
         bottom_info_box.attach(recent_update_time_label, 0, 1, 0, 1, xoptions=gtk.FILL, xpadding=0, ypadding=4)
         bottom_info_box.attach(self.recent_update_time, 1, 2, 0, 1, xoptions=gtk.FILL, xpadding=0, ypadding=4)
@@ -396,11 +396,11 @@ class UpgradingBox(gtk.VBox):
     def create_download_failed_box(self):
         download_failed_box = gtk.VBox(spacing=10)
         download_failed_box.set_size_request(400, -1)
-        error_title = Label(_("Failed to download updates"), text_color=DynamicColor('#ff0000'), text_size=16)
+        error_title = Label(_("Failed to download upgrade packages"), text_color=DynamicColor('#ff0000'), text_size=16)
 
         detail_info_start = Label(_("The requested package does not exist on server."))
         detail_info_start_2 = Label(_("Suggest to "))
-        detail_info_middle = widgets.ActionButton(_("update package lists"), lambda:global_event.emit("start-update-list"))
+        detail_info_middle = widgets.ActionButton(_("refresh package lists"), lambda:global_event.emit("start-update-list"))
         detail_info_end = Label(_(" and try again."))
         detail_info_box = gtk.HBox()
         detail_info_box.pack_start(detail_info_start_2, False, False)
@@ -416,12 +416,12 @@ class UpgradingBox(gtk.VBox):
     def create_install_failed_box(self):
         install_failed_box = gtk.VBox(spacing=10)
         install_failed_box.set_size_request(400, -1)
-        error_title = Label(_("Failed to install updates"), text_color=DynamicColor('#ff0000'), text_size=16)
+        error_title = Label(_("Failed to install upgrade packages"), text_color=DynamicColor('#ff0000'), text_size=16)
 
         error_info = Label(_("This problem occurs due to corrupted local apt dependency relationship."), wrap_width=360)
 
         detail_info_start = Label(_("Suggest to "))
-        detail_info_middle = widgets.ActionButton(_("update package lists"), lambda:global_event.emit("start-update-list"))
+        detail_info_middle = widgets.ActionButton(_("refresh package lists"), lambda:global_event.emit("start-update-list"))
         detail_info_end = Label(_(" and try again."))
         detail_info_box = gtk.HBox()
         detail_info_box.pack_start(detail_info_start, False, False)
@@ -439,12 +439,12 @@ class UpgradingBox(gtk.VBox):
         marked_delete_box.set_size_request(400, -1)
         error_title = Label(_("Warning"), text_color=DynamicColor('#ff0000'), text_size=16)
 
-        error_info = Label(_("The update requires to uninstall crucial components "
-            "due to corrupted local dependencies or incorrect package dependencies "
-            "on server."), wrap_width=360)
+        error_info = Label(_("The upgrade requires to uninstall crucial"
+            " components due to corrupted local dependencies or incorrect package"
+            " dependencies on server."), wrap_width=360)
 
         detail_info_start = Label(_("Suggest to "))
-        detail_info_middle = widgets.ActionButton(_("update package lists"), lambda:global_event.emit("start-update-list"))
+        detail_info_middle = widgets.ActionButton(_("refresh package lists"), lambda:global_event.emit("start-update-list"))
         detail_info_end = Label(_(" and try again."))
         detail_info_box = gtk.HBox()
         detail_info_box.pack_start(detail_info_start, False, False)
@@ -1117,12 +1117,12 @@ class UpgradePage(gtk.VBox, Logger):
         self.upgrading_view.upgrading_progress_detail.set_text(_("Download stopped."))
 
     def download_parse_failed(self, pkg_name):
-        self.upgrading_view.upgrading_progress_detail.set_text(_("Failed to analyze dependencies."))
+        self.upgrading_view.upgrading_progress_detail.set_text(_("Failed to install upgrade packages"))
 
     def action_start(self, pkg_name):
         self.upgrading_view.upgrade_page_logo.change_image(utils.get_common_image("upgrade/upgrade.png"))
-        self.upgrading_view.upgrading_progress_title.change_text(_("Installing updates"))
-        self.upgrading_view.upgrading_progress_detail.set_text(_("Updating..."))
+        self.upgrading_view.upgrading_progress_title.change_text(_("Installing upgrade packages"))
+        self.upgrading_view.upgrading_progress_detail.set_text(_("Upgrading..."))
 
     def action_update(self, pkg_name, percent, status):
         self.upgrading_view.upgrading_progress_detail.set_text(str(status))

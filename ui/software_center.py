@@ -443,7 +443,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                         reply_handler=lambda reply: request_status_reply_hander(reply, install_page, upgrade_page, uninstall_page),
                         error_handler=lambda e:handle_dbus_error("request_status", e),
                         )
-                global_event.emit("show-message", [_("Package lists updated completely."), ''], 5000)
+                global_event.emit("show-message", [_("Package lists refreshed completely."), ''], 5000)
                 global_event.emit('update-list-finish')
                 global_event.emit("hide-update-list-dialog")
 
@@ -475,7 +475,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 pkg_name = action_content
                 list_message = []
                 list_message.append(_('The requested package \"%s\" was not found in the package list.') % pkg_name)
-                list_message.append(_('Update package lists again and try again.'))
+                list_message.append(_('Refresh package lists again and try again.'))
                 list_message.append(lambda:global_event.emit('start-update-list'))
                 global_event.emit("show-message", list_message, 0)
         except Exception, e:
@@ -813,7 +813,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
             menu_min_width = 150
         menu = Menu(
             [
-             (None, _("Update package lists"), lambda:global_event.emit('start-update-list')),
+             (None, _("Refresh package lists"), lambda:global_event.emit('start-update-list')),
              (None, _("Open download directory"), self.open_download_directory),
              (None, _("Clear up cached packages"), self.clean_download_cache),
              (None, _("View new features"), lambda : self.show_wizard_win()),

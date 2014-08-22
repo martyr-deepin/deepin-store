@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-15 09:59+0800\n"
+"POT-Creation-Date: 2014-08-22 11:20+0800\n"
 "PO-Revision-Date: 2014-07-02 06:03+0000\n"
 "Last-Translator: iceleaf <iceleaf916@gmail.com>\n"
 "Language-Team: Indonesian (Indonesia) (http://www.transifex.com/projects/p/"
@@ -216,12 +216,12 @@ msgstr ""
 msgid "Delete configuration files"
 msgstr "Hapus berkas konfigurasi"
 
-#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1649
+#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1647
 msgid "Dependencies analysis failed"
 msgstr "Gagal menganalisa ketergantungan"
 
 #: ../ui/install_page.py:313 ../ui/install_page.py:741
-#: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1609
+#: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
 msgid "Dependencies analyzing"
 msgstr "Menganalisa ketergantungan"
 
@@ -278,12 +278,13 @@ msgstr "Unduh: %s"
 msgid "Download: 0"
 msgstr "Unduh: 0"
 
-#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1623
+#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1621
 msgid "Downloading"
 msgstr "Mengunduh"
 
 #: ../ui/upgrade_page.py:328
-msgid "Downloading updates"
+#, fuzzy
+msgid "Downloading upgrade packages"
 msgstr "Mengunduh pembaruan"
 
 #: ../ui/category_info.py:29
@@ -306,16 +307,14 @@ msgstr ""
 msgid "Err"
 msgstr "Err"
 
-#: ../ui/upgrade_page.py:1120
-msgid "Failed to analyze dependencies."
-msgstr "Gagal menganalisa ketergantungan."
-
 #: ../ui/upgrade_page.py:399
-msgid "Failed to download updates"
+#, fuzzy
+msgid "Failed to download upgrade packages"
 msgstr "Gagal mengunduh pembaruan"
 
-#: ../ui/upgrade_page.py:419
-msgid "Failed to install updates"
+#: ../ui/upgrade_page.py:419 ../ui/upgrade_page.py:1120
+#, fuzzy
+msgid "Failed to install upgrade packages"
 msgstr "Gagal memasang pembaruan"
 
 #: ../ui/software_center.py:458
@@ -426,7 +425,8 @@ msgid "Installing"
 msgstr "Memasang "
 
 #: ../ui/upgrade_page.py:1124
-msgid "Installing updates"
+#, fuzzy
+msgid "Installing upgrade packages"
 msgstr "Memasang pembaruan."
 
 #: ../ui/category_info.py:28
@@ -459,7 +459,7 @@ msgid "Last system upgraded time: "
 msgstr ""
 
 #: ../ui/upgrade_page.py:335
-msgid "Last updated package lists time: "
+msgid "Last time of refreshed package lists: "
 msgstr ""
 
 #: ../ui/detail_page.py:239 ../ui/detail_page.py:491
@@ -524,7 +524,7 @@ msgstr "Tidak ada pengingat"
 
 #: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
 #, python-format
-msgid "No reminder to update (%s)"
+msgid "No reminder to upgrade (%s)"
 msgstr ""
 
 #: ../ui/detail_page.py:441 ../ui/install_page.py:506
@@ -558,7 +558,8 @@ msgid "Open download directory"
 msgstr "Buka direktori unduh"
 
 #: ../ui/software_center.py:446
-msgid "Package lists updated completely."
+#, fuzzy
+msgid "Package lists refreshed completely."
 msgstr "Daftar paket berhasil diperbarui."
 
 #: ../ui/category_info.py:89
@@ -574,8 +575,9 @@ msgid "Player"
 msgstr ""
 
 #: ../ui/inhibit.py:54
+#, fuzzy
 msgid ""
-"Please wait a moment while system update is being performed... Do not turn "
+"Please wait a moment while system upgrade is being performed... Do not turn "
 "off your computer."
 msgstr ""
 "Tunggu sebentar sistem sedang melakukan pembaruan... Jangan matikan komputer."
@@ -642,6 +644,16 @@ msgstr "Rekomendasi"
 #: ../ui/category_info.py:42
 msgid "Recorder"
 msgstr ""
+
+#: ../ui/software_center.py:816 ../ui/preference.py:568
+#, fuzzy
+msgid "Refresh package lists"
+msgstr "Perbarui daftar peket"
+
+#: ../ui/software_center.py:478
+#, fuzzy
+msgid "Refresh package lists again and try again."
+msgstr "Perbaru daftar peket lagi dan coba lagi."
 
 #: ../ui/category_info.py:76
 msgid "Religion"
@@ -786,7 +798,7 @@ msgstr "Sistem bukan Deepin, fungsi invalid."
 
 #: ../ui/upgrade_page.py:442
 msgid ""
-"The update requires to uninstall crucial components due to corrupted local "
+"The upgrade requires to uninstall crucial components due to corrupted local "
 "dependencies or incorrect package dependencies on server."
 msgstr ""
 
@@ -865,22 +877,6 @@ msgstr "Sedang membongkar"
 msgid "Unpacking"
 msgstr "Membuka"
 
-#: ../ui/preference.py:571
-msgid "Update automatically"
-msgstr "Perbarui otomatis"
-
-#: ../ui/software_center.py:816 ../ui/preference.py:568
-msgid "Update package lists"
-msgstr "Perbarui daftar peket"
-
-#: ../ui/software_center.py:478
-msgid "Update package lists again and try again."
-msgstr "Perbaru daftar peket lagi dan coba lagi."
-
-#: ../ui/upgrade_page.py:1125
-msgid "Updating..."
-msgstr "Memperbarui ..."
-
 #: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
 #: ../ui/software_center.py:790
 msgid "Upgrade"
@@ -890,13 +886,23 @@ msgstr ""
 msgid "Upgrade applications selected"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1674
+#: ../ui/preference.py:571
+#, fuzzy
+msgid "Upgrade automatically"
+msgstr "Perbarui otomatis"
+
+#: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
 msgid "Upgrade completed"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1658 ../ui/upgrade_page.py:1665
+#: ../ui/upgrade_page.py:1656 ../ui/upgrade_page.py:1663
 msgid "Upgrading"
 msgstr ""
+
+#: ../ui/upgrade_page.py:1125
+#, fuzzy
+msgid "Upgrading..."
+msgstr "Memperbarui ..."
 
 #: ../ui/upgrade_page.py:498
 msgid "Uploading error log"
@@ -943,8 +949,8 @@ msgstr "Kunjungi Laman web"
 msgid "Waiting"
 msgstr "Menunggu"
 
-#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1497
-#: ../ui/upgrade_page.py:1616
+#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1495
+#: ../ui/upgrade_page.py:1614
 msgid "Waiting for download"
 msgstr "Menunggu unduhan"
 
@@ -956,7 +962,7 @@ msgstr "Menunggu pemasangan"
 msgid "Waiting for uninstall"
 msgstr "menunggu membongkar"
 
-#: ../ui/upgrade_page.py:1639
+#: ../ui/upgrade_page.py:1637
 msgid "Waiting for upgrade"
 msgstr ""
 
@@ -989,11 +995,18 @@ msgstr ""
 msgid "Your system cache is empty."
 msgstr "Tembolok sistem kosong."
 
+#: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
+#: ../ui/upgrade_page.py:447
+#, fuzzy
+msgid "refresh package lists"
+msgstr "Perbarui daftar peket"
+
 #: ../ui/upgrade_page.py:484 ../ui/upgrade_page.py:510
 msgid "send error report"
 msgstr "kirim laporan galat"
 
-#: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
-#: ../ui/upgrade_page.py:447
-msgid "update package lists"
-msgstr "pembaruan daftar paket"
+#~ msgid "Failed to analyze dependencies."
+#~ msgstr "Gagal menganalisa ketergantungan."
+
+#~ msgid "update package lists"
+#~ msgstr "pembaruan daftar paket"
