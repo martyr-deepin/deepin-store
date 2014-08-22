@@ -26,30 +26,36 @@ import os
 import gobject
 import cairo
 import json
-from message_bar import MessageBar
-from dtk.ui.utils import remove_timeout_id, cairo_state, get_content_size
+
+from skin import app_theme
+
 from deepin_utils.net import is_network_connected
-from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, LANGUAGE
-from item_render import STAR_SIZE, get_star_level, get_icon_pixbuf_path, NAME_SIZE, ITEM_PADDING_X, ICON_SIZE
-from search_page import SearchPage
+from deepin_utils.file import get_parent_dir
+
+from dtk.ui.utils import color_hex_to_cairo, container_remove_all, is_in_rect
+from dtk.ui.utils import remove_timeout_id, cairo_state, get_content_size
 from dtk.ui.treeview import TreeView, TreeItem
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
-from deepin_utils.file import get_parent_dir
-from dtk.ui.utils import color_hex_to_cairo, container_remove_all, is_in_rect
-from star_buffer import DscStarBuffer
 from dtk.ui.iconview import IconView
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.iconview import IconItem
-from recommend_page import RecommendIconItem
 from dtk.ui.box import BackgroundBox
-from slide_switcher import IndexSlideSwitcher
-from album_page import AlbumPage
 from dtk.ui.tab_switcher import TabSwitcher
 from dtk.ui.threads import post_gui
+
+from message_bar import MessageBar
+from constant import BUTTON_NORMAL, BUTTON_HOVER, BUTTON_PRESS, LANGUAGE
+from item_render import (STAR_SIZE, get_star_level, get_icon_pixbuf_path,
+        NAME_SIZE, ITEM_PADDING_X, ICON_SIZE,
+        )
+from search_page import SearchPage
+from star_buffer import DscStarBuffer
+from recommend_page import RecommendIconItem
+from slide_switcher import IndexSlideSwitcher
+from album_page import AlbumPage
 from download_rank_page import DownloadRankPage
 from completion_window import search_entry, completion_window, completion_grab_window
 from events import global_event
-from skin import app_theme
 from data import DATA_ID
 from category_info import get_category_name
 from nls import _
@@ -965,6 +971,12 @@ class PkgName(gobject.GObject):
             rect.height,
             text_size=NAME_SIZE)
 
+button_status_dict = {
+        BUTTON_NORMAL: "normal",
+        BUTTON_HOVER: "hover",
+        BUTTON_PRESS: "press"
+        }
+
 class PkgIconItem(IconItem):
     '''
     class docs
@@ -1022,6 +1034,11 @@ class PkgIconItem(IconItem):
     def handle_pkg_status(self, status, success):
         if success:
             self.install_status= str(status)
+            try:
+                self.desktops = json.loads(self.install_status)
+                self.desktops = self.data_manager.get_pkg_desktop_info(self.desktops)
+            except:
+                pass
             self.emit_redraw_request()
         else:
             global_logger.logerror("%s: get_pkg_installed handle_dbus_error" % self.pkg_name)
@@ -1068,22 +1085,13 @@ class PkgIconItem(IconItem):
         elif self.install_status == "unknown":
             draw_str = _("Not found")
         else:
-            desktops = json.loads(self.install_status)
-            if desktops:
+            if self.desktops:
                 name = "button/start_small"
-                self.desktops = self.data_manager.get_pkg_desktop_info(desktops)
             else:
                 draw_str = _("Installed")
 
         if name:
-            if self.button_status == BUTTON_NORMAL:
-                status = "normal"
-            elif self.button_status == BUTTON_HOVER:
-                status = "hover"
-            elif self.button_status == BUTTON_PRESS:
-                status = "press"
-
-            pixbuf = app_theme.get_pixbuf("%s_%s.png" % (name, status)).get_pixbuf()
+            pixbuf = app_theme.get_pixbuf("%s_%s.png" % (name, button_status_dict[self.button_status])).get_pixbuf()
             draw_pixbuf(
                 cr,
                 pixbuf,

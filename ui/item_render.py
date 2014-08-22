@@ -132,3 +132,4 @@ def render_star(cr, rect, star_buffer):
 
 def get_star_level(star_level):
     return int(round(star_level))
+

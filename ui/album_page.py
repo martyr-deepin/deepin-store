@@ -425,6 +425,11 @@ class AlbumDetailItem(TreeItem):
     def handle_pkg_status(self, status, success):
         if success:
             self.install_status= str(status)
+            try:
+                self.desktops = json.loads(self.install_status)
+                self.desktops = self.data_manager.get_pkg_desktop_info(self.desktops)
+            except:
+                pass
             self.emit_redraw_request()
         else:
             global_logger.logerror("%s: get_pkg_installed handle_dbus_error" % self.pkg_name)
@@ -477,10 +482,8 @@ class AlbumDetailItem(TreeItem):
         elif self.install_status == "unknown":
             draw_str = _("Not found")
         else:
-            desktops = json.loads(self.install_status)
-            if desktops:
+            if self.desktops:
                 name = "button/start"
-                self.desktops = self.data_manager.get_pkg_desktop_info(desktops)
             else:
                 draw_str = _("Installed")
 
