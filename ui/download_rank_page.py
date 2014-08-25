@@ -400,38 +400,35 @@ class PkgIconItem(IconItem):
             )
 
     def is_in_button_area(self, x, y):
-        if self.desktops:
+        if self.install_status == "uninstalled" or self.desktops:
             pixbuf = app_theme.get_pixbuf("button/start_small_normal.png").get_pixbuf()
-            return is_in_rect((x, y),
-                            (self.BUTTON_PADDING_X,
-                            self.height - self.BUTTON_PADDING_BOTTOM - pixbuf.get_height(),
-                            pixbuf.get_width(),
-                            pixbuf.get_height()))
+            x1 = self.BUTTON_PADDING_X
+            y1 = self.height - self.BUTTON_PADDING_BOTTOM - pixbuf.get_height()
+            w = pixbuf.get_width()
+            h = pixbuf.get_height()
+            return is_in_rect((x, y), (x1, y1, w, h))
         else:
             return False
 
     def is_in_star_area(self, x, y):
-        return is_in_rect((x, y),
-                          ((self.width - STAR_SIZE * 5) / 2,
-                           self.icon_padding_y + self.icon_pixbuf.get_height() + self.name_padding_y + DEFAULT_FONT_SIZE + self.star_padding_y,
-                           STAR_SIZE * 5,
-                           STAR_SIZE
-                           ))
+        x1 = (self.width - STAR_SIZE * 5) / 2
+        y1 = self.icon_padding_y + self.icon_pixbuf.get_height() + self.name_padding_y + DEFAULT_FONT_SIZE + self.star_padding_y
+        w = STAR_SIZE * 5
+        h = STAR_SIZE
+        return is_in_rect((x, y), (x1, y1, w, h))
 
     def is_in_icon_area(self, x, y):
-        return is_in_rect((x, y),
-                          (self.ICON_PADDING_X,
-                           self.ICON_PADDING_TOP,
-                           self.icon_pixbuf.get_width(),
-                           self.icon_pixbuf.get_height()))
+        x1 = self.ICON_PADDING_X
+        y1 = self.ICON_PADDING_TOP
+        w = self.icon_pixbuf.get_width()
+        h = self.icon_pixbuf.get_height()
+        return is_in_rect((x, y), (x1, y1, w, h))
 
     def is_in_name_area(self, x, y):
-        (name_width, name_height) = get_content_size(self.alias_name, DEFAULT_FONT_SIZE)
-        return is_in_rect((x, y),
-                          (0,
-                           self.icon_padding_y + self.icon_pixbuf.get_height() + self.name_padding_y,
-                           name_width,
-                           name_height))
+        x1 = 0
+        y1 = self.icon_padding_y + self.icon_pixbuf.get_height() + self.name_padding_y
+        (w, h) = get_content_size(self.alias_name, DEFAULT_FONT_SIZE)
+        return is_in_rect((x, y), (x1, y1, w, h))
 
     def icon_item_motion_notify(self, x, y):
         '''
@@ -441,36 +438,28 @@ class PkgIconItem(IconItem):
         '''
         self.hover_flag = True
 
-        self.emit_redraw_request()
-
         if self.is_in_icon_area(x, y) or self.is_in_name_area(x, y):
             global_event.emit("set-cursor", gtk.gdk.HAND2)
+
         elif self.is_in_star_area(x, y):
             global_event.emit("set-cursor", gtk.gdk.HAND2)
-
             offset_x = x - (self.width - STAR_SIZE * 5) / 2
-
             times = offset_x / STAR_SIZE
             self.grade_star = times * 2 + 2
-
             self.grade_star = min(self.grade_star, 10)
             self.star_buffer.star_level = self.grade_star
-
             self.emit_redraw_request()
+
         else:
             global_event.emit("set-cursor", None)
-
             if self.star_buffer.star_level != self.star_level:
                 self.star_buffer.star_level = self.star_level
 
-                self.emit_redraw_request()
-
             if self.is_in_button_area(x, y):
                 self.button_status = BUTTON_HOVER
-                self.emit_redraw_request()
             elif self.button_status != BUTTON_NORMAL:
                 self.button_status = BUTTON_NORMAL
-                self.emit_redraw_request()
+            self.emit_redraw_request()
 
     def get_offset_with_button(self, offset_x, offset_y):
         pixbuf = app_theme.get_pixbuf("button/start_small_normal.png").get_pixbuf()
