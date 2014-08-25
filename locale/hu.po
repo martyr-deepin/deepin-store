@@ -1,563 +1,99 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
+# ddabrahim <ddabrahim@googlemail.com>, 2014
+# kdavid97 <kdavid97@gmail.hu>, 2014
+# Marcell Lévai, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: Deepin Software Center\n"
+"Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-08-22 11:20+0800\n"
-"PO-Revision-Date: 2014-03-06 13:17+0000\n"
-"Last-Translator: electricface <songwentai@linuxdeepin.com>\n"
-"Language-Team: Hungarian (http://www.transifex.com/projects/p/deepin-"
-"software-center/language/hu/)\n"
-"Language: hu\n"
+"PO-Revision-Date: 2014-08-22 05:40+0000\n"
+"Last-Translator: szd_liufei <liufei@linuxdeepin.com>\n"
+"Language-Team: Hungarian (http://www.transifex.com/projects/p/deepin-store/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
-#: ../ui/upgrade_page.py:448
-msgid " and try again."
-msgstr ""
+#: ../ui/detail_page.py:178
+msgid "Popular recommendations"
+msgstr "Népszerű ajánlatok"
 
-#: ../ui/preference.py:578
-msgid " hour"
-msgstr ""
-
-#: ../ui/home_page.py:660
-#, python-format
-msgid "%s > %s : %s applications"
-msgstr ""
-
-#: ../ui/upgrade_page.py:204
-#, python-format
-msgid "%s applications are available for upgrade"
-msgstr ""
-
-#: ../ui/install_page.py:146
-#, python-format
-msgid "%s applications are being installed"
-msgstr ""
-
-#: ../ui/upgrade_page.py:272
-#, python-format
-msgid "%s applications are not being watched"
-msgstr ""
-
-#: ../ui/uninstall_page.py:175
-#, python-format
-msgid "%s applications can be uninstalled"
-msgstr ""
-
-#: ../ui/search_page.py:110
-#, python-format
-msgid "%s applications searched"
-msgstr ""
-
-#: ../ui/software_center.py:127
-#, python-format
-msgid "%s haven't any desktop file"
-msgstr ""
-
-#: ../ui/widgets.py:80
-#, python-format
-msgid "%s hours ago"
-msgstr ""
-
-#: ../ui/widgets.py:73
-#, python-format
-msgid "%s minutes ago"
-msgstr ""
-
-#: ../ui/upgrade_page.py:668
-#, python-format
-msgid "%s package(s) are available for upgrade, %s will be downloaded."
-msgstr ""
-
-#: ../ui/software_center.py:391
-#, python-format
-msgid "%s packages upgrade successfully."
-msgstr ""
-
-#: ../ui/home_page.py:478
-#, python-format
-msgid "%s: %s applications"
-msgstr ""
-
-#: ../ui/start_desktop_window.py:227 ../ui/software_center.py:131
-#, python-format
-msgid "%s: request for starting applications sent"
-msgstr ""
-
-#: ../ui/upgrade_page.py:485
-msgid "."
-msgstr ""
-
-#: ../ui/category_info.py:59
-msgid "2D graphics"
-msgstr ""
-
-#: ../ui/category_info.py:60
-msgid "3D graphics"
-msgstr ""
-
-#: ../ui/preference.py:831
-msgid "About"
-msgstr ""
-
-#: ../ui/category_info.py:94
-msgid "Accessories"
-msgstr ""
-
-#: ../ui/category_info.py:46
-msgid "Action games"
-msgstr ""
-
-#: ../ui/category_info.py:47
-msgid "Advernture games"
-msgstr ""
-
-#: ../ui/category_info.py:48
-msgid "Arcade games"
-msgstr ""
-
-#: ../ui/category_info.py:95
-msgid "Archiving"
-msgstr ""
-
-#: ../ui/category_info.py:36
-msgid "Audiovideo"
-msgstr ""
-
-#: ../ui/category_info.py:49
-msgid "Board games"
-msgstr ""
-
-#: ../ui/category_info.py:27
-msgid "Browser"
-msgstr ""
-
-#: ../ui/widgets.py:463 ../ui/preference.py:784
-msgid "Cancel"
-msgstr ""
-
-#: ../ui/category_info.py:50
-msgid "Card games"
-msgstr ""
-
-#: ../ui/detail_page.py:386
-msgid "Category: "
-msgstr ""
-
-#: ../ui/preference.py:516
-msgid "Change"
-msgstr ""
-
-#: ../ui/software_center.py:818
-msgid "Clear up cached packages"
-msgstr ""
-
-#: ../ui/widgets.py:295 ../ui/widgets.py:369
-msgid "Click to refresh"
-msgstr ""
-
-#: ../ui/upgrade_page.py:1103
-#, python-format
-msgid "Completed: %s/%s (%s/%s) Download Rate: %s/s"
-msgstr ""
-
-#: ../ui/utils.py:359
-msgid "Configuring"
-msgstr ""
-
-#: ../ui/category_info.py:79
-msgid "Database"
-msgstr ""
-
-#: ../ui/category_info.py:80
-msgid "Debugging"
-msgstr ""
-
-#: ../ui/upgrade_page.py:306
-msgid "Deepin Desktop Environment is not installed, this function is invalid!"
-msgstr ""
-
-#: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
-#: ../ui/software_center.py:733 ../ui/preference.py:433
-msgid "Deepin Store"
-msgstr ""
-
-#: ../ui/preference.py:452
-msgid ""
-"Deepin Store is a commonly used software center on Linux. We selected more "
-"than 2,600 excellent applications with many functions of installation and "
-"uninstalling, software repository and popular recommendations, which "
-"supports 1-click quick installation, multi-threaded download and clearing of "
-"cached packages. It provides topics for software introduction and shares "
-"good applications.\n"
-"\n"
-"Deepin Store is a free software licensed under GNU GPLv3."
-msgstr ""
-
-#: ../ui/preference.py:480
-msgid "Delete configuration files"
-msgstr ""
-
-#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1647
-msgid "Dependencies analysis failed"
-msgstr ""
-
-#: ../ui/install_page.py:313 ../ui/install_page.py:741
-#: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
-msgid "Dependencies analyzing"
-msgstr ""
-
-#: ../ui/category_info.py:86
-msgid "Desktop environment"
-msgstr ""
-
-#: ../ui/category_info.py:78
-msgid "Development"
-msgstr ""
-
-#: ../ui/category_info.py:38
-msgid "Disc burner"
-msgstr ""
-
-#: ../ui/preference.py:510
-msgid "Download directory: "
-msgstr ""
-
-#: ../ui/install_page.py:762
-msgid "Download failed"
-msgstr ""
-
-#: ../ui/upgrade_page.py:1113
-msgid "Download finished."
-msgstr ""
-
-#: ../ui/upgrade_page.py:1097
-msgid "Download has started"
-msgstr ""
-
-#: ../ui/home_page.py:756
-msgid "Download rank"
-msgstr ""
-
-#: ../ui/preference.py:494
-msgid "Download settings"
-msgstr ""
-
-#: ../ui/upgrade_page.py:1117
-msgid "Download stopped."
-msgstr ""
-
-#: ../ui/install_page.py:662 ../ui/install_page.py:673
-msgid "Download was interrupted"
-msgstr ""
+#: ../ui/detail_page.py:239 ../ui/detail_page.py:491
+msgid "Loading comments..."
+msgstr "Megjegyzések betöltése..."
 
 #: ../ui/detail_page.py:355
 #, python-format
 msgid "Download: %s"
-msgstr ""
+msgstr "Letöltés: %s"
+
+#: ../ui/detail_page.py:386
+msgid "Category: "
+msgstr "Kategória:"
+
+#: ../ui/detail_page.py:390
+#, python-format
+msgid "Version: %s"
+msgstr "Verzió: %s"
 
 #: ../ui/detail_page.py:391
 msgid "Download: 0"
-msgstr ""
+msgstr "Letöltés: 0"
 
-#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1621
-msgid "Downloading"
-msgstr ""
+#: ../ui/detail_page.py:392
+msgid "Size: calculating..."
+msgstr "Méret: kiszámítás..."
 
-#: ../ui/upgrade_page.py:328
-msgid "Downloading upgrade packages"
-msgstr ""
-
-#: ../ui/category_info.py:29
-msgid "Email"
-msgstr ""
-
-#: ../ui/category_info.py:96
-msgid "Emulation"
-msgstr ""
-
-#: ../ui/category_info.py:51
-msgid "Emulator"
-msgstr ""
-
-#: ../ui/category_info.py:69
-msgid "Engineering"
-msgstr ""
-
-#: ../ui/utils.py:370
-msgid "Err"
-msgstr ""
-
-#: ../ui/upgrade_page.py:399
-msgid "Failed to download upgrade packages"
-msgstr ""
-
-#: ../ui/upgrade_page.py:419 ../ui/upgrade_page.py:1120
-msgid "Failed to install upgrade packages"
-msgstr ""
-
-#: ../ui/software_center.py:458
-msgid "Failed to refresh package lists."
-msgstr ""
-
-#: ../ui/upgrade_page.py:509
-msgid "Failed to send the error report. You could try again."
-msgstr ""
-
-#: ../ui/category_info.py:97
-msgid "File manager"
-msgstr ""
-
-#: ../ui/category_info.py:30
-msgid "File transfer"
-msgstr ""
-
-#: ../ui/category_info.py:70
-msgid "Finance"
-msgstr ""
-
-#: ../ui/upgrade_page.py:1094
-msgid "Finished analyzing dependencies."
-msgstr ""
-
-#: ../ui/category_info.py:45
-msgid "Games"
-msgstr ""
-
-#: ../ui/preference.py:829
-msgid "General"
-msgstr ""
-
-#: ../ui/software_center.py:438
-msgid "Generating package list database..."
-msgstr ""
-
-#: ../ui/utils.py:372
-msgid "Get"
-msgstr ""
-
-#: ../ui/category_info.py:58
-msgid "Graphics"
-msgstr ""
-
-#: ../ui/category_info.py:71
-msgid "Ham radio"
-msgstr ""
-
-#: ../ui/utils.py:373
-msgid "Hit"
-msgstr ""
-
-#: ../ui/home_page.py:716 ../ui/software_center.py:789
-msgid "Home"
-msgstr ""
-
-#: ../ui/category_info.py:81
-msgid "IDE"
-msgstr ""
-
-#: ../ui/upgrade_page.py:483
-msgid "If the prompt occurs again, you could "
-msgstr ""
-
-#: ../ui/utils.py:371
-msgid "Ign"
-msgstr ""
-
-#: ../ui/category_info.py:61
-msgid "Image processing"
-msgstr ""
-
-#: ../ui/category_info.py:68
-msgid "Industry"
-msgstr ""
-
-#: ../ui/software_center.py:394
-msgid "Install"
-msgstr ""
-
-#: ../ui/software_center.py:394
-#, python-format
-msgid "Install %s Successfully."
-msgstr ""
-
-#: ../ui/software_center.py:792
-msgid "Installation"
-msgstr ""
-
-#: ../ui/install_page.py:813
-msgid "Installation completed"
-msgstr ""
-
-#: ../ui/install_page.py:686
-msgid "Installation was interrupted"
-msgstr ""
-
-#: ../ui/install_page.py:513 ../ui/download_rank_page.py:371
-#: ../ui/home_page.py:1076 ../ui/utils.py:360 ../ui/album_page.py:485
-#: ../ui/search_page.py:276
-msgid "Installed"
-msgstr ""
-
-#: ../ui/install_page.py:797 ../ui/install_page.py:804
-msgid "Installing"
-msgstr ""
-
-#: ../ui/upgrade_page.py:1124
-msgid "Installing upgrade packages"
-msgstr ""
-
-#: ../ui/category_info.py:28
-msgid "Instant messaging"
-msgstr ""
-
-#: ../ui/category_info.py:26
-msgid "Internet"
-msgstr ""
-
-#: ../ui/software_center.py:770
-msgid "Join us"
-msgstr ""
-
-#: ../ui/widgets.py:66
-msgid "Just now"
-msgstr ""
-
-#: ../ui/category_info.py:52
-msgid "Kids games"
-msgstr ""
-
-#: ../ui/category_info.py:75
-msgid "Languages"
-msgstr ""
-
-#: ../ui/upgrade_page.py:78 ../ui/upgrade_page.py:107
-#: ../ui/upgrade_page.py:340
-msgid "Last system upgraded time: "
-msgstr ""
-
-#: ../ui/upgrade_page.py:335
-msgid "Last time of refreshed package lists: "
-msgstr ""
-
-#: ../ui/detail_page.py:239 ../ui/detail_page.py:491
-msgid "Loading comments..."
-msgstr ""
-
-#: ../ui/category_info.py:53
-msgid "Logic games"
-msgstr ""
-
-#: ../ui/category_info.py:39
-msgid "MIDI"
-msgstr ""
-
-#: ../ui/preference.py:500
-msgid "Maximum number of download tasks: "
-msgstr ""
-
-#: ../ui/category_info.py:37
-msgid "Media Editing"
-msgstr ""
-
-#: ../ui/category_info.py:72
-msgid "Medical"
-msgstr ""
-
-#: ../ui/upgrade_page.py:345
-msgid "Mirror Receiving: "
-msgstr ""
-
-#: ../ui/preference.py:830
-msgid "Mirrors"
-msgstr ""
-
-#: ../ui/category_info.py:34
-msgid "Miscellaneous"
-msgstr ""
-
-#: ../ui/category_info.py:40
-msgid "Mixer"
-msgstr ""
-
-#: ../ui/category_info.py:87
-msgid "Monitor"
-msgstr ""
-
-#: ../ui/category_info.py:35
-msgid "Multimedia"
-msgstr ""
-
-#: ../ui/category_info.py:88
-msgid "Network"
-msgstr ""
-
-#: ../ui/category_info.py:31
-msgid "News"
-msgstr ""
-
-#: ../ui/item_render.py:44
-msgid "No reminder"
-msgstr ""
-
-#: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
-#, python-format
-msgid "No reminder to upgrade (%s)"
-msgstr ""
+#: ../ui/detail_page.py:396
+msgid "Visit Homepage"
+msgstr "Főoldal megtekintése"
 
 #: ../ui/detail_page.py:441 ../ui/install_page.py:506
 #: ../ui/download_rank_page.py:364 ../ui/home_page.py:1069
 #: ../ui/album_page.py:478 ../ui/search_page.py:269
 msgid "Not found"
-msgstr ""
+msgstr "Nem található"
 
-#: ../ui/widgets.py:462 ../ui/preference.py:782
-msgid "OK"
-msgstr ""
+#: ../ui/detail_page.py:447
+msgid "Successfully installed"
+msgstr "Sikeresen telepítve"
 
-#: ../ui/category_info.py:66
-msgid "Office"
-msgstr ""
+#: ../ui/detail_page.py:470
+#, python-format
+msgid "Size: %s"
+msgstr "Méret: %s"
 
-#: ../ui/preference.py:477
-msgid "On uninstalling the software"
-msgstr ""
+#: ../ui/detail_page.py:608
+msgid "Powered by 又拍云存储"
+msgstr "Powered by 又拍云存储"
 
-#: ../ui/widgets.py:78
-msgid "One hour ago"
-msgstr ""
+#: ../ui/uninstall_page.py:175
+#, python-format
+msgid "%s applications can be uninstalled"
+msgstr "%s alkalmazás eltávolítható"
 
-#: ../ui/widgets.py:71
-msgid "One minute ago"
-msgstr ""
+#: ../ui/uninstall_page.py:515 ../ui/uninstall_page.py:598
+msgid "Waiting for uninstall"
+msgstr "Várakozás az eltávolításra"
 
-#: ../ui/software_center.py:817
-msgid "Open download directory"
-msgstr ""
+#: ../ui/uninstall_page.py:605 ../ui/uninstall_page.py:612
+msgid "Uninstalling"
+msgstr "Eltávolítás"
 
-#: ../ui/software_center.py:446
-msgid "Package lists refreshed completely."
-msgstr ""
+#: ../ui/uninstall_page.py:619
+msgid "Uninstallation completed"
+msgstr "Eltávolítás befejeződött"
 
-#: ../ui/category_info.py:89
-msgid "Package manager"
-msgstr ""
-
-#: ../ui/category_info.py:62
-msgid "Photography"
-msgstr ""
-
-#: ../ui/category_info.py:41
-msgid "Player"
-msgstr ""
+#: ../ui/start_desktop_window.py:227 ../ui/software_center.py:131
+#, python-format
+msgid "%s: request for starting applications sent"
+msgstr "%s: kérés az induló alkalmazásoknak elküldve"
 
 #: ../ui/inhibit.py:54
 msgid ""
@@ -565,216 +101,174 @@ msgid ""
 "off your computer."
 msgstr ""
 
-#: ../ui/detail_page.py:178
-msgid "Popular recommendations"
-msgstr ""
+#: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
+#: ../ui/software_center.py:790
+msgid "Upgrade"
+msgstr "Frissítés"
 
-#: ../ui/detail_page.py:608
-msgid "Powered by 又拍云存储"
-msgstr ""
-
-#: ../ui/software_center.py:820
-msgid "Preferences"
-msgstr ""
-
-#: ../ui/utils.py:356
-msgid "Preparing"
-msgstr ""
-
-#: ../ui/utils.py:358
-msgid "Preparing to configure"
-msgstr ""
-
-#: ../ui/software_center.py:469
+#: ../ui/dsc-daemon.py:284
 #, python-format
 msgid ""
-"Problem occurred when analyzing dependencies for %s. Installation aborted."
-msgstr ""
+"There are %s packages needed to upgrade in your system, please use Deepin "
+"Store to upgrade."
+msgstr "%s csomag frissítése elérhető, kérem használja a Deepin Boltot a frissítéshez."
 
-#: ../ui/software_center.py:472
+#: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
+#: ../ui/software_center.py:733 ../ui/preference.py:433
+msgid "Deepin Store"
+msgstr "Deepin Bolt"
+
+#: ../ui/dsc-daemon.py:288
 #, python-format
-msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
+msgid ""
+"There is %s package needed to upgrade in your system, please use Deepin "
+"Store to upgrade."
+msgstr "%s csomag frissítése elérhető, kérem használja a Deepin Boltot a frissítéshez."
+
+#: ../ui/install_page.py:146
+#, python-format
+msgid "%s applications are being installed"
+msgstr "%s alkalmazás telepítésre került"
+
+#: ../ui/install_page.py:313 ../ui/install_page.py:741
+#: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
+msgid "Dependencies analyzing"
+msgstr "Függőségek analizálása"
+
+#: ../ui/install_page.py:513 ../ui/download_rank_page.py:371
+#: ../ui/home_page.py:1076 ../ui/utils.py:360 ../ui/album_page.py:485
+#: ../ui/search_page.py:276
+msgid "Installed"
+msgstr "Telepített"
+
+#: ../ui/install_page.py:662 ../ui/install_page.py:673
+msgid "Download was interrupted"
+msgstr "Letöltés megszakadt"
+
+#: ../ui/install_page.py:686
+msgid "Installation was interrupted"
+msgstr "Telepítés megszakadt"
+
+#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1495
+#: ../ui/upgrade_page.py:1614
+msgid "Waiting for download"
+msgstr "Várakozás a letöltésre"
+
+#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1621
+msgid "Downloading"
+msgstr "Letöltés"
+
+#: ../ui/install_page.py:762
+msgid "Download failed"
+msgstr "Letöltés sikertelen"
+
+#: ../ui/install_page.py:778
+msgid "Waiting for installation"
+msgstr "Várakozás a telepítésre"
+
+#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1647
+msgid "Dependencies analysis failed"
+msgstr "Függőségek analizálása sikertelen"
+
+#: ../ui/install_page.py:797 ../ui/install_page.py:804
+msgid "Installing"
+msgstr "Telepítés"
+
+#: ../ui/install_page.py:813
+msgid "Installation completed"
+msgstr "Telepítés befejeződött"
+
+#: ../ui/upgrade_page.py:78 ../ui/upgrade_page.py:107
+#: ../ui/upgrade_page.py:340
+msgid "Last system upgraded time: "
+msgstr "Utolsó rendszerfrissítés ideje:"
+
+#: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
+#, python-format
+msgid "No reminder to upgrade (%s)"
 msgstr ""
 
-#: ../ui/category_info.py:65
-msgid "Productivity"
-msgstr ""
+#: ../ui/upgrade_page.py:182
+msgid "Upgrade applications selected"
+msgstr "Kiválasztott alkalmazások frissítése"
 
-#: ../ui/category_info.py:73
-msgid "Publishing"
-msgstr ""
-
-#: ../ui/category_info.py:54
-msgid "Puzzle games"
-msgstr ""
-
-#: ../ui/software_center.py:821
-msgid "Quit"
-msgstr ""
-
-#: ../ui/software_center.py:204
-msgid "Rated successfully. Thanks for your involvement."
-msgstr ""
-
-#: ../ui/software_center.py:220
-msgid "Rating failed. Please check your network connection!"
-msgstr ""
-
-#: ../ui/home_page.py:756
-msgid "Recommendations"
-msgstr ""
-
-#: ../ui/category_info.py:42
-msgid "Recorder"
-msgstr ""
-
-#: ../ui/software_center.py:816 ../ui/preference.py:568
-msgid "Refresh package lists"
-msgstr ""
-
-#: ../ui/software_center.py:478
-msgid "Refresh package lists again and try again."
-msgstr ""
-
-#: ../ui/category_info.py:76
-msgid "Religion"
-msgstr ""
+#: ../ui/upgrade_page.py:204
+#, python-format
+msgid "%s applications are available for upgrade"
+msgstr "%s alkalmazáshoz frissítés érhető el"
 
 #: ../ui/upgrade_page.py:238 ../ui/item_render.py:46
 msgid "Remind again"
-msgstr ""
+msgstr "Emlékeztessen újra"
 
-#: ../ui/category_info.py:32
-msgid "Remote access"
-msgstr ""
-
-#: ../ui/category_info.py:55
-msgid "Role-playing games"
-msgstr ""
-
-#: ../ui/utils.py:355
-msgid "Running"
-msgstr ""
-
-#: ../ui/category_info.py:67
-msgid "Scanning printing"
-msgstr ""
-
-#: ../ui/category_info.py:77
-msgid "Science"
-msgstr ""
-
-#: ../ui/category_info.py:74
-msgid "Science Education"
-msgstr ""
-
-#: ../ui/category_info.py:98
-msgid "Screensaver"
-msgstr ""
-
-#: ../ui/category_info.py:33
-msgid "Security"
-msgstr ""
-
-#: ../ui/preference.py:705
-msgid "Select Directory"
-msgstr ""
-
-#: ../ui/preference.py:642
-msgid "Select mirror"
-msgstr ""
-
-#: ../ui/preference.py:551
-msgid "Select the best mirror"
-msgstr ""
-
-#: ../ui/software_center.py:194
-msgid "Sending rating..."
-msgstr ""
-
-#: ../ui/category_info.py:43
-msgid "Sequencer"
-msgstr ""
-
-#: ../ui/category_info.py:90
-msgid "Settings"
-msgstr ""
+#: ../ui/upgrade_page.py:272
+#, python-format
+msgid "%s applications are not being watched"
+msgstr "%s alkalmazás nincs figyelőben"
 
 #: ../ui/upgrade_page.py:289
 msgid "Shut down the computer after upgraded"
+msgstr "Számítógép kikapcsolása frissítés után"
+
+#: ../ui/upgrade_page.py:304
+msgid "This function is invalid without Deepin System Settings installed."
+msgstr "A Deepin Rendszer Beállítások telepítése nélkül ez a funkció érvénytelen."
+
+#: ../ui/upgrade_page.py:306
+msgid "Deepin Desktop Environment is not installed, this function is invalid!"
+msgstr "Deepin Asztali Környezet nem lett telepítve, ez a funkció érvénytelen!"
+
+#: ../ui/upgrade_page.py:308
+msgid "The system is not Deepin, this function is invalid."
+msgstr "Ez a rendszer nem Deepin, ez a funkció érvénytelen."
+
+#: ../ui/upgrade_page.py:328
+msgid "Downloading upgrade packages"
 msgstr ""
 
-#: ../ui/detail_page.py:470
-#, python-format
-msgid "Size: %s"
+#: ../ui/upgrade_page.py:335
+msgid "Last time of refreshed package lists: "
 msgstr ""
 
-#: ../ui/detail_page.py:392
-msgid "Size: calculating..."
-msgstr ""
+#: ../ui/upgrade_page.py:345
+msgid "Mirror Receiving: "
+msgstr "Tükör Fogadása:"
 
-#: ../ui/category_info.py:82
-msgid "Software development"
-msgstr ""
-
-#: ../ui/preference.py:751
-msgid "Speed testing will finish only after one minute, please wait."
-msgstr ""
-
-#: ../ui/category_info.py:56
-msgid "Sports games"
-msgstr ""
-
-#: ../ui/category_info.py:57
-msgid "Strategy games"
-msgstr ""
-
-#: ../ui/preference.py:553
-msgid "Successfully"
-msgstr ""
-
-#: ../ui/detail_page.py:447
-msgid "Successfully installed"
-msgstr ""
-
-#: ../ui/upgrade_page.py:402 ../ui/upgrade_page.py:423
-#: ../ui/upgrade_page.py:446
-msgid "Suggest to "
-msgstr ""
-
-#: ../ui/category_info.py:85
-msgid "System"
-msgstr ""
-
-#: ../ui/category_info.py:99
-msgid "Terminal emulator"
-msgstr ""
-
-#: ../ui/preference.py:776
-#, python-format
-msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
-msgstr ""
-
-#: ../ui/category_info.py:100
-msgid "Text editor"
-msgstr ""
-
-#: ../ui/upgrade_page.py:503
-msgid "The error was successfully reported and will be handled soon."
-msgstr ""
-
-#: ../ui/software_center.py:477
-#, python-format
-msgid "The requested package \"%s\" was not found in the package list."
+#: ../ui/upgrade_page.py:399
+msgid "Failed to download upgrade packages"
 msgstr ""
 
 #: ../ui/upgrade_page.py:401
 msgid "The requested package does not exist on server."
+msgstr "A kért csomag nem érhető el a szerveren."
+
+#: ../ui/upgrade_page.py:402 ../ui/upgrade_page.py:423
+#: ../ui/upgrade_page.py:446
+msgid "Suggest to "
+msgstr "Ajánlom"
+
+#: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
+#: ../ui/upgrade_page.py:447
+msgid "refresh package lists"
 msgstr ""
 
-#: ../ui/upgrade_page.py:308
-msgid "The system is not Deepin, this function is invalid."
+#: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
+#: ../ui/upgrade_page.py:448
+msgid " and try again."
+msgstr "és próbálja újra."
+
+#: ../ui/upgrade_page.py:419 ../ui/upgrade_page.py:1120
+msgid "Failed to install upgrade packages"
 msgstr ""
+
+#: ../ui/upgrade_page.py:421
+msgid ""
+"This problem occurs due to corrupted local apt dependency relationship."
+msgstr "Ez a probléma, sérült helyi apt függőség kapcsolat miatt lép fel."
+
+#: ../ui/upgrade_page.py:440
+msgid "Warning"
+msgstr "Figyelmeztetés"
 
 #: ../ui/upgrade_page.py:442
 msgid ""
@@ -782,202 +276,707 @@ msgid ""
 "dependencies or incorrect package dependencies on server."
 msgstr ""
 
-#: ../ui/dsc-daemon.py:284
-#, python-format
-msgid ""
-"There are %s packages needed to upgrade in your system, please use Deepin "
-"Store to upgrade."
-msgstr ""
+#: ../ui/upgrade_page.py:483
+msgid "If the prompt occurs again, you could "
+msgstr "Ha újra előfordul, ön tud"
 
-#: ../ui/dsc-daemon.py:288
-#, python-format
-msgid ""
-"There is %s package needed to upgrade in your system, please use Deepin "
-"Store to upgrade."
-msgstr ""
+#: ../ui/upgrade_page.py:484 ../ui/upgrade_page.py:510
+msgid "send error report"
+msgstr "hibajelentés küldése"
 
-#: ../ui/upgrade_page.py:304
-msgid "This function is invalid without Deepin System Settings installed."
-msgstr ""
+#: ../ui/upgrade_page.py:485
+msgid "."
+msgstr "."
+
+#: ../ui/upgrade_page.py:498
+msgid "Uploading error log"
+msgstr "Hiba napló feltöltése"
+
+#: ../ui/upgrade_page.py:503
+msgid "The error was successfully reported and will be handled soon."
+msgstr "A hiba sikeresen bejelentésre került és hamarosan megoldjuk."
+
+#: ../ui/upgrade_page.py:509
+msgid "Failed to send the error report. You could try again."
+msgstr "Hibajelentés küldése sikertelen. Próbálja újra."
 
 #: ../ui/upgrade_page.py:663
-msgid "This problem occurs due to corrupted local apt dependence relationship."
-msgstr ""
+msgid ""
+"This problem occurs due to corrupted local apt dependence relationship."
+msgstr "Ez a probléma, sérült helyi apt függőség kapcsolat miatt lép fel."
 
-#: ../ui/upgrade_page.py:421
-msgid "This problem occurs due to corrupted local apt dependency relationship."
-msgstr ""
-
-#: ../ui/preference.py:575
-msgid "Time interval: "
-msgstr ""
-
-#: ../ui/download_rank_page.py:61
-msgid "Top 25 monthly"
-msgstr ""
-
-#: ../ui/download_rank_page.py:61
-msgid "Top 25 totally"
-msgstr ""
-
-#: ../ui/download_rank_page.py:61
-msgid "Top 25 weekly"
-msgstr ""
-
-#: ../ui/home_page.py:756
-msgid "Topics"
-msgstr ""
-
-#: ../ui/software_center.py:459
-msgid "Try again"
-msgstr ""
-
-#: ../ui/category_info.py:44
-msgid "Tuner"
-msgstr ""
-
-#: ../ui/software_center.py:385 ../ui/software_center.py:791
-msgid "Uninstall"
-msgstr ""
-
-#: ../ui/software_center.py:385
+#: ../ui/upgrade_page.py:668
 #, python-format
-msgid "Uninstall %s Successfully."
+msgid "%s package(s) are available for upgrade, %s will be downloaded."
 msgstr ""
 
-#: ../ui/uninstall_page.py:619
-msgid "Uninstallation completed"
-msgstr ""
+#: ../ui/upgrade_page.py:1094
+msgid "Finished analyzing dependencies."
+msgstr "Függőségek analizálása befejezve."
 
-#: ../ui/uninstall_page.py:605 ../ui/uninstall_page.py:612
-msgid "Uninstalling"
-msgstr ""
+#: ../ui/upgrade_page.py:1097
+msgid "Download has started"
+msgstr "Letöltés elkezdődött"
 
-#: ../ui/utils.py:357
-msgid "Unpacking"
-msgstr ""
+#: ../ui/upgrade_page.py:1103
+#, python-format
+msgid "Completed: %s/%s (%s/%s) Download Rate: %s/s"
+msgstr "Befejezve: %s/%s (%s/%s) Letöltés: %s/s"
 
-#: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
-#: ../ui/software_center.py:790
-msgid "Upgrade"
-msgstr ""
+#: ../ui/upgrade_page.py:1113
+msgid "Download finished."
+msgstr "Letöltés befejeződött."
 
-#: ../ui/upgrade_page.py:182
-msgid "Upgrade applications selected"
-msgstr ""
+#: ../ui/upgrade_page.py:1117
+msgid "Download stopped."
+msgstr "Letöltés megállt."
 
-#: ../ui/preference.py:571
-msgid "Upgrade automatically"
-msgstr ""
-
-#: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
-msgid "Upgrade completed"
-msgstr ""
-
-#: ../ui/upgrade_page.py:1656 ../ui/upgrade_page.py:1663
-msgid "Upgrading"
+#: ../ui/upgrade_page.py:1124
+msgid "Installing upgrade packages"
 msgstr ""
 
 #: ../ui/upgrade_page.py:1125
 msgid "Upgrading..."
 msgstr ""
 
-#: ../ui/upgrade_page.py:498
-msgid "Uploading error log"
-msgstr ""
-
-#: ../ui/category_info.py:93
-msgid "Utilities"
-msgstr ""
-
-#: ../ui/category_info.py:63
-msgid "Vector graphics"
-msgstr ""
-
-#: ../ui/category_info.py:83
-msgid "Version control"
-msgstr ""
-
-#: ../ui/preference.py:438
-msgid "Version:"
-msgstr ""
-
-#: ../ui/detail_page.py:390
-#, python-format
-msgid "Version: %s"
-msgstr ""
-
-#: ../ui/software_center.py:819
-msgid "View new features"
-msgstr ""
-
-#: ../ui/category_info.py:64
-msgid "Viewer"
-msgstr ""
-
-#: ../ui/category_info.py:91
-msgid "Virtualization"
-msgstr ""
-
-#: ../ui/detail_page.py:396
-msgid "Visit Homepage"
-msgstr ""
-
-#: ../ui/preference.py:552
-msgid "Waiting"
-msgstr ""
-
-#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1495
-#: ../ui/upgrade_page.py:1614
-msgid "Waiting for download"
-msgstr ""
-
-#: ../ui/install_page.py:778
-msgid "Waiting for installation"
-msgstr ""
-
-#: ../ui/uninstall_page.py:515 ../ui/uninstall_page.py:598
-msgid "Waiting for uninstall"
-msgstr ""
+#: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
+msgid "Upgrade completed"
+msgstr "Frissítés befejeződött"
 
 #: ../ui/upgrade_page.py:1637
 msgid "Waiting for upgrade"
-msgstr ""
+msgstr "Várakozás a frissítésre"
 
-#: ../ui/upgrade_page.py:440
-msgid "Warning"
-msgstr ""
+#: ../ui/upgrade_page.py:1656 ../ui/upgrade_page.py:1663
+msgid "Upgrading"
+msgstr "Frissítés"
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 weekly"
+msgstr "Top 25 heti"
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 monthly"
+msgstr "Top 25 havi"
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 totally"
+msgstr "Top 25 összesített"
+
+#: ../ui/category_info.py:26
+msgid "Internet"
+msgstr "Internet"
+
+#: ../ui/category_info.py:27
+msgid "Browser"
+msgstr "Böngésző"
+
+#: ../ui/category_info.py:28
+msgid "Instant messaging"
+msgstr "Azonnali üzenetküldés"
+
+#: ../ui/category_info.py:29
+msgid "Email"
+msgstr "Email"
+
+#: ../ui/category_info.py:30
+msgid "File transfer"
+msgstr "Fájlküldés"
+
+#: ../ui/category_info.py:31
+msgid "News"
+msgstr "Hírek"
+
+#: ../ui/category_info.py:32
+msgid "Remote access"
+msgstr "Távoli hozzáférés"
+
+#: ../ui/category_info.py:33
+msgid "Security"
+msgstr "Biztonság"
+
+#: ../ui/category_info.py:34
+msgid "Miscellaneous"
+msgstr "Vegyes"
+
+#: ../ui/category_info.py:35
+msgid "Multimedia"
+msgstr "Multimédia"
+
+#: ../ui/category_info.py:36
+msgid "Audiovideo"
+msgstr "Audiovideó"
+
+#: ../ui/category_info.py:37
+msgid "Media Editing"
+msgstr "Médiaszerkesztés"
+
+#: ../ui/category_info.py:38
+msgid "Disc burner"
+msgstr "CD/DVD írás"
+
+#: ../ui/category_info.py:39
+msgid "MIDI"
+msgstr "MIDI"
+
+#: ../ui/category_info.py:40
+msgid "Mixer"
+msgstr "Keverő"
+
+#: ../ui/category_info.py:41
+msgid "Player"
+msgstr "Lejátszó"
+
+#: ../ui/category_info.py:42
+msgid "Recorder"
+msgstr "Felvevő"
+
+#: ../ui/category_info.py:43
+msgid "Sequencer"
+msgstr "Sequencer"
+
+#: ../ui/category_info.py:44
+msgid "Tuner"
+msgstr "Hangoló"
+
+#: ../ui/category_info.py:45
+msgid "Games"
+msgstr "Játékok"
+
+#: ../ui/category_info.py:46
+msgid "Action games"
+msgstr "Akció játékok"
+
+#: ../ui/category_info.py:47
+msgid "Advernture games"
+msgstr "Kaland játékok"
+
+#: ../ui/category_info.py:48
+msgid "Arcade games"
+msgstr "Arcade játékok"
+
+#: ../ui/category_info.py:49
+msgid "Board games"
+msgstr "Tábla játékok"
+
+#: ../ui/category_info.py:50
+msgid "Card games"
+msgstr "Kártya játékok"
+
+#: ../ui/category_info.py:51
+msgid "Emulator"
+msgstr "Emulátor"
+
+#: ../ui/category_info.py:52
+msgid "Kids games"
+msgstr "Gyerek játékok"
+
+#: ../ui/category_info.py:53
+msgid "Logic games"
+msgstr "Logikai játékok"
+
+#: ../ui/category_info.py:54
+msgid "Puzzle games"
+msgstr "Puzzle játékok"
+
+#: ../ui/category_info.py:55
+msgid "Role-playing games"
+msgstr "Szerepjátékok"
+
+#: ../ui/category_info.py:56
+msgid "Sports games"
+msgstr "Sport játékok"
+
+#: ../ui/category_info.py:57
+msgid "Strategy games"
+msgstr "Stratégiai játékok"
+
+#: ../ui/category_info.py:58
+msgid "Graphics"
+msgstr "Grafika"
+
+#: ../ui/category_info.py:59
+msgid "2D graphics"
+msgstr "2D grafika"
+
+#: ../ui/category_info.py:60
+msgid "3D graphics"
+msgstr "3D grafika"
+
+#: ../ui/category_info.py:61
+msgid "Image processing"
+msgstr "Képfeldolgozás"
+
+#: ../ui/category_info.py:62
+msgid "Photography"
+msgstr "Fényképezés"
+
+#: ../ui/category_info.py:63
+msgid "Vector graphics"
+msgstr "Vektor grafika"
+
+#: ../ui/category_info.py:64
+msgid "Viewer"
+msgstr "Nézegető"
+
+#: ../ui/category_info.py:65
+msgid "Productivity"
+msgstr "Termelékenység"
+
+#: ../ui/category_info.py:66
+msgid "Office"
+msgstr "Iroda"
+
+#: ../ui/category_info.py:67
+msgid "Scanning printing"
+msgstr "Szkennelés - Nyomtatás"
+
+#: ../ui/category_info.py:68
+msgid "Industry"
+msgstr "Ipar"
+
+#: ../ui/category_info.py:69
+msgid "Engineering"
+msgstr "Mérnök"
+
+#: ../ui/category_info.py:70
+msgid "Finance"
+msgstr "Pénzügy"
+
+#: ../ui/category_info.py:71
+msgid "Ham radio"
+msgstr "Ham rádió"
+
+#: ../ui/category_info.py:72
+msgid "Medical"
+msgstr "Orvosi"
+
+#: ../ui/category_info.py:73
+msgid "Publishing"
+msgstr "Kiadás"
+
+#: ../ui/category_info.py:74
+msgid "Science Education"
+msgstr "Tudomány Oktatás"
+
+#: ../ui/category_info.py:75
+msgid "Languages"
+msgstr "Nyelvek"
+
+#: ../ui/category_info.py:76
+msgid "Religion"
+msgstr "Vallás"
+
+#: ../ui/category_info.py:77
+msgid "Science"
+msgstr "Tudomány"
+
+#: ../ui/category_info.py:78
+msgid "Development"
+msgstr "Fejlesztés"
+
+#: ../ui/category_info.py:79
+msgid "Database"
+msgstr "Adatbázis"
+
+#: ../ui/category_info.py:80
+msgid "Debugging"
+msgstr "Hibakeresés"
+
+#: ../ui/category_info.py:81
+msgid "IDE"
+msgstr "IDE"
+
+#: ../ui/category_info.py:82
+msgid "Software development"
+msgstr "Szoftverfejlesztés"
+
+#: ../ui/category_info.py:83
+msgid "Version control"
+msgstr "Verziókövetés"
 
 #: ../ui/category_info.py:84
 msgid "Web development"
-msgstr ""
+msgstr "Webfejlesztés"
+
+#: ../ui/category_info.py:85
+msgid "System"
+msgstr "Rendszer"
+
+#: ../ui/category_info.py:86
+msgid "Desktop environment"
+msgstr "Asztali környezet"
+
+#: ../ui/category_info.py:87
+msgid "Monitor"
+msgstr "Monitor"
+
+#: ../ui/category_info.py:88
+msgid "Network"
+msgstr "Hálózat"
+
+#: ../ui/category_info.py:89
+msgid "Package manager"
+msgstr "Csomagkezelő"
+
+#: ../ui/category_info.py:90
+msgid "Settings"
+msgstr "Beállítások"
+
+#: ../ui/category_info.py:91
+msgid "Virtualization"
+msgstr "Vizualizáció"
 
 #: ../ui/category_info.py:92
 msgid "Window manager"
-msgstr ""
+msgstr "Ablakkezelő"
+
+#: ../ui/category_info.py:93
+msgid "Utilities"
+msgstr "Segédprogramok"
+
+#: ../ui/category_info.py:94
+msgid "Accessories"
+msgstr "Kiegészítők"
+
+#: ../ui/category_info.py:95
+msgid "Archiving"
+msgstr "Archiválás"
+
+#: ../ui/category_info.py:96
+msgid "Emulation"
+msgstr "Emuláció"
+
+#: ../ui/category_info.py:97
+msgid "File manager"
+msgstr "Fájlkezelő"
+
+#: ../ui/category_info.py:98
+msgid "Screensaver"
+msgstr "Képernyőkímélő"
+
+#: ../ui/category_info.py:99
+msgid "Terminal emulator"
+msgstr "Terminál emulátor"
+
+#: ../ui/category_info.py:100
+msgid "Text editor"
+msgstr "Szövegszerkesztő"
+
+#: ../ui/home_page.py:478
+#, python-format
+msgid "%s: %s applications"
+msgstr "%s: %s alkalmazások"
+
+#: ../ui/home_page.py:660
+#, python-format
+msgid "%s > %s : %s applications"
+msgstr "%s > %s : %s alkalmazások"
+
+#: ../ui/home_page.py:716 ../ui/software_center.py:789
+msgid "Home"
+msgstr "Home"
+
+#: ../ui/home_page.py:756
+msgid "Recommendations"
+msgstr "Ajánlatok"
+
+#: ../ui/home_page.py:756
+msgid "Topics"
+msgstr "Témák"
+
+#: ../ui/home_page.py:756
+msgid "Download rank"
+msgstr "Letöltési rang"
+
+#: ../ui/widgets.py:66
+msgid "Just now"
+msgstr "Pont most"
+
+#: ../ui/widgets.py:71
+msgid "One minute ago"
+msgstr "Egy perce"
+
+#: ../ui/widgets.py:73
+#, python-format
+msgid "%s minutes ago"
+msgstr "%s perce"
+
+#: ../ui/widgets.py:78
+msgid "One hour ago"
+msgstr "Egy órája"
+
+#: ../ui/widgets.py:80
+#, python-format
+msgid "%s hours ago"
+msgstr "%s órája"
 
 #: ../ui/widgets.py:84
 msgid "Yesterday"
-msgstr ""
+msgstr "Tegnap"
+
+#: ../ui/widgets.py:295 ../ui/widgets.py:369
+msgid "Click to refresh"
+msgstr "Kattints a frissítéshez"
+
+#: ../ui/widgets.py:462 ../ui/preference.py:782
+msgid "OK"
+msgstr "OK"
+
+#: ../ui/widgets.py:463 ../ui/preference.py:784
+msgid "Cancel"
+msgstr "Mégsem"
+
+#: ../ui/utils.py:355
+msgid "Running"
+msgstr "Fut"
+
+#: ../ui/utils.py:356
+msgid "Preparing"
+msgstr "Előkészül"
+
+#: ../ui/utils.py:357
+msgid "Unpacking"
+msgstr "Kicsomagol"
+
+#: ../ui/utils.py:358
+msgid "Preparing to configure"
+msgstr "Előkészül a konfigurálásra"
+
+#: ../ui/utils.py:359
+msgid "Configuring"
+msgstr "Konfigurál"
+
+#: ../ui/utils.py:370
+msgid "Err"
+msgstr "Err"
+
+#: ../ui/utils.py:371
+msgid "Ign"
+msgstr "Ign"
+
+#: ../ui/utils.py:372
+msgid "Get"
+msgstr "Kap"
+
+#: ../ui/utils.py:373
+msgid "Hit"
+msgstr "Elér"
+
+#: ../ui/software_center.py:127
+#, python-format
+msgid "%s haven't any desktop file"
+msgstr "%s nem rendelkezik asztal fájlal"
+
+#: ../ui/software_center.py:194
+msgid "Sending rating..."
+msgstr "Értékelés küldése"
 
 #: ../ui/software_center.py:198
 msgid "You have already scored.  ;)"
+msgstr "Ön már értékelte :)"
+
+#: ../ui/software_center.py:204
+msgid "Rated successfully. Thanks for your involvement."
+msgstr "Az értékelés sikeresen befejezve. Köszönjük a részvétel."
+
+#: ../ui/software_center.py:220
+msgid "Rating failed. Please check your network connection!"
+msgstr "Értékelés sikertelen. Kérem ellenőrizze a hálózati kapcsolatát!"
+
+#: ../ui/software_center.py:385
+#, python-format
+msgid "Uninstall %s Successfully."
+msgstr "Eltávolítva %s Sikeresen."
+
+#: ../ui/software_center.py:385 ../ui/software_center.py:791
+msgid "Uninstall"
+msgstr "Eltávolítás"
+
+#: ../ui/software_center.py:391
+#, python-format
+msgid "%s packages upgrade successfully."
+msgstr "%s csomag sikeresen frissítve."
+
+#: ../ui/software_center.py:394
+#, python-format
+msgid "Install %s Successfully."
+msgstr "Telepítve %s Sikeresen."
+
+#: ../ui/software_center.py:394
+msgid "Install"
+msgstr "Telepítés"
+
+#: ../ui/software_center.py:438
+msgid "Generating package list database..."
+msgstr "Csomaglista adatbázis generálása..."
+
+#: ../ui/software_center.py:446
+msgid "Package lists refreshed completely."
 msgstr ""
+
+#: ../ui/software_center.py:458
+msgid "Failed to refresh package lists."
+msgstr "Csomaglista újratöltése sikertelen."
+
+#: ../ui/software_center.py:459
+msgid "Try again"
+msgstr "Próbálja újra"
+
+#: ../ui/software_center.py:469
+#, python-format
+msgid ""
+"Problem occurred when analyzing dependencies for %s. Installation aborted."
+msgstr "%s függőségeinek analizálása során probléma lépett fel. Telepítés félbeszakadt."
+
+#: ../ui/software_center.py:472
+#, python-format
+msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
+msgstr "%s függőségeinek analizálása során probléma lépett fel. Frissítés félbeszakadt."
+
+#: ../ui/software_center.py:477
+#, python-format
+msgid "The requested package \"%s\" was not found in the package list."
+msgstr "A kért csomag \"%s\" nem található a csomaglistában."
+
+#: ../ui/software_center.py:478
+msgid "Refresh package lists again and try again."
+msgstr ""
+
+#: ../ui/software_center.py:770
+msgid "Join us"
+msgstr "Csatlakozzon hozzánk"
+
+#: ../ui/software_center.py:792
+msgid "Installation"
+msgstr "Telepítés"
+
+#: ../ui/software_center.py:816 ../ui/preference.py:568
+msgid "Refresh package lists"
+msgstr ""
+
+#: ../ui/software_center.py:817
+msgid "Open download directory"
+msgstr "Letöltés mappa megnyitása"
+
+#: ../ui/software_center.py:818
+msgid "Clear up cached packages"
+msgstr "Tárolt csomagok kitakarítása"
+
+#: ../ui/software_center.py:819
+msgid "View new features"
+msgstr "Új funkciók megtekintése"
+
+#: ../ui/software_center.py:820
+msgid "Preferences"
+msgstr "Beállítások"
+
+#: ../ui/software_center.py:821
+msgid "Quit"
+msgstr "Kilépés"
 
 #: ../ui/software_center.py:1123
 #, python-format
 msgid "You have cleared up %s packages and saved %s of space."
-msgstr ""
+msgstr "%s csomag kitakarítva és %s hely felszabadítva."
 
 #: ../ui/software_center.py:1125
 msgid "Your system cache is empty."
+msgstr "A rendszer tár üres."
+
+#: ../ui/item_render.py:44
+msgid "No reminder"
+msgstr "Nincs emlékeztető"
+
+#: ../ui/preference.py:438
+msgid "Version:"
+msgstr "Verzió:"
+
+#: ../ui/preference.py:452
+msgid ""
+"Deepin Store is a commonly used software center on Linux. We selected more than 2,600 excellent applications with many functions of installation and uninstalling, software repository and popular recommendations, which supports 1-click quick installation, multi-threaded download and clearing of cached packages. It provides topics for software introduction and shares good applications.\n"
+"\n"
+"Deepin Store is a free software licensed under GNU GPLv3."
+msgstr "A Deepin szoftverközpont egy gyakran használt szoftverközpont linuxon. Több mint 2600 kitűnő alkalmazást választottunk ki, rengeteg funkciót ad az alkalmazások telepítéshez és eltávolításhoz, szoftverforrások hozzá adásához, népszerű alkalmazások megtekintéséhez,1 kattintású telepítéshez, egyszerre több alkalmazás letöltéséhez és a gyorsítótár tisztításához. Biztosítja a  jó alkalmazások bemutatását.\n\nDeepin szoftverközpont GNU GPLv3. szabad szoftver licence alatt áll."
+
+#: ../ui/preference.py:477
+msgid "On uninstalling the software"
+msgstr "A szoftver eltávolítása esetén"
+
+#: ../ui/preference.py:480
+msgid "Delete configuration files"
+msgstr "Konfigurációs fájlok törlése"
+
+#: ../ui/preference.py:494
+msgid "Download settings"
+msgstr "Letöltési beállítások"
+
+#: ../ui/preference.py:500
+msgid "Maximum number of download tasks: "
 msgstr ""
 
-#: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
-#: ../ui/upgrade_page.py:447
-msgid "refresh package lists"
+#: ../ui/preference.py:510
+msgid "Download directory: "
+msgstr "Letöltési mappa:"
+
+#: ../ui/preference.py:516
+msgid "Change"
+msgstr "Változtatás"
+
+#: ../ui/preference.py:551
+msgid "Select the best mirror"
+msgstr "A legjobb tükör kiválasztása"
+
+#: ../ui/preference.py:552
+msgid "Waiting"
+msgstr "Várakozás"
+
+#: ../ui/preference.py:553
+msgid "Successfully"
+msgstr "Sikeresen"
+
+#: ../ui/preference.py:571
+msgid "Upgrade automatically"
 msgstr ""
 
-#: ../ui/upgrade_page.py:484 ../ui/upgrade_page.py:510
-msgid "send error report"
-msgstr ""
+#: ../ui/preference.py:575
+msgid "Time interval: "
+msgstr "Időintervallum:"
+
+#: ../ui/preference.py:578
+msgid " hour"
+msgstr "óra"
+
+#: ../ui/preference.py:642
+msgid "Select mirror"
+msgstr "Tükör kiválasztása"
+
+#: ../ui/preference.py:705
+msgid "Select Directory"
+msgstr "Mappa megnyitása"
+
+#: ../ui/preference.py:751
+msgid "Speed testing will finish only after one minute, please wait."
+msgstr "A sebesség teszt egy percen belül befejeződik, kérem várjon."
+
+#: ../ui/preference.py:776
+#, python-format
+msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
+msgstr "Teszt befejezve, a leggyorsabb tükör forrás \"%s\", átváltás most?"
+
+#: ../ui/preference.py:829
+msgid "General"
+msgstr "Általános"
+
+#: ../ui/preference.py:830
+msgid "Mirrors"
+msgstr "Tükrök"
+
+#: ../ui/preference.py:831
+msgid "About"
+msgstr "Rólunk"
+
+#: ../ui/search_page.py:110
+#, python-format
+msgid "%s applications searched"
+msgstr "%s alkalmazás keresve"

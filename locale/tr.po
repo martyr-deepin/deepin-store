@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-02 13:20+0800\n"
-"PO-Revision-Date: 2014-07-02 12:31+0000\n"
+"POT-Creation-Date: 2014-08-22 11:20+0800\n"
+"PO-Revision-Date: 2014-08-22 21:31+0000\n"
 "Last-Translator: yakup <mutouk@yandex.ru>\n"
 "Language-Team: Turkish (http://www.transifex.com/projects/p/deepin-store/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -54,7 +54,7 @@ msgstr "Boyut: hesaplanıyor..."
 msgid "Visit Homepage"
 msgstr "Ana sayfasını ziyaret edin"
 
-#: ../ui/detail_page.py:441 ../ui/install_page.py:503
+#: ../ui/detail_page.py:441 ../ui/install_page.py:506
 #: ../ui/download_rank_page.py:364 ../ui/home_page.py:1069
 #: ../ui/album_page.py:478 ../ui/search_page.py:269
 msgid "Not found"
@@ -73,20 +73,20 @@ msgstr "Boyut: %s"
 msgid "Powered by 又拍云存储"
 msgstr "Bulut depolama tarafından desteklenmektedir"
 
-#: ../ui/uninstall_page.py:159
+#: ../ui/uninstall_page.py:175
 #, python-format
 msgid "%s applications can be uninstalled"
 msgstr "%s uygulamalar kaldırılabilir"
 
-#: ../ui/uninstall_page.py:490 ../ui/uninstall_page.py:573
+#: ../ui/uninstall_page.py:515 ../ui/uninstall_page.py:598
 msgid "Waiting for uninstall"
 msgstr "Kaldırma işlemi bekleniyor"
 
-#: ../ui/uninstall_page.py:580 ../ui/uninstall_page.py:587
+#: ../ui/uninstall_page.py:605 ../ui/uninstall_page.py:612
 msgid "Uninstalling"
 msgstr "Kaldırılıyor"
 
-#: ../ui/uninstall_page.py:594
+#: ../ui/uninstall_page.py:619
 msgid "Uninstallation completed"
 msgstr "Kaldırma tamamlandı"
 
@@ -97,84 +97,84 @@ msgstr "%s: uygulamaları başlatmak için istek gönderildi"
 
 #: ../ui/inhibit.py:54
 msgid ""
-"Please wait a moment while system update is being performed... Do not turn "
+"Please wait a moment while system upgrade is being performed... Do not turn "
 "off your computer."
 msgstr "Sistem güncellemesi gerçekleştirilirken lütfen bekleyin... Bilgisayarınızı kapatmayın."
 
-#: ../ui/dsc-daemon.py:236 ../ui/software_center.py:390
-#: ../ui/software_center.py:789
+#: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
+#: ../ui/software_center.py:790
 msgid "Upgrade"
 msgstr "Yükselt"
 
-#: ../ui/dsc-daemon.py:310
+#: ../ui/dsc-daemon.py:284
 #, python-format
 msgid ""
 "There are %s packages needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
 msgstr "Sisteminizde güncellenmesi gereken paketler %s var,  güncelleme için Deepin Store kullanın!"
 
-#: ../ui/dsc-daemon.py:312 ../ui/dsc-daemon.py:316
-#: ../ui/software_center.py:732 ../ui/preference.py:433
+#: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
+#: ../ui/software_center.py:733 ../ui/preference.py:433
 msgid "Deepin Store"
 msgstr "Deepin Store"
 
-#: ../ui/dsc-daemon.py:314
+#: ../ui/dsc-daemon.py:288
 #, python-format
 msgid ""
 "There is %s package needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
 msgstr "%s paketi için sisteminizi güncellemeniz gerekmektedir, güncelleme için Deepin Store kullanın!"
 
-#: ../ui/install_page.py:139
+#: ../ui/install_page.py:146
 #, python-format
 msgid "%s applications are being installed"
 msgstr "%s uygulamalar yükleniyor"
 
-#: ../ui/install_page.py:324 ../ui/install_page.py:727
-#: ../ui/upgrade_page.py:1088 ../ui/upgrade_page.py:1606
+#: ../ui/install_page.py:313 ../ui/install_page.py:741
+#: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
 msgid "Dependencies analyzing"
 msgstr "Bağımlılıkların analizi"
 
-#: ../ui/install_page.py:510 ../ui/download_rank_page.py:371
-#: ../ui/home_page.py:1076 ../ui/utils.py:339 ../ui/album_page.py:485
+#: ../ui/install_page.py:513 ../ui/download_rank_page.py:371
+#: ../ui/home_page.py:1076 ../ui/utils.py:360 ../ui/album_page.py:485
 #: ../ui/search_page.py:276
 msgid "Installed"
 msgstr "Yüklü"
 
-#: ../ui/install_page.py:649 ../ui/install_page.py:661
+#: ../ui/install_page.py:662 ../ui/install_page.py:673
 msgid "Download was interrupted"
 msgstr "İndirme durdu"
 
-#: ../ui/install_page.py:671
+#: ../ui/install_page.py:686
 msgid "Installation was interrupted"
 msgstr "Kurulum durdu"
 
-#: ../ui/install_page.py:734 ../ui/upgrade_page.py:1494
-#: ../ui/upgrade_page.py:1613
+#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1495
+#: ../ui/upgrade_page.py:1614
 msgid "Waiting for download"
 msgstr "Karşıdan yükleme için bekleniyor"
 
-#: ../ui/install_page.py:741 ../ui/upgrade_page.py:1620
+#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1621
 msgid "Downloading"
 msgstr "İndiriliyor"
 
-#: ../ui/install_page.py:748
+#: ../ui/install_page.py:762
 msgid "Download failed"
 msgstr "İndirme başarısız"
 
-#: ../ui/install_page.py:764
+#: ../ui/install_page.py:778
 msgid "Waiting for installation"
 msgstr "Kurulum için bekleniyor"
 
-#: ../ui/install_page.py:774 ../ui/upgrade_page.py:1646
+#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1647
 msgid "Dependencies analysis failed"
 msgstr "Bağımlılıklar analizi başarısız oldu"
 
-#: ../ui/install_page.py:783 ../ui/install_page.py:790
+#: ../ui/install_page.py:797 ../ui/install_page.py:804
 msgid "Installing"
 msgstr "Kuruluyor"
 
-#: ../ui/install_page.py:799
+#: ../ui/install_page.py:813
 msgid "Installation completed"
 msgstr "Kurulum tamamlandı"
 
@@ -185,8 +185,8 @@ msgstr "Son sistem güncelleme zamanı:"
 
 #: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
 #, python-format
-msgid "No reminder to update (%s)"
-msgstr "Güncellemek için hiçbir hatırlatma yok (%s)"
+msgid "No reminder to upgrade (%s)"
+msgstr "Güncelleme için hiçbir hatırlatma yok (%s)"
 
 #: ../ui/upgrade_page.py:182
 msgid "Upgrade applications selected"
@@ -223,20 +223,20 @@ msgid "The system is not Deepin, this function is invalid."
 msgstr "Sistem Deepin değil, bu fonksiyon geçersiz!"
 
 #: ../ui/upgrade_page.py:328
-msgid "Downloading updates"
-msgstr "Güncellemeler indiriliyor"
+msgid "Downloading upgrade packages"
+msgstr "Güncelleme paketleri indiriliyor"
 
 #: ../ui/upgrade_page.py:335
-msgid "Last updated package lists time: "
-msgstr "Paket listesinin son güncelleme zamanı:"
+msgid "Last time of refreshed package lists: "
+msgstr "Paket listesinin en son güncellenme zamanı:"
 
 #: ../ui/upgrade_page.py:345
 msgid "Mirror Receiving: "
 msgstr "Yansı Alıcısı: "
 
 #: ../ui/upgrade_page.py:399
-msgid "Failed to download updates"
-msgstr "Güncelleştirmeler karşıdan yüklenemedi"
+msgid "Failed to download upgrade packages"
+msgstr "Günceleme paketleri karşıdan yüklenemedi"
 
 #: ../ui/upgrade_page.py:401
 msgid "The requested package does not exist on server."
@@ -249,17 +249,17 @@ msgstr "Öner"
 
 #: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
 #: ../ui/upgrade_page.py:447
-msgid "update package lists"
-msgstr "paket listesini güncelle"
+msgid "refresh package lists"
+msgstr "paket listesini yenile"
 
 #: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
 #: ../ui/upgrade_page.py:448
 msgid " and try again."
 msgstr "ve yeniden dene."
 
-#: ../ui/upgrade_page.py:419
-msgid "Failed to install updates"
-msgstr "Güncelleme başarısız"
+#: ../ui/upgrade_page.py:419 ../ui/upgrade_page.py:1120
+msgid "Failed to install upgrade packages"
+msgstr "Güncelleme paketleri kurulumu başarısız"
 
 #: ../ui/upgrade_page.py:421
 msgid ""
@@ -272,7 +272,7 @@ msgstr "Uyarı"
 
 #: ../ui/upgrade_page.py:442
 msgid ""
-"The update requires to uninstall crucial components due to corrupted local "
+"The upgrade requires to uninstall crucial components due to corrupted local "
 "dependencies or incorrect package dependencies on server."
 msgstr "Güncelleme nedeniyle sunucu üzerindeki bozuk yerel bağımlılıkları olan veya yanlış paket bağımlılıklarına sahip önemli bileşenlerin kaldırılması gerekir."
 
@@ -293,65 +293,61 @@ msgid "Uploading error log"
 msgstr "Yükleme hatası günlüğü"
 
 #: ../ui/upgrade_page.py:503
-msgid "The error was successfully reported and will be soon handled."
+msgid "The error was successfully reported and will be handled soon."
 msgstr "Hata başarıyla bildirildi ve yakında ele alınacaktır."
 
 #: ../ui/upgrade_page.py:509
 msgid "Failed to send the error report. You could try again."
 msgstr "Hata raporu gönderilemedi. Tekrar deneyebilirsiniz."
 
-#: ../ui/upgrade_page.py:664
+#: ../ui/upgrade_page.py:663
 msgid ""
 "This problem occurs due to corrupted local apt dependence relationship."
 msgstr "Bu sorunun nedenini bozuk yerel apt bağımlılık ilişkisi oluşur."
 
 #: ../ui/upgrade_page.py:668
 #, python-format
-msgid "%s updates are selected. %s will be downloaded."
-msgstr "%s güncelleme seçildi. %s indirilecek."
+msgid "%s package(s) are available for upgrade, %s will be downloaded."
+msgstr "%s paket(ler) güncelleme için kullanılabilir, %s indirilecek."
 
-#: ../ui/upgrade_page.py:1091
+#: ../ui/upgrade_page.py:1094
 msgid "Finished analyzing dependencies."
 msgstr "Bağımlılıklar incelendi."
 
-#: ../ui/upgrade_page.py:1094
+#: ../ui/upgrade_page.py:1097
 msgid "Download has started"
 msgstr "İndirme başladı"
 
-#: ../ui/upgrade_page.py:1100
+#: ../ui/upgrade_page.py:1103
 #, python-format
 msgid "Completed: %s/%s (%s/%s) Download Rate: %s/s"
 msgstr "Tamamlandı: %s/%s (%s/%s) İndirme Hızı: %s/s"
 
-#: ../ui/upgrade_page.py:1110
+#: ../ui/upgrade_page.py:1113
 msgid "Download finished."
 msgstr "İndirme tamamlandı."
 
-#: ../ui/upgrade_page.py:1114
+#: ../ui/upgrade_page.py:1117
 msgid "Download stopped."
 msgstr "İndirme durduruldu."
 
-#: ../ui/upgrade_page.py:1117
-msgid "Failed to analyze dependencies."
-msgstr "Bağımlılıklar çözümlenemedi."
+#: ../ui/upgrade_page.py:1124
+msgid "Installing upgrade packages"
+msgstr "Güncelleme paketleri kuruluyor"
 
-#: ../ui/upgrade_page.py:1121
-msgid "Installing updates"
-msgstr "Güncellemeler yükleniyor"
+#: ../ui/upgrade_page.py:1125
+msgid "Upgrading..."
+msgstr "Güncelleniyor..."
 
-#: ../ui/upgrade_page.py:1122
-msgid "Updating..."
-msgstr "Güncelleştiriliyor..."
-
-#: ../ui/upgrade_page.py:1129 ../ui/upgrade_page.py:1671
+#: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
 msgid "Upgrade completed"
 msgstr "Güncelleme tamamlandı"
 
-#: ../ui/upgrade_page.py:1636
+#: ../ui/upgrade_page.py:1637
 msgid "Waiting for upgrade"
 msgstr "Yükseltme için bekliyor"
 
-#: ../ui/upgrade_page.py:1655 ../ui/upgrade_page.py:1662
+#: ../ui/upgrade_page.py:1656 ../ui/upgrade_page.py:1663
 msgid "Upgrading"
 msgstr "Güncelleniyor"
 
@@ -677,7 +673,7 @@ msgstr "%s: %s uygulamalar"
 msgid "%s > %s : %s applications"
 msgstr "%s > %s : %s uygulamalar"
 
-#: ../ui/home_page.py:716 ../ui/software_center.py:788
+#: ../ui/home_page.py:716 ../ui/software_center.py:789
 msgid "Home"
 msgstr "Ev"
 
@@ -723,47 +719,47 @@ msgstr "Dün"
 msgid "Click to refresh"
 msgstr "Yenilemek için tıklatın"
 
-#: ../ui/widgets.py:462 ../ui/preference.py:785
+#: ../ui/widgets.py:462 ../ui/preference.py:782
 msgid "OK"
 msgstr "OK"
 
-#: ../ui/widgets.py:463 ../ui/preference.py:787
+#: ../ui/widgets.py:463 ../ui/preference.py:784
 msgid "Cancel"
 msgstr "İptal"
 
-#: ../ui/utils.py:334
+#: ../ui/utils.py:355
 msgid "Running"
 msgstr "Çalışıyor"
 
-#: ../ui/utils.py:335
+#: ../ui/utils.py:356
 msgid "Preparing"
 msgstr "Hazırlanıyor"
 
-#: ../ui/utils.py:336
+#: ../ui/utils.py:357
 msgid "Unpacking"
 msgstr "Paketler açılıyor"
 
-#: ../ui/utils.py:337
+#: ../ui/utils.py:358
 msgid "Preparing to configure"
 msgstr "Yapılandırma için hazırlanıyor"
 
-#: ../ui/utils.py:338
+#: ../ui/utils.py:359
 msgid "Configuring"
 msgstr "Yapılandırma"
 
-#: ../ui/utils.py:349
+#: ../ui/utils.py:370
 msgid "Err"
 msgstr "Ht"
 
-#: ../ui/utils.py:350
+#: ../ui/utils.py:371
 msgid "Ign"
 msgstr "grş"
 
-#: ../ui/utils.py:351
+#: ../ui/utils.py:372
 msgid "Get"
 msgstr "Al"
 
-#: ../ui/utils.py:352
+#: ../ui/utils.py:373
 msgid "Hit"
 msgstr "Hit"
 
@@ -781,110 +777,110 @@ msgid "You have already scored.  ;)"
 msgstr "Zaten bir oy gönderdiğiniz ;)"
 
 #: ../ui/software_center.py:204
-msgid "Rating successfully. Thanks for your involvement."
+msgid "Rated successfully. Thanks for your involvement."
 msgstr "Oylama başarılı. İlginiz için teşekkürler."
 
 #: ../ui/software_center.py:220
 msgid "Rating failed. Please check your network connection!"
 msgstr "Oylama başarısız. Lütfen ağ bağlantınızı kontrol edin!"
 
-#: ../ui/software_center.py:384
+#: ../ui/software_center.py:385
 #, python-format
 msgid "Uninstall %s Successfully."
 msgstr "%s Başarılı Bir Şekilde Kaldırıldı."
 
-#: ../ui/software_center.py:384 ../ui/software_center.py:790
+#: ../ui/software_center.py:385 ../ui/software_center.py:791
 msgid "Uninstall"
 msgstr "Kaldır"
 
-#: ../ui/software_center.py:390
+#: ../ui/software_center.py:391
 #, python-format
 msgid "%s packages upgrade successfully."
 msgstr "%s paketlerinin güncellemesi başarılı."
 
-#: ../ui/software_center.py:393
+#: ../ui/software_center.py:394
 #, python-format
 msgid "Install %s Successfully."
 msgstr "%s Başarıyla Kuruldu."
 
-#: ../ui/software_center.py:393
+#: ../ui/software_center.py:394
 msgid "Install"
 msgstr "Kur"
 
-#: ../ui/software_center.py:437
+#: ../ui/software_center.py:438
 msgid "Generating package list database..."
 msgstr "Paket listesi veritabanı oluşturuluyor..."
 
-#: ../ui/software_center.py:445
-msgid "Package lists updated completely."
-msgstr "Paket listesi güncellemesi tamamlandı."
+#: ../ui/software_center.py:446
+msgid "Package lists refreshed completely."
+msgstr "Paket listelerinin yenilenmesi tamamlandı."
 
-#: ../ui/software_center.py:457
+#: ../ui/software_center.py:458
 msgid "Failed to refresh package lists."
 msgstr "Paket listesi yenilemesi başarısız."
 
-#: ../ui/software_center.py:458
+#: ../ui/software_center.py:459
 msgid "Try again"
 msgstr "Tekrar dene"
 
-#: ../ui/software_center.py:468
+#: ../ui/software_center.py:469
 #, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted."
 msgstr "%s için bağımlılıklar çözümlenirken hata oluştu. Kurulumdan iptal edildi."
 
-#: ../ui/software_center.py:471
+#: ../ui/software_center.py:472
 #, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
 msgstr "%s için bağımlılıklar çözümlenirken hata oluştu. Yükseltme iptal edildi."
 
-#: ../ui/software_center.py:476
+#: ../ui/software_center.py:477
 #, python-format
 msgid "The requested package \"%s\" was not found in the package list."
 msgstr "\"%s\"  istenen paket paket listesinde bulunamadı."
 
-#: ../ui/software_center.py:477
-msgid "Update package lists again and try again."
+#: ../ui/software_center.py:478
+msgid "Refresh package lists again and try again."
 msgstr "Paket listesini tekrar güncelle ve yeniden dene."
 
-#: ../ui/software_center.py:769
+#: ../ui/software_center.py:770
 msgid "Join us"
 msgstr "Bize katılın"
 
-#: ../ui/software_center.py:791
+#: ../ui/software_center.py:792
 msgid "Installation"
 msgstr "Yükleme"
 
-#: ../ui/software_center.py:815 ../ui/preference.py:568
-msgid "Update package lists"
-msgstr "Paket listelerini güncelle"
+#: ../ui/software_center.py:816 ../ui/preference.py:568
+msgid "Refresh package lists"
+msgstr "Paket listesini yenile"
 
-#: ../ui/software_center.py:816
+#: ../ui/software_center.py:817
 msgid "Open download directory"
 msgstr "İndirme dizinini aç"
 
-#: ../ui/software_center.py:817
+#: ../ui/software_center.py:818
 msgid "Clear up cached packages"
 msgstr "Önbelleğe alınmış paketleri temizle"
 
-#: ../ui/software_center.py:818
+#: ../ui/software_center.py:819
 msgid "View new features"
 msgstr "Yeni özellikleri görüntüle"
 
-#: ../ui/software_center.py:819
+#: ../ui/software_center.py:820
 msgid "Preferences"
 msgstr "Tercihler"
 
-#: ../ui/software_center.py:820
+#: ../ui/software_center.py:821
 msgid "Quit"
 msgstr "Çıkış"
 
-#: ../ui/software_center.py:1131
+#: ../ui/software_center.py:1123
 #, python-format
 msgid "You have cleared up %s packages and saved %s of space."
 msgstr "%s paketleri temizlendi ve %s kadar yer boşaldı."
 
-#: ../ui/software_center.py:1133
+#: ../ui/software_center.py:1125
 msgid "Your system cache is empty."
 msgstr "Sisteminizin önbelleği boş."
 
@@ -898,10 +894,10 @@ msgstr "Versiyon:"
 
 #: ../ui/preference.py:452
 msgid ""
-"Deepin Store is a commonly used software center on Linux. It selected more than 2,600 excellent applications with many functions of installation and uninstalling, software repository and popular recommendations, which supports 1-click quick installation, multi-threaded download and clearing of cached packages. It provides topics for software introduction and shares good applications.\n"
+"Deepin Store is a commonly used software center on Linux. We selected more than 2,600 excellent applications with many functions of installation and uninstalling, software repository and popular recommendations, which supports 1-click quick installation, multi-threaded download and clearing of cached packages. It provides topics for software introduction and shares good applications.\n"
 "\n"
 "Deepin Store is a free software licensed under GNU GPLv3."
-msgstr "Deepin Store Linux üzerinde yaygın olarak kullanılan bir yazılım merkezidir. O seçili 2,600 den fazla harika uygulaması ile bir çok kurulum ve kaldırma fonkiyonuna sahiptir, yazılım deposu ve popüler öneriler, 1 tıklama ile hızlı kurulumu destekler, önbelleğe alınan paketlerin çoklu iş parçacıklı indirme ve takas alanının temizlenmesini sağlar. Bu yazılım tanıtım ve paylaşım için iyi uygulamaları içinde barındırır.\n\nDeepin Store GNU GPLv3 lisansı altında ücretsiz bir programdır."
+msgstr "Deepin Store Linux üzerinde yaygın olarak kullanılan bir yazılım merkezidir. Seçtiğimiz 2,600 den fazla harika uygulaması ile bir çok kurulum ve kaldırma fonkiyonuna sahiptir, yazılım deposu ve popüler öneriler, 1 tıklama ile hızlı kurulumu destekler, önbelleğe alınan paketlerin çoklu iş parçacıklı indirme ve takas alanının temizlenmesini sağlar. Bu yazılım tanıtım ve paylaşım için iyi uygulamaları içinde barındırır.\n\nDeepin Store GNU GPLv3 lisansı altında ücretsiz bir programdır."
 
 #: ../ui/preference.py:477
 msgid "On uninstalling the software"
@@ -916,7 +912,7 @@ msgid "Download settings"
 msgstr "İndirme ayarları"
 
 #: ../ui/preference.py:500
-msgid "Max download task number: "
+msgid "Maximum number of download tasks: "
 msgstr "Azami indirme görevi:"
 
 #: ../ui/preference.py:510
@@ -940,8 +936,8 @@ msgid "Successfully"
 msgstr "Başarılı"
 
 #: ../ui/preference.py:571
-msgid "Update automatically"
-msgstr "Otomatik olarak güncelleştir"
+msgid "Upgrade automatically"
+msgstr "Otomatik Güncelle"
 
 #: ../ui/preference.py:575
 msgid "Time interval: "
@@ -951,32 +947,32 @@ msgstr "Zaman aralığı:"
 msgid " hour"
 msgstr "saat"
 
-#: ../ui/preference.py:648
+#: ../ui/preference.py:642
 msgid "Select mirror"
 msgstr "Yansı seç"
 
-#: ../ui/preference.py:706
+#: ../ui/preference.py:705
 msgid "Select Directory"
 msgstr "Dizin Seçin"
 
-#: ../ui/preference.py:752
+#: ../ui/preference.py:751
 msgid "Speed testing will finish only after one minute, please wait."
 msgstr "Hız testi yanlızca bir dakika sonra bitecek, lütfen bekleyiniz."
 
-#: ../ui/preference.py:778
+#: ../ui/preference.py:776
 #, python-format
 msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
 msgstr "Test tamamlandı, \"%s\" yansı kaynağı gayet hızlı, şimdi değiştirilsin mi?"
 
-#: ../ui/preference.py:832
+#: ../ui/preference.py:829
 msgid "General"
 msgstr "Genel"
 
-#: ../ui/preference.py:833
+#: ../ui/preference.py:830
 msgid "Mirrors"
 msgstr "Yansılar"
 
-#: ../ui/preference.py:834
+#: ../ui/preference.py:831
 msgid "About"
 msgstr "Hakkında"
 

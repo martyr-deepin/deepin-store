@@ -1,531 +1,57 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Aril Apria Susanto <awriel@gmail.com>, 2014
+# Yugo Purwanto <dedy.yugo.purwanto@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-08-22 11:20+0800\n"
-"PO-Revision-Date: 2014-07-02 06:03+0000\n"
-"Last-Translator: iceleaf <iceleaf916@gmail.com>\n"
-"Language-Team: Indonesian (Indonesia) (http://www.transifex.com/projects/p/"
-"deepin-store/language/id_ID/)\n"
-"Language: id_ID\n"
+"PO-Revision-Date: 2014-08-22 05:40+0000\n"
+"Last-Translator: szd_liufei <liufei@linuxdeepin.com>\n"
+"Language-Team: Indonesian (Indonesia) (http://www.transifex.com/projects/p/deepin-store/language/id_ID/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: id_ID\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
-#: ../ui/upgrade_page.py:448
-msgid " and try again."
-msgstr "dan coba lagi."
+#: ../ui/detail_page.py:178
+msgid "Popular recommendations"
+msgstr "Rekomendasi populer"
 
-#: ../ui/preference.py:578
-msgid " hour"
-msgstr "jam"
-
-#: ../ui/home_page.py:660
-#, python-format
-msgid "%s > %s : %s applications"
-msgstr "%s > %s : %s aplikasi"
-
-#: ../ui/upgrade_page.py:204
-#, python-format
-msgid "%s applications are available for upgrade"
-msgstr ""
-
-#: ../ui/install_page.py:146
-#, python-format
-msgid "%s applications are being installed"
-msgstr "%s aplikasi sedang dipasang"
-
-#: ../ui/upgrade_page.py:272
-#, python-format
-msgid "%s applications are not being watched"
-msgstr ""
-
-#: ../ui/uninstall_page.py:175
-#, python-format
-msgid "%s applications can be uninstalled"
-msgstr "%s aplikasi dapat dibongkar"
-
-#: ../ui/search_page.py:110
-#, python-format
-msgid "%s applications searched"
-msgstr ""
-
-#: ../ui/software_center.py:127
-#, python-format
-msgid "%s haven't any desktop file"
-msgstr ""
-
-#: ../ui/widgets.py:80
-#, python-format
-msgid "%s hours ago"
-msgstr "%s jam yang lalu"
-
-#: ../ui/widgets.py:73
-#, python-format
-msgid "%s minutes ago"
-msgstr "%s menit yang lalu"
-
-#: ../ui/upgrade_page.py:668
-#, fuzzy, python-format
-msgid "%s package(s) are available for upgrade, %s will be downloaded."
-msgstr "%s pembaruan terpilih. %s akan diunduh."
-
-#: ../ui/software_center.py:391
-#, python-format
-msgid "%s packages upgrade successfully."
-msgstr ""
-
-#: ../ui/home_page.py:478
-#, python-format
-msgid "%s: %s applications"
-msgstr "%s: %s aplikasi"
-
-#: ../ui/start_desktop_window.py:227 ../ui/software_center.py:131
-#, python-format
-msgid "%s: request for starting applications sent"
-msgstr ""
-
-#: ../ui/upgrade_page.py:485
-msgid "."
-msgstr "."
-
-#: ../ui/category_info.py:59
-msgid "2D graphics"
-msgstr "Grafik 2D"
-
-#: ../ui/category_info.py:60
-msgid "3D graphics"
-msgstr "Grafik 3D"
-
-#: ../ui/preference.py:831
-msgid "About"
-msgstr "Tentang"
-
-#: ../ui/category_info.py:94
-msgid "Accessories"
-msgstr "Aksesori"
-
-#: ../ui/category_info.py:46
-msgid "Action games"
-msgstr "Permainan Aksi"
-
-#: ../ui/category_info.py:47
-msgid "Advernture games"
-msgstr "Petualangan"
-
-#: ../ui/category_info.py:48
-msgid "Arcade games"
-msgstr "Permainan Arkade"
-
-#: ../ui/category_info.py:95
-msgid "Archiving"
-msgstr "Pengarsipan"
-
-#: ../ui/category_info.py:36
-msgid "Audiovideo"
-msgstr "Audiovideo"
-
-#: ../ui/category_info.py:49
-msgid "Board games"
-msgstr "Permainan Papan"
-
-#: ../ui/category_info.py:27
-msgid "Browser"
-msgstr "Peramban"
-
-#: ../ui/widgets.py:463 ../ui/preference.py:784
-msgid "Cancel"
-msgstr "Batal"
-
-#: ../ui/category_info.py:50
-msgid "Card games"
-msgstr "Permainan Kartu"
-
-#: ../ui/detail_page.py:386
-msgid "Category: "
-msgstr "Kategori:"
-
-#: ../ui/preference.py:516
-msgid "Change"
-msgstr ""
-
-#: ../ui/software_center.py:818
-msgid "Clear up cached packages"
-msgstr "Bersihkan paket di tembolok"
-
-#: ../ui/widgets.py:295 ../ui/widgets.py:369
-msgid "Click to refresh"
-msgstr "Klik untuk menyegarkan"
-
-#: ../ui/upgrade_page.py:1103
-#, python-format
-msgid "Completed: %s/%s (%s/%s) Download Rate: %s/s"
-msgstr ""
-
-#: ../ui/utils.py:359
-msgid "Configuring"
-msgstr "Mengkonfigurasi"
-
-#: ../ui/category_info.py:79
-msgid "Database"
-msgstr "Basisdata"
-
-#: ../ui/category_info.py:80
-msgid "Debugging"
-msgstr ""
-
-#: ../ui/upgrade_page.py:306
-msgid "Deepin Desktop Environment is not installed, this function is invalid!"
-msgstr "Lingkungan Desktop Deepin tidak terpasang, fungsi invalid!"
-
-#: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
-#: ../ui/software_center.py:733 ../ui/preference.py:433
-msgid "Deepin Store"
-msgstr ""
-
-#: ../ui/preference.py:452
-#, fuzzy
-msgid ""
-"Deepin Store is a commonly used software center on Linux. We selected more "
-"than 2,600 excellent applications with many functions of installation and "
-"uninstalling, software repository and popular recommendations, which "
-"supports 1-click quick installation, multi-threaded download and clearing of "
-"cached packages. It provides topics for software introduction and shares "
-"good applications.\n"
-"\n"
-"Deepin Store is a free software licensed under GNU GPLv3."
-msgstr ""
-"Deepin Store adalah pusat perangkat lunak yang umum digunakan pada Linux. "
-"Ini memiliki lebih dari 2.600 aplikasi yang sangat baik dengan banyak fungsi "
-"pemasangan dan pembongkaran , lumbung perangkat lunak dan rekomendasi yang "
-"populer, yang mendukung 1-klik instalasi cepat,  unduhan berantai dan "
-"pembersihan tembolok paket . Ini memberikan topik untuk pengenalan software "
-"dan berbagi aplikasi yang baik.\n"
-"\n"
-"Deepi Store adalah perangkat lunak bebas yang berlisensi GNU GPLv3."
-
-#: ../ui/preference.py:480
-msgid "Delete configuration files"
-msgstr "Hapus berkas konfigurasi"
-
-#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1647
-msgid "Dependencies analysis failed"
-msgstr "Gagal menganalisa ketergantungan"
-
-#: ../ui/install_page.py:313 ../ui/install_page.py:741
-#: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
-msgid "Dependencies analyzing"
-msgstr "Menganalisa ketergantungan"
-
-#: ../ui/category_info.py:86
-msgid "Desktop environment"
-msgstr "Lingkungan Desktop"
-
-#: ../ui/category_info.py:78
-msgid "Development"
-msgstr ""
-
-#: ../ui/category_info.py:38
-msgid "Disc burner"
-msgstr ""
-
-#: ../ui/preference.py:510
-msgid "Download directory: "
-msgstr "Direktori unduhan:"
-
-#: ../ui/install_page.py:762
-msgid "Download failed"
-msgstr "Pengunduhan gagal"
-
-#: ../ui/upgrade_page.py:1113
-msgid "Download finished."
-msgstr "Pengunduhan selesai."
-
-#: ../ui/upgrade_page.py:1097
-msgid "Download has started"
-msgstr ""
-
-#: ../ui/home_page.py:756
-msgid "Download rank"
-msgstr "Ranking unduhan"
-
-#: ../ui/preference.py:494
-msgid "Download settings"
-msgstr "Pengaturan unduhan"
-
-#: ../ui/upgrade_page.py:1117
-msgid "Download stopped."
-msgstr "Pengunduhan berhenti."
-
-#: ../ui/install_page.py:662 ../ui/install_page.py:673
-msgid "Download was interrupted"
-msgstr "Pengunduhan terganggu"
+#: ../ui/detail_page.py:239 ../ui/detail_page.py:491
+msgid "Loading comments..."
+msgstr "Memuat komentar ..."
 
 #: ../ui/detail_page.py:355
 #, python-format
 msgid "Download: %s"
 msgstr "Unduh: %s"
 
+#: ../ui/detail_page.py:386
+msgid "Category: "
+msgstr "Kategori:"
+
+#: ../ui/detail_page.py:390
+#, python-format
+msgid "Version: %s"
+msgstr "Versi: %s"
+
 #: ../ui/detail_page.py:391
 msgid "Download: 0"
-msgstr "Unduh: 0"
+msgstr "Unduhan: 0"
 
-#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1621
-msgid "Downloading"
-msgstr "Mengunduh"
+#: ../ui/detail_page.py:392
+msgid "Size: calculating..."
+msgstr "Ukuran: menghitung..."
 
-#: ../ui/upgrade_page.py:328
-#, fuzzy
-msgid "Downloading upgrade packages"
-msgstr "Mengunduh pembaruan"
-
-#: ../ui/category_info.py:29
-msgid "Email"
-msgstr "Surel"
-
-#: ../ui/category_info.py:96
-msgid "Emulation"
-msgstr "Emulasi"
-
-#: ../ui/category_info.py:51
-msgid "Emulator"
-msgstr "Emulator"
-
-#: ../ui/category_info.py:69
-msgid "Engineering"
-msgstr ""
-
-#: ../ui/utils.py:370
-msgid "Err"
-msgstr "Err"
-
-#: ../ui/upgrade_page.py:399
-#, fuzzy
-msgid "Failed to download upgrade packages"
-msgstr "Gagal mengunduh pembaruan"
-
-#: ../ui/upgrade_page.py:419 ../ui/upgrade_page.py:1120
-#, fuzzy
-msgid "Failed to install upgrade packages"
-msgstr "Gagal memasang pembaruan"
-
-#: ../ui/software_center.py:458
-msgid "Failed to refresh package lists."
-msgstr ""
-
-#: ../ui/upgrade_page.py:509
-msgid "Failed to send the error report. You could try again."
-msgstr "Gagal mengirim laporan galat. Silakan coba lagi"
-
-#: ../ui/category_info.py:97
-msgid "File manager"
-msgstr "Manajer Berkas"
-
-#: ../ui/category_info.py:30
-msgid "File transfer"
-msgstr "Transfer berkas"
-
-#: ../ui/category_info.py:70
-msgid "Finance"
-msgstr "Keuangan"
-
-#: ../ui/upgrade_page.py:1094
-msgid "Finished analyzing dependencies."
-msgstr "Selesai menganalisa ketergantungan."
-
-#: ../ui/category_info.py:45
-msgid "Games"
-msgstr "Permainan"
-
-#: ../ui/preference.py:829
-msgid "General"
-msgstr "Umum"
-
-#: ../ui/software_center.py:438
-msgid "Generating package list database..."
-msgstr ""
-
-#: ../ui/utils.py:372
-msgid "Get"
-msgstr "Get"
-
-#: ../ui/category_info.py:58
-msgid "Graphics"
-msgstr "Grafik"
-
-#: ../ui/category_info.py:71
-msgid "Ham radio"
-msgstr ""
-
-#: ../ui/utils.py:373
-msgid "Hit"
-msgstr "Hit"
-
-#: ../ui/home_page.py:716 ../ui/software_center.py:789
-msgid "Home"
-msgstr "Rumah"
-
-#: ../ui/category_info.py:81
-msgid "IDE"
-msgstr "IDE"
-
-#: ../ui/upgrade_page.py:483
-msgid "If the prompt occurs again, you could "
-msgstr ""
-
-#: ../ui/utils.py:371
-msgid "Ign"
-msgstr "Ign"
-
-#: ../ui/category_info.py:61
-msgid "Image processing"
-msgstr "Pemrosesan Gambar"
-
-#: ../ui/category_info.py:68
-msgid "Industry"
-msgstr "Industri"
-
-#: ../ui/software_center.py:394
-msgid "Install"
-msgstr "Pasang"
-
-#: ../ui/software_center.py:394
-#, python-format
-msgid "Install %s Successfully."
-msgstr ""
-
-#: ../ui/software_center.py:792
-msgid "Installation"
-msgstr "Pemasangan"
-
-#: ../ui/install_page.py:813
-msgid "Installation completed"
-msgstr "Pemasangan berhasil"
-
-#: ../ui/install_page.py:686
-msgid "Installation was interrupted"
-msgstr "Pemasangan terganggu"
-
-#: ../ui/install_page.py:513 ../ui/download_rank_page.py:371
-#: ../ui/home_page.py:1076 ../ui/utils.py:360 ../ui/album_page.py:485
-#: ../ui/search_page.py:276
-msgid "Installed"
-msgstr "Terpasang"
-
-#: ../ui/install_page.py:797 ../ui/install_page.py:804
-msgid "Installing"
-msgstr "Memasang "
-
-#: ../ui/upgrade_page.py:1124
-#, fuzzy
-msgid "Installing upgrade packages"
-msgstr "Memasang pembaruan."
-
-#: ../ui/category_info.py:28
-msgid "Instant messaging"
-msgstr ""
-
-#: ../ui/category_info.py:26
-msgid "Internet"
-msgstr "Internet"
-
-#: ../ui/software_center.py:770
-msgid "Join us"
-msgstr "Bergabung dengan kami"
-
-#: ../ui/widgets.py:66
-msgid "Just now"
-msgstr "Baru saja"
-
-#: ../ui/category_info.py:52
-msgid "Kids games"
-msgstr "Permainan anak-anak"
-
-#: ../ui/category_info.py:75
-msgid "Languages"
-msgstr "Bahasa"
-
-#: ../ui/upgrade_page.py:78 ../ui/upgrade_page.py:107
-#: ../ui/upgrade_page.py:340
-msgid "Last system upgraded time: "
-msgstr ""
-
-#: ../ui/upgrade_page.py:335
-msgid "Last time of refreshed package lists: "
-msgstr ""
-
-#: ../ui/detail_page.py:239 ../ui/detail_page.py:491
-msgid "Loading comments..."
-msgstr "Memuat komentar ..."
-
-#: ../ui/category_info.py:53
-msgid "Logic games"
-msgstr "Permainan Logika"
-
-#: ../ui/category_info.py:39
-msgid "MIDI"
-msgstr "MIDI"
-
-#: ../ui/preference.py:500
-msgid "Maximum number of download tasks: "
-msgstr ""
-
-#: ../ui/category_info.py:37
-msgid "Media Editing"
-msgstr ""
-
-#: ../ui/category_info.py:72
-msgid "Medical"
-msgstr "Medis"
-
-#: ../ui/upgrade_page.py:345
-msgid "Mirror Receiving: "
-msgstr ""
-
-#: ../ui/preference.py:830
-msgid "Mirrors"
-msgstr "Cermin"
-
-#: ../ui/category_info.py:34
-msgid "Miscellaneous"
-msgstr "Lain-lain"
-
-#: ../ui/category_info.py:40
-msgid "Mixer"
-msgstr ""
-
-#: ../ui/category_info.py:87
-msgid "Monitor"
-msgstr "Monitor"
-
-#: ../ui/category_info.py:35
-msgid "Multimedia"
-msgstr "Multimedia"
-
-#: ../ui/category_info.py:88
-msgid "Network"
-msgstr "Jaringan"
-
-#: ../ui/category_info.py:31
-msgid "News"
-msgstr "Berita"
-
-#: ../ui/item_render.py:44
-msgid "No reminder"
-msgstr "Tidak ada pengingat"
-
-#: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
-#, python-format
-msgid "No reminder to upgrade (%s)"
-msgstr ""
+#: ../ui/detail_page.py:396
+msgid "Visit Homepage"
+msgstr "Kunjungi Laman web"
 
 #: ../ui/detail_page.py:441 ../ui/install_page.py:506
 #: ../ui/download_rank_page.py:364 ../ui/home_page.py:1069
@@ -533,212 +59,428 @@ msgstr ""
 msgid "Not found"
 msgstr "Tidak ditemukan"
 
-#: ../ui/widgets.py:462 ../ui/preference.py:782
-msgid "OK"
-msgstr "OK"
-
-#: ../ui/category_info.py:66
-msgid "Office"
-msgstr "Perkantoran"
-
-#: ../ui/preference.py:477
-msgid "On uninstalling the software"
-msgstr ""
-
-#: ../ui/widgets.py:78
-msgid "One hour ago"
-msgstr "Satu jam yang lalu"
-
-#: ../ui/widgets.py:71
-msgid "One minute ago"
-msgstr "Satu menit yang lalu"
-
-#: ../ui/software_center.py:817
-msgid "Open download directory"
-msgstr "Buka direktori unduh"
-
-#: ../ui/software_center.py:446
-#, fuzzy
-msgid "Package lists refreshed completely."
-msgstr "Daftar paket berhasil diperbarui."
-
-#: ../ui/category_info.py:89
-msgid "Package manager"
-msgstr "Manajer Paket"
-
-#: ../ui/category_info.py:62
-msgid "Photography"
-msgstr "Photografi"
-
-#: ../ui/category_info.py:41
-msgid "Player"
-msgstr ""
-
-#: ../ui/inhibit.py:54
-#, fuzzy
-msgid ""
-"Please wait a moment while system upgrade is being performed... Do not turn "
-"off your computer."
-msgstr ""
-"Tunggu sebentar sistem sedang melakukan pembaruan... Jangan matikan komputer."
-
-#: ../ui/detail_page.py:178
-msgid "Popular recommendations"
-msgstr "Rekomendasi populer"
-
-#: ../ui/detail_page.py:608
-msgid "Powered by 又拍云存储"
-msgstr ""
-
-#: ../ui/software_center.py:820
-msgid "Preferences"
-msgstr "Preferensi"
-
-#: ../ui/utils.py:356
-msgid "Preparing"
-msgstr "Menyiapkan"
-
-#: ../ui/utils.py:358
-msgid "Preparing to configure"
-msgstr "Siap mengkonfigurasi"
-
-#: ../ui/software_center.py:469
-#, python-format
-msgid ""
-"Problem occurred when analyzing dependencies for %s. Installation aborted."
-msgstr ""
-
-#: ../ui/software_center.py:472
-#, python-format
-msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
-msgstr ""
-
-#: ../ui/category_info.py:65
-msgid "Productivity"
-msgstr "Produktifitas"
-
-#: ../ui/category_info.py:73
-msgid "Publishing"
-msgstr "Penerbitan"
-
-#: ../ui/category_info.py:54
-msgid "Puzzle games"
-msgstr "Permainan Teka-teki"
-
-#: ../ui/software_center.py:821
-msgid "Quit"
-msgstr "Keluar"
-
-#: ../ui/software_center.py:204
-msgid "Rated successfully. Thanks for your involvement."
-msgstr ""
-
-#: ../ui/software_center.py:220
-msgid "Rating failed. Please check your network connection!"
-msgstr ""
-
-#: ../ui/home_page.py:756
-msgid "Recommendations"
-msgstr "Rekomendasi"
-
-#: ../ui/category_info.py:42
-msgid "Recorder"
-msgstr ""
-
-#: ../ui/software_center.py:816 ../ui/preference.py:568
-#, fuzzy
-msgid "Refresh package lists"
-msgstr "Perbarui daftar peket"
-
-#: ../ui/software_center.py:478
-#, fuzzy
-msgid "Refresh package lists again and try again."
-msgstr "Perbaru daftar peket lagi dan coba lagi."
-
-#: ../ui/category_info.py:76
-msgid "Religion"
-msgstr "Religi"
-
-#: ../ui/upgrade_page.py:238 ../ui/item_render.py:46
-msgid "Remind again"
-msgstr ""
-
-#: ../ui/category_info.py:32
-msgid "Remote access"
-msgstr ""
-
-#: ../ui/category_info.py:55
-msgid "Role-playing games"
-msgstr ""
-
-#: ../ui/utils.py:355
-msgid "Running"
-msgstr "Berjalan"
-
-#: ../ui/category_info.py:67
-msgid "Scanning printing"
-msgstr "Pindan dan Cetak"
-
-#: ../ui/category_info.py:77
-msgid "Science"
-msgstr "Sains"
-
-#: ../ui/category_info.py:74
-msgid "Science Education"
-msgstr "Pendidikan dan Sains"
-
-#: ../ui/category_info.py:98
-msgid "Screensaver"
-msgstr ""
-
-#: ../ui/category_info.py:33
-msgid "Security"
-msgstr "Keamanan"
-
-#: ../ui/preference.py:705
-msgid "Select Directory"
-msgstr "Pilih Direktori"
-
-#: ../ui/preference.py:642
-msgid "Select mirror"
-msgstr "Pilih cermin"
-
-#: ../ui/preference.py:551
-msgid "Select the best mirror"
-msgstr "Pilih cermin terbaik"
-
-#: ../ui/software_center.py:194
-msgid "Sending rating..."
-msgstr ""
-
-#: ../ui/category_info.py:43
-msgid "Sequencer"
-msgstr ""
-
-#: ../ui/category_info.py:90
-msgid "Settings"
-msgstr "Pengaturan"
-
-#: ../ui/upgrade_page.py:289
-msgid "Shut down the computer after upgraded"
-msgstr ""
+#: ../ui/detail_page.py:447
+msgid "Successfully installed"
+msgstr "Berhasil terpasang"
 
 #: ../ui/detail_page.py:470
 #, python-format
 msgid "Size: %s"
 msgstr "Ukuran: %s"
 
-#: ../ui/detail_page.py:392
-msgid "Size: calculating..."
-msgstr "Ukurang: menghitung..."
+#: ../ui/detail_page.py:608
+msgid "Powered by 又拍云存储"
+msgstr "Diperkuat oleh 又拍云存储"
 
-#: ../ui/category_info.py:82
-msgid "Software development"
-msgstr "Pengembangan perangkat lunak"
+#: ../ui/uninstall_page.py:175
+#, python-format
+msgid "%s applications can be uninstalled"
+msgstr "%s aplikasi dapat dibongkar"
 
-#: ../ui/preference.py:751
-msgid "Speed testing will finish only after one minute, please wait."
+#: ../ui/uninstall_page.py:515 ../ui/uninstall_page.py:598
+msgid "Waiting for uninstall"
+msgstr "menunggu membongkar"
+
+#: ../ui/uninstall_page.py:605 ../ui/uninstall_page.py:612
+msgid "Uninstalling"
+msgstr "Sedang membongkar"
+
+#: ../ui/uninstall_page.py:619
+msgid "Uninstallation completed"
+msgstr "Pembongkaran selesai"
+
+#: ../ui/start_desktop_window.py:227 ../ui/software_center.py:131
+#, python-format
+msgid "%s: request for starting applications sent"
+msgstr "%s: permintaan memulai aplikasi dikirim"
+
+#: ../ui/inhibit.py:54
+msgid ""
+"Please wait a moment while system upgrade is being performed... Do not turn "
+"off your computer."
 msgstr ""
+
+#: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
+#: ../ui/software_center.py:790
+msgid "Upgrade"
+msgstr "Peningkatan"
+
+#: ../ui/dsc-daemon.py:284
+#, python-format
+msgid ""
+"There are %s packages needed to upgrade in your system, please use Deepin "
+"Store to upgrade."
+msgstr "Terdapat %s paket yang perlu ditingkatkan. Silakan gunakan Deepin Store untuk melakukan peningkatan paket."
+
+#: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
+#: ../ui/software_center.py:733 ../ui/preference.py:433
+msgid "Deepin Store"
+msgstr "Deepin Store"
+
+#: ../ui/dsc-daemon.py:288
+#, python-format
+msgid ""
+"There is %s package needed to upgrade in your system, please use Deepin "
+"Store to upgrade."
+msgstr "Terdapat %s paket yang perlu ditingkatkan. Silakan gunakan Deepin Store untuk melakukan peningkatan paket."
+
+#: ../ui/install_page.py:146
+#, python-format
+msgid "%s applications are being installed"
+msgstr "%s aplikasi sedang dipasang"
+
+#: ../ui/install_page.py:313 ../ui/install_page.py:741
+#: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
+msgid "Dependencies analyzing"
+msgstr "Menganalisa ketergantungan"
+
+#: ../ui/install_page.py:513 ../ui/download_rank_page.py:371
+#: ../ui/home_page.py:1076 ../ui/utils.py:360 ../ui/album_page.py:485
+#: ../ui/search_page.py:276
+msgid "Installed"
+msgstr "Terpasang"
+
+#: ../ui/install_page.py:662 ../ui/install_page.py:673
+msgid "Download was interrupted"
+msgstr "Pengunduhan terganggu"
+
+#: ../ui/install_page.py:686
+msgid "Installation was interrupted"
+msgstr "Pemasangan terganggu"
+
+#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1495
+#: ../ui/upgrade_page.py:1614
+msgid "Waiting for download"
+msgstr "Menunggu unduhan"
+
+#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1621
+msgid "Downloading"
+msgstr "Mengunduh"
+
+#: ../ui/install_page.py:762
+msgid "Download failed"
+msgstr "Pengunduhan gagal"
+
+#: ../ui/install_page.py:778
+msgid "Waiting for installation"
+msgstr "Menunggu pemasangan"
+
+#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1647
+msgid "Dependencies analysis failed"
+msgstr "Gagal menganalisa ketergantungan"
+
+#: ../ui/install_page.py:797 ../ui/install_page.py:804
+msgid "Installing"
+msgstr "Memasang "
+
+#: ../ui/install_page.py:813
+msgid "Installation completed"
+msgstr "Pemasangan berhasil"
+
+#: ../ui/upgrade_page.py:78 ../ui/upgrade_page.py:107
+#: ../ui/upgrade_page.py:340
+msgid "Last system upgraded time: "
+msgstr "Waktu peningkatan sistem terakhir:"
+
+#: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
+#, python-format
+msgid "No reminder to upgrade (%s)"
+msgstr ""
+
+#: ../ui/upgrade_page.py:182
+msgid "Upgrade applications selected"
+msgstr "Peningkatan aplikasi terpilih"
+
+#: ../ui/upgrade_page.py:204
+#, python-format
+msgid "%s applications are available for upgrade"
+msgstr "%s aplikasi tersedia untuk ditingkatkan"
+
+#: ../ui/upgrade_page.py:238 ../ui/item_render.py:46
+msgid "Remind again"
+msgstr "Ingatkan kembali"
+
+#: ../ui/upgrade_page.py:272
+#, python-format
+msgid "%s applications are not being watched"
+msgstr "%s aplikasi tidak diawasi"
+
+#: ../ui/upgrade_page.py:289
+msgid "Shut down the computer after upgraded"
+msgstr "Matikan komputer setelah peningkatan"
+
+#: ../ui/upgrade_page.py:304
+msgid "This function is invalid without Deepin System Settings installed."
+msgstr "Fungsi tidak valid tanpa Sistem Deepin terpasang."
+
+#: ../ui/upgrade_page.py:306
+msgid "Deepin Desktop Environment is not installed, this function is invalid!"
+msgstr "Lingkungan Desktop Deepin tidak terpasang, fungsi invalid!"
+
+#: ../ui/upgrade_page.py:308
+msgid "The system is not Deepin, this function is invalid."
+msgstr "Sistem bukan Deepin, fungsi invalid."
+
+#: ../ui/upgrade_page.py:328
+msgid "Downloading upgrade packages"
+msgstr ""
+
+#: ../ui/upgrade_page.py:335
+msgid "Last time of refreshed package lists: "
+msgstr ""
+
+#: ../ui/upgrade_page.py:345
+msgid "Mirror Receiving: "
+msgstr "Menerima mirror:"
+
+#: ../ui/upgrade_page.py:399
+msgid "Failed to download upgrade packages"
+msgstr ""
+
+#: ../ui/upgrade_page.py:401
+msgid "The requested package does not exist on server."
+msgstr "Paket yang dimaksud tidak terdapat di peladen."
+
+#: ../ui/upgrade_page.py:402 ../ui/upgrade_page.py:423
+#: ../ui/upgrade_page.py:446
+msgid "Suggest to "
+msgstr "Sarankan untuk"
+
+#: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
+#: ../ui/upgrade_page.py:447
+msgid "refresh package lists"
+msgstr ""
+
+#: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
+#: ../ui/upgrade_page.py:448
+msgid " and try again."
+msgstr "dan coba lagi."
+
+#: ../ui/upgrade_page.py:419 ../ui/upgrade_page.py:1120
+msgid "Failed to install upgrade packages"
+msgstr ""
+
+#: ../ui/upgrade_page.py:421
+msgid ""
+"This problem occurs due to corrupted local apt dependency relationship."
+msgstr "Masalah ini terjadi berhubungan dengan dependensi apt lokal yang rusak."
+
+#: ../ui/upgrade_page.py:440
+msgid "Warning"
+msgstr "Peringatan"
+
+#: ../ui/upgrade_page.py:442
+msgid ""
+"The upgrade requires to uninstall crucial components due to corrupted local "
+"dependencies or incorrect package dependencies on server."
+msgstr ""
+
+#: ../ui/upgrade_page.py:483
+msgid "If the prompt occurs again, you could "
+msgstr "Jika terjadi kembali, Anda dapat"
+
+#: ../ui/upgrade_page.py:484 ../ui/upgrade_page.py:510
+msgid "send error report"
+msgstr "kirim laporan galat"
+
+#: ../ui/upgrade_page.py:485
+msgid "."
+msgstr "."
+
+#: ../ui/upgrade_page.py:498
+msgid "Uploading error log"
+msgstr "Catatan galat pengunggahan"
+
+#: ../ui/upgrade_page.py:503
+msgid "The error was successfully reported and will be handled soon."
+msgstr ""
+
+#: ../ui/upgrade_page.py:509
+msgid "Failed to send the error report. You could try again."
+msgstr "Gagal mengirim laporan galat. Silakan coba lagi"
+
+#: ../ui/upgrade_page.py:663
+msgid ""
+"This problem occurs due to corrupted local apt dependence relationship."
+msgstr "Masalah ini terjadi berhubungan dengan dependensi apt lokal yang rusak."
+
+#: ../ui/upgrade_page.py:668
+#, python-format
+msgid "%s package(s) are available for upgrade, %s will be downloaded."
+msgstr ""
+
+#: ../ui/upgrade_page.py:1094
+msgid "Finished analyzing dependencies."
+msgstr "Selesai menganalisa ketergantungan."
+
+#: ../ui/upgrade_page.py:1097
+msgid "Download has started"
+msgstr "Unduhan telah dimulai"
+
+#: ../ui/upgrade_page.py:1103
+#, python-format
+msgid "Completed: %s/%s (%s/%s) Download Rate: %s/s"
+msgstr "Terunduh: %s/%s (%s/%s) Kecepatan unduh: %s/d"
+
+#: ../ui/upgrade_page.py:1113
+msgid "Download finished."
+msgstr "Pengunduhan selesai."
+
+#: ../ui/upgrade_page.py:1117
+msgid "Download stopped."
+msgstr "Pengunduhan berhenti."
+
+#: ../ui/upgrade_page.py:1124
+msgid "Installing upgrade packages"
+msgstr ""
+
+#: ../ui/upgrade_page.py:1125
+msgid "Upgrading..."
+msgstr ""
+
+#: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
+msgid "Upgrade completed"
+msgstr "Peningkatan telah diselesaikan"
+
+#: ../ui/upgrade_page.py:1637
+msgid "Waiting for upgrade"
+msgstr "Menunggu untuk ditingkatkan"
+
+#: ../ui/upgrade_page.py:1656 ../ui/upgrade_page.py:1663
+msgid "Upgrading"
+msgstr "Meningkatkan"
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 weekly"
+msgstr "25 Tertinggi Mingguan"
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 monthly"
+msgstr "25 Tertinggi bulanan"
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 totally"
+msgstr "Total 25 Tertinggi"
+
+#: ../ui/category_info.py:26
+msgid "Internet"
+msgstr "Internet"
+
+#: ../ui/category_info.py:27
+msgid "Browser"
+msgstr "Peramban"
+
+#: ../ui/category_info.py:28
+msgid "Instant messaging"
+msgstr "Pesan Instan"
+
+#: ../ui/category_info.py:29
+msgid "Email"
+msgstr "Surel"
+
+#: ../ui/category_info.py:30
+msgid "File transfer"
+msgstr "Transfer berkas"
+
+#: ../ui/category_info.py:31
+msgid "News"
+msgstr "Berita"
+
+#: ../ui/category_info.py:32
+msgid "Remote access"
+msgstr "Akses jarak jauh"
+
+#: ../ui/category_info.py:33
+msgid "Security"
+msgstr "Keamanan"
+
+#: ../ui/category_info.py:34
+msgid "Miscellaneous"
+msgstr "Lain-lain"
+
+#: ../ui/category_info.py:35
+msgid "Multimedia"
+msgstr "Multimedia"
+
+#: ../ui/category_info.py:36
+msgid "Audiovideo"
+msgstr "Audiovideo"
+
+#: ../ui/category_info.py:37
+msgid "Media Editing"
+msgstr "Edit Media"
+
+#: ../ui/category_info.py:38
+msgid "Disc burner"
+msgstr "Pembakar Diska"
+
+#: ../ui/category_info.py:39
+msgid "MIDI"
+msgstr "MIDI"
+
+#: ../ui/category_info.py:40
+msgid "Mixer"
+msgstr "Pemadu"
+
+#: ../ui/category_info.py:41
+msgid "Player"
+msgstr "Pemain"
+
+#: ../ui/category_info.py:42
+msgid "Recorder"
+msgstr "Perekam"
+
+#: ../ui/category_info.py:43
+msgid "Sequencer"
+msgstr "Pengurut"
+
+#: ../ui/category_info.py:44
+msgid "Tuner"
+msgstr "Penala"
+
+#: ../ui/category_info.py:45
+msgid "Games"
+msgstr "Permainan"
+
+#: ../ui/category_info.py:46
+msgid "Action games"
+msgstr "Permainan Aksi"
+
+#: ../ui/category_info.py:47
+msgid "Advernture games"
+msgstr "Permainan Petualangan"
+
+#: ../ui/category_info.py:48
+msgid "Arcade games"
+msgstr "Permainan Arkade"
+
+#: ../ui/category_info.py:49
+msgid "Board games"
+msgstr "Permainan Papan"
+
+#: ../ui/category_info.py:50
+msgid "Card games"
+msgstr "Permainan Kartu"
+
+#: ../ui/category_info.py:51
+msgid "Emulator"
+msgstr "Emulator"
+
+#: ../ui/category_info.py:52
+msgid "Kids games"
+msgstr "Permainan anak-anak"
+
+#: ../ui/category_info.py:53
+msgid "Logic games"
+msgstr "Permainan Logika"
+
+#: ../ui/category_info.py:54
+msgid "Puzzle games"
+msgstr "Permainan Teka-teki"
+
+#: ../ui/category_info.py:55
+msgid "Role-playing games"
+msgstr "Permainan peran (RPG)"
 
 #: ../ui/category_info.py:56
 msgid "Sports games"
@@ -748,265 +490,492 @@ msgstr "Permainan Olahraga"
 msgid "Strategy games"
 msgstr "Permainan Strategi"
 
-#: ../ui/preference.py:553
-msgid "Successfully"
-msgstr "Berhasil"
+#: ../ui/category_info.py:58
+msgid "Graphics"
+msgstr "Grafik"
 
-#: ../ui/detail_page.py:447
-msgid "Successfully installed"
-msgstr "Berhasil terpasang"
+#: ../ui/category_info.py:59
+msgid "2D graphics"
+msgstr "Grafik 2D"
 
-#: ../ui/upgrade_page.py:402 ../ui/upgrade_page.py:423
-#: ../ui/upgrade_page.py:446
-msgid "Suggest to "
-msgstr ""
+#: ../ui/category_info.py:60
+msgid "3D graphics"
+msgstr "Grafik 3D"
+
+#: ../ui/category_info.py:61
+msgid "Image processing"
+msgstr "Pemrosesan Gambar"
+
+#: ../ui/category_info.py:62
+msgid "Photography"
+msgstr "Photografi"
+
+#: ../ui/category_info.py:63
+msgid "Vector graphics"
+msgstr "Gambar Vektor"
+
+#: ../ui/category_info.py:64
+msgid "Viewer"
+msgstr "Penampil Gambar"
+
+#: ../ui/category_info.py:65
+msgid "Productivity"
+msgstr "Produktifitas"
+
+#: ../ui/category_info.py:66
+msgid "Office"
+msgstr "Perkantoran"
+
+#: ../ui/category_info.py:67
+msgid "Scanning printing"
+msgstr "Pindai dan Cetak"
+
+#: ../ui/category_info.py:68
+msgid "Industry"
+msgstr "Industri"
+
+#: ../ui/category_info.py:69
+msgid "Engineering"
+msgstr "Teknik"
+
+#: ../ui/category_info.py:70
+msgid "Finance"
+msgstr "Keuangan"
+
+#: ../ui/category_info.py:71
+msgid "Ham radio"
+msgstr "Layanan Radio"
+
+#: ../ui/category_info.py:72
+msgid "Medical"
+msgstr "Medis"
+
+#: ../ui/category_info.py:73
+msgid "Publishing"
+msgstr "Penerbitan"
+
+#: ../ui/category_info.py:74
+msgid "Science Education"
+msgstr "Pendidikan dan Sains"
+
+#: ../ui/category_info.py:75
+msgid "Languages"
+msgstr "Bahasa"
+
+#: ../ui/category_info.py:76
+msgid "Religion"
+msgstr "Religi"
+
+#: ../ui/category_info.py:77
+msgid "Science"
+msgstr "Sains"
+
+#: ../ui/category_info.py:78
+msgid "Development"
+msgstr "Pengembangan"
+
+#: ../ui/category_info.py:79
+msgid "Database"
+msgstr "Basisdata"
+
+#: ../ui/category_info.py:80
+msgid "Debugging"
+msgstr "Pengawakutuan"
+
+#: ../ui/category_info.py:81
+msgid "IDE"
+msgstr "IDE"
+
+#: ../ui/category_info.py:82
+msgid "Software development"
+msgstr "Pengembangan perangkat lunak"
+
+#: ../ui/category_info.py:83
+msgid "Version control"
+msgstr "Kontrol versi"
+
+#: ../ui/category_info.py:84
+msgid "Web development"
+msgstr "Pengembangan web"
 
 #: ../ui/category_info.py:85
 msgid "System"
 msgstr "Sistem"
 
+#: ../ui/category_info.py:86
+msgid "Desktop environment"
+msgstr "Lingkungan Desktop"
+
+#: ../ui/category_info.py:87
+msgid "Monitor"
+msgstr "Monitor"
+
+#: ../ui/category_info.py:88
+msgid "Network"
+msgstr "Jaringan"
+
+#: ../ui/category_info.py:89
+msgid "Package manager"
+msgstr "Manajer Paket"
+
+#: ../ui/category_info.py:90
+msgid "Settings"
+msgstr "Pengaturan"
+
+#: ../ui/category_info.py:91
+msgid "Virtualization"
+msgstr "Virtualisasi"
+
+#: ../ui/category_info.py:92
+msgid "Window manager"
+msgstr "Manajer Jendela"
+
+#: ../ui/category_info.py:93
+msgid "Utilities"
+msgstr "Utilitas"
+
+#: ../ui/category_info.py:94
+msgid "Accessories"
+msgstr "Aksesori"
+
+#: ../ui/category_info.py:95
+msgid "Archiving"
+msgstr "Pengarsipan"
+
+#: ../ui/category_info.py:96
+msgid "Emulation"
+msgstr "Emulasi"
+
+#: ../ui/category_info.py:97
+msgid "File manager"
+msgstr "Manajer Berkas"
+
+#: ../ui/category_info.py:98
+msgid "Screensaver"
+msgstr "Hemat layar"
+
 #: ../ui/category_info.py:99
 msgid "Terminal emulator"
-msgstr ""
-
-#: ../ui/preference.py:776
-#, python-format
-msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
-msgstr ""
+msgstr "Emulator Terminal"
 
 #: ../ui/category_info.py:100
 msgid "Text editor"
 msgstr "Editor Teks"
 
-#: ../ui/upgrade_page.py:503
-#, fuzzy
-msgid "The error was successfully reported and will be handled soon."
-msgstr "Galat telah dilaporkan dan segera ditindak-lanjuti."
-
-#: ../ui/software_center.py:477
+#: ../ui/home_page.py:478
 #, python-format
-msgid "The requested package \"%s\" was not found in the package list."
-msgstr "Paket \"%s\" tidak ditemukan di daftar paket."
+msgid "%s: %s applications"
+msgstr "%s: %s aplikasi"
 
-#: ../ui/upgrade_page.py:401
-msgid "The requested package does not exist on server."
-msgstr "Paket yang dimaksud tidak terdapat di peladen."
-
-#: ../ui/upgrade_page.py:308
-msgid "The system is not Deepin, this function is invalid."
-msgstr "Sistem bukan Deepin, fungsi invalid."
-
-#: ../ui/upgrade_page.py:442
-msgid ""
-"The upgrade requires to uninstall crucial components due to corrupted local "
-"dependencies or incorrect package dependencies on server."
-msgstr ""
-
-#: ../ui/dsc-daemon.py:284
+#: ../ui/home_page.py:660
 #, python-format
-msgid ""
-"There are %s packages needed to upgrade in your system, please use Deepin "
-"Store to upgrade."
-msgstr ""
+msgid "%s > %s : %s applications"
+msgstr "%s > %s : %s aplikasi"
 
-#: ../ui/dsc-daemon.py:288
-#, python-format
-msgid ""
-"There is %s package needed to upgrade in your system, please use Deepin "
-"Store to upgrade."
-msgstr ""
+#: ../ui/home_page.py:716 ../ui/software_center.py:789
+msgid "Home"
+msgstr "Beranda"
 
-#: ../ui/upgrade_page.py:304
-msgid "This function is invalid without Deepin System Settings installed."
-msgstr ""
-
-#: ../ui/upgrade_page.py:663
-msgid "This problem occurs due to corrupted local apt dependence relationship."
-msgstr ""
-
-#: ../ui/upgrade_page.py:421
-msgid "This problem occurs due to corrupted local apt dependency relationship."
-msgstr ""
-
-#: ../ui/preference.py:575
-msgid "Time interval: "
-msgstr "Interval waktu:"
-
-#: ../ui/download_rank_page.py:61
-msgid "Top 25 monthly"
-msgstr "25 Terbaik bulanan"
-
-#: ../ui/download_rank_page.py:61
-msgid "Top 25 totally"
-msgstr ""
-
-#: ../ui/download_rank_page.py:61
-msgid "Top 25 weekly"
-msgstr "25 Terbaik Mingguan"
+#: ../ui/home_page.py:756
+msgid "Recommendations"
+msgstr "Rekomendasi"
 
 #: ../ui/home_page.py:756
 msgid "Topics"
 msgstr "Topik"
 
-#: ../ui/software_center.py:459
-msgid "Try again"
-msgstr "Coba lagi"
+#: ../ui/home_page.py:756
+msgid "Download rank"
+msgstr "Peringkat unduhan"
 
-#: ../ui/category_info.py:44
-msgid "Tuner"
+#: ../ui/widgets.py:66
+msgid "Just now"
+msgstr "Baru saja"
+
+#: ../ui/widgets.py:71
+msgid "One minute ago"
+msgstr "Satu menit yang lalu"
+
+#: ../ui/widgets.py:73
+#, python-format
+msgid "%s minutes ago"
+msgstr "%s menit yang lalu"
+
+#: ../ui/widgets.py:78
+msgid "One hour ago"
+msgstr "Satu jam yang lalu"
+
+#: ../ui/widgets.py:80
+#, python-format
+msgid "%s hours ago"
+msgstr "%s jam yang lalu"
+
+#: ../ui/widgets.py:84
+msgid "Yesterday"
+msgstr "Kemarin"
+
+#: ../ui/widgets.py:295 ../ui/widgets.py:369
+msgid "Click to refresh"
+msgstr "Klik untuk menyegarkan"
+
+#: ../ui/widgets.py:462 ../ui/preference.py:782
+msgid "OK"
+msgstr "OK"
+
+#: ../ui/widgets.py:463 ../ui/preference.py:784
+msgid "Cancel"
+msgstr "Batal"
+
+#: ../ui/utils.py:355
+msgid "Running"
+msgstr "Berjalan"
+
+#: ../ui/utils.py:356
+msgid "Preparing"
+msgstr "Menyiapkan"
+
+#: ../ui/utils.py:357
+msgid "Unpacking"
+msgstr "Membuka"
+
+#: ../ui/utils.py:358
+msgid "Preparing to configure"
+msgstr "Siap mengkonfigurasi"
+
+#: ../ui/utils.py:359
+msgid "Configuring"
+msgstr "Mengkonfigurasi"
+
+#: ../ui/utils.py:370
+msgid "Err"
+msgstr "Err"
+
+#: ../ui/utils.py:371
+msgid "Ign"
+msgstr "Ign"
+
+#: ../ui/utils.py:372
+msgid "Get"
+msgstr "Get"
+
+#: ../ui/utils.py:373
+msgid "Hit"
+msgstr "Hit"
+
+#: ../ui/software_center.py:127
+#, python-format
+msgid "%s haven't any desktop file"
+msgstr "%s tidak memiliki berkas destop"
+
+#: ../ui/software_center.py:194
+msgid "Sending rating..."
+msgstr "Mengirim penilaian..."
+
+#: ../ui/software_center.py:198
+msgid "You have already scored.  ;)"
+msgstr "Anda telah menilai. ;)"
+
+#: ../ui/software_center.py:204
+msgid "Rated successfully. Thanks for your involvement."
 msgstr ""
 
-#: ../ui/software_center.py:385 ../ui/software_center.py:791
-msgid "Uninstall"
-msgstr "Bongkar"
+#: ../ui/software_center.py:220
+msgid "Rating failed. Please check your network connection!"
+msgstr "Penilaian gagal. Silakan periksa koneksi jaringan Anda!"
 
 #: ../ui/software_center.py:385
 #, python-format
 msgid "Uninstall %s Successfully."
 msgstr "Pembongkaran %s berhasil."
 
-#: ../ui/uninstall_page.py:619
-msgid "Uninstallation completed"
-msgstr "Pembongkaran selesai"
+#: ../ui/software_center.py:385 ../ui/software_center.py:791
+msgid "Uninstall"
+msgstr "Bongkar"
 
-#: ../ui/uninstall_page.py:605 ../ui/uninstall_page.py:612
-msgid "Uninstalling"
-msgstr "Sedang membongkar"
-
-#: ../ui/utils.py:357
-msgid "Unpacking"
-msgstr "Membuka"
-
-#: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
-#: ../ui/software_center.py:790
-msgid "Upgrade"
-msgstr ""
-
-#: ../ui/upgrade_page.py:182
-msgid "Upgrade applications selected"
-msgstr ""
-
-#: ../ui/preference.py:571
-#, fuzzy
-msgid "Upgrade automatically"
-msgstr "Perbarui otomatis"
-
-#: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
-msgid "Upgrade completed"
-msgstr ""
-
-#: ../ui/upgrade_page.py:1656 ../ui/upgrade_page.py:1663
-msgid "Upgrading"
-msgstr ""
-
-#: ../ui/upgrade_page.py:1125
-#, fuzzy
-msgid "Upgrading..."
-msgstr "Memperbarui ..."
-
-#: ../ui/upgrade_page.py:498
-msgid "Uploading error log"
-msgstr "Log galat pengunggahan"
-
-#: ../ui/category_info.py:93
-msgid "Utilities"
-msgstr "Perkakas"
-
-#: ../ui/category_info.py:63
-msgid "Vector graphics"
-msgstr "Gambar Vektor"
-
-#: ../ui/category_info.py:83
-msgid "Version control"
-msgstr ""
-
-#: ../ui/preference.py:438
-msgid "Version:"
-msgstr "Versi:"
-
-#: ../ui/detail_page.py:390
+#: ../ui/software_center.py:391
 #, python-format
-msgid "Version: %s"
-msgstr "Versi: %s"
+msgid "%s packages upgrade successfully."
+msgstr "%s berhasil ditingkatkan."
+
+#: ../ui/software_center.py:394
+#, python-format
+msgid "Install %s Successfully."
+msgstr "Pemasangan %s Berhasil."
+
+#: ../ui/software_center.py:394
+msgid "Install"
+msgstr "Pasang"
+
+#: ../ui/software_center.py:438
+msgid "Generating package list database..."
+msgstr "Membangkitkan basis data daftar paket..."
+
+#: ../ui/software_center.py:446
+msgid "Package lists refreshed completely."
+msgstr ""
+
+#: ../ui/software_center.py:458
+msgid "Failed to refresh package lists."
+msgstr "Gagal memperbaharui daftar paket."
+
+#: ../ui/software_center.py:459
+msgid "Try again"
+msgstr "Coba lagi"
+
+#: ../ui/software_center.py:469
+#, python-format
+msgid ""
+"Problem occurred when analyzing dependencies for %s. Installation aborted."
+msgstr "Terjadi masalah ketika menganalisa ketergantungan untuk paket %s. Pemasangan dibatalkan."
+
+#: ../ui/software_center.py:472
+#, python-format
+msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
+msgstr "Terjadi masalah ketika menganalisa ketergantungan untuk paket %s. Peningkatan dibatalkan."
+
+#: ../ui/software_center.py:477
+#, python-format
+msgid "The requested package \"%s\" was not found in the package list."
+msgstr "Paket \"%s\" tidak ditemukan di daftar paket."
+
+#: ../ui/software_center.py:478
+msgid "Refresh package lists again and try again."
+msgstr ""
+
+#: ../ui/software_center.py:770
+msgid "Join us"
+msgstr "Bergabung dengan kami"
+
+#: ../ui/software_center.py:792
+msgid "Installation"
+msgstr "Pemasangan"
+
+#: ../ui/software_center.py:816 ../ui/preference.py:568
+msgid "Refresh package lists"
+msgstr ""
+
+#: ../ui/software_center.py:817
+msgid "Open download directory"
+msgstr "Buka direktori unduhan"
+
+#: ../ui/software_center.py:818
+msgid "Clear up cached packages"
+msgstr "Bersihkan paket di tembolok"
 
 #: ../ui/software_center.py:819
 msgid "View new features"
 msgstr "Lihat fitur terbaru"
 
-#: ../ui/category_info.py:64
-msgid "Viewer"
-msgstr ""
+#: ../ui/software_center.py:820
+msgid "Preferences"
+msgstr "Preferensi"
 
-#: ../ui/category_info.py:91
-msgid "Virtualization"
-msgstr "Virtualisasi"
-
-#: ../ui/detail_page.py:396
-msgid "Visit Homepage"
-msgstr "Kunjungi Laman web"
-
-#: ../ui/preference.py:552
-msgid "Waiting"
-msgstr "Menunggu"
-
-#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1495
-#: ../ui/upgrade_page.py:1614
-msgid "Waiting for download"
-msgstr "Menunggu unduhan"
-
-#: ../ui/install_page.py:778
-msgid "Waiting for installation"
-msgstr "Menunggu pemasangan"
-
-#: ../ui/uninstall_page.py:515 ../ui/uninstall_page.py:598
-msgid "Waiting for uninstall"
-msgstr "menunggu membongkar"
-
-#: ../ui/upgrade_page.py:1637
-msgid "Waiting for upgrade"
-msgstr ""
-
-#: ../ui/upgrade_page.py:440
-msgid "Warning"
-msgstr "Peringatan"
-
-#: ../ui/category_info.py:84
-msgid "Web development"
-msgstr "Pengembangan web"
-
-#: ../ui/category_info.py:92
-msgid "Window manager"
-msgstr "Manajer Jendela"
-
-#: ../ui/widgets.py:84
-msgid "Yesterday"
-msgstr "Kemarin"
-
-#: ../ui/software_center.py:198
-msgid "You have already scored.  ;)"
-msgstr ""
+#: ../ui/software_center.py:821
+msgid "Quit"
+msgstr "Keluar"
 
 #: ../ui/software_center.py:1123
 #, python-format
 msgid "You have cleared up %s packages and saved %s of space."
-msgstr ""
+msgstr "Anda telah membersihkan %s paket dan menghemat %s ruang."
 
 #: ../ui/software_center.py:1125
 msgid "Your system cache is empty."
 msgstr "Tembolok sistem kosong."
 
-#: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
-#: ../ui/upgrade_page.py:447
-#, fuzzy
-msgid "refresh package lists"
-msgstr "Perbarui daftar peket"
+#: ../ui/item_render.py:44
+msgid "No reminder"
+msgstr "Tidak ada pengingat"
 
-#: ../ui/upgrade_page.py:484 ../ui/upgrade_page.py:510
-msgid "send error report"
-msgstr "kirim laporan galat"
+#: ../ui/preference.py:438
+msgid "Version:"
+msgstr "Versi:"
 
-#~ msgid "Failed to analyze dependencies."
-#~ msgstr "Gagal menganalisa ketergantungan."
+#: ../ui/preference.py:452
+msgid ""
+"Deepin Store is a commonly used software center on Linux. We selected more than 2,600 excellent applications with many functions of installation and uninstalling, software repository and popular recommendations, which supports 1-click quick installation, multi-threaded download and clearing of cached packages. It provides topics for software introduction and shares good applications.\n"
+"\n"
+"Deepin Store is a free software licensed under GNU GPLv3."
+msgstr ""
 
-#~ msgid "update package lists"
-#~ msgstr "pembaruan daftar paket"
+#: ../ui/preference.py:477
+msgid "On uninstalling the software"
+msgstr "Sedang membongkar perangkat lunak"
+
+#: ../ui/preference.py:480
+msgid "Delete configuration files"
+msgstr "Hapus berkas konfigurasi"
+
+#: ../ui/preference.py:494
+msgid "Download settings"
+msgstr "Pengaturan unduhan"
+
+#: ../ui/preference.py:500
+msgid "Maximum number of download tasks: "
+msgstr ""
+
+#: ../ui/preference.py:510
+msgid "Download directory: "
+msgstr "Direktori unduhan:"
+
+#: ../ui/preference.py:516
+msgid "Change"
+msgstr "Ganti"
+
+#: ../ui/preference.py:551
+msgid "Select the best mirror"
+msgstr "Pilih cermin terbaik"
+
+#: ../ui/preference.py:552
+msgid "Waiting"
+msgstr "Menunggu"
+
+#: ../ui/preference.py:553
+msgid "Successfully"
+msgstr "Berhasil"
+
+#: ../ui/preference.py:571
+msgid "Upgrade automatically"
+msgstr ""
+
+#: ../ui/preference.py:575
+msgid "Time interval: "
+msgstr "Interval waktu:"
+
+#: ../ui/preference.py:578
+msgid " hour"
+msgstr "jam"
+
+#: ../ui/preference.py:642
+msgid "Select mirror"
+msgstr "Pilih cermin"
+
+#: ../ui/preference.py:705
+msgid "Select Directory"
+msgstr "Pilih Direktori"
+
+#: ../ui/preference.py:751
+msgid "Speed testing will finish only after one minute, please wait."
+msgstr "Pengujian kecepatan akan selesai hanya dalam satu menit, mohon menunggu."
+
+#: ../ui/preference.py:776
+#, python-format
+msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
+msgstr "Pengujian selesai, sumber mirror paling cepat adalah \"%s\", beralih sekarang?"
+
+#: ../ui/preference.py:829
+msgid "General"
+msgstr "Umum"
+
+#: ../ui/preference.py:830
+msgid "Mirrors"
+msgstr "Cermin"
+
+#: ../ui/preference.py:831
+msgid "About"
+msgstr "Tentang"
+
+#: ../ui/search_page.py:110
+#, python-format
+msgid "%s applications searched"
+msgstr "%s aplikasi dicari"
