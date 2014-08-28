@@ -123,6 +123,7 @@ class DetailPage(gtk.HBox):
         self.pkg_name = None
         self.alias_name = ""
         self.pkg_pixbuf = None
+        self.pkg_star_view = None
 
         self.left_view_box = gtk.VBox()
         self.left_view_box.set_size_request(self.LEFT_INFO_WIDTH, - 1)
@@ -251,9 +252,10 @@ class DetailPage(gtk.HBox):
             container_remove_all(self.right_comment_box) # remove comment box first, to avoid comment area flash
 
     def grade_pkg(self):
-        global_event.emit("grade-pkg", (self.pkg_name, self.pkg_star_view), self.pkg_star_view.star_buffer.star_level)
-        self.pkg_star_view.set_star_level(int(self.star))
-        self.pkg_star_view.queue_draw()
+        if self.pkg_star_view:
+            global_event.emit("grade-pkg", (self.pkg_name, self.pkg_star_view), self.pkg_star_view.star_buffer.star_level)
+            self.pkg_star_view.set_star_level(int(self.star))
+            self.pkg_star_view.queue_draw()
 
     def jump_to_category(self):
         global_event.emit("jump-to-category", self.category[0], self.category[1])
@@ -346,8 +348,9 @@ class DetailPage(gtk.HBox):
     @post_gui
     def update_some_info(self, info):
         self.star = float(info[0]['mark'].encode('utf-8').strip())
-        self.pkg_star_view.star_buffer.star_level = int(self.star)
-        self.pkg_star_view.queue_draw()
+        if self.pkg_star_view:
+            self.pkg_star_view.star_buffer.star_level = int(self.star)
+            self.pkg_star_view.queue_draw()
         self.pkg_star_mark.update_star(self.star)
         self.pkg_star_mark.queue_draw()
 
