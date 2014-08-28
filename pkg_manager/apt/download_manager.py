@@ -36,9 +36,19 @@ class DownloadManager(Logger):
 
         self.global_event = global_event
         self.verbose = verbose
+        self.download_dbus_interface = None
+        self.init_download_dbus()
 
+        self.download_task_info = {}
+        self.task_name_to_id = {}
+
+    def init_download_dbus(self):
         system_bus = dbus.SystemBus()
-        bus_object = system_bus.get_object(DOWNLOAD_DBUS_NAME, DOWNLOAD_DBUS_PATH)
+        bus_object = dbus.proxies.ProxyObject(system_bus, DOWNLOAD_DBUS_NAME, DOWNLOAD_DBUS_PATH)
+        #bus_object = system_bus.get_object(DOWNLOAD_DBUS_NAME, DOWNLOAD_DBUS_PATH)
+        if self.download_dbus_interface:
+            del self.download_dbus_interface
+            self.download_dbus_interface = None
         self.download_dbus_interface = dbus.Interface(bus_object, DOWNLOAD_DBUS_INTERFACE)
 
         self.download_dbus_interface.connect_to_signal(
@@ -66,9 +76,6 @@ class DownloadManager(Logger):
                 handler_function=self.download_error
                 )
 
-        self.download_task_info = {}
-        self.task_name_to_id = {}
-
     def add_download(self,
             task_name,
             action_type,
@@ -80,13 +87,25 @@ class DownloadManager(Logger):
             file_save_dir="/var/cache/apt/archives"
             ):
 
-        task_id = self.download_dbus_interface.AddTask(
-            task_name,
-            download_urls,
-            download_sizes,
-            download_md5s,
-            file_save_dir,
-            )
+        task_name = str(task_name)
+        file_save_dir = str(file_save_dir)
+        try:
+            task_id = self.download_dbus_interface.AddTask(
+                task_name,
+                download_urls,
+                [dbus.Int64(size) for size in download_sizes ],
+                download_md5s,
+                file_save_dir
+                )
+        except Exception, e:
+            self.init_download_dbus()
+            task_id = self.download_dbus_interface.AddTask(
+                task_name,
+                download_urls,
+                [dbus.Int64(size) for size in download_sizes ],
+                download_md5s,
+                file_save_dir,
+                )
 
         self.download_task_info[task_id] = {
             "task_name": task_name,
@@ -187,11 +206,19 @@ class DownloadManager(Logger):
                 self.loginfo("%s download stop" % (task_name,))
 
     def stop_wait_download(self, task_name):
-        if self.task_name_to_id.has_key(task_name):
-            task_id = self.task_name_to_id[task_name]
-            self.download_dbus_interface.StopTask(task_id)
-            self.download_task_info.pop(task_id)
-            self.task_name_to_id.pop(task_name)
+        task_name_i386 = ""
+        if task_name.endswith(":i386"):
+            task_name_i386 = task_name
+            task_name = task_name[:-5]
+        else:
+            task_name_i386 = task_name + ":i386"
+
+        for name in [task_name, task_name_i386]:
+            if self.task_name_to_id.has_key(name):
+                task_id = self.task_name_to_id[name]
+                self.download_dbus_interface.StopTask(task_id)
+                self.download_task_info.pop(task_id)
+                self.task_name_to_id.pop(name)
 
 if __name__ == "__main__":
     import gtk
