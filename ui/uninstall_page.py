@@ -527,7 +527,7 @@ class UninstallItem(TreeItem):
                 if self.is_cancel_button_area(column, offset_x, offset_y):
                     self.status = self.STATUS_NORMAL
 
-                    global_event.emit("remove-wait-action", [(str((self.pkg_name, ACTION_UNINSTALL)))])
+                    global_event.emit("remove-wait-action", [(self.pkg_name, ACTION_UNINSTALL)])
 
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)

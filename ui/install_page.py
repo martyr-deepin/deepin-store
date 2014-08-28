@@ -689,7 +689,7 @@ class InstallItem(TreeItem):
                     self.status_text = _("Installation was interrupted")
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
-                    global_event.emit("remove-wait-action", [(str((self.pkg_name, ACTION_INSTALL)))])
+                    global_event.emit("remove-wait-action", [(self.pkg_name, ACTION_INSTALL)])
                     global_event.emit("request-stop-install-actions", [self.pkg_name])
 
             elif self.status == self.STATUS_INSTALL_FINISH:

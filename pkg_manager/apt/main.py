@@ -619,6 +619,10 @@ class PackageManager(dbus.service.Object):
             cache_upgrade_pkgs = self.pkg_cache.get_upgrade_pkgs()
             return ("normal", cache_upgrade_pkgs)
 
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="a(si)", out_signature="")
+    def RemoveWaitMissions(self, pkg_infos):
+        self.apt_action_pool.remove_wait_missions(pkg_infos)
+
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="s")
     def request_uninstall_pkgs(self):
         return json.dumps(self.pkg_cache.get_uninstall_pkgs())
@@ -716,10 +720,6 @@ class PackageManager(dbus.service.Object):
     def cancel_upgrade_download(self):
         if getattr(self, 'upgrade_id'):
             self.download_manager.stop_wait_download(self.upgrade_id)
-
-    @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")
-    def remove_wait_missions(self, pkg_infos):
-        self.apt_action_pool.remove_wait_missions(pkg_infos)
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")
     def remove_wait_downloads(self, pkg_names):

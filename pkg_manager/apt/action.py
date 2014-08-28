@@ -327,9 +327,9 @@ class AptActionPool(MissionThreadPool):
                 self.upgrade_action_dict[pkg_name]["status"] = "update"
 
     def clean_action(self, mission_result_list):
-        for result in mission_result_list:
-            if result:
-                for r in result:
+        for mission_result in mission_result_list:
+            if mission_result:
+                for r in mission_result:
                     pkg_name, action_type = r
                     if action_type == ACTION_INSTALL:
                         if self.install_action_dict.has_key(pkg_name):
@@ -395,8 +395,9 @@ class AptActionPool(MissionThreadPool):
     def remove_wait_missions(self, pkg_infos):
         remove_missions = []
         for pkg_info in pkg_infos:
-            (pkg_name, action_type) = eval(pkg_info)
-            self.clean_action([(pkg_name, action_type)])
+            (pkg_name, action_type) = pkg_info
+            result = [(pkg_name, action_type)]
+            self.clean_action([result])
 
             for wait_mission in self.wait_mission_list:
                 if wait_mission.pkg_name == pkg_name and wait_mission.action_type == action_type:

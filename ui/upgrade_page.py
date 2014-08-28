@@ -1520,7 +1520,7 @@ class UpgradeItem(TreeItem):
                     if self.redraw_request_callback:
                         self.redraw_request_callback(self)
 
-                    global_event.emit("remove-wait-action", [(str((self.pkg_name, ACTION_UPGRADE)))])
+                    global_event.emit("remove-wait-action", [(self.pkg_name, ACTION_UPGRADE)])
 
     def button_release(self, column, offset_x, offset_y):
         if column == 0 and self.check_button_buffer.release_button(offset_x, offset_y):

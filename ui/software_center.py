@@ -962,7 +962,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         global_event.register_event("stop-download-pkg", self.bus_interface.stop_download_pkg)
         global_event.register_event("switch-to-detail-page", lambda pkg_name : switch_to_detail_page(self.page_switcher, self.detail_page, pkg_name))
         global_event.register_event("switch-from-detail-page", lambda : switch_from_detail_page(self.page_switcher, self.detail_page, self.page_box))
-        global_event.register_event("remove-wait-action", self.bus_interface.remove_wait_missions)
+        global_event.register_event("remove-wait-action", self.bus_interface.RemoveWaitMissions)
         global_event.register_event("remove-wait-download", self.bus_interface.remove_wait_downloads)
         global_event.register_event("request-clear-action-pages", request_clear_action_pages)
         global_event.register_event("request-stop-install-actions", request_stop_install_actions)
