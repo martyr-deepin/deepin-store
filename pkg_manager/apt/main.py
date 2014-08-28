@@ -198,6 +198,7 @@ class PackageManager(dbus.service.Object):
         self.exit_flag = False
         self.simulate = False
         self.all_upgrade_pkg_names = []
+        self.download_dir = "/var/cache/apt/archives"
 
         self.is_upgrading = False
         self.in_update_list = False
