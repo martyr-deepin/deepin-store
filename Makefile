@@ -13,8 +13,9 @@ install:
 	mkdir -p ${DESTDIR}${PREFIX}/share/dbus-1/services
 	mkdir -p ${DESTDIR}${PREFIX}/share/icons/hicolor/scalable/apps
 	mkdir -p ${DESTDIR}/etc/dbus-1/system.d
-	cp -r app_theme pkg_manager ui image wizard locale skin mirrors \
+	cp -r app_theme pkg_manager ui image wizard skin mirrors \
 	  ${DESTDIR}${PREFIX}/share/deepin-software-center
+	cp -r locale/mo ${DESTDIR}${PREFIX}/share/locale
 	cp pkg_manager/apt/dbus_script/com.linuxdeepin.softwarecenter.service ${DESTDIR}${PREFIX}/share/dbus-1/system-services
 	cp pkg_manager/apt/dbus_script/com.linuxdeepin.softwarecenter.policy ${DESTDIR}${PREFIX}/share/polkit-1/actions
 	cp pkg_manager/apt/dbus_script/com.linuxdeepin.softwarecenter.conf ${DESTDIR}/etc/dbus-1/system.d
