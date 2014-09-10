@@ -608,7 +608,7 @@ class DetailPage(gtk.HBox):
                 self.right_slide_box.pack_start(slide_align, True, True)
 
                 powered_link = Label(
-                    _("Powered by 又拍云存储"),
+                    _("Powered by UpYun.com"),
                     text_color=app_theme.get_color("homepage"),
                     hover_color=app_theme.get_color("homepage_hover"),
                     )

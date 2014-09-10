@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-04 17:35+0800\n"
+"POT-Creation-Date: 2014-09-10 09:41+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../ui/detail_page.py:179
@@ -52,7 +52,7 @@ msgid "Visit Homepage"
 msgstr ""
 
 #: ../ui/detail_page.py:444 ../ui/download_rank_page.py:369
-#: ../ui/home_page.py:1086 ../ui/search_page.py:274 ../ui/album_page.py:483
+#: ../ui/home_page.py:1086 ../ui/album_page.py:483 ../ui/search_page.py:274
 msgid "Not found"
 msgstr ""
 
@@ -66,51 +66,112 @@ msgid "Size: %s"
 msgstr ""
 
 #: ../ui/detail_page.py:611
-msgid "Powered by 又拍云存储"
+msgid "Powered by UpYun.com"
 msgstr ""
 
-#: ../ui/download_rank_page.py:61
-msgid "Top 25 weekly"
+#: ../ui/uninstall_page.py:175
+#, python-format
+msgid "%s applications can be uninstalled"
 msgstr ""
 
-#: ../ui/download_rank_page.py:61
-msgid "Top 25 monthly"
+#: ../ui/uninstall_page.py:515 ../ui/uninstall_page.py:598
+msgid "Waiting for uninstall"
 msgstr ""
 
-#: ../ui/download_rank_page.py:61
-msgid "Top 25 totally"
+#: ../ui/uninstall_page.py:605 ../ui/uninstall_page.py:612
+msgid "Uninstalling"
 msgstr ""
 
-#: ../ui/download_rank_page.py:374 ../ui/home_page.py:1091
-#: ../ui/install_page.py:511 ../ui/install_page.py:516 ../ui/utils.py:360
-#: ../ui/search_page.py:279 ../ui/album_page.py:488
+#: ../ui/uninstall_page.py:619
+msgid "Uninstallation completed"
+msgstr ""
+
+#: ../ui/start_desktop_window.py:227 ../ui/software_center.py:131
+#, python-format
+msgid "%s: request for starting applications sent"
+msgstr ""
+
+#: ../ui/inhibit.py:54
+msgid ""
+"Please wait a moment while system upgrade is being performed... Do not turn "
+"off your computer."
+msgstr ""
+
+#: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
+#: ../ui/software_center.py:790
+msgid "Upgrade"
+msgstr ""
+
+#: ../ui/dsc-daemon.py:284
+#, python-format
+msgid ""
+"There are %s packages needed to upgrade in your system, please use Deepin "
+"Store to upgrade."
+msgstr ""
+
+#: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
+#: ../ui/software_center.py:733 ../ui/preference.py:433
+msgid "Deepin Store"
+msgstr ""
+
+#: ../ui/dsc-daemon.py:288
+#, python-format
+msgid ""
+"There is %s package needed to upgrade in your system, please use Deepin "
+"Store to upgrade."
+msgstr ""
+
+#: ../ui/install_page.py:146
+#, python-format
+msgid "%s applications are being installed"
+msgstr ""
+
+#: ../ui/install_page.py:313 ../ui/install_page.py:744
+#: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
+msgid "Dependencies analyzing"
+msgstr ""
+
+#: ../ui/install_page.py:511 ../ui/install_page.py:516
+#: ../ui/download_rank_page.py:374 ../ui/home_page.py:1091 ../ui/utils.py:360
+#: ../ui/album_page.py:488 ../ui/search_page.py:279
 msgid "Installed"
 msgstr ""
 
-#: ../ui/home_page.py:484
-#, python-format
-msgid "%s: %s applications"
+#: ../ui/install_page.py:665 ../ui/install_page.py:676
+msgid "Download was interrupted"
 msgstr ""
 
-#: ../ui/home_page.py:666
-#, python-format
-msgid "%s > %s : %s applications"
+#: ../ui/install_page.py:689
+msgid "Installation was interrupted"
 msgstr ""
 
-#: ../ui/home_page.py:722 ../ui/software_center.py:789
-msgid "Home"
+#: ../ui/install_page.py:751 ../ui/upgrade_page.py:1495
+#: ../ui/upgrade_page.py:1614
+msgid "Waiting for download"
 msgstr ""
 
-#: ../ui/home_page.py:762
-msgid "Recommendations"
+#: ../ui/install_page.py:758 ../ui/upgrade_page.py:1621
+msgid "Downloading"
 msgstr ""
 
-#: ../ui/home_page.py:762
-msgid "Topics"
+#: ../ui/install_page.py:765
+msgid "Download failed"
 msgstr ""
 
-#: ../ui/home_page.py:762
-msgid "Download rank"
+#: ../ui/install_page.py:781
+msgid "Waiting for installation"
+msgstr ""
+
+#: ../ui/install_page.py:791 ../ui/upgrade_page.py:1647
+msgid "Dependencies analysis failed"
+msgstr ""
+
+#: ../ui/install_page.py:800 ../ui/install_page.py:807
+msgid "Installing"
+msgstr ""
+
+#: ../ui/install_page.py:816
+msgid "Installation completed"
 msgstr ""
 
 #: ../ui/upgrade_page.py:78 ../ui/upgrade_page.py:107
@@ -243,11 +304,6 @@ msgstr ""
 msgid "%s package(s) are available for upgrade, %s will be downloaded."
 msgstr ""
 
-#: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
-#: ../ui/install_page.py:313 ../ui/install_page.py:744
-msgid "Dependencies analyzing"
-msgstr ""
-
 #: ../ui/upgrade_page.py:1094
 msgid "Finished analyzing dependencies."
 msgstr ""
@@ -281,183 +337,24 @@ msgstr ""
 msgid "Upgrade completed"
 msgstr ""
 
-#: ../ui/upgrade_page.py:1495 ../ui/upgrade_page.py:1614
-#: ../ui/install_page.py:751
-msgid "Waiting for download"
-msgstr ""
-
-#: ../ui/upgrade_page.py:1621 ../ui/install_page.py:758
-msgid "Downloading"
-msgstr ""
-
 #: ../ui/upgrade_page.py:1637
 msgid "Waiting for upgrade"
-msgstr ""
-
-#: ../ui/upgrade_page.py:1647 ../ui/install_page.py:791
-msgid "Dependencies analysis failed"
 msgstr ""
 
 #: ../ui/upgrade_page.py:1656 ../ui/upgrade_page.py:1663
 msgid "Upgrading"
 msgstr ""
 
-#: ../ui/preference.py:433 ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
-#: ../ui/software_center.py:733
-msgid "Deepin Store"
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 weekly"
 msgstr ""
 
-#: ../ui/preference.py:438
-msgid "Version:"
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 monthly"
 msgstr ""
 
-#: ../ui/preference.py:452
-msgid ""
-"Deepin Store is a commonly used software center on Linux. We selected more "
-"than 2,600 excellent applications with many functions of installation and "
-"uninstalling, software repository and popular recommendations, which "
-"supports 1-click quick installation, multi-threaded download and clearing of "
-"cached packages. It provides topics for software introduction and shares "
-"good applications.\n"
-"\n"
-"Deepin Store is a free software licensed under GNU GPLv3."
-msgstr ""
-
-#: ../ui/preference.py:477
-msgid "On uninstalling the software"
-msgstr ""
-
-#: ../ui/preference.py:480
-msgid "Delete configuration files"
-msgstr ""
-
-#: ../ui/preference.py:494
-msgid "Download settings"
-msgstr ""
-
-#: ../ui/preference.py:500
-msgid "Maximum number of download tasks: "
-msgstr ""
-
-#: ../ui/preference.py:510
-msgid "Download directory: "
-msgstr ""
-
-#: ../ui/preference.py:516
-msgid "Change"
-msgstr ""
-
-#: ../ui/preference.py:551
-msgid "Select the best mirror"
-msgstr ""
-
-#: ../ui/preference.py:552
-msgid "Waiting"
-msgstr ""
-
-#: ../ui/preference.py:553
-msgid "Successfully"
-msgstr ""
-
-#: ../ui/preference.py:568 ../ui/software_center.py:816
-msgid "Refresh package lists"
-msgstr ""
-
-#: ../ui/preference.py:571
-msgid "Upgrade automatically"
-msgstr ""
-
-#: ../ui/preference.py:575
-msgid "Time interval: "
-msgstr ""
-
-#: ../ui/preference.py:578
-msgid " hour"
-msgstr ""
-
-#: ../ui/preference.py:642
-msgid "Select mirror"
-msgstr ""
-
-#: ../ui/preference.py:705
-msgid "Select Directory"
-msgstr ""
-
-#: ../ui/preference.py:751
-msgid "Speed testing will finish only after one minute, please wait."
-msgstr ""
-
-#: ../ui/preference.py:776
-#, python-format
-msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
-msgstr ""
-
-#: ../ui/preference.py:782 ../ui/widgets.py:462
-msgid "OK"
-msgstr ""
-
-#: ../ui/preference.py:784 ../ui/widgets.py:463
-msgid "Cancel"
-msgstr ""
-
-#: ../ui/preference.py:829
-msgid "General"
-msgstr ""
-
-#: ../ui/preference.py:830
-msgid "Mirrors"
-msgstr ""
-
-#: ../ui/preference.py:831
-msgid "About"
-msgstr ""
-
-#: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
-#: ../ui/software_center.py:790
-msgid "Upgrade"
-msgstr ""
-
-#: ../ui/dsc-daemon.py:284
-#, python-format
-msgid ""
-"There are %s packages needed to upgrade in your system, please use Deepin "
-"Store to upgrade."
-msgstr ""
-
-#: ../ui/dsc-daemon.py:288
-#, python-format
-msgid ""
-"There is %s package needed to upgrade in your system, please use Deepin "
-"Store to upgrade."
-msgstr ""
-
-#: ../ui/install_page.py:146
-#, python-format
-msgid "%s applications are being installed"
-msgstr ""
-
-#: ../ui/install_page.py:665 ../ui/install_page.py:676
-msgid "Download was interrupted"
-msgstr ""
-
-#: ../ui/install_page.py:689
-msgid "Installation was interrupted"
-msgstr ""
-
-#: ../ui/install_page.py:765
-msgid "Download failed"
-msgstr ""
-
-#: ../ui/install_page.py:781
-msgid "Waiting for installation"
-msgstr ""
-
-#: ../ui/install_page.py:800 ../ui/install_page.py:807
-msgid "Installing"
-msgstr ""
-
-#: ../ui/install_page.py:816
-msgid "Installation completed"
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 totally"
 msgstr ""
 
 #: ../ui/category_info.py:26
@@ -760,26 +657,68 @@ msgstr ""
 msgid "Text editor"
 msgstr ""
 
-#: ../ui/start_desktop_window.py:227 ../ui/software_center.py:131
+#: ../ui/home_page.py:484
 #, python-format
-msgid "%s: request for starting applications sent"
+msgid "%s: %s applications"
 msgstr ""
 
-#: ../ui/uninstall_page.py:175
+#: ../ui/home_page.py:666
 #, python-format
-msgid "%s applications can be uninstalled"
+msgid "%s > %s : %s applications"
 msgstr ""
 
-#: ../ui/uninstall_page.py:515 ../ui/uninstall_page.py:598
-msgid "Waiting for uninstall"
+#: ../ui/home_page.py:722 ../ui/software_center.py:789
+msgid "Home"
 msgstr ""
 
-#: ../ui/uninstall_page.py:605 ../ui/uninstall_page.py:612
-msgid "Uninstalling"
+#: ../ui/home_page.py:762
+msgid "Recommendations"
 msgstr ""
 
-#: ../ui/uninstall_page.py:619
-msgid "Uninstallation completed"
+#: ../ui/home_page.py:762
+msgid "Topics"
+msgstr ""
+
+#: ../ui/home_page.py:762
+msgid "Download rank"
+msgstr ""
+
+#: ../ui/widgets.py:66
+msgid "Just now"
+msgstr ""
+
+#: ../ui/widgets.py:71
+msgid "One minute ago"
+msgstr ""
+
+#: ../ui/widgets.py:73
+#, python-format
+msgid "%s minutes ago"
+msgstr ""
+
+#: ../ui/widgets.py:78
+msgid "One hour ago"
+msgstr ""
+
+#: ../ui/widgets.py:80
+#, python-format
+msgid "%s hours ago"
+msgstr ""
+
+#: ../ui/widgets.py:84
+msgid "Yesterday"
+msgstr ""
+
+#: ../ui/widgets.py:295 ../ui/widgets.py:369
+msgid "Click to refresh"
+msgstr ""
+
+#: ../ui/widgets.py:462 ../ui/preference.py:782
+msgid "OK"
+msgstr ""
+
+#: ../ui/widgets.py:463 ../ui/preference.py:784
+msgid "Cancel"
 msgstr ""
 
 #: ../ui/utils.py:355
@@ -816,51 +755,6 @@ msgstr ""
 
 #: ../ui/utils.py:373
 msgid "Hit"
-msgstr ""
-
-#: ../ui/widgets.py:66
-msgid "Just now"
-msgstr ""
-
-#: ../ui/widgets.py:71
-msgid "One minute ago"
-msgstr ""
-
-#: ../ui/widgets.py:73
-#, python-format
-msgid "%s minutes ago"
-msgstr ""
-
-#: ../ui/widgets.py:78
-msgid "One hour ago"
-msgstr ""
-
-#: ../ui/widgets.py:80
-#, python-format
-msgid "%s hours ago"
-msgstr ""
-
-#: ../ui/widgets.py:84
-msgid "Yesterday"
-msgstr ""
-
-#: ../ui/widgets.py:295 ../ui/widgets.py:369
-msgid "Click to refresh"
-msgstr ""
-
-#: ../ui/inhibit.py:54
-msgid ""
-"Please wait a moment while system upgrade is being performed... Do not turn "
-"off your computer."
-msgstr ""
-
-#: ../ui/search_page.py:110
-#, python-format
-msgid "%s applications searched"
-msgstr ""
-
-#: ../ui/item_render.py:44
-msgid "No reminder"
 msgstr ""
 
 #: ../ui/software_center.py:127
@@ -951,6 +845,10 @@ msgstr ""
 msgid "Installation"
 msgstr ""
 
+#: ../ui/software_center.py:816 ../ui/preference.py:568
+msgid "Refresh package lists"
+msgstr ""
+
 #: ../ui/software_center.py:817
 msgid "Open download directory"
 msgstr ""
@@ -978,4 +876,106 @@ msgstr ""
 
 #: ../ui/software_center.py:1125
 msgid "Your system cache is empty."
+msgstr ""
+
+#: ../ui/item_render.py:44
+msgid "No reminder"
+msgstr ""
+
+#: ../ui/preference.py:438
+msgid "Version:"
+msgstr ""
+
+#: ../ui/preference.py:452
+msgid ""
+"Deepin Store is a commonly used software center on Linux. We selected more "
+"than 2,600 excellent applications with many functions of installation and "
+"uninstalling, software repository and popular recommendations, which "
+"supports 1-click quick installation, multi-threaded download and clearing of "
+"cached packages. It provides topics for software introduction and shares "
+"good applications.\n"
+"\n"
+"Deepin Store is a free software licensed under GNU GPLv3."
+msgstr ""
+
+#: ../ui/preference.py:477
+msgid "On uninstalling the software"
+msgstr ""
+
+#: ../ui/preference.py:480
+msgid "Delete configuration files"
+msgstr ""
+
+#: ../ui/preference.py:494
+msgid "Download settings"
+msgstr ""
+
+#: ../ui/preference.py:500
+msgid "Maximum number of download tasks: "
+msgstr ""
+
+#: ../ui/preference.py:510
+msgid "Download directory: "
+msgstr ""
+
+#: ../ui/preference.py:516
+msgid "Change"
+msgstr ""
+
+#: ../ui/preference.py:551
+msgid "Select the best mirror"
+msgstr ""
+
+#: ../ui/preference.py:552
+msgid "Waiting"
+msgstr ""
+
+#: ../ui/preference.py:553
+msgid "Successfully"
+msgstr ""
+
+#: ../ui/preference.py:571
+msgid "Upgrade automatically"
+msgstr ""
+
+#: ../ui/preference.py:575
+msgid "Time interval: "
+msgstr ""
+
+#: ../ui/preference.py:578
+msgid " hour"
+msgstr ""
+
+#: ../ui/preference.py:642
+msgid "Select mirror"
+msgstr ""
+
+#: ../ui/preference.py:705
+msgid "Select Directory"
+msgstr ""
+
+#: ../ui/preference.py:751
+msgid "Speed testing will finish only after one minute, please wait."
+msgstr ""
+
+#: ../ui/preference.py:776
+#, python-format
+msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
+msgstr ""
+
+#: ../ui/preference.py:829
+msgid "General"
+msgstr ""
+
+#: ../ui/preference.py:830
+msgid "Mirrors"
+msgstr ""
+
+#: ../ui/preference.py:831
+msgid "About"
+msgstr ""
+
+#: ../ui/search_page.py:110
+#, python-format
+msgid "%s applications searched"
 msgstr ""
