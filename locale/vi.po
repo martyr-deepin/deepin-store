@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-22 11:20+0800\n"
-"PO-Revision-Date: 2014-08-22 05:40+0000\n"
-"Last-Translator: szd_liufei <liufei@linuxdeepin.com>\n"
+"POT-Creation-Date: 2014-09-10 09:41+0800\n"
+"PO-Revision-Date: 2014-09-10 04:04+0000\n"
+"Last-Translator: snyh <snyh@snyh.org>\n"
 "Language-Team: Vietnamese (http://www.transifex.com/projects/p/deepin-store/language/vi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,58 +18,57 @@ msgstr ""
 "Language: vi\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../ui/detail_page.py:178
+#: ../ui/detail_page.py:179
 msgid "Popular recommendations"
 msgstr "Đề nghị phổ biến"
 
-#: ../ui/detail_page.py:239 ../ui/detail_page.py:491
+#: ../ui/detail_page.py:240 ../ui/detail_page.py:494
 msgid "Loading comments..."
 msgstr "Đang tải bình luận..."
 
-#: ../ui/detail_page.py:355
+#: ../ui/detail_page.py:358
 #, python-format
 msgid "Download: %s"
 msgstr "Tải xuống: %s"
 
-#: ../ui/detail_page.py:386
+#: ../ui/detail_page.py:389
 msgid "Category: "
 msgstr "Phân loại:"
 
-#: ../ui/detail_page.py:390
+#: ../ui/detail_page.py:393
 #, python-format
 msgid "Version: %s"
 msgstr "Phiên bản: %s"
 
-#: ../ui/detail_page.py:391
+#: ../ui/detail_page.py:394
 msgid "Download: 0"
 msgstr "Tải xuống: 0"
 
-#: ../ui/detail_page.py:392
+#: ../ui/detail_page.py:395
 msgid "Size: calculating..."
 msgstr "Kích thước: đang tính toán..."
 
-#: ../ui/detail_page.py:396
+#: ../ui/detail_page.py:399
 msgid "Visit Homepage"
 msgstr "Ghé thăm trang chủ"
 
-#: ../ui/detail_page.py:441 ../ui/install_page.py:506
-#: ../ui/download_rank_page.py:364 ../ui/home_page.py:1069
-#: ../ui/album_page.py:478 ../ui/search_page.py:269
+#: ../ui/detail_page.py:444 ../ui/download_rank_page.py:369
+#: ../ui/home_page.py:1086 ../ui/album_page.py:483 ../ui/search_page.py:274
 msgid "Not found"
 msgstr "Không tìm thấy"
 
-#: ../ui/detail_page.py:447
+#: ../ui/detail_page.py:450
 msgid "Successfully installed"
 msgstr "Cài đặt thành công"
 
-#: ../ui/detail_page.py:470
+#: ../ui/detail_page.py:473
 #, python-format
 msgid "Size: %s"
 msgstr "Kích thước: %s"
 
-#: ../ui/detail_page.py:608
-msgid "Powered by 又拍云存储"
-msgstr "Cung cấp bởi 又拍云存储"
+#: ../ui/detail_page.py:611
+msgid "Powered by UpYun.com"
+msgstr ""
 
 #: ../ui/uninstall_page.py:175
 #, python-format
@@ -128,51 +127,51 @@ msgstr "Có %s gói cần được nâng cấp trong hệ thống của bạn, v
 msgid "%s applications are being installed"
 msgstr "%s ứng dụng được gỡ bỏ"
 
-#: ../ui/install_page.py:313 ../ui/install_page.py:741
+#: ../ui/install_page.py:313 ../ui/install_page.py:744
 #: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
 msgid "Dependencies analyzing"
 msgstr "Gói phụ thuộc đang được phân tích"
 
-#: ../ui/install_page.py:513 ../ui/download_rank_page.py:371
-#: ../ui/home_page.py:1076 ../ui/utils.py:360 ../ui/album_page.py:485
-#: ../ui/search_page.py:276
+#: ../ui/install_page.py:511 ../ui/install_page.py:516
+#: ../ui/download_rank_page.py:374 ../ui/home_page.py:1091 ../ui/utils.py:360
+#: ../ui/album_page.py:488 ../ui/search_page.py:279
 msgid "Installed"
 msgstr "Đã cài đặt"
 
-#: ../ui/install_page.py:662 ../ui/install_page.py:673
+#: ../ui/install_page.py:665 ../ui/install_page.py:676
 msgid "Download was interrupted"
 msgstr "Tải xuống gián đoạn"
 
-#: ../ui/install_page.py:686
+#: ../ui/install_page.py:689
 msgid "Installation was interrupted"
 msgstr "Cài đặt gián đoạn"
 
-#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1495
+#: ../ui/install_page.py:751 ../ui/upgrade_page.py:1495
 #: ../ui/upgrade_page.py:1614
 msgid "Waiting for download"
 msgstr "Đang đợi tải xuống"
 
-#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1621
+#: ../ui/install_page.py:758 ../ui/upgrade_page.py:1621
 msgid "Downloading"
 msgstr "Đang tải xuống"
 
-#: ../ui/install_page.py:762
+#: ../ui/install_page.py:765
 msgid "Download failed"
 msgstr "Tải xuống thất bại"
 
-#: ../ui/install_page.py:778
+#: ../ui/install_page.py:781
 msgid "Waiting for installation"
 msgstr "Đang đợi cài đặt"
 
-#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1647
+#: ../ui/install_page.py:791 ../ui/upgrade_page.py:1647
 msgid "Dependencies analysis failed"
 msgstr "Phân tích gói phụ thuộc thất bại"
 
-#: ../ui/install_page.py:797 ../ui/install_page.py:804
+#: ../ui/install_page.py:800 ../ui/install_page.py:807
 msgid "Installing"
 msgstr "Đang cài đặt"
 
-#: ../ui/install_page.py:813
+#: ../ui/install_page.py:816
 msgid "Installation completed"
 msgstr "Cài đặt hoàn tất"
 
@@ -661,29 +660,29 @@ msgstr "Giả lập terminal"
 msgid "Text editor"
 msgstr "Chỉnh sửa text"
 
-#: ../ui/home_page.py:478
+#: ../ui/home_page.py:484
 #, python-format
 msgid "%s: %s applications"
 msgstr "%s: %s ứng dụng"
 
-#: ../ui/home_page.py:660
+#: ../ui/home_page.py:666
 #, python-format
 msgid "%s > %s : %s applications"
 msgstr "%s > %s : %s ứng dụng"
 
-#: ../ui/home_page.py:716 ../ui/software_center.py:789
+#: ../ui/home_page.py:722 ../ui/software_center.py:789
 msgid "Home"
 msgstr "Trang chủ"
 
-#: ../ui/home_page.py:756
+#: ../ui/home_page.py:762
 msgid "Recommendations"
 msgstr "Đề nghị"
 
-#: ../ui/home_page.py:756
+#: ../ui/home_page.py:762
 msgid "Topics"
 msgstr "Chủ đề"
 
-#: ../ui/home_page.py:756
+#: ../ui/home_page.py:762
 msgid "Download rank"
 msgstr "Xếp hạng tải về"
 

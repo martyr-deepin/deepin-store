@@ -3,286 +3,283 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# kangur <kangurwa@onet.pl>, 2014
-# Piotr Strębski <strebski@o2.pl>, 2014
-# suore <suore@outlook.com>, 2014
-# suore <suore@outlook.com>, 2014
+# JimSp472000 <jimspentzos2000@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-10 09:41+0800\n"
-"PO-Revision-Date: 2014-09-16 09:01+0000\n"
-"Last-Translator: Piotr Strębski <strebski@o2.pl>\n"
-"Language-Team: Polish (Poland) (http://www.transifex.com/projects/p/deepin-store/language/pl_PL/)\n"
+"PO-Revision-Date: 2014-09-14 15:20+0000\n"
+"Last-Translator: JimSp472000 <jimspentzos2000@gmail.com>\n"
+"Language-Team: Greek (Greece) (http://www.transifex.com/projects/p/deepin-store/language/el_GR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pl_PL\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: el_GR\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../ui/detail_page.py:179
 msgid "Popular recommendations"
-msgstr "Popularne rekomendacje"
+msgstr "Δημοφιλείς προτάσεις"
 
 #: ../ui/detail_page.py:240 ../ui/detail_page.py:494
 msgid "Loading comments..."
-msgstr "Wczytuję komentarze... "
+msgstr "Φόρτωση σχολίων..."
 
 #: ../ui/detail_page.py:358
 #, python-format
 msgid "Download: %s"
-msgstr "Pobierz: %s"
+msgstr "Λήψη: %s"
 
 #: ../ui/detail_page.py:389
 msgid "Category: "
-msgstr "Kategoria:"
+msgstr "Κατηγορία:"
 
 #: ../ui/detail_page.py:393
 #, python-format
 msgid "Version: %s"
-msgstr "Wersja: %s"
+msgstr "Έκδοση: %s"
 
 #: ../ui/detail_page.py:394
 msgid "Download: 0"
-msgstr "Pobrano: 0"
+msgstr "Λήψη: 0"
 
 #: ../ui/detail_page.py:395
 msgid "Size: calculating..."
-msgstr "Rozmiar: obliczanie..."
+msgstr "Μέγεθος: υπολογισμός..."
 
 #: ../ui/detail_page.py:399
 msgid "Visit Homepage"
-msgstr "Odwiedź stronę domową"
+msgstr "Επισκεφθείτε την Αρχική Σελίδα"
 
 #: ../ui/detail_page.py:444 ../ui/download_rank_page.py:369
 #: ../ui/home_page.py:1086 ../ui/album_page.py:483 ../ui/search_page.py:274
 msgid "Not found"
-msgstr "Nie znaleziono"
+msgstr "Δε βρέθηκε"
 
 #: ../ui/detail_page.py:450
 msgid "Successfully installed"
-msgstr "Pomyślnie zainstalowano"
+msgstr "Επιτυχής εγκατάσταση"
 
 #: ../ui/detail_page.py:473
 #, python-format
 msgid "Size: %s"
-msgstr "Rozmiar: %s"
+msgstr "Μέγεθος: %s"
 
 #: ../ui/detail_page.py:611
 msgid "Powered by UpYun.com"
-msgstr ""
+msgstr "Με την υποστήριξη του UpYun.com"
 
 #: ../ui/uninstall_page.py:175
 #, python-format
 msgid "%s applications can be uninstalled"
-msgstr "%s aplikacji zostanie usuniętych"
+msgstr "%s εφαρμογές μπορούν να απεγκατασταθούν"
 
 #: ../ui/uninstall_page.py:515 ../ui/uninstall_page.py:598
 msgid "Waiting for uninstall"
-msgstr "Czekanie na odinstalowanie"
+msgstr "Αναμονή για απεγκατάσταση"
 
 #: ../ui/uninstall_page.py:605 ../ui/uninstall_page.py:612
 msgid "Uninstalling"
-msgstr "Usuwanie"
+msgstr "Απεγκατάσταση"
 
 #: ../ui/uninstall_page.py:619
 msgid "Uninstallation completed"
-msgstr "Ukończono odinstalowywanie"
+msgstr "Η απεγκατάσταση ολοκληρώθηκε"
 
 #: ../ui/start_desktop_window.py:227 ../ui/software_center.py:131
 #, python-format
 msgid "%s: request for starting applications sent"
-msgstr ""
+msgstr "%s: απεστάλη αίτημα για έναρξη εφαρμογών"
 
 #: ../ui/inhibit.py:54
 msgid ""
 "Please wait a moment while system upgrade is being performed... Do not turn "
 "off your computer."
-msgstr ""
+msgstr "Παρακαλώ περιμένετε μια στιγμή ενώ εκτελείται η αναβάθμιση συστήματος... Μην απενεργοποιήσετε τον υπολογιστή σας."
 
 #: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
 #: ../ui/software_center.py:790
 msgid "Upgrade"
-msgstr "Aktualizuj "
+msgstr "Αναβάθμιση"
 
 #: ../ui/dsc-daemon.py:284
 #, python-format
 msgid ""
 "There are %s packages needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
-msgstr ""
+msgstr "Υπάρχουν %s πακέτα που χρειάζονται αναβάθμιση στο σύστημά σας, παρακαλώ χρησιμοποιήστε το Κατάστημα Deepin για την αναβάθμιση."
 
 #: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
 #: ../ui/software_center.py:733 ../ui/preference.py:433
 msgid "Deepin Store"
-msgstr "Sklep Deepin"
+msgstr "Κατάστημα Deepin"
 
 #: ../ui/dsc-daemon.py:288
 #, python-format
 msgid ""
 "There is %s package needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
-msgstr ""
+msgstr "Υπάρχει %s πακέτο που χρειάζεται αναβάθμιση στο σύστημά σας, παρακαλώ χρησιμοποιήστε το Κατάστημα Deepin για την αναβάθμιση."
 
 #: ../ui/install_page.py:146
 #, python-format
 msgid "%s applications are being installed"
-msgstr "%s aplikacji zosanie zainstalowanych"
+msgstr "%s εφαρμογές εγκαθίστανται"
 
 #: ../ui/install_page.py:313 ../ui/install_page.py:744
 #: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
 msgid "Dependencies analyzing"
-msgstr "Analizowanie zależności"
+msgstr "Ανάλυση εξαρτήσεων"
 
 #: ../ui/install_page.py:511 ../ui/install_page.py:516
 #: ../ui/download_rank_page.py:374 ../ui/home_page.py:1091 ../ui/utils.py:360
 #: ../ui/album_page.py:488 ../ui/search_page.py:279
 msgid "Installed"
-msgstr "Zainstalowano"
+msgstr "Εγκαταστάθηκε"
 
 #: ../ui/install_page.py:665 ../ui/install_page.py:676
 msgid "Download was interrupted"
-msgstr "Pobieranie zostało przerwane"
+msgstr "Η λήψη διακόπηκε"
 
 #: ../ui/install_page.py:689
 msgid "Installation was interrupted"
-msgstr "Instalacja została przerwana"
+msgstr "Η εγκατάσταση διακόπηκε"
 
 #: ../ui/install_page.py:751 ../ui/upgrade_page.py:1495
 #: ../ui/upgrade_page.py:1614
 msgid "Waiting for download"
-msgstr "Czeka do pobrania"
+msgstr "Αναμονή για λήψη"
 
 #: ../ui/install_page.py:758 ../ui/upgrade_page.py:1621
 msgid "Downloading"
-msgstr "Pobieranie"
+msgstr "Λήψη"
 
 #: ../ui/install_page.py:765
 msgid "Download failed"
-msgstr "Błąd pobierania"
+msgstr "Αποτυχία λήψης"
 
 #: ../ui/install_page.py:781
 msgid "Waiting for installation"
-msgstr "Oczekiwanie na instalację"
+msgstr "Αναμονή για εγκατάσταση"
 
 #: ../ui/install_page.py:791 ../ui/upgrade_page.py:1647
 msgid "Dependencies analysis failed"
-msgstr "Błąd analizy zależności"
+msgstr "Η ανάλυση εξαρτήσεων απέτυχε"
 
 #: ../ui/install_page.py:800 ../ui/install_page.py:807
 msgid "Installing"
-msgstr "Instalowanie"
+msgstr "Εγκατάσταση;"
 
 #: ../ui/install_page.py:816
 msgid "Installation completed"
-msgstr "Instalacja została ukończona"
+msgstr "Η εγκατάσταση ολοκληρώθηκε"
 
 #: ../ui/upgrade_page.py:78 ../ui/upgrade_page.py:107
 #: ../ui/upgrade_page.py:340
 msgid "Last system upgraded time: "
-msgstr "Data ostatniej aktualizacji systemu:"
+msgstr "Τελευταία φορά αναβάθμισης συστήματος:"
 
 #: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
 #, python-format
 msgid "No reminder to upgrade (%s)"
-msgstr ""
+msgstr "Καμία υπενθύμιση για αναβάθμιση (%s)"
 
 #: ../ui/upgrade_page.py:182
 msgid "Upgrade applications selected"
-msgstr ""
+msgstr "Αναβάθμιση επιλεγμένων εφαρμογών"
 
 #: ../ui/upgrade_page.py:204
 #, python-format
 msgid "%s applications are available for upgrade"
-msgstr "%s aplikacji wymaga aktualizacji"
+msgstr "%s εφαρμογές είναι διαθέσιμες για αναβάθμιση"
 
 #: ../ui/upgrade_page.py:238 ../ui/item_render.py:46
 msgid "Remind again"
-msgstr "Przypomnij ponownie"
+msgstr "Υπενθύμιση ξανά"
 
 #: ../ui/upgrade_page.py:272
 #, python-format
 msgid "%s applications are not being watched"
-msgstr "%s aplikacji nie zostało obejrzanych"
+msgstr "%s εφαρμογές δεν παρακολουθούνται"
 
 #: ../ui/upgrade_page.py:289
 msgid "Shut down the computer after upgraded"
-msgstr "Wyłącz komputer po aktualizacji"
+msgstr "Τερματισμός λειτουργίας του υπολογιστής μετά την αναβάθμιση"
 
 #: ../ui/upgrade_page.py:304
 msgid "This function is invalid without Deepin System Settings installed."
-msgstr ""
+msgstr "Αυτή η λειτουργία δεν είναι έγκυρη χωρίς την εγκατάσταση των Ρυθμίσεων Συστήματος Deepin."
 
 #: ../ui/upgrade_page.py:306
 msgid "Deepin Desktop Environment is not installed, this function is invalid!"
-msgstr ""
+msgstr "Το Περιβάλλον Επιφάνειας Εργασίας Deepin δεν είναι εγκατεστημένο, αυτή η λειτουργία δεν είναι έγκυρη!"
 
 #: ../ui/upgrade_page.py:308
 msgid "The system is not Deepin, this function is invalid."
-msgstr ""
+msgstr "Το σύστημα δεν είναι Deepin, αυτή η λειτουργία δεν είναι έγκυρη."
 
 #: ../ui/upgrade_page.py:328
 msgid "Downloading upgrade packages"
-msgstr "Pobieranie pakietów aktualizacji"
+msgstr "Λήψη πακέτων αναβάθμισης"
 
 #: ../ui/upgrade_page.py:335
 msgid "Last time of refreshed package lists: "
-msgstr "Data ostatniego odświeżenia listy pakietów:"
+msgstr "Τελευταία φορά ανανεωμένων λιστών πακέτων:"
 
 #: ../ui/upgrade_page.py:345
 msgid "Mirror Receiving: "
-msgstr ""
+msgstr "Λήψη Καθρέπτη:"
 
 #: ../ui/upgrade_page.py:399
 msgid "Failed to download upgrade packages"
-msgstr "Błąd pobierania pakietów aktualizacji"
+msgstr "Αποτυχία λήψης πακέτων αναβάθμισης"
 
 #: ../ui/upgrade_page.py:401
 msgid "The requested package does not exist on server."
-msgstr ""
+msgstr "Το απαιτούμενο πακέτο δεν υπάρχει στο διακομιστή."
 
 #: ../ui/upgrade_page.py:402 ../ui/upgrade_page.py:423
 #: ../ui/upgrade_page.py:446
 msgid "Suggest to "
-msgstr "Proponuję"
+msgstr "Πρόταση σε"
 
 #: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
 #: ../ui/upgrade_page.py:447
 msgid "refresh package lists"
-msgstr "odśwież listy pakietów "
+msgstr "ανανέωση λιστών πακέτων"
 
 #: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
 #: ../ui/upgrade_page.py:448
 msgid " and try again."
-msgstr "i spróbuj ponownie."
+msgstr "και δοκιμάστε ξανά."
 
 #: ../ui/upgrade_page.py:419 ../ui/upgrade_page.py:1120
 msgid "Failed to install upgrade packages"
-msgstr "Błąd instalacji pakietów aktualizacji"
+msgstr "Αποτυχία εγκατάστασης πακέτων αναβαθμίσεων"
 
 #: ../ui/upgrade_page.py:421
 msgid ""
 "This problem occurs due to corrupted local apt dependency relationship."
-msgstr ""
+msgstr "Αυτό το πρόβλημα προκύπτει λόγω της κατεστραμμένης σχέσης των τοπικών εξαρτήσεων του apt."
 
 #: ../ui/upgrade_page.py:440
 msgid "Warning"
-msgstr "Uwaga"
+msgstr "Προειδοποίηση"
 
 #: ../ui/upgrade_page.py:442
 msgid ""
 "The upgrade requires to uninstall crucial components due to corrupted local "
 "dependencies or incorrect package dependencies on server."
-msgstr ""
+msgstr "Η αναβάθμιση απαιτεί την απεγκατάσταση κρίσιμων στοιχείων λόγω των κατεστραμμένων τοπικών εξαρτήσεων ή των λανθασμένων εξαρτήσεων των πακέτων στο διακομιστή."
 
 #: ../ui/upgrade_page.py:483
 msgid "If the prompt occurs again, you could "
-msgstr ""
+msgstr "Αν προκύψει ξανά το μήνυμα, μπορείτε να"
 
 #: ../ui/upgrade_page.py:484 ../ui/upgrade_page.py:510
 msgid "send error report"
-msgstr "wyślij raport błędu"
+msgstr "στείλετε αναφορά σφάλματος"
 
 #: ../ui/upgrade_page.py:485
 msgid "."
@@ -290,150 +287,150 @@ msgstr "."
 
 #: ../ui/upgrade_page.py:498
 msgid "Uploading error log"
-msgstr "Wysyłanie dziennika błędów"
+msgstr "Μεταφόρτωση αρχείου καταγραφής σφάλματος"
 
 #: ../ui/upgrade_page.py:503
 msgid "The error was successfully reported and will be handled soon."
-msgstr ""
+msgstr "Το σφάλμα αναφέρθηκε επιτυχώς και θα διευθετηθεί σύντομα."
 
 #: ../ui/upgrade_page.py:509
 msgid "Failed to send the error report. You could try again."
-msgstr ""
+msgstr "Αποτυχία αποστολής αναφοράς σφάλματος. Μπορείτε να δοκιμάσετε ξανά."
 
 #: ../ui/upgrade_page.py:663
 msgid ""
 "This problem occurs due to corrupted local apt dependence relationship."
-msgstr ""
+msgstr "Αυτό το πρόβλημα προκύπτει λόγω της κατεστραμμένης σχέσης των τοπικών εξαρτήσεων του apt."
 
 #: ../ui/upgrade_page.py:668
 #, python-format
 msgid "%s package(s) are available for upgrade, %s will be downloaded."
-msgstr ""
+msgstr "%s πακέτο(α) είναι διαθέσιμα για αναβάθμιση, %s θα ληφθούν."
 
 #: ../ui/upgrade_page.py:1094
 msgid "Finished analyzing dependencies."
-msgstr "Zakończyłem analizę zależności."
+msgstr "Η ανάλυση εξαρτήσεων τελείωσε."
 
 #: ../ui/upgrade_page.py:1097
 msgid "Download has started"
-msgstr "Pobieranie rozpoczęte"
+msgstr "Η λήψη ξεκίνησε"
 
 #: ../ui/upgrade_page.py:1103
 #, python-format
 msgid "Completed: %s/%s (%s/%s) Download Rate: %s/s"
-msgstr ""
+msgstr "Ολοκληρώθηκαν: %s/%s (%s/%s) Βαθμός Λήψης: %s/s"
 
 #: ../ui/upgrade_page.py:1113
 msgid "Download finished."
-msgstr "Pobieranie zakończone."
+msgstr "Η λήψη τελείωσε."
 
 #: ../ui/upgrade_page.py:1117
 msgid "Download stopped."
-msgstr "Pobieranie przerwane."
+msgstr "Η λήψη διεκόπη."
 
 #: ../ui/upgrade_page.py:1124
 msgid "Installing upgrade packages"
-msgstr "Instalowanie pakietów aktualizacji"
+msgstr "Εγκατάσταση πακέτων ενημέρωσης"
 
 #: ../ui/upgrade_page.py:1125
 msgid "Upgrading..."
-msgstr "Aktualizowanie..."
+msgstr "Αναβάθμιση..."
 
 #: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
 msgid "Upgrade completed"
-msgstr "Aktualizacja ukończona"
+msgstr "Η αναβάθμιση ολοκληρώθηκε"
 
 #: ../ui/upgrade_page.py:1637
 msgid "Waiting for upgrade"
-msgstr "Oczekiwanie na aktualizację"
+msgstr "Αναμονή για αναβάθμιση"
 
 #: ../ui/upgrade_page.py:1656 ../ui/upgrade_page.py:1663
 msgid "Upgrading"
-msgstr "Aktualizowanie"
+msgstr "Αναβάθμιση"
 
 #: ../ui/download_rank_page.py:61
 msgid "Top 25 weekly"
-msgstr "25 najlepszych w tygodniu"
+msgstr "25 Κορυφαία εβδομαδιαία"
 
 #: ../ui/download_rank_page.py:61
 msgid "Top 25 monthly"
-msgstr "25 najlepszych w miesiącu"
+msgstr "25 Κορυφαία μηνιαία"
 
 #: ../ui/download_rank_page.py:61
 msgid "Top 25 totally"
-msgstr ""
+msgstr "25 Κορυφαία συνολικά"
 
 #: ../ui/category_info.py:26
 msgid "Internet"
-msgstr "Internet"
+msgstr "Διαδίκτυο"
 
 #: ../ui/category_info.py:27
 msgid "Browser"
-msgstr "Przeglądarka"
+msgstr "Περιηγητές"
 
 #: ../ui/category_info.py:28
 msgid "Instant messaging"
-msgstr "Komunikatory"
+msgstr "Άμεση ανταλλαγή μηνυμάτων"
 
 #: ../ui/category_info.py:29
 msgid "Email"
-msgstr "E-mail"
+msgstr "Email"
 
 #: ../ui/category_info.py:30
 msgid "File transfer"
-msgstr "Przekaz plików"
+msgstr "Μεταφορά αρχείων"
 
 #: ../ui/category_info.py:31
 msgid "News"
-msgstr "Wiadomości"
+msgstr "Ειδήσεις"
 
 #: ../ui/category_info.py:32
 msgid "Remote access"
-msgstr "Zdalny dostęp"
+msgstr "Απομακρυσμένη πρόσβαση"
 
 #: ../ui/category_info.py:33
 msgid "Security"
-msgstr "Bezpieczeństwo"
+msgstr "Ασφάλεια"
 
 #: ../ui/category_info.py:34
 msgid "Miscellaneous"
-msgstr "Rozmaity"
+msgstr "Διάφορα"
 
 #: ../ui/category_info.py:35
 msgid "Multimedia"
-msgstr "Multimedia"
+msgstr "Πολυμέσα"
 
 #: ../ui/category_info.py:36
 msgid "Audiovideo"
-msgstr "Audio-wideo"
+msgstr "Ήχος και βίντεο"
 
 #: ../ui/category_info.py:37
 msgid "Media Editing"
-msgstr "Edycja plików mediów"
+msgstr "Επεξεργασία Μέσων"
 
 #: ../ui/category_info.py:38
 msgid "Disc burner"
-msgstr "Nagrywanie płyt"
+msgstr "Εγγραφή δίσκων"
 
 #: ../ui/category_info.py:39
 msgid "MIDI"
-msgstr ".MIDI"
+msgstr "MIDI"
 
 #: ../ui/category_info.py:40
 msgid "Mixer"
-msgstr "Mikser"
+msgstr "Μείξη"
 
 #: ../ui/category_info.py:41
 msgid "Player"
-msgstr "Odtwarzacz"
+msgstr "Εφαρμογή αναπαραγωγής"
 
 #: ../ui/category_info.py:42
 msgid "Recorder"
-msgstr "Rejestrator"
+msgstr "Εγγραφή"
 
 #: ../ui/category_info.py:43
 msgid "Sequencer"
-msgstr "Sekwencer"
+msgstr "Ενορχήστρωση"
 
 #: ../ui/category_info.py:44
 msgid "Tuner"
@@ -441,283 +438,283 @@ msgstr "Tuner"
 
 #: ../ui/category_info.py:45
 msgid "Games"
-msgstr "Gry"
+msgstr "Παιχνίδια"
 
 #: ../ui/category_info.py:46
 msgid "Action games"
-msgstr "Gry akcji"
+msgstr "Παιχνίδια δράσης"
 
 #: ../ui/category_info.py:47
 msgid "Advernture games"
-msgstr "Gry przygodowe"
+msgstr "Παιχνίδια περιπέτειας"
 
 #: ../ui/category_info.py:48
 msgid "Arcade games"
-msgstr "Gry platformowe"
+msgstr "Παιχνίδια arcade"
 
 #: ../ui/category_info.py:49
 msgid "Board games"
-msgstr "Gry planszowe"
+msgstr "Επιτραπέζια παιχνίδια"
 
 #: ../ui/category_info.py:50
 msgid "Card games"
-msgstr "Gry karciane"
+msgstr "Παιχνίδια με κάρτες"
 
 #: ../ui/category_info.py:51
 msgid "Emulator"
-msgstr "Emulator"
+msgstr "Προσωμοιοτής"
 
 #: ../ui/category_info.py:52
 msgid "Kids games"
-msgstr "Gry dla dzieci"
+msgstr "Παιδικά παιχνίδια"
 
 #: ../ui/category_info.py:53
 msgid "Logic games"
-msgstr "Gry logiczne"
+msgstr "Παιχνίδια λογικής"
 
 #: ../ui/category_info.py:54
 msgid "Puzzle games"
-msgstr "Do układania"
+msgstr "Παζλ"
 
 #: ../ui/category_info.py:55
 msgid "Role-playing games"
-msgstr "Gry fabularne"
+msgstr "Παιχνίδια με ρόλους"
 
 #: ../ui/category_info.py:56
 msgid "Sports games"
-msgstr "Gry sportowe"
+msgstr "Αθλητικά παιχνίδια"
 
 #: ../ui/category_info.py:57
 msgid "Strategy games"
-msgstr "Gry strategiczne"
+msgstr "Παιχνίδια στρατηγικής"
 
 #: ../ui/category_info.py:58
 msgid "Graphics"
-msgstr "Grafika"
+msgstr "Γραφικά"
 
 #: ../ui/category_info.py:59
 msgid "2D graphics"
-msgstr "Grafika 2D"
+msgstr "Γραφικά 2D"
 
 #: ../ui/category_info.py:60
 msgid "3D graphics"
-msgstr "Grafika 3D"
+msgstr "Γραφικά 3D"
 
 #: ../ui/category_info.py:61
 msgid "Image processing"
-msgstr "Przetwarzanie obrazu"
+msgstr "Επεξεργασία εικόνας"
 
 #: ../ui/category_info.py:62
 msgid "Photography"
-msgstr "Zdjęcie"
+msgstr "Φωτογραφία"
 
 #: ../ui/category_info.py:63
 msgid "Vector graphics"
-msgstr "Grafika wektorowa"
+msgstr "Γραφικά φορέα"
 
 #: ../ui/category_info.py:64
 msgid "Viewer"
-msgstr "Przeglądarki"
+msgstr "Προβολέας"
 
 #: ../ui/category_info.py:65
 msgid "Productivity"
-msgstr "Wydajność"
+msgstr "Παραγωγικότητα"
 
 #: ../ui/category_info.py:66
 msgid "Office"
-msgstr "Biuro"
+msgstr "Γραφείο"
 
 #: ../ui/category_info.py:67
 msgid "Scanning printing"
-msgstr "Skanowanie drukowanie"
+msgstr "Σάρωση εκτύπωσης"
 
 #: ../ui/category_info.py:68
 msgid "Industry"
-msgstr "Przemysł"
+msgstr "Βιομηχανία"
 
 #: ../ui/category_info.py:69
 msgid "Engineering"
-msgstr "Inżynieria"
+msgstr "Μηχανική"
 
 #: ../ui/category_info.py:70
 msgid "Finance"
-msgstr "Finanse"
+msgstr "Οικονομικά"
 
 #: ../ui/category_info.py:71
 msgid "Ham radio"
-msgstr "Domowe Radio"
+msgstr "Ραδιόφωνο Ham"
 
 #: ../ui/category_info.py:72
 msgid "Medical"
-msgstr "Medyczne"
+msgstr "Ιατρική"
 
 #: ../ui/category_info.py:73
 msgid "Publishing"
-msgstr "Wydawnictwo"
+msgstr "Εκδόσεις"
 
 #: ../ui/category_info.py:74
 msgid "Science Education"
-msgstr "Edukacja naukowa"
+msgstr "Εκπαίδευση Επιστημών"
 
 #: ../ui/category_info.py:75
 msgid "Languages"
-msgstr "Języki"
+msgstr "Γλώσσες"
 
 #: ../ui/category_info.py:76
 msgid "Religion"
-msgstr "Wiara"
+msgstr "Θρησκεία"
 
 #: ../ui/category_info.py:77
 msgid "Science"
-msgstr "Nauka"
+msgstr "Επιστήμες"
 
 #: ../ui/category_info.py:78
 msgid "Development"
-msgstr "Rozwój"
+msgstr "Προγραμματισμός"
 
 #: ../ui/category_info.py:79
 msgid "Database"
-msgstr "Baza danych"
+msgstr "Βάση δεδομένων"
 
 #: ../ui/category_info.py:80
 msgid "Debugging"
-msgstr "Debugowanie"
+msgstr "Αποσφαλμάτωση"
 
 #: ../ui/category_info.py:81
 msgid "IDE"
-msgstr "IDE/ZŚP"
+msgstr "IDE"
 
 #: ../ui/category_info.py:82
 msgid "Software development"
-msgstr "Rozwój oprogramowania"
+msgstr "Ανάπτυξη λογισμικού"
 
 #: ../ui/category_info.py:83
 msgid "Version control"
-msgstr "Kontrola wersji"
+msgstr "Έλεγχος έκδοσης"
 
 #: ../ui/category_info.py:84
 msgid "Web development"
-msgstr "Rozwój sieci"
+msgstr "Προγραμματισμός ιστού"
 
 #: ../ui/category_info.py:85
 msgid "System"
-msgstr "System"
+msgstr "Σύστημα"
 
 #: ../ui/category_info.py:86
 msgid "Desktop environment"
-msgstr "Środowisko graficzne"
+msgstr "Περιβάλλον επιφάνειας εργασίας"
 
 #: ../ui/category_info.py:87
 msgid "Monitor"
-msgstr "Monitor"
+msgstr "Παρακολούθηση"
 
 #: ../ui/category_info.py:88
 msgid "Network"
-msgstr "Sieć"
+msgstr "Δίκτυο"
 
 #: ../ui/category_info.py:89
 msgid "Package manager"
-msgstr "Menedżer pakietów"
+msgstr "Διαχειριστής πακέτων"
 
 #: ../ui/category_info.py:90
 msgid "Settings"
-msgstr "Ustawienia"
+msgstr "Ρυθμίσεις"
 
 #: ../ui/category_info.py:91
 msgid "Virtualization"
-msgstr "Wirtualizacja"
+msgstr "Εικονικοποίηση"
 
 #: ../ui/category_info.py:92
 msgid "Window manager"
-msgstr "Menedżer okien"
+msgstr "Διαχειριστής παραθύρων"
 
 #: ../ui/category_info.py:93
 msgid "Utilities"
-msgstr "Użytkowe"
+msgstr "Βοηθήματα"
 
 #: ../ui/category_info.py:94
 msgid "Accessories"
-msgstr "Akcesoria"
+msgstr "Βοηθήματα"
 
 #: ../ui/category_info.py:95
 msgid "Archiving"
-msgstr "Archiwizacja"
+msgstr "Αρχειοθέτηση"
 
 #: ../ui/category_info.py:96
 msgid "Emulation"
-msgstr "Emulacja"
+msgstr "Προσομοίωση"
 
 #: ../ui/category_info.py:97
 msgid "File manager"
-msgstr "Menedżer plików"
+msgstr "Διαχειριστής αρχείων"
 
 #: ../ui/category_info.py:98
 msgid "Screensaver"
-msgstr "Wygaszacz ekranu"
+msgstr "Στιγμιότυπο οθόνης"
 
 #: ../ui/category_info.py:99
 msgid "Terminal emulator"
-msgstr "Emulator terminala"
+msgstr "Προσομοιωτής τερματικού"
 
 #: ../ui/category_info.py:100
 msgid "Text editor"
-msgstr "Edytor tekstu"
+msgstr "Επεξεργαστής κειμένου"
 
 #: ../ui/home_page.py:484
 #, python-format
 msgid "%s: %s applications"
-msgstr "%s: %s aplikacji"
+msgstr "%s: %s εφαρμογές"
 
 #: ../ui/home_page.py:666
 #, python-format
 msgid "%s > %s : %s applications"
-msgstr "%s > %s : %s aplikacji"
+msgstr "%s > %s : %s εφαρμογές"
 
 #: ../ui/home_page.py:722 ../ui/software_center.py:789
 msgid "Home"
-msgstr "Katalog domowy"
+msgstr "Αρχική"
 
 #: ../ui/home_page.py:762
 msgid "Recommendations"
-msgstr "Polecane"
+msgstr "Προτάσεις"
 
 #: ../ui/home_page.py:762
 msgid "Topics"
-msgstr "Tematy"
+msgstr "Θέματα"
 
 #: ../ui/home_page.py:762
 msgid "Download rank"
-msgstr "Ranking pobieralni"
+msgstr "Βαθμός λήψης"
 
 #: ../ui/widgets.py:66
 msgid "Just now"
-msgstr "Właśnie teraz"
+msgstr "Μόλις τώρα"
 
 #: ../ui/widgets.py:71
 msgid "One minute ago"
-msgstr "Minutę temu"
+msgstr "Ένα λεπτό πριν"
 
 #: ../ui/widgets.py:73
 #, python-format
 msgid "%s minutes ago"
-msgstr "%s minut temu"
+msgstr "%s λεπτά πριν"
 
 #: ../ui/widgets.py:78
 msgid "One hour ago"
-msgstr "Godzinę temu"
+msgstr "Μια ώρα πριν"
 
 #: ../ui/widgets.py:80
 #, python-format
 msgid "%s hours ago"
-msgstr "%s godzin temu"
+msgstr "%s ώρες πριν"
 
 #: ../ui/widgets.py:84
 msgid "Yesterday"
-msgstr "Wczoraj"
+msgstr "Χθες"
 
 #: ../ui/widgets.py:295 ../ui/widgets.py:369
 msgid "Click to refresh"
-msgstr "Kliknij, aby odświeżyć"
+msgstr "Κάντε κλικ για ανανέωση"
 
 #: ../ui/widgets.py:462 ../ui/preference.py:782
 msgid "OK"
@@ -725,258 +722,258 @@ msgstr "OK"
 
 #: ../ui/widgets.py:463 ../ui/preference.py:784
 msgid "Cancel"
-msgstr "Anuluj"
+msgstr "Ακύρωση"
 
 #: ../ui/utils.py:355
 msgid "Running"
-msgstr "Uruchamiam"
+msgstr "Εκτέλεση"
 
 #: ../ui/utils.py:356
 msgid "Preparing"
-msgstr "Przygotowuje"
+msgstr "Προετοιμασία"
 
 #: ../ui/utils.py:357
 msgid "Unpacking"
-msgstr "Rozpakowuje"
+msgstr "Ξεπακετάρισμα"
 
 #: ../ui/utils.py:358
 msgid "Preparing to configure"
-msgstr "Przygotowuje do skonfigurowania"
+msgstr "Προετοιμασία για ρύθμιση"
 
 #: ../ui/utils.py:359
 msgid "Configuring"
-msgstr "Konfiguruje"
+msgstr "Ρύθμιση"
 
 #: ../ui/utils.py:370
 msgid "Err"
-msgstr ""
+msgstr "Err"
 
 #: ../ui/utils.py:371
 msgid "Ign"
-msgstr ""
+msgstr "Ign"
 
 #: ../ui/utils.py:372
 msgid "Get"
-msgstr ""
+msgstr "Get"
 
 #: ../ui/utils.py:373
 msgid "Hit"
-msgstr ""
+msgstr "Hit"
 
 #: ../ui/software_center.py:127
 #, python-format
 msgid "%s haven't any desktop file"
-msgstr "%s niema żadnej ikony"
+msgstr "%s δεν έχουν κανένα αρχείο επιφάνειας εργασίας"
 
 #: ../ui/software_center.py:194
 msgid "Sending rating..."
-msgstr "Przesyłanie oceny..."
+msgstr "Αποστολή αξιολόγησης..."
 
 #: ../ui/software_center.py:198
 msgid "You have already scored.  ;)"
-msgstr "Już oceniałeś ;)"
+msgstr "Έχετε ήδη σκοράρει. ;)"
 
 #: ../ui/software_center.py:204
 msgid "Rated successfully. Thanks for your involvement."
-msgstr ""
+msgstr "Επιτυχής αξιολόγηση. Ευχαριστούμε για τη συμμετοχή."
 
 #: ../ui/software_center.py:220
 msgid "Rating failed. Please check your network connection!"
-msgstr ""
+msgstr "Αποτυχία αξιολόγησης. Παρακαλώ ελέγξτε τη σύνδεση δικτύου σας!"
 
 #: ../ui/software_center.py:385
 #, python-format
 msgid "Uninstall %s Successfully."
-msgstr "Usunołem %s pomyślnie."
+msgstr "Επιτυχής Απεγκατάσταση του %s."
 
 #: ../ui/software_center.py:385 ../ui/software_center.py:791
 msgid "Uninstall"
-msgstr "Usuń"
+msgstr "Απεγκατάσταση"
 
 #: ../ui/software_center.py:391
 #, python-format
 msgid "%s packages upgrade successfully."
-msgstr "%s pakietów zostało pomyślnie zaktualizowanych."
+msgstr "%s πακέτα αναβαθμίστηκαν επιτυχώς."
 
 #: ../ui/software_center.py:394
 #, python-format
 msgid "Install %s Successfully."
-msgstr "Zainstalowałem %s pomyślna."
+msgstr "Επιτυχής Εγκατάσταση του %s."
 
 #: ../ui/software_center.py:394
 msgid "Install"
-msgstr "Instaluj"
+msgstr "Εγκατάσταση"
 
 #: ../ui/software_center.py:438
 msgid "Generating package list database..."
-msgstr "Tworzenie bazy danych list pakietów..."
+msgstr "Δημιουργία βάσης δεδομένων λίστας πακέτων..."
 
 #: ../ui/software_center.py:446
 msgid "Package lists refreshed completely."
-msgstr ""
+msgstr "Οι λίστες πακέτων ανανεώθηκαν πλήρως."
 
 #: ../ui/software_center.py:458
 msgid "Failed to refresh package lists."
-msgstr "Błąd odświeżania listy pakietów."
+msgstr "Αποτυχία ανανέωσης λιστών πακέτων."
 
 #: ../ui/software_center.py:459
 msgid "Try again"
-msgstr "Spróbuj ponownie"
+msgstr "Προσπαθήστε ξανά"
 
 #: ../ui/software_center.py:469
 #, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted."
-msgstr ""
+msgstr "Προέκυψε σφάλμα κατά την ανάλυση εξαρτήσεων για το %s. Η εγκατάσταση ματαιώθηκε."
 
 #: ../ui/software_center.py:472
 #, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
-msgstr ""
+msgstr "Προέκυψε σφάλμα κατά την ανάλυση εξαρτήσεων για το %s. Η αναβάθμιση ματαιώθηκε."
 
 #: ../ui/software_center.py:477
 #, python-format
 msgid "The requested package \"%s\" was not found in the package list."
-msgstr "Pakiet \"%s\" nie został znaleziony na liście pakietów."
+msgstr "Το απαιτούμενο πακέτο \"%s\" δε βρέθηκε στη λίστα πακέτων."
 
 #: ../ui/software_center.py:478
 msgid "Refresh package lists again and try again."
-msgstr "Odśwież listy pakietów i spróbuj ponownie."
+msgstr "Ανανεώστε πάλι τις λίστες πακέτων και δοκιμάστε ξανά."
 
 #: ../ui/software_center.py:770
 msgid "Join us"
-msgstr "Dołącz do nas"
+msgstr "Ελάτε μαζί μας"
 
 #: ../ui/software_center.py:792
 msgid "Installation"
-msgstr "Instalacja"
+msgstr "Εγκατάσταση"
 
 #: ../ui/software_center.py:816 ../ui/preference.py:568
 msgid "Refresh package lists"
-msgstr "Odśwież listy pakietów"
+msgstr "Ανανέωση λιστών πακέτων"
 
 #: ../ui/software_center.py:817
 msgid "Open download directory"
-msgstr "Otwórz katalog pobrań"
+msgstr "Άνοιγμα καταλόγου λήψης"
 
 #: ../ui/software_center.py:818
 msgid "Clear up cached packages"
-msgstr "Wyczyść pamięć podręczną pakietów"
+msgstr "Εκκαθάριση πακέτων με προσωρινή μνήμη"
 
 #: ../ui/software_center.py:819
 msgid "View new features"
-msgstr "Zobacz nowe możliwości"
+msgstr "Προβολή νέων χαρακτηριστικών"
 
 #: ../ui/software_center.py:820
 msgid "Preferences"
-msgstr "Ustawienia"
+msgstr "Προτιμήσεις"
 
 #: ../ui/software_center.py:821
 msgid "Quit"
-msgstr "Wyjdź"
+msgstr "Έξοδος"
 
 #: ../ui/software_center.py:1123
 #, python-format
 msgid "You have cleared up %s packages and saved %s of space."
-msgstr ""
+msgstr "Καθαρίσατε %s πακέτα και εξοικονομήσατε %s χώρου."
 
 #: ../ui/software_center.py:1125
 msgid "Your system cache is empty."
-msgstr "Pamięć podręczna Twojego systemu jest pusta."
+msgstr "Η προσωρινή μνήμη συστήματος είναι άδεια."
 
 #: ../ui/item_render.py:44
 msgid "No reminder"
-msgstr ""
+msgstr "Καμία υπενθύμιση"
 
 #: ../ui/preference.py:438
 msgid "Version:"
-msgstr "Wersja:"
+msgstr "Έκδοση:"
 
 #: ../ui/preference.py:452
 msgid ""
 "Deepin Store is a commonly used software center on Linux. We selected more than 2,600 excellent applications with many functions of installation and uninstalling, software repository and popular recommendations, which supports 1-click quick installation, multi-threaded download and clearing of cached packages. It provides topics for software introduction and shares good applications.\n"
 "\n"
 "Deepin Store is a free software licensed under GNU GPLv3."
-msgstr ""
+msgstr "Το Κατάστημα Deepin είναι ένα συχνά χρησιμοποιούμενο κέντρο λογισμικού στο Linux. Επιλέξαμε πάνω από 2.600 εξαιρετικές εφαρμογές με πολλές λειτουργίες εγκατάστασης και απεγκατάστασης, αποθετηρίων λογισμικού και δημοφιλών προτάσεων, ενώ υποστηρίζει γρήγορη εγκατάσταση με 1 κλικ, πολλαπλές λήψεις και εκκαθάριση πακέτων με προσωρινή μνήμη. Παρέχει θέματα για παρουσίαση λογισμικού και μοιράζεται καλές εφαρμογές.\n\nΤο Κατάστημα Deepin είναι δωρεάν λογισμικό υπό την άδεια GNU GPLv3."
 
 #: ../ui/preference.py:477
 msgid "On uninstalling the software"
-msgstr ""
+msgstr "Στην απεγκατάσταση του λογισμικού"
 
 #: ../ui/preference.py:480
 msgid "Delete configuration files"
-msgstr "Usuń pliki konfiguracyjne"
+msgstr "Διαγραφή αρχείων παραμέτρων"
 
 #: ../ui/preference.py:494
 msgid "Download settings"
-msgstr "Ustawienia pobierania"
+msgstr "Ρυθμίσεις Λήψης"
 
 #: ../ui/preference.py:500
 msgid "Maximum number of download tasks: "
-msgstr ""
+msgstr "Μέγιστος αριθμός εργασιών λήψης:"
 
 #: ../ui/preference.py:510
 msgid "Download directory: "
-msgstr "Ścieżka do folderu pobrań"
+msgstr "Κατάλογος λήψεων:"
 
 #: ../ui/preference.py:516
 msgid "Change"
-msgstr "Zmień"
+msgstr "Αλλαγή"
 
 #: ../ui/preference.py:551
 msgid "Select the best mirror"
-msgstr "Wybierz najlepsze źródło"
+msgstr "Επιλέξτε τον καλύτερο καθρέπτη"
 
 #: ../ui/preference.py:552
 msgid "Waiting"
-msgstr "Oczekiwanie"
+msgstr "Αναμονή"
 
 #: ../ui/preference.py:553
 msgid "Successfully"
-msgstr ""
+msgstr "Επιτυχώς"
 
 #: ../ui/preference.py:571
 msgid "Upgrade automatically"
-msgstr ""
+msgstr "Αυτόματη αναβάθμιση"
 
 #: ../ui/preference.py:575
 msgid "Time interval: "
-msgstr "Przedział czasu:"
+msgstr "Χρονικό διάστημα:"
 
 #: ../ui/preference.py:578
 msgid " hour"
-msgstr "godzina"
+msgstr "ώρα"
 
 #: ../ui/preference.py:642
 msgid "Select mirror"
-msgstr "Wybierz źródło"
+msgstr "Επιλέξτε καθρέπτη"
 
 #: ../ui/preference.py:705
 msgid "Select Directory"
-msgstr "Wybierz katalog"
+msgstr "Επιλέξτε Κατάλογο"
 
 #: ../ui/preference.py:751
 msgid "Speed testing will finish only after one minute, please wait."
-msgstr ""
+msgstr "Η δοκιμή ταχύτητας θα τελειώσει μόνο μετά από ένα λεπτό, παρακαλώ περιμένετε."
 
 #: ../ui/preference.py:776
 #, python-format
 msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
-msgstr "Ukończono testowanie, najszybszym serwerem źródłowym jest \"%s\", przełączyć na niego?"
+msgstr "Η δοκιμή ολοκληρώθηκε, η πιο γρήγορη πηγή καθρέπτη είναι το \"%s\", αλλαγή τώρα;"
 
 #: ../ui/preference.py:829
 msgid "General"
-msgstr "Ogólny"
+msgstr "Γενικά"
 
 #: ../ui/preference.py:830
 msgid "Mirrors"
-msgstr "Lustra"
+msgstr "Καθρέπτες"
 
 #: ../ui/preference.py:831
 msgid "About"
-msgstr "O nas"
+msgstr "Σχετικά"
 
 #: ../ui/search_page.py:110
 #, python-format
 msgid "%s applications searched"
-msgstr ""
+msgstr "%s εφαρμογές αναζητήθηκαν"

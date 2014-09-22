@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-22 11:20+0800\n"
-"PO-Revision-Date: 2014-08-22 05:40+0000\n"
-"Last-Translator: szd_liufei <liufei@linuxdeepin.com>\n"
+"POT-Creation-Date: 2014-09-10 09:41+0800\n"
+"PO-Revision-Date: 2014-09-15 10:41+0000\n"
+"Last-Translator: fri\n"
 "Language-Team: Czech (http://www.transifex.com/projects/p/deepin-store/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,58 +20,57 @@ msgstr ""
 "Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: ../ui/detail_page.py:178
+#: ../ui/detail_page.py:179
 msgid "Popular recommendations"
 msgstr "Doporučení oblíbených"
 
-#: ../ui/detail_page.py:239 ../ui/detail_page.py:491
+#: ../ui/detail_page.py:240 ../ui/detail_page.py:494
 msgid "Loading comments..."
 msgstr "Nahrávají se poznámky..."
 
-#: ../ui/detail_page.py:355
+#: ../ui/detail_page.py:358
 #, python-format
 msgid "Download: %s"
 msgstr "Stahování: %s"
 
-#: ../ui/detail_page.py:386
+#: ../ui/detail_page.py:389
 msgid "Category: "
 msgstr "Skupina: "
 
-#: ../ui/detail_page.py:390
+#: ../ui/detail_page.py:393
 #, python-format
 msgid "Version: %s"
 msgstr "Verze: %s"
 
-#: ../ui/detail_page.py:391
+#: ../ui/detail_page.py:394
 msgid "Download: 0"
 msgstr "Stahování: 0"
 
-#: ../ui/detail_page.py:392
+#: ../ui/detail_page.py:395
 msgid "Size: calculating..."
 msgstr "Velikost: Počítá se..."
 
-#: ../ui/detail_page.py:396
+#: ../ui/detail_page.py:399
 msgid "Visit Homepage"
 msgstr "Navštívit domovskou stránku"
 
-#: ../ui/detail_page.py:441 ../ui/install_page.py:506
-#: ../ui/download_rank_page.py:364 ../ui/home_page.py:1069
-#: ../ui/album_page.py:478 ../ui/search_page.py:269
+#: ../ui/detail_page.py:444 ../ui/download_rank_page.py:369
+#: ../ui/home_page.py:1086 ../ui/album_page.py:483 ../ui/search_page.py:274
 msgid "Not found"
 msgstr "Nenalezeno"
 
-#: ../ui/detail_page.py:447
+#: ../ui/detail_page.py:450
 msgid "Successfully installed"
 msgstr "Úspěšně nainstalováno"
 
-#: ../ui/detail_page.py:470
+#: ../ui/detail_page.py:473
 #, python-format
 msgid "Size: %s"
 msgstr "Velikost: %s"
 
-#: ../ui/detail_page.py:608
-msgid "Powered by 又拍云存储"
-msgstr "Poháněno 又拍云存储"
+#: ../ui/detail_page.py:611
+msgid "Powered by UpYun.com"
+msgstr "Provozováno UpYun.com"
 
 #: ../ui/uninstall_page.py:175
 #, python-format
@@ -99,7 +98,7 @@ msgstr "%s: žádá se o spuštění poslaných programů"
 msgid ""
 "Please wait a moment while system upgrade is being performed... Do not turn "
 "off your computer."
-msgstr ""
+msgstr "Počkejte, prosím, chvíli, zatímco je systém povyšován. Nevypínejte počítač."
 
 #: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
 #: ../ui/software_center.py:790
@@ -130,51 +129,51 @@ msgstr "Ve vašem systému je %s balíček, který je třeba povýšit. Otevřet
 msgid "%s applications are being installed"
 msgstr "Je instalováno %s programů"
 
-#: ../ui/install_page.py:313 ../ui/install_page.py:741
+#: ../ui/install_page.py:313 ../ui/install_page.py:744
 #: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
 msgid "Dependencies analyzing"
 msgstr "Rozbor závislostí"
 
-#: ../ui/install_page.py:513 ../ui/download_rank_page.py:371
-#: ../ui/home_page.py:1076 ../ui/utils.py:360 ../ui/album_page.py:485
-#: ../ui/search_page.py:276
+#: ../ui/install_page.py:511 ../ui/install_page.py:516
+#: ../ui/download_rank_page.py:374 ../ui/home_page.py:1091 ../ui/utils.py:360
+#: ../ui/album_page.py:488 ../ui/search_page.py:279
 msgid "Installed"
 msgstr "Nainstalováno"
 
-#: ../ui/install_page.py:662 ../ui/install_page.py:673
+#: ../ui/install_page.py:665 ../ui/install_page.py:676
 msgid "Download was interrupted"
 msgstr "Stahování bylo přerušeno"
 
-#: ../ui/install_page.py:686
+#: ../ui/install_page.py:689
 msgid "Installation was interrupted"
 msgstr "Instalace byla přerušena"
 
-#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1495
+#: ../ui/install_page.py:751 ../ui/upgrade_page.py:1495
 #: ../ui/upgrade_page.py:1614
 msgid "Waiting for download"
 msgstr "Čeká se na stahování"
 
-#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1621
+#: ../ui/install_page.py:758 ../ui/upgrade_page.py:1621
 msgid "Downloading"
 msgstr "Stahuje se"
 
-#: ../ui/install_page.py:762
+#: ../ui/install_page.py:765
 msgid "Download failed"
 msgstr "Stažení se nezdařilo"
 
-#: ../ui/install_page.py:778
+#: ../ui/install_page.py:781
 msgid "Waiting for installation"
 msgstr "Čeká se na instalaci"
 
-#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1647
+#: ../ui/install_page.py:791 ../ui/upgrade_page.py:1647
 msgid "Dependencies analysis failed"
 msgstr "Rozbor závislostí se nezdařil"
 
-#: ../ui/install_page.py:797 ../ui/install_page.py:804
+#: ../ui/install_page.py:800 ../ui/install_page.py:807
 msgid "Installing"
 msgstr "Instaluje se"
 
-#: ../ui/install_page.py:813
+#: ../ui/install_page.py:816
 msgid "Installation completed"
 msgstr "Instalace dokončena"
 
@@ -186,7 +185,7 @@ msgstr "Doba posledního povýšení systému: "
 #: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
 #, python-format
 msgid "No reminder to upgrade (%s)"
-msgstr ""
+msgstr "Žádná připomínka povýšení (%s)"
 
 #: ../ui/upgrade_page.py:182
 msgid "Upgrade applications selected"
@@ -224,11 +223,11 @@ msgstr "Systém není Deepin. Tato funkce je neplatná!"
 
 #: ../ui/upgrade_page.py:328
 msgid "Downloading upgrade packages"
-msgstr ""
+msgstr "Stahují se povyšovací balíčky"
 
 #: ../ui/upgrade_page.py:335
 msgid "Last time of refreshed package lists: "
-msgstr ""
+msgstr "Čas posledního obnovení seznamu balíčků: "
 
 #: ../ui/upgrade_page.py:345
 msgid "Mirror Receiving: "
@@ -236,7 +235,7 @@ msgstr "Příjem zrcadla:"
 
 #: ../ui/upgrade_page.py:399
 msgid "Failed to download upgrade packages"
-msgstr ""
+msgstr "Nepodařilo se stáhnout povyšovací balíčky"
 
 #: ../ui/upgrade_page.py:401
 msgid "The requested package does not exist on server."
@@ -250,7 +249,7 @@ msgstr "Navrhnout"
 #: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
 #: ../ui/upgrade_page.py:447
 msgid "refresh package lists"
-msgstr ""
+msgstr "Obnovit seznam balíčků"
 
 #: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
 #: ../ui/upgrade_page.py:448
@@ -259,7 +258,7 @@ msgstr " a zkusit znovu."
 
 #: ../ui/upgrade_page.py:419 ../ui/upgrade_page.py:1120
 msgid "Failed to install upgrade packages"
-msgstr ""
+msgstr "Nepodařilo se nainstalovat povyšovací balíčky"
 
 #: ../ui/upgrade_page.py:421
 msgid ""
@@ -274,7 +273,7 @@ msgstr "Varování"
 msgid ""
 "The upgrade requires to uninstall crucial components due to corrupted local "
 "dependencies or incorrect package dependencies on server."
-msgstr ""
+msgstr "Povýšení vyžaduje odinstalaci zásadních součástí. To může být z důvodu poškození vašich místních závislostí. Nebo to může být nesprávnými závislostmi balíčků na straně serveru."
 
 #: ../ui/upgrade_page.py:483
 msgid "If the prompt occurs again, you could "
@@ -308,7 +307,7 @@ msgstr "Tento problém se objevil kvůli místnímu poškození závislostí apt
 #: ../ui/upgrade_page.py:668
 #, python-format
 msgid "%s package(s) are available for upgrade, %s will be downloaded."
-msgstr ""
+msgstr "Pro povýšení je dostupných %s balíčků. Bude staženo %s."
 
 #: ../ui/upgrade_page.py:1094
 msgid "Finished analyzing dependencies."
@@ -333,11 +332,11 @@ msgstr "Stahování zastaveno."
 
 #: ../ui/upgrade_page.py:1124
 msgid "Installing upgrade packages"
-msgstr ""
+msgstr "Instalují se povyšovací balíčky"
 
 #: ../ui/upgrade_page.py:1125
 msgid "Upgrading..."
-msgstr ""
+msgstr "Povyšuje se..."
 
 #: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
 msgid "Upgrade completed"
@@ -663,29 +662,29 @@ msgstr "Emulátor terminálu"
 msgid "Text editor"
 msgstr "Textový editor"
 
-#: ../ui/home_page.py:478
+#: ../ui/home_page.py:484
 #, python-format
 msgid "%s: %s applications"
 msgstr "%s: %s programů"
 
-#: ../ui/home_page.py:660
+#: ../ui/home_page.py:666
 #, python-format
 msgid "%s > %s : %s applications"
 msgstr "%s > %s : %s programů"
 
-#: ../ui/home_page.py:716 ../ui/software_center.py:789
+#: ../ui/home_page.py:722 ../ui/software_center.py:789
 msgid "Home"
 msgstr "Domovská složka"
 
-#: ../ui/home_page.py:756
+#: ../ui/home_page.py:762
 msgid "Recommendations"
 msgstr "Doporučení"
 
-#: ../ui/home_page.py:756
+#: ../ui/home_page.py:762
 msgid "Topics"
 msgstr "Náměty"
 
-#: ../ui/home_page.py:756
+#: ../ui/home_page.py:762
 msgid "Download rank"
 msgstr "Žebříček stahování"
 
@@ -813,7 +812,7 @@ msgstr "Vytváří se databáze seznamu balíčků..."
 
 #: ../ui/software_center.py:446
 msgid "Package lists refreshed completely."
-msgstr ""
+msgstr "Seznamy balíčků obnoveny úspěšně."
 
 #: ../ui/software_center.py:458
 msgid "Failed to refresh package lists."
@@ -841,7 +840,7 @@ msgstr "Požadovaný balíček \"%s\" nebyl nalezen v seznamu balíčků."
 
 #: ../ui/software_center.py:478
 msgid "Refresh package lists again and try again."
-msgstr ""
+msgstr "Obnovit znovu seznamy balíčků a zkusit to znovu."
 
 #: ../ui/software_center.py:770
 msgid "Join us"
@@ -853,7 +852,7 @@ msgstr "Instalace"
 
 #: ../ui/software_center.py:816 ../ui/preference.py:568
 msgid "Refresh package lists"
-msgstr ""
+msgstr "Obnovit seznam balíčků"
 
 #: ../ui/software_center.py:817
 msgid "Open download directory"
@@ -913,7 +912,7 @@ msgstr "Nastavení stahování"
 
 #: ../ui/preference.py:500
 msgid "Maximum number of download tasks: "
-msgstr ""
+msgstr "Nejvyšší počet stahovacích úkolů: "
 
 #: ../ui/preference.py:510
 msgid "Download directory: "
@@ -937,7 +936,7 @@ msgstr "Úspěch"
 
 #: ../ui/preference.py:571
 msgid "Upgrade automatically"
-msgstr ""
+msgstr "Povýšit automaticky"
 
 #: ../ui/preference.py:575
 msgid "Time interval: "

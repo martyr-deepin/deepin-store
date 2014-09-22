@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-22 11:20+0800\n"
-"PO-Revision-Date: 2014-08-22 05:40+0000\n"
-"Last-Translator: szd_liufei <liufei@linuxdeepin.com>\n"
+"POT-Creation-Date: 2014-09-10 09:41+0800\n"
+"PO-Revision-Date: 2014-09-18 10:51+0000\n"
+"Last-Translator: Carl Andersen <carl@manjaro.dk>\n"
 "Language-Team: Danish (http://www.transifex.com/projects/p/deepin-store/language/da/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,58 +18,57 @@ msgstr ""
 "Language: da\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../ui/detail_page.py:178
+#: ../ui/detail_page.py:179
 msgid "Popular recommendations"
 msgstr "Populære anbefalinger"
 
-#: ../ui/detail_page.py:239 ../ui/detail_page.py:491
+#: ../ui/detail_page.py:240 ../ui/detail_page.py:494
 msgid "Loading comments..."
 msgstr "Indlæser kommenterer..."
 
-#: ../ui/detail_page.py:355
+#: ../ui/detail_page.py:358
 #, python-format
 msgid "Download: %s"
 msgstr "Download: %s"
 
-#: ../ui/detail_page.py:386
+#: ../ui/detail_page.py:389
 msgid "Category: "
 msgstr "Kategori:"
 
-#: ../ui/detail_page.py:390
+#: ../ui/detail_page.py:393
 #, python-format
 msgid "Version: %s"
 msgstr "Version: %s"
 
-#: ../ui/detail_page.py:391
+#: ../ui/detail_page.py:394
 msgid "Download: 0"
 msgstr "Download: 0"
 
-#: ../ui/detail_page.py:392
+#: ../ui/detail_page.py:395
 msgid "Size: calculating..."
 msgstr "Størelse: beregner..."
 
-#: ../ui/detail_page.py:396
+#: ../ui/detail_page.py:399
 msgid "Visit Homepage"
 msgstr "Besøg Hjemmeside"
 
-#: ../ui/detail_page.py:441 ../ui/install_page.py:506
-#: ../ui/download_rank_page.py:364 ../ui/home_page.py:1069
-#: ../ui/album_page.py:478 ../ui/search_page.py:269
+#: ../ui/detail_page.py:444 ../ui/download_rank_page.py:369
+#: ../ui/home_page.py:1086 ../ui/album_page.py:483 ../ui/search_page.py:274
 msgid "Not found"
 msgstr "Ikke fundet"
 
-#: ../ui/detail_page.py:447
+#: ../ui/detail_page.py:450
 msgid "Successfully installed"
 msgstr "Succesfuldt installeret"
 
-#: ../ui/detail_page.py:470
+#: ../ui/detail_page.py:473
 #, python-format
 msgid "Size: %s"
 msgstr "Størelse: %s"
 
-#: ../ui/detail_page.py:608
-msgid "Powered by 又拍云存储"
-msgstr "Drevet af 又拍云存储"
+#: ../ui/detail_page.py:611
+msgid "Powered by UpYun.com"
+msgstr "Drevet af UpYun.com"
 
 #: ../ui/uninstall_page.py:175
 #, python-format
@@ -97,7 +96,7 @@ msgstr "%s: anmodning om at starte program hentning"
 msgid ""
 "Please wait a moment while system upgrade is being performed... Do not turn "
 "off your computer."
-msgstr ""
+msgstr "Vent et øjeblik, mens system opgraderingen udføres... Du må ikke slukke for computeren."
 
 #: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
 #: ../ui/software_center.py:790
@@ -128,51 +127,51 @@ msgstr "Der er %s pakker som behøves for at opgradere dit system, du skal bruge
 msgid "%s applications are being installed"
 msgstr "%s programmer bliver installeret"
 
-#: ../ui/install_page.py:313 ../ui/install_page.py:741
+#: ../ui/install_page.py:313 ../ui/install_page.py:744
 #: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
 msgid "Dependencies analyzing"
 msgstr "Analyserer afhængigheder"
 
-#: ../ui/install_page.py:513 ../ui/download_rank_page.py:371
-#: ../ui/home_page.py:1076 ../ui/utils.py:360 ../ui/album_page.py:485
-#: ../ui/search_page.py:276
+#: ../ui/install_page.py:511 ../ui/install_page.py:516
+#: ../ui/download_rank_page.py:374 ../ui/home_page.py:1091 ../ui/utils.py:360
+#: ../ui/album_page.py:488 ../ui/search_page.py:279
 msgid "Installed"
 msgstr "Installeret"
 
-#: ../ui/install_page.py:662 ../ui/install_page.py:673
+#: ../ui/install_page.py:665 ../ui/install_page.py:676
 msgid "Download was interrupted"
 msgstr "Download blev afbrudt"
 
-#: ../ui/install_page.py:686
+#: ../ui/install_page.py:689
 msgid "Installation was interrupted"
 msgstr "Installation blev afbrudt"
 
-#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1495
+#: ../ui/install_page.py:751 ../ui/upgrade_page.py:1495
 #: ../ui/upgrade_page.py:1614
 msgid "Waiting for download"
 msgstr "Venter på download"
 
-#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1621
+#: ../ui/install_page.py:758 ../ui/upgrade_page.py:1621
 msgid "Downloading"
 msgstr "Downloader"
 
-#: ../ui/install_page.py:762
+#: ../ui/install_page.py:765
 msgid "Download failed"
 msgstr "Download mislykkedes"
 
-#: ../ui/install_page.py:778
+#: ../ui/install_page.py:781
 msgid "Waiting for installation"
 msgstr "Venter på installation"
 
-#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1647
+#: ../ui/install_page.py:791 ../ui/upgrade_page.py:1647
 msgid "Dependencies analysis failed"
 msgstr "Afhængighedsanalyse mislykkedes"
 
-#: ../ui/install_page.py:797 ../ui/install_page.py:804
+#: ../ui/install_page.py:800 ../ui/install_page.py:807
 msgid "Installing"
 msgstr "Installerer"
 
-#: ../ui/install_page.py:813
+#: ../ui/install_page.py:816
 msgid "Installation completed"
 msgstr "Installation fuldført"
 
@@ -184,7 +183,7 @@ msgstr "Sidste system, opgraderingstidspunkt:"
 #: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
 #, python-format
 msgid "No reminder to upgrade (%s)"
-msgstr ""
+msgstr "Ingen påmindelse til at opgradere  (%s)"
 
 #: ../ui/upgrade_page.py:182
 msgid "Upgrade applications selected"
@@ -222,11 +221,11 @@ msgstr "Systemet er ikke Deepin, denne funktion er ugyldig."
 
 #: ../ui/upgrade_page.py:328
 msgid "Downloading upgrade packages"
-msgstr ""
+msgstr "Downloader opgraderingspakker"
 
 #: ../ui/upgrade_page.py:335
 msgid "Last time of refreshed package lists: "
-msgstr ""
+msgstr "Sidste gang der var opfriskning pakkelister:"
 
 #: ../ui/upgrade_page.py:345
 msgid "Mirror Receiving: "
@@ -234,7 +233,7 @@ msgstr "Mirror Modtagelse:"
 
 #: ../ui/upgrade_page.py:399
 msgid "Failed to download upgrade packages"
-msgstr ""
+msgstr "Det lykkedes ikke at hente opgraderingspakker"
 
 #: ../ui/upgrade_page.py:401
 msgid "The requested package does not exist on server."
@@ -248,7 +247,7 @@ msgstr "Foreslag til"
 #: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
 #: ../ui/upgrade_page.py:447
 msgid "refresh package lists"
-msgstr ""
+msgstr "genopfrisk pakkelister"
 
 #: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
 #: ../ui/upgrade_page.py:448
@@ -257,7 +256,7 @@ msgstr "og prøv igen."
 
 #: ../ui/upgrade_page.py:419 ../ui/upgrade_page.py:1120
 msgid "Failed to install upgrade packages"
-msgstr ""
+msgstr "Det lykkedes ikke at installere opgraderingspakker"
 
 #: ../ui/upgrade_page.py:421
 msgid ""
@@ -272,7 +271,7 @@ msgstr "Advarsel"
 msgid ""
 "The upgrade requires to uninstall crucial components due to corrupted local "
 "dependencies or incorrect package dependencies on server."
-msgstr ""
+msgstr "Opgraderingen kræver at der afinstalleres afgørende komponenter på grund af beskadigede lokale afhængigheder eller forkerte pakkeafhængigheder på serveren."
 
 #: ../ui/upgrade_page.py:483
 msgid "If the prompt occurs again, you could "
@@ -306,7 +305,7 @@ msgstr "Dette problem opstår på grund af ødelagt lokal apt afhængighedsforho
 #: ../ui/upgrade_page.py:668
 #, python-format
 msgid "%s package(s) are available for upgrade, %s will be downloaded."
-msgstr ""
+msgstr "%s pakke(r) er tilgængelig for opgradering, %s bliver downloadet."
 
 #: ../ui/upgrade_page.py:1094
 msgid "Finished analyzing dependencies."
@@ -331,11 +330,11 @@ msgstr "Download stoppede."
 
 #: ../ui/upgrade_page.py:1124
 msgid "Installing upgrade packages"
-msgstr ""
+msgstr "Installerer opgraderingspakker"
 
 #: ../ui/upgrade_page.py:1125
 msgid "Upgrading..."
-msgstr ""
+msgstr "Opgradering..."
 
 #: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
 msgid "Upgrade completed"
@@ -661,29 +660,29 @@ msgstr "Terminal emulator"
 msgid "Text editor"
 msgstr "Tekst editor"
 
-#: ../ui/home_page.py:478
+#: ../ui/home_page.py:484
 #, python-format
 msgid "%s: %s applications"
 msgstr "%s: %s programmer"
 
-#: ../ui/home_page.py:660
+#: ../ui/home_page.py:666
 #, python-format
 msgid "%s > %s : %s applications"
 msgstr "%s > %s : %s programmer"
 
-#: ../ui/home_page.py:716 ../ui/software_center.py:789
+#: ../ui/home_page.py:722 ../ui/software_center.py:789
 msgid "Home"
 msgstr "Hjem"
 
-#: ../ui/home_page.py:756
+#: ../ui/home_page.py:762
 msgid "Recommendations"
 msgstr "Anbefalinger"
 
-#: ../ui/home_page.py:756
+#: ../ui/home_page.py:762
 msgid "Topics"
 msgstr "Emner"
 
-#: ../ui/home_page.py:756
+#: ../ui/home_page.py:762
 msgid "Download rank"
 msgstr "Download rang"
 
@@ -811,7 +810,7 @@ msgstr "Genererer pakkeliste databasen ..."
 
 #: ../ui/software_center.py:446
 msgid "Package lists refreshed completely."
-msgstr ""
+msgstr "Pakkelister opdateres fuldstændigt."
 
 #: ../ui/software_center.py:458
 msgid "Failed to refresh package lists."
@@ -839,7 +838,7 @@ msgstr "Den udbedte pakke \"%s\" blev ikke fundet i pakkelisten."
 
 #: ../ui/software_center.py:478
 msgid "Refresh package lists again and try again."
-msgstr ""
+msgstr "Opdatér pakkelister igen, og prøv så igen."
 
 #: ../ui/software_center.py:770
 msgid "Join us"
@@ -851,7 +850,7 @@ msgstr "Installation"
 
 #: ../ui/software_center.py:816 ../ui/preference.py:568
 msgid "Refresh package lists"
-msgstr ""
+msgstr "Opdater pakkelister"
 
 #: ../ui/software_center.py:817
 msgid "Open download directory"
@@ -911,7 +910,7 @@ msgstr "Download indstillinger"
 
 #: ../ui/preference.py:500
 msgid "Maximum number of download tasks: "
-msgstr ""
+msgstr "Maksimalt antal download-opgaver:"
 
 #: ../ui/preference.py:510
 msgid "Download directory: "
@@ -935,7 +934,7 @@ msgstr "Blev med succes gennemført"
 
 #: ../ui/preference.py:571
 msgid "Upgrade automatically"
-msgstr ""
+msgstr "Opgrader automatisk"
 
 #: ../ui/preference.py:575
 msgid "Time interval: "

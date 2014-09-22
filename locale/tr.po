@@ -4,15 +4,16 @@
 # 
 # Translators:
 # Ömer GÖK <omergok@outlook.com>, 2014
+# Sinan Eldem, 2014
 # Vahap Karataş <k.vahap@gmail.com>, 2014
 # yakup <mutouk@yandex.ru>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-22 11:20+0800\n"
-"PO-Revision-Date: 2014-08-22 21:31+0000\n"
-"Last-Translator: yakup <mutouk@yandex.ru>\n"
+"POT-Creation-Date: 2014-09-10 09:41+0800\n"
+"PO-Revision-Date: 2014-09-10 04:04+0000\n"
+"Last-Translator: snyh <snyh@snyh.org>\n"
 "Language-Team: Turkish (http://www.transifex.com/projects/p/deepin-store/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,58 +21,57 @@ msgstr ""
 "Language: tr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: ../ui/detail_page.py:178
+#: ../ui/detail_page.py:179
 msgid "Popular recommendations"
 msgstr "Popüler öneriler"
 
-#: ../ui/detail_page.py:239 ../ui/detail_page.py:491
+#: ../ui/detail_page.py:240 ../ui/detail_page.py:494
 msgid "Loading comments..."
 msgstr "Değerlendirmeler yükleniyor..."
 
-#: ../ui/detail_page.py:355
+#: ../ui/detail_page.py:358
 #, python-format
 msgid "Download: %s"
 msgstr "İndiriliyor: %s"
 
-#: ../ui/detail_page.py:386
+#: ../ui/detail_page.py:389
 msgid "Category: "
 msgstr "Kategori:"
 
-#: ../ui/detail_page.py:390
+#: ../ui/detail_page.py:393
 #, python-format
 msgid "Version: %s"
 msgstr "Versiyon: %s"
 
-#: ../ui/detail_page.py:391
+#: ../ui/detail_page.py:394
 msgid "Download: 0"
 msgstr "İndirme: 0"
 
-#: ../ui/detail_page.py:392
+#: ../ui/detail_page.py:395
 msgid "Size: calculating..."
 msgstr "Boyut: hesaplanıyor..."
 
-#: ../ui/detail_page.py:396
+#: ../ui/detail_page.py:399
 msgid "Visit Homepage"
 msgstr "Ana sayfasını ziyaret edin"
 
-#: ../ui/detail_page.py:441 ../ui/install_page.py:506
-#: ../ui/download_rank_page.py:364 ../ui/home_page.py:1069
-#: ../ui/album_page.py:478 ../ui/search_page.py:269
+#: ../ui/detail_page.py:444 ../ui/download_rank_page.py:369
+#: ../ui/home_page.py:1086 ../ui/album_page.py:483 ../ui/search_page.py:274
 msgid "Not found"
 msgstr "Bulunamadı"
 
-#: ../ui/detail_page.py:447
+#: ../ui/detail_page.py:450
 msgid "Successfully installed"
 msgstr "Başarıyla kuruldu"
 
-#: ../ui/detail_page.py:470
+#: ../ui/detail_page.py:473
 #, python-format
 msgid "Size: %s"
 msgstr "Boyut: %s"
 
-#: ../ui/detail_page.py:608
-msgid "Powered by 又拍云存储"
-msgstr "Bulut depolama tarafından desteklenmektedir"
+#: ../ui/detail_page.py:611
+msgid "Powered by UpYun.com"
+msgstr ""
 
 #: ../ui/uninstall_page.py:175
 #, python-format
@@ -111,70 +111,70 @@ msgstr "Yükselt"
 msgid ""
 "There are %s packages needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
-msgstr "Sisteminizde güncellenmesi gereken paketler %s var,  güncelleme için Deepin Store kullanın!"
+msgstr "Sisteminizde güncellenmesi gereken paketler %s var,  güncelleme için Deepin Mağaza kullanın!"
 
 #: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
 #: ../ui/software_center.py:733 ../ui/preference.py:433
 msgid "Deepin Store"
-msgstr "Deepin Store"
+msgstr "Deepin Mağaza"
 
 #: ../ui/dsc-daemon.py:288
 #, python-format
 msgid ""
 "There is %s package needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
-msgstr "%s paketi için sisteminizi güncellemeniz gerekmektedir, güncelleme için Deepin Store kullanın!"
+msgstr "%s paketi için sisteminizi güncellemeniz gerekmektedir, güncelleme için Deepin Mağaza kullanın!"
 
 #: ../ui/install_page.py:146
 #, python-format
 msgid "%s applications are being installed"
 msgstr "%s uygulamalar yükleniyor"
 
-#: ../ui/install_page.py:313 ../ui/install_page.py:741
+#: ../ui/install_page.py:313 ../ui/install_page.py:744
 #: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
 msgid "Dependencies analyzing"
 msgstr "Bağımlılıkların analizi"
 
-#: ../ui/install_page.py:513 ../ui/download_rank_page.py:371
-#: ../ui/home_page.py:1076 ../ui/utils.py:360 ../ui/album_page.py:485
-#: ../ui/search_page.py:276
+#: ../ui/install_page.py:511 ../ui/install_page.py:516
+#: ../ui/download_rank_page.py:374 ../ui/home_page.py:1091 ../ui/utils.py:360
+#: ../ui/album_page.py:488 ../ui/search_page.py:279
 msgid "Installed"
 msgstr "Yüklü"
 
-#: ../ui/install_page.py:662 ../ui/install_page.py:673
+#: ../ui/install_page.py:665 ../ui/install_page.py:676
 msgid "Download was interrupted"
 msgstr "İndirme durdu"
 
-#: ../ui/install_page.py:686
+#: ../ui/install_page.py:689
 msgid "Installation was interrupted"
 msgstr "Kurulum durdu"
 
-#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1495
+#: ../ui/install_page.py:751 ../ui/upgrade_page.py:1495
 #: ../ui/upgrade_page.py:1614
 msgid "Waiting for download"
 msgstr "Karşıdan yükleme için bekleniyor"
 
-#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1621
+#: ../ui/install_page.py:758 ../ui/upgrade_page.py:1621
 msgid "Downloading"
 msgstr "İndiriliyor"
 
-#: ../ui/install_page.py:762
+#: ../ui/install_page.py:765
 msgid "Download failed"
 msgstr "İndirme başarısız"
 
-#: ../ui/install_page.py:778
+#: ../ui/install_page.py:781
 msgid "Waiting for installation"
 msgstr "Kurulum için bekleniyor"
 
-#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1647
+#: ../ui/install_page.py:791 ../ui/upgrade_page.py:1647
 msgid "Dependencies analysis failed"
 msgstr "Bağımlılıklar analizi başarısız oldu"
 
-#: ../ui/install_page.py:797 ../ui/install_page.py:804
+#: ../ui/install_page.py:800 ../ui/install_page.py:807
 msgid "Installing"
 msgstr "Kuruluyor"
 
-#: ../ui/install_page.py:813
+#: ../ui/install_page.py:816
 msgid "Installation completed"
 msgstr "Kurulum tamamlandı"
 
@@ -663,29 +663,29 @@ msgstr "Terminal emülatörü"
 msgid "Text editor"
 msgstr "Metin Düzenleyicisi"
 
-#: ../ui/home_page.py:478
+#: ../ui/home_page.py:484
 #, python-format
 msgid "%s: %s applications"
 msgstr "%s: %s uygulamalar"
 
-#: ../ui/home_page.py:660
+#: ../ui/home_page.py:666
 #, python-format
 msgid "%s > %s : %s applications"
 msgstr "%s > %s : %s uygulamalar"
 
-#: ../ui/home_page.py:716 ../ui/software_center.py:789
+#: ../ui/home_page.py:722 ../ui/software_center.py:789
 msgid "Home"
 msgstr "Ev"
 
-#: ../ui/home_page.py:756
+#: ../ui/home_page.py:762
 msgid "Recommendations"
 msgstr "Öneriler"
 
-#: ../ui/home_page.py:756
+#: ../ui/home_page.py:762
 msgid "Topics"
 msgstr "Başlıklar"
 
-#: ../ui/home_page.py:756
+#: ../ui/home_page.py:762
 msgid "Download rank"
 msgstr "İndirme sırası"
 
@@ -774,7 +774,7 @@ msgstr "Oylama gönderiliyor..."
 
 #: ../ui/software_center.py:198
 msgid "You have already scored.  ;)"
-msgstr "Zaten bir oy gönderdiğiniz ;)"
+msgstr "Zaten oy göndermiştiniz ;)"
 
 #: ../ui/software_center.py:204
 msgid "Rated successfully. Thanks for your involvement."
@@ -796,7 +796,7 @@ msgstr "Kaldır"
 #: ../ui/software_center.py:391
 #, python-format
 msgid "%s packages upgrade successfully."
-msgstr "%s paketlerinin güncellemesi başarılı."
+msgstr "%s paket başarıyla güncellendi."
 
 #: ../ui/software_center.py:394
 #, python-format
@@ -897,7 +897,7 @@ msgid ""
 "Deepin Store is a commonly used software center on Linux. We selected more than 2,600 excellent applications with many functions of installation and uninstalling, software repository and popular recommendations, which supports 1-click quick installation, multi-threaded download and clearing of cached packages. It provides topics for software introduction and shares good applications.\n"
 "\n"
 "Deepin Store is a free software licensed under GNU GPLv3."
-msgstr "Deepin Store Linux üzerinde yaygın olarak kullanılan bir yazılım merkezidir. Seçtiğimiz 2,600 den fazla harika uygulaması ile bir çok kurulum ve kaldırma fonkiyonuna sahiptir, yazılım deposu ve popüler öneriler, 1 tıklama ile hızlı kurulumu destekler, önbelleğe alınan paketlerin çoklu iş parçacıklı indirme ve takas alanının temizlenmesini sağlar. Bu yazılım tanıtım ve paylaşım için iyi uygulamaları içinde barındırır.\n\nDeepin Store GNU GPLv3 lisansı altında ücretsiz bir programdır."
+msgstr "Deepin Mağaza Linux üzerinde yaygın olarak kullanılan bir yazılım merkezidir. Seçtiğimiz 2,600 den fazla harika uygulaması ile bir çok kurulum ve kaldırma fonkiyonuna sahiptir, yazılım deposu ve popüler öneriler, 1 tıklama ile hızlı kurulumu destekler, önbelleğe alınan paketlerin çoklu iş parçacıklı indirme ve takas alanının temizlenmesini sağlar. Bu yazılım tanıtım ve paylaşım için iyi uygulamaları içinde barındırır.\n\nDeepin Mağaza GNU GPLv3 lisansı altında ücretsiz bir programdır."
 
 #: ../ui/preference.py:477
 msgid "On uninstalling the software"

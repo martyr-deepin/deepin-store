@@ -6,13 +6,14 @@
 # ddabrahim <ddabrahim@googlemail.com>, 2014
 # kdavid97 <kdavid97@gmail.hu>, 2014
 # Marcell Lévai, 2014
+# unicum99 <stampf99@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-22 11:20+0800\n"
-"PO-Revision-Date: 2014-08-22 05:40+0000\n"
-"Last-Translator: szd_liufei <liufei@linuxdeepin.com>\n"
+"POT-Creation-Date: 2014-09-10 09:41+0800\n"
+"PO-Revision-Date: 2014-09-19 11:21+0000\n"
+"Last-Translator: kdavid97 <kdavid97@gmail.hu>\n"
 "Language-Team: Hungarian (http://www.transifex.com/projects/p/deepin-store/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,58 +21,57 @@ msgstr ""
 "Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../ui/detail_page.py:178
+#: ../ui/detail_page.py:179
 msgid "Popular recommendations"
 msgstr "Népszerű ajánlatok"
 
-#: ../ui/detail_page.py:239 ../ui/detail_page.py:491
+#: ../ui/detail_page.py:240 ../ui/detail_page.py:494
 msgid "Loading comments..."
 msgstr "Megjegyzések betöltése..."
 
-#: ../ui/detail_page.py:355
+#: ../ui/detail_page.py:358
 #, python-format
 msgid "Download: %s"
 msgstr "Letöltés: %s"
 
-#: ../ui/detail_page.py:386
+#: ../ui/detail_page.py:389
 msgid "Category: "
 msgstr "Kategória:"
 
-#: ../ui/detail_page.py:390
+#: ../ui/detail_page.py:393
 #, python-format
 msgid "Version: %s"
 msgstr "Verzió: %s"
 
-#: ../ui/detail_page.py:391
+#: ../ui/detail_page.py:394
 msgid "Download: 0"
 msgstr "Letöltés: 0"
 
-#: ../ui/detail_page.py:392
+#: ../ui/detail_page.py:395
 msgid "Size: calculating..."
 msgstr "Méret: kiszámítás..."
 
-#: ../ui/detail_page.py:396
+#: ../ui/detail_page.py:399
 msgid "Visit Homepage"
 msgstr "Főoldal megtekintése"
 
-#: ../ui/detail_page.py:441 ../ui/install_page.py:506
-#: ../ui/download_rank_page.py:364 ../ui/home_page.py:1069
-#: ../ui/album_page.py:478 ../ui/search_page.py:269
+#: ../ui/detail_page.py:444 ../ui/download_rank_page.py:369
+#: ../ui/home_page.py:1086 ../ui/album_page.py:483 ../ui/search_page.py:274
 msgid "Not found"
 msgstr "Nem található"
 
-#: ../ui/detail_page.py:447
+#: ../ui/detail_page.py:450
 msgid "Successfully installed"
 msgstr "Sikeresen telepítve"
 
-#: ../ui/detail_page.py:470
+#: ../ui/detail_page.py:473
 #, python-format
 msgid "Size: %s"
 msgstr "Méret: %s"
 
-#: ../ui/detail_page.py:608
-msgid "Powered by 又拍云存储"
-msgstr "Powered by 又拍云存储"
+#: ../ui/detail_page.py:611
+msgid "Powered by UpYun.com"
+msgstr "UpYun.com által támogatott"
 
 #: ../ui/uninstall_page.py:175
 #, python-format
@@ -99,7 +99,7 @@ msgstr "%s: kérés az induló alkalmazásoknak elküldve"
 msgid ""
 "Please wait a moment while system upgrade is being performed... Do not turn "
 "off your computer."
-msgstr ""
+msgstr "Kérem várjon még a rendszer frissítés befejeződik... Ne kapcsolja ki a számítógépet."
 
 #: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
 #: ../ui/software_center.py:790
@@ -130,51 +130,51 @@ msgstr "%s csomag frissítése elérhető, kérem használja a Deepin Boltot a f
 msgid "%s applications are being installed"
 msgstr "%s alkalmazás telepítésre került"
 
-#: ../ui/install_page.py:313 ../ui/install_page.py:741
+#: ../ui/install_page.py:313 ../ui/install_page.py:744
 #: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
 msgid "Dependencies analyzing"
 msgstr "Függőségek analizálása"
 
-#: ../ui/install_page.py:513 ../ui/download_rank_page.py:371
-#: ../ui/home_page.py:1076 ../ui/utils.py:360 ../ui/album_page.py:485
-#: ../ui/search_page.py:276
+#: ../ui/install_page.py:511 ../ui/install_page.py:516
+#: ../ui/download_rank_page.py:374 ../ui/home_page.py:1091 ../ui/utils.py:360
+#: ../ui/album_page.py:488 ../ui/search_page.py:279
 msgid "Installed"
 msgstr "Telepített"
 
-#: ../ui/install_page.py:662 ../ui/install_page.py:673
+#: ../ui/install_page.py:665 ../ui/install_page.py:676
 msgid "Download was interrupted"
 msgstr "Letöltés megszakadt"
 
-#: ../ui/install_page.py:686
+#: ../ui/install_page.py:689
 msgid "Installation was interrupted"
 msgstr "Telepítés megszakadt"
 
-#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1495
+#: ../ui/install_page.py:751 ../ui/upgrade_page.py:1495
 #: ../ui/upgrade_page.py:1614
 msgid "Waiting for download"
 msgstr "Várakozás a letöltésre"
 
-#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1621
+#: ../ui/install_page.py:758 ../ui/upgrade_page.py:1621
 msgid "Downloading"
 msgstr "Letöltés"
 
-#: ../ui/install_page.py:762
+#: ../ui/install_page.py:765
 msgid "Download failed"
 msgstr "Letöltés sikertelen"
 
-#: ../ui/install_page.py:778
+#: ../ui/install_page.py:781
 msgid "Waiting for installation"
 msgstr "Várakozás a telepítésre"
 
-#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1647
+#: ../ui/install_page.py:791 ../ui/upgrade_page.py:1647
 msgid "Dependencies analysis failed"
 msgstr "Függőségek analizálása sikertelen"
 
-#: ../ui/install_page.py:797 ../ui/install_page.py:804
+#: ../ui/install_page.py:800 ../ui/install_page.py:807
 msgid "Installing"
 msgstr "Telepítés"
 
-#: ../ui/install_page.py:813
+#: ../ui/install_page.py:816
 msgid "Installation completed"
 msgstr "Telepítés befejeződött"
 
@@ -186,7 +186,7 @@ msgstr "Utolsó rendszerfrissítés ideje:"
 #: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
 #, python-format
 msgid "No reminder to upgrade (%s)"
-msgstr ""
+msgstr "Nincs frissítés emlékeztető (%s)"
 
 #: ../ui/upgrade_page.py:182
 msgid "Upgrade applications selected"
@@ -224,11 +224,11 @@ msgstr "Ez a rendszer nem Deepin, ez a funkció érvénytelen."
 
 #: ../ui/upgrade_page.py:328
 msgid "Downloading upgrade packages"
-msgstr ""
+msgstr "Frissítési csomag letöltése"
 
 #: ../ui/upgrade_page.py:335
 msgid "Last time of refreshed package lists: "
-msgstr ""
+msgstr "Utolsó frissített csomagok ideje:"
 
 #: ../ui/upgrade_page.py:345
 msgid "Mirror Receiving: "
@@ -236,7 +236,7 @@ msgstr "Tükör Fogadása:"
 
 #: ../ui/upgrade_page.py:399
 msgid "Failed to download upgrade packages"
-msgstr ""
+msgstr "Frissítések letöltése sikertelen"
 
 #: ../ui/upgrade_page.py:401
 msgid "The requested package does not exist on server."
@@ -250,7 +250,7 @@ msgstr "Ajánlom"
 #: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
 #: ../ui/upgrade_page.py:447
 msgid "refresh package lists"
-msgstr ""
+msgstr "Csomaglista újratöltése"
 
 #: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
 #: ../ui/upgrade_page.py:448
@@ -259,7 +259,7 @@ msgstr "és próbálja újra."
 
 #: ../ui/upgrade_page.py:419 ../ui/upgrade_page.py:1120
 msgid "Failed to install upgrade packages"
-msgstr ""
+msgstr "Frissítési csomagok telepítése sikertelen"
 
 #: ../ui/upgrade_page.py:421
 msgid ""
@@ -274,7 +274,7 @@ msgstr "Figyelmeztetés"
 msgid ""
 "The upgrade requires to uninstall crucial components due to corrupted local "
 "dependencies or incorrect package dependencies on server."
-msgstr ""
+msgstr "A frissítéshez kritikus komponenseket kell eltávolítani, sérült helyi függőségek vagy szerveren található hibás csomag függőségek miatt."
 
 #: ../ui/upgrade_page.py:483
 msgid "If the prompt occurs again, you could "
@@ -308,7 +308,7 @@ msgstr "Ez a probléma, sérült helyi apt függőség kapcsolat miatt lép fel.
 #: ../ui/upgrade_page.py:668
 #, python-format
 msgid "%s package(s) are available for upgrade, %s will be downloaded."
-msgstr ""
+msgstr "%s alkalmazáshoz frissítés(ek) érhető el, %s fog letöltődni."
 
 #: ../ui/upgrade_page.py:1094
 msgid "Finished analyzing dependencies."
@@ -333,11 +333,11 @@ msgstr "Letöltés megállt."
 
 #: ../ui/upgrade_page.py:1124
 msgid "Installing upgrade packages"
-msgstr ""
+msgstr "Frissitési csomagok telepitése"
 
 #: ../ui/upgrade_page.py:1125
 msgid "Upgrading..."
-msgstr ""
+msgstr "Frissítés"
 
 #: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
 msgid "Upgrade completed"
@@ -663,29 +663,29 @@ msgstr "Terminál emulátor"
 msgid "Text editor"
 msgstr "Szövegszerkesztő"
 
-#: ../ui/home_page.py:478
+#: ../ui/home_page.py:484
 #, python-format
 msgid "%s: %s applications"
 msgstr "%s: %s alkalmazások"
 
-#: ../ui/home_page.py:660
+#: ../ui/home_page.py:666
 #, python-format
 msgid "%s > %s : %s applications"
 msgstr "%s > %s : %s alkalmazások"
 
-#: ../ui/home_page.py:716 ../ui/software_center.py:789
+#: ../ui/home_page.py:722 ../ui/software_center.py:789
 msgid "Home"
 msgstr "Home"
 
-#: ../ui/home_page.py:756
+#: ../ui/home_page.py:762
 msgid "Recommendations"
 msgstr "Ajánlatok"
 
-#: ../ui/home_page.py:756
+#: ../ui/home_page.py:762
 msgid "Topics"
 msgstr "Témák"
 
-#: ../ui/home_page.py:756
+#: ../ui/home_page.py:762
 msgid "Download rank"
 msgstr "Letöltési rang"
 
@@ -813,7 +813,7 @@ msgstr "Csomaglista adatbázis generálása..."
 
 #: ../ui/software_center.py:446
 msgid "Package lists refreshed completely."
-msgstr ""
+msgstr "Csomaglista frissítése kész."
 
 #: ../ui/software_center.py:458
 msgid "Failed to refresh package lists."
@@ -841,7 +841,7 @@ msgstr "A kért csomag \"%s\" nem található a csomaglistában."
 
 #: ../ui/software_center.py:478
 msgid "Refresh package lists again and try again."
-msgstr ""
+msgstr "Frissítse a csomaglistákat és próbálja újra."
 
 #: ../ui/software_center.py:770
 msgid "Join us"
@@ -853,7 +853,7 @@ msgstr "Telepítés"
 
 #: ../ui/software_center.py:816 ../ui/preference.py:568
 msgid "Refresh package lists"
-msgstr ""
+msgstr "Frissítése a csomaglistát"
 
 #: ../ui/software_center.py:817
 msgid "Open download directory"
@@ -913,7 +913,7 @@ msgstr "Letöltési beállítások"
 
 #: ../ui/preference.py:500
 msgid "Maximum number of download tasks: "
-msgstr ""
+msgstr "Maximum letöltések száma:"
 
 #: ../ui/preference.py:510
 msgid "Download directory: "
@@ -937,7 +937,7 @@ msgstr "Sikeresen"
 
 #: ../ui/preference.py:571
 msgid "Upgrade automatically"
-msgstr ""
+msgstr "Automatikus frissítés"
 
 #: ../ui/preference.py:575
 msgid "Time interval: "

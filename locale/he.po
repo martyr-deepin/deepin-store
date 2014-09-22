@@ -3,71 +3,68 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# kangur <kangurwa@onet.pl>, 2014
-# Piotr Strębski <strebski@o2.pl>, 2014
-# suore <suore@outlook.com>, 2014
-# suore <suore@outlook.com>, 2014
+# Yuval Bar-On <hyuvii@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-10 09:41+0800\n"
-"PO-Revision-Date: 2014-09-16 09:01+0000\n"
-"Last-Translator: Piotr Strębski <strebski@o2.pl>\n"
-"Language-Team: Polish (Poland) (http://www.transifex.com/projects/p/deepin-store/language/pl_PL/)\n"
+"PO-Revision-Date: 2014-09-10 04:04+0000\n"
+"Last-Translator: snyh <snyh@snyh.org>\n"
+"Language-Team: Hebrew (http://www.transifex.com/projects/p/deepin-store/language/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pl_PL\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: he\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../ui/detail_page.py:179
 msgid "Popular recommendations"
-msgstr "Popularne rekomendacje"
+msgstr "המלצות פופולריות"
 
 #: ../ui/detail_page.py:240 ../ui/detail_page.py:494
 msgid "Loading comments..."
-msgstr "Wczytuję komentarze... "
+msgstr "טוען תגובות..."
 
 #: ../ui/detail_page.py:358
 #, python-format
 msgid "Download: %s"
-msgstr "Pobierz: %s"
+msgstr "הורדות: %s"
 
 #: ../ui/detail_page.py:389
 msgid "Category: "
-msgstr "Kategoria:"
+msgstr "קטגוריה"
 
 #: ../ui/detail_page.py:393
 #, python-format
 msgid "Version: %s"
-msgstr "Wersja: %s"
+msgstr "גרסא: %s"
 
 #: ../ui/detail_page.py:394
 msgid "Download: 0"
-msgstr "Pobrano: 0"
+msgstr "הורדות: 0"
 
 #: ../ui/detail_page.py:395
 msgid "Size: calculating..."
-msgstr "Rozmiar: obliczanie..."
+msgstr "גודל: מחשב..."
 
 #: ../ui/detail_page.py:399
 msgid "Visit Homepage"
-msgstr "Odwiedź stronę domową"
+msgstr "בקר באתר הבית"
 
 #: ../ui/detail_page.py:444 ../ui/download_rank_page.py:369
 #: ../ui/home_page.py:1086 ../ui/album_page.py:483 ../ui/search_page.py:274
 msgid "Not found"
-msgstr "Nie znaleziono"
+msgstr "לא נמצא"
 
 #: ../ui/detail_page.py:450
 msgid "Successfully installed"
-msgstr "Pomyślnie zainstalowano"
+msgstr "הותקן בהצלחה"
 
 #: ../ui/detail_page.py:473
 #, python-format
 msgid "Size: %s"
-msgstr "Rozmiar: %s"
+msgstr "גודל: %s"
 
 #: ../ui/detail_page.py:611
 msgid "Powered by UpYun.com"
@@ -76,24 +73,24 @@ msgstr ""
 #: ../ui/uninstall_page.py:175
 #, python-format
 msgid "%s applications can be uninstalled"
-msgstr "%s aplikacji zostanie usuniętych"
+msgstr "%s תוכנות אינן ניתנות למחיקה"
 
 #: ../ui/uninstall_page.py:515 ../ui/uninstall_page.py:598
 msgid "Waiting for uninstall"
-msgstr "Czekanie na odinstalowanie"
+msgstr "ממתין להסרה"
 
 #: ../ui/uninstall_page.py:605 ../ui/uninstall_page.py:612
 msgid "Uninstalling"
-msgstr "Usuwanie"
+msgstr "מסיר"
 
 #: ../ui/uninstall_page.py:619
 msgid "Uninstallation completed"
-msgstr "Ukończono odinstalowywanie"
+msgstr "ההסרה הושלמה"
 
 #: ../ui/start_desktop_window.py:227 ../ui/software_center.py:131
 #, python-format
 msgid "%s: request for starting applications sent"
-msgstr ""
+msgstr "%s: בקשה להתחיל את התוכנות נשלחה"
 
 #: ../ui/inhibit.py:54
 msgid ""
@@ -104,84 +101,84 @@ msgstr ""
 #: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
 #: ../ui/software_center.py:790
 msgid "Upgrade"
-msgstr "Aktualizuj "
+msgstr "שדרוג"
 
 #: ../ui/dsc-daemon.py:284
 #, python-format
 msgid ""
 "There are %s packages needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
-msgstr ""
+msgstr "ישנן %s חבילות אשר צריכות להתעדכן. אנא השתמש בחנות של Deepin על מנת לעשות זאת"
 
 #: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
 #: ../ui/software_center.py:733 ../ui/preference.py:433
 msgid "Deepin Store"
-msgstr "Sklep Deepin"
+msgstr "חנות Deepin"
 
 #: ../ui/dsc-daemon.py:288
 #, python-format
 msgid ""
 "There is %s package needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
-msgstr ""
+msgstr "ישנה %s חבילה אשר צריכה להתעדכן. אנא השתמש "
 
 #: ../ui/install_page.py:146
 #, python-format
 msgid "%s applications are being installed"
-msgstr "%s aplikacji zosanie zainstalowanych"
+msgstr "%s תוכנות מותקנות עכשיו"
 
 #: ../ui/install_page.py:313 ../ui/install_page.py:744
 #: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
 msgid "Dependencies analyzing"
-msgstr "Analizowanie zależności"
+msgstr "מנתח חבילות תלויות"
 
 #: ../ui/install_page.py:511 ../ui/install_page.py:516
 #: ../ui/download_rank_page.py:374 ../ui/home_page.py:1091 ../ui/utils.py:360
 #: ../ui/album_page.py:488 ../ui/search_page.py:279
 msgid "Installed"
-msgstr "Zainstalowano"
+msgstr "מותקן"
 
 #: ../ui/install_page.py:665 ../ui/install_page.py:676
 msgid "Download was interrupted"
-msgstr "Pobieranie zostało przerwane"
+msgstr "ההורדה הופרעה באמצע"
 
 #: ../ui/install_page.py:689
 msgid "Installation was interrupted"
-msgstr "Instalacja została przerwana"
+msgstr "ההתקנה הופרעה באמצע"
 
 #: ../ui/install_page.py:751 ../ui/upgrade_page.py:1495
 #: ../ui/upgrade_page.py:1614
 msgid "Waiting for download"
-msgstr "Czeka do pobrania"
+msgstr "ממתין להורדה"
 
 #: ../ui/install_page.py:758 ../ui/upgrade_page.py:1621
 msgid "Downloading"
-msgstr "Pobieranie"
+msgstr "מוריד"
 
 #: ../ui/install_page.py:765
 msgid "Download failed"
-msgstr "Błąd pobierania"
+msgstr "ההורדה נכשלה"
 
 #: ../ui/install_page.py:781
 msgid "Waiting for installation"
-msgstr "Oczekiwanie na instalację"
+msgstr "מחכה להתקנה"
 
 #: ../ui/install_page.py:791 ../ui/upgrade_page.py:1647
 msgid "Dependencies analysis failed"
-msgstr "Błąd analizy zależności"
+msgstr "ניתוח חבילות תלויות נכשל"
 
 #: ../ui/install_page.py:800 ../ui/install_page.py:807
 msgid "Installing"
-msgstr "Instalowanie"
+msgstr "מתקין"
 
 #: ../ui/install_page.py:816
 msgid "Installation completed"
-msgstr "Instalacja została ukończona"
+msgstr "ההתקנה הושלמה"
 
 #: ../ui/upgrade_page.py:78 ../ui/upgrade_page.py:107
 #: ../ui/upgrade_page.py:340
 msgid "Last system upgraded time: "
-msgstr "Data ostatniej aktualizacji systemu:"
+msgstr "זמן עדכון אחרון:"
 
 #: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
 #, python-format
@@ -190,85 +187,85 @@ msgstr ""
 
 #: ../ui/upgrade_page.py:182
 msgid "Upgrade applications selected"
-msgstr ""
+msgstr "עדכן את התוכנות המסומנות"
 
 #: ../ui/upgrade_page.py:204
 #, python-format
 msgid "%s applications are available for upgrade"
-msgstr "%s aplikacji wymaga aktualizacji"
+msgstr "%s  עדכונים זמינים לתוכנות"
 
 #: ../ui/upgrade_page.py:238 ../ui/item_render.py:46
 msgid "Remind again"
-msgstr "Przypomnij ponownie"
+msgstr "הזכר שנית"
 
 #: ../ui/upgrade_page.py:272
 #, python-format
 msgid "%s applications are not being watched"
-msgstr "%s aplikacji nie zostało obejrzanych"
+msgstr "%s תוכנות אינן תחת מעקב"
 
 #: ../ui/upgrade_page.py:289
 msgid "Shut down the computer after upgraded"
-msgstr "Wyłącz komputer po aktualizacji"
+msgstr "אתחל את המחשב לאחר עדכון"
 
 #: ../ui/upgrade_page.py:304
 msgid "This function is invalid without Deepin System Settings installed."
-msgstr ""
+msgstr "פונקציה זו אינה תקינה ללא מערכת הגדרות Deepin מותקנת"
 
 #: ../ui/upgrade_page.py:306
 msgid "Deepin Desktop Environment is not installed, this function is invalid!"
-msgstr ""
+msgstr "סביבת שולחן העבודה של Deepin איננה מותקנת, הפונקציה אינה תקינה!"
 
 #: ../ui/upgrade_page.py:308
 msgid "The system is not Deepin, this function is invalid."
-msgstr ""
+msgstr "המערכת איננה Deepin, הפונקציה איננה תקינה"
 
 #: ../ui/upgrade_page.py:328
 msgid "Downloading upgrade packages"
-msgstr "Pobieranie pakietów aktualizacji"
+msgstr ""
 
 #: ../ui/upgrade_page.py:335
 msgid "Last time of refreshed package lists: "
-msgstr "Data ostatniego odświeżenia listy pakietów:"
+msgstr ""
 
 #: ../ui/upgrade_page.py:345
 msgid "Mirror Receiving: "
-msgstr ""
+msgstr "מקבל מ-Mirror:"
 
 #: ../ui/upgrade_page.py:399
 msgid "Failed to download upgrade packages"
-msgstr "Błąd pobierania pakietów aktualizacji"
+msgstr ""
 
 #: ../ui/upgrade_page.py:401
 msgid "The requested package does not exist on server."
-msgstr ""
+msgstr "החבילה שהתבקשה איננה קיימת על השרת"
 
 #: ../ui/upgrade_page.py:402 ../ui/upgrade_page.py:423
 #: ../ui/upgrade_page.py:446
 msgid "Suggest to "
-msgstr "Proponuję"
+msgstr "הצע"
 
 #: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
 #: ../ui/upgrade_page.py:447
 msgid "refresh package lists"
-msgstr "odśwież listy pakietów "
+msgstr ""
 
 #: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
 #: ../ui/upgrade_page.py:448
 msgid " and try again."
-msgstr "i spróbuj ponownie."
+msgstr "ונסה שנית"
 
 #: ../ui/upgrade_page.py:419 ../ui/upgrade_page.py:1120
 msgid "Failed to install upgrade packages"
-msgstr "Błąd instalacji pakietów aktualizacji"
+msgstr ""
 
 #: ../ui/upgrade_page.py:421
 msgid ""
 "This problem occurs due to corrupted local apt dependency relationship."
-msgstr ""
+msgstr "This problem occurs due to corrupted local apt dependency relationship."
 
 #: ../ui/upgrade_page.py:440
 msgid "Warning"
-msgstr "Uwaga"
+msgstr "אזהרה"
 
 #: ../ui/upgrade_page.py:442
 msgid ""
@@ -278,19 +275,19 @@ msgstr ""
 
 #: ../ui/upgrade_page.py:483
 msgid "If the prompt occurs again, you could "
-msgstr ""
+msgstr "אם ההודעה מופיעה שוב, אתה יכול"
 
 #: ../ui/upgrade_page.py:484 ../ui/upgrade_page.py:510
 msgid "send error report"
-msgstr "wyślij raport błędu"
+msgstr "שלח דו\"ח שגיאה"
 
 #: ../ui/upgrade_page.py:485
 msgid "."
-msgstr "."
+msgstr "-"
 
 #: ../ui/upgrade_page.py:498
 msgid "Uploading error log"
-msgstr "Wysyłanie dziennika błędów"
+msgstr "מעלה דו\"ח שגיאה"
 
 #: ../ui/upgrade_page.py:503
 msgid "The error was successfully reported and will be handled soon."
@@ -298,12 +295,12 @@ msgstr ""
 
 #: ../ui/upgrade_page.py:509
 msgid "Failed to send the error report. You could try again."
-msgstr ""
+msgstr "נכשל בשליחת הודעת שגיאה. אתה יכול לנסות שנית"
 
 #: ../ui/upgrade_page.py:663
 msgid ""
 "This problem occurs due to corrupted local apt dependence relationship."
-msgstr ""
+msgstr "This problem occurs due to corrupted local apt dependence relationship."
 
 #: ../ui/upgrade_page.py:668
 #, python-format
@@ -312,469 +309,469 @@ msgstr ""
 
 #: ../ui/upgrade_page.py:1094
 msgid "Finished analyzing dependencies."
-msgstr "Zakończyłem analizę zależności."
+msgstr "סיים לנתח חבילות תלויות"
 
 #: ../ui/upgrade_page.py:1097
 msgid "Download has started"
-msgstr "Pobieranie rozpoczęte"
+msgstr "ההורדה החלה"
 
 #: ../ui/upgrade_page.py:1103
 #, python-format
 msgid "Completed: %s/%s (%s/%s) Download Rate: %s/s"
-msgstr ""
+msgstr "השלים: %s/%s (%s/%s) קצב הורדה: %s/s"
 
 #: ../ui/upgrade_page.py:1113
 msgid "Download finished."
-msgstr "Pobieranie zakończone."
+msgstr "ההורדה הושלמה"
 
 #: ../ui/upgrade_page.py:1117
 msgid "Download stopped."
-msgstr "Pobieranie przerwane."
+msgstr "ההורדה הופסקה"
 
 #: ../ui/upgrade_page.py:1124
 msgid "Installing upgrade packages"
-msgstr "Instalowanie pakietów aktualizacji"
+msgstr ""
 
 #: ../ui/upgrade_page.py:1125
 msgid "Upgrading..."
-msgstr "Aktualizowanie..."
+msgstr ""
 
 #: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
 msgid "Upgrade completed"
-msgstr "Aktualizacja ukończona"
+msgstr "השדרוג הושלם"
 
 #: ../ui/upgrade_page.py:1637
 msgid "Waiting for upgrade"
-msgstr "Oczekiwanie na aktualizację"
+msgstr "ממתין לעדכון"
 
 #: ../ui/upgrade_page.py:1656 ../ui/upgrade_page.py:1663
 msgid "Upgrading"
-msgstr "Aktualizowanie"
+msgstr "מעדכן"
 
 #: ../ui/download_rank_page.py:61
 msgid "Top 25 weekly"
-msgstr "25 najlepszych w tygodniu"
+msgstr "25 הטובים ביותר השבוע"
 
 #: ../ui/download_rank_page.py:61
 msgid "Top 25 monthly"
-msgstr "25 najlepszych w miesiącu"
+msgstr "25 הטובים ביותר החודש"
 
 #: ../ui/download_rank_page.py:61
 msgid "Top 25 totally"
-msgstr ""
+msgstr "ה-25 הטובים ביותר סה\"כ"
 
 #: ../ui/category_info.py:26
 msgid "Internet"
-msgstr "Internet"
+msgstr "אינטרנט"
 
 #: ../ui/category_info.py:27
 msgid "Browser"
-msgstr "Przeglądarka"
+msgstr "דפדפן"
 
 #: ../ui/category_info.py:28
 msgid "Instant messaging"
-msgstr "Komunikatory"
+msgstr "מסרים מיידיים"
 
 #: ../ui/category_info.py:29
 msgid "Email"
-msgstr "E-mail"
+msgstr "דואר אלקטרוני"
 
 #: ../ui/category_info.py:30
 msgid "File transfer"
-msgstr "Przekaz plików"
+msgstr "העברת קבצים"
 
 #: ../ui/category_info.py:31
 msgid "News"
-msgstr "Wiadomości"
+msgstr "חדשות"
 
 #: ../ui/category_info.py:32
 msgid "Remote access"
-msgstr "Zdalny dostęp"
+msgstr "נגישות מרחוק"
 
 #: ../ui/category_info.py:33
 msgid "Security"
-msgstr "Bezpieczeństwo"
+msgstr "אבטחה"
 
 #: ../ui/category_info.py:34
 msgid "Miscellaneous"
-msgstr "Rozmaity"
+msgstr "שונות"
 
 #: ../ui/category_info.py:35
 msgid "Multimedia"
-msgstr "Multimedia"
+msgstr "מולטימדיה"
 
 #: ../ui/category_info.py:36
 msgid "Audiovideo"
-msgstr "Audio-wideo"
+msgstr "שמע ווידאו"
 
 #: ../ui/category_info.py:37
 msgid "Media Editing"
-msgstr "Edycja plików mediów"
+msgstr "עריכת מדיה"
 
 #: ../ui/category_info.py:38
 msgid "Disc burner"
-msgstr "Nagrywanie płyt"
+msgstr "צורב דיסקים"
 
 #: ../ui/category_info.py:39
 msgid "MIDI"
-msgstr ".MIDI"
+msgstr "MIDI"
 
 #: ../ui/category_info.py:40
 msgid "Mixer"
-msgstr "Mikser"
+msgstr "מיקסר"
 
 #: ../ui/category_info.py:41
 msgid "Player"
-msgstr "Odtwarzacz"
+msgstr "נגן"
 
 #: ../ui/category_info.py:42
 msgid "Recorder"
-msgstr "Rejestrator"
+msgstr "מקליט"
 
 #: ../ui/category_info.py:43
 msgid "Sequencer"
-msgstr "Sekwencer"
+msgstr "סקוונסר"
 
 #: ../ui/category_info.py:44
 msgid "Tuner"
-msgstr "Tuner"
+msgstr "מכוון"
 
 #: ../ui/category_info.py:45
 msgid "Games"
-msgstr "Gry"
+msgstr "משחקים"
 
 #: ../ui/category_info.py:46
 msgid "Action games"
-msgstr "Gry akcji"
+msgstr "משחקי אקשן"
 
 #: ../ui/category_info.py:47
 msgid "Advernture games"
-msgstr "Gry przygodowe"
+msgstr "משחקי הרפתקאות"
 
 #: ../ui/category_info.py:48
 msgid "Arcade games"
-msgstr "Gry platformowe"
+msgstr "משחקי ארקייד"
 
 #: ../ui/category_info.py:49
 msgid "Board games"
-msgstr "Gry planszowe"
+msgstr "משחקי לוח"
 
 #: ../ui/category_info.py:50
 msgid "Card games"
-msgstr "Gry karciane"
+msgstr "משחקי קלפים"
 
 #: ../ui/category_info.py:51
 msgid "Emulator"
-msgstr "Emulator"
+msgstr "אמולטור"
 
 #: ../ui/category_info.py:52
 msgid "Kids games"
-msgstr "Gry dla dzieci"
+msgstr "משחקי ילדים"
 
 #: ../ui/category_info.py:53
 msgid "Logic games"
-msgstr "Gry logiczne"
+msgstr "משחקי לוגיקה"
 
 #: ../ui/category_info.py:54
 msgid "Puzzle games"
-msgstr "Do układania"
+msgstr "משחקי פאזל"
 
 #: ../ui/category_info.py:55
 msgid "Role-playing games"
-msgstr "Gry fabularne"
+msgstr "משחקי תפקידים"
 
 #: ../ui/category_info.py:56
 msgid "Sports games"
-msgstr "Gry sportowe"
+msgstr "משחקי ספורט"
 
 #: ../ui/category_info.py:57
 msgid "Strategy games"
-msgstr "Gry strategiczne"
+msgstr "משחקי אסטרטגיה"
 
 #: ../ui/category_info.py:58
 msgid "Graphics"
-msgstr "Grafika"
+msgstr "גרפיקה"
 
 #: ../ui/category_info.py:59
 msgid "2D graphics"
-msgstr "Grafika 2D"
+msgstr "גרפיקה 2D"
 
 #: ../ui/category_info.py:60
 msgid "3D graphics"
-msgstr "Grafika 3D"
+msgstr "גרפיקה 3D"
 
 #: ../ui/category_info.py:61
 msgid "Image processing"
-msgstr "Przetwarzanie obrazu"
+msgstr "עיבוד תמונות"
 
 #: ../ui/category_info.py:62
 msgid "Photography"
-msgstr "Zdjęcie"
+msgstr "צילום"
 
 #: ../ui/category_info.py:63
 msgid "Vector graphics"
-msgstr "Grafika wektorowa"
+msgstr "גרפיקה וקטורית"
 
 #: ../ui/category_info.py:64
 msgid "Viewer"
-msgstr "Przeglądarki"
+msgstr "תוכנת צפייה"
 
 #: ../ui/category_info.py:65
 msgid "Productivity"
-msgstr "Wydajność"
+msgstr "פרודקטיביות"
 
 #: ../ui/category_info.py:66
 msgid "Office"
-msgstr "Biuro"
+msgstr "משרדי"
 
 #: ../ui/category_info.py:67
 msgid "Scanning printing"
-msgstr "Skanowanie drukowanie"
+msgstr "סריקה והדפסה"
 
 #: ../ui/category_info.py:68
 msgid "Industry"
-msgstr "Przemysł"
+msgstr "תעשייה"
 
 #: ../ui/category_info.py:69
 msgid "Engineering"
-msgstr "Inżynieria"
+msgstr "הנדסה ותכנון"
 
 #: ../ui/category_info.py:70
 msgid "Finance"
-msgstr "Finanse"
+msgstr "כספים"
 
 #: ../ui/category_info.py:71
 msgid "Ham radio"
-msgstr "Domowe Radio"
+msgstr "רדיו חובבים"
 
 #: ../ui/category_info.py:72
 msgid "Medical"
-msgstr "Medyczne"
+msgstr "רפואי"
 
 #: ../ui/category_info.py:73
 msgid "Publishing"
-msgstr "Wydawnictwo"
+msgstr "הוצאה לאור"
 
 #: ../ui/category_info.py:74
 msgid "Science Education"
-msgstr "Edukacja naukowa"
+msgstr "חינוך מדעי"
 
 #: ../ui/category_info.py:75
 msgid "Languages"
-msgstr "Języki"
+msgstr "שפות"
 
 #: ../ui/category_info.py:76
 msgid "Religion"
-msgstr "Wiara"
+msgstr "דת"
 
 #: ../ui/category_info.py:77
 msgid "Science"
-msgstr "Nauka"
+msgstr "מדע"
 
 #: ../ui/category_info.py:78
 msgid "Development"
-msgstr "Rozwój"
+msgstr "פיתוח"
 
 #: ../ui/category_info.py:79
 msgid "Database"
-msgstr "Baza danych"
+msgstr "מאגר מידע"
 
 #: ../ui/category_info.py:80
 msgid "Debugging"
-msgstr "Debugowanie"
+msgstr "דיבאגינג"
 
 #: ../ui/category_info.py:81
 msgid "IDE"
-msgstr "IDE/ZŚP"
+msgstr "IDE"
 
 #: ../ui/category_info.py:82
 msgid "Software development"
-msgstr "Rozwój oprogramowania"
+msgstr "פיתוח תוכנה"
 
 #: ../ui/category_info.py:83
 msgid "Version control"
-msgstr "Kontrola wersji"
+msgstr "בקרת גרסאות"
 
 #: ../ui/category_info.py:84
 msgid "Web development"
-msgstr "Rozwój sieci"
+msgstr "פיתוח ווב"
 
 #: ../ui/category_info.py:85
 msgid "System"
-msgstr "System"
+msgstr "מערכת"
 
 #: ../ui/category_info.py:86
 msgid "Desktop environment"
-msgstr "Środowisko graficzne"
+msgstr "סביבת שולחן העבודה"
 
 #: ../ui/category_info.py:87
 msgid "Monitor"
-msgstr "Monitor"
+msgstr "בקרה"
 
 #: ../ui/category_info.py:88
 msgid "Network"
-msgstr "Sieć"
+msgstr "רשת"
 
 #: ../ui/category_info.py:89
 msgid "Package manager"
-msgstr "Menedżer pakietów"
+msgstr "ניהול חבילות"
 
 #: ../ui/category_info.py:90
 msgid "Settings"
-msgstr "Ustawienia"
+msgstr "הגדרות"
 
 #: ../ui/category_info.py:91
 msgid "Virtualization"
-msgstr "Wirtualizacja"
+msgstr "וירטואליזציה"
 
 #: ../ui/category_info.py:92
 msgid "Window manager"
-msgstr "Menedżer okien"
+msgstr "מנהל חלונות"
 
 #: ../ui/category_info.py:93
 msgid "Utilities"
-msgstr "Użytkowe"
+msgstr "שימושי"
 
 #: ../ui/category_info.py:94
 msgid "Accessories"
-msgstr "Akcesoria"
+msgstr "אבזרים"
 
 #: ../ui/category_info.py:95
 msgid "Archiving"
-msgstr "Archiwizacja"
+msgstr "כיווץ ואחסון"
 
 #: ../ui/category_info.py:96
 msgid "Emulation"
-msgstr "Emulacja"
+msgstr "אמולציה"
 
 #: ../ui/category_info.py:97
 msgid "File manager"
-msgstr "Menedżer plików"
+msgstr "מנהל קבצים"
 
 #: ../ui/category_info.py:98
 msgid "Screensaver"
-msgstr "Wygaszacz ekranu"
+msgstr "שומר מסך"
 
 #: ../ui/category_info.py:99
 msgid "Terminal emulator"
-msgstr "Emulator terminala"
+msgstr "מסוף"
 
 #: ../ui/category_info.py:100
 msgid "Text editor"
-msgstr "Edytor tekstu"
+msgstr "עורך טקסט"
 
 #: ../ui/home_page.py:484
 #, python-format
 msgid "%s: %s applications"
-msgstr "%s: %s aplikacji"
+msgstr "%s: %s תוכנות"
 
 #: ../ui/home_page.py:666
 #, python-format
 msgid "%s > %s : %s applications"
-msgstr "%s > %s : %s aplikacji"
+msgstr "%s > %s : %s תוכנות"
 
 #: ../ui/home_page.py:722 ../ui/software_center.py:789
 msgid "Home"
-msgstr "Katalog domowy"
+msgstr "עמוד הבית"
 
 #: ../ui/home_page.py:762
 msgid "Recommendations"
-msgstr "Polecane"
+msgstr "המלצות"
 
 #: ../ui/home_page.py:762
 msgid "Topics"
-msgstr "Tematy"
+msgstr "נושאים"
 
 #: ../ui/home_page.py:762
 msgid "Download rank"
-msgstr "Ranking pobieralni"
+msgstr "ציון הורדה"
 
 #: ../ui/widgets.py:66
 msgid "Just now"
-msgstr "Właśnie teraz"
+msgstr "כרגע"
 
 #: ../ui/widgets.py:71
 msgid "One minute ago"
-msgstr "Minutę temu"
+msgstr "לפני דקה"
 
 #: ../ui/widgets.py:73
 #, python-format
 msgid "%s minutes ago"
-msgstr "%s minut temu"
+msgstr "לפני %s דקות"
 
 #: ../ui/widgets.py:78
 msgid "One hour ago"
-msgstr "Godzinę temu"
+msgstr "לפני שעה"
 
 #: ../ui/widgets.py:80
 #, python-format
 msgid "%s hours ago"
-msgstr "%s godzin temu"
+msgstr "לפני %s שעות"
 
 #: ../ui/widgets.py:84
 msgid "Yesterday"
-msgstr "Wczoraj"
+msgstr "אתמול"
 
 #: ../ui/widgets.py:295 ../ui/widgets.py:369
 msgid "Click to refresh"
-msgstr "Kliknij, aby odświeżyć"
+msgstr "לחץ לרענן"
 
 #: ../ui/widgets.py:462 ../ui/preference.py:782
 msgid "OK"
-msgstr "OK"
+msgstr "אישור"
 
 #: ../ui/widgets.py:463 ../ui/preference.py:784
 msgid "Cancel"
-msgstr "Anuluj"
+msgstr "ביטול"
 
 #: ../ui/utils.py:355
 msgid "Running"
-msgstr "Uruchamiam"
+msgstr "פועל"
 
 #: ../ui/utils.py:356
 msgid "Preparing"
-msgstr "Przygotowuje"
+msgstr "מתכונן"
 
 #: ../ui/utils.py:357
 msgid "Unpacking"
-msgstr "Rozpakowuje"
+msgstr "מחלץ"
 
 #: ../ui/utils.py:358
 msgid "Preparing to configure"
-msgstr "Przygotowuje do skonfigurowania"
+msgstr "מתכונן להגדיר"
 
 #: ../ui/utils.py:359
 msgid "Configuring"
-msgstr "Konfiguruje"
+msgstr "מגדיר"
 
 #: ../ui/utils.py:370
 msgid "Err"
-msgstr ""
+msgstr "Err"
 
 #: ../ui/utils.py:371
 msgid "Ign"
-msgstr ""
+msgstr "Ign"
 
 #: ../ui/utils.py:372
 msgid "Get"
-msgstr ""
+msgstr "השג"
 
 #: ../ui/utils.py:373
 msgid "Hit"
-msgstr ""
+msgstr "פגע"
 
 #: ../ui/software_center.py:127
 #, python-format
 msgid "%s haven't any desktop file"
-msgstr "%s niema żadnej ikony"
+msgstr "ל-%s אין קובץ על שולחן העבודה"
 
 #: ../ui/software_center.py:194
 msgid "Sending rating..."
-msgstr "Przesyłanie oceny..."
+msgstr "שולח דירוג..."
 
 #: ../ui/software_center.py:198
 msgid "You have already scored.  ;)"
-msgstr "Już oceniałeś ;)"
+msgstr "כבר זכית ;)"
 
 #: ../ui/software_center.py:204
 msgid "Rated successfully. Thanks for your involvement."
@@ -782,34 +779,34 @@ msgstr ""
 
 #: ../ui/software_center.py:220
 msgid "Rating failed. Please check your network connection!"
-msgstr ""
+msgstr "הדירוג נכשל. אנא בדוק את החיבור שלך לרשת"
 
 #: ../ui/software_center.py:385
 #, python-format
 msgid "Uninstall %s Successfully."
-msgstr "Usunołem %s pomyślnie."
+msgstr "הסרת %s הושלמה בהצלחה"
 
 #: ../ui/software_center.py:385 ../ui/software_center.py:791
 msgid "Uninstall"
-msgstr "Usuń"
+msgstr "הסרה"
 
 #: ../ui/software_center.py:391
 #, python-format
 msgid "%s packages upgrade successfully."
-msgstr "%s pakietów zostało pomyślnie zaktualizowanych."
+msgstr "%s חבילות שודרגו בהצלחה"
 
 #: ../ui/software_center.py:394
 #, python-format
 msgid "Install %s Successfully."
-msgstr "Zainstalowałem %s pomyślna."
+msgstr "התקנת %s הושלמה בהצלחה"
 
 #: ../ui/software_center.py:394
 msgid "Install"
-msgstr "Instaluj"
+msgstr "התקן"
 
 #: ../ui/software_center.py:438
 msgid "Generating package list database..."
-msgstr "Tworzenie bazy danych list pakietów..."
+msgstr "מייצר רשימת חבילות למאגר נתונים..."
 
 #: ../ui/software_center.py:446
 msgid "Package lists refreshed completely."
@@ -817,80 +814,80 @@ msgstr ""
 
 #: ../ui/software_center.py:458
 msgid "Failed to refresh package lists."
-msgstr "Błąd odświeżania listy pakietów."
+msgstr "נכשל ברענון רשימת חבילות"
 
 #: ../ui/software_center.py:459
 msgid "Try again"
-msgstr "Spróbuj ponownie"
+msgstr "נסה שוב"
 
 #: ../ui/software_center.py:469
 #, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted."
-msgstr ""
+msgstr "נוצרה בעיה במהלך ניתוח חבילות תלויות עבור %s. ההתקנה בוטלה"
 
 #: ../ui/software_center.py:472
 #, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
-msgstr ""
+msgstr "נוצרה בעיה במהלך ניתוח חבילות תלויות עבור %s. השדרוג בוטל"
 
 #: ../ui/software_center.py:477
 #, python-format
 msgid "The requested package \"%s\" was not found in the package list."
-msgstr "Pakiet \"%s\" nie został znaleziony na liście pakietów."
+msgstr "החבילה שהתבקשה \"%s\" לא נמצאה ברשימת החבילות"
 
 #: ../ui/software_center.py:478
 msgid "Refresh package lists again and try again."
-msgstr "Odśwież listy pakietów i spróbuj ponownie."
+msgstr ""
 
 #: ../ui/software_center.py:770
 msgid "Join us"
-msgstr "Dołącz do nas"
+msgstr "הצטרף אלינו"
 
 #: ../ui/software_center.py:792
 msgid "Installation"
-msgstr "Instalacja"
+msgstr "התקנה"
 
 #: ../ui/software_center.py:816 ../ui/preference.py:568
 msgid "Refresh package lists"
-msgstr "Odśwież listy pakietów"
+msgstr ""
 
 #: ../ui/software_center.py:817
 msgid "Open download directory"
-msgstr "Otwórz katalog pobrań"
+msgstr "פתח את תיקיית ההורדות"
 
 #: ../ui/software_center.py:818
 msgid "Clear up cached packages"
-msgstr "Wyczyść pamięć podręczną pakietów"
+msgstr "נקה חבילות אשר נמצאות ב-cache"
 
 #: ../ui/software_center.py:819
 msgid "View new features"
-msgstr "Zobacz nowe możliwości"
+msgstr "צפה בתכונות חדשות"
 
 #: ../ui/software_center.py:820
 msgid "Preferences"
-msgstr "Ustawienia"
+msgstr "העדפות"
 
 #: ../ui/software_center.py:821
 msgid "Quit"
-msgstr "Wyjdź"
+msgstr "יציאה"
 
 #: ../ui/software_center.py:1123
 #, python-format
 msgid "You have cleared up %s packages and saved %s of space."
-msgstr ""
+msgstr "ניקית %s תוכנות וחסכת %s של שטח"
 
 #: ../ui/software_center.py:1125
 msgid "Your system cache is empty."
-msgstr "Pamięć podręczna Twojego systemu jest pusta."
+msgstr "ה-cache של המערכת ריק"
 
 #: ../ui/item_render.py:44
 msgid "No reminder"
-msgstr ""
+msgstr "אין תזכורת"
 
 #: ../ui/preference.py:438
 msgid "Version:"
-msgstr "Wersja:"
+msgstr "גרסא:"
 
 #: ../ui/preference.py:452
 msgid ""
@@ -901,15 +898,15 @@ msgstr ""
 
 #: ../ui/preference.py:477
 msgid "On uninstalling the software"
-msgstr ""
+msgstr "כאשר מסירים תוכנה"
 
 #: ../ui/preference.py:480
 msgid "Delete configuration files"
-msgstr "Usuń pliki konfiguracyjne"
+msgstr "מחק קבצי הגדרות"
 
 #: ../ui/preference.py:494
 msgid "Download settings"
-msgstr "Ustawienia pobierania"
+msgstr "הגדרות הורדה"
 
 #: ../ui/preference.py:500
 msgid "Maximum number of download tasks: "
@@ -917,23 +914,23 @@ msgstr ""
 
 #: ../ui/preference.py:510
 msgid "Download directory: "
-msgstr "Ścieżka do folderu pobrań"
+msgstr "תיקיית הורדות:"
 
 #: ../ui/preference.py:516
 msgid "Change"
-msgstr "Zmień"
+msgstr "שנה"
 
 #: ../ui/preference.py:551
 msgid "Select the best mirror"
-msgstr "Wybierz najlepsze źródło"
+msgstr "בחר את ה-Mirror הטוב ביותר"
 
 #: ../ui/preference.py:552
 msgid "Waiting"
-msgstr "Oczekiwanie"
+msgstr "ממתין"
 
 #: ../ui/preference.py:553
 msgid "Successfully"
-msgstr ""
+msgstr "בהצלחה"
 
 #: ../ui/preference.py:571
 msgid "Upgrade automatically"
@@ -941,42 +938,42 @@ msgstr ""
 
 #: ../ui/preference.py:575
 msgid "Time interval: "
-msgstr "Przedział czasu:"
+msgstr "מרווח זמן:"
 
 #: ../ui/preference.py:578
 msgid " hour"
-msgstr "godzina"
+msgstr "שעה"
 
 #: ../ui/preference.py:642
 msgid "Select mirror"
-msgstr "Wybierz źródło"
+msgstr "בחר mirror"
 
 #: ../ui/preference.py:705
 msgid "Select Directory"
-msgstr "Wybierz katalog"
+msgstr "בחר תיקייה"
 
 #: ../ui/preference.py:751
 msgid "Speed testing will finish only after one minute, please wait."
-msgstr ""
+msgstr "בדיקת מהירות תסתיים רק לאחר דקה אחת, אנא המתן"
 
 #: ../ui/preference.py:776
 #, python-format
 msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
-msgstr "Ukończono testowanie, najszybszym serwerem źródłowym jest \"%s\", przełączyć na niego?"
+msgstr "הבדיקה הושלמה, ה-Mirror המהיר ביותר הוא \"%s\", להחליף עכשיו?"
 
 #: ../ui/preference.py:829
 msgid "General"
-msgstr "Ogólny"
+msgstr "כללי"
 
 #: ../ui/preference.py:830
 msgid "Mirrors"
-msgstr "Lustra"
+msgstr "Mirrors"
 
 #: ../ui/preference.py:831
 msgid "About"
-msgstr "O nas"
+msgstr "אודות"
 
 #: ../ui/search_page.py:110
 #, python-format
 msgid "%s applications searched"
-msgstr ""
+msgstr "חיפש %s תוכנות"
