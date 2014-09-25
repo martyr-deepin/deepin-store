@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-10 09:41+0800\n"
-"PO-Revision-Date: 2014-09-10 12:37+0000\n"
+"PO-Revision-Date: 2014-09-26 19:40+0000\n"
 "Last-Translator: Maxximo88 <real.massimo@hotmail.it>\n"
 "Language-Team: Italian (http://www.transifex.com/projects/p/deepin-store/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -170,7 +170,7 @@ msgstr "Analisi dipendenze fallita"
 
 #: ../ui/install_page.py:800 ../ui/install_page.py:807
 msgid "Installing"
-msgstr "Installazione"
+msgstr "Installazione in corso"
 
 #: ../ui/install_page.py:816
 msgid "Installation completed"
@@ -847,7 +847,7 @@ msgstr "Unisciti a Noi"
 
 #: ../ui/software_center.py:792
 msgid "Installation"
-msgstr "Istallazione"
+msgstr "Installazione"
 
 #: ../ui/software_center.py:816 ../ui/preference.py:568
 msgid "Refresh package lists"

@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-10 09:41+0800\n"
-"PO-Revision-Date: 2014-09-16 09:01+0000\n"
+"PO-Revision-Date: 2014-09-23 10:41+0000\n"
 "Last-Translator: Piotr Strębski <strebski@o2.pl>\n"
 "Language-Team: Polish (Poland) (http://www.transifex.com/projects/p/deepin-store/language/pl_PL/)\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr "Popularne rekomendacje"
 
 #: ../ui/detail_page.py:240 ../ui/detail_page.py:494
 msgid "Loading comments..."
-msgstr "Wczytuję komentarze... "
+msgstr "Wczytywanie komentarzy... "
 
 #: ../ui/detail_page.py:358
 #, python-format
@@ -71,16 +71,16 @@ msgstr "Rozmiar: %s"
 
 #: ../ui/detail_page.py:611
 msgid "Powered by UpYun.com"
-msgstr ""
+msgstr "Zasilane przez UpYun.com"
 
 #: ../ui/uninstall_page.py:175
 #, python-format
 msgid "%s applications can be uninstalled"
-msgstr "%s aplikacji zostanie usuniętych"
+msgstr "%s programów zostanie usuniętych"
 
 #: ../ui/uninstall_page.py:515 ../ui/uninstall_page.py:598
 msgid "Waiting for uninstall"
-msgstr "Czekanie na odinstalowanie"
+msgstr "Oczekiwanie na odinstalowanie"
 
 #: ../ui/uninstall_page.py:605 ../ui/uninstall_page.py:612
 msgid "Uninstalling"
@@ -128,7 +128,7 @@ msgstr ""
 #: ../ui/install_page.py:146
 #, python-format
 msgid "%s applications are being installed"
-msgstr "%s aplikacji zosanie zainstalowanych"
+msgstr "%s programów zostanie zainstalowanych"
 
 #: ../ui/install_page.py:313 ../ui/install_page.py:744
 #: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
@@ -152,7 +152,7 @@ msgstr "Instalacja została przerwana"
 #: ../ui/install_page.py:751 ../ui/upgrade_page.py:1495
 #: ../ui/upgrade_page.py:1614
 msgid "Waiting for download"
-msgstr "Czeka do pobrania"
+msgstr "Oczekiwanie na pobranie"
 
 #: ../ui/install_page.py:758 ../ui/upgrade_page.py:1621
 msgid "Downloading"
@@ -190,7 +190,7 @@ msgstr ""
 
 #: ../ui/upgrade_page.py:182
 msgid "Upgrade applications selected"
-msgstr ""
+msgstr "Aktualizuj wybrane programy"
 
 #: ../ui/upgrade_page.py:204
 #, python-format
@@ -329,7 +329,7 @@ msgstr "Pobieranie zakończone."
 
 #: ../ui/upgrade_page.py:1117
 msgid "Download stopped."
-msgstr "Pobieranie przerwane."
+msgstr "Pobieranie zatrzymane."
 
 #: ../ui/upgrade_page.py:1124
 msgid "Installing upgrade packages"
@@ -361,7 +361,7 @@ msgstr "25 najlepszych w miesiącu"
 
 #: ../ui/download_rank_page.py:61
 msgid "Top 25 totally"
-msgstr ""
+msgstr "25 najlepszych ogólnie"
 
 #: ../ui/category_info.py:26
 msgid "Internet"
@@ -782,7 +782,7 @@ msgstr ""
 
 #: ../ui/software_center.py:220
 msgid "Rating failed. Please check your network connection!"
-msgstr ""
+msgstr "Błąd oceniania. Proszę sprawdzić połączenie internetowe!"
 
 #: ../ui/software_center.py:385
 #, python-format
@@ -813,7 +813,7 @@ msgstr "Tworzenie bazy danych list pakietów..."
 
 #: ../ui/software_center.py:446
 msgid "Package lists refreshed completely."
-msgstr ""
+msgstr "Ukończono odświeżanie listy pakietów."
 
 #: ../ui/software_center.py:458
 msgid "Failed to refresh package lists."
@@ -878,7 +878,7 @@ msgstr "Wyjdź"
 #: ../ui/software_center.py:1123
 #, python-format
 msgid "You have cleared up %s packages and saved %s of space."
-msgstr ""
+msgstr "Wyczyszczono %s pakietów i zaoszczędzono %s miejsca na dysku."
 
 #: ../ui/software_center.py:1125
 msgid "Your system cache is empty."
@@ -901,7 +901,7 @@ msgstr ""
 
 #: ../ui/preference.py:477
 msgid "On uninstalling the software"
-msgstr ""
+msgstr "O odinstalowywaniu oprogramowania"
 
 #: ../ui/preference.py:480
 msgid "Delete configuration files"
@@ -933,11 +933,11 @@ msgstr "Oczekiwanie"
 
 #: ../ui/preference.py:553
 msgid "Successfully"
-msgstr ""
+msgstr "Pomyślnie"
 
 #: ../ui/preference.py:571
 msgid "Upgrade automatically"
-msgstr ""
+msgstr "Aktualizuj automatycznie"
 
 #: ../ui/preference.py:575
 msgid "Time interval: "
@@ -957,7 +957,7 @@ msgstr "Wybierz katalog"
 
 #: ../ui/preference.py:751
 msgid "Speed testing will finish only after one minute, please wait."
-msgstr ""
+msgstr "Testowanie szybkości zakończy się już po minucie, prosimy zaczekać."
 
 #: ../ui/preference.py:776
 #, python-format
