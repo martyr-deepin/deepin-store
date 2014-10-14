@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-10 09:41+0800\n"
-"PO-Revision-Date: 2014-09-23 10:12+0000\n"
+"PO-Revision-Date: 2014-10-22 09:38+0000\n"
 "Last-Translator: szd_liufei <liufei@linuxdeepin.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/deepin-store/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -236,7 +236,7 @@ msgstr "最近刷新软件包列表的时间："
 
 #: ../ui/upgrade_page.py:345
 msgid "Mirror Receiving: "
-msgstr "接收的软件源："
+msgstr "接收的镜像源："
 
 #: ../ui/upgrade_page.py:399
 msgid "Failed to download upgrade packages"
@@ -929,7 +929,7 @@ msgstr "更改"
 
 #: ../ui/preference.py:551
 msgid "Select the best mirror"
-msgstr "选择最佳软件源"
+msgstr "选择最佳镜像源"
 
 #: ../ui/preference.py:552
 msgid "Waiting"
@@ -953,7 +953,7 @@ msgstr " 小时"
 
 #: ../ui/preference.py:642
 msgid "Select mirror"
-msgstr "选择软件源"
+msgstr "选择镜像源"
 
 #: ../ui/preference.py:705
 msgid "Select Directory"
@@ -974,7 +974,7 @@ msgstr "常规"
 
 #: ../ui/preference.py:830
 msgid "Mirrors"
-msgstr "软件源"
+msgstr "镜像源"
 
 #: ../ui/preference.py:831
 msgid "About"

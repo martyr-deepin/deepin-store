@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-10 09:41+0800\n"
-"PO-Revision-Date: 2014-09-23 10:12+0000\n"
+"PO-Revision-Date: 2014-10-20 14:21+0000\n"
 "Last-Translator: JimSp472000 <jimspentzos2000@gmail.com>\n"
 "Language-Team: Greek (Greece) (http://www.transifex.com/projects/p/deepin-store/language/el_GR/)\n"
 "MIME-Version: 1.0\n"
@@ -169,7 +169,7 @@ msgstr "Η ανάλυση εξαρτήσεων απέτυχε"
 
 #: ../ui/install_page.py:800 ../ui/install_page.py:807
 msgid "Installing"
-msgstr "Εγκατάσταση;"
+msgstr "Εγκατάσταση"
 
 #: ../ui/install_page.py:816
 msgid "Installation completed"
@@ -205,7 +205,7 @@ msgstr "%s εφαρμογές δεν παρακολουθούνται"
 
 #: ../ui/upgrade_page.py:289
 msgid "Shut down the computer after upgraded"
-msgstr "Τερματισμός λειτουργίας του υπολογιστής μετά την αναβάθμιση"
+msgstr "Τερματισμός λειτουργίας του υπολογιστή μετά την αναβάθμιση"
 
 #: ../ui/upgrade_page.py:304
 msgid "This function is invalid without Deepin System Settings installed."
@@ -247,7 +247,7 @@ msgstr "Πρόταση σε"
 #: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
 #: ../ui/upgrade_page.py:447
 msgid "refresh package lists"
-msgstr "ανανέωση λιστών πακέτων"
+msgstr "ανανεώσετε τις λίστες πακέτων"
 
 #: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
 #: ../ui/upgrade_page.py:448

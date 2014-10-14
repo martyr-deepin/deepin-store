@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Massimo Antonio Carofano <real.massimo@hotmail.it>, 2014
 # massimo.carofano <massimo.carofano@gmail.com>, 2014
 # Massimo Antonio Carofano <real.massimo@hotmail.it>, 2014
 msgid ""
@@ -10,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-10 09:41+0800\n"
-"PO-Revision-Date: 2014-09-26 19:40+0000\n"
+"PO-Revision-Date: 2014-10-22 19:31+0000\n"
 "Last-Translator: Massimo Antonio Carofano <real.massimo@hotmail.it>\n"
 "Language-Team: Italian (http://www.transifex.com/projects/p/deepin-store/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -141,7 +142,7 @@ msgstr "Installata"
 
 #: ../ui/install_page.py:665 ../ui/install_page.py:676
 msgid "Download was interrupted"
-msgstr "I download è stato interrotto"
+msgstr "Il download è stato interrotto"
 
 #: ../ui/install_page.py:689
 msgid "Installation was interrupted"
@@ -179,7 +180,7 @@ msgstr "Installazione completata"
 #: ../ui/upgrade_page.py:78 ../ui/upgrade_page.py:107
 #: ../ui/upgrade_page.py:340
 msgid "Last system upgraded time: "
-msgstr "Ultimo aggiornamento:"
+msgstr "Ultimo aggiornamento: "
 
 #: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
 #, python-format
@@ -210,7 +211,7 @@ msgstr "Spegni il computer dopo l'aggiornamento"
 
 #: ../ui/upgrade_page.py:304
 msgid "This function is invalid without Deepin System Settings installed."
-msgstr "Questa funzione non è valida senza il pannello di controllo Deepin installato."
+msgstr "Questa funzione non è valida senza il Deepin System Settings installato."
 
 #: ../ui/upgrade_page.py:306
 msgid "Deepin Desktop Environment is not installed, this function is invalid!"
@@ -226,11 +227,11 @@ msgstr "Download dei pacchetti di aggiornamento"
 
 #: ../ui/upgrade_page.py:335
 msgid "Last time of refreshed package lists: "
-msgstr "Ultimo refresh della lista pacchetti:"
+msgstr "Ultimo refresh della lista pacchetti: "
 
 #: ../ui/upgrade_page.py:345
 msgid "Mirror Receiving: "
-msgstr "Ricezione dal Mirror:"
+msgstr "Mirror utilizzato:"
 
 #: ../ui/upgrade_page.py:399
 msgid "Failed to download upgrade packages"
@@ -895,7 +896,7 @@ msgid ""
 "Deepin Store is a commonly used software center on Linux. We selected more than 2,600 excellent applications with many functions of installation and uninstalling, software repository and popular recommendations, which supports 1-click quick installation, multi-threaded download and clearing of cached packages. It provides topics for software introduction and shares good applications.\n"
 "\n"
 "Deepin Store is a free software licensed under GNU GPLv3."
-msgstr "Deepin Store è un popolare centro software per Linux. Ha più di 2.600 ottime applicazioni con molte funzioni, repository e raccomandazioni popolari, supporta la funzione \"1-click install\", download simmetrici e la pulizia della cache pacchetti. Fornisce informazioni sul software e la possibilità di condivider le app.\n\nDeepin Store è un software libero distribuito su licenza GNU GPLv3."
+msgstr "Deepin Store è un popolare centro software per Linux. Ha più di 2.600 ottime applicazioni con molte funzioni, repository e raccomandazioni popolari, supporta la funzione \"1-click install\", download simmetrici e la pulizia della cache pacchetti. Fornisce informazioni sul software e la possibilità di condivider le app.\n\nDeepin Store è un software libero distribuito su licenza GNU GPLv3.\nTraduzione italiana a cura di Carofano Massimo Antonio."
 
 #: ../ui/preference.py:477
 msgid "On uninstalling the software"
