@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-10 09:41+0800\n"
-"PO-Revision-Date: 2014-10-17 06:02+0000\n"
+"PO-Revision-Date: 2014-10-24 08:44+0000\n"
 "Last-Translator: Piotr Strębski <strebski@o2.pl>\n"
 "Language-Team: Polish (Poland) (http://www.transifex.com/projects/p/deepin-store/language/pl_PL/)\n"
 "MIME-Version: 1.0\n"
@@ -99,7 +99,7 @@ msgstr ""
 msgid ""
 "Please wait a moment while system upgrade is being performed... Do not turn "
 "off your computer."
-msgstr ""
+msgstr "Prosimy chwilę poczekać, gdyż przeprowadzana jest aktualizacja systemu... Nie wyłączaj teraz swojego komputera."
 
 #: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
 #: ../ui/software_center.py:790
@@ -111,7 +111,7 @@ msgstr "Aktualizuj "
 msgid ""
 "There are %s packages needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
-msgstr ""
+msgstr "Jest %s pakietów potrzebnych do aktualizacji Twojego systemu, prosimy użyć Sklepu Deepin, aby przeprowadzić aktualizację."
 
 #: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
 #: ../ui/software_center.py:733 ../ui/preference.py:433
@@ -123,7 +123,7 @@ msgstr "Sklep Deepin"
 msgid ""
 "There is %s package needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
-msgstr ""
+msgstr "Jest %s pakiet potrzebny do aktualizacji Twojego systemu, prosimy użyć Sklepu Deepin, aby przeprowadzić aktualizację."
 
 #: ../ui/install_page.py:146
 #, python-format
@@ -212,15 +212,15 @@ msgstr "Wyłącz komputer po aktualizacji"
 
 #: ../ui/upgrade_page.py:304
 msgid "This function is invalid without Deepin System Settings installed."
-msgstr ""
+msgstr "Ta funkcja jest nieprawidłowa, gdy nie są zainstalowane Ustawienia systemowe Deepin."
 
 #: ../ui/upgrade_page.py:306
 msgid "Deepin Desktop Environment is not installed, this function is invalid!"
-msgstr ""
+msgstr "Środowisko pulpitowe Deepin jest niezainstalowane, ta funkcja jest nieprawidłowa!"
 
 #: ../ui/upgrade_page.py:308
 msgid "The system is not Deepin, this function is invalid."
-msgstr ""
+msgstr "Twój system to nie Deepin, ta funkcja jest nieprawidłowa."
 
 #: ../ui/upgrade_page.py:328
 msgid "Downloading upgrade packages"
@@ -240,7 +240,7 @@ msgstr "Błąd pobierania pakietów aktualizacji"
 
 #: ../ui/upgrade_page.py:401
 msgid "The requested package does not exist on server."
-msgstr ""
+msgstr "Oczekiwany pakiet nie istnieje na serwerze."
 
 #: ../ui/upgrade_page.py:402 ../ui/upgrade_page.py:423
 #: ../ui/upgrade_page.py:446
@@ -264,7 +264,7 @@ msgstr "Błąd instalacji pakietów aktualizacji"
 #: ../ui/upgrade_page.py:421
 msgid ""
 "This problem occurs due to corrupted local apt dependency relationship."
-msgstr ""
+msgstr "Ten problem pojawia się z uwagi na uszkodzone lokalnie powiązania zależności w apt."
 
 #: ../ui/upgrade_page.py:440
 msgid "Warning"
@@ -294,21 +294,21 @@ msgstr "Wysyłanie dziennika błędów"
 
 #: ../ui/upgrade_page.py:503
 msgid "The error was successfully reported and will be handled soon."
-msgstr ""
+msgstr "Raport o błędzie został pomyślnie przesłany i wkrótce zostanie rozpatrzony."
 
 #: ../ui/upgrade_page.py:509
 msgid "Failed to send the error report. You could try again."
-msgstr ""
+msgstr "Wystąpił błąd przy wysyłaniu raportu o błędzie. Proszę spróbować później."
 
 #: ../ui/upgrade_page.py:663
 msgid ""
 "This problem occurs due to corrupted local apt dependence relationship."
-msgstr ""
+msgstr "Ten problem pojawia się z uwagi na uszkodzone lokalnie powiązania zależności w apt."
 
 #: ../ui/upgrade_page.py:668
 #, python-format
 msgid "%s package(s) are available for upgrade, %s will be downloaded."
-msgstr ""
+msgstr "%s pakiet(ów) dostępnych do aktualizacji, %s zostanie pobranych."
 
 #: ../ui/upgrade_page.py:1094
 msgid "Finished analyzing dependencies."
@@ -321,7 +321,7 @@ msgstr "Pobieranie rozpoczęte"
 #: ../ui/upgrade_page.py:1103
 #, python-format
 msgid "Completed: %s/%s (%s/%s) Download Rate: %s/s"
-msgstr ""
+msgstr "Ukończono: %s/%s (%s/%s) Prędkość pobierania: %s/s"
 
 #: ../ui/upgrade_page.py:1113
 msgid "Download finished."
@@ -778,7 +778,7 @@ msgstr "Już oceniałeś ;)"
 
 #: ../ui/software_center.py:204
 msgid "Rated successfully. Thanks for your involvement."
-msgstr ""
+msgstr "Pomyślnie oceniłeś. Dziękujemy za Twoje zaangażowanie."
 
 #: ../ui/software_center.py:220
 msgid "Rating failed. Please check your network connection!"
@@ -827,12 +827,12 @@ msgstr "Spróbuj ponownie"
 #, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted."
-msgstr ""
+msgstr "Wystąpił problem podczas analizowania zależności dla %s. Przerwano instalację."
 
 #: ../ui/software_center.py:472
 #, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
-msgstr ""
+msgstr "Wystąpił problem podczas analizowania zależności dla %s. Przerwano aktualizację."
 
 #: ../ui/software_center.py:477
 #, python-format
@@ -886,7 +886,7 @@ msgstr "Pamięć podręczna Twojego systemu jest pusta."
 
 #: ../ui/item_render.py:44
 msgid "No reminder"
-msgstr ""
+msgstr "Brak przypomnienia"
 
 #: ../ui/preference.py:438
 msgid "Version:"
@@ -913,7 +913,7 @@ msgstr "Ustawienia pobierania"
 
 #: ../ui/preference.py:500
 msgid "Maximum number of download tasks: "
-msgstr ""
+msgstr "Maksymalna liczba zadań pobierania:"
 
 #: ../ui/preference.py:510
 msgid "Download directory: "
@@ -979,4 +979,4 @@ msgstr "O nas"
 #: ../ui/search_page.py:110
 #, python-format
 msgid "%s applications searched"
-msgstr ""
+msgstr "Wyszukano %s programów"
