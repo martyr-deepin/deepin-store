@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-10 09:41+0800\n"
-"PO-Revision-Date: 2014-10-22 19:31+0000\n"
+"PO-Revision-Date: 2014-10-31 21:00+0000\n"
 "Last-Translator: Massimo Antonio Carofano <real.massimo@hotmail.it>\n"
 "Language-Team: Italian (http://www.transifex.com/projects/p/deepin-store/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -231,7 +231,7 @@ msgstr "Ultimo refresh della lista pacchetti: "
 
 #: ../ui/upgrade_page.py:345
 msgid "Mirror Receiving: "
-msgstr "Mirror utilizzato:"
+msgstr "Mirror utilizzato: "
 
 #: ../ui/upgrade_page.py:399
 msgid "Failed to download upgrade packages"

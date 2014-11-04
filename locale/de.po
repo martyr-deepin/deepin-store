@@ -4,15 +4,19 @@
 # 
 # Translators:
 # Antisound <antisound@gmail.com>, 2014
+# Antisound <antisound@gmail.com>, 2014
 # webcrush <chris.plescher@yahoo.de>, 2014
 # Eduard Gotwig <eduardgotwig@gmail.com>, 2014
+# Eduard Gotwig <eduardgotwig@gmail.com>, 2014
+# Ettore Atalan <atalanttore@googlemail.com>, 2014
+# webcrush <chris.plescher@yahoo.de>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-10 09:41+0800\n"
-"PO-Revision-Date: 2014-10-17 06:01+0000\n"
-"Last-Translator: snyh <snyh@snyh.org>\n"
+"PO-Revision-Date: 2014-10-28 09:52+0000\n"
+"Last-Translator: szd_liufei <liufei@linuxdeepin.com>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/deepin-store/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,12 +30,12 @@ msgstr "Beliebte Empfehlungen"
 
 #: ../ui/detail_page.py:240 ../ui/detail_page.py:494
 msgid "Loading comments..."
-msgstr "Lade Kommentare..."
+msgstr "Kommentare laden..."
 
 #: ../ui/detail_page.py:358
 #, python-format
 msgid "Download: %s"
-msgstr "Download: %s"
+msgstr "Herunterladen: %s"
 
 #: ../ui/detail_page.py:389
 msgid "Category: "
@@ -44,15 +48,15 @@ msgstr "Version: %s"
 
 #: ../ui/detail_page.py:394
 msgid "Download: 0"
-msgstr "Download: 0"
+msgstr "Herunterladen: 0"
 
 #: ../ui/detail_page.py:395
 msgid "Size: calculating..."
-msgstr "Größe: kalkuliere..."
+msgstr "Größe: wird berechnet..."
 
 #: ../ui/detail_page.py:399
 msgid "Visit Homepage"
-msgstr "Besuche Homepage"
+msgstr "Webseite besuchen"
 
 #: ../ui/detail_page.py:444 ../ui/download_rank_page.py:369
 #: ../ui/home_page.py:1086 ../ui/album_page.py:483 ../ui/search_page.py:274
@@ -70,7 +74,7 @@ msgstr "Größe: %s"
 
 #: ../ui/detail_page.py:611
 msgid "Powered by UpYun.com"
-msgstr ""
+msgstr "Powered by UpYun.com"
 
 #: ../ui/uninstall_page.py:175
 #, python-format
@@ -83,7 +87,7 @@ msgstr "Warte auf Deinstallation"
 
 #: ../ui/uninstall_page.py:605 ../ui/uninstall_page.py:612
 msgid "Uninstalling"
-msgstr "Deinstalliere"
+msgstr "Deinstallerien"
 
 #: ../ui/uninstall_page.py:619
 msgid "Uninstallation completed"
@@ -98,12 +102,12 @@ msgstr "%s: Anfrage für Startsoftware gesendet"
 msgid ""
 "Please wait a moment while system upgrade is being performed... Do not turn "
 "off your computer."
-msgstr ""
+msgstr "Bitte warten Sie einen Moment, während die Systemaktualisierung durchgeführt wird... Schalten Sie den Computer nicht aus."
 
 #: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
 #: ../ui/software_center.py:790
 msgid "Upgrade"
-msgstr "Aktuallisierung"
+msgstr "Aktualisierung"
 
 #: ../ui/dsc-daemon.py:284
 #, python-format
@@ -122,7 +126,7 @@ msgstr "Deepin Store"
 msgid ""
 "There is %s package needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
-msgstr "Auf Ihrem PC sind %s Pakete zur Aktualisieren verfügbar, bitte nutzen Sie den Deepin Store zum Anwenden der Aktualisierungen."
+msgstr "Auf Ihrem PC sind %s Pakete zur Aktualisierung verfügbar, bitte nutzen Sie den Deepin Store zum Anwenden der Aktualisierungen."
 
 #: ../ui/install_page.py:146
 #, python-format
@@ -142,7 +146,7 @@ msgstr "Installiert"
 
 #: ../ui/install_page.py:665 ../ui/install_page.py:676
 msgid "Download was interrupted"
-msgstr "Download wurde unterbrochen"
+msgstr "Herunterladen wurde unterbrochen"
 
 #: ../ui/install_page.py:689
 msgid "Installation was interrupted"
@@ -151,7 +155,7 @@ msgstr "Installation wurde unterbrochen"
 #: ../ui/install_page.py:751 ../ui/upgrade_page.py:1495
 #: ../ui/upgrade_page.py:1614
 msgid "Waiting for download"
-msgstr "Warte auf Download"
+msgstr "Warten auf Herunterladen"
 
 #: ../ui/install_page.py:758 ../ui/upgrade_page.py:1621
 msgid "Downloading"
@@ -159,7 +163,7 @@ msgstr "Am herunterladen"
 
 #: ../ui/install_page.py:765
 msgid "Download failed"
-msgstr "Download fehlgeschlagen"
+msgstr "Herunterladen fehlgeschlagen"
 
 #: ../ui/install_page.py:781
 msgid "Waiting for installation"
@@ -171,7 +175,7 @@ msgstr "Abhängigkeitsanalyse fehlgeschlagen"
 
 #: ../ui/install_page.py:800 ../ui/install_page.py:807
 msgid "Installing"
-msgstr "Installatiere"
+msgstr "Installieren"
 
 #: ../ui/install_page.py:816
 msgid "Installation completed"
@@ -185,7 +189,7 @@ msgstr "Zeit der zuletzt angewandten Aktualisierung:"
 #: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
 #, python-format
 msgid "No reminder to upgrade (%s)"
-msgstr ""
+msgstr "Keine Aktualisierungserinnerung (%s)"
 
 #: ../ui/upgrade_page.py:182
 msgid "Upgrade applications selected"
@@ -203,7 +207,7 @@ msgstr "Erneut erinnern"
 #: ../ui/upgrade_page.py:272
 #, python-format
 msgid "%s applications are not being watched"
-msgstr "%s Anwendungen sind nicht angesehen"
+msgstr "%s Anwendungen werden nicht gefolgt"
 
 #: ../ui/upgrade_page.py:289
 msgid "Shut down the computer after upgraded"
@@ -223,11 +227,11 @@ msgstr "Das System ist nicht Deepin, diese Funktion ist ungültig."
 
 #: ../ui/upgrade_page.py:328
 msgid "Downloading upgrade packages"
-msgstr ""
+msgstr "Aktualisierungspakete werden heruntergeladen"
 
 #: ../ui/upgrade_page.py:335
 msgid "Last time of refreshed package lists: "
-msgstr ""
+msgstr "Letztmalige Aktualisierung der Paketlisten:"
 
 #: ../ui/upgrade_page.py:345
 msgid "Mirror Receiving: "
@@ -235,7 +239,7 @@ msgstr "Spiegelserver Empfangen:"
 
 #: ../ui/upgrade_page.py:399
 msgid "Failed to download upgrade packages"
-msgstr ""
+msgstr "Das Herunterladen der Aktualisierungspakete ist fehlgeschlagen"
 
 #: ../ui/upgrade_page.py:401
 msgid "The requested package does not exist on server."
@@ -244,21 +248,21 @@ msgstr "Das angeforderte Paket existiert nicht auf dem Server."
 #: ../ui/upgrade_page.py:402 ../ui/upgrade_page.py:423
 #: ../ui/upgrade_page.py:446
 msgid "Suggest to "
-msgstr "Vorschlag"
+msgstr "Wir empfehlen"
 
 #: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
 #: ../ui/upgrade_page.py:447
 msgid "refresh package lists"
-msgstr ""
+msgstr "Paketlisten aktualisieren"
 
 #: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
 #: ../ui/upgrade_page.py:448
 msgid " and try again."
-msgstr "und versuchen Sie es erneut."
+msgstr "und es erneut zu versuchen."
 
 #: ../ui/upgrade_page.py:419 ../ui/upgrade_page.py:1120
 msgid "Failed to install upgrade packages"
-msgstr ""
+msgstr "Das Installieren der Aktualisierungspakete ist fehlgeschlagen"
 
 #: ../ui/upgrade_page.py:421
 msgid ""
@@ -273,7 +277,7 @@ msgstr "Warnung"
 msgid ""
 "The upgrade requires to uninstall crucial components due to corrupted local "
 "dependencies or incorrect package dependencies on server."
-msgstr ""
+msgstr "Das Upgrade erfordert wichtige Komponenten durch beschädigte lokale Abhängigkeiten oder falsche Paketabhängigkeiten auf dem Server zu deinstallieren."
 
 #: ../ui/upgrade_page.py:483
 msgid "If the prompt occurs again, you could "
@@ -289,11 +293,11 @@ msgstr "."
 
 #: ../ui/upgrade_page.py:498
 msgid "Uploading error log"
-msgstr "Fehlerlog hochladen"
+msgstr "Fehlerbericht senden"
 
 #: ../ui/upgrade_page.py:503
 msgid "The error was successfully reported and will be handled soon."
-msgstr ""
+msgstr "Der Fehler wurde erfolgreich gemeldet und wird bald verarbeitet werden."
 
 #: ../ui/upgrade_page.py:509
 msgid "Failed to send the error report. You could try again."
@@ -307,7 +311,7 @@ msgstr "Dieses Problem tritt auf wegen einer beschädigten lokalen apt Abhängig
 #: ../ui/upgrade_page.py:668
 #, python-format
 msgid "%s package(s) are available for upgrade, %s will be downloaded."
-msgstr ""
+msgstr "%s Paket(e) sind verfügbar zum Aktualisieren, %s werden heruntergeladen."
 
 #: ../ui/upgrade_page.py:1094
 msgid "Finished analyzing dependencies."
@@ -324,19 +328,19 @@ msgstr "Abgeschlossen: %s/%s (%s/%s) Herunterlade-Rate: %s/s"
 
 #: ../ui/upgrade_page.py:1113
 msgid "Download finished."
-msgstr "Download erfolgreich."
+msgstr "Herunterladen erfolgreich."
 
 #: ../ui/upgrade_page.py:1117
 msgid "Download stopped."
-msgstr "Download gestopt."
+msgstr "Herunterladen gestoppt."
 
 #: ../ui/upgrade_page.py:1124
 msgid "Installing upgrade packages"
-msgstr ""
+msgstr "Aktualisierungspakete werden installiert"
 
 #: ../ui/upgrade_page.py:1125
 msgid "Upgrading..."
-msgstr ""
+msgstr "Aktualisieren..."
 
 #: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
 msgid "Upgrade completed"
@@ -344,7 +348,7 @@ msgstr "Aktualisierung abgeschlossen"
 
 #: ../ui/upgrade_page.py:1637
 msgid "Waiting for upgrade"
-msgstr "Warte auf Aktualisierung"
+msgstr "Warten auf Aktualisierung"
 
 #: ../ui/upgrade_page.py:1656 ../ui/upgrade_page.py:1663
 msgid "Upgrading"
@@ -412,7 +416,7 @@ msgstr "Medienschnitt"
 
 #: ../ui/category_info.py:38
 msgid "Disc burner"
-msgstr "Disk Brenner"
+msgstr "CD Brenner"
 
 #: ../ui/category_info.py:39
 msgid "MIDI"
@@ -424,7 +428,7 @@ msgstr "Mixer"
 
 #: ../ui/category_info.py:41
 msgid "Player"
-msgstr "Spieler"
+msgstr "Wiedergabe"
 
 #: ../ui/category_info.py:42
 msgid "Recorder"
@@ -580,7 +584,7 @@ msgstr "Datenbank"
 
 #: ../ui/category_info.py:80
 msgid "Debugging"
-msgstr "Fehlersuche"
+msgstr "Fehleranalyse"
 
 #: ../ui/category_info.py:81
 msgid "IDE"
@@ -628,7 +632,7 @@ msgstr "Virtualisierung"
 
 #: ../ui/category_info.py:92
 msgid "Window manager"
-msgstr "Fensterverwalter"
+msgstr "Fensterverwaltung"
 
 #: ../ui/category_info.py:93
 msgid "Utilities"
@@ -648,7 +652,7 @@ msgstr "Emulatoren"
 
 #: ../ui/category_info.py:97
 msgid "File manager"
-msgstr "Dateiverwalter"
+msgstr "Dateiverwaltung"
 
 #: ../ui/category_info.py:98
 msgid "Screensaver"
@@ -686,7 +690,7 @@ msgstr "Themenfelder"
 
 #: ../ui/home_page.py:762
 msgid "Download rank"
-msgstr "Anzahl der Downloads"
+msgstr "Download Rang"
 
 #: ../ui/widgets.py:66
 msgid "Just now"
@@ -716,7 +720,7 @@ msgstr "Gestern"
 
 #: ../ui/widgets.py:295 ../ui/widgets.py:369
 msgid "Click to refresh"
-msgstr "Klicken sie um aufzufrischen"
+msgstr "Zum Aktualisieren klicken"
 
 #: ../ui/widgets.py:462 ../ui/preference.py:782
 msgid "OK"
@@ -777,7 +781,7 @@ msgstr "Sie haben bereits bewertet. ;)"
 
 #: ../ui/software_center.py:204
 msgid "Rated successfully. Thanks for your involvement."
-msgstr ""
+msgstr "Erfolgreich bewertet. Vielen Dank für Ihre Beteiligung."
 
 #: ../ui/software_center.py:220
 msgid "Rating failed. Please check your network connection!"
@@ -812,7 +816,7 @@ msgstr "Paketlisten Datenbank wird generiert..."
 
 #: ../ui/software_center.py:446
 msgid "Package lists refreshed completely."
-msgstr ""
+msgstr "Paketlisten vollständig aktualisiert."
 
 #: ../ui/software_center.py:458
 msgid "Failed to refresh package lists."
@@ -840,11 +844,11 @@ msgstr "Das angeforderte Paket \"%s\" konnte in der Paketliste nicht gefunden we
 
 #: ../ui/software_center.py:478
 msgid "Refresh package lists again and try again."
-msgstr ""
+msgstr "Paketlisten erneut aktualisieren und nochmal versuchen."
 
 #: ../ui/software_center.py:770
 msgid "Join us"
-msgstr "Schließ dich uns an"
+msgstr "Schließen Sie sich uns an"
 
 #: ../ui/software_center.py:792
 msgid "Installation"
@@ -852,19 +856,19 @@ msgstr "Installation"
 
 #: ../ui/software_center.py:816 ../ui/preference.py:568
 msgid "Refresh package lists"
-msgstr ""
+msgstr "Paketlisten aktualisieren"
 
 #: ../ui/software_center.py:817
 msgid "Open download directory"
-msgstr "Öffne Downloadverzeichnis"
+msgstr "Heruntergelade Dateien anzeigen"
 
 #: ../ui/software_center.py:818
 msgid "Clear up cached packages"
-msgstr "Bereinige gepufferte Pakete"
+msgstr "Zwischengespeicherte Pakete entfernen"
 
 #: ../ui/software_center.py:819
 msgid "View new features"
-msgstr "Zeige neue Möglichkeiten"
+msgstr "Neue Funktionen anzeigen"
 
 #: ../ui/software_center.py:820
 msgid "Preferences"
@@ -877,7 +881,7 @@ msgstr "Beenden"
 #: ../ui/software_center.py:1123
 #, python-format
 msgid "You have cleared up %s packages and saved %s of space."
-msgstr "Sie haben %s Pakete bereinigt und %s an Speicherplatz gespart"
+msgstr "Sie haben %s Pakete geleert und dabei %s an Platz eingespart."
 
 #: ../ui/software_center.py:1125
 msgid "Your system cache is empty."
@@ -896,7 +900,7 @@ msgid ""
 "Deepin Store is a commonly used software center on Linux. We selected more than 2,600 excellent applications with many functions of installation and uninstalling, software repository and popular recommendations, which supports 1-click quick installation, multi-threaded download and clearing of cached packages. It provides topics for software introduction and shares good applications.\n"
 "\n"
 "Deepin Store is a free software licensed under GNU GPLv3."
-msgstr ""
+msgstr "Deepin Shop ist eine häufig verwendete Software Center unter Linux. Wir haben mehr als 2.600 hervorragende Anwendungen mit vielen Funktionen für Installation und Deinstallation, Software-Repository und beliebte Empfehlungen, die 1-Klick-schnelle Installation, Multi-Thread-Download und das Säubern von zwischengespeicherten Paketen unterstützt. Es bietet Themen für Software-Einführung und Teile guter Anwendungen.\n\nDeepin Store ist eine freie Software unter der GNU GPLv3 lizenziert."
 
 #: ../ui/preference.py:477
 msgid "On uninstalling the software"
@@ -904,15 +908,15 @@ msgstr "bei der Deinstallation der Software"
 
 #: ../ui/preference.py:480
 msgid "Delete configuration files"
-msgstr "Lösche Konfigurationsdateien"
+msgstr "Konfigurationsdateien löschen"
 
 #: ../ui/preference.py:494
 msgid "Download settings"
-msgstr "Downloadeigenschaften"
+msgstr "Eigenschaften zum Herunterladen"
 
 #: ../ui/preference.py:500
 msgid "Maximum number of download tasks: "
-msgstr ""
+msgstr "Maximale Anzahl von Download-Aufgaben:"
 
 #: ../ui/preference.py:510
 msgid "Download directory: "
@@ -924,7 +928,7 @@ msgstr "Wechsel"
 
 #: ../ui/preference.py:551
 msgid "Select the best mirror"
-msgstr "Wähle besten Spiegelserver aus"
+msgstr "Besten Spiegelserver wählen"
 
 #: ../ui/preference.py:552
 msgid "Waiting"
@@ -936,7 +940,7 @@ msgstr "Erfolgreich"
 
 #: ../ui/preference.py:571
 msgid "Upgrade automatically"
-msgstr ""
+msgstr "Automatisch aktualisieren"
 
 #: ../ui/preference.py:575
 msgid "Time interval: "
@@ -948,24 +952,24 @@ msgstr "Stunde"
 
 #: ../ui/preference.py:642
 msgid "Select mirror"
-msgstr "Wähle Spiegelserver aus"
+msgstr "Spiegelserver auswählen"
 
 #: ../ui/preference.py:705
 msgid "Select Directory"
-msgstr "Wähle Verzeichnis"
+msgstr "Verzeichnis wählen"
 
 #: ../ui/preference.py:751
 msgid "Speed testing will finish only after one minute, please wait."
-msgstr "Geschwindigkeitsprüfung wird nach einer Minute abgeschlossen, bitte warten."
+msgstr "Der Geschwindigkeitstest wird in einer Minute beendet, bitte warten."
 
 #: ../ui/preference.py:776
 #, python-format
 msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
-msgstr "Test ist abgeschlossen, die schnellste Spiegelquelle ist \"%s\", jetzt wechseln?"
+msgstr "Test beendet, der schnellste Spiegelserver ist \"%s\", Dorthin wechseln?"
 
 #: ../ui/preference.py:829
 msgid "General"
-msgstr "Generelles"
+msgstr "Allgemein"
 
 #: ../ui/preference.py:830
 msgid "Mirrors"

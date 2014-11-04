@@ -6,14 +6,15 @@
 # ddabrahim <ddabrahim@googlemail.com>, 2014
 # kdavid97 <kdavid97@gmail.hu>, 2014
 # Marcell Lévai, 2014
+# SlazO <blum1866@gmail.com>, 2014
 # unicum99 <stampf99@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-10 09:41+0800\n"
-"PO-Revision-Date: 2014-10-21 09:40+0000\n"
-"Last-Translator: kdavid97 <kdavid97@gmail.hu>\n"
+"PO-Revision-Date: 2014-10-24 16:01+0000\n"
+"Last-Translator: SlazO <blum1866@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/projects/p/deepin-store/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -71,7 +72,7 @@ msgstr "Méret: %s"
 
 #: ../ui/detail_page.py:611
 msgid "Powered by UpYun.com"
-msgstr "UpYun.com által támogatott"
+msgstr "UpYun.com által üzemeltetve"
 
 #: ../ui/uninstall_page.py:175
 #, python-format
@@ -99,7 +100,7 @@ msgstr "%s: kérés az induló alkalmazásoknak elküldve"
 msgid ""
 "Please wait a moment while system upgrade is being performed... Do not turn "
 "off your computer."
-msgstr "Kérem várjon még a rendszer frissítés befejeződik... Ne kapcsolja ki a számítógépet."
+msgstr "Kérem várjon amíg a rendszer frissítése folyamatban van... Ne kapcsolja ki a számítógépet."
 
 #: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
 #: ../ui/software_center.py:790
@@ -111,7 +112,7 @@ msgstr "Frissítés"
 msgid ""
 "There are %s packages needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
-msgstr "%s csomag frissítése elérhető, kérem használja a Deepin Boltot a frissítéshez."
+msgstr "%s csomag frissítése szükséges, kérem használja a Deepin Boltot a frissítés végrehajtására."
 
 #: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
 #: ../ui/software_center.py:733 ../ui/preference.py:433
@@ -123,12 +124,12 @@ msgstr "Deepin Bolt"
 msgid ""
 "There is %s package needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
-msgstr "%s csomag frissítése elérhető, kérem használja a Deepin Boltot a frissítéshez."
+msgstr "A(z) %s csomag frissítése szükséges, kérem használja a Deepin Boltot a frissítés végrehajtására."
 
 #: ../ui/install_page.py:146
 #, python-format
 msgid "%s applications are being installed"
-msgstr "%s alkalmazás telepítésre került"
+msgstr "%s alkalmazások telepítése zajlik"
 
 #: ../ui/install_page.py:313 ../ui/install_page.py:744
 #: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
@@ -139,15 +140,15 @@ msgstr "Függőségek analizálása"
 #: ../ui/download_rank_page.py:374 ../ui/home_page.py:1091 ../ui/utils.py:360
 #: ../ui/album_page.py:488 ../ui/search_page.py:279
 msgid "Installed"
-msgstr "Telepített"
+msgstr "Telepítve"
 
 #: ../ui/install_page.py:665 ../ui/install_page.py:676
 msgid "Download was interrupted"
-msgstr "Letöltés megszakadt"
+msgstr "Letöltés megszakítva"
 
 #: ../ui/install_page.py:689
 msgid "Installation was interrupted"
-msgstr "Telepítés megszakadt"
+msgstr "Telepítés megszakítva"
 
 #: ../ui/install_page.py:751 ../ui/upgrade_page.py:1495
 #: ../ui/upgrade_page.py:1614
@@ -195,7 +196,7 @@ msgstr "Kiválasztott alkalmazások frissítése"
 #: ../ui/upgrade_page.py:204
 #, python-format
 msgid "%s applications are available for upgrade"
-msgstr "%s alkalmazáshoz frissítés érhető el"
+msgstr "%s alkalmazásokhoz frissítés érhető el"
 
 #: ../ui/upgrade_page.py:238 ../ui/item_render.py:46
 msgid "Remind again"
@@ -204,11 +205,11 @@ msgstr "Emlékeztessen újra"
 #: ../ui/upgrade_page.py:272
 #, python-format
 msgid "%s applications are not being watched"
-msgstr "%s alkalmazás nincs figyelőben"
+msgstr "%s alkalmazás nincs figyelés alatt"
 
 #: ../ui/upgrade_page.py:289
 msgid "Shut down the computer after upgraded"
-msgstr "Számítógép kikapcsolása frissítés után"
+msgstr "Számítógép kikapcsolása a frissítések végeztével"
 
 #: ../ui/upgrade_page.py:304
 msgid "This function is invalid without Deepin System Settings installed."
@@ -224,7 +225,7 @@ msgstr "Ez a rendszer nem Deepin, ez a funkció érvénytelen."
 
 #: ../ui/upgrade_page.py:328
 msgid "Downloading upgrade packages"
-msgstr "Frissítési csomag letöltése"
+msgstr "Frissítési csomagok letöltése"
 
 #: ../ui/upgrade_page.py:335
 msgid "Last time of refreshed package lists: "
@@ -240,7 +241,7 @@ msgstr "Frissítések letöltése sikertelen"
 
 #: ../ui/upgrade_page.py:401
 msgid "The requested package does not exist on server."
-msgstr "A kért csomag nem érhető el a szerveren."
+msgstr "A kért csomag nincs a szerveren."
 
 #: ../ui/upgrade_page.py:402 ../ui/upgrade_page.py:423
 #: ../ui/upgrade_page.py:446
@@ -250,7 +251,7 @@ msgstr "Ajánlom"
 #: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
 #: ../ui/upgrade_page.py:447
 msgid "refresh package lists"
-msgstr "Csomaglista újratöltése"
+msgstr "csomaglista frissítése"
 
 #: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
 #: ../ui/upgrade_page.py:448
@@ -264,7 +265,7 @@ msgstr "Frissítési csomagok telepítése sikertelen"
 #: ../ui/upgrade_page.py:421
 msgid ""
 "This problem occurs due to corrupted local apt dependency relationship."
-msgstr "Ez a probléma, sérült helyi apt függőség kapcsolat miatt lép fel."
+msgstr "A probléma a helyi apt függőségek sérüléséből fakad."
 
 #: ../ui/upgrade_page.py:440
 msgid "Warning"
@@ -274,7 +275,7 @@ msgstr "Figyelmeztetés"
 msgid ""
 "The upgrade requires to uninstall crucial components due to corrupted local "
 "dependencies or incorrect package dependencies on server."
-msgstr "A frissítéshez kritikus komponenseket kell eltávolítani, sérült helyi függőségek vagy szerveren található hibás csomag függőségek miatt."
+msgstr "A frissítéshez kritikus komponenseket kell eltávolítani, sérült helyi függőségek vagy a szerveren található hibás csomag függőségek miatt."
 
 #: ../ui/upgrade_page.py:483
 msgid "If the prompt occurs again, you could "
@@ -290,11 +291,11 @@ msgstr "."
 
 #: ../ui/upgrade_page.py:498
 msgid "Uploading error log"
-msgstr "Hiba napló feltöltése"
+msgstr "Hiba log feltöltése"
 
 #: ../ui/upgrade_page.py:503
 msgid "The error was successfully reported and will be handled soon."
-msgstr "A hiba sikeresen bejelentésre került és hamarosan megoldjuk."
+msgstr "A hiba sikeresen bejelentve és hamarosan feldolgozásra kerül."
 
 #: ../ui/upgrade_page.py:509
 msgid "Failed to send the error report. You could try again."
@@ -303,7 +304,7 @@ msgstr "Hibajelentés küldése sikertelen. Próbálja újra."
 #: ../ui/upgrade_page.py:663
 msgid ""
 "This problem occurs due to corrupted local apt dependence relationship."
-msgstr "Ez a probléma, sérült helyi apt függőség kapcsolat miatt lép fel."
+msgstr "A probléma a helyi apt függőségek sérüléséből fakad"
 
 #: ../ui/upgrade_page.py:668
 #, python-format
@@ -337,7 +338,7 @@ msgstr "Frissitési csomagok telepitése"
 
 #: ../ui/upgrade_page.py:1125
 msgid "Upgrading..."
-msgstr "Frissítés"
+msgstr "Frissítés..."
 
 #: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
 msgid "Upgrade completed"
@@ -361,7 +362,7 @@ msgstr "Top 25 havi"
 
 #: ../ui/download_rank_page.py:61
 msgid "Top 25 totally"
-msgstr "Top 25 összesített"
+msgstr "Top 25 összesen"
 
 #: ../ui/category_info.py:26
 msgid "Internet"
@@ -433,7 +434,7 @@ msgstr "Felvevő"
 
 #: ../ui/category_info.py:43
 msgid "Sequencer"
-msgstr "Sequencer"
+msgstr "Rendező"
 
 #: ../ui/category_info.py:44
 msgid "Tuner"
@@ -675,7 +676,7 @@ msgstr "%s > %s : %s alkalmazások"
 
 #: ../ui/home_page.py:722 ../ui/software_center.py:789
 msgid "Home"
-msgstr "Home"
+msgstr "Kezdőlap"
 
 #: ../ui/home_page.py:762
 msgid "Recommendations"
@@ -687,11 +688,11 @@ msgstr "Témák"
 
 #: ../ui/home_page.py:762
 msgid "Download rank"
-msgstr "Letöltési rang"
+msgstr "Letöltési helyezés"
 
 #: ../ui/widgets.py:66
 msgid "Just now"
-msgstr "Pont most"
+msgstr "Csak most"
 
 #: ../ui/widgets.py:71
 msgid "One minute ago"
@@ -733,7 +734,7 @@ msgstr "Fut"
 
 #: ../ui/utils.py:356
 msgid "Preparing"
-msgstr "Előkészül"
+msgstr "Felkészülés"
 
 #: ../ui/utils.py:357
 msgid "Unpacking"
@@ -741,7 +742,7 @@ msgstr "Kicsomagol"
 
 #: ../ui/utils.py:358
 msgid "Preparing to configure"
-msgstr "Előkészül a konfigurálásra"
+msgstr "Felkészül a konfigurálásra"
 
 #: ../ui/utils.py:359
 msgid "Configuring"
@@ -770,7 +771,7 @@ msgstr "%s nem rendelkezik asztal fájlal"
 
 #: ../ui/software_center.py:194
 msgid "Sending rating..."
-msgstr "Értékelés küldése"
+msgstr "Értékelés küldése..."
 
 #: ../ui/software_center.py:198
 msgid "You have already scored.  ;)"
@@ -778,7 +779,7 @@ msgstr "Ön már értékelte :)"
 
 #: ../ui/software_center.py:204
 msgid "Rated successfully. Thanks for your involvement."
-msgstr "Az értékelés sikeresen befejezve. Köszönjük a részvétel."
+msgstr "Az értékelés sikeresen befejezve. Köszönjük a részvételt."
 
 #: ../ui/software_center.py:220
 msgid "Rating failed. Please check your network connection!"
@@ -817,7 +818,7 @@ msgstr "Csomaglista frissítése kész."
 
 #: ../ui/software_center.py:458
 msgid "Failed to refresh package lists."
-msgstr "Csomaglista újratöltése sikertelen."
+msgstr "Csomaglista frissítése sikertelen."
 
 #: ../ui/software_center.py:459
 msgid "Try again"
@@ -897,7 +898,7 @@ msgid ""
 "Deepin Store is a commonly used software center on Linux. We selected more than 2,600 excellent applications with many functions of installation and uninstalling, software repository and popular recommendations, which supports 1-click quick installation, multi-threaded download and clearing of cached packages. It provides topics for software introduction and shares good applications.\n"
 "\n"
 "Deepin Store is a free software licensed under GNU GPLv3."
-msgstr "A Deepin szoftverközpont egy gyakran használt szoftverközpont linuxon. Több mint 2600 kitűnő alkalmazást választottunk ki, rengeteg funkciót ad az alkalmazások telepítéshez és eltávolításhoz, szoftverforrások hozzá adásához, népszerű alkalmazások megtekintéséhez,1 kattintású telepítéshez, egyszerre több alkalmazás letöltéséhez és a gyorsítótár tisztításához. Biztosítja a  jó alkalmazások bemutatását.\n\nDeepin szoftverközpont GNU GPLv3. szabad szoftver licence alatt áll."
+msgstr "A Deepin Bolt egy gyakran használt szoftverközpont Linux rendszerek alatt. Mi kiválasztottunk több mint 2,600 kiváló alkamazást renegeteg telepítési és törlési funkciókkal, népszerű ajánlatokat és szoftver forrásokat melyek támogatják az 1-kattintásos telepítést, több szálon történő letöltést és a már meglévő alkalmazások törlését. Továbbá szolgáltat olyan témákat, ahol a szoftvert megismerheti és a különböző alkalmazásokat meg is oszthatja.\n\nA Deepin Bolt egy ingyenes szoftver a GNU GPLv3 licenc keretein belül."
 
 #: ../ui/preference.py:477
 msgid "On uninstalling the software"
@@ -925,7 +926,7 @@ msgstr "Változtatás"
 
 #: ../ui/preference.py:551
 msgid "Select the best mirror"
-msgstr "A legjobb tükör kiválasztása"
+msgstr "A legjobb forrás kiválasztása"
 
 #: ../ui/preference.py:552
 msgid "Waiting"
@@ -949,11 +950,11 @@ msgstr "óra"
 
 #: ../ui/preference.py:642
 msgid "Select mirror"
-msgstr "Tükör kiválasztása"
+msgstr "Forrás kiválasztása"
 
 #: ../ui/preference.py:705
 msgid "Select Directory"
-msgstr "Mappa megnyitása"
+msgstr "Mappa kiválasztása"
 
 #: ../ui/preference.py:751
 msgid "Speed testing will finish only after one minute, please wait."
@@ -970,7 +971,7 @@ msgstr "Általános"
 
 #: ../ui/preference.py:830
 msgid "Mirrors"
-msgstr "Tükrök"
+msgstr "Források"
 
 #: ../ui/preference.py:831
 msgid "About"

@@ -4,13 +4,14 @@
 # 
 # Translators:
 # gogo <trebelnik2@gmail.com>, 2014
+# Ivica  Kolić <ikoli@yahoo.com>, 2014
 # gogo <trebelnik2@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-10 09:41+0800\n"
-"PO-Revision-Date: 2014-10-20 12:23+0000\n"
+"PO-Revision-Date: 2014-10-24 10:23+0000\n"
 "Last-Translator: Ivica  Kolić <ikoli@yahoo.com>\n"
 "Language-Team: Croatian (http://www.transifex.com/projects/p/deepin-store/language/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -69,7 +70,7 @@ msgstr "Veličina: %s"
 
 #: ../ui/detail_page.py:611
 msgid "Powered by UpYun.com"
-msgstr ""
+msgstr "Pokreće UpYun.com"
 
 #: ../ui/uninstall_page.py:175
 #, python-format
@@ -206,7 +207,7 @@ msgstr "%s aplikacija se ne promatra"
 
 #: ../ui/upgrade_page.py:289
 msgid "Shut down the computer after upgraded"
-msgstr "Isključi računalo nako nadogradnje"
+msgstr "Isključi računalo nakon nadogradnje"
 
 #: ../ui/upgrade_page.py:304
 msgid "This function is invalid without Deepin System Settings installed."
@@ -635,7 +636,7 @@ msgstr "Uslužni programi"
 
 #: ../ui/category_info.py:94
 msgid "Accessories"
-msgstr ""
+msgstr "Pribori"
 
 #: ../ui/category_info.py:95
 msgid "Archiving"
