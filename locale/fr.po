@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-10 09:41+0800\n"
-"PO-Revision-Date: 2014-10-17 06:02+0000\n"
+"PO-Revision-Date: 2014-11-20 18:40+0000\n"
 "Last-Translator: lexross <its4moi@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/deepin-store/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr ""
 
 #: ../ui/detail_page.py:179
 msgid "Popular recommendations"
-msgstr "Recommandations populaires"
+msgstr "Les plus recommandés"
 
 #: ../ui/detail_page.py:240 ../ui/detail_page.py:494
 msgid "Loading comments..."
@@ -51,11 +51,11 @@ msgstr "Téléchargement: 0"
 
 #: ../ui/detail_page.py:395
 msgid "Size: calculating..."
-msgstr "Je calcule la taille..."
+msgstr "Taille: calcul..."
 
 #: ../ui/detail_page.py:399
 msgid "Visit Homepage"
-msgstr "Accéder à la page d'accueil"
+msgstr "Aller à la page d'accueil"
 
 #: ../ui/detail_page.py:444 ../ui/download_rank_page.py:369
 #: ../ui/home_page.py:1086 ../ui/album_page.py:483 ../ui/search_page.py:274
@@ -118,7 +118,7 @@ msgstr "Il y a %s paquets qui nécessitent d'être mis à jour dans votre systè
 #: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
 #: ../ui/software_center.py:733 ../ui/preference.py:433
 msgid "Deepin Store"
-msgstr "Deepin Store"
+msgstr "Deepin Logitèque"
 
 #: ../ui/dsc-daemon.py:288
 #, python-format
@@ -183,7 +183,7 @@ msgstr "Installation terminée"
 #: ../ui/upgrade_page.py:78 ../ui/upgrade_page.py:107
 #: ../ui/upgrade_page.py:340
 msgid "Last system upgraded time: "
-msgstr "Date de la dernière mise à jour système : "
+msgstr "Dernière mise à jour du système : "
 
 #: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
 #, python-format
@@ -201,28 +201,28 @@ msgstr "%s applications peuvent être mises à jour"
 
 #: ../ui/upgrade_page.py:238 ../ui/item_render.py:46
 msgid "Remind again"
-msgstr "Rappeler encore"
+msgstr "Rappeler "
 
 #: ../ui/upgrade_page.py:272
 #, python-format
 msgid "%s applications are not being watched"
-msgstr "%s application ne sont pas verifiées"
+msgstr "%s applications ne sont pas verifiées"
 
 #: ../ui/upgrade_page.py:289
 msgid "Shut down the computer after upgraded"
-msgstr "Éteindre l'ordinateur après la mise à jour"
+msgstr "Éteindre l'ordinateur après les mises à jour"
 
 #: ../ui/upgrade_page.py:304
 msgid "This function is invalid without Deepin System Settings installed."
-msgstr "Cette fonction est invalide tant que les Paramètres Système de Deepin ne sont pas installés."
+msgstr "Cette fonction est indisponible tant que les paramètres système de Deepin ne sont pas installés."
 
 #: ../ui/upgrade_page.py:306
 msgid "Deepin Desktop Environment is not installed, this function is invalid!"
-msgstr "L'environnement de bureau Deepin n'est pas installé, cette fonction est invalide !"
+msgstr "L'environnement de bureau Deepin n'est pas installé, cette fonction est indisponible !"
 
 #: ../ui/upgrade_page.py:308
 msgid "The system is not Deepin, this function is invalid."
-msgstr "Le système n'est pas Deepin, cette fonction est invalide."
+msgstr "Le système n'est pas Deepin, cette fonction est indisponible."
 
 #: ../ui/upgrade_page.py:328
 msgid "Downloading upgrade packages"
@@ -230,7 +230,7 @@ msgstr "Téléchargement des mise à jours"
 
 #: ../ui/upgrade_page.py:335
 msgid "Last time of refreshed package lists: "
-msgstr "Date de la dernière mise à jour:"
+msgstr "Dernière mise à jour des paquets:"
 
 #: ../ui/upgrade_page.py:345
 msgid "Mirror Receiving: "
@@ -252,7 +252,7 @@ msgstr "Proposition "
 #: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
 #: ../ui/upgrade_page.py:447
 msgid "refresh package lists"
-msgstr "Actualiser les mises à jour"
+msgstr "Actualisez les mises à jour"
 
 #: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
 #: ../ui/upgrade_page.py:448
@@ -323,7 +323,7 @@ msgstr "Le téléchargement a commencé"
 #: ../ui/upgrade_page.py:1103
 #, python-format
 msgid "Completed: %s/%s (%s/%s) Download Rate: %s/s"
-msgstr "Terminé : %s/%s (%s/%s) Vitesse de téléchargement : %s/s"
+msgstr "Actuellement : %s/%s (%s/%s) Vitesse de téléchargement : %s/s"
 
 #: ../ui/upgrade_page.py:1113
 msgid "Download finished."
@@ -363,7 +363,7 @@ msgstr "Top 25 du Mois"
 
 #: ../ui/download_rank_page.py:61
 msgid "Top 25 totally"
-msgstr "Top 25 du total"
+msgstr "Top 25 général"
 
 #: ../ui/category_info.py:26
 msgid "Internet"
@@ -411,7 +411,7 @@ msgstr "Audio-Vidéo"
 
 #: ../ui/category_info.py:37
 msgid "Media Editing"
-msgstr "Édition du media"
+msgstr "Édition video"
 
 #: ../ui/category_info.py:38
 msgid "Disc burner"
@@ -535,7 +535,7 @@ msgstr "Scanneur et imprimante"
 
 #: ../ui/category_info.py:68
 msgid "Industry"
-msgstr "Industriel"
+msgstr "Industrie"
 
 #: ../ui/category_info.py:69
 msgid "Engineering"
@@ -559,7 +559,7 @@ msgstr "Édition"
 
 #: ../ui/category_info.py:74
 msgid "Science Education"
-msgstr "Éducation scientifique"
+msgstr "Sciences"
 
 #: ../ui/category_info.py:75
 msgid "Languages"
@@ -819,11 +819,11 @@ msgstr "Liste des applications actualisée."
 
 #: ../ui/software_center.py:458
 msgid "Failed to refresh package lists."
-msgstr "Échec du rafraîchissement de la liste des paquets."
+msgstr "Échec actualisation de la liste des paquets."
 
 #: ../ui/software_center.py:459
 msgid "Try again"
-msgstr "Essayer de nouveau"
+msgstr "Essayer à nouveau"
 
 #: ../ui/software_center.py:469
 #, python-format
@@ -899,7 +899,7 @@ msgid ""
 "Deepin Store is a commonly used software center on Linux. We selected more than 2,600 excellent applications with many functions of installation and uninstalling, software repository and popular recommendations, which supports 1-click quick installation, multi-threaded download and clearing of cached packages. It provides topics for software introduction and shares good applications.\n"
 "\n"
 "Deepin Store is a free software licensed under GNU GPLv3."
-msgstr "La logithèque Deepin est un gestionnaire de logiciels couramment utilisés sur Linux. Il permet de faire son choix parmi plus de 2600 applications,dispose d'un module d'installation/désinstallation simple et pratique ainsi qu'un référencement d'applications recommandées. Il prend en charge l'installation/désinstallation en 1 clic , le téléchargement et le nettoyage des paquets. Il fournit également des informations pour chaque logiciel mis à disposition. \n\nLa logitèque Deepin est une application gratuite sous licence GNU GPv3."
+msgstr "La logithèque Deepin est un gestionnaire de logiciels utilisés sous Linux. Il permet de faire son choix parmi plus de 2600 applications,dispose d'un module d'installation/désinstallation simple et pratique, ainsi qu'un référencement d'applications recommandées. Il prend en charge le téléchargement et le nettoyage des paquets.Il fournit également des informations pour chaque logiciel mis à disposition. \n\nLa logitèque Deepin est une application gratuite sous licence GNU GPv3."
 
 #: ../ui/preference.py:477
 msgid "On uninstalling the software"
@@ -959,7 +959,7 @@ msgstr "Sélectionnez un dossier"
 
 #: ../ui/preference.py:751
 msgid "Speed testing will finish only after one minute, please wait."
-msgstr "Les tests de vitesse seront terminés seulement après une minute, veuillez patienter."
+msgstr "Les tests de vitesse seront terminés dans un instant, veuillez patienter."
 
 #: ../ui/preference.py:776
 #, python-format
@@ -981,4 +981,4 @@ msgstr "À propos"
 #: ../ui/search_page.py:110
 #, python-format
 msgid "%s applications searched"
-msgstr "%s applications recherchées"
+msgstr "%s applications trouvées"

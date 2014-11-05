@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-10 09:41+0800\n"
-"PO-Revision-Date: 2014-10-30 02:41+0000\n"
-"Last-Translator: szd_liufei <liufei@linuxdeepin.com>\n"
+"PO-Revision-Date: 2014-11-14 17:01+0000\n"
+"Last-Translator: Ricardo Simões <xmcorporation@gmail.com>\n"
 "Language-Team: Portuguese (http://www.transifex.com/projects/p/deepin-store/language/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -71,7 +71,7 @@ msgstr "Tamanho: %s"
 
 #: ../ui/detail_page.py:611
 msgid "Powered by UpYun.com"
-msgstr ""
+msgstr "Potenciado por UpYun.com"
 
 #: ../ui/uninstall_page.py:175
 #, python-format
@@ -99,7 +99,7 @@ msgstr "%s: requesito para a iniciação das aplicações enviado"
 msgid ""
 "Please wait a moment while system upgrade is being performed... Do not turn "
 "off your computer."
-msgstr ""
+msgstr "Por favor espere um momento enquanto a atualização do sistema é efetuada... Não desligue o seu computador."
 
 #: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
 #: ../ui/software_center.py:790
@@ -186,7 +186,7 @@ msgstr "Última atualização do sistema:"
 #: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
 #, python-format
 msgid "No reminder to upgrade (%s)"
-msgstr ""
+msgstr "Sem lembrete para atualizar (%s)"
 
 #: ../ui/upgrade_page.py:182
 msgid "Upgrade applications selected"
@@ -224,11 +224,11 @@ msgstr "O sistema não é Deepin, esta função é inválida."
 
 #: ../ui/upgrade_page.py:328
 msgid "Downloading upgrade packages"
-msgstr ""
+msgstr "A descarregar pacotes de atualização"
 
 #: ../ui/upgrade_page.py:335
 msgid "Last time of refreshed package lists: "
-msgstr ""
+msgstr "Última data de atualização das listas de pacotes:"
 
 #: ../ui/upgrade_page.py:345
 msgid "Mirror Receiving: "
@@ -236,7 +236,7 @@ msgstr "A receber do Servidor Espelho:"
 
 #: ../ui/upgrade_page.py:399
 msgid "Failed to download upgrade packages"
-msgstr ""
+msgstr "Falha ao descarregar pacotes de atualização"
 
 #: ../ui/upgrade_page.py:401
 msgid "The requested package does not exist on server."
@@ -250,7 +250,7 @@ msgstr "Sugerir a"
 #: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
 #: ../ui/upgrade_page.py:447
 msgid "refresh package lists"
-msgstr ""
+msgstr "refrescar listas de pacotes"
 
 #: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
 #: ../ui/upgrade_page.py:448
@@ -259,7 +259,7 @@ msgstr "e tente novamente."
 
 #: ../ui/upgrade_page.py:419 ../ui/upgrade_page.py:1120
 msgid "Failed to install upgrade packages"
-msgstr ""
+msgstr "A instalação de pacotes de atualização falhou"
 
 #: ../ui/upgrade_page.py:421
 msgid ""
@@ -274,7 +274,7 @@ msgstr "Aviso"
 msgid ""
 "The upgrade requires to uninstall crucial components due to corrupted local "
 "dependencies or incorrect package dependencies on server."
-msgstr ""
+msgstr "A atualização requere a desinstalação de componentes cruciais devido a dependências locais corrompidas ou pacotes de dependências incorretas no servidor. "
 
 #: ../ui/upgrade_page.py:483
 msgid "If the prompt occurs again, you could "
@@ -308,7 +308,7 @@ msgstr "Este problema ocorre devido a uma relação de dependência apt local co
 #: ../ui/upgrade_page.py:668
 #, python-format
 msgid "%s package(s) are available for upgrade, %s will be downloaded."
-msgstr ""
+msgstr "%s pacote(s) estão disponíveis para atualização, %s serão descarregados."
 
 #: ../ui/upgrade_page.py:1094
 msgid "Finished analyzing dependencies."
@@ -333,11 +333,11 @@ msgstr "Transferência parada."
 
 #: ../ui/upgrade_page.py:1124
 msgid "Installing upgrade packages"
-msgstr ""
+msgstr "A instalar pacotes de atualização"
 
 #: ../ui/upgrade_page.py:1125
 msgid "Upgrading..."
-msgstr ""
+msgstr "A atualizar..."
 
 #: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
 msgid "Upgrade completed"
@@ -813,7 +813,7 @@ msgstr "A gerar base de dados de lista de pacotes..."
 
 #: ../ui/software_center.py:446
 msgid "Package lists refreshed completely."
-msgstr ""
+msgstr "Lista de pacotes completamente refrescada."
 
 #: ../ui/software_center.py:458
 msgid "Failed to refresh package lists."
@@ -841,7 +841,7 @@ msgstr "O pacote requisitado \"%s\" não foi encontrado na lista de pacotes."
 
 #: ../ui/software_center.py:478
 msgid "Refresh package lists again and try again."
-msgstr ""
+msgstr "Refresque novamente as listas de pacotes e tente outra vez."
 
 #: ../ui/software_center.py:770
 msgid "Join us"
@@ -853,7 +853,7 @@ msgstr "Instalação"
 
 #: ../ui/software_center.py:816 ../ui/preference.py:568
 msgid "Refresh package lists"
-msgstr ""
+msgstr "Refrescar listas de pacotes"
 
 #: ../ui/software_center.py:817
 msgid "Open download directory"
@@ -913,7 +913,7 @@ msgstr "Definições de descarga"
 
 #: ../ui/preference.py:500
 msgid "Maximum number of download tasks: "
-msgstr ""
+msgstr "Número máximo de tarefas de descarregamento:"
 
 #: ../ui/preference.py:510
 msgid "Download directory: "
@@ -937,7 +937,7 @@ msgstr "Com sucesso"
 
 #: ../ui/preference.py:571
 msgid "Upgrade automatically"
-msgstr ""
+msgstr "Atualizar automaticamente"
 
 #: ../ui/preference.py:575
 msgid "Time interval: "

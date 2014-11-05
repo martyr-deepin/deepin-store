@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-10 09:41+0800\n"
-"PO-Revision-Date: 2014-10-31 21:00+0000\n"
+"PO-Revision-Date: 2014-11-04 13:11+0000\n"
 "Last-Translator: Massimo Antonio Carofano <real.massimo@hotmail.it>\n"
 "Language-Team: Italian (http://www.transifex.com/projects/p/deepin-store/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -795,7 +795,7 @@ msgstr "Disinstalla"
 #: ../ui/software_center.py:391
 #, python-format
 msgid "%s packages upgrade successfully."
-msgstr "%s pacchetti aggiornati con successo."
+msgstr "%s pacchetto/i aggiornato/i con successo."
 
 #: ../ui/software_center.py:394
 #, python-format
@@ -889,7 +889,7 @@ msgstr "Nessun promemoria"
 
 #: ../ui/preference.py:438
 msgid "Version:"
-msgstr "Versione:"
+msgstr "Versione: "
 
 #: ../ui/preference.py:452
 msgid ""
