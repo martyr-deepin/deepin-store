@@ -213,6 +213,11 @@ class Update(dbus.service.Object, Logger):
                 signal_name="ActionInvoked",
                 dbus_interface=NOTIFICATIONS_NAME
             )
+            self.session_bus.add_signal_receiver(
+                handler_function=self.handle_notification_close,
+                signal_name="NotificationClosed",
+                dbus_interface=NOTIFICATIONS_NAME
+            )
         except:
             pass
 
@@ -229,6 +234,8 @@ class Update(dbus.service.Object, Logger):
             self.notify_id = int(r)
 
     def handle_notification_action(self, notify_id, action_id):
+        notify_id = int(notify_id)
+        action_id = str(action_id)
         if self.notify_id == notify_id:
             dsc_obj = self.session_bus.get_object(DSC_FRONTEND_NAME, DSC_FRONTEND_PATH)
             self.dsc_interface = dbus.Interface(dsc_obj, DSC_FRONTEND_NAME)
@@ -239,13 +246,15 @@ class Update(dbus.service.Object, Logger):
                 self.dsc_interface.show_page("upgrade")
                 self.dsc_interface.raise_to_top()
 
-    def set_delay_update(self, seconds):
-        if not self.is_run_in_daemon:
+    def handle_notification_close(self, notify_id, reason):
+        notify_id = int(notify_id)
+        if self.notify_id == notify_id and not self.is_run_in_daemon:
             gobject.timeout_add_seconds(5, self.mainloop.quit)
 
-        ###
+    def set_delay_update(self, seconds):
         if self.delay_update_id:
             gobject.source_remove(self.delay_update_id)
+
         if is_auto_update() and seconds:
             self.delay_update_id = gobject.timeout_add_seconds(seconds, self.update_handler)
         else:
@@ -257,12 +266,12 @@ class Update(dbus.service.Object, Logger):
         bus_object = self.system_bus.get_object(DSC_SERVICE_NAME, DSC_SERVICE_PATH)
         self.bus_interface = dbus.Interface(bus_object, DSC_SERVICE_NAME)
         self.system_bus.add_signal_receiver(
-                self.signal_receiver,
+                self.handle_dsc_update_signal,
                 signal_name="update_signal",
                 dbus_interface=DSC_SERVICE_NAME,
                 path=DSC_SERVICE_PATH)
 
-    def signal_receiver(self, messages):
+    def handle_dsc_update_signal(self, messages):
         for message in messages:
             (signal_type, action_content) = message
             if signal_type == "update-list-update":
