@@ -30,9 +30,12 @@ from datetime import datetime
 import threading
 import urllib2
 import uuid
+import json
+
 from deepin_utils.ipc import is_dbus_name_exists
 from deepin_utils.file import touch_file
 from deepin_utils.config import Config
+
 from nls import _
 from logger import Logger
 
@@ -224,7 +227,7 @@ class Update(dbus.service.Object, Logger):
         app_name = "deepin-software-center"
         replaces_id = 0
         app_icon = get_common_image("logo48.png")
-        actions = ["_id_default_", "default", "_id_open_update_", _("Upgrade")]
+        actions = ["default", "default", "_id_open_update_", _("Upgrade")]
         hints = {"image-path": app_icon}
         timeout = 3500
         if self.notify_interface:
@@ -239,7 +242,7 @@ class Update(dbus.service.Object, Logger):
         if self.notify_id == notify_id:
             dsc_obj = self.session_bus.get_object(DSC_FRONTEND_NAME, DSC_FRONTEND_PATH)
             self.dsc_interface = dbus.Interface(dsc_obj, DSC_FRONTEND_NAME)
-            if action_id == "_id_default_":
+            if action_id == "default":
                 self.dsc_interface.show_page("home")
                 self.dsc_interface.raise_to_top()
             elif action_id == "_id_open_update_":
@@ -281,15 +284,17 @@ class Update(dbus.service.Object, Logger):
                 self.is_in_update_list = False
                 self.update_status = "finish"
                 (upgrade_state, pkg_infos) = self.bus_interface.RequestUpgradeStatus()
-                update_num = len(pkg_infos)
-                remind_num = update_num - len(self.bus_interface.read_no_notify_config(NO_NOTIFY_FILE))
+                need_upgrade_pkg_names = []
+                for info in pkg_infos:
+                    need_upgrade_pkg_names.append(json.loads(info)[0])
+                hold_upgrade_pkg_names = self.bus_interface.read_no_notify_config(NO_NOTIFY_FILE)
+                for name in hold_upgrade_pkg_names:
+                    if name in need_upgrade_pkg_names:
+                        need_upgrade_pkg_names.remove(name)
+                remind_num = len(need_upgrade_pkg_names)
                 self.loginfo("Remind update number: %s" % remind_num)
-                if remind_num < 0:
-                    self.logerror("Error for no notify function\nUpdate number: \
-                            %s\nNo notify number: %s" %
-                            (update_num, update_num-remind_num))
-                elif remind_num > 0 and remind_num != self.remind_num:
-                    if remind_num != 1:
+                if remind_num != self.remind_num:
+                    if remind_num > 1:
                         self.send_notify(_("There are %s packages needed to "
                             "upgrade in your system, please use Deepin Store "
                             "to upgrade.") % remind_num, _("Deepin Store"))
