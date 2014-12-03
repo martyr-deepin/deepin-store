@@ -1,999 +1,981 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
+# Heimen Stoffels <motionshot@vivaldi.net>, 2014
+# Anduxor <itachiandu@gmail.com>, 2014
 # jasper580 <jasperweyne@gmail.com>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: Deepin Software Center\n"
+"Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-22 11:20+0800\n"
-"PO-Revision-Date: 2014-03-06 13:17+0000\n"
-"Last-Translator: electricface <songwentai@linuxdeepin.com>\n"
-"Language-Team: Dutch (http://www.transifex.com/projects/p/deepin-software-"
-"center/language/nl/)\n"
-"Language: nl\n"
+"POT-Creation-Date: 2014-09-10 09:41+0800\n"
+"PO-Revision-Date: 2014-12-04 20:22+0000\n"
+"Last-Translator: Heimen Stoffels <motionshot@vivaldi.net>\n"
+"Language-Team: Dutch (http://www.transifex.com/projects/p/deepin-store/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
-#: ../ui/upgrade_page.py:448
-msgid " and try again."
-msgstr ""
+#: ../ui/detail_page.py:179
+msgid "Popular recommendations"
+msgstr "Populaire aanbevelingen"
 
-#: ../ui/preference.py:578
-msgid " hour"
-msgstr ""
+#: ../ui/detail_page.py:240 ../ui/detail_page.py:494
+msgid "Loading comments..."
+msgstr "Bezig met laden van reacties..."
 
-#: ../ui/home_page.py:660
+#: ../ui/detail_page.py:358
 #, python-format
-msgid "%s > %s : %s applications"
-msgstr "%s > %s : %s applicaties"
+msgid "Download: %s"
+msgstr "Download: %s"
 
-#: ../ui/upgrade_page.py:204
-#, python-format
-msgid "%s applications are available for upgrade"
-msgstr ""
+#: ../ui/detail_page.py:389
+msgid "Category: "
+msgstr "Categorie:"
 
-#: ../ui/install_page.py:146
+#: ../ui/detail_page.py:393
 #, python-format
-msgid "%s applications are being installed"
-msgstr ""
+msgid "Version: %s"
+msgstr "Versie: %s"
 
-#: ../ui/upgrade_page.py:272
+#: ../ui/detail_page.py:394
+msgid "Download: 0"
+msgstr "Download: 0"
+
+#: ../ui/detail_page.py:395
+msgid "Size: calculating..."
+msgstr "Grootte: bezig met berekenen..."
+
+#: ../ui/detail_page.py:399
+msgid "Visit Homepage"
+msgstr "Thuispagina bezoeken"
+
+#: ../ui/detail_page.py:444 ../ui/download_rank_page.py:369
+#: ../ui/home_page.py:1086 ../ui/album_page.py:483 ../ui/search_page.py:274
+msgid "Not found"
+msgstr "Niet gevonden"
+
+#: ../ui/detail_page.py:450
+msgid "Successfully installed"
+msgstr "Succesvol geïnstalleerd"
+
+#: ../ui/detail_page.py:473
 #, python-format
-msgid "%s applications are not being watched"
-msgstr ""
+msgid "Size: %s"
+msgstr "Grootte: %s"
+
+#: ../ui/detail_page.py:611
+msgid "Powered by UpYun.com"
+msgstr "Aangestuurd door UpYun.com"
 
 #: ../ui/uninstall_page.py:175
 #, python-format
 msgid "%s applications can be uninstalled"
-msgstr ""
+msgstr "%s applicaties kunnen worden gedeïnstalleerd"
 
-#: ../ui/search_page.py:110
-#, python-format
-msgid "%s applications searched"
-msgstr ""
+#: ../ui/uninstall_page.py:515 ../ui/uninstall_page.py:598
+msgid "Waiting for uninstall"
+msgstr "Wachten voor deïnstalleren"
 
-#: ../ui/software_center.py:127
-#, python-format
-msgid "%s haven't any desktop file"
-msgstr "%s heeft geen desktop bestand"
+#: ../ui/uninstall_page.py:605 ../ui/uninstall_page.py:612
+msgid "Uninstalling"
+msgstr "Bezig met deïnstalleren"
 
-#: ../ui/widgets.py:80
-#, python-format
-msgid "%s hours ago"
-msgstr ""
-
-#: ../ui/widgets.py:73
-#, python-format
-msgid "%s minutes ago"
-msgstr ""
-
-#: ../ui/upgrade_page.py:668
-#, python-format
-msgid "%s package(s) are available for upgrade, %s will be downloaded."
-msgstr ""
-
-#: ../ui/software_center.py:391
-#, python-format
-msgid "%s packages upgrade successfully."
-msgstr "%s pakketten succesvol geupgrade."
-
-#: ../ui/home_page.py:478
-#, python-format
-msgid "%s: %s applications"
-msgstr "%s: %s applicaties"
+#: ../ui/uninstall_page.py:619
+msgid "Uninstallation completed"
+msgstr "Deïnstallatie voltooid"
 
 #: ../ui/start_desktop_window.py:227 ../ui/software_center.py:131
 #, python-format
 msgid "%s: request for starting applications sent"
-msgstr "%s: verzoek om applicaties te starten verzonden"
-
-#: ../ui/upgrade_page.py:485
-msgid "."
-msgstr ""
-
-#: ../ui/category_info.py:59
-msgid "2D graphics"
-msgstr ""
-
-#: ../ui/category_info.py:60
-msgid "3D graphics"
-msgstr ""
-
-#: ../ui/preference.py:831
-msgid "About"
-msgstr ""
-
-#: ../ui/category_info.py:94
-msgid "Accessories"
-msgstr ""
-
-#: ../ui/category_info.py:46
-msgid "Action games"
-msgstr ""
-
-#: ../ui/category_info.py:47
-msgid "Advernture games"
-msgstr ""
-
-#: ../ui/category_info.py:48
-msgid "Arcade games"
-msgstr ""
-
-#: ../ui/category_info.py:95
-msgid "Archiving"
-msgstr ""
-
-#: ../ui/category_info.py:36
-msgid "Audiovideo"
-msgstr ""
-
-#: ../ui/category_info.py:49
-msgid "Board games"
-msgstr ""
-
-#: ../ui/category_info.py:27
-msgid "Browser"
-msgstr ""
-
-#: ../ui/widgets.py:463 ../ui/preference.py:784
-msgid "Cancel"
-msgstr ""
-
-#: ../ui/category_info.py:50
-msgid "Card games"
-msgstr ""
-
-#: ../ui/detail_page.py:386
-msgid "Category: "
-msgstr ""
-
-#: ../ui/preference.py:516
-msgid "Change"
-msgstr ""
-
-#: ../ui/software_center.py:818
-msgid "Clear up cached packages"
-msgstr "Schoon gecachede pakketten op"
-
-#: ../ui/widgets.py:295 ../ui/widgets.py:369
-msgid "Click to refresh"
-msgstr ""
-
-#: ../ui/upgrade_page.py:1103
-#, python-format
-msgid "Completed: %s/%s (%s/%s) Download Rate: %s/s"
-msgstr ""
-
-#: ../ui/utils.py:359
-msgid "Configuring"
-msgstr ""
-
-#: ../ui/category_info.py:79
-msgid "Database"
-msgstr ""
-
-#: ../ui/category_info.py:80
-msgid "Debugging"
-msgstr ""
-
-#: ../ui/upgrade_page.py:306
-msgid "Deepin Desktop Environment is not installed, this function is invalid!"
-msgstr ""
-
-#: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
-#: ../ui/software_center.py:733 ../ui/preference.py:433
-msgid "Deepin Store"
-msgstr "Deepin Software Center"
-
-#: ../ui/preference.py:452
-msgid ""
-"Deepin Store is a commonly used software center on Linux. We selected more "
-"than 2,600 excellent applications with many functions of installation and "
-"uninstalling, software repository and popular recommendations, which "
-"supports 1-click quick installation, multi-threaded download and clearing of "
-"cached packages. It provides topics for software introduction and shares "
-"good applications.\n"
-"\n"
-"Deepin Store is a free software licensed under GNU GPLv3."
-msgstr ""
-
-#: ../ui/preference.py:480
-msgid "Delete configuration files"
-msgstr ""
-
-#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1647
-msgid "Dependencies analysis failed"
-msgstr ""
-
-#: ../ui/install_page.py:313 ../ui/install_page.py:741
-#: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
-msgid "Dependencies analyzing"
-msgstr ""
-
-#: ../ui/category_info.py:86
-msgid "Desktop environment"
-msgstr ""
-
-#: ../ui/category_info.py:78
-msgid "Development"
-msgstr ""
-
-#: ../ui/category_info.py:38
-msgid "Disc burner"
-msgstr ""
-
-#: ../ui/preference.py:510
-msgid "Download directory: "
-msgstr ""
-
-#: ../ui/install_page.py:762
-msgid "Download failed"
-msgstr ""
-
-#: ../ui/upgrade_page.py:1113
-msgid "Download finished."
-msgstr ""
-
-#: ../ui/upgrade_page.py:1097
-msgid "Download has started"
-msgstr ""
-
-#: ../ui/home_page.py:756
-msgid "Download rank"
-msgstr ""
-
-#: ../ui/preference.py:494
-msgid "Download settings"
-msgstr ""
-
-#: ../ui/upgrade_page.py:1117
-msgid "Download stopped."
-msgstr ""
-
-#: ../ui/install_page.py:662 ../ui/install_page.py:673
-msgid "Download was interrupted"
-msgstr ""
-
-#: ../ui/detail_page.py:355
-#, python-format
-msgid "Download: %s"
-msgstr ""
-
-#: ../ui/detail_page.py:391
-msgid "Download: 0"
-msgstr ""
-
-#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1621
-msgid "Downloading"
-msgstr ""
-
-#: ../ui/upgrade_page.py:328
-#, fuzzy
-msgid "Downloading upgrade packages"
-msgstr "Schoon gecachede pakketten op"
-
-#: ../ui/category_info.py:29
-msgid "Email"
-msgstr ""
-
-#: ../ui/category_info.py:96
-msgid "Emulation"
-msgstr ""
-
-#: ../ui/category_info.py:51
-msgid "Emulator"
-msgstr ""
-
-#: ../ui/category_info.py:69
-msgid "Engineering"
-msgstr ""
-
-#: ../ui/utils.py:370
-msgid "Err"
-msgstr ""
-
-#: ../ui/upgrade_page.py:399
-#, fuzzy
-msgid "Failed to download upgrade packages"
-msgstr "Verversen van applicatie lijsten gefaald."
-
-#: ../ui/upgrade_page.py:419 ../ui/upgrade_page.py:1120
-#, fuzzy
-msgid "Failed to install upgrade packages"
-msgstr "Verversen van applicatie lijsten gefaald."
-
-#: ../ui/software_center.py:458
-msgid "Failed to refresh package lists."
-msgstr "Verversen van applicatie lijsten gefaald."
-
-#: ../ui/upgrade_page.py:509
-msgid "Failed to send the error report. You could try again."
-msgstr ""
-
-#: ../ui/category_info.py:97
-msgid "File manager"
-msgstr ""
-
-#: ../ui/category_info.py:30
-msgid "File transfer"
-msgstr ""
-
-#: ../ui/category_info.py:70
-msgid "Finance"
-msgstr ""
-
-#: ../ui/upgrade_page.py:1094
-msgid "Finished analyzing dependencies."
-msgstr ""
-
-#: ../ui/category_info.py:45
-msgid "Games"
-msgstr ""
-
-#: ../ui/preference.py:829
-msgid "General"
-msgstr ""
-
-#: ../ui/software_center.py:438
-msgid "Generating package list database..."
-msgstr "Genereren van lokale pakketten database..."
-
-#: ../ui/utils.py:372
-msgid "Get"
-msgstr ""
-
-#: ../ui/category_info.py:58
-msgid "Graphics"
-msgstr ""
-
-#: ../ui/category_info.py:71
-msgid "Ham radio"
-msgstr ""
-
-#: ../ui/utils.py:373
-msgid "Hit"
-msgstr ""
-
-#: ../ui/home_page.py:716 ../ui/software_center.py:789
-msgid "Home"
-msgstr "Thuis"
-
-#: ../ui/category_info.py:81
-msgid "IDE"
-msgstr ""
-
-#: ../ui/upgrade_page.py:483
-msgid "If the prompt occurs again, you could "
-msgstr ""
-
-#: ../ui/utils.py:371
-msgid "Ign"
-msgstr ""
-
-#: ../ui/category_info.py:61
-msgid "Image processing"
-msgstr ""
-
-#: ../ui/category_info.py:68
-msgid "Industry"
-msgstr ""
-
-#: ../ui/software_center.py:394
-msgid "Install"
-msgstr "Installeer"
-
-#: ../ui/software_center.py:394
-#, python-format
-msgid "Install %s Successfully."
-msgstr "Installatie %s succesvol."
-
-#: ../ui/software_center.py:792
-msgid "Installation"
-msgstr ""
-
-#: ../ui/install_page.py:813
-msgid "Installation completed"
-msgstr ""
-
-#: ../ui/install_page.py:686
-msgid "Installation was interrupted"
-msgstr ""
-
-#: ../ui/install_page.py:513 ../ui/download_rank_page.py:371
-#: ../ui/home_page.py:1076 ../ui/utils.py:360 ../ui/album_page.py:485
-#: ../ui/search_page.py:276
-msgid "Installed"
-msgstr ""
-
-#: ../ui/install_page.py:797 ../ui/install_page.py:804
-msgid "Installing"
-msgstr ""
-
-#: ../ui/upgrade_page.py:1124
-msgid "Installing upgrade packages"
-msgstr ""
-
-#: ../ui/category_info.py:28
-msgid "Instant messaging"
-msgstr ""
-
-#: ../ui/category_info.py:26
-msgid "Internet"
-msgstr ""
-
-#: ../ui/software_center.py:770
-msgid "Join us"
-msgstr "Doe mee"
-
-#: ../ui/widgets.py:66
-msgid "Just now"
-msgstr ""
-
-#: ../ui/category_info.py:52
-msgid "Kids games"
-msgstr ""
-
-#: ../ui/category_info.py:75
-msgid "Languages"
-msgstr ""
-
-#: ../ui/upgrade_page.py:78 ../ui/upgrade_page.py:107
-#: ../ui/upgrade_page.py:340
-msgid "Last system upgraded time: "
-msgstr ""
-
-#: ../ui/upgrade_page.py:335
-#, fuzzy
-msgid "Last time of refreshed package lists: "
-msgstr "Verversen van applicatie lijsten gefaald."
-
-#: ../ui/detail_page.py:239 ../ui/detail_page.py:491
-msgid "Loading comments..."
-msgstr ""
-
-#: ../ui/category_info.py:53
-msgid "Logic games"
-msgstr ""
-
-#: ../ui/category_info.py:39
-msgid "MIDI"
-msgstr ""
-
-#: ../ui/preference.py:500
-msgid "Maximum number of download tasks: "
-msgstr ""
-
-#: ../ui/category_info.py:37
-msgid "Media Editing"
-msgstr ""
-
-#: ../ui/category_info.py:72
-msgid "Medical"
-msgstr ""
-
-#: ../ui/upgrade_page.py:345
-msgid "Mirror Receiving: "
-msgstr ""
-
-#: ../ui/preference.py:830
-msgid "Mirrors"
-msgstr ""
-
-#: ../ui/category_info.py:34
-msgid "Miscellaneous"
-msgstr ""
-
-#: ../ui/category_info.py:40
-msgid "Mixer"
-msgstr ""
-
-#: ../ui/category_info.py:87
-msgid "Monitor"
-msgstr ""
-
-#: ../ui/category_info.py:35
-msgid "Multimedia"
-msgstr ""
-
-#: ../ui/category_info.py:88
-msgid "Network"
-msgstr ""
-
-#: ../ui/category_info.py:31
-msgid "News"
-msgstr ""
-
-#: ../ui/item_render.py:44
-msgid "No reminder"
-msgstr ""
-
-#: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
-#, python-format
-msgid "No reminder to upgrade (%s)"
-msgstr ""
-
-#: ../ui/detail_page.py:441 ../ui/install_page.py:506
-#: ../ui/download_rank_page.py:364 ../ui/home_page.py:1069
-#: ../ui/album_page.py:478 ../ui/search_page.py:269
-msgid "Not found"
-msgstr ""
-
-#: ../ui/widgets.py:462 ../ui/preference.py:782
-msgid "OK"
-msgstr ""
-
-#: ../ui/category_info.py:66
-msgid "Office"
-msgstr ""
-
-#: ../ui/preference.py:477
-msgid "On uninstalling the software"
-msgstr ""
-
-#: ../ui/widgets.py:78
-msgid "One hour ago"
-msgstr ""
-
-#: ../ui/widgets.py:71
-msgid "One minute ago"
-msgstr ""
-
-#: ../ui/software_center.py:817
-msgid "Open download directory"
-msgstr "Open download map"
-
-#: ../ui/software_center.py:446
-msgid "Package lists refreshed completely."
-msgstr ""
-
-#: ../ui/category_info.py:89
-msgid "Package manager"
-msgstr ""
-
-#: ../ui/category_info.py:62
-msgid "Photography"
-msgstr ""
-
-#: ../ui/category_info.py:41
-msgid "Player"
-msgstr ""
+msgstr "%s: verzoek om toepassingen te starten verzonden"
 
 #: ../ui/inhibit.py:54
 msgid ""
 "Please wait a moment while system upgrade is being performed... Do not turn "
 "off your computer."
-msgstr ""
-
-#: ../ui/detail_page.py:178
-msgid "Popular recommendations"
-msgstr ""
-
-#: ../ui/detail_page.py:608
-msgid "Powered by 又拍云存储"
-msgstr ""
-
-#: ../ui/software_center.py:820
-msgid "Preferences"
-msgstr "Voorkeuren"
-
-#: ../ui/utils.py:356
-msgid "Preparing"
-msgstr ""
-
-#: ../ui/utils.py:358
-msgid "Preparing to configure"
-msgstr ""
-
-#: ../ui/software_center.py:469
-#, python-format
-msgid ""
-"Problem occurred when analyzing dependencies for %s. Installation aborted."
-msgstr ""
-"Probleem bij analyseren van afhankelijkheden voor %s. Installatie afgebroken"
-
-#: ../ui/software_center.py:472
-#, python-format
-msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
-msgstr ""
-"Probleem bij analyseren van afhankelijkheden voor %s. Upgrade afgebroken"
-
-#: ../ui/category_info.py:65
-msgid "Productivity"
-msgstr ""
-
-#: ../ui/category_info.py:73
-msgid "Publishing"
-msgstr ""
-
-#: ../ui/category_info.py:54
-msgid "Puzzle games"
-msgstr ""
-
-#: ../ui/software_center.py:821
-msgid "Quit"
-msgstr "Afsluiten"
-
-#: ../ui/software_center.py:204
-#, fuzzy
-msgid "Rated successfully. Thanks for your involvement."
-msgstr "Commentaar sturen succesvol. Bedankt voor uw betrokkenheid. :)"
-
-#: ../ui/software_center.py:220
-msgid "Rating failed. Please check your network connection!"
-msgstr ""
-"Commentaar sturen gefaald. Controleer uw netwerkverbinding alstublieft!"
-
-#: ../ui/home_page.py:756
-msgid "Recommendations"
-msgstr ""
-
-#: ../ui/category_info.py:42
-msgid "Recorder"
-msgstr ""
-
-#: ../ui/software_center.py:816 ../ui/preference.py:568
-#, fuzzy
-msgid "Refresh package lists"
-msgstr "Verversen van applicatie lijsten gefaald."
-
-#: ../ui/software_center.py:478
-#, fuzzy
-msgid "Refresh package lists again and try again."
-msgstr "Ververs de pakketten lijst en probeer opnieuw."
-
-#: ../ui/category_info.py:76
-msgid "Religion"
-msgstr ""
-
-#: ../ui/upgrade_page.py:238 ../ui/item_render.py:46
-msgid "Remind again"
-msgstr ""
-
-#: ../ui/category_info.py:32
-msgid "Remote access"
-msgstr ""
-
-#: ../ui/category_info.py:55
-msgid "Role-playing games"
-msgstr ""
-
-#: ../ui/utils.py:355
-msgid "Running"
-msgstr ""
-
-#: ../ui/category_info.py:67
-msgid "Scanning printing"
-msgstr ""
-
-#: ../ui/category_info.py:77
-msgid "Science"
-msgstr ""
-
-#: ../ui/category_info.py:74
-msgid "Science Education"
-msgstr ""
-
-#: ../ui/category_info.py:98
-msgid "Screensaver"
-msgstr ""
-
-#: ../ui/category_info.py:33
-msgid "Security"
-msgstr ""
-
-#: ../ui/preference.py:705
-msgid "Select Directory"
-msgstr ""
-
-#: ../ui/preference.py:642
-msgid "Select mirror"
-msgstr ""
-
-#: ../ui/preference.py:551
-msgid "Select the best mirror"
-msgstr ""
-
-#: ../ui/software_center.py:194
-msgid "Sending rating..."
-msgstr "Commentaar aan het versturen..."
-
-#: ../ui/category_info.py:43
-msgid "Sequencer"
-msgstr ""
-
-#: ../ui/category_info.py:90
-msgid "Settings"
-msgstr ""
-
-#: ../ui/upgrade_page.py:289
-msgid "Shut down the computer after upgraded"
-msgstr ""
-
-#: ../ui/detail_page.py:470
-#, python-format
-msgid "Size: %s"
-msgstr ""
-
-#: ../ui/detail_page.py:392
-msgid "Size: calculating..."
-msgstr ""
-
-#: ../ui/category_info.py:82
-msgid "Software development"
-msgstr ""
-
-#: ../ui/preference.py:751
-msgid "Speed testing will finish only after one minute, please wait."
-msgstr ""
-
-#: ../ui/category_info.py:56
-msgid "Sports games"
-msgstr ""
-
-#: ../ui/category_info.py:57
-msgid "Strategy games"
-msgstr ""
-
-#: ../ui/preference.py:553
-msgid "Successfully"
-msgstr "Succesvol."
-
-#: ../ui/detail_page.py:447
-msgid "Successfully installed"
-msgstr ""
-
-#: ../ui/upgrade_page.py:402 ../ui/upgrade_page.py:423
-#: ../ui/upgrade_page.py:446
-msgid "Suggest to "
-msgstr ""
-
-#: ../ui/category_info.py:85
-msgid "System"
-msgstr ""
-
-#: ../ui/category_info.py:99
-msgid "Terminal emulator"
-msgstr ""
-
-#: ../ui/preference.py:776
-#, python-format
-msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
-msgstr ""
-
-#: ../ui/category_info.py:100
-msgid "Text editor"
-msgstr ""
-
-#: ../ui/upgrade_page.py:503
-msgid "The error was successfully reported and will be handled soon."
-msgstr ""
-
-#: ../ui/software_center.py:477
-#, python-format
-msgid "The requested package \"%s\" was not found in the package list."
-msgstr "Het gevraagde pakket \"%s\" is niet gevonden in de pakketten lijst."
-
-#: ../ui/upgrade_page.py:401
-msgid "The requested package does not exist on server."
-msgstr "Het gevraagde pakket \"%s\" is niet gevonden in de pakketten lijst."
-
-#: ../ui/upgrade_page.py:308
-msgid "The system is not Deepin, this function is invalid."
-msgstr ""
-
-#: ../ui/upgrade_page.py:442
-msgid ""
-"The upgrade requires to uninstall crucial components due to corrupted local "
-"dependencies or incorrect package dependencies on server."
-msgstr ""
-
-#: ../ui/dsc-daemon.py:284
-#, python-format
-msgid ""
-"There are %s packages needed to upgrade in your system, please use Deepin "
-"Store to upgrade."
-msgstr ""
-
-#: ../ui/dsc-daemon.py:288
-#, python-format
-msgid ""
-"There is %s package needed to upgrade in your system, please use Deepin "
-"Store to upgrade."
-msgstr ""
-
-#: ../ui/upgrade_page.py:304
-msgid "This function is invalid without Deepin System Settings installed."
-msgstr ""
-
-#: ../ui/upgrade_page.py:663
-msgid "This problem occurs due to corrupted local apt dependence relationship."
-msgstr ""
-
-#: ../ui/upgrade_page.py:421
-msgid "This problem occurs due to corrupted local apt dependency relationship."
-msgstr ""
-
-#: ../ui/preference.py:575
-msgid "Time interval: "
-msgstr ""
-
-#: ../ui/download_rank_page.py:61
-msgid "Top 25 monthly"
-msgstr ""
-
-#: ../ui/download_rank_page.py:61
-msgid "Top 25 totally"
-msgstr ""
-
-#: ../ui/download_rank_page.py:61
-msgid "Top 25 weekly"
-msgstr ""
-
-#: ../ui/home_page.py:756
-msgid "Topics"
-msgstr "Onderwerpen"
-
-#: ../ui/software_center.py:459
-msgid "Try again"
-msgstr "Probeer opnieuw"
-
-#: ../ui/category_info.py:44
-msgid "Tuner"
-msgstr ""
-
-#: ../ui/software_center.py:385 ../ui/software_center.py:791
-msgid "Uninstall"
-msgstr "Verwijder"
-
-#: ../ui/software_center.py:385
-#, python-format
-msgid "Uninstall %s Successfully."
-msgstr "Verwijderen %s Succesvol."
-
-#: ../ui/uninstall_page.py:619
-msgid "Uninstallation completed"
-msgstr ""
-
-#: ../ui/uninstall_page.py:605 ../ui/uninstall_page.py:612
-msgid "Uninstalling"
-msgstr ""
-
-#: ../ui/utils.py:357
-msgid "Unpacking"
-msgstr ""
+msgstr "Een moment geduld terwijl er een systeemupgrade wordt uitgevoerd... Schakel de computer niet uit!"
 
 #: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
 #: ../ui/software_center.py:790
 msgid "Upgrade"
 msgstr "Upgrade"
 
+#: ../ui/dsc-daemon.py:284
+#, python-format
+msgid ""
+"There are %s packages needed to upgrade in your system, please use Deepin "
+"Store to upgrade."
+msgstr "Er zijn %s pakketten op uw systeem aanwezig die geupgradet moeten worden; start alstublieft Deepin Winkel om te upgraden!"
+
+#: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
+#: ../ui/software_center.py:733 ../ui/preference.py:433
+msgid "Deepin Store"
+msgstr "Deepin winkel"
+
+#: ../ui/dsc-daemon.py:288
+#, python-format
+msgid ""
+"There is %s package needed to upgrade in your system, please use Deepin "
+"Store to upgrade."
+msgstr "Er dient %s pakket te worden geüpgraded op uw systeem, gelieve de Deepin Store te gebruiken om te upgraden."
+
+#: ../ui/install_page.py:146
+#, python-format
+msgid "%s applications are being installed"
+msgstr "%s applicaties worden geïnstalleerd"
+
+#: ../ui/install_page.py:313 ../ui/install_page.py:744
+#: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
+msgid "Dependencies analyzing"
+msgstr "Bezig met analyseren van afhankelijkheden"
+
+#: ../ui/install_page.py:511 ../ui/install_page.py:516
+#: ../ui/download_rank_page.py:374 ../ui/home_page.py:1091 ../ui/utils.py:360
+#: ../ui/album_page.py:488 ../ui/search_page.py:279
+msgid "Installed"
+msgstr "Geïnstalleerd"
+
+#: ../ui/install_page.py:665 ../ui/install_page.py:676
+msgid "Download was interrupted"
+msgstr "Download werd onderbroken"
+
+#: ../ui/install_page.py:689
+msgid "Installation was interrupted"
+msgstr "Installatie werd onderbroken"
+
+#: ../ui/install_page.py:751 ../ui/upgrade_page.py:1495
+#: ../ui/upgrade_page.py:1614
+msgid "Waiting for download"
+msgstr "Wachten voor downloaden"
+
+#: ../ui/install_page.py:758 ../ui/upgrade_page.py:1621
+msgid "Downloading"
+msgstr "Bezig met downloaden"
+
+#: ../ui/install_page.py:765
+msgid "Download failed"
+msgstr "Downloaden mislukt"
+
+#: ../ui/install_page.py:781
+msgid "Waiting for installation"
+msgstr "Wachten voor installatie"
+
+#: ../ui/install_page.py:791 ../ui/upgrade_page.py:1647
+msgid "Dependencies analysis failed"
+msgstr "Analyse van afhankelijkheden mislukt"
+
+#: ../ui/install_page.py:800 ../ui/install_page.py:807
+msgid "Installing"
+msgstr "Bezig met installeren"
+
+#: ../ui/install_page.py:816
+msgid "Installation completed"
+msgstr "Installatie voltooid"
+
+#: ../ui/upgrade_page.py:78 ../ui/upgrade_page.py:107
+#: ../ui/upgrade_page.py:340
+msgid "Last system upgraded time: "
+msgstr "Laatste systeemupgrade-tijd:"
+
+#: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
+#, python-format
+msgid "No reminder to upgrade (%s)"
+msgstr "Geen herinnering om te upgraden (%s)"
+
 #: ../ui/upgrade_page.py:182
 msgid "Upgrade applications selected"
-msgstr "Ververs applicatie lijsten"
+msgstr "Geselecteerde applicatie upgraden"
 
-#: ../ui/preference.py:571
-msgid "Upgrade automatically"
-msgstr ""
+#: ../ui/upgrade_page.py:204
+#, python-format
+msgid "%s applications are available for upgrade"
+msgstr "%s applicaties zijn beschikbaar voor upgrade"
 
-#: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
-msgid "Upgrade completed"
-msgstr ""
+#: ../ui/upgrade_page.py:238 ../ui/item_render.py:46
+msgid "Remind again"
+msgstr "Opnieuw aan herinneren"
 
-#: ../ui/upgrade_page.py:1656 ../ui/upgrade_page.py:1663
-msgid "Upgrading"
-msgstr ""
+#: ../ui/upgrade_page.py:272
+#, python-format
+msgid "%s applications are not being watched"
+msgstr "%s applicaties worden niet bekeken"
 
-#: ../ui/upgrade_page.py:1125
-#, fuzzy
-msgid "Upgrading..."
-msgstr "Upgrade"
+#: ../ui/upgrade_page.py:289
+msgid "Shut down the computer after upgraded"
+msgstr "Schakel de computer uit na het upgraden"
+
+#: ../ui/upgrade_page.py:304
+msgid "This function is invalid without Deepin System Settings installed."
+msgstr "Deze functie is ongeldig zonder installatie van Deepin System Settings."
+
+#: ../ui/upgrade_page.py:306
+msgid "Deepin Desktop Environment is not installed, this function is invalid!"
+msgstr "Deepin Desktop Environment is niet geïnstalleerd, deze functie is ongeldig!"
+
+#: ../ui/upgrade_page.py:308
+msgid "The system is not Deepin, this function is invalid."
+msgstr "Het systeem is niet Deepin, deze functie is ongeldig."
+
+#: ../ui/upgrade_page.py:328
+msgid "Downloading upgrade packages"
+msgstr "Upgrade pakketten downloaden"
+
+#: ../ui/upgrade_page.py:335
+msgid "Last time of refreshed package lists: "
+msgstr "Laatste tijd van ververste pakketlijsten:"
+
+#: ../ui/upgrade_page.py:345
+msgid "Mirror Receiving: "
+msgstr "Mirror Ontvangen:"
+
+#: ../ui/upgrade_page.py:399
+msgid "Failed to download upgrade packages"
+msgstr "Download van upgrade pakketten mislukt"
+
+#: ../ui/upgrade_page.py:401
+msgid "The requested package does not exist on server."
+msgstr "Het gevraagde pakket bestaat niet op de server."
+
+#: ../ui/upgrade_page.py:402 ../ui/upgrade_page.py:423
+#: ../ui/upgrade_page.py:446
+msgid "Suggest to "
+msgstr "Aanraden aan"
+
+#: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
+#: ../ui/upgrade_page.py:447
+msgid "refresh package lists"
+msgstr "pakketlijsten verversen"
+
+#: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
+#: ../ui/upgrade_page.py:448
+msgid " and try again."
+msgstr "en probeer opnieuw."
+
+#: ../ui/upgrade_page.py:419 ../ui/upgrade_page.py:1120
+msgid "Failed to install upgrade packages"
+msgstr "Installatie van upgrade pakketten mislukt."
+
+#: ../ui/upgrade_page.py:421
+msgid ""
+"This problem occurs due to corrupted local apt dependency relationship."
+msgstr "Dit probleem doet zich voor als gevolg van corrupte lokale apt afhankelijkheidsrelatie."
+
+#: ../ui/upgrade_page.py:440
+msgid "Warning"
+msgstr "Waarschuwing"
+
+#: ../ui/upgrade_page.py:442
+msgid ""
+"The upgrade requires to uninstall crucial components due to corrupted local "
+"dependencies or incorrect package dependencies on server."
+msgstr "De upgrade vereist het deïnstalleren van cruciale componenten als gevolg van corrupte lokale afhankelijkheden of onjuiste pakketafhankelijkheden op de server."
+
+#: ../ui/upgrade_page.py:483
+msgid "If the prompt occurs again, you could "
+msgstr "Indien de aanwijzing weer optreedt, kunt u"
+
+#: ../ui/upgrade_page.py:484 ../ui/upgrade_page.py:510
+msgid "send error report"
+msgstr "foutrapport versturen"
+
+#: ../ui/upgrade_page.py:485
+msgid "."
+msgstr "."
 
 #: ../ui/upgrade_page.py:498
 msgid "Uploading error log"
-msgstr ""
+msgstr "Foutlog uploaden"
 
-#: ../ui/category_info.py:93
-msgid "Utilities"
-msgstr ""
+#: ../ui/upgrade_page.py:503
+msgid "The error was successfully reported and will be handled soon."
+msgstr "De fout is met succes gemeld en zal binnenkort behandeld worden."
+
+#: ../ui/upgrade_page.py:509
+msgid "Failed to send the error report. You could try again."
+msgstr "Verzending van foutenrapport mislukt. U kunt opnieuw proberen."
+
+#: ../ui/upgrade_page.py:663
+msgid ""
+"This problem occurs due to corrupted local apt dependence relationship."
+msgstr "Dit probleem doet zich voor als gevolg van corrupte lokale apt afhankelijkheidsrelatie."
+
+#: ../ui/upgrade_page.py:668
+#, python-format
+msgid "%s package(s) are available for upgrade, %s will be downloaded."
+msgstr "%s pakket(ten) zijn beschikbaar voor upgrade, %s zullen worden gedownload."
+
+#: ../ui/upgrade_page.py:1094
+msgid "Finished analyzing dependencies."
+msgstr "Analyseren van afhankelijkheden voltooid."
+
+#: ../ui/upgrade_page.py:1097
+msgid "Download has started"
+msgstr "Download is begonnen"
+
+#: ../ui/upgrade_page.py:1103
+#, python-format
+msgid "Completed: %s/%s (%s/%s) Download Rate: %s/s"
+msgstr "Voltooid: %s/%s (%s/%s) Downloadsnelheid: %s/s"
+
+#: ../ui/upgrade_page.py:1113
+msgid "Download finished."
+msgstr "Download afgerond."
+
+#: ../ui/upgrade_page.py:1117
+msgid "Download stopped."
+msgstr "Download gestopt."
+
+#: ../ui/upgrade_page.py:1124
+msgid "Installing upgrade packages"
+msgstr "Upgrade pakketten installeren"
+
+#: ../ui/upgrade_page.py:1125
+msgid "Upgrading..."
+msgstr "Upgraden..."
+
+#: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
+msgid "Upgrade completed"
+msgstr "Upgrade voltooid"
+
+#: ../ui/upgrade_page.py:1637
+msgid "Waiting for upgrade"
+msgstr "Wachten op upgrade"
+
+#: ../ui/upgrade_page.py:1656 ../ui/upgrade_page.py:1663
+msgid "Upgrading"
+msgstr "Upgraden"
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 weekly"
+msgstr "Top 25 wekelijks"
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 monthly"
+msgstr "Top 25 maandelijks"
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 totally"
+msgstr "Top 25 totaal"
+
+#: ../ui/category_info.py:26
+msgid "Internet"
+msgstr "Internet"
+
+#: ../ui/category_info.py:27
+msgid "Browser"
+msgstr "Browser"
+
+#: ../ui/category_info.py:28
+msgid "Instant messaging"
+msgstr "Instant messaging"
+
+#: ../ui/category_info.py:29
+msgid "Email"
+msgstr "E-mail"
+
+#: ../ui/category_info.py:30
+msgid "File transfer"
+msgstr "Bestandsoverdracht"
+
+#: ../ui/category_info.py:31
+msgid "News"
+msgstr "Nieuws"
+
+#: ../ui/category_info.py:32
+msgid "Remote access"
+msgstr "Toegang op afstand"
+
+#: ../ui/category_info.py:33
+msgid "Security"
+msgstr "Beveiliging"
+
+#: ../ui/category_info.py:34
+msgid "Miscellaneous"
+msgstr "Diversen"
+
+#: ../ui/category_info.py:35
+msgid "Multimedia"
+msgstr "Multimedia"
+
+#: ../ui/category_info.py:36
+msgid "Audiovideo"
+msgstr "Audio-videa"
+
+#: ../ui/category_info.py:37
+msgid "Media Editing"
+msgstr "Media bewerking"
+
+#: ../ui/category_info.py:38
+msgid "Disc burner"
+msgstr "Diskbrander"
+
+#: ../ui/category_info.py:39
+msgid "MIDI"
+msgstr "MIDI"
+
+#: ../ui/category_info.py:40
+msgid "Mixer"
+msgstr "Mixer"
+
+#: ../ui/category_info.py:41
+msgid "Player"
+msgstr "Player"
+
+#: ../ui/category_info.py:42
+msgid "Recorder"
+msgstr "Recorder"
+
+#: ../ui/category_info.py:43
+msgid "Sequencer"
+msgstr "Sequencer"
+
+#: ../ui/category_info.py:44
+msgid "Tuner"
+msgstr "Tuner"
+
+#: ../ui/category_info.py:45
+msgid "Games"
+msgstr "Spelletjes"
+
+#: ../ui/category_info.py:46
+msgid "Action games"
+msgstr "Actiespellen"
+
+#: ../ui/category_info.py:47
+msgid "Advernture games"
+msgstr "Avontuurspellen"
+
+#: ../ui/category_info.py:48
+msgid "Arcade games"
+msgstr "Arcadespelletjes"
+
+#: ../ui/category_info.py:49
+msgid "Board games"
+msgstr "Bordspelletjes"
+
+#: ../ui/category_info.py:50
+msgid "Card games"
+msgstr "Kaartspelletjes"
+
+#: ../ui/category_info.py:51
+msgid "Emulator"
+msgstr "Emulator"
+
+#: ../ui/category_info.py:52
+msgid "Kids games"
+msgstr "Kinderspelletjes"
+
+#: ../ui/category_info.py:53
+msgid "Logic games"
+msgstr "Logicaspelletjes"
+
+#: ../ui/category_info.py:54
+msgid "Puzzle games"
+msgstr "Puzzelspelletjes"
+
+#: ../ui/category_info.py:55
+msgid "Role-playing games"
+msgstr "Rollenspellen"
+
+#: ../ui/category_info.py:56
+msgid "Sports games"
+msgstr "Sport spelletjes"
+
+#: ../ui/category_info.py:57
+msgid "Strategy games"
+msgstr "Strategiespellen"
+
+#: ../ui/category_info.py:58
+msgid "Graphics"
+msgstr "Graphics"
+
+#: ../ui/category_info.py:59
+msgid "2D graphics"
+msgstr "2D graphics"
+
+#: ../ui/category_info.py:60
+msgid "3D graphics"
+msgstr "3D graphics"
+
+#: ../ui/category_info.py:61
+msgid "Image processing"
+msgstr "Beeldverwerking"
+
+#: ../ui/category_info.py:62
+msgid "Photography"
+msgstr "Fotografie"
 
 #: ../ui/category_info.py:63
 msgid "Vector graphics"
-msgstr ""
+msgstr "Vector graphics"
+
+#: ../ui/category_info.py:64
+msgid "Viewer"
+msgstr "Viewer"
+
+#: ../ui/category_info.py:65
+msgid "Productivity"
+msgstr "Productiviteit"
+
+#: ../ui/category_info.py:66
+msgid "Office"
+msgstr "Kantoor"
+
+#: ../ui/category_info.py:67
+msgid "Scanning printing"
+msgstr "Scannen printen"
+
+#: ../ui/category_info.py:68
+msgid "Industry"
+msgstr "Industrie"
+
+#: ../ui/category_info.py:69
+msgid "Engineering"
+msgstr "Techniek"
+
+#: ../ui/category_info.py:70
+msgid "Finance"
+msgstr "Financiën"
+
+#: ../ui/category_info.py:71
+msgid "Ham radio"
+msgstr "Hamradio"
+
+#: ../ui/category_info.py:72
+msgid "Medical"
+msgstr "Medisch"
+
+#: ../ui/category_info.py:73
+msgid "Publishing"
+msgstr "Publiceren"
+
+#: ../ui/category_info.py:74
+msgid "Science Education"
+msgstr "Wetenschapseducatie"
+
+#: ../ui/category_info.py:75
+msgid "Languages"
+msgstr "Talen"
+
+#: ../ui/category_info.py:76
+msgid "Religion"
+msgstr "Religie"
+
+#: ../ui/category_info.py:77
+msgid "Science"
+msgstr "Wetenschap"
+
+#: ../ui/category_info.py:78
+msgid "Development"
+msgstr "Ontwikkeling"
+
+#: ../ui/category_info.py:79
+msgid "Database"
+msgstr "Database"
+
+#: ../ui/category_info.py:80
+msgid "Debugging"
+msgstr "Debuggen"
+
+#: ../ui/category_info.py:81
+msgid "IDE"
+msgstr "IDE"
+
+#: ../ui/category_info.py:82
+msgid "Software development"
+msgstr "Software ontwikkeling"
 
 #: ../ui/category_info.py:83
 msgid "Version control"
-msgstr ""
+msgstr "Versie controle"
 
-#: ../ui/preference.py:438
-msgid "Version:"
-msgstr ""
+#: ../ui/category_info.py:84
+msgid "Web development"
+msgstr "Webontwikkeling"
 
-#: ../ui/detail_page.py:390
+#: ../ui/category_info.py:85
+msgid "System"
+msgstr "Systeem"
+
+#: ../ui/category_info.py:86
+msgid "Desktop environment"
+msgstr "Desktop omgeving"
+
+#: ../ui/category_info.py:87
+msgid "Monitor"
+msgstr "Monitor"
+
+#: ../ui/category_info.py:88
+msgid "Network"
+msgstr "Netwerk"
+
+#: ../ui/category_info.py:89
+msgid "Package manager"
+msgstr "Pakketbeheerder"
+
+#: ../ui/category_info.py:90
+msgid "Settings"
+msgstr "Instellingen"
+
+#: ../ui/category_info.py:91
+msgid "Virtualization"
+msgstr "Virtualisatie"
+
+#: ../ui/category_info.py:92
+msgid "Window manager"
+msgstr "Venstermanager"
+
+#: ../ui/category_info.py:93
+msgid "Utilities"
+msgstr "Hulpprogramma's"
+
+#: ../ui/category_info.py:94
+msgid "Accessories"
+msgstr "Accessoires"
+
+#: ../ui/category_info.py:95
+msgid "Archiving"
+msgstr "Archiveren"
+
+#: ../ui/category_info.py:96
+msgid "Emulation"
+msgstr "Emulatie"
+
+#: ../ui/category_info.py:97
+msgid "File manager"
+msgstr "Bestandsbeheerder"
+
+#: ../ui/category_info.py:98
+msgid "Screensaver"
+msgstr "Screensaver"
+
+#: ../ui/category_info.py:99
+msgid "Terminal emulator"
+msgstr "Terminal emulator"
+
+#: ../ui/category_info.py:100
+msgid "Text editor"
+msgstr "Tekstverwerker"
+
+#: ../ui/home_page.py:484
 #, python-format
-msgid "Version: %s"
-msgstr ""
+msgid "%s: %s applications"
+msgstr "%s: %s toepassingen"
+
+#: ../ui/home_page.py:666
+#, python-format
+msgid "%s > %s : %s applications"
+msgstr "%s > %s : %s toepassingen"
+
+#: ../ui/home_page.py:722 ../ui/software_center.py:789
+msgid "Home"
+msgstr "Thuis"
+
+#: ../ui/home_page.py:762
+msgid "Recommendations"
+msgstr "Aanbevelingen"
+
+#: ../ui/home_page.py:762
+msgid "Topics"
+msgstr "Onderwerpen"
+
+#: ../ui/home_page.py:762
+msgid "Download rank"
+msgstr "Download rangschikking"
+
+#: ../ui/widgets.py:66
+msgid "Just now"
+msgstr "Zonet"
+
+#: ../ui/widgets.py:71
+msgid "One minute ago"
+msgstr "Een minuut geleden"
+
+#: ../ui/widgets.py:73
+#, python-format
+msgid "%s minutes ago"
+msgstr "%s minuten geleden"
+
+#: ../ui/widgets.py:78
+msgid "One hour ago"
+msgstr "Een uur geleden"
+
+#: ../ui/widgets.py:80
+#, python-format
+msgid "%s hours ago"
+msgstr "%s uur geleden"
+
+#: ../ui/widgets.py:84
+msgid "Yesterday"
+msgstr "Gisteren"
+
+#: ../ui/widgets.py:295 ../ui/widgets.py:369
+msgid "Click to refresh"
+msgstr "Klik om te verversen"
+
+#: ../ui/widgets.py:462 ../ui/preference.py:782
+msgid "OK"
+msgstr "Oké"
+
+#: ../ui/widgets.py:463 ../ui/preference.py:784
+msgid "Cancel"
+msgstr "Annuleren"
+
+#: ../ui/utils.py:355
+msgid "Running"
+msgstr "Uitvoeren"
+
+#: ../ui/utils.py:356
+msgid "Preparing"
+msgstr "Voorbereiden"
+
+#: ../ui/utils.py:357
+msgid "Unpacking"
+msgstr "Ontpakken"
+
+#: ../ui/utils.py:358
+msgid "Preparing to configure"
+msgstr "Voorbereiden om te configureren"
+
+#: ../ui/utils.py:359
+msgid "Configuring"
+msgstr "Configureren"
+
+#: ../ui/utils.py:370
+msgid "Err"
+msgstr "Err"
+
+#: ../ui/utils.py:371
+msgid "Ign"
+msgstr "Ign"
+
+#: ../ui/utils.py:372
+msgid "Get"
+msgstr "Krijgen"
+
+#: ../ui/utils.py:373
+msgid "Hit"
+msgstr "Hit"
+
+#: ../ui/software_center.py:127
+#, python-format
+msgid "%s haven't any desktop file"
+msgstr "%s heeft geen bureaublad bestand"
+
+#: ../ui/software_center.py:194
+msgid "Sending rating..."
+msgstr "Waardering versturen..."
+
+#: ../ui/software_center.py:198
+msgid "You have already scored.  ;)"
+msgstr "U heeft reeds gescoord. ;)"
+
+#: ../ui/software_center.py:204
+msgid "Rated successfully. Thanks for your involvement."
+msgstr "Waardering succesvol. Bedankt voor uw betrokkenheid."
+
+#: ../ui/software_center.py:220
+msgid "Rating failed. Please check your network connection!"
+msgstr "Waardering mislukt. Gelieve uw netwerkverbinding na te kijken!"
+
+#: ../ui/software_center.py:385
+#, python-format
+msgid "Uninstall %s Successfully."
+msgstr "Verwijderen %s Succesvol."
+
+#: ../ui/software_center.py:385 ../ui/software_center.py:791
+msgid "Uninstall"
+msgstr "Verwijder"
+
+#: ../ui/software_center.py:391
+#, python-format
+msgid "%s packages upgrade successfully."
+msgstr "%s pakketten met succes geüpgraded."
+
+#: ../ui/software_center.py:394
+#, python-format
+msgid "Install %s Successfully."
+msgstr "Installatie %s succesvol."
+
+#: ../ui/software_center.py:394
+msgid "Install"
+msgstr " Installeren"
+
+#: ../ui/software_center.py:438
+msgid "Generating package list database..."
+msgstr "Pakketlijst database genereren..."
+
+#: ../ui/software_center.py:446
+msgid "Package lists refreshed completely."
+msgstr "Pakketlijsten volledig ververst."
+
+#: ../ui/software_center.py:458
+msgid "Failed to refresh package lists."
+msgstr "Verversen van de pakketlijsten mislukt."
+
+#: ../ui/software_center.py:459
+msgid "Try again"
+msgstr "Probeer opnieuw"
+
+#: ../ui/software_center.py:469
+#, python-format
+msgid ""
+"Problem occurred when analyzing dependencies for %s. Installation aborted."
+msgstr "Probleem opgetreden tijdens het analyseren van afhankelijkheden voor %s. Installatie afgebroken."
+
+#: ../ui/software_center.py:472
+#, python-format
+msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
+msgstr "Probleem trad op tijdens analyseren van de afhankelijkheden voor %s. Upgrade afgebroken."
+
+#: ../ui/software_center.py:477
+#, python-format
+msgid "The requested package \"%s\" was not found in the package list."
+msgstr "Het gevraagde pakket \"%s\" is niet gevonden in de pakketten lijst."
+
+#: ../ui/software_center.py:478
+msgid "Refresh package lists again and try again."
+msgstr "Ververs pakketlijsten opnieuw en probeer opnieuw"
+
+#: ../ui/software_center.py:770
+msgid "Join us"
+msgstr "Doe mee"
+
+#: ../ui/software_center.py:792
+msgid "Installation"
+msgstr "Installatie"
+
+#: ../ui/software_center.py:816 ../ui/preference.py:568
+msgid "Refresh package lists"
+msgstr "Ververs pakketlijsten"
+
+#: ../ui/software_center.py:817
+msgid "Open download directory"
+msgstr "Open download map"
+
+#: ../ui/software_center.py:818
+msgid "Clear up cached packages"
+msgstr "Schoon gecachede pakketten op"
 
 #: ../ui/software_center.py:819
 msgid "View new features"
 msgstr "Bekijk nieuwe functies"
 
-#: ../ui/category_info.py:64
-msgid "Viewer"
-msgstr ""
+#: ../ui/software_center.py:820
+msgid "Preferences"
+msgstr "Voorkeuren"
 
-#: ../ui/category_info.py:91
-msgid "Virtualization"
-msgstr ""
-
-#: ../ui/detail_page.py:396
-msgid "Visit Homepage"
-msgstr ""
-
-#: ../ui/preference.py:552
-msgid "Waiting"
-msgstr ""
-
-#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1495
-#: ../ui/upgrade_page.py:1614
-msgid "Waiting for download"
-msgstr ""
-
-#: ../ui/install_page.py:778
-msgid "Waiting for installation"
-msgstr ""
-
-#: ../ui/uninstall_page.py:515 ../ui/uninstall_page.py:598
-msgid "Waiting for uninstall"
-msgstr ""
-
-#: ../ui/upgrade_page.py:1637
-msgid "Waiting for upgrade"
-msgstr ""
-
-#: ../ui/upgrade_page.py:440
-msgid "Warning"
-msgstr ""
-
-#: ../ui/category_info.py:84
-msgid "Web development"
-msgstr ""
-
-#: ../ui/category_info.py:92
-msgid "Window manager"
-msgstr ""
-
-#: ../ui/widgets.py:84
-msgid "Yesterday"
-msgstr ""
-
-#: ../ui/software_center.py:198
-msgid "You have already scored.  ;)"
-msgstr "U heeft al commentaar verstuurd ;)"
+#: ../ui/software_center.py:821
+msgid "Quit"
+msgstr "Afsluiten"
 
 #: ../ui/software_center.py:1123
 #, python-format
 msgid "You have cleared up %s packages and saved %s of space."
-msgstr "U heeft %s pakketten opgeschoond en %s ruimte vrijgemaakt"
+msgstr "U heeft %s pakketten opgeruimd en %s ruimte bespaard."
 
 #: ../ui/software_center.py:1125
 msgid "Your system cache is empty."
-msgstr "Uw systeem is opgeschoond"
+msgstr "Uw systeemtache is leeg."
 
-#: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
-#: ../ui/upgrade_page.py:447
-#, fuzzy
-msgid "refresh package lists"
-msgstr "Verversen van applicatie lijsten gefaald."
+#: ../ui/item_render.py:44
+msgid "No reminder"
+msgstr "Geen herinnering"
 
-#: ../ui/upgrade_page.py:484 ../ui/upgrade_page.py:510
-msgid "send error report"
-msgstr ""
+#: ../ui/preference.py:438
+msgid "Version:"
+msgstr "Versie:"
 
-#~ msgid "Successfully refreshed applications lists."
-#~ msgstr "Verversen van applicatie lijsten succesvol."
+#: ../ui/preference.py:452
+msgid ""
+"Deepin Store is a commonly used software center on Linux. We selected more than 2,600 excellent applications with many functions of installation and uninstalling, software repository and popular recommendations, which supports 1-click quick installation, multi-threaded download and clearing of cached packages. It provides topics for software introduction and shares good applications.\n"
+"\n"
+"Deepin Store is a free software licensed under GNU GPLv3."
+msgstr "Deepin Store is een veelgebruikt softwarecentrum op Linux. Wij selecteerden meer dan 2,600 uitstekende applicaties met veel functies voor installeren en deïnstalleren, software repository en populaire aanbevelingen, die een snelle installatie met 1 klik, multi-threaded downloaden en wissen van gecachete pakketten ondersteunt. Het heeft onderwerpen voor software introductie en deelt goede applicaties.\n\nDeepin Store is een gratis software onder de GNU GPLv3 licentie."
+
+#: ../ui/preference.py:477
+msgid "On uninstalling the software"
+msgstr "Bij het deïnstalleren van de software"
+
+#: ../ui/preference.py:480
+msgid "Delete configuration files"
+msgstr "Configuratiebestanden verwijderen"
+
+#: ../ui/preference.py:494
+msgid "Download settings"
+msgstr "Download instellingen"
+
+#: ../ui/preference.py:500
+msgid "Maximum number of download tasks: "
+msgstr "Maximum aantal download taken:"
+
+#: ../ui/preference.py:510
+msgid "Download directory: "
+msgstr "Download map:"
+
+#: ../ui/preference.py:516
+msgid "Change"
+msgstr "Wijzigen"
+
+#: ../ui/preference.py:551
+msgid "Select the best mirror"
+msgstr "Selecteer de beste mirror"
+
+#: ../ui/preference.py:552
+msgid "Waiting"
+msgstr "Wachten"
+
+#: ../ui/preference.py:553
+msgid "Successfully"
+msgstr "Met succes"
+
+#: ../ui/preference.py:571
+msgid "Upgrade automatically"
+msgstr "Automatisch upgraden"
+
+#: ../ui/preference.py:575
+msgid "Time interval: "
+msgstr "Tijdsinterval:"
+
+#: ../ui/preference.py:578
+msgid " hour"
+msgstr "uur"
+
+#: ../ui/preference.py:642
+msgid "Select mirror"
+msgstr "Selecteer mirror"
+
+#: ../ui/preference.py:705
+msgid "Select Directory"
+msgstr "Selecteer Map"
+
+#: ../ui/preference.py:751
+msgid "Speed testing will finish only after one minute, please wait."
+msgstr "Snelheidstest zal na slechts één minuut klaar zijn, gelieve te wachten."
+
+#: ../ui/preference.py:776
+#, python-format
+msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
+msgstr "Test is afgerond, de snelste mirror bron is \"%s\", nu overschakelen?"
+
+#: ../ui/preference.py:829
+msgid "General"
+msgstr "Algemeen"
+
+#: ../ui/preference.py:830
+msgid "Mirrors"
+msgstr "Mirrors"
+
+#: ../ui/preference.py:831
+msgid "About"
+msgstr "Over"
+
+#: ../ui/search_page.py:110
+#, python-format
+msgid "%s applications searched"
+msgstr "%s applicaties doorzocht"
