@@ -429,7 +429,10 @@ class AboutBox(BaseBox):
     def __init__(self):
         BaseBox.__init__(self)
 
-        logo_image = gtk.image_new_from_pixbuf(gtk.gdk.pixbuf_new_from_file(os.path.join(get_parent_dir(__file__, 2), "image", "logo16.png")))
+        logo_image_path = utils.icon_name_to_path("deepin-software-center", 16)
+        if not logo_image_path:
+            logo_image_path = os.path.join(get_parent_dir(__file__, 2), "image", "logo16.png")
+        logo_image = gtk.image_new_from_pixbuf(gtk.gdk.pixbuf_new_from_file(logo_image_path))
         logo_name = Label(_("Deepin Store"), text_size=10)
         logo_box = gtk.HBox(spacing=2)
         logo_box.pack_start(logo_image, False, False)
