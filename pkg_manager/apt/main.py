@@ -35,7 +35,6 @@ import apt_pkg
 import apt.progress.base as apb
 import aptsources.distro
 import logging
-import subprocess
 logging.basicConfig(format='[%(levelname)s][%(name)s] %(message)s', level=logging.INFO)
 logger = logging.getLogger("pkg_manager.apt.main")
 
@@ -691,11 +690,12 @@ class PackageManager(dbus.service.Object):
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="s")
     def get_pkg_name_from_path(self, path):
-        result = subprocess.check_output(['dpkg', '-S', path]).strip().split(":")
-        if len(result) == 2 and result[1].strip() == path.strip():
-            return result[0].strip()
-        else:
-            return ""
+        pkg_name = utils.file_path_to_package_name(path)
+        if pkg_name == "" and path.endswith(".desktop"):
+            desktop_name = os.path.split(path)[1]
+            path = utils.desktop_name_to_desktop_path(desktop_name)
+            pkg_name = utils.file_path_to_package_name(path)
+        return pkg_name
 
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")
     def upgrade_pkg(self, pkg_names):

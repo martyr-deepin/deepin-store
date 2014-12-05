@@ -23,10 +23,44 @@ import os
 from datetime import datetime
 import time
 import dbus
+import subprocess
+
 from constant import LOG_PATH, SYS_CONFIG_INFO_PATH, BACKEND_PID
 
 from deepin_utils.config import Config
 from deepin_utils.file import touch_file
+
+def desktop_name_to_desktop_path(desktop_name):
+    """ get desktop absolute path from a desktop name
+
+    @param desktop_name: A desktop name, such as: firefox.desktop or firefox
+    @return: The absolute path from search paths
+    """
+    search_paths = ["/usr/share/applications/", "/usr/share/applications/kde4"]
+    if not desktop_name.endswith(".desktop"):
+        desktop_name += ".desktop"
+    for folder in search_paths:
+        if os.path.exists(folder):
+            files = os.listdir(folder)
+            for desktop in files:
+                if desktop == desktop_name:
+                    return os.path.join(folder, desktop)
+    return ""
+
+def file_path_to_package_name(file_path):
+    """ a wrap of dpkg -S
+
+    @param file_path: Any absolute file path
+    @return: the name of package that own the file
+    """
+    try:
+        result = subprocess.check_output(['dpkg', '-S', file_path]).strip().split(":")
+        if len(result) == 2 and result[1].strip() == file_path.strip():
+            return result[0].strip()
+        else:
+            return ""
+    except:
+        return ""
 
 def set_running_lock(running):
     if running:
