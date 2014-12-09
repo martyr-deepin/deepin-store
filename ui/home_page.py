@@ -759,7 +759,7 @@ class RecommendItem(TreeItem):
         self.slider_switcher.connect("leave-notify-index", lambda w, i: global_event.emit("set-cursor", None))
 
         self.recommend_infos = sort_for_home_page_data(data['recommend'])
-        self.tab_switcher = TabSwitcher([_("Recommendations"), _("Topics"), _("Download rank")], CATEGORY_ITEM_NAME_SIZE)
+        self.tab_switcher = TabSwitcher([_("Recommendations"), _("HotApps"), _("Download rank")], CATEGORY_ITEM_NAME_SIZE)
         self.tab_switcher_align = gtk.Alignment()
         self.tab_switcher_align.set(0.5, 0.5, 1, 1)
         self.tab_switcher_align.set_padding(10, 0, 0, 9)
@@ -936,8 +936,9 @@ class RecommendItem(TreeItem):
                      )
 
     def click_page(self):
-        if isinstance(self.active_page, AlbumPage) and self.active_page.in_detail_view:
-            self.active_page.switch_to_album_summary_view()
+        pass
+        #if isinstance(self.active_page, AlbumPage) and self.active_page.in_detail_view:
+            #self.active_page.switch_to_album_summary_view()
 
     def switch_page(self, page_index):
         container_remove_all(self.page_box)
@@ -949,9 +950,9 @@ class RecommendItem(TreeItem):
         self.active_page = self.page_cache[page_name]
         self.page_box.pack_start(self.active_page, True, True)
 
-        if isinstance(self.active_page, AlbumPage):
-            if self.active_page.in_detail_view:
-                self.active_page.switch_to_album_summary_view()
+        #if isinstance(self.active_page, AlbumPage):
+            #if self.active_page.in_detail_view:
+                #self.active_page.switch_to_album_summary_view()
 
         self.recommend_scrolled_window.show_all()
 
