@@ -840,10 +840,13 @@ if __name__ == "__main__":
 
     # Init dbus.
     system_bus = dbus.SystemBus()
-    bus_name = dbus.service.BusName(DSC_SERVICE_NAME, system_bus)
+    if system_bus.name_has_owner(DSC_SERVICE_NAME):
+        print "backend is runing:", DSC_SERVICE_NAME
+    else:
+        bus_name = dbus.service.BusName(DSC_SERVICE_NAME, system_bus)
 
-    # Init package manager.
-    PackageManager(system_bus, mainloop)
+        # Init package manager.
+        PackageManager(system_bus, mainloop)
 
-    # Run.
-    mainloop.run()
+        # Run.
+        mainloop.run()

@@ -67,7 +67,6 @@ if not os.path.exists(CONFIG_INFO_PATH):
 config = Config(CONFIG_INFO_PATH)
 config.load()
 
-
 def get_common_image(name):
     return os.path.join(dsc_root_dir, "image", name)
 
@@ -81,6 +80,13 @@ def get_update_interval():
     if config.has_option('update', 'interval'):
         return config.get('update', 'interval')
     return DEFAULT_UPDATE_INTERVAL
+
+def is_first_started():
+    return not config.has_option('settings', 'first_started')
+
+def set_first_started():
+    config.set("settings", "first_started", "false")
+    config.write()
 
 def log(message):
     if not os.path.exists(LOG_PATH):
@@ -199,6 +205,18 @@ class Update(dbus.service.Object, Logger):
 
         self.loginfo("Start Update List Daemon")
 
+    def handle_mirror_test(self):
+        if is_first_started():
+            self.loginfo("Mirror test start...")
+            from mirror_test import get_best_mirror
+            best_mirror = get_best_mirror()
+            repo_urls = best_mirror.get_repo_urls()
+            if not self.is_fontend_running():
+                self.bus_interface.change_source_list(repo_urls)
+                set_first_started()
+                self.loginfo("first started has setted!")
+            self.loginfo("Mirror test finish!")
+
     def run(self, daemon):
         self.is_run_in_daemon = daemon
         self.loginfo("run in daemon: %s" % self.is_run_in_daemon)
@@ -255,13 +273,16 @@ class Update(dbus.service.Object, Logger):
             gobject.timeout_add_seconds(5, self.mainloop.quit)
 
     def set_delay_update(self, seconds):
-        if self.delay_update_id:
-            gobject.source_remove(self.delay_update_id)
-
-        if is_auto_update() and seconds:
-            self.delay_update_id = gobject.timeout_add_seconds(seconds, self.update_handler)
-        else:
+        if not self.is_run_in_daemon:
             self.mainloop.quit()
+        else:
+            if self.delay_update_id:
+                gobject.source_remove(self.delay_update_id)
+
+            if is_auto_update() and seconds:
+                self.delay_update_id = gobject.timeout_add_seconds(seconds, self.update_handler)
+            else:
+                self.mainloop.quit()
 
     def start_dsc_backend(self):
         self.loginfo("Start dsc backend service")
@@ -335,6 +356,7 @@ class Update(dbus.service.Object, Logger):
             self.mainloop.quit()
         else:
             self.start_dsc_backend()
+            self.handle_mirror_test()
             gobject.timeout_add_seconds(1, self.start_updater, False)
             gobject.timeout_add_seconds(1, self.start_update_list, self.bus_interface)
             SendStatistics().start()

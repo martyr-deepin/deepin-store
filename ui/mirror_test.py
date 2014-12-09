@@ -39,15 +39,6 @@ from logger import Logger
 root_dir = get_parent_dir(__file__, 2)
 mirrors_dir = os.path.join(root_dir, 'mirrors')
 
-def get_mirrors():
-    mirrors = []
-    for f in os.listdir(mirrors_dir):
-        if f.endswith(".ini"):
-            ini_file = os.path.join(mirrors_dir, f)
-            m = Mirror(ini_file)
-            mirrors.append(m)
-    return mirrors
-
 class Mirror(object):
     def __init__(self, ini_file):
         self.config = Config(ini_file)
@@ -94,10 +85,9 @@ class MirrorTest(Logger):
         self._cancel = True
 
     def init_mirrors(self):
-        all_mirrors_list = get_mirrors()
         for hostname in self.hostnames:
             url = "http://" + hostname
-            for m in all_mirrors_list:
+            for m in all_mirrors:
                 if url in m.hostname:
                     self._mirrors.append(m)
 
@@ -151,6 +141,26 @@ class MirrorTest(Logger):
         speed = len(total_data)/total_time
         self.loginfo("Speed for host: %s %s" % (mirror.hostname, speed))
         return speed
+
+def get_mirrors():
+    mirrors = []
+    for f in os.listdir(mirrors_dir):
+        if f.endswith(".ini"):
+            ini_file = os.path.join(mirrors_dir, f)
+            m = Mirror(ini_file)
+            mirrors.append(m)
+    return mirrors
+
+all_mirrors = get_mirrors()
+
+def get_best_mirror():
+    from mirror_speed.ip_detect import get_nearest_mirrors
+    hostnames = get_nearest_mirrors()
+    mirror_test_obj = MirrorTest(hostnames)
+    hostname = mirror_test_obj.run()
+    for mirror in all_mirrors:
+        if mirror.hostname == hostname:
+            return mirror
 
 if __name__ == "__main__":
     for mirror in get_mirrors():

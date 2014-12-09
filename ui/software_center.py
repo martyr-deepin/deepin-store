@@ -816,7 +816,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
              (None, _("Refresh package lists"), lambda:global_event.emit('start-update-list')),
              (None, _("Open download directory"), self.open_download_directory),
              (None, _("Clear up cached packages"), self.clean_download_cache),
-             (None, _("View new features"), lambda : self.show_wizard_win()),
+             #(None, _("View new features"), lambda : self.show_wizard_win()),
              (self.get_pixbuf_group("menu", "setting"), _("Preferences"), self.show_preference_dialog),
              (self.get_pixbuf_group("menu", "close"), _("Quit"), self.exit),
              ],
@@ -829,7 +829,6 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
                 get_widget_root_coordinate(button, WIDGET_POS_BOTTOM_LEFT),
                 (button.get_allocation().width, 0)))
 
-        self.preference_dialog = DscPreferenceDialog()
 
         if hasattr(self, 'recommend_status'):
             self.init_home_page(self.recommend_status)
@@ -870,16 +869,22 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         self.preference_dialog.show_all()
 
     def ready_show(self):
+        self.preference_dialog = DscPreferenceDialog()
         if utils.is_first_started():
             utils.set_first_started()
             self.in_wizard_showing = True
-            self.show_wizard_win(True, callback=self.wizard_callback)
+            self.show_test_mirror()
             self.init_ui()
         else:
             self.init_ui()
             if not self.init_hide:
                 self.application.window.show_all()
         #self.paned_box.bottom_window.set_composited(True)
+
+    def show_test_mirror(self, callback=None):
+        self.preference_dialog.waiting_dialog.hide_callback = self.wizard_callback
+        mirrors_box = self.preference_dialog.mirrors_box
+        mirrors_box.select_best_mirror(mirrors_box.select_best_mirror_button)
 
     def show_wizard_win(self, show_button=False, callback=None):
         program_dir = get_parent_dir(__file__, 2)

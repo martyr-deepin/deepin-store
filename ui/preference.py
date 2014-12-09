@@ -26,17 +26,18 @@ import gobject
 import pango
 import os
 import dbus
-import math
+import subprocess
 
 #from dtk.ui.threads import post_gui
-from dtk.ui.dialog import PreferenceDialog, DialogBox
+from dtk.ui.dialog import PreferenceDialog
 from dtk.ui.entry import InputEntry
 from dtk.ui.button import Button, CheckButton
 from dtk.ui.label import Label
 from dtk.ui.line import HSeparator
 from dtk.ui.treeview import TreeView, TreeItem, get_background_color
-from dtk.ui.utils import (get_content_size, is_in_rect, alpha_color_hex_to_cairo,
-        color_hex_to_cairo, container_remove_all)
+from dtk.ui.utils import (
+        get_content_size, is_in_rect, alpha_color_hex_to_cairo,
+        color_hex_to_cairo)
 from dtk.ui.draw import draw_text, draw_pixbuf
 from dtk.ui.spin import SpinBox
 #from dtk.ui.progressbar import ProgressBar
@@ -60,17 +61,18 @@ from utils import (
         set_download_number,
         )
 import utils
-from mirror_test import get_mirrors, MirrorTest
+from mirror_test import all_mirrors, get_best_mirror
 from events import global_event
 #import aptsources
 #import aptsources.distro
 #from loading_widget import Loading
 from constant import PROGRAM_VERSION
 #import time
-import subprocess
+
+from dialog_widgets import WaitingDialog
 
 DSC_UPDATE_DAEMON_NAME = "com.linuxdeepin.softwarecenter.update.daemon"
-DSC_UPDATE_DAEMON_PATH = "/" + DSC_UPDATE_DAEMON_NAME.replace(".", "/")
+DSC_UPDATE_DAEMON_PATH = "/com/linuxdeepin/softwarecenter/update/daemon"
 
 class SelectedButtonBuffer(gobject.GObject):
     '''
@@ -624,14 +626,8 @@ class MirrorsBox(BaseBox):
             self.finish_mirror_test("")
 
     def change_to_nearest_mirror_thread(self, widget):
-        from mirror_speed.ip_detect import get_nearest_mirrors
-        hostnames = get_nearest_mirrors()
-        self.mirror_test_obj = MirrorTest(hostnames)
-        hostname = self.mirror_test_obj.run()
-        for mirror in self.mirrors_list:
-            if mirror.hostname == hostname:
-                global_event.emit("mirror-test-finished", mirror)
-                break
+        best_mirror = get_best_mirror()
+        global_event.emit("mirror-test-finished", best_mirror)
 
     def finish_mirror_test(self, mirror):
         for item in self.mirror_view.visible_items:
@@ -691,8 +687,7 @@ class MirrorsBox(BaseBox):
 
     def get_mirror_items(self):
         items = []
-        self.mirrors_list = get_mirrors()
-        for m in self.mirrors_list:
+        for m in all_mirrors:
             item = MirrorItem(m, self.mirror_clicked_callback)
             if m.hostname == self.current_mirror_hostname:
                 item.radio_button.active = True
@@ -724,100 +719,6 @@ class FolderChooseDialog(gtk.FileChooserDialog):
                 folder = self.get_filename()
         self.destroy()
         return folder
-
-class WaitingDialog(DialogBox):
-    def __init__(self):
-        self.dialog_width = 330
-        DialogBox.__init__(
-                self,
-                title="",
-                default_width=self.dialog_width,
-                default_height=145,
-                mask_type=0,
-                close_callback=self.close_action,
-                modal=True,
-                window_hint=gtk.gdk.WINDOW_TYPE_HINT_DIALOG,
-                window_pos=None,
-                skip_taskbar_hint=True,
-                resizable=False,
-                window_type=gtk.WINDOW_TOPLEVEL,
-                )
-
-        self.waiting_animation = gtk.VBox()
-        self.waiting_animation.set_size_request(36, 36)
-        self.waiting_bg_pixbuf = utils.get_common_image_pixbuf("waiting/waiting_bg.png")
-        self.waiting_fg_pixbuf = utils.get_common_image_pixbuf("waiting/waiting_fg.png")
-        self.waiting_animation.connect("expose-event", self.expose_waiting)
-        self.counter = 1
-        self.factor = math.pi/10
-        gtk.timeout_add(50, self.on_timer)
-
-        self.label = Label(
-            _("Speed testing will finish only after one minute, please wait."),
-            text_size=10,
-            wrap_width=self.dialog_width- 36 - 60,
-            )
-
-        self.waiting_hbox = gtk.HBox()
-        self.waiting_hbox.pack_start(self.waiting_animation, False, False)
-        self.waiting_hbox.pack_start(self.label, False, False)
-
-        self.center_align = gtk.Alignment()
-        self.center_align.set(0.5, 0.5, 0, 0)
-        self.center_align.set_padding(0, 0, 8, 8)
-        self.body_box.add(self.center_align)
-
-        global_event.register_event("mirror-test-finished", self.show_result)
-
-    def show_waiting(self):
-        container_remove_all(self.right_button_box.button_box)
-        container_remove_all(self.center_align)
-        self.center_align.add(self.waiting_hbox)
-        self.show_all()
-
-    def show_result(self, mirror):
-        container_remove_all(self.center_align)
-        message = Label(
-                _('Test is completed, the fastest mirror source is "%s", switch now?') % mirror.name,
-                text_size=10,
-                wrap_width=self.dialog_width - 100,
-                )
-        self.center_align.add(message)
-
-        self.confirm_button = Button(_("OK"))
-        self.confirm_button.connect("clicked", self.confirm_button_callback, mirror)
-        self.cancel_button = Button(_("Cancel"))
-        self.cancel_button.connect("clicked", lambda w: self.hide_all())
-
-        self.right_button_box.set_buttons([self.confirm_button, self.cancel_button])
-
-        self.show_all()
-
-    def confirm_button_callback(self, w, mirror):
-        global_event.emit("start-change-mirror", mirror)
-        self.hide_all()
-
-    def close_action(self):
-        global_event.emit("cancel-mirror-test")
-        self.hide_all()
-
-    def on_timer(self):
-        if self.counter < 2 * math.pi/self.factor:
-            self.counter += 1
-        else:
-            self.counter = 1
-        self.waiting_animation.queue_draw()
-        return True
-
-    def expose_waiting(self, widget, event):
-        cr = widget.window.cairo_create()
-        rect = widget.allocation
-
-        cr.translate(rect.x, rect.y)
-        draw_pixbuf(cr, self.waiting_bg_pixbuf)
-        cr.translate(rect.width/2, rect.height/2)
-        cr.rotate(self.counter * self.factor)
-        draw_pixbuf(cr, self.waiting_fg_pixbuf, -rect.width/2, -rect.height/2)
 
 class DscPreferenceDialog(PreferenceDialog):
     def __init__(self):
