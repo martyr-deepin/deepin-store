@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=com.deepin.store.Api
+Exec=/usr/lib/deepin-store/deepin-store-backend
+User=root
