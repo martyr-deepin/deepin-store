@@ -34,6 +34,8 @@ from Queue import Queue
 import apt_pkg
 import apt.progress.base as apb
 import aptsources.distro
+import functools
+
 import logging
 logging.basicConfig(format='[%(levelname)s][%(name)s] %(message)s', level=logging.INFO)
 logger = logging.getLogger("pkg_manager.apt.main")
@@ -186,9 +188,16 @@ class PackageManager(dbus.service.Object):
     docs
     '''
 
-    def __init__(self, system_bus, mainloop):
-        log("init dbus")
+    def invoked_log(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kw):
+            info = "dbus method invoked: %s, arguments: %s" % (func.__name__, str(args[1:]))
+            print info
+            log(info)
+            return func(*args, **kw)
+        return wrapper
 
+    def __init__(self, system_bus, mainloop):
         # Init dbus service.
         dbus.service.Object.__init__(self, system_bus, DSC_SERVICE_PATH)
         # Init.
@@ -233,7 +242,6 @@ class PackageManager(dbus.service.Object):
             self.have_exit_request)
         self.exit_manager.start()
 
-        log("init finish")
         self.set_download_dir('/var/cache/apt/archives')
         self.download_manager = DownloadManager(global_event, verbose=True)
 
@@ -408,6 +416,13 @@ class PackageManager(dbus.service.Object):
                                             )
 
     def add_download(self, pkg_name, action_type, simulate=False):
+        installed = self.get_pkg_installed(pkg_name)
+        if installed == 1:
+            self.update_signal([("pkg-installed", (pkg_name, action_type))])
+            return
+        elif installed == -1:
+            self.update_signal([("pkg-not-in-cache", (pkg_name, action_type))])
+            return
         pkg_infos = get_pkg_download_info(self.pkg_cache, pkg_name)
         self.update_signal([("ready-download-finish", (pkg_name, action_type))])
         if pkg_infos[0] == DOWNLOAD_STATUS_NOTNEED:
@@ -452,6 +467,7 @@ class PackageManager(dbus.service.Object):
             pass
         return desktops
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature='', out_signature='as')
     def read_no_notify_config(self, no_notify_config_path):
         if os.path.exists(no_notify_config_path):
@@ -468,6 +484,7 @@ class PackageManager(dbus.service.Object):
         else:
             return []
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")
     def add_no_notify_pkg(self, info):
         pkg_name, path = info
@@ -478,6 +495,7 @@ class PackageManager(dbus.service.Object):
             no_notify_config.append(pkg_name)
             write_file(path, str(no_notify_config))
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")
     def remove_no_notify_pkg(self, info):
         pkg_name, path = info
@@ -488,15 +506,18 @@ class PackageManager(dbus.service.Object):
         if pkg_name in no_notify_config:
             write_file(path, str(filter(lambda config_pkg_name: config_pkg_name != pkg_name, no_notify_config)))
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="i", out_signature="")
     def init_download_manager(self, number):
         pass
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="")
     def set_download_dir(self, local_dir):
         apt_pkg.config.set("Dir::Cache::Archives", local_dir)
         self.download_dir = local_dir
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="ai")
     def get_download_size(self, pkg_name):
         total_size = 0
@@ -514,6 +535,7 @@ class PackageManager(dbus.service.Object):
             size_flag = PKG_SIZE_DOWNLOAD
         return [size_flag, total_size]
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="as")
     def get_upgrade_download_size(self, pkg_names):
         real_pkg_dict, not_in_cache = parse_pkg.get_real_pkg_dict(self.pkg_cache, pkg_names)
@@ -536,6 +558,7 @@ class PackageManager(dbus.service.Object):
                     total_size += size
                 return [str(total_size), json.dumps(change_pkg_names)]
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="ai")
     def clean_download_cache(self):
         '''Clean download cache.'''
@@ -573,15 +596,16 @@ class PackageManager(dbus.service.Object):
 
         return [packageNum, cleanSize]
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="b", out_signature="")
     def say_hello(self, simulate):
         # Set exit_flag with False to prevent backend exit,
         # this just useful that frontend start again before backend exit.
-        log("Say hello from frontend.")
 
         self.exit_flag = False
         self.simulate = simulate
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="")
     def request_quit(self):
         # Set exit flag.
@@ -590,6 +614,7 @@ class PackageManager(dbus.service.Object):
         self.exit_manager.check()
         self.update_signal([("frontend-quit", "")])
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")
     def change_source_list(self, repo_urls):
         ubuntu_repo_url, deepin_repo_url = repo_urls
@@ -598,6 +623,7 @@ class PackageManager(dbus.service.Object):
         with open(SOURCE_LIST, 'w') as fp:
             fp.write(new_source_list_content)
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="(sas)")
     # def request_upgrade_pkgs(self):  // old api name
     def RequestUpgradeStatus(self):
@@ -618,14 +644,17 @@ class PackageManager(dbus.service.Object):
             cache_upgrade_pkgs = self.pkg_cache.get_upgrade_pkgs()
             return ("normal", cache_upgrade_pkgs)
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="a(si)", out_signature="")
     def RemoveWaitMissions(self, pkg_infos):
         self.apt_action_pool.remove_wait_missions(pkg_infos)
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="s")
     def request_uninstall_pkgs(self):
         return json.dumps(self.pkg_cache.get_uninstall_pkgs())
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="as")
     def request_pkgs_install_version(self, pkg_names):
         pkg_versions = []
@@ -641,6 +670,7 @@ class PackageManager(dbus.service.Object):
                     self.update_signal([("pkg-not-in-cache", pkg_name)])
         return pkg_versions
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="as")
     def is_pkg_in_cache(self, pkg_name):
         result = []
@@ -656,10 +686,12 @@ class PackageManager(dbus.service.Object):
                 pass
         return result
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="as")
     def request_pkgs_uninstall_version(self, pkg_names):
         return self.pkg_cache.get_pkgs_uninstall_version(pkg_names)
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")
     def install_pkg(self, pkg_names):
         for pkg_name in pkg_names:
@@ -669,6 +701,7 @@ class PackageManager(dbus.service.Object):
             else:
                 self.update_signal([("pkg-not-in-cache", pkg_name)])
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="sb", out_signature="")
     def uninstall_pkg(self, pkg_name, purge):
         real_pkg_name = self.get_real_pkg_name(pkg_name)
@@ -677,6 +710,7 @@ class PackageManager(dbus.service.Object):
         else:
             self.update_signal([("pkg-not-in-cache", pkg_name)])
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="sb", out_signature="")
     def uninstall_pkg_from_desktop(self, desktop_path, purge):
         ThreadMethod(self.uninstall_pkg_from_desktop_thread, (desktop_path, purge)).start()
@@ -688,6 +722,7 @@ class PackageManager(dbus.service.Object):
         else:
             global_event.emit("action-failed", (path, ACTION_UNINSTALL, [], "no package found for path: %s" % path))
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="s")
     def get_pkg_name_from_path(self, path):
         pkg_name = utils.file_path_to_package_name(path)
@@ -697,6 +732,7 @@ class PackageManager(dbus.service.Object):
             pkg_name = utils.file_path_to_package_name(path)
         return pkg_name
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")
     def upgrade_pkg(self, pkg_names):
         for pkg_name in pkg_names:
@@ -707,29 +743,35 @@ class PackageManager(dbus.service.Object):
             else:
                 self.update_signal([("pkg-not-in-cache", pkg_name)])
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")
     def upgrade_pkgs_with_new_policy(self, pkg_names):
         ThreadMethod(self.add_upgrade_download_with_new_policy, (pkg_names, ACTION_UPGRADE)).start()
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")
     def stop_download_pkg(self, pkg_names):
         for pkg_name in pkg_names:
             self.download_manager.stop_wait_download(pkg_name)
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="")
     def cancel_upgrade_download(self):
         if getattr(self, 'upgrade_id'):
             self.download_manager.stop_wait_download(self.upgrade_id)
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")
     def remove_wait_downloads(self, pkg_names):
         for pkg_name in pkg_names:
             self.download_manager.stop_wait_download(pkg_name)
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="s")
     def request_pkg_short_desc(self, pkg_name):
         return self.pkg_cache.get_pkg_short_desc(pkg_name)
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="as")
     def request_status(self):
         download_status = {
@@ -760,14 +802,14 @@ class PackageManager(dbus.service.Object):
 
         return [str(download_status), str(action_status)]
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="")
     def start_update_list(self):
-        log("start update list...")
         self.del_source_list_d()
         self.pkg_cache.open(apb.OpProgress())
         self.apt_action_pool.add_update_list_mission()
-        log("start update list done")
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="ab")
     def request_pkgs_install_status(self, pkg_names):
         _status = []
@@ -775,11 +817,13 @@ class PackageManager(dbus.service.Object):
             _status.append(self.pkg_cache.is_pkg_installed(pkg))
         return _status
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="(si)", out_signature="")
     def set_pkg_status(self, pkg_status):
         pkg_name, status = pkg_status
         self.pkg_cache.set_pkg_status(pkg_name, pkg_status)
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="i")
     def get_pkg_installed(self, pkg_name):
         if self.is_pkg_in_cache(pkg_name):
@@ -790,6 +834,7 @@ class PackageManager(dbus.service.Object):
         else:
             return -1
 
+    @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="ss", out_signature="s")
     def get_pkg_start_status(self, pkg_name, start_pkg_names):
         is_current_installed = self.get_pkg_installed(pkg_name)
@@ -811,7 +856,8 @@ class PackageManager(dbus.service.Object):
     def update_signal(self, message):
         # The signal is emitted when this method exits
         # You can have code here if you wish
-        pass
+        info = str(message)
+        log("dbus signal emit: %s" % info)
 
 if __name__ == "__main__":
     # dpkg will failed if not set TERM and PATH environment variable.
