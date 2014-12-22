@@ -25,4 +25,4 @@ install:
 	ln -sf ${PREFIX}/share/deepin-software-center/pkg_manager/apt/main.py ${DESTDIR}${PREFIX}/bin/deepin-software-center-backend.py
 	ln -sf ${PREFIX}/share/deepin-software-center/ui/main.py ${DESTDIR}${PREFIX}/bin/deepin-software-center
 	ln -sf ${PREFIX}/share/deepin-software-center/ui/dsc-daemon.py ${DESTDIR}${PREFIX}/bin/dsc-daemon
-
+	make -C dapt install
