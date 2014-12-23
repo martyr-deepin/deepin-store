@@ -172,6 +172,7 @@ class DStoreDBusApi(dbus.service.Object):
     @timeout
     @dbus.service.method(DBUS_INTERFACE, in_signature="s", out_signature="b")
     def MarkLaunched(self, desktop):
+        desktop = desktop.encode("utf-8")
         return self.dstore_desktop.mark_launched(desktop)
 
     @timeout
