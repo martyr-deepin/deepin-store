@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-10 09:41+0800\n"
-"PO-Revision-Date: 2014-12-08 09:41+0000\n"
-"Last-Translator: szd_liufei <liufei@linuxdeepin.com>\n"
+"POT-Creation-Date: 2014-12-29 13:45+0800\n"
+"PO-Revision-Date: 2014-12-29 06:50+0000\n"
+"Last-Translator: deepin_transifex <xiabin@linuxdeepin.com>\n"
 "Language-Team: Indonesian (http://www.transifex.com/projects/p/deepin-store/language/id/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -55,6 +55,7 @@ msgstr "Kunjungi Laman web"
 
 #: ../ui/detail_page.py:444 ../ui/download_rank_page.py:369
 #: ../ui/home_page.py:1086 ../ui/album_page.py:483 ../ui/search_page.py:274
+#: ../ui/album_page.py:486 ../ui/home_page.py:1087
 msgid "Not found"
 msgstr "Tidak ditemukan"
 
@@ -69,7 +70,7 @@ msgstr "Ukuran: %s"
 
 #: ../ui/detail_page.py:611
 msgid "Powered by UpYun.com"
-msgstr ""
+msgstr "Didukung oleh UpYun.com"
 
 #: ../ui/uninstall_page.py:175
 #, python-format
@@ -97,14 +98,14 @@ msgstr "%s: permintaan memulai aplikasi dikirim"
 msgid ""
 "Please wait a moment while system upgrade is being performed... Do not turn "
 "off your computer."
-msgstr ""
+msgstr "Silakan tunggu sementara upgrade sistem sedang dijalankan... Harap untuk tidak mematikan komputer Anda."
 
 #: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
-#: ../ui/software_center.py:790
+#: ../ui/software_center.py:790 ../ui/dsc-daemon.py:248
 msgid "Upgrade"
 msgstr "Peningkatan"
 
-#: ../ui/dsc-daemon.py:284
+#: ../ui/dsc-daemon.py:284 ../ui/dsc-daemon.py:319
 #, python-format
 msgid ""
 "There are %s packages needed to upgrade in your system, please use Deepin "
@@ -113,10 +114,11 @@ msgstr "Terdapat %s paket yang perlu ditingkatkan. Silakan gunakan Deepin Store 
 
 #: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
 #: ../ui/software_center.py:733 ../ui/preference.py:433
+#: ../ui/preference.py:440 ../ui/dsc-daemon.py:321 ../ui/dsc-daemon.py:325
 msgid "Deepin Store"
 msgstr "Deepin Store"
 
-#: ../ui/dsc-daemon.py:288
+#: ../ui/dsc-daemon.py:288 ../ui/dsc-daemon.py:323
 #, python-format
 msgid ""
 "There is %s package needed to upgrade in your system, please use Deepin "
@@ -135,7 +137,8 @@ msgstr "Menganalisa ketergantungan"
 
 #: ../ui/install_page.py:511 ../ui/install_page.py:516
 #: ../ui/download_rank_page.py:374 ../ui/home_page.py:1091 ../ui/utils.py:360
-#: ../ui/album_page.py:488 ../ui/search_page.py:279
+#: ../ui/album_page.py:488 ../ui/search_page.py:279 ../ui/album_page.py:491
+#: ../ui/utils.py:368 ../ui/home_page.py:1092
 msgid "Installed"
 msgstr "Terpasang"
 
@@ -184,7 +187,7 @@ msgstr "Waktu peningkatan sistem terakhir:"
 #: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
 #, python-format
 msgid "No reminder to upgrade (%s)"
-msgstr ""
+msgstr "Tidak ada pengingat untuk upgrade (%s)"
 
 #: ../ui/upgrade_page.py:182
 msgid "Upgrade applications selected"
@@ -222,11 +225,11 @@ msgstr "Sistem bukan Deepin, fungsi invalid."
 
 #: ../ui/upgrade_page.py:328
 msgid "Downloading upgrade packages"
-msgstr ""
+msgstr "Mengunduh paket upgrade"
 
 #: ../ui/upgrade_page.py:335
 msgid "Last time of refreshed package lists: "
-msgstr ""
+msgstr "Penyegaran daftar paket terakhir:"
 
 #: ../ui/upgrade_page.py:345
 msgid "Mirror Receiving: "
@@ -234,7 +237,7 @@ msgstr "Menerima mirror:"
 
 #: ../ui/upgrade_page.py:399
 msgid "Failed to download upgrade packages"
-msgstr ""
+msgstr "Gagal mengunduh paket upgrade"
 
 #: ../ui/upgrade_page.py:401
 msgid "The requested package does not exist on server."
@@ -248,7 +251,7 @@ msgstr "Sarankan untuk"
 #: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
 #: ../ui/upgrade_page.py:447
 msgid "refresh package lists"
-msgstr ""
+msgstr "segarkan daftar paket"
 
 #: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
 #: ../ui/upgrade_page.py:448
@@ -257,7 +260,7 @@ msgstr "dan coba lagi."
 
 #: ../ui/upgrade_page.py:419 ../ui/upgrade_page.py:1120
 msgid "Failed to install upgrade packages"
-msgstr ""
+msgstr "Gagal memasang paket upgrade"
 
 #: ../ui/upgrade_page.py:421
 msgid ""
@@ -272,7 +275,7 @@ msgstr "Peringatan"
 msgid ""
 "The upgrade requires to uninstall crucial components due to corrupted local "
 "dependencies or incorrect package dependencies on server."
-msgstr ""
+msgstr "Upgrade ini membutuhkan Anda untuk mencopot pemasangan komponen penting karena dependensi lokal yang rusak atau dependensi paket yang keliru pada server."
 
 #: ../ui/upgrade_page.py:483
 msgid "If the prompt occurs again, you could "
@@ -292,7 +295,7 @@ msgstr "Catatan galat pengunggahan"
 
 #: ../ui/upgrade_page.py:503
 msgid "The error was successfully reported and will be handled soon."
-msgstr ""
+msgstr "Kesalahan berhasil dilaporkan dan akan segera diatasi."
 
 #: ../ui/upgrade_page.py:509
 msgid "Failed to send the error report. You could try again."
@@ -306,7 +309,7 @@ msgstr "Masalah ini terjadi berhubungan dengan dependensi apt lokal yang rusak."
 #: ../ui/upgrade_page.py:668
 #, python-format
 msgid "%s package(s) are available for upgrade, %s will be downloaded."
-msgstr ""
+msgstr "%s paket tersedia untuk upgrade, %s akan diunduh."
 
 #: ../ui/upgrade_page.py:1094
 msgid "Finished analyzing dependencies."
@@ -331,11 +334,11 @@ msgstr "Pengunduhan berhenti."
 
 #: ../ui/upgrade_page.py:1124
 msgid "Installing upgrade packages"
-msgstr ""
+msgstr "Memasang paket upgrade"
 
 #: ../ui/upgrade_page.py:1125
 msgid "Upgrading..."
-msgstr ""
+msgstr "Meng-upgrade..."
 
 #: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
 msgid "Upgrade completed"
@@ -717,47 +720,47 @@ msgstr "Kemarin"
 msgid "Click to refresh"
 msgstr "Klik untuk menyegarkan"
 
-#: ../ui/widgets.py:462 ../ui/preference.py:782
+#: ../ui/widgets.py:462 ../ui/preference.py:782 ../ui/dialog_widgets.py:96
 msgid "OK"
 msgstr "OK"
 
-#: ../ui/widgets.py:463 ../ui/preference.py:784
+#: ../ui/widgets.py:463 ../ui/preference.py:784 ../ui/dialog_widgets.py:98
 msgid "Cancel"
 msgstr "Batal"
 
-#: ../ui/utils.py:355
+#: ../ui/utils.py:355 ../ui/utils.py:363
 msgid "Running"
 msgstr "Berjalan"
 
-#: ../ui/utils.py:356
+#: ../ui/utils.py:356 ../ui/utils.py:364
 msgid "Preparing"
 msgstr "Menyiapkan"
 
-#: ../ui/utils.py:357
+#: ../ui/utils.py:357 ../ui/utils.py:365
 msgid "Unpacking"
 msgstr "Membuka"
 
-#: ../ui/utils.py:358
+#: ../ui/utils.py:358 ../ui/utils.py:366
 msgid "Preparing to configure"
 msgstr "Siap mengkonfigurasi"
 
-#: ../ui/utils.py:359
+#: ../ui/utils.py:359 ../ui/utils.py:367
 msgid "Configuring"
 msgstr "Mengkonfigurasi"
 
-#: ../ui/utils.py:370
+#: ../ui/utils.py:370 ../ui/utils.py:378
 msgid "Err"
 msgstr "Err"
 
-#: ../ui/utils.py:371
+#: ../ui/utils.py:371 ../ui/utils.py:379
 msgid "Ign"
 msgstr "Ign"
 
-#: ../ui/utils.py:372
+#: ../ui/utils.py:372 ../ui/utils.py:380
 msgid "Get"
 msgstr "Get"
 
-#: ../ui/utils.py:373
+#: ../ui/utils.py:373 ../ui/utils.py:381
 msgid "Hit"
 msgstr "Hit"
 
@@ -776,7 +779,7 @@ msgstr "Anda telah menilai. ;)"
 
 #: ../ui/software_center.py:204
 msgid "Rated successfully. Thanks for your involvement."
-msgstr ""
+msgstr "Berhasil memberi nilai. Terima kasih atas kerja sama Anda."
 
 #: ../ui/software_center.py:220
 msgid "Rating failed. Please check your network connection!"
@@ -811,7 +814,7 @@ msgstr "Membangkitkan basis data daftar paket..."
 
 #: ../ui/software_center.py:446
 msgid "Package lists refreshed completely."
-msgstr ""
+msgstr "Daftar paket sudah disegarkan."
 
 #: ../ui/software_center.py:458
 msgid "Failed to refresh package lists."
@@ -839,7 +842,7 @@ msgstr "Paket \"%s\" tidak ditemukan di daftar paket."
 
 #: ../ui/software_center.py:478
 msgid "Refresh package lists again and try again."
-msgstr ""
+msgstr "Segarkan daftar paket dan coba lagi."
 
 #: ../ui/software_center.py:770
 msgid "Join us"
@@ -850,8 +853,9 @@ msgid "Installation"
 msgstr "Pemasangan"
 
 #: ../ui/software_center.py:816 ../ui/preference.py:568
+#: ../ui/preference.py:575
 msgid "Refresh package lists"
-msgstr ""
+msgstr "Segarkan daftar paket"
 
 #: ../ui/software_center.py:817
 msgid "Open download directory"
@@ -873,12 +877,12 @@ msgstr "Preferensi"
 msgid "Quit"
 msgstr "Keluar"
 
-#: ../ui/software_center.py:1123
+#: ../ui/software_center.py:1123 ../ui/software_center.py:1128
 #, python-format
 msgid "You have cleared up %s packages and saved %s of space."
 msgstr "Anda telah membersihkan %s paket dan menghemat %s ruang."
 
-#: ../ui/software_center.py:1125
+#: ../ui/software_center.py:1125 ../ui/software_center.py:1130
 msgid "Your system cache is empty."
 msgstr "Tembolok sistem kosong."
 
@@ -886,66 +890,66 @@ msgstr "Tembolok sistem kosong."
 msgid "No reminder"
 msgstr "Tidak ada pengingat"
 
-#: ../ui/preference.py:438
+#: ../ui/preference.py:438 ../ui/preference.py:445
 msgid "Version:"
 msgstr "Versi:"
 
-#: ../ui/preference.py:452
+#: ../ui/preference.py:452 ../ui/preference.py:459
 msgid ""
 "Deepin Store is a commonly used software center on Linux. We selected more than 2,600 excellent applications with many functions of installation and uninstalling, software repository and popular recommendations, which supports 1-click quick installation, multi-threaded download and clearing of cached packages. It provides topics for software introduction and shares good applications.\n"
 "\n"
 "Deepin Store is a free software licensed under GNU GPLv3."
-msgstr ""
+msgstr "Deepin Store adalah pusat perangkat lunak yang umum digunakan pada Linux. Kami memilih lebih dari 2.600 aplikasi unggulan dengan berbagai fungsi pemasangan dan pencopotan, repositori perangkat lunak, dan rekomendasi populer, yang mendukung pemasangan kilat 1-klik, unduhan multi-thread, dan penghapusan paket yang tersimpan di tembolok. Deepin Store menyediakan topik untuk pengenalan perangkat lunak dan membagikan aplikasi-aplikasi menarik.\n\nDeepin Store adalah perangkat lunak gratis berlisensi di bawah GNU GPLv3."
 
-#: ../ui/preference.py:477
+#: ../ui/preference.py:477 ../ui/preference.py:484
 msgid "On uninstalling the software"
 msgstr "Sedang membongkar perangkat lunak"
 
-#: ../ui/preference.py:480
+#: ../ui/preference.py:480 ../ui/preference.py:487
 msgid "Delete configuration files"
 msgstr "Hapus berkas konfigurasi"
 
-#: ../ui/preference.py:494
+#: ../ui/preference.py:494 ../ui/preference.py:501
 msgid "Download settings"
 msgstr "Pengaturan unduhan"
 
-#: ../ui/preference.py:500
+#: ../ui/preference.py:500 ../ui/preference.py:507
 msgid "Maximum number of download tasks: "
-msgstr ""
+msgstr "Jumlah daftar unduhan maksimum:"
 
-#: ../ui/preference.py:510
+#: ../ui/preference.py:510 ../ui/preference.py:517
 msgid "Download directory: "
 msgstr "Direktori unduhan:"
 
-#: ../ui/preference.py:516
+#: ../ui/preference.py:516 ../ui/preference.py:523
 msgid "Change"
 msgstr "Ganti"
 
-#: ../ui/preference.py:551
+#: ../ui/preference.py:551 ../ui/preference.py:558
 msgid "Select the best mirror"
 msgstr "Pilih cermin terbaik"
 
-#: ../ui/preference.py:552
+#: ../ui/preference.py:552 ../ui/preference.py:559
 msgid "Waiting"
 msgstr "Menunggu"
 
-#: ../ui/preference.py:553
+#: ../ui/preference.py:553 ../ui/preference.py:560
 msgid "Successfully"
 msgstr "Berhasil"
 
-#: ../ui/preference.py:571
+#: ../ui/preference.py:571 ../ui/preference.py:578
 msgid "Upgrade automatically"
-msgstr ""
+msgstr "Upgrade otomatis"
 
-#: ../ui/preference.py:575
+#: ../ui/preference.py:575 ../ui/preference.py:582
 msgid "Time interval: "
 msgstr "Interval waktu:"
 
-#: ../ui/preference.py:578
+#: ../ui/preference.py:578 ../ui/preference.py:585
 msgid " hour"
 msgstr "jam"
 
-#: ../ui/preference.py:642
+#: ../ui/preference.py:642 ../ui/preference.py:643
 msgid "Select mirror"
 msgstr "Pilih cermin"
 
@@ -953,24 +957,24 @@ msgstr "Pilih cermin"
 msgid "Select Directory"
 msgstr "Pilih Direktori"
 
-#: ../ui/preference.py:751
+#: ../ui/preference.py:751 ../ui/dialog_widgets.py:65
 msgid "Speed testing will finish only after one minute, please wait."
 msgstr "Pengujian kecepatan akan selesai hanya dalam satu menit, mohon menunggu."
 
-#: ../ui/preference.py:776
+#: ../ui/preference.py:776 ../ui/dialog_widgets.py:90
 #, python-format
 msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
 msgstr "Pengujian selesai, sumber mirror paling cepat adalah \"%s\", beralih sekarang?"
 
-#: ../ui/preference.py:829
+#: ../ui/preference.py:829 ../ui/preference.py:735
 msgid "General"
 msgstr "Umum"
 
-#: ../ui/preference.py:830
+#: ../ui/preference.py:830 ../ui/preference.py:736
 msgid "Mirrors"
 msgstr "Cermin"
 
-#: ../ui/preference.py:831
+#: ../ui/preference.py:831 ../ui/preference.py:737
 msgid "About"
 msgstr "Tentang"
 
@@ -978,3 +982,7 @@ msgstr "Tentang"
 #, python-format
 msgid "%s applications searched"
 msgstr "%s aplikasi dicari"
+
+#: ../ui/home_page.py:762
+msgid "HotApps"
+msgstr "AppPopuler"
