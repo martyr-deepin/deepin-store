@@ -402,10 +402,10 @@ class AlbumDetailItem(TreeItem):
         self.desktop_info = data_manager.get_pkg_desktop_info(self.pkg_name)
         self.data_manager = data_manager
 
-        # TODO: fetch install_status
+        ## TODO: fetch install_status
         self.install_status = "uninstalled"
         self.desktops = []
-        self.data_manager.get_pkg_installed(self.pkg_name, self.handle_pkg_status)
+        gtk.timeout_add(2000, self.data_manager.get_pkg_installed, self.pkg_name, self.handle_pkg_status)
 
         FetchImageFromUpyun(self.software_pic, self.update_software_pic).start()
         self.pixbuf = None
