@@ -299,7 +299,7 @@ class PkgIconItem(IconItem):
         # TODO: fetch install_status
         self.install_status = "uninstalled"
         self.desktops = []
-        self.data_manager.get_pkg_installed(self.pkg_name, self.handle_pkg_status)
+        gtk.timeout_add(2000, self.data_manager.get_pkg_installed, self.pkg_name, self.handle_pkg_status)
 
     def handle_pkg_status(self, status, success):
         if success:

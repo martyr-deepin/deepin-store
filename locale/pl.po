@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-10 09:41+0800\n"
-"PO-Revision-Date: 2014-12-02 08:10+0000\n"
+"POT-Creation-Date: 2014-12-29 13:45+0800\n"
+"PO-Revision-Date: 2014-12-29 19:50+0000\n"
 "Last-Translator: Piotr Strębski <strebski@o2.pl>\n"
 "Language-Team: Polish (http://www.transifex.com/projects/p/deepin-store/language/pl/)\n"
 "MIME-Version: 1.0\n"
@@ -56,6 +56,7 @@ msgstr "Odwiedź stronę domową"
 
 #: ../ui/detail_page.py:444 ../ui/download_rank_page.py:369
 #: ../ui/home_page.py:1086 ../ui/album_page.py:483 ../ui/search_page.py:274
+#: ../ui/album_page.py:486 ../ui/home_page.py:1087
 msgid "Not found"
 msgstr "Nie znaleziono"
 
@@ -101,11 +102,11 @@ msgid ""
 msgstr "Prosimy chwilę poczekać, gdyż przeprowadzana jest aktualizacja systemu... Nie wyłączaj teraz swojego komputera."
 
 #: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
-#: ../ui/software_center.py:790
+#: ../ui/software_center.py:790 ../ui/dsc-daemon.py:248
 msgid "Upgrade"
 msgstr "Aktualizuj "
 
-#: ../ui/dsc-daemon.py:284
+#: ../ui/dsc-daemon.py:284 ../ui/dsc-daemon.py:319
 #, python-format
 msgid ""
 "There are %s packages needed to upgrade in your system, please use Deepin "
@@ -114,10 +115,11 @@ msgstr "Jest %s pakietów potrzebnych do aktualizacji Twojego systemu, prosimy u
 
 #: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
 #: ../ui/software_center.py:733 ../ui/preference.py:433
+#: ../ui/preference.py:440 ../ui/dsc-daemon.py:321 ../ui/dsc-daemon.py:325
 msgid "Deepin Store"
 msgstr "Sklep Deepin"
 
-#: ../ui/dsc-daemon.py:288
+#: ../ui/dsc-daemon.py:288 ../ui/dsc-daemon.py:323
 #, python-format
 msgid ""
 "There is %s package needed to upgrade in your system, please use Deepin "
@@ -136,7 +138,8 @@ msgstr "Analizowanie zależności"
 
 #: ../ui/install_page.py:511 ../ui/install_page.py:516
 #: ../ui/download_rank_page.py:374 ../ui/home_page.py:1091 ../ui/utils.py:360
-#: ../ui/album_page.py:488 ../ui/search_page.py:279
+#: ../ui/album_page.py:488 ../ui/search_page.py:279 ../ui/album_page.py:491
+#: ../ui/utils.py:368 ../ui/home_page.py:1092
 msgid "Installed"
 msgstr "Zainstalowano"
 
@@ -718,47 +721,47 @@ msgstr "Wczoraj"
 msgid "Click to refresh"
 msgstr "Kliknij, aby odświeżyć"
 
-#: ../ui/widgets.py:462 ../ui/preference.py:782
+#: ../ui/widgets.py:462 ../ui/preference.py:782 ../ui/dialog_widgets.py:96
 msgid "OK"
 msgstr "OK"
 
-#: ../ui/widgets.py:463 ../ui/preference.py:784
+#: ../ui/widgets.py:463 ../ui/preference.py:784 ../ui/dialog_widgets.py:98
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: ../ui/utils.py:355
+#: ../ui/utils.py:355 ../ui/utils.py:363
 msgid "Running"
 msgstr "Uruchamianie"
 
-#: ../ui/utils.py:356
+#: ../ui/utils.py:356 ../ui/utils.py:364
 msgid "Preparing"
 msgstr "Przygotowywanie"
 
-#: ../ui/utils.py:357
+#: ../ui/utils.py:357 ../ui/utils.py:365
 msgid "Unpacking"
 msgstr "Rozpakowywanie"
 
-#: ../ui/utils.py:358
+#: ../ui/utils.py:358 ../ui/utils.py:366
 msgid "Preparing to configure"
 msgstr "Przygotowywanie do skonfigurowania"
 
-#: ../ui/utils.py:359
+#: ../ui/utils.py:359 ../ui/utils.py:367
 msgid "Configuring"
 msgstr "Konfigurowanie"
 
-#: ../ui/utils.py:370
+#: ../ui/utils.py:370 ../ui/utils.py:378
 msgid "Err"
 msgstr "Błąd"
 
-#: ../ui/utils.py:371
+#: ../ui/utils.py:371 ../ui/utils.py:379
 msgid "Ign"
 msgstr "Ignorowane"
 
-#: ../ui/utils.py:372
+#: ../ui/utils.py:372 ../ui/utils.py:380
 msgid "Get"
 msgstr "Pozyskiwane"
 
-#: ../ui/utils.py:373
+#: ../ui/utils.py:373 ../ui/utils.py:381
 msgid "Hit"
 msgstr "Uzyskano"
 
@@ -851,6 +854,7 @@ msgid "Installation"
 msgstr "Instalacja"
 
 #: ../ui/software_center.py:816 ../ui/preference.py:568
+#: ../ui/preference.py:575
 msgid "Refresh package lists"
 msgstr "Odśwież listy pakietów"
 
@@ -874,12 +878,12 @@ msgstr "Ustawienia"
 msgid "Quit"
 msgstr "Wyjdź"
 
-#: ../ui/software_center.py:1123
+#: ../ui/software_center.py:1123 ../ui/software_center.py:1128
 #, python-format
 msgid "You have cleared up %s packages and saved %s of space."
 msgstr "Wyczyszczono %s pakietów i zaoszczędzono %s miejsca na dysku."
 
-#: ../ui/software_center.py:1125
+#: ../ui/software_center.py:1125 ../ui/software_center.py:1130
 msgid "Your system cache is empty."
 msgstr "Pamięć podręczna Twojego systemu jest pusta."
 
@@ -887,66 +891,66 @@ msgstr "Pamięć podręczna Twojego systemu jest pusta."
 msgid "No reminder"
 msgstr "Brak przypomnienia"
 
-#: ../ui/preference.py:438
+#: ../ui/preference.py:438 ../ui/preference.py:445
 msgid "Version:"
 msgstr "Wersja:"
 
-#: ../ui/preference.py:452
+#: ../ui/preference.py:452 ../ui/preference.py:459
 msgid ""
 "Deepin Store is a commonly used software center on Linux. We selected more than 2,600 excellent applications with many functions of installation and uninstalling, software repository and popular recommendations, which supports 1-click quick installation, multi-threaded download and clearing of cached packages. It provides topics for software introduction and shares good applications.\n"
 "\n"
 "Deepin Store is a free software licensed under GNU GPLv3."
 msgstr "Sklep Deepin jest powszechnie stosowanym centrum oprogramowania w systemie Linux. Wybraliśmy ponad 2600 doskonałych programów, które posiadają wiele funkcji instalacji i odinstalowania, repozytorium oprogramowania i rekomendacje popularności, wspierających technikę szybkiej instalacji 1 kliknięciem myszy, wielowątkowego pobierania i czyszczenia pamięci podręcznej pakietów. Zapewnia on kategoryzację wprowadzającą oprogramowania i współdzieli dobre oprogramowanie.\n\nSklep Deepin jest wolnym oprogramowaniem na licencji GNU GPLv3."
 
-#: ../ui/preference.py:477
+#: ../ui/preference.py:477 ../ui/preference.py:484
 msgid "On uninstalling the software"
 msgstr "O odinstalowywaniu oprogramowania"
 
-#: ../ui/preference.py:480
+#: ../ui/preference.py:480 ../ui/preference.py:487
 msgid "Delete configuration files"
 msgstr "Usuń pliki konfiguracyjne"
 
-#: ../ui/preference.py:494
+#: ../ui/preference.py:494 ../ui/preference.py:501
 msgid "Download settings"
 msgstr "Ustawienia pobierania"
 
-#: ../ui/preference.py:500
+#: ../ui/preference.py:500 ../ui/preference.py:507
 msgid "Maximum number of download tasks: "
 msgstr "Maksymalna liczba zadań pobierania:"
 
-#: ../ui/preference.py:510
+#: ../ui/preference.py:510 ../ui/preference.py:517
 msgid "Download directory: "
 msgstr "Katalog pobrań:"
 
-#: ../ui/preference.py:516
+#: ../ui/preference.py:516 ../ui/preference.py:523
 msgid "Change"
 msgstr "Zmień"
 
-#: ../ui/preference.py:551
+#: ../ui/preference.py:551 ../ui/preference.py:558
 msgid "Select the best mirror"
 msgstr "Wybierz najlepszy serwer zwierciadlany"
 
-#: ../ui/preference.py:552
+#: ../ui/preference.py:552 ../ui/preference.py:559
 msgid "Waiting"
 msgstr "Oczekiwanie"
 
-#: ../ui/preference.py:553
+#: ../ui/preference.py:553 ../ui/preference.py:560
 msgid "Successfully"
 msgstr "Pomyślnie"
 
-#: ../ui/preference.py:571
+#: ../ui/preference.py:571 ../ui/preference.py:578
 msgid "Upgrade automatically"
 msgstr "Aktualizuj automatycznie"
 
-#: ../ui/preference.py:575
+#: ../ui/preference.py:575 ../ui/preference.py:582
 msgid "Time interval: "
 msgstr "Przedział czasu:"
 
-#: ../ui/preference.py:578
+#: ../ui/preference.py:578 ../ui/preference.py:585
 msgid " hour"
 msgstr "godzina"
 
-#: ../ui/preference.py:642
+#: ../ui/preference.py:642 ../ui/preference.py:643
 msgid "Select mirror"
 msgstr "Wybierz serwer zwierciadlany"
 
@@ -954,24 +958,24 @@ msgstr "Wybierz serwer zwierciadlany"
 msgid "Select Directory"
 msgstr "Wybierz katalog"
 
-#: ../ui/preference.py:751
+#: ../ui/preference.py:751 ../ui/dialog_widgets.py:65
 msgid "Speed testing will finish only after one minute, please wait."
 msgstr "Testowanie szybkości zakończy się już po minucie, prosimy zaczekać."
 
-#: ../ui/preference.py:776
+#: ../ui/preference.py:776 ../ui/dialog_widgets.py:90
 #, python-format
 msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
 msgstr "Ukończono testowanie, najszybszym serwerem zwierciadlanym jest \"%s\", przełączyć na niego?"
 
-#: ../ui/preference.py:829
+#: ../ui/preference.py:829 ../ui/preference.py:735
 msgid "General"
 msgstr "Ogólne"
 
-#: ../ui/preference.py:830
+#: ../ui/preference.py:830 ../ui/preference.py:736
 msgid "Mirrors"
 msgstr "Serwery zwierciadlane"
 
-#: ../ui/preference.py:831
+#: ../ui/preference.py:831 ../ui/preference.py:737
 msgid "About"
 msgstr "O programie"
 
@@ -979,3 +983,7 @@ msgstr "O programie"
 #, python-format
 msgid "%s applications searched"
 msgstr "Wyszukano %s programów"
+
+#: ../ui/home_page.py:762
+msgid "HotApps"
+msgstr "Popularne aplikacje"

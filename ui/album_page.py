@@ -113,7 +113,8 @@ class AlbumPage(gtk.VBox):
 
         self.pack_start(self.album_summary_align, True, True)
 
-        self.show_all()
+        self.album_summary_view.iconview.items[0].icon_item_button_press(0, 0)
+        #self.show_all()
 
     def switch_to_album_detail_view(self, album_info):
         self.in_detail_view = True
@@ -337,7 +338,9 @@ class AlbumDetailPage(gtk.VBox):
         self.treeview = TreeView(enable_drag_drop=False, expand_column=1)
 
         items = []
-        for software_info in album_info['softwares']:
+        album_detail_infos = album_info['softwares']
+        album_detail_infos = sorted(album_detail_infos, key=lambda info: info.get('order'), reverse=True)
+        for software_info in album_detail_infos:
             items.append(AlbumDetailItem(software_info, data_manager))
         self.treeview.add_items(items)
         self.treeview.draw_mask = self.draw_mask
@@ -399,10 +402,10 @@ class AlbumDetailItem(TreeItem):
         self.desktop_info = data_manager.get_pkg_desktop_info(self.pkg_name)
         self.data_manager = data_manager
 
-        # TODO: fetch install_status
+        ## TODO: fetch install_status
         self.install_status = "uninstalled"
         self.desktops = []
-        self.data_manager.get_pkg_installed(self.pkg_name, self.handle_pkg_status)
+        gtk.timeout_add(2000, self.data_manager.get_pkg_installed, self.pkg_name, self.handle_pkg_status)
 
         FetchImageFromUpyun(self.software_pic, self.update_software_pic).start()
         self.pixbuf = None
