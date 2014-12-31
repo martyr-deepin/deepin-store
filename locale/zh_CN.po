@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-10 09:41+0800\n"
-"PO-Revision-Date: 2014-10-22 09:38+0000\n"
+"POT-Creation-Date: 2014-12-29 13:45+0800\n"
+"PO-Revision-Date: 2014-12-29 06:20+0000\n"
 "Last-Translator: szd_liufei <liufei@linuxdeepin.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/deepin-store/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -61,6 +61,7 @@ msgstr "访问首页"
 
 #: ../ui/detail_page.py:444 ../ui/download_rank_page.py:369
 #: ../ui/home_page.py:1086 ../ui/album_page.py:483 ../ui/search_page.py:274
+#: ../ui/album_page.py:486 ../ui/home_page.py:1087
 msgid "Not found"
 msgstr "未找到"
 
@@ -106,11 +107,11 @@ msgid ""
 msgstr "系统更新请稍后...不要关闭电脑。"
 
 #: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
-#: ../ui/software_center.py:790
+#: ../ui/software_center.py:790 ../ui/dsc-daemon.py:248
 msgid "Upgrade"
 msgstr "系统升级"
 
-#: ../ui/dsc-daemon.py:284
+#: ../ui/dsc-daemon.py:284 ../ui/dsc-daemon.py:319
 #, python-format
 msgid ""
 "There are %s packages needed to upgrade in your system, please use Deepin "
@@ -119,10 +120,11 @@ msgstr "您的系统有 %s 个软件包需要升级，请使用深度软件商�
 
 #: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
 #: ../ui/software_center.py:733 ../ui/preference.py:433
+#: ../ui/preference.py:440 ../ui/dsc-daemon.py:321 ../ui/dsc-daemon.py:325
 msgid "Deepin Store"
 msgstr "深度商店"
 
-#: ../ui/dsc-daemon.py:288
+#: ../ui/dsc-daemon.py:288 ../ui/dsc-daemon.py:323
 #, python-format
 msgid ""
 "There is %s package needed to upgrade in your system, please use Deepin "
@@ -141,7 +143,8 @@ msgstr "分析依赖中"
 
 #: ../ui/install_page.py:511 ../ui/install_page.py:516
 #: ../ui/download_rank_page.py:374 ../ui/home_page.py:1091 ../ui/utils.py:360
-#: ../ui/album_page.py:488 ../ui/search_page.py:279
+#: ../ui/album_page.py:488 ../ui/search_page.py:279 ../ui/album_page.py:491
+#: ../ui/utils.py:368 ../ui/home_page.py:1092
 msgid "Installed"
 msgstr "已安装"
 
@@ -723,47 +726,47 @@ msgstr "昨天"
 msgid "Click to refresh"
 msgstr "点击此处刷新"
 
-#: ../ui/widgets.py:462 ../ui/preference.py:782
+#: ../ui/widgets.py:462 ../ui/preference.py:782 ../ui/dialog_widgets.py:96
 msgid "OK"
 msgstr "确定"
 
-#: ../ui/widgets.py:463 ../ui/preference.py:784
+#: ../ui/widgets.py:463 ../ui/preference.py:784 ../ui/dialog_widgets.py:98
 msgid "Cancel"
 msgstr "取消"
 
-#: ../ui/utils.py:355
+#: ../ui/utils.py:355 ../ui/utils.py:363
 msgid "Running"
 msgstr "正在运行"
 
-#: ../ui/utils.py:356
+#: ../ui/utils.py:356 ../ui/utils.py:364
 msgid "Preparing"
 msgstr "正在准备"
 
-#: ../ui/utils.py:357
+#: ../ui/utils.py:357 ../ui/utils.py:365
 msgid "Unpacking"
 msgstr "正在解压缩"
 
-#: ../ui/utils.py:358
+#: ../ui/utils.py:358 ../ui/utils.py:366
 msgid "Preparing to configure"
 msgstr "正在准备配置"
 
-#: ../ui/utils.py:359
+#: ../ui/utils.py:359 ../ui/utils.py:367
 msgid "Configuring"
 msgstr "正在配置"
 
-#: ../ui/utils.py:370
+#: ../ui/utils.py:370 ../ui/utils.py:378
 msgid "Err"
 msgstr "错误"
 
-#: ../ui/utils.py:371
+#: ../ui/utils.py:371 ../ui/utils.py:379
 msgid "Ign"
 msgstr "忽略"
 
-#: ../ui/utils.py:372
+#: ../ui/utils.py:372 ../ui/utils.py:380
 msgid "Get"
 msgstr "获取"
 
-#: ../ui/utils.py:373
+#: ../ui/utils.py:373 ../ui/utils.py:381
 msgid "Hit"
 msgstr "命中"
 
@@ -856,6 +859,7 @@ msgid "Installation"
 msgstr "安装管理"
 
 #: ../ui/software_center.py:816 ../ui/preference.py:568
+#: ../ui/preference.py:575
 msgid "Refresh package lists"
 msgstr "刷新软件包列表"
 
@@ -879,12 +883,12 @@ msgstr "选项"
 msgid "Quit"
 msgstr "退出"
 
-#: ../ui/software_center.py:1123
+#: ../ui/software_center.py:1123 ../ui/software_center.py:1128
 #, python-format
 msgid "You have cleared up %s packages and saved %s of space."
 msgstr "恭喜您清理了 %s 个软件包，共节约了 %s 空间。"
 
-#: ../ui/software_center.py:1125
+#: ../ui/software_center.py:1125 ../ui/software_center.py:1130
 msgid "Your system cache is empty."
 msgstr "您的系统已经很干净了，不需要清理。"
 
@@ -892,66 +896,66 @@ msgstr "您的系统已经很干净了，不需要清理。"
 msgid "No reminder"
 msgstr "不再提醒"
 
-#: ../ui/preference.py:438
+#: ../ui/preference.py:438 ../ui/preference.py:445
 msgid "Version:"
 msgstr "版本："
 
-#: ../ui/preference.py:452
+#: ../ui/preference.py:452 ../ui/preference.py:459
 msgid ""
 "Deepin Store is a commonly used software center on Linux. We selected more than 2,600 excellent applications with many functions of installation and uninstalling, software repository and popular recommendations, which supports 1-click quick installation, multi-threaded download and clearing of cached packages. It provides topics for software introduction and shares good applications.\n"
 "\n"
 "Deepin Store is a free software licensed under GNU GPLv3."
 msgstr "深度商店是Linux平台通用的软件管理中心，精选了2600多款优秀软件，集成了软件安装与卸载、软件仓库、热门软件推荐等多项功能。支持一键快速安装软件、多线程下载及智能清理下载缓存。提供专题介绍，分享好软件。\n\n深度商店是自由软件，遵循自由软件基金会发布的GNU通用公共许可证第三版。"
 
-#: ../ui/preference.py:477
+#: ../ui/preference.py:477 ../ui/preference.py:484
 msgid "On uninstalling the software"
 msgstr "当卸载软件的时候"
 
-#: ../ui/preference.py:480
+#: ../ui/preference.py:480 ../ui/preference.py:487
 msgid "Delete configuration files"
 msgstr "删除配置文件"
 
-#: ../ui/preference.py:494
+#: ../ui/preference.py:494 ../ui/preference.py:501
 msgid "Download settings"
 msgstr "下载设置"
 
-#: ../ui/preference.py:500
+#: ../ui/preference.py:500 ../ui/preference.py:507
 msgid "Maximum number of download tasks: "
 msgstr "最大下载任务数："
 
-#: ../ui/preference.py:510
+#: ../ui/preference.py:510 ../ui/preference.py:517
 msgid "Download directory: "
 msgstr "下载目录："
 
-#: ../ui/preference.py:516
+#: ../ui/preference.py:516 ../ui/preference.py:523
 msgid "Change"
 msgstr "更改"
 
-#: ../ui/preference.py:551
+#: ../ui/preference.py:551 ../ui/preference.py:558
 msgid "Select the best mirror"
 msgstr "选择最佳镜像源"
 
-#: ../ui/preference.py:552
+#: ../ui/preference.py:552 ../ui/preference.py:559
 msgid "Waiting"
 msgstr "请稍等"
 
-#: ../ui/preference.py:553
+#: ../ui/preference.py:553 ../ui/preference.py:560
 msgid "Successfully"
 msgstr "成功了"
 
-#: ../ui/preference.py:571
+#: ../ui/preference.py:571 ../ui/preference.py:578
 msgid "Upgrade automatically"
 msgstr "自动更新"
 
-#: ../ui/preference.py:575
+#: ../ui/preference.py:575 ../ui/preference.py:582
 msgid "Time interval: "
 msgstr "间隔时间："
 
-#: ../ui/preference.py:578
+#: ../ui/preference.py:578 ../ui/preference.py:585
 msgid " hour"
 msgstr " 小时"
 
-#: ../ui/preference.py:642
+#: ../ui/preference.py:642 ../ui/preference.py:643
 msgid "Select mirror"
 msgstr "选择镜像源"
 
@@ -959,24 +963,24 @@ msgstr "选择镜像源"
 msgid "Select Directory"
 msgstr "选择目录"
 
-#: ../ui/preference.py:751
+#: ../ui/preference.py:751 ../ui/dialog_widgets.py:65
 msgid "Speed testing will finish only after one minute, please wait."
 msgstr "正在测速中，大约1分钟可以完成，请稍等。"
 
-#: ../ui/preference.py:776
+#: ../ui/preference.py:776 ../ui/dialog_widgets.py:90
 #, python-format
 msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
 msgstr "测试完成，最快的镜像源是\"%s\"，是否立即切换？"
 
-#: ../ui/preference.py:829
+#: ../ui/preference.py:829 ../ui/preference.py:735
 msgid "General"
 msgstr "常规"
 
-#: ../ui/preference.py:830
+#: ../ui/preference.py:830 ../ui/preference.py:736
 msgid "Mirrors"
 msgstr "镜像源"
 
-#: ../ui/preference.py:831
+#: ../ui/preference.py:831 ../ui/preference.py:737
 msgid "About"
 msgstr "关于"
 
@@ -984,3 +988,7 @@ msgstr "关于"
 #, python-format
 msgid "%s applications searched"
 msgstr "搜索到 %s 款软件"
+
+#: ../ui/home_page.py:762
+msgid "HotApps"
+msgstr "装机必备"

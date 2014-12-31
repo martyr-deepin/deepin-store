@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-10 09:41+0800\n"
-"PO-Revision-Date: 2014-09-23 10:12+0000\n"
-"Last-Translator: Анатолий Валерианович <ffox909@mail.ru>\n"
+"POT-Creation-Date: 2014-12-29 13:45+0800\n"
+"PO-Revision-Date: 2014-12-29 06:50+0000\n"
+"Last-Translator: deepin_transifex <xiabin@linuxdeepin.com>\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/deepin-store/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -58,6 +58,7 @@ msgstr "Посетить домашнюю страницу"
 
 #: ../ui/detail_page.py:444 ../ui/download_rank_page.py:369
 #: ../ui/home_page.py:1086 ../ui/album_page.py:483 ../ui/search_page.py:274
+#: ../ui/album_page.py:486 ../ui/home_page.py:1087
 msgid "Not found"
 msgstr "Не найдено"
 
@@ -103,11 +104,11 @@ msgid ""
 msgstr "Подождите несколько секунд, пока выполняется обновление системы... Не выключайте компьютер."
 
 #: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
-#: ../ui/software_center.py:790
+#: ../ui/software_center.py:790 ../ui/dsc-daemon.py:248
 msgid "Upgrade"
 msgstr "Обновить"
 
-#: ../ui/dsc-daemon.py:284
+#: ../ui/dsc-daemon.py:284 ../ui/dsc-daemon.py:319
 #, python-format
 msgid ""
 "There are %s packages needed to upgrade in your system, please use Deepin "
@@ -116,10 +117,11 @@ msgstr "%s пакетов приложений нуждаются в обнов�
 
 #: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
 #: ../ui/software_center.py:733 ../ui/preference.py:433
+#: ../ui/preference.py:440 ../ui/dsc-daemon.py:321 ../ui/dsc-daemon.py:325
 msgid "Deepin Store"
 msgstr "Deepin Store"
 
-#: ../ui/dsc-daemon.py:288
+#: ../ui/dsc-daemon.py:288 ../ui/dsc-daemon.py:323
 #, python-format
 msgid ""
 "There is %s package needed to upgrade in your system, please use Deepin "
@@ -138,7 +140,8 @@ msgstr "Анализ зависимостей"
 
 #: ../ui/install_page.py:511 ../ui/install_page.py:516
 #: ../ui/download_rank_page.py:374 ../ui/home_page.py:1091 ../ui/utils.py:360
-#: ../ui/album_page.py:488 ../ui/search_page.py:279
+#: ../ui/album_page.py:488 ../ui/search_page.py:279 ../ui/album_page.py:491
+#: ../ui/utils.py:368 ../ui/home_page.py:1092
 msgid "Installed"
 msgstr "Установлено"
 
@@ -720,47 +723,47 @@ msgstr "Вчера"
 msgid "Click to refresh"
 msgstr "Кликните, чтобы обновить"
 
-#: ../ui/widgets.py:462 ../ui/preference.py:782
+#: ../ui/widgets.py:462 ../ui/preference.py:782 ../ui/dialog_widgets.py:96
 msgid "OK"
 msgstr "ОК"
 
-#: ../ui/widgets.py:463 ../ui/preference.py:784
+#: ../ui/widgets.py:463 ../ui/preference.py:784 ../ui/dialog_widgets.py:98
 msgid "Cancel"
 msgstr "Отмена"
 
-#: ../ui/utils.py:355
+#: ../ui/utils.py:355 ../ui/utils.py:363
 msgid "Running"
 msgstr "Выполнение"
 
-#: ../ui/utils.py:356
+#: ../ui/utils.py:356 ../ui/utils.py:364
 msgid "Preparing"
 msgstr "Подготовка"
 
-#: ../ui/utils.py:357
+#: ../ui/utils.py:357 ../ui/utils.py:365
 msgid "Unpacking"
 msgstr "Распаковка"
 
-#: ../ui/utils.py:358
+#: ../ui/utils.py:358 ../ui/utils.py:366
 msgid "Preparing to configure"
 msgstr "Подготовка настройки"
 
-#: ../ui/utils.py:359
+#: ../ui/utils.py:359 ../ui/utils.py:367
 msgid "Configuring"
 msgstr "Настройка"
 
-#: ../ui/utils.py:370
+#: ../ui/utils.py:370 ../ui/utils.py:378
 msgid "Err"
 msgstr "Ошбк."
 
-#: ../ui/utils.py:371
+#: ../ui/utils.py:371 ../ui/utils.py:379
 msgid "Ign"
 msgstr "Игн."
 
-#: ../ui/utils.py:372
+#: ../ui/utils.py:372 ../ui/utils.py:380
 msgid "Get"
 msgstr "Получить"
 
-#: ../ui/utils.py:373
+#: ../ui/utils.py:373 ../ui/utils.py:381
 msgid "Hit"
 msgstr "Хит"
 
@@ -853,6 +856,7 @@ msgid "Installation"
 msgstr "Установка"
 
 #: ../ui/software_center.py:816 ../ui/preference.py:568
+#: ../ui/preference.py:575
 msgid "Refresh package lists"
 msgstr "Обновить список пакетов"
 
@@ -876,12 +880,12 @@ msgstr "Параметры"
 msgid "Quit"
 msgstr "Выход"
 
-#: ../ui/software_center.py:1123
+#: ../ui/software_center.py:1123 ../ui/software_center.py:1128
 #, python-format
 msgid "You have cleared up %s packages and saved %s of space."
 msgstr "Вами очищено %s пакетов и сохранено %s пространства."
 
-#: ../ui/software_center.py:1125
+#: ../ui/software_center.py:1125 ../ui/software_center.py:1130
 msgid "Your system cache is empty."
 msgstr "Ваш системный кэш пуст"
 
@@ -889,66 +893,66 @@ msgstr "Ваш системный кэш пуст"
 msgid "No reminder"
 msgstr "Не напоминать"
 
-#: ../ui/preference.py:438
+#: ../ui/preference.py:438 ../ui/preference.py:445
 msgid "Version:"
 msgstr "Версия:"
 
-#: ../ui/preference.py:452
+#: ../ui/preference.py:452 ../ui/preference.py:459
 msgid ""
 "Deepin Store is a commonly used software center on Linux. We selected more than 2,600 excellent applications with many functions of installation and uninstalling, software repository and popular recommendations, which supports 1-click quick installation, multi-threaded download and clearing of cached packages. It provides topics for software introduction and shares good applications.\n"
 "\n"
 "Deepin Store is a free software licensed under GNU GPLv3."
 msgstr "Deepin Store это популярный центр программного обеспечения Linux. Мы выбрали свыше 2.600 наилучших приложений, поддерживая множество функций: установка-удаление,  собственный репозиторий, популярные рекомендации, установка в 1-клик, многопоточная загрузка и очистка от кэшируемых пакетов. Поддерживаются рейтинги программ и акции хороших приложений.\n\nDeepin Store это свободное программное обеспечение под лицензией GNU GPLv3."
 
-#: ../ui/preference.py:477
+#: ../ui/preference.py:477 ../ui/preference.py:484
 msgid "On uninstalling the software"
 msgstr "При удалении программного обеспечения"
 
-#: ../ui/preference.py:480
+#: ../ui/preference.py:480 ../ui/preference.py:487
 msgid "Delete configuration files"
 msgstr "Удалить файлы конфигурации"
 
-#: ../ui/preference.py:494
+#: ../ui/preference.py:494 ../ui/preference.py:501
 msgid "Download settings"
 msgstr "Настройки загрузки"
 
-#: ../ui/preference.py:500
+#: ../ui/preference.py:500 ../ui/preference.py:507
 msgid "Maximum number of download tasks: "
 msgstr "Максимальное число очереди загрузки:"
 
-#: ../ui/preference.py:510
+#: ../ui/preference.py:510 ../ui/preference.py:517
 msgid "Download directory: "
 msgstr "Папка загрузки:"
 
-#: ../ui/preference.py:516
+#: ../ui/preference.py:516 ../ui/preference.py:523
 msgid "Change"
 msgstr "Изменить"
 
-#: ../ui/preference.py:551
+#: ../ui/preference.py:551 ../ui/preference.py:558
 msgid "Select the best mirror"
 msgstr "Выбрать лучшее зеркало"
 
-#: ../ui/preference.py:552
+#: ../ui/preference.py:552 ../ui/preference.py:559
 msgid "Waiting"
 msgstr "Ожидание"
 
-#: ../ui/preference.py:553
+#: ../ui/preference.py:553 ../ui/preference.py:560
 msgid "Successfully"
 msgstr "Успешно"
 
-#: ../ui/preference.py:571
+#: ../ui/preference.py:571 ../ui/preference.py:578
 msgid "Upgrade automatically"
 msgstr "Автоматическое бновление"
 
-#: ../ui/preference.py:575
+#: ../ui/preference.py:575 ../ui/preference.py:582
 msgid "Time interval: "
 msgstr "Временной интервал:"
 
-#: ../ui/preference.py:578
+#: ../ui/preference.py:578 ../ui/preference.py:585
 msgid " hour"
 msgstr "час"
 
-#: ../ui/preference.py:642
+#: ../ui/preference.py:642 ../ui/preference.py:643
 msgid "Select mirror"
 msgstr "Выберите зеркало"
 
@@ -956,24 +960,24 @@ msgstr "Выберите зеркало"
 msgid "Select Directory"
 msgstr "Выбор каталога"
 
-#: ../ui/preference.py:751
+#: ../ui/preference.py:751 ../ui/dialog_widgets.py:65
 msgid "Speed testing will finish only after one minute, please wait."
 msgstr "Тестирование скорости завершится только через минуту, подождите."
 
-#: ../ui/preference.py:776
+#: ../ui/preference.py:776 ../ui/dialog_widgets.py:90
 #, python-format
 msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
 msgstr "Тест завершен, самое быстрое источник это зеркало \"%s\", переключиться сейчас?"
 
-#: ../ui/preference.py:829
+#: ../ui/preference.py:829 ../ui/preference.py:735
 msgid "General"
 msgstr "Общее"
 
-#: ../ui/preference.py:830
+#: ../ui/preference.py:830 ../ui/preference.py:736
 msgid "Mirrors"
 msgstr "Зеркала"
 
-#: ../ui/preference.py:831
+#: ../ui/preference.py:831 ../ui/preference.py:737
 msgid "About"
 msgstr "О программе"
 
@@ -981,3 +985,7 @@ msgstr "О программе"
 #, python-format
 msgid "%s applications searched"
 msgstr "найдено приложение %s"
+
+#: ../ui/home_page.py:762
+msgid "HotApps"
+msgstr "Лучшие приложения"

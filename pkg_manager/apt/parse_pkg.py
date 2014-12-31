@@ -125,8 +125,12 @@ def get_pkg_dependence(cache, pkg_name):
 
     if cache.is_pkg_upgradable(pkg_name):
         pkg.mark_upgrade()
+        if not pkg.marked_upgrade:
+            return -1
     elif not cache.is_pkg_installed(pkg_name):
         pkg.mark_install()
+        if not pkg.marked_install:
+            return -1
 
     # Get package information.
     pkgs = sorted(cache.get_changes(), key=lambda pkg: pkg.name)

@@ -270,12 +270,10 @@ class Update(dbus.service.Object, Logger):
     def handle_notification_close(self, notify_id, reason):
         notify_id = int(notify_id)
         if self.notify_id == notify_id and not self.is_run_in_daemon:
-            gobject.timeout_add_seconds(5, self.mainloop.quit)
+            gobject.timeout_add_seconds(2, self.mainloop.quit)
 
     def set_delay_update(self, seconds):
-        if not self.is_run_in_daemon:
-            self.mainloop.quit()
-        else:
+        if self.is_run_in_daemon:
             if self.delay_update_id:
                 gobject.source_remove(self.delay_update_id)
 

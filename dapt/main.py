@@ -20,6 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import gobject
 import glib
 import dbus
 import dbus.service
@@ -40,20 +41,19 @@ DB_PATH = "/var/cache/deepin-store/new-desktop.db"
 ORIGIN_DESKTOPS = []
 XDG_DATA_DIRS = "/usr/share/deepin:/usr/local/share/:/usr/share/"
 
-class DStoreApi(dbus.service.Object):
-    def __init__(self, bus_name, bus_path, mainloop):
-        self.bus_name = bus_name
-        self.mainloop = mainloop
-        dbus.service.Object.__init__(self, bus_name, bus_path)
+class DStoreDesktop(gobject.GObject):
+
+    __gsignals__ = {
+        "new-desktop-added": (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (str, int)),
+    }
+
+    def __init__(self):
+        gobject.GObject.__init__(self)
 
         self.db = {}
         self.application_dirs = []
-        self.timeout_id = None
 
-        self.init_data()
-
-    def init_data(self):
-        # init application_dirs
+        #init application_dirs
         data_dirs = os.environ.get("XDG_DATA_DIRS", None)
         if not data_dirs:
             data_dirs = XDG_DATA_DIRS
@@ -64,22 +64,12 @@ class DStoreApi(dbus.service.Object):
                 self.application_dirs.append(os.path.join(folder, "applications"))
                 self.application_dirs.append(os.path.join(folder, "applications", "kde4"))
 
-        #init self.db
+        # init self.db
         if os.path.exists(DB_PATH):
             with open(DB_PATH) as fp:
                 self.db = cPickle.load(fp)
         else:
-            self.MarkAll()
-
-    def timeout(func):
-        @functools.wraps(func)
-        def wrapper(*args, **kw):
-            self = args[0]
-            if self.timeout_id:
-                glib.source_remove(self.timeout_id)
-            self.timeout_id = glib.timeout_add_seconds(30, self.quit)
-            return func(*args, **kw)
-        return wrapper
+            self.mark_all_launched()
 
     def save_db(self):
         db_dir = os.path.dirname(DB_PATH)
@@ -87,10 +77,6 @@ class DStoreApi(dbus.service.Object):
             os.makedirs(db_dir)
         with open(DB_PATH, "w") as fp:
             cPickle.dump(self.db, fp)
-
-    def quit(self):
-        self.remove_from_connection()
-        self.mainloop.quit()
 
     def real_scan(self, emit_signal=True):
         all_desktops = []
@@ -108,7 +94,7 @@ class DStoreApi(dbus.service.Object):
                         self.db[f] = [now, True]
                         if emit_signal:
                             desktop_path = os.path.join(folder, f)
-                            self.NewDesktopAdded(desktop_path, now)
+                            self.emit("new-desktop-added", desktop_path, now)
         # delete desktops
         keys = self.db.keys()
         for key in keys:
@@ -116,14 +102,7 @@ class DStoreApi(dbus.service.Object):
                 self.db.pop(key)
         self.save_db()
 
-    @timeout
-    @dbus.service.method(DBUS_INTERFACE, in_signature="", out_signature="")
-    def Scan(self):
-        glib.timeout_add(10, self.real_scan)
-
-    @timeout
-    @dbus.service.method(DBUS_INTERFACE, in_signature="s", out_signature="b")
-    def MarkLaunched(self, desktop):
+    def mark_launched(self, desktop):
         if not desktop.endswith(".desktop"):
             desktop += ".desktop"
         desktop_info = self.db.get(desktop)
@@ -134,9 +113,7 @@ class DStoreApi(dbus.service.Object):
         else:
             return False
 
-    @timeout
-    @dbus.service.method(DBUS_INTERFACE, in_signature="", out_signature="b")
-    def MarkAll(self):
+    def mark_all_launched(self):
         self.real_scan(emit_signal=False)
         desktops = self.db.keys()
         for desktop in desktops:
@@ -144,26 +121,75 @@ class DStoreApi(dbus.service.Object):
             if desktop_info != None:
                 self.db[desktop][1] = False
         self.save_db()
-        return True
 
-    @timeout
-    @dbus.service.method(DBUS_INTERFACE, in_signature="", out_signature="s")
-    def GetNewDesktops(self):
+    def get_new_desktops(self):
         new_desktops = []
         for key in self.db:
             desktop_info = self.db[key]
             if desktop_info[1]:
                 new_desktops.append((key, desktop_info[0]))
-        return json.dumps(sorted(new_desktops, key=lambda info: info[1], reverse=True))
+        return sorted(new_desktops, key=lambda info: info[1], reverse=True)
 
-    @timeout
-    @dbus.service.method(DBUS_INTERFACE, in_signature="", out_signature="s")
-    def GetAllDesktops(self):
+    def get_all_desktops(self):
         all_desktops = []
         for key in self.db:
             desktop_info = self.db[key]
             all_desktops.append((key, desktop_info[0], desktop_info[1]))
-        return json.dumps(sorted(all_desktops, key=lambda info: info[1], reverse=True))
+        return sorted(all_desktops, key=lambda info: info[1], reverse=True)
+
+class DStoreDBusApi(dbus.service.Object):
+    def __init__(self, bus_name, bus_path, mainloop):
+        self.bus_name = bus_name
+        self.mainloop = mainloop
+        dbus.service.Object.__init__(self, bus_name, bus_path)
+
+        self.dstore_desktop = DStoreDesktop()
+        self.dstore_desktop.connect("new-desktop-added",
+            lambda widget, desktop, time: self.NewDesktopAdded(desktop, time))
+
+        self.timeout_id = None
+
+    def timeout(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kw):
+            self = args[0]
+            if self.timeout_id:
+                glib.source_remove(self.timeout_id)
+            self.timeout_id = glib.timeout_add_seconds(30, self.Quit)
+            return func(*args, **kw)
+        return wrapper
+
+    @dbus.service.method(DBUS_INTERFACE, in_signature="", out_signature="")
+    def Quit(self):
+        self.remove_from_connection()
+        self.mainloop.quit()
+
+    @timeout
+    @dbus.service.method(DBUS_INTERFACE, in_signature="", out_signature="")
+    def Scan(self):
+        glib.timeout_add(10, self.dstore_desktop.real_scan)
+
+    @timeout
+    @dbus.service.method(DBUS_INTERFACE, in_signature="s", out_signature="b")
+    def MarkLaunched(self, desktop):
+        desktop = desktop.encode("utf-8")
+        return self.dstore_desktop.mark_launched(desktop)
+
+    @timeout
+    @dbus.service.method(DBUS_INTERFACE, in_signature="", out_signature="b")
+    def MarkAll(self):
+        self.dstore_desktop.mark_all_launched()
+        return True
+
+    @timeout
+    @dbus.service.method(DBUS_INTERFACE, in_signature="", out_signature="s")
+    def GetNewDesktops(self):
+        return json.dumps(self.dstore_desktop.get_new_desktops())
+
+    @timeout
+    @dbus.service.method(DBUS_INTERFACE, in_signature="", out_signature="s")
+    def GetAllDesktops(self):
+        return json.dumps(self.dstore_desktop.get_all_desktops())
 
     @dbus.service.signal(DBUS_INTERFACE, signature='si')
     # Use below command for test:
@@ -175,13 +201,14 @@ if __name__ == "__main__":
     DBusGMainLoop(set_as_default=True)
     mainloop = glib.MainLoop()
     signal.signal(signal.SIGINT, lambda : mainloop.quit()) # capture "Ctrl + c" signal
-
-    system_bus = dbus.SystemBus()
-    if system_bus.name_has_owner(DBUS_NAME):
-        print DBUS_NAME, "is running..."
+    if len(sys.argv) == 2 and sys.argv[1] == "--init":
+        dstore_obj = DStoreDesktop()
     else:
-        bus_name = dbus.service.BusName(DBUS_NAME, bus=system_bus)
-        service = DStoreApi(bus_name, DBUS_PATH, mainloop)
-        if not (len(sys.argv) == 2 and sys.argv[1] == "--init"):
+        system_bus = dbus.SystemBus()
+        if system_bus.name_has_owner(DBUS_NAME):
+            print DBUS_NAME, "is running..."
+        else:
+            bus_name = dbus.service.BusName(DBUS_NAME, bus=system_bus)
+            service = DStoreDBusApi(bus_name, DBUS_PATH, mainloop)
             mainloop.run()
 
