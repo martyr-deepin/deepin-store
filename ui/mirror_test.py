@@ -29,6 +29,7 @@ import urllib2
 import time
 from urlparse import urlparse
 import traceback
+import hashlib
 
 from deepin_utils.file import get_parent_dir
 from deepin_utils.config import Config
@@ -38,6 +39,12 @@ from logger import Logger
 
 root_dir = get_parent_dir(__file__, 2)
 mirrors_dir = os.path.join(root_dir, 'mirrors')
+
+codename = aptsources.distro.get_distro().codename
+
+official_host = "packages.linuxdeepin.com"
+official_url = "http://%s/deepin" % official_host
+release_path = "%s/dists/%s/Release"
 
 class Mirror(object):
     def __init__(self, ini_file):
@@ -76,7 +83,7 @@ class Mirror(object):
 
 class MirrorTest(Logger):
     def __init__(self, hostnames):
-        self.hostnames = hostnames
+        self.hostnames = hostnames + [official_host]
         self._stop = False
         self._cancel = False
         self._mirrors = []
@@ -94,16 +101,37 @@ class MirrorTest(Logger):
     def timer_out_callback(self):
         self._stop = True
 
+    def get_newest_mirrors(self, mirrors):
+        newest_mirrors = []
+        release_url = release_path % (official_url, codename)
+        data = urllib2.urlopen(release_url, timeout=30).read()
+        official_md5 = hashlib.md5(data).hexdigest()
+        for mirror in mirrors:
+            deepin_mirror_url = mirror.get_repo_urls()[1]
+            download_url = release_path % (deepin_mirror_url, codename)
+            try:
+                data = urllib2.urlopen(download_url, timeout=30).read()
+                mirror_md5 = hashlib.md5(data).hexdigest()
+                if mirror_md5 == official_md5:
+                    newest_mirrors.append(mirror)
+            except:
+                pass
+        return newest_mirrors
+
     def run(self):
         self.init_mirrors()
+        self._mirrors = self.get_newest_mirrors(self._mirrors)
         result = []
         for m in self._mirrors:
             if self._cancel:
                 return ""
             speed = self.get_speed(m)
             result.append((speed, m.hostname))
-        sorted_result = sorted(result, key=lambda r: r[0])
-        best_hostname = sorted_result[-1][-1]
+        if len(result) > 0:
+            sorted_result = sorted(result, key=lambda r: r[0])
+            best_hostname = sorted_result[-1][-1]
+        else:
+            best_hostname = (1, official_url)
         self.loginfo("Best hostname: %s" % best_hostname)
         return best_hostname
 
@@ -111,8 +139,7 @@ class MirrorTest(Logger):
         deepin_url = mirror.get_repo_urls()[1]
         if deepin_url.endswith("/"):
             deepin_url = deepin_url[:-1]
-        distro = aptsources.distro.get_distro()
-        download_url = "%s/dists/%s/Contents-amd64" % (deepin_url, distro.codename)
+        download_url = "%s/dists/%s/Contents-amd64" % (deepin_url, codename)
         request = urllib2.Request(download_url, None)
         try:
             conn = urllib2.urlopen(request, timeout=10)
