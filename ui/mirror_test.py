@@ -46,6 +46,16 @@ official_host = "packages.linuxdeepin.com"
 official_url = "http://%s/deepin" % official_host
 release_path = "%s/dists/%s/Release"
 
+deepin_version_path = "/etc/deepin-version"
+
+def is_mirror_disabled():
+    if os.path.exists(deepin_version_path):
+        config = Config(deepin_version_path)
+        config.load()
+        return config.has_option("Custom", "Mirror") and config.get("Custom", "Mirror") == "False"
+    else:
+        return True # not deepin os, disable mirror change
+
 class Mirror(object):
     def __init__(self, ini_file):
         self.config = Config(ini_file)
@@ -171,6 +181,8 @@ class MirrorTest(Logger):
 
 def get_mirrors():
     mirrors = []
+    if not os.path.exists(mirrors_dir) or is_mirror_disabled():
+        return mirrors
     for f in os.listdir(mirrors_dir):
         if f.endswith(".ini"):
             ini_file = os.path.join(mirrors_dir, f)
@@ -190,9 +202,4 @@ def get_best_mirror():
             return mirror
 
 if __name__ == "__main__":
-    for mirror in get_mirrors():
-        print mirror.get_repo_urls()
-    #now = time.time()
-    #t = MirrorTest([u'mirrors.hust.edu.cn', u'packages.linuxdeepin.com', u'mirrors.ustc.edu.cn', u'test.packages.linuxdeepin.com', u'mirrors.jstvu.edu.cn'])
-    #print t.run()
-    #print "Total Time:", time.time() - now
+    print len(all_mirrors)

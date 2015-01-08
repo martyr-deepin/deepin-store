@@ -206,9 +206,9 @@ class Update(dbus.service.Object, Logger):
         self.loginfo("Start Update List Daemon")
 
     def handle_mirror_test(self):
-        if is_first_started():
+        from mirror_test import get_best_mirror, all_mirrors
+        if is_first_started() and len(all_mirrors) > 0:
             self.loginfo("Mirror test start...")
-            from mirror_test import get_best_mirror
             best_mirror = get_best_mirror()
             repo_urls = best_mirror.get_repo_urls()
             if not self.is_fontend_running():

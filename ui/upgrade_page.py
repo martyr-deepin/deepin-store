@@ -343,7 +343,7 @@ class UpgradingBox(gtk.VBox):
         bottom_info_box.attach(self.recent_upgrade_time, 1, 2, 1, 2, xoptions=gtk.FILL, xpadding=0, ypadding=4)
 
         software_mirror_label = utils.create_right_align_label(_("Mirror Receiving: "))
-        if self.preference_dialog.mirrors_box.current_mirror_item:
+        if hasattr(self.preference_dialog, "mirrors_box") and self.preference_dialog.mirrors_box.current_mirror_item:
             self.software_mirror = utils.create_left_align_label(
                 self.preference_dialog.mirrors_box.current_mirror_item.mirror.name)
         else:
