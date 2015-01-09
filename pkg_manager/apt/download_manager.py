@@ -22,7 +22,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from deepin_storm.logger import Logger
+from logger import Logger
 
 import sys
 import dbus
