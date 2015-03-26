@@ -249,13 +249,14 @@ class MultiAptActionThread(MissionThread):
         self.pkg_cache.open(apb.OpProgress())
         log("Reopen Cache Time: %s" % (time.time()-start,))
 
-        for pkg_name in self.pkg_names:
-            if self.action_type == ACTION_INSTALL:
-                self.pkg_cache[self.pkg_name].mark_install()
-            elif self.action_type == ACTION_UPGRADE:
-                self.pkg_cache[pkg_name].mark_upgrade()
-            elif self.action_type == ACTION_UNINSTALL:
-                self.pkg_cache[self.pkg_name].mark_delete(purge=self.purge_flag)
+        if self.action_type != ACTION_UPGRADE:
+            for pkg_name in self.pkg_names:
+                if self.action_type == ACTION_INSTALL:
+                    self.pkg_cache[self.pkg_name].mark_install()
+                elif self.action_type == ACTION_UNINSTALL:
+                    self.pkg_cache[self.pkg_name].mark_delete(purge=self.purge_flag)
+        else:
+            self.pkg_cache.upgrade(True)
 
         pkg_info_list = map(lambda pkg: (pkg.name, pkg.marked_delete, pkg.marked_install, pkg.marked_upgrade),
                             self.pkg_cache.get_changes())

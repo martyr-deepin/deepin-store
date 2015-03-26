@@ -1115,7 +1115,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
                 error_handler=lambda e:handle_dbus_error("start_update_list", e),)
 
     def upgrade_pkgs(self, pkg_names):
-        self.bus_interface.upgrade_pkgs_with_new_policy(
+        self.bus_interface.DistUpgrade(
                 pkg_names,
                 reply_handler=lambda :handle_dbus_reply("upgrade_pkgs"),
                 error_handler=lambda e:handle_dbus_error("upgrade_pkgs", e))

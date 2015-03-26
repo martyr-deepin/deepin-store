@@ -44,6 +44,19 @@ class AptCache(apt.Cache):
         apt.Cache.__init__(self, apt.progress.base.OpProgress())
         self.packages_status = {}
 
+        cache_instance = self
+        class dep_init(object):
+            def __init__(self):
+                self.cache = cache_instance
+
+            def __enter__(self):
+                self.cache._depcache.init()
+                return self.cache
+
+            def __exit__(self, *args):
+                self.cache._depcache.init()
+        self.dep_init = dep_init
+
     def get_upgrade_pkgs(self):
         pkg_infos = []
 
@@ -52,6 +65,18 @@ class AptCache(apt.Cache):
                 pkg_version = pkg.versions[0].version
                 pkg_infos.append(json.dumps((pkg.name, pkg_version)))
         return pkg_infos
+
+    def get_dist_upgrade_changes(self):
+        change_pkg_status = {"delete": [], "downgrade": [], "install": [], "keep": [], "reinstall": [], "upgrade": []}
+        with self.dep_init():
+            self.upgrade(True)
+            change_pkgs = self.get_changes()
+            for pkg in change_pkgs:
+                for key in change_pkg_status.keys():
+                    method = "marked_" + key
+                    if hasattr(pkg, method) and getattr(pkg, method):
+                        change_pkg_status[key].append(pkg)
+        return change_pkg_status
 
     def set_pkg_status(self, pkg_name, status):
         self._depcache.init()
@@ -125,9 +150,9 @@ class AptCache(apt.Cache):
 
 if __name__ == "__main__":
     pkg_cache = AptCache()
-
-    print pkg_cache.get_pkgs_install_version(['exaile', 'subdownloader', 'gmusicbrowser', 'gwibber', 'qutim', 'bibus', 'guvcview', 'kino', 'gnucash', 'gpodder', 'pokerth', 'choqok', 'k3b', 'rekonq', 'terminator', 'synapse', 'kmail', 'kopete', 'gpicview', 'gpixpod', 'furiusisomount', 'liferea'])
-    # import Queue as Q
-    # block_signal = Q.Queue()
-    # if block_signal.get():
-    #     print "finish"
+    changes = pkg_cache.get_dist_upgrade_changes()
+    for key in changes:
+        if len(changes[key]) > 0:
+            print "%s:" % key
+            for item in changes[key]:
+                print item
