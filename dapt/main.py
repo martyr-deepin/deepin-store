@@ -170,6 +170,11 @@ class DStoreDBusApi(dbus.service.Object):
         glib.timeout_add(10, self.dstore_desktop.real_scan)
 
     @timeout
+    @dbus.service.method(DBUS_INTERFACE, in_signature="", out_signature="")
+    def Scanning(self):
+        self.dstore_desktop.real_scan()
+
+    @timeout
     @dbus.service.method(DBUS_INTERFACE, in_signature="s", out_signature="b")
     def MarkLaunched(self, desktop):
         desktop = desktop.encode("utf-8")
@@ -201,10 +206,25 @@ if __name__ == "__main__":
     DBusGMainLoop(set_as_default=True)
     mainloop = glib.MainLoop()
     signal.signal(signal.SIGINT, lambda : mainloop.quit()) # capture "Ctrl + c" signal
-    if len(sys.argv) == 2 and sys.argv[1] == "--init":
-        dstore_obj = DStoreDesktop()
+    from optparse import OptionParser
+    parser = OptionParser()
+    parser.add_option("-s", "--scan",
+                    action="store_true", dest="scan", default=False,
+                    help="scan desktop changes in all desktop folders")
+    (options, args) = parser.parse_args()
+    dstore_obj = DStoreDesktop()
+    system_bus = dbus.SystemBus()
+    if options.scan:
+        if system_bus.name_has_owner(DBUS_NAME):
+            print DBUS_NAME, "is running..."
+            bus_object = system_bus.get_object(DBUS_NAME, DBUS_PATH)
+            bus_interface = dbus.Interface(bus_object, DBUS_INTERFACE)
+            bus_interface.Scanning()
+        else:
+            bus_name = dbus.service.BusName(DBUS_NAME, bus=system_bus)
+            service = DStoreDBusApi(bus_name, DBUS_PATH, mainloop)
+            service.Scanning()
     else:
-        system_bus = dbus.SystemBus()
         if system_bus.name_has_owner(DBUS_NAME):
             print DBUS_NAME, "is running..."
         else:
