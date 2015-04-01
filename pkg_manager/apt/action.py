@@ -27,7 +27,7 @@ import gobject
 
 from events import global_event
 import traceback
-from utils import log
+from utils import logger
 from constant import ACTION_INSTALL, ACTION_UPGRADE, ACTION_UNINSTALL
 
 from update_list import UpdateList
@@ -69,21 +69,21 @@ class AptProcess(apb.InstallProgress):
     def conffile(self, current, new):
         global_event.emit("action-conffile", (current, new))
 
-        log("conffile: %s %s" % (current, new))
+        logger.warn("conffile: %s %s" % (current, new))
 
     def error(self, pkg_name, errorstr):
         global_event.emit("action-error", (self.pkg_name, errorstr))
 
-        log("error: %s" % errorstr)
+        logger.error("error: %s" % errorstr)
 
     def start_update(self):
         '''Start update.'''
-        log("start action...")
+        logger.info("start action...")
 
     def status_change(self, pkg, percent, status):
         '''Progress status change.'''
         global_event.emit("action-update", (self.pkg_name, self.action_type, int(percent), status))
-        log((self.pkg_name, self.action_type, int(percent), status))
+        logger.debug((self.pkg_name, self.action_type, int(percent), status))
 
 class GInstallProgress(gobject.GObject, apb.InstallProgress):
     """Installation progress with global_event signals.
@@ -119,7 +119,7 @@ class GInstallProgress(gobject.GObject, apb.InstallProgress):
         """
         global_event.emit("action-error", (pkg, errormsg))
         global_event.emit("action-failed", (pkg, ACTION_UPGRADE, [], str(errormsg)))
-        log("error: %s" % errormsg)
+        logger.error("error: %s" % errormsg)
 
     def conffile(self, current, new):
         """Called during conffile.
@@ -191,10 +191,10 @@ class AptActionThread(MissionThread):
         self.purge_flag = purge_flag
 
     def start_mission(self):
-        log("start thread")
+        logger.info("start thread")
         start = time.time()
         self.pkg_cache.open(apb.OpProgress())
-        log("Reopen Cache Time: %s" % (time.time()-start,))
+        logger.info("Reopen Cache Time: %s" % (time.time()-start,))
 
         if self.action_type == ACTION_INSTALL:
             self.pkg_cache[self.pkg_name].mark_install()
@@ -219,12 +219,12 @@ class AptActionThread(MissionThread):
                 self.pkg_cache.open(apb.OpProgress())
                 global_event.emit("action-finish", (self.pkg_name, self.action_type, pkg_info_list))
             except Exception, e:
-                log("Commit Failed: %s" % e)
-                log(str(traceback.format_exc()))
+                logger.error("Commit Failed: %s" % e)
+                logger.error(str(traceback.format_exc()))
                 global_event.emit("action-failed", (self.pkg_name, self.action_type, pkg_info_list, str(e)))
         else:
-            log("nothing to change")
-        log("end thread")
+            logger.info("nothing to change")
+        logger.info("end thread")
 
     def get_mission_result(self):
         '''Get misssion retsult.'''
@@ -244,10 +244,10 @@ class MultiAptActionThread(MissionThread):
         self.upgrade_id = upgrade_id
 
     def start_mission(self):
-        log("start thread")
+        logger.info("start thread")
         start = time.time()
         self.pkg_cache.open(apb.OpProgress())
-        log("Reopen Cache Time: %s" % (time.time()-start,))
+        logger.info("Reopen Cache Time: %s" % (time.time()-start,))
 
         if self.action_type != ACTION_UPGRADE:
             for pkg_name in self.pkg_names:
@@ -270,12 +270,12 @@ class MultiAptActionThread(MissionThread):
                 self.pkg_cache.open(apb.OpProgress())
                 global_event.emit('action-finish', (self.upgrade_id, self.action_type, pkg_info_list))
             except Exception, e:
-                log("Commit Failed: %s" % e)
-                log(str(traceback.format_exc()))
+                logger.error("Commit Failed: %s" % e)
+                logger.error(str(traceback.format_exc()))
                 global_event.emit("action-failed", (self.upgrade_id, self.action_type, pkg_info_list, str(e)))
         else:
-            log("nothing to change")
-        log("end thread")
+            logger.info("nothing to change")
+        logger.info("end thread")
 
     def get_mission_result(self):
         '''Get misssion retsult.'''

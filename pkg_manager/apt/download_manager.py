@@ -22,7 +22,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from logger import Logger
+from utils import logger
 
 import sys
 import dbus
@@ -31,7 +31,7 @@ DOWNLOAD_DBUS_NAME = "com.deepin.download.service"
 DOWNLOAD_DBUS_PATH = "/com/deepin/download/service"
 DOWNLOAD_DBUS_INTERFACE = "com.deepin.download.service"
 
-class DownloadManager(Logger):
+class DownloadManager(object):
     def __init__(self, global_event=None, verbose=False):
 
         self.global_event = global_event
@@ -115,13 +115,13 @@ class DownloadManager(Logger):
             "status" : "wait"
             }
         if self.task_name_to_id.has_key(task_name):
-            self.logwarn("repeat task name:", task_name)
+            logger.warn("repeat task name: %s" % task_name)
         self.task_name_to_id[task_name] = task_id
 
         if self.verbose:
-            self.loginfo("Add download for %s urls:" % len(download_urls))
+            logger.debug("Add download for %s urls:" % len(download_urls))
             for url in download_urls:
-                self.loginfo(">>> " + url)
+                logger.debug(">>> " + url)
 
     def start_download(self, task_id):
         if self.download_task_info.has_key(task_id):
@@ -133,7 +133,7 @@ class DownloadManager(Logger):
 
             self.global_event.emit("download-start", task_name, action_type)
             if self.verbose:
-                self.loginfo("%s download start" % task_name)
+                logger.info("%s download start" % task_name)
 
     def update_download(self, task_id, progress, speed, finish_number,
             total_number, downloaded_size, total_size):
@@ -163,7 +163,7 @@ class DownloadManager(Logger):
             self.global_event.emit("download-error", task_name, action_type,
                     error_string)
             if self.verbose:
-                self.logerror("%s download error: %s" % (task_name, error_string))
+                logger.error("%s download error: %s" % (task_name, error_string))
 
     def finish_download(self, task_id):
         if self.download_task_info.has_key(task_id):
@@ -179,7 +179,7 @@ class DownloadManager(Logger):
                     all_task_names)
             if self.verbose:
                 sys.stdout.flush()
-                self.loginfo("%s download finish" % (task_name,))
+                logger.info("%s download finish" % (task_name,))
 
     def pause_download(self, task_id):
         if self.download_task_info.has_key(task_id):
@@ -191,7 +191,7 @@ class DownloadManager(Logger):
 
             self.global_event.emit("download-stop", task_name, action_type)
             if self.verbose:
-                self.loginfo("%s download pause" % (task_name,))
+                logger.info("%s download pause" % (task_name,))
 
     def stop_download(self, task_id):
         if self.download_task_info.has_key(task_id):
@@ -203,7 +203,7 @@ class DownloadManager(Logger):
 
             self.global_event.emit("download-stop", task_name, action_type)
             if self.verbose:
-                self.loginfo("%s download stop" % (task_name,))
+                logger.info("%s download stop" % (task_name,))
 
     def stop_wait_download(self, task_name):
         task_name_i386 = ""

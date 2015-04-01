@@ -72,10 +72,18 @@ class AptCache(apt.Cache):
             self.upgrade(True)
             change_pkgs = self.get_changes()
             for pkg in change_pkgs:
-                for key in change_pkg_status.keys():
-                    method = "marked_" + key
-                    if hasattr(pkg, method) and getattr(pkg, method):
-                        change_pkg_status[key].append(pkg)
+                if not pkg.is_installed and pkg.marked_install:
+                    change_pkg_status["install"].append(pkg)
+                elif pkg.marked_upgrade:
+                    change_pkg_status["upgrade"].append(pkg)
+                elif pkg.marked_delete:
+                    change_pkg_status["delete"].append(pkg)
+                elif pkg.marked_reinstall:
+                    change_pkg_status["reinstall"].append(pkg)
+                elif pkg.marked_keep:
+                    change_pkg_status["keep"].append(pkg)
+                elif pkg.marked_downgrade:
+                    change_pkg_status["downgrade"].append(pkg)
         return change_pkg_status
 
     def set_pkg_status(self, pkg_name, status):
@@ -153,6 +161,6 @@ if __name__ == "__main__":
     changes = pkg_cache.get_dist_upgrade_changes()
     for key in changes:
         if len(changes[key]) > 0:
-            print "%s:" % key
+            print "%s(%s):" % (key, len(changes[key]))
             for item in changes[key]:
                 print item

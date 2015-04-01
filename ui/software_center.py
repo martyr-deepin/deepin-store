@@ -25,7 +25,6 @@ from skin import app_theme
 from nls import _
 
 import glib
-import subprocess
 from data import data_exit
 import gtk
 import gobject
@@ -1057,9 +1056,9 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
 
     def dbus_request_status(self):
         self.bus_interface.request_status(
-                reply_handler=lambda reply: request_status_reply_hander(reply, self.install_page, self.upgrade_page, self.uninstall_page),
-                error_handler=lambda e:handle_dbus_error("request_status", e),
-                )
+            reply_handler=lambda reply: request_status_reply_hander(reply, self.install_page, self.upgrade_page, self.uninstall_page),
+            error_handler=lambda e:handle_dbus_error("request_status", e),
+            )
 
     def set_software_download_dir(self):
         self.bus_interface.set_download_dir(

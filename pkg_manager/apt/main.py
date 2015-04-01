@@ -36,11 +36,6 @@ import apt.progress.base as apb
 import aptsources.distro
 import functools
 
-import logging
-logging.basicConfig(
-    format='[%(levelname)s][%(name)s] %(message)s', level=logging.INFO)
-logger = logging.getLogger("pkg_manager.apt.main")
-
 from deepin_utils.file import read_file, write_file
 
 from download_manager import DownloadManager
@@ -67,8 +62,8 @@ from constant import (
 from apt_cache import AptCache
 from action import AptActionPool
 from events import global_event
-from utils import log
 import utils
+from utils import logger
 import db_build
 
 DATA_DIR = os.path.join(get_parent_dir(__file__, 3), "data")
@@ -157,17 +152,17 @@ class ExitManager(td.Thread):
         signal = self.signal.get()
         if signal == "check":
             if self.is_download_action_running():
-                print "Download action still runing, exit later"
+                logger.info("Download action still runing, exit later")
                 self.loop()
             elif self.is_update_list_running():
-                print "Update list still runing, exit later"
+                logger.info("Update list still runing, exit later")
                 self.loop()
             elif self.is_apt_action_running():
-                print "Apt action still running, exit later"
+                logger.info("Apt action still running, exit later")
                 self.loop()
             else:
                 if self.have_exit_request():
-                    print "Exit"
+                    logger.info("backend service exit")
                     self.mainloop.quit()
                     utils.set_running_lock(False)
                 else:
@@ -200,8 +195,7 @@ class PackageManager(dbus.service.Object):
         def wrapper(*args, **kw):
             info = "dbus method invoked: %s, arguments: %s" % (
                 func.__name__, str(args[1:]))
-            print info
-            log(info)
+            logger.debug(info)
             return func(*args, **kw)
         return wrapper
 
@@ -378,10 +372,10 @@ class PackageManager(dbus.service.Object):
             "update-list-update", (percent, status_message, speed_str))])
 
     def handle_dbus_reply(self, *reply):
-        log("%s (reply): %s" % (self.module_dbus_name, str(reply)))
+        logger.info("%s (reply): %s" % (self.module_dbus_name, str(reply)))
 
     def handle_dbus_error(self, *error):
-        log("%s (error): %s" % (self.module_dbus_name, str(error)))
+        logger.info("%s (error): %s" % (self.module_dbus_name, str(error)))
 
     def send_parse_download_error(self, pkg_name, action_type):
         self.update_signal([("parse-download-error", (pkg_name, action_type))])
@@ -882,7 +876,7 @@ class PackageManager(dbus.service.Object):
         # The signal is emitted when this method exits
         # You can have code here if you wish
         info = str(message)
-        log("dbus signal emit: %s" % info)
+        logger.debug("dbus signal emit: %s" % info)
 
 if __name__ == "__main__":
     # dpkg will failed if not set TERM and PATH environment variable.
@@ -903,7 +897,7 @@ if __name__ == "__main__":
 
     # Auth with root permission.
     if not utils.auth_with_policykit("com.linuxdeepin.softwarecenter.action"):
-        log("Auth failed")
+        logger.error("Auth failed")
 
     # Remove lock file if it exist.
     if os.path.exists("/var/lib/apt/lists/lock"):
@@ -912,12 +906,9 @@ if __name__ == "__main__":
     # Init dbus.
     system_bus = dbus.SystemBus()
     if system_bus.name_has_owner(DSC_SERVICE_NAME):
-        print "backend is runing:", DSC_SERVICE_NAME
+        logger.warn("another backend is running: %s" % DSC_SERVICE_NAME)
     else:
         bus_name = dbus.service.BusName(DSC_SERVICE_NAME, system_bus)
-
-        # Init package manager.
         PackageManager(system_bus, mainloop)
-
-        # Run.
+        logger.info("backend service started")
         mainloop.run()

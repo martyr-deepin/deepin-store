@@ -102,7 +102,7 @@ class UpdateList(MissionThread):
         '''Update package list.'''
         global_event.emit("update-list-start")
         utils.set_last_update_time()
-        utils.log("Cache update list start!")
+        utils.logger.info("Cache update list start!")
 
         log_file = open(UPDATE_LIST_LOG_PATH, 'ab')
         progress = AcquireProgress(log_file)
@@ -110,15 +110,15 @@ class UpdateList(MissionThread):
             self.pkg_cache.update(progress)
             if int(progress.percent) == 0:
                 global_event.emit("update-list-failed")
-                utils.log("update list failed!")
+                utils.logger.error("update list failed!")
             else:
                 self.pkg_cache.open(None)
                 global_event.emit("update-list-finish")
-                utils.log("update list finish")
+                utils.logger.info("update list finish")
         except Exception, e:
             global_event.emit("update-list-failed")
             failed_message = "Cache update list failed: %s" % e
-            utils.log(failed_message)
+            utils.logger.error(failed_message)
 
 if __name__ == "__main__":
     import gtk

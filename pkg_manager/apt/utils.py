@@ -30,6 +30,24 @@ from constant import LOG_PATH, SYS_CONFIG_INFO_PATH, BACKEND_PID
 from deepin_utils.config import Config
 from deepin_utils.file import touch_file
 
+import logging
+def get_logger():
+    logger = logging.getLogger('dstore.pkg_manager')
+    logger.setLevel(logging.DEBUG)
+    formatter = logging.Formatter('[%(asctime)s][%(levelname)s]: %(message)s')
+
+    fh = logging.FileHandler('/tmp/dstore-backend.log')
+    fh.setLevel(logging.DEBUG)
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.INFO)
+    ch.setFormatter(formatter)
+    logger.addHandler(ch)
+    return logger
+logger = get_logger()
+
 def desktop_name_to_desktop_path(desktop_name):
     """ get desktop absolute path from a desktop name
 
@@ -70,11 +88,6 @@ def set_running_lock(running):
     else:
         if os.path.exists(BACKEND_PID):
             os.remove(BACKEND_PID)
-
-def log(message):
-    with open(LOG_PATH, "a") as file_handler:
-        now = datetime.now().strftime("[%Y-%m-%d %H:%M:%S]")
-        file_handler.write("%s %s\n" % (now, message))
 
 def set_last_update_time():
     config_info_config = get_config_info_config()
