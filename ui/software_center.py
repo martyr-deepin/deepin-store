@@ -25,7 +25,6 @@ from skin import app_theme
 from nls import _
 
 import glib
-import subprocess
 from data import data_exit
 import gtk
 import gobject
@@ -75,6 +74,7 @@ from logger import Logger
 from paned_box import PanedBox
 from widgets import BottomTipBar
 from star_buffer import StarView, DscStarBuffer
+from mirror_test import all_mirrors
 from constant import (
             DSC_SERVICE_NAME, DSC_SERVICE_PATH,
             DSC_FRONTEND_NAME, DSC_FRONTEND_PATH,
@@ -871,9 +871,12 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
     def ready_show(self):
         self.preference_dialog = DscPreferenceDialog()
         if utils.is_first_started():
-            utils.set_first_started()
             self.in_wizard_showing = True
-            self.show_test_mirror()
+            if len(all_mirrors) > 0:
+                self.show_test_mirror(callback=self.wizard_callback)
+            else:
+                self.show_wizard_win(callback=self.wizard_callback)
+            utils.set_first_started()
             self.init_ui()
         else:
             self.init_ui()
@@ -882,7 +885,8 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         #self.paned_box.bottom_window.set_composited(True)
 
     def show_test_mirror(self, callback=None):
-        self.preference_dialog.waiting_dialog.hide_callback = self.wizard_callback
+        if callback:
+            self.preference_dialog.waiting_dialog.hide_callback = callback
         mirrors_box = self.preference_dialog.mirrors_box
         mirrors_box.select_best_mirror(mirrors_box.select_best_mirror_button)
 
@@ -1052,9 +1056,9 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
 
     def dbus_request_status(self):
         self.bus_interface.request_status(
-                reply_handler=lambda reply: request_status_reply_hander(reply, self.install_page, self.upgrade_page, self.uninstall_page),
-                error_handler=lambda e:handle_dbus_error("request_status", e),
-                )
+            reply_handler=lambda reply: request_status_reply_hander(reply, self.install_page, self.upgrade_page, self.uninstall_page),
+            error_handler=lambda e:handle_dbus_error("request_status", e),
+            )
 
     def set_software_download_dir(self):
         self.bus_interface.set_download_dir(
@@ -1110,7 +1114,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
                 error_handler=lambda e:handle_dbus_error("start_update_list", e),)
 
     def upgrade_pkgs(self, pkg_names):
-        self.bus_interface.upgrade_pkgs_with_new_policy(
+        self.bus_interface.DistUpgrade(
                 pkg_names,
                 reply_handler=lambda :handle_dbus_reply("upgrade_pkgs"),
                 error_handler=lambda e:handle_dbus_error("upgrade_pkgs", e))

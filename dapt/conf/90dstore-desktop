@@ -1,1 +1,0 @@
-DPkg::Post-Invoke { "/usr/lib/deepin-store/deepin-store-scan-hook || true"; };
