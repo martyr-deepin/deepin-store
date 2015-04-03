@@ -407,7 +407,11 @@ class PackageManager(dbus.service.Object):
             if name in SYS_PKG_WHITE_LIST:
                 pkg_in_white_list.append(name)
         if len(pkg_in_white_list) > 0:
-            self.update_signal([("remove-pkgs-in-white-list", (json.dumps(pkg_in_white_list), action_type))])
+            self.update_signal([(
+                "remove-pkgs-in-white-list",
+                (json.dumps(pkg_in_white_list), action_type))])
+            logger.error("found remove system packages: %s" %
+                json.dumps(pkg_in_white_list))
         else:
             for status in dist_upgrade_changes:
                 for pkg in dist_upgrade_changes[status]:

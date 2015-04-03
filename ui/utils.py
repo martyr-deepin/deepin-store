@@ -44,15 +44,28 @@ from constant import (
         dsc_root_dir,
         LANGUAGE
         )
-from logger import newLogger
+#from logger import newLogger
 from nls import _
 import dbus
 
-global_logger = newLogger('global')
+import logging
 
 LOG_PATH = "/tmp/dsc-frontend.log"
 SYS_CONFIG_INFO_PATH = "/var/cache/deepin-software-center/config_info.ini"
 BACKEND_PID = "/var/run/dsc_backend_running.pid"
+
+def get_log_handler():
+    formatter = logging.Formatter('[%(asctime)s][%(levelname)s][%(name)s]: %(message)s')
+    log_to_file_handler = logging.FileHandler(LOG_PATH)
+    log_to_file_handler.setLevel(logging.DEBUG)
+    log_to_file_handler.setFormatter(formatter)
+    return log_to_file_handler
+
+def get_logger(name='dstore.ui'):
+    logger = logging.getLogger(name)
+    logger.addHandler(get_log_handler())
+    return logger
+global_logger = get_logger()
 
 def icon_name_to_path(name, size):
     theme = gtk.icon_theme_get_default()
@@ -214,20 +227,12 @@ def bit_to_human_str(size):
                 size = size/1024.0
                 return "%.2fGB" % size
 
-def write_log(message):
-    if not os.path.exists(LOG_PATH):
-        open(LOG_PATH, "w").close()
-        os.chmod(LOG_PATH, 0777)
-    with open(LOG_PATH, "a") as file_handler:
-        now = datetime.now().strftime("[%Y-%m-%d %H:%M:%S]")
-        file_handler.write("%s %s\n" % (now, message))
-
 def handle_dbus_reply(obj=None):
-    global_logger.loginfo("Dbus Reply OK: %s", obj)
+    global_logger.debug("Dbus Reply OK: %s", obj)
 
 def handle_dbus_error(obj, error=None):
-    global_logger.logerror("Dbus Reply Error: %s", obj)
-    global_logger.logerror("ERROR MESSAGE: %s", error)
+    global_logger.error("Dbus Reply Error: %s", obj)
+    global_logger.error("ERROR MESSAGE: %s", error)
 
 def is_64bit_system():
     if os.uname()[-1] == "x86_64":

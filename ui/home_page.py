@@ -63,9 +63,6 @@ from widgets import LoadingBox, NetworkConnectFailed, NetworkConnectTimeout
 from server_action import FetchHomeData
 from utils import sort_for_home_page_data, global_logger
 
-import logging
-logger = logging.getLogger("home_page")
-
 NETWORK_TRY_TIMES = 1
 
 FIRST_CATEGORY_PADDING_X = 66
@@ -320,7 +317,7 @@ class HomePage(gtk.HBox):
             self.show_pkg_view(search_page)
             search_page.update(map(lambda word: word.encode("utf8"), search_string.split(" ")))
         else:
-            logger.warning("empty string in search text input")
+            global_logger.warn("empty string in search text input")
 
     def show_pkg_view(self, widget):
         container_remove_all(self.page_box)
@@ -1042,8 +1039,8 @@ class PkgIconItem(IconItem):
                 pass
             self.emit_redraw_request()
         else:
-            global_logger.logerror("%s: get_pkg_installed handle_dbus_error" % self.pkg_name)
-            global_logger.logerror(status)
+            global_logger.error("%s: get_pkg_installed handle_dbus_error" % self.pkg_name)
+            global_logger.error(status)
 
     def get_width(self):
         '''

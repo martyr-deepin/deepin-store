@@ -30,12 +30,12 @@ import time
 from urlparse import urlparse
 import traceback
 import hashlib
+import logging
 
 from deepin_utils.file import get_parent_dir
 from deepin_utils.config import Config
 
 from constant import LANGUAGE
-from logger import Logger
 
 root_dir = get_parent_dir(__file__, 2)
 mirrors_dir = os.path.join(root_dir, 'mirrors')
@@ -91,7 +91,7 @@ class Mirror(object):
         else:
             return s
 
-class MirrorTest(Logger):
+class MirrorTest(object):
     def __init__(self, hostnames):
         self.hostnames = hostnames + [official_host]
         self._stop = False
@@ -142,7 +142,7 @@ class MirrorTest(Logger):
             best_hostname = sorted_result[-1][-1]
         else:
             best_hostname = (1, official_url)
-        self.loginfo("Best hostname: %s" % best_hostname)
+        logging.info("Best hostname: %s" % best_hostname)
         return best_hostname
 
     def get_speed(self, mirror):
@@ -154,7 +154,7 @@ class MirrorTest(Logger):
         try:
             conn = urllib2.urlopen(request, timeout=10)
         except Exception, e:
-            self.logerror("Error for host: %s %s" % (mirror.hostname, e))
+            logging.error("Error for host: %s %s" % (mirror.hostname, e))
             return 0
         total_data = ""
         self._stop = False
@@ -176,7 +176,7 @@ class MirrorTest(Logger):
         self._timer = None
         total_time = time.time() - start_time
         speed = len(total_data)/total_time
-        self.loginfo("Speed for host: %s %s" % (mirror.hostname, speed))
+        logging.info("Speed for host: %s %s" % (mirror.hostname, speed))
         return speed
 
 def get_mirrors():

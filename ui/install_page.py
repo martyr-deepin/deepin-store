@@ -331,8 +331,8 @@ class InstallItem(TreeItem):
                 pass
             self.emit_redraw_request()
         else:
-            utils.global_logger.logerror("%s: get_pkg_installed handle_dbus_error" % self.pkg_name)
-            utils.global_logger.logerror(status)
+            utils.global_logger.error("%s: get_pkg_installed handle_dbus_error" % self.pkg_name)
+            utils.global_logger.error(status)
 
     def render_pkg_info(self, cr, rect):
         if self.row_index % 2 == 1:

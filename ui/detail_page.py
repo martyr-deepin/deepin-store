@@ -463,8 +463,8 @@ class DetailPage(gtk.HBox):
             self.left_action_box.show_all()
             global_event.emit('update-current-status-pkg-page', self)
         else:
-            global_logger.logerror("get_pkg_installed handle_dbus_error")
-            global_logger.logerror(reply)
+            global_logger.error("get_pkg_installed handle_dbus_error")
+            global_logger.error(reply)
 
     def handle_pkg_download_size(self, reply, success):
         # FIXME: download information display
@@ -473,10 +473,10 @@ class DetailPage(gtk.HBox):
                 self.left_size_label.set_text(_("Size: %s") % bit_to_human_str(reply[1]))
             elif reply[0] == PKG_SIZE_ERROR:
                 self.left_size_label.set_text("")
-                global_logger.logerror("Error for calculate pkg size!")
+                global_logger.error("Error for calculate pkg size!")
         else:
-            global_logger.logerror("request_pkgs_install_status handle_dbus_error")
-            global_logger.logerror(reply)
+            global_logger.error("request_pkgs_install_status handle_dbus_error")
+            global_logger.error(reply)
 
     def fetch_pkg_status(self):
         self.data_manager.get_pkg_installed(self.pkg_name, self.handle_pkg_status)
@@ -554,9 +554,9 @@ class DetailPage(gtk.HBox):
                                        )
                     global_event.emit("download-screenshot-finish", self.pkg_name)
                 except Exception, e:
-                    global_logger.logerror("Download screenshot error: %s" % e)
+                    global_logger.error("Download screenshot error: %s" % e)
         except Exception, e:
-            global_logger.logerror("fetch_screenshot got error: %s" % e)
+            global_logger.error("fetch_screenshot got error: %s" % e)
 
     def download_screenshot_finish(self, pkg_name):
         if self.pkg_name == pkg_name:
@@ -622,7 +622,7 @@ class DetailPage(gtk.HBox):
 
                 self.show_all()
             else:
-                global_logger.logerror("%s haven't any screenshot from zip file" % self.pkg_name)
+                global_logger.error("%s haven't any screenshot from zip file" % self.pkg_name)
 
 gobject.type_register(DetailPage)
 

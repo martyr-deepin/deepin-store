@@ -29,8 +29,20 @@ from constant import DSC_FRONTEND_NAME, DSC_FRONTEND_PATH
 from deepin_utils.ipc import is_dbus_name_exists
 import gtk
 import os
+import json
 
 from optparse import OptionParser
+
+import logging
+logging.basicConfig(level=logging.INFO)
+
+from utils import global_logger
+logger = logging.getLogger("dstore.ui.main")
+
+def get_apt_argument(arguments):
+    for arg in arguments:
+        if arg.startswith("apt://"):
+            return arg[6:]
 
 def start_main():
     # Init.
@@ -38,6 +50,8 @@ def start_main():
     gtk.gdk.threads_init()
     session_bus = dbus.SessionBus()
     options, arguments = get_parser()
+    logger.info("options:" + str(options))
+    logger.info("arguments:" + str(arguments))
 
     # Send hello message if updater has running.
     if is_dbus_name_exists(DSC_FRONTEND_NAME, True):
@@ -47,6 +61,9 @@ def start_main():
         bus_interface.raise_to_top()
         if options.show_page:
             bus_interface.show_page(options.show_page)
+        pkg_name = get_apt_argument(arguments)
+        if pkg_name:
+            bus_interface.show_page(pkg_name)
     else:
         # Init dbus.
         bus_name = dbus.service.BusName(DSC_FRONTEND_NAME, session_bus)
@@ -58,6 +75,10 @@ def start_main():
             software_center.recommend_status = options.show_recommend
         if options.start_quiet:
             software_center.init_hide = True
+
+        pkg_name = get_apt_argument(arguments)
+        if pkg_name:
+            gtk.timeout_add(800, lambda:software_center.show_detail(pkg_name))
 
         try:
             software_center.run()

@@ -37,7 +37,7 @@ import gtk
 from dtk.ui.draw import draw_text, draw_pixbuf, draw_vlinear
 from events import global_event
 from nls import _
-from utils import ThreadMethod, handle_dbus_error, global_logger
+from utils import ThreadMethod, global_logger
 from widgets import LoadingBox
 
 RANK_TAB_HEIGHT = 20
@@ -311,8 +311,8 @@ class PkgIconItem(IconItem):
                 pass
             self.emit_redraw_request()
         else:
-            global_logger.logerror("%s: get_pkg_installed handle_dbus_error" % self.pkg_name)
-            global_logger.logerror(status)
+            global_logger.error("%s: get_pkg_installed handle_dbus_error" % self.pkg_name)
+            global_logger.error(status)
 
     def get_width(self):
         '''
