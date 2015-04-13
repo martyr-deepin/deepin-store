@@ -1,120 +1,451 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
+# alibacha19 <alibacha19@gmail.com>, 2015
 # abs1515 <ayobbasher@gmail.com>, 2014
+# Baraa Ch <baraa.ch.95@mail.ru>, 2014
 # mo-hd <mo-hd@windowslive.com>, 2014
 # w5wa <wael@hwael.tk>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-22 11:20+0800\n"
-"PO-Revision-Date: 2014-07-02 06:03+0000\n"
-"Last-Translator: iceleaf <iceleaf916@gmail.com>\n"
-"Language-Team: Arabic (http://www.transifex.com/projects/p/deepin-store/"
-"language/ar/)\n"
-"Language: ar\n"
+"POT-Creation-Date: 2014-12-29 13:45+0800\n"
+"PO-Revision-Date: 2015-03-23 10:24+0000\n"
+"Last-Translator: alibacha19 <alibacha19@gmail.com>\n"
+"Language-Team: Arabic (http://www.transifex.com/projects/p/deepin-store/language/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
-#: ../ui/upgrade_page.py:448
-msgid " and try again."
-msgstr "وحاول مرة أخرى."
+#: ../ui/detail_page.py:179
+msgid "Popular recommendations"
+msgstr "توصيات شعبية"
 
-#: ../ui/preference.py:578
-msgid " hour"
-msgstr "ساعة"
+#: ../ui/detail_page.py:240 ../ui/detail_page.py:494
+msgid "Loading comments..."
+msgstr "يتم تحميل التعليقات..."
 
-#: ../ui/home_page.py:660
+#: ../ui/detail_page.py:358
 #, python-format
-msgid "%s > %s : %s applications"
-msgstr "%s > %s : %s التطبيقات"
+msgid "Download: %s"
+msgstr "تنزيل : %s"
 
-#: ../ui/upgrade_page.py:204
-#, python-format
-msgid "%s applications are available for upgrade"
-msgstr "%s تطبيقات متوفرة للترقية"
+#: ../ui/detail_page.py:389
+msgid "Category: "
+msgstr "الفئة :"
 
-#: ../ui/install_page.py:146
+#: ../ui/detail_page.py:393
 #, python-format
-msgid "%s applications are being installed"
-msgstr "%s يتم تثبيت التطبيقات"
+msgid "Version: %s"
+msgstr "الإصدار : %s"
 
-#: ../ui/upgrade_page.py:272
+#: ../ui/detail_page.py:394
+msgid "Download: 0"
+msgstr "تنزيل : 0"
+
+#: ../ui/detail_page.py:395
+msgid "Size: calculating..."
+msgstr "الحجم : يتم الحساب..."
+
+#: ../ui/detail_page.py:399
+msgid "Visit Homepage"
+msgstr "زيارة الصفحة الرئيسية"
+
+#: ../ui/detail_page.py:444 ../ui/download_rank_page.py:369
+#: ../ui/home_page.py:1086 ../ui/album_page.py:483 ../ui/search_page.py:274
+#: ../ui/album_page.py:486 ../ui/home_page.py:1087
+msgid "Not found"
+msgstr "لم يتم العثور !"
+
+#: ../ui/detail_page.py:450
+msgid "Successfully installed"
+msgstr "تم التثبيت بنجاح"
+
+#: ../ui/detail_page.py:473
 #, python-format
-msgid "%s applications are not being watched"
-msgstr "%s تطبيقات غير مشاهدة"
+msgid "Size: %s"
+msgstr "الحجم : %s"
+
+#: ../ui/detail_page.py:611
+msgid "Powered by UpYun.com"
+msgstr "مدعوم من UpYun.com"
 
 #: ../ui/uninstall_page.py:175
 #, python-format
 msgid "%s applications can be uninstalled"
 msgstr "%s التطبيقات يمكن الغاء تثبيتها"
 
-#: ../ui/search_page.py:110
-#, python-format
-msgid "%s applications searched"
-msgstr ""
+#: ../ui/uninstall_page.py:515 ../ui/uninstall_page.py:598
+msgid "Waiting for uninstall"
+msgstr "في انتظار الغاء التثبيت"
 
-#: ../ui/software_center.py:127
-#, python-format
-msgid "%s haven't any desktop file"
-msgstr "%s لا يوجد أي ملف سطح مكتب"
+#: ../ui/uninstall_page.py:605 ../ui/uninstall_page.py:612
+msgid "Uninstalling"
+msgstr "يتم الغاء التثبيت"
 
-#: ../ui/widgets.py:80
-#, python-format
-msgid "%s hours ago"
-msgstr "%s ساعات مضة"
-
-#: ../ui/widgets.py:73
-#, python-format
-msgid "%s minutes ago"
-msgstr "%s دقائق مضة"
-
-#: ../ui/upgrade_page.py:668
-#, fuzzy, python-format
-msgid "%s package(s) are available for upgrade, %s will be downloaded."
-msgstr "%s تم إختيار التحديثات. %s سيتم تنزيلها."
-
-#: ../ui/software_center.py:391
-#, python-format
-msgid "%s packages upgrade successfully."
-msgstr ""
-
-#: ../ui/home_page.py:478
-#, python-format
-msgid "%s: %s applications"
-msgstr "%s: %s التطبيقات"
+#: ../ui/uninstall_page.py:619
+msgid "Uninstallation completed"
+msgstr "اكتمل التثبيت"
 
 #: ../ui/start_desktop_window.py:227 ../ui/software_center.py:131
 #, python-format
 msgid "%s: request for starting applications sent"
 msgstr "%s: مطلوب من أجل بدأ تطبيقات الإرسال"
 
+#: ../ui/inhibit.py:54
+msgid ""
+"Please wait a moment while system upgrade is being performed... Do not turn "
+"off your computer."
+msgstr "الرجاء الانتظار بعض الوقت أثناء يتم تنفيذ تحديث النظام ... لا تقم بإيقاف جهاز الكمبيوتر الخاص بك."
+
+#: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
+#: ../ui/software_center.py:790 ../ui/dsc-daemon.py:248
+msgid "Upgrade"
+msgstr "ترقية"
+
+#: ../ui/dsc-daemon.py:284 ../ui/dsc-daemon.py:319
+#, python-format
+msgid ""
+"There are %s packages needed to upgrade in your system, please use Deepin "
+"Store to upgrade."
+msgstr "هناك %s حزم تحتاج إلى الترقية في نظامك ، الرجاء أفتح مركز البرمجيات للترقية !"
+
+#: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
+#: ../ui/software_center.py:733 ../ui/preference.py:433
+#: ../ui/preference.py:440 ../ui/dsc-daemon.py:321 ../ui/dsc-daemon.py:325
+msgid "Deepin Store"
+msgstr "متجر ديبين"
+
+#: ../ui/dsc-daemon.py:288 ../ui/dsc-daemon.py:323
+#, python-format
+msgid ""
+"There is %s package needed to upgrade in your system, please use Deepin "
+"Store to upgrade."
+msgstr "هناك %s حزمة تحتاج إلى الترقية في نظامك ، الرجاء أفتح مركز البرمجيات للترقية !"
+
+#: ../ui/install_page.py:146
+#, python-format
+msgid "%s applications are being installed"
+msgstr "%s يتم تثبيت التطبيقات"
+
+#: ../ui/install_page.py:313 ../ui/install_page.py:744
+#: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
+msgid "Dependencies analyzing"
+msgstr "تحليل الاعتماديات"
+
+#: ../ui/install_page.py:511 ../ui/install_page.py:516
+#: ../ui/download_rank_page.py:374 ../ui/home_page.py:1091 ../ui/utils.py:360
+#: ../ui/album_page.py:488 ../ui/search_page.py:279 ../ui/album_page.py:491
+#: ../ui/utils.py:368 ../ui/home_page.py:1092
+msgid "Installed"
+msgstr "تم التثبيت"
+
+#: ../ui/install_page.py:665 ../ui/install_page.py:676
+msgid "Download was interrupted"
+msgstr "تم مقاطعة التنزيل"
+
+#: ../ui/install_page.py:689
+msgid "Installation was interrupted"
+msgstr "تم مقاطعة التثبيت"
+
+#: ../ui/install_page.py:751 ../ui/upgrade_page.py:1495
+#: ../ui/upgrade_page.py:1614
+msgid "Waiting for download"
+msgstr "في إنتظار التنزيل"
+
+#: ../ui/install_page.py:758 ../ui/upgrade_page.py:1621
+msgid "Downloading"
+msgstr "يتم التنزيل"
+
+#: ../ui/install_page.py:765
+msgid "Download failed"
+msgstr "يتم التنزيل"
+
+#: ../ui/install_page.py:781
+msgid "Waiting for installation"
+msgstr "في إنتظار التثبيت"
+
+#: ../ui/install_page.py:791 ../ui/upgrade_page.py:1647
+msgid "Dependencies analysis failed"
+msgstr "فشل تحليل الاعتماديات"
+
+#: ../ui/install_page.py:800 ../ui/install_page.py:807
+msgid "Installing"
+msgstr "جاري التثبيت"
+
+#: ../ui/install_page.py:816
+msgid "Installation completed"
+msgstr "تم التنصيب"
+
+#: ../ui/upgrade_page.py:78 ../ui/upgrade_page.py:107
+#: ../ui/upgrade_page.py:340
+msgid "Last system upgraded time: "
+msgstr "آخر تحديث للنظام:"
+
+#: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
+#, python-format
+msgid "No reminder to upgrade (%s)"
+msgstr "لا تذكير للترقية(%s)"
+
+#: ../ui/upgrade_page.py:182
+msgid "Upgrade applications selected"
+msgstr "تطبيقات مختارة للترقية "
+
+#: ../ui/upgrade_page.py:204
+#, python-format
+msgid "%s applications are available for upgrade"
+msgstr "%s تطبيقات متوفرة للترقية"
+
+#: ../ui/upgrade_page.py:238 ../ui/item_render.py:46
+msgid "Remind again"
+msgstr "تذكير مرة أخرى"
+
+#: ../ui/upgrade_page.py:272
+#, python-format
+msgid "%s applications are not being watched"
+msgstr "%s تطبيقات غير مشاهدة"
+
+#: ../ui/upgrade_page.py:289
+msgid "Shut down the computer after upgraded"
+msgstr "إيقاف تشغيل الكمبيوتر بعد الترقية"
+
+#: ../ui/upgrade_page.py:304
+msgid "This function is invalid without Deepin System Settings installed."
+msgstr "هذه الوظيفة غير صالحة دون تثبيت إعدادات النظام Deepin "
+
+#: ../ui/upgrade_page.py:306
+msgid "Deepin Desktop Environment is not installed, this function is invalid!"
+msgstr "بيئة سطح المكتب Deepinغير مثبية، هذه العملية غير صالحة!"
+
+#: ../ui/upgrade_page.py:308
+msgid "The system is not Deepin, this function is invalid."
+msgstr "ليس نظام Deepin، هذه العملية غير صالحة."
+
+#: ../ui/upgrade_page.py:328
+msgid "Downloading upgrade packages"
+msgstr "تحميل حزم ترقية"
+
+#: ../ui/upgrade_page.py:335
+msgid "Last time of refreshed package lists: "
+msgstr "آخر مرة تجدد قوائم الحزم :"
+
+#: ../ui/upgrade_page.py:345
+msgid "Mirror Receiving: "
+msgstr "تلقي المزود:"
+
+#: ../ui/upgrade_page.py:399
+msgid "Failed to download upgrade packages"
+msgstr "فشل تحميل حزم الترقية"
+
+#: ../ui/upgrade_page.py:401
+msgid "The requested package does not exist on server."
+msgstr "الحزمة المطلوبة غير موجودة على الخادم."
+
+#: ../ui/upgrade_page.py:402 ../ui/upgrade_page.py:423
+#: ../ui/upgrade_page.py:446
+msgid "Suggest to "
+msgstr "إقتراح إلى"
+
+#: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
+#: ../ui/upgrade_page.py:447
+msgid "refresh package lists"
+msgstr "تحديث قوائم الحزمة"
+
+#: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
+#: ../ui/upgrade_page.py:448
+msgid " and try again."
+msgstr "وحاول مرة أخرى."
+
+#: ../ui/upgrade_page.py:419 ../ui/upgrade_page.py:1120
+msgid "Failed to install upgrade packages"
+msgstr "فشل في تثبيت حزم الترقية"
+
+#: ../ui/upgrade_page.py:421
+msgid ""
+"This problem occurs due to corrupted local apt dependency relationship."
+msgstr "حدثت هذه المشكلة بسبب فساد تبعيات محلية."
+
+#: ../ui/upgrade_page.py:440
+msgid "Warning"
+msgstr "تحذير"
+
+#: ../ui/upgrade_page.py:442
+msgid ""
+"The upgrade requires to uninstall crucial components due to corrupted local "
+"dependencies or incorrect package dependencies on server."
+msgstr "التحديث يتطلب منك إلغاء تثبيت مكونات النظام  وذلك لتجنب التضارب."
+
+#: ../ui/upgrade_page.py:483
+msgid "If the prompt occurs again, you could "
+msgstr "إذا كان المحث لا يزال يظهر، يمكنك"
+
+#: ../ui/upgrade_page.py:484 ../ui/upgrade_page.py:510
+msgid "send error report"
+msgstr "ترسل تقرير عن المشكلة"
+
 #: ../ui/upgrade_page.py:485
 msgid "."
 msgstr "."
 
-#: ../ui/category_info.py:59
-msgid "2D graphics"
-msgstr "2D رسومات"
+#: ../ui/upgrade_page.py:498
+msgid "Uploading error log"
+msgstr "رفع سجل الأخطاء"
 
-#: ../ui/category_info.py:60
-msgid "3D graphics"
-msgstr "3D رسومات"
+#: ../ui/upgrade_page.py:503
+msgid "The error was successfully reported and will be handled soon."
+msgstr "تم إرسال تقرير المشكلة بنجاح وسيتم التعامل معه قريبا."
 
-#: ../ui/preference.py:831
-msgid "About"
-msgstr "عن"
+#: ../ui/upgrade_page.py:509
+msgid "Failed to send the error report. You could try again."
+msgstr "فشل في إرسال تقرير المشكلة. قد تود المحاولة مرة أخرى."
 
-#: ../ui/category_info.py:94
-msgid "Accessories"
-msgstr "إكسسوارات"
+#: ../ui/upgrade_page.py:663
+msgid ""
+"This problem occurs due to corrupted local apt dependence relationship."
+msgstr "حدثت هذه المشكلة بسبب فساد التتبعية المحلية"
+
+#: ../ui/upgrade_page.py:668
+#, python-format
+msgid "%s package(s) are available for upgrade, %s will be downloaded."
+msgstr "%sتتوفر حزم للترقية، %sسيتم تحميلها"
+
+#: ../ui/upgrade_page.py:1094
+msgid "Finished analyzing dependencies."
+msgstr "تحليل التبعيات أنتهى."
+
+#: ../ui/upgrade_page.py:1097
+msgid "Download has started"
+msgstr "بدأ التنزيل..."
+
+#: ../ui/upgrade_page.py:1103
+#, python-format
+msgid "Completed: %s/%s (%s/%s) Download Rate: %s/s"
+msgstr "مكتمل : %s/%s (%s/%s) معدل التنزيل : %s/s"
+
+#: ../ui/upgrade_page.py:1113
+msgid "Download finished."
+msgstr "إكتمل التنزيل."
+
+#: ../ui/upgrade_page.py:1117
+msgid "Download stopped."
+msgstr "توقف التنزيل."
+
+#: ../ui/upgrade_page.py:1124
+msgid "Installing upgrade packages"
+msgstr "تثبيت حزم الترقية"
+
+#: ../ui/upgrade_page.py:1125
+msgid "Upgrading..."
+msgstr "ترقية"
+
+#: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
+msgid "Upgrade completed"
+msgstr "إكتملت الترقية"
+
+#: ../ui/upgrade_page.py:1637
+msgid "Waiting for upgrade"
+msgstr "في إنتظار الترقية"
+
+#: ../ui/upgrade_page.py:1656 ../ui/upgrade_page.py:1663
+msgid "Upgrading"
+msgstr "يتم الترقية"
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 weekly"
+msgstr "أفضل 25 أسبوعياً"
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 monthly"
+msgstr "أفضل 25 شهرياً"
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 totally"
+msgstr "افضل 25 على العموم"
+
+#: ../ui/category_info.py:26
+msgid "Internet"
+msgstr "إنترنت"
+
+#: ../ui/category_info.py:27
+msgid "Browser"
+msgstr "متصفح"
+
+#: ../ui/category_info.py:28
+msgid "Instant messaging"
+msgstr "مراسلة فورية"
+
+#: ../ui/category_info.py:29
+msgid "Email"
+msgstr "إيميل"
+
+#: ../ui/category_info.py:30
+msgid "File transfer"
+msgstr "نقل الملف"
+
+#: ../ui/category_info.py:31
+msgid "News"
+msgstr "الأخبار"
+
+#: ../ui/category_info.py:32
+msgid "Remote access"
+msgstr "الوصول عن بعد"
+
+#: ../ui/category_info.py:33
+msgid "Security"
+msgstr "الأمان"
+
+#: ../ui/category_info.py:34
+msgid "Miscellaneous"
+msgstr "متنوعة"
+
+#: ../ui/category_info.py:35
+msgid "Multimedia"
+msgstr "ملتميديا"
+
+#: ../ui/category_info.py:36
+msgid "Audiovideo"
+msgstr "صوت و فيديو"
+
+#: ../ui/category_info.py:37
+msgid "Media Editing"
+msgstr "وسائط التحرير"
+
+#: ../ui/category_info.py:38
+msgid "Disc burner"
+msgstr "حارق أقراص"
+
+#: ../ui/category_info.py:39
+msgid "MIDI"
+msgstr "MIDI"
+
+#: ../ui/category_info.py:40
+msgid "Mixer"
+msgstr "خالط"
+
+#: ../ui/category_info.py:41
+msgid "Player"
+msgstr "مشغل"
+
+#: ../ui/category_info.py:42
+msgid "Recorder"
+msgstr "مسجل"
+
+#: ../ui/category_info.py:43
+msgid "Sequencer"
+msgstr "منظم"
+
+#: ../ui/category_info.py:44
+msgid "Tuner"
+msgstr "مدوزن"
+
+#: ../ui/category_info.py:45
+msgid "Games"
+msgstr "العاب"
 
 #: ../ui/category_info.py:46
 msgid "Action games"
@@ -128,612 +459,33 @@ msgstr "العاب مغامرات"
 msgid "Arcade games"
 msgstr "العاب أركيد"
 
-#: ../ui/category_info.py:95
-msgid "Archiving"
-msgstr "الأرشفة"
-
-#: ../ui/category_info.py:36
-msgid "Audiovideo"
-msgstr "صوت و فيديو"
-
 #: ../ui/category_info.py:49
 msgid "Board games"
 msgstr "العاب لوحية"
-
-#: ../ui/category_info.py:27
-msgid "Browser"
-msgstr "متصفح"
-
-#: ../ui/widgets.py:463 ../ui/preference.py:784
-msgid "Cancel"
-msgstr "إلغاء"
 
 #: ../ui/category_info.py:50
 msgid "Card games"
 msgstr "العاب كروت"
 
-#: ../ui/detail_page.py:386
-msgid "Category: "
-msgstr "الفئة :"
-
-#: ../ui/preference.py:516
-msgid "Change"
-msgstr "تغيير"
-
-#: ../ui/software_center.py:818
-msgid "Clear up cached packages"
-msgstr "تنظيف الحزم المؤقته"
-
-#: ../ui/widgets.py:295 ../ui/widgets.py:369
-msgid "Click to refresh"
-msgstr "أنقر للتحديث"
-
-#: ../ui/upgrade_page.py:1103
-#, python-format
-msgid "Completed: %s/%s (%s/%s) Download Rate: %s/s"
-msgstr "مكتمل : %s/%s (%s/%s) معدل التنزيل : %s/s"
-
-#: ../ui/utils.py:359
-msgid "Configuring"
-msgstr "جاري التكوين"
-
-#: ../ui/category_info.py:79
-msgid "Database"
-msgstr "قاعدة بيانات"
-
-#: ../ui/category_info.py:80
-msgid "Debugging"
-msgstr "المعالجة"
-
-#: ../ui/upgrade_page.py:306
-msgid "Deepin Desktop Environment is not installed, this function is invalid!"
-msgstr ""
-
-#: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
-#: ../ui/software_center.py:733 ../ui/preference.py:433
-msgid "Deepin Store"
-msgstr "متجر ديبين"
-
-#: ../ui/preference.py:452
-msgid ""
-"Deepin Store is a commonly used software center on Linux. We selected more "
-"than 2,600 excellent applications with many functions of installation and "
-"uninstalling, software repository and popular recommendations, which "
-"supports 1-click quick installation, multi-threaded download and clearing of "
-"cached packages. It provides topics for software introduction and shares "
-"good applications.\n"
-"\n"
-"Deepin Store is a free software licensed under GNU GPLv3."
-msgstr ""
-
-#: ../ui/preference.py:480
-msgid "Delete configuration files"
-msgstr "حذف تشكيلة الملفات"
-
-#: ../ui/install_page.py:788 ../ui/upgrade_page.py:1647
-msgid "Dependencies analysis failed"
-msgstr ""
-
-#: ../ui/install_page.py:313 ../ui/install_page.py:741
-#: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
-msgid "Dependencies analyzing"
-msgstr "تحليل التبعيات"
-
-#: ../ui/category_info.py:86
-msgid "Desktop environment"
-msgstr "بيئة سطح المكتب"
-
-#: ../ui/category_info.py:78
-msgid "Development"
-msgstr "التطوير و التنمية"
-
-#: ../ui/category_info.py:38
-msgid "Disc burner"
-msgstr "حارق أقراص"
-
-#: ../ui/preference.py:510
-msgid "Download directory: "
-msgstr "دليل التنزيل : "
-
-#: ../ui/install_page.py:762
-msgid "Download failed"
-msgstr ""
-
-#: ../ui/upgrade_page.py:1113
-msgid "Download finished."
-msgstr "إكتمل التنزيل."
-
-#: ../ui/upgrade_page.py:1097
-msgid "Download has started"
-msgstr "بدأ التنزيل..."
-
-#: ../ui/home_page.py:756
-msgid "Download rank"
-msgstr "معدل التنزيل"
-
-#: ../ui/preference.py:494
-msgid "Download settings"
-msgstr "إعدادات التنزيل"
-
-#: ../ui/upgrade_page.py:1117
-msgid "Download stopped."
-msgstr "توقف التنزيل."
-
-#: ../ui/install_page.py:662 ../ui/install_page.py:673
-msgid "Download was interrupted"
-msgstr "تم مقاطعة التنزيل"
-
-#: ../ui/detail_page.py:355
-#, python-format
-msgid "Download: %s"
-msgstr "تنزيل : %s"
-
-#: ../ui/detail_page.py:391
-msgid "Download: 0"
-msgstr "تنزيل : 0"
-
-#: ../ui/install_page.py:755 ../ui/upgrade_page.py:1621
-msgid "Downloading"
-msgstr "يتم التنزيل"
-
-#: ../ui/upgrade_page.py:328
-#, fuzzy
-msgid "Downloading upgrade packages"
-msgstr "يتم تحميل التحديثات"
-
-#: ../ui/category_info.py:29
-msgid "Email"
-msgstr "إيميل"
-
-#: ../ui/category_info.py:96
-msgid "Emulation"
-msgstr "محاكاة"
-
 #: ../ui/category_info.py:51
 msgid "Emulator"
 msgstr "محاكيات"
-
-#: ../ui/category_info.py:69
-msgid "Engineering"
-msgstr "هندسة"
-
-#: ../ui/utils.py:370
-msgid "Err"
-msgstr "Err"
-
-#: ../ui/upgrade_page.py:399
-#, fuzzy
-msgid "Failed to download upgrade packages"
-msgstr "فشل في تحميل التحديثات"
-
-#: ../ui/upgrade_page.py:419 ../ui/upgrade_page.py:1120
-#, fuzzy
-msgid "Failed to install upgrade packages"
-msgstr "فشل في تثبيت التحديثات"
-
-#: ../ui/software_center.py:458
-msgid "Failed to refresh package lists."
-msgstr ""
-
-#: ../ui/upgrade_page.py:509
-msgid "Failed to send the error report. You could try again."
-msgstr "فشل في إرسال تقرير المشكلة. قد تود المحاولة مرة أخرى."
-
-#: ../ui/category_info.py:97
-msgid "File manager"
-msgstr "مدير الملفات"
-
-#: ../ui/category_info.py:30
-msgid "File transfer"
-msgstr "نقل الملف"
-
-#: ../ui/category_info.py:70
-msgid "Finance"
-msgstr "تمويل"
-
-#: ../ui/upgrade_page.py:1094
-msgid "Finished analyzing dependencies."
-msgstr "تحليل التبعيات أنتهى."
-
-#: ../ui/category_info.py:45
-msgid "Games"
-msgstr "العاب"
-
-#: ../ui/preference.py:829
-msgid "General"
-msgstr "عام"
-
-#: ../ui/software_center.py:438
-msgid "Generating package list database..."
-msgstr ""
-
-#: ../ui/utils.py:372
-msgid "Get"
-msgstr "احصل"
-
-#: ../ui/category_info.py:58
-msgid "Graphics"
-msgstr "الرسومات"
-
-#: ../ui/category_info.py:71
-msgid "Ham radio"
-msgstr "إذاعة هم"
-
-#: ../ui/utils.py:373
-msgid "Hit"
-msgstr "أصب"
-
-#: ../ui/home_page.py:716 ../ui/software_center.py:789
-msgid "Home"
-msgstr "المنزل"
-
-#: ../ui/category_info.py:81
-msgid "IDE"
-msgstr "IDE"
-
-#: ../ui/upgrade_page.py:483
-msgid "If the prompt occurs again, you could "
-msgstr ""
-
-#: ../ui/utils.py:371
-msgid "Ign"
-msgstr "Ign"
-
-#: ../ui/category_info.py:61
-msgid "Image processing"
-msgstr "تحويل الصورة"
-
-#: ../ui/category_info.py:68
-msgid "Industry"
-msgstr "صناعة"
-
-#: ../ui/software_center.py:394
-msgid "Install"
-msgstr "تثبيت"
-
-#: ../ui/software_center.py:394
-#, python-format
-msgid "Install %s Successfully."
-msgstr "تم تثبيت %s بنجاح."
-
-#: ../ui/software_center.py:792
-msgid "Installation"
-msgstr "تنصيب"
-
-#: ../ui/install_page.py:813
-msgid "Installation completed"
-msgstr ""
-
-#: ../ui/install_page.py:686
-msgid "Installation was interrupted"
-msgstr "تم مقاطعة التثبيت"
-
-#: ../ui/install_page.py:513 ../ui/download_rank_page.py:371
-#: ../ui/home_page.py:1076 ../ui/utils.py:360 ../ui/album_page.py:485
-#: ../ui/search_page.py:276
-msgid "Installed"
-msgstr "تم التثبيت"
-
-#: ../ui/install_page.py:797 ../ui/install_page.py:804
-msgid "Installing"
-msgstr "جاري التثبيت"
-
-#: ../ui/upgrade_page.py:1124
-#, fuzzy
-msgid "Installing upgrade packages"
-msgstr "تثبيت التحديثات"
-
-#: ../ui/category_info.py:28
-msgid "Instant messaging"
-msgstr "مراسلة فورية"
-
-#: ../ui/category_info.py:26
-msgid "Internet"
-msgstr "إنترنت"
-
-#: ../ui/software_center.py:770
-msgid "Join us"
-msgstr "إنظم إلينا"
-
-#: ../ui/widgets.py:66
-msgid "Just now"
-msgstr "فقط الآن"
 
 #: ../ui/category_info.py:52
 msgid "Kids games"
 msgstr "العاب أطفال"
 
-#: ../ui/category_info.py:75
-msgid "Languages"
-msgstr "اللغات"
-
-#: ../ui/upgrade_page.py:78 ../ui/upgrade_page.py:107
-#: ../ui/upgrade_page.py:340
-msgid "Last system upgraded time: "
-msgstr ""
-
-#: ../ui/upgrade_page.py:335
-#, fuzzy
-msgid "Last time of refreshed package lists: "
-msgstr " أخر وقت تحديث لقائمة التطبيقات :"
-
-#: ../ui/detail_page.py:239 ../ui/detail_page.py:491
-msgid "Loading comments..."
-msgstr "يتم تحميل التعليقات..."
-
 #: ../ui/category_info.py:53
 msgid "Logic games"
 msgstr "العاب منطقية"
-
-#: ../ui/category_info.py:39
-msgid "MIDI"
-msgstr "MIDI"
-
-#: ../ui/preference.py:500
-#, fuzzy
-msgid "Maximum number of download tasks: "
-msgstr " الحد الأقصى لعدد مهمات التنزيل :"
-
-#: ../ui/category_info.py:37
-msgid "Media Editing"
-msgstr ""
-
-#: ../ui/category_info.py:72
-msgid "Medical"
-msgstr "طبي"
-
-#: ../ui/upgrade_page.py:345
-msgid "Mirror Receiving: "
-msgstr ""
-
-#: ../ui/preference.py:830
-msgid "Mirrors"
-msgstr "المرايا"
-
-#: ../ui/category_info.py:34
-msgid "Miscellaneous"
-msgstr "متنوعة"
-
-#: ../ui/category_info.py:40
-msgid "Mixer"
-msgstr "خالط"
-
-#: ../ui/category_info.py:87
-msgid "Monitor"
-msgstr "الشاشة"
-
-#: ../ui/category_info.py:35
-msgid "Multimedia"
-msgstr "ملتميديا"
-
-#: ../ui/category_info.py:88
-msgid "Network"
-msgstr "الشبكة"
-
-#: ../ui/category_info.py:31
-msgid "News"
-msgstr "الأخبار"
-
-#: ../ui/item_render.py:44
-msgid "No reminder"
-msgstr ""
-
-#: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
-#, python-format
-msgid "No reminder to upgrade (%s)"
-msgstr ""
-
-#: ../ui/detail_page.py:441 ../ui/install_page.py:506
-#: ../ui/download_rank_page.py:364 ../ui/home_page.py:1069
-#: ../ui/album_page.py:478 ../ui/search_page.py:269
-msgid "Not found"
-msgstr "لم يتم العثور !"
-
-#: ../ui/widgets.py:462 ../ui/preference.py:782
-msgid "OK"
-msgstr "موافق"
-
-#: ../ui/category_info.py:66
-msgid "Office"
-msgstr "مكتب"
-
-#: ../ui/preference.py:477
-msgid "On uninstalling the software"
-msgstr ""
-
-#: ../ui/widgets.py:78
-msgid "One hour ago"
-msgstr "قبل ساعة مضة"
-
-#: ../ui/widgets.py:71
-msgid "One minute ago"
-msgstr "قبل دقيقة مضة"
-
-#: ../ui/software_center.py:817
-msgid "Open download directory"
-msgstr "فتح دليل التنزيلات"
-
-#: ../ui/software_center.py:446
-msgid "Package lists refreshed completely."
-msgstr ""
-
-#: ../ui/category_info.py:89
-msgid "Package manager"
-msgstr "مدير الحزم"
-
-#: ../ui/category_info.py:62
-msgid "Photography"
-msgstr "تصوير"
-
-#: ../ui/category_info.py:41
-msgid "Player"
-msgstr "مشغل"
-
-#: ../ui/inhibit.py:54
-#, fuzzy
-msgid ""
-"Please wait a moment while system upgrade is being performed... Do not turn "
-"off your computer."
-msgstr ""
-"الرجاء الانتظار بعض الوقت أثناء يتم تنفيذ تحديث النظام ... لا تقم بإيقاف "
-"جهاز الكمبيوتر الخاص بك."
-
-#: ../ui/detail_page.py:178
-msgid "Popular recommendations"
-msgstr "توصيات شعبية"
-
-#: ../ui/detail_page.py:608
-msgid "Powered by 又拍云存储"
-msgstr "又拍云存储 مدعوم بواسطة "
-
-#: ../ui/software_center.py:820
-msgid "Preferences"
-msgstr "التفضيلات"
-
-#: ../ui/utils.py:356
-msgid "Preparing"
-msgstr "جاري الإعداد"
-
-#: ../ui/utils.py:358
-msgid "Preparing to configure"
-msgstr "جاري الإعداد للتكوين"
-
-#: ../ui/software_center.py:469
-#, python-format
-msgid ""
-"Problem occurred when analyzing dependencies for %s. Installation aborted."
-msgstr ""
-
-#: ../ui/software_center.py:472
-#, python-format
-msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
-msgstr ""
-
-#: ../ui/category_info.py:65
-msgid "Productivity"
-msgstr "إنتاجية"
-
-#: ../ui/category_info.py:73
-msgid "Publishing"
-msgstr "طبع ونشر"
 
 #: ../ui/category_info.py:54
 msgid "Puzzle games"
 msgstr "العاب ألغاز"
 
-#: ../ui/software_center.py:821
-msgid "Quit"
-msgstr "خروج"
-
-#: ../ui/software_center.py:204
-msgid "Rated successfully. Thanks for your involvement."
-msgstr ""
-
-#: ../ui/software_center.py:220
-msgid "Rating failed. Please check your network connection!"
-msgstr ""
-
-#: ../ui/home_page.py:756
-msgid "Recommendations"
-msgstr ""
-
-#: ../ui/category_info.py:42
-msgid "Recorder"
-msgstr "مسجل"
-
-#: ../ui/software_center.py:816 ../ui/preference.py:568
-#, fuzzy
-msgid "Refresh package lists"
-msgstr "تحديث قائمة التطبيقات"
-
-#: ../ui/software_center.py:478
-msgid "Refresh package lists again and try again."
-msgstr ""
-
-#: ../ui/category_info.py:76
-msgid "Religion"
-msgstr "الدين"
-
-#: ../ui/upgrade_page.py:238 ../ui/item_render.py:46
-msgid "Remind again"
-msgstr ""
-
-#: ../ui/category_info.py:32
-msgid "Remote access"
-msgstr "الوصول عن بعد"
-
 #: ../ui/category_info.py:55
 msgid "Role-playing games"
 msgstr "العاب تعدد الأدوار"
-
-#: ../ui/utils.py:355
-msgid "Running"
-msgstr "جاري التشغيل"
-
-#: ../ui/category_info.py:67
-msgid "Scanning printing"
-msgstr "يتم فحص الطباعة"
-
-#: ../ui/category_info.py:77
-msgid "Science"
-msgstr "العلوم"
-
-#: ../ui/category_info.py:74
-msgid "Science Education"
-msgstr ""
-
-#: ../ui/category_info.py:98
-msgid "Screensaver"
-msgstr "شاشة التوقف"
-
-#: ../ui/category_info.py:33
-msgid "Security"
-msgstr "الأمان"
-
-#: ../ui/preference.py:705
-msgid "Select Directory"
-msgstr "أختر دليل"
-
-#: ../ui/preference.py:642
-msgid "Select mirror"
-msgstr "أختار مرآة"
-
-#: ../ui/preference.py:551
-msgid "Select the best mirror"
-msgstr ""
-
-#: ../ui/software_center.py:194
-msgid "Sending rating..."
-msgstr ""
-
-#: ../ui/category_info.py:43
-msgid "Sequencer"
-msgstr "منظم"
-
-#: ../ui/category_info.py:90
-msgid "Settings"
-msgstr "الإعدادات"
-
-#: ../ui/upgrade_page.py:289
-msgid "Shut down the computer after upgraded"
-msgstr ""
-
-#: ../ui/detail_page.py:470
-#, python-format
-msgid "Size: %s"
-msgstr "الحجم : %s"
-
-#: ../ui/detail_page.py:392
-msgid "Size: calculating..."
-msgstr "الحجم : يتم الحساب..."
-
-#: ../ui/category_info.py:82
-msgid "Software development"
-msgstr "تطوير البرمجيات"
-
-#: ../ui/preference.py:751
-msgid "Speed testing will finish only after one minute, please wait."
-msgstr ""
 
 #: ../ui/category_info.py:56
 msgid "Sports games"
@@ -743,271 +495,497 @@ msgstr "العاب رياضية"
 msgid "Strategy games"
 msgstr "العاب استرتيجية"
 
-#: ../ui/preference.py:553
-msgid "Successfully"
-msgstr ""
+#: ../ui/category_info.py:58
+msgid "Graphics"
+msgstr "الرسومات"
 
-#: ../ui/detail_page.py:447
-msgid "Successfully installed"
-msgstr "تم التثبيت بنجاح"
+#: ../ui/category_info.py:59
+msgid "2D graphics"
+msgstr "2D رسومات"
 
-#: ../ui/upgrade_page.py:402 ../ui/upgrade_page.py:423
-#: ../ui/upgrade_page.py:446
-msgid "Suggest to "
-msgstr "إقتراح إلى"
+#: ../ui/category_info.py:60
+msgid "3D graphics"
+msgstr "3D رسومات"
+
+#: ../ui/category_info.py:61
+msgid "Image processing"
+msgstr "تحويل الصورة"
+
+#: ../ui/category_info.py:62
+msgid "Photography"
+msgstr "تصوير"
+
+#: ../ui/category_info.py:63
+msgid "Vector graphics"
+msgstr "توجيه الرسومات"
+
+#: ../ui/category_info.py:64
+msgid "Viewer"
+msgstr "العارض"
+
+#: ../ui/category_info.py:65
+msgid "Productivity"
+msgstr "إنتاجية"
+
+#: ../ui/category_info.py:66
+msgid "Office"
+msgstr "مكتب"
+
+#: ../ui/category_info.py:67
+msgid "Scanning printing"
+msgstr "يتم فحص الطباعة"
+
+#: ../ui/category_info.py:68
+msgid "Industry"
+msgstr "صناعة"
+
+#: ../ui/category_info.py:69
+msgid "Engineering"
+msgstr "هندسة"
+
+#: ../ui/category_info.py:70
+msgid "Finance"
+msgstr "تمويل"
+
+#: ../ui/category_info.py:71
+msgid "Ham radio"
+msgstr "إذاعة هم"
+
+#: ../ui/category_info.py:72
+msgid "Medical"
+msgstr "طبي"
+
+#: ../ui/category_info.py:73
+msgid "Publishing"
+msgstr "طبع ونشر"
+
+#: ../ui/category_info.py:74
+msgid "Science Education"
+msgstr "تعليم العلوم"
+
+#: ../ui/category_info.py:75
+msgid "Languages"
+msgstr "اللغات"
+
+#: ../ui/category_info.py:76
+msgid "Religion"
+msgstr "الدين"
+
+#: ../ui/category_info.py:77
+msgid "Science"
+msgstr "العلوم"
+
+#: ../ui/category_info.py:78
+msgid "Development"
+msgstr "التطوير و التنمية"
+
+#: ../ui/category_info.py:79
+msgid "Database"
+msgstr "قاعدة بيانات"
+
+#: ../ui/category_info.py:80
+msgid "Debugging"
+msgstr "المعالجة"
+
+#: ../ui/category_info.py:81
+msgid "IDE"
+msgstr "IDE"
+
+#: ../ui/category_info.py:82
+msgid "Software development"
+msgstr "تطوير البرمجيات"
+
+#: ../ui/category_info.py:83
+msgid "Version control"
+msgstr "التحكم في الإصدار"
+
+#: ../ui/category_info.py:84
+msgid "Web development"
+msgstr "تطوير الشبكة"
 
 #: ../ui/category_info.py:85
 msgid "System"
 msgstr "النظام"
 
+#: ../ui/category_info.py:86
+msgid "Desktop environment"
+msgstr "بيئة سطح المكتب"
+
+#: ../ui/category_info.py:87
+msgid "Monitor"
+msgstr "الشاشة"
+
+#: ../ui/category_info.py:88
+msgid "Network"
+msgstr "الشبكة"
+
+#: ../ui/category_info.py:89
+msgid "Package manager"
+msgstr "مدير الحزم"
+
+#: ../ui/category_info.py:90
+msgid "Settings"
+msgstr "الإعدادات"
+
+#: ../ui/category_info.py:91
+msgid "Virtualization"
+msgstr "المحاكاة الإفتراضية"
+
+#: ../ui/category_info.py:92
+msgid "Window manager"
+msgstr "مدير النوافذ"
+
+#: ../ui/category_info.py:93
+msgid "Utilities"
+msgstr "خدمات"
+
+#: ../ui/category_info.py:94
+msgid "Accessories"
+msgstr "إكسسوارات"
+
+#: ../ui/category_info.py:95
+msgid "Archiving"
+msgstr "الأرشفة"
+
+#: ../ui/category_info.py:96
+msgid "Emulation"
+msgstr "محاكاة"
+
+#: ../ui/category_info.py:97
+msgid "File manager"
+msgstr "مدير الملفات"
+
+#: ../ui/category_info.py:98
+msgid "Screensaver"
+msgstr "شاشة التوقف"
+
 #: ../ui/category_info.py:99
 msgid "Terminal emulator"
 msgstr "محاكي الطرفية"
-
-#: ../ui/preference.py:776
-#, python-format
-msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
-msgstr ""
 
 #: ../ui/category_info.py:100
 msgid "Text editor"
 msgstr "محرر النص"
 
-#: ../ui/upgrade_page.py:503
-#, fuzzy
-msgid "The error was successfully reported and will be handled soon."
-msgstr "تم إرسال تقرير المشكلة بنجاح وسيتم التعامل معه قريبا."
-
-#: ../ui/software_center.py:477
+#: ../ui/home_page.py:484
 #, python-format
-msgid "The requested package \"%s\" was not found in the package list."
-msgstr "الحزمة المطلوبة \"%s\" لم يتم العثور عليها في قائمة الحزم."
+msgid "%s: %s applications"
+msgstr "%s: %s التطبيقات"
 
-#: ../ui/upgrade_page.py:401
-msgid "The requested package does not exist on server."
-msgstr "الحزمة المطلوبة غير موجودة على الخادم."
-
-#: ../ui/upgrade_page.py:308
-msgid "The system is not Deepin, this function is invalid."
-msgstr ""
-
-#: ../ui/upgrade_page.py:442
-#, fuzzy
-msgid ""
-"The upgrade requires to uninstall crucial components due to corrupted local "
-"dependencies or incorrect package dependencies on server."
-msgstr ""
-"سيتم إلغاء تثبيت مكونات حاسمة. هذا قد يكون بسبب تلف تبعيات المحلي الخاص بك "
-"أو أن التبعيات على الخادم غير صحيحة."
-
-#: ../ui/dsc-daemon.py:284
+#: ../ui/home_page.py:666
 #, python-format
-msgid ""
-"There are %s packages needed to upgrade in your system, please use Deepin "
-"Store to upgrade."
-msgstr ""
-"هناك %s حزم تحتاج إلى الترقية في نظامك ، الرجاء أفتح مركز البرمجيات للترقية !"
+msgid "%s > %s : %s applications"
+msgstr "%s > %s : %s التطبيقات"
 
-#: ../ui/dsc-daemon.py:288
-#, python-format
-msgid ""
-"There is %s package needed to upgrade in your system, please use Deepin "
-"Store to upgrade."
-msgstr ""
-"هناك %s حزمة تحتاج إلى الترقية في نظامك ، الرجاء أفتح مركز البرمجيات "
-"للترقية !"
+#: ../ui/home_page.py:722 ../ui/software_center.py:789
+msgid "Home"
+msgstr "المنزل"
 
-#: ../ui/upgrade_page.py:304
-msgid "This function is invalid without Deepin System Settings installed."
-msgstr ""
+#: ../ui/home_page.py:762
+msgid "Recommendations"
+msgstr "توصيات"
 
-#: ../ui/upgrade_page.py:663
-msgid "This problem occurs due to corrupted local apt dependence relationship."
-msgstr ""
-
-#: ../ui/upgrade_page.py:421
-msgid "This problem occurs due to corrupted local apt dependency relationship."
-msgstr ""
-
-#: ../ui/preference.py:575
-msgid "Time interval: "
-msgstr "مدة الوقت : "
-
-#: ../ui/download_rank_page.py:61
-msgid "Top 25 monthly"
-msgstr "أفضل 25 شهرياً"
-
-#: ../ui/download_rank_page.py:61
-msgid "Top 25 totally"
-msgstr ""
-
-#: ../ui/download_rank_page.py:61
-msgid "Top 25 weekly"
-msgstr "أفضل 25 أسبوعياً"
-
-#: ../ui/home_page.py:756
+#: ../ui/home_page.py:762
 msgid "Topics"
 msgstr "المواضيع"
 
-#: ../ui/software_center.py:459
-msgid "Try again"
-msgstr "حاول مرة أخرى"
+#: ../ui/home_page.py:762
+msgid "Download rank"
+msgstr "معدل التنزيل"
 
-#: ../ui/category_info.py:44
-msgid "Tuner"
-msgstr "مدوزن"
+#: ../ui/widgets.py:66
+msgid "Just now"
+msgstr "فقط الآن"
 
-#: ../ui/software_center.py:385 ../ui/software_center.py:791
-msgid "Uninstall"
-msgstr "إلغاء التثبيت"
+#: ../ui/widgets.py:71
+msgid "One minute ago"
+msgstr "قبل دقيقة مضة"
+
+#: ../ui/widgets.py:73
+#, python-format
+msgid "%s minutes ago"
+msgstr "%s دقائق مضة"
+
+#: ../ui/widgets.py:78
+msgid "One hour ago"
+msgstr "قبل ساعة مضة"
+
+#: ../ui/widgets.py:80
+#, python-format
+msgid "%s hours ago"
+msgstr "%s ساعات مضة"
+
+#: ../ui/widgets.py:84
+msgid "Yesterday"
+msgstr "أمس"
+
+#: ../ui/widgets.py:295 ../ui/widgets.py:369
+msgid "Click to refresh"
+msgstr "أنقر للتحديث"
+
+#: ../ui/widgets.py:462 ../ui/preference.py:782 ../ui/dialog_widgets.py:96
+msgid "OK"
+msgstr "موافق"
+
+#: ../ui/widgets.py:463 ../ui/preference.py:784 ../ui/dialog_widgets.py:98
+msgid "Cancel"
+msgstr "إلغاء"
+
+#: ../ui/utils.py:355 ../ui/utils.py:363
+msgid "Running"
+msgstr "جاري التشغيل"
+
+#: ../ui/utils.py:356 ../ui/utils.py:364
+msgid "Preparing"
+msgstr "جاري الإعداد"
+
+#: ../ui/utils.py:357 ../ui/utils.py:365
+msgid "Unpacking"
+msgstr "جاري التفريغ"
+
+#: ../ui/utils.py:358 ../ui/utils.py:366
+msgid "Preparing to configure"
+msgstr "جاري الإعداد للتكوين"
+
+#: ../ui/utils.py:359 ../ui/utils.py:367
+msgid "Configuring"
+msgstr "جاري التكوين"
+
+#: ../ui/utils.py:370 ../ui/utils.py:378
+msgid "Err"
+msgstr "Err"
+
+#: ../ui/utils.py:371 ../ui/utils.py:379
+msgid "Ign"
+msgstr "Ign"
+
+#: ../ui/utils.py:372 ../ui/utils.py:380
+msgid "Get"
+msgstr "احصل"
+
+#: ../ui/utils.py:373 ../ui/utils.py:381
+msgid "Hit"
+msgstr "أصب"
+
+#: ../ui/software_center.py:127
+#, python-format
+msgid "%s haven't any desktop file"
+msgstr "%s لا يوجد أي ملف سطح مكتب"
+
+#: ../ui/software_center.py:194
+msgid "Sending rating..."
+msgstr "إرسال تصنيف ..."
+
+#: ../ui/software_center.py:198
+msgid "You have already scored.  ;)"
+msgstr "لقد سجل بالفعل. ؛)"
+
+#: ../ui/software_center.py:204
+msgid "Rated successfully. Thanks for your involvement."
+msgstr "صنف بنجاح. شكرا لمشاركتكم."
+
+#: ../ui/software_center.py:220
+msgid "Rating failed. Please check your network connection!"
+msgstr "فشل التحديد. الرجاء التحقق من اتصال الشبكة الخاص بك!"
 
 #: ../ui/software_center.py:385
 #, python-format
 msgid "Uninstall %s Successfully."
 msgstr "تم إلغاء %s التثبيت بنجاح."
 
-#: ../ui/uninstall_page.py:619
-msgid "Uninstallation completed"
-msgstr "اكتمل التثبيت"
+#: ../ui/software_center.py:385 ../ui/software_center.py:791
+msgid "Uninstall"
+msgstr "إلغاء التثبيت"
 
-#: ../ui/uninstall_page.py:605 ../ui/uninstall_page.py:612
-msgid "Uninstalling"
-msgstr "يتم الغاء التثبيت"
-
-#: ../ui/utils.py:357
-msgid "Unpacking"
-msgstr "جاري التفريغ"
-
-#: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
-#: ../ui/software_center.py:790
-msgid "Upgrade"
-msgstr "ترقية"
-
-#: ../ui/upgrade_page.py:182
-msgid "Upgrade applications selected"
-msgstr ""
-
-#: ../ui/preference.py:571
-#, fuzzy
-msgid "Upgrade automatically"
-msgstr "تحديث تلقائي"
-
-#: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
-msgid "Upgrade completed"
-msgstr ""
-
-#: ../ui/upgrade_page.py:1656 ../ui/upgrade_page.py:1663
-msgid "Upgrading"
-msgstr "يتم الترقية"
-
-#: ../ui/upgrade_page.py:1125
-#, fuzzy
-msgid "Upgrading..."
-msgstr "يتم الترقية"
-
-#: ../ui/upgrade_page.py:498
-msgid "Uploading error log"
-msgstr "رفع سجل الأخطاء"
-
-#: ../ui/category_info.py:93
-msgid "Utilities"
-msgstr "خدمات"
-
-#: ../ui/category_info.py:63
-msgid "Vector graphics"
-msgstr "توجيه الرسومات"
-
-#: ../ui/category_info.py:83
-msgid "Version control"
-msgstr "التحكم في الإصدار"
-
-#: ../ui/preference.py:438
-msgid "Version:"
-msgstr "الإصدار :"
-
-#: ../ui/detail_page.py:390
+#: ../ui/software_center.py:391
 #, python-format
-msgid "Version: %s"
-msgstr "الإصدار : %s"
+msgid "%s packages upgrade successfully."
+msgstr "%s تم ترقية الحزم بنجاح."
+
+#: ../ui/software_center.py:394
+#, python-format
+msgid "Install %s Successfully."
+msgstr "تم تثبيت %s بنجاح."
+
+#: ../ui/software_center.py:394
+msgid "Install"
+msgstr "تثبيت"
+
+#: ../ui/software_center.py:438
+msgid "Generating package list database..."
+msgstr "توليد قائمة حزم قاعدة البيانات  ..."
+
+#: ../ui/software_center.py:446
+msgid "Package lists refreshed completely."
+msgstr "قوائم حزمة محدثة تماما."
+
+#: ../ui/software_center.py:458
+msgid "Failed to refresh package lists."
+msgstr "فشل تحديث قوائم الحزمة."
+
+#: ../ui/software_center.py:459
+msgid "Try again"
+msgstr "حاول مرة أخرى"
+
+#: ../ui/software_center.py:469
+#, python-format
+msgid ""
+"Problem occurred when analyzing dependencies for %s. Installation aborted."
+msgstr "حدث خطأ أثناء تحليل التبعيات لـ %s. أجهض التثبيت"
+
+#: ../ui/software_center.py:472
+#, python-format
+msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
+msgstr "حدث خطأ أثناء تحليل التبعيات لـ %s. أجهضت الترقية"
+
+#: ../ui/software_center.py:477
+#, python-format
+msgid "The requested package \"%s\" was not found in the package list."
+msgstr "الحزمة المطلوبة \"%s\" لم يتم العثور عليها في قائمة الحزم."
+
+#: ../ui/software_center.py:478
+msgid "Refresh package lists again and try again."
+msgstr ".حدث قائمة الحزمة وحاول مرة أخرى"
+
+#: ../ui/software_center.py:770
+msgid "Join us"
+msgstr "إنظم إلينا"
+
+#: ../ui/software_center.py:792
+msgid "Installation"
+msgstr "تنصيب"
+
+#: ../ui/software_center.py:816 ../ui/preference.py:568
+#: ../ui/preference.py:575
+msgid "Refresh package lists"
+msgstr "تحديث قوائم الحزمة"
+
+#: ../ui/software_center.py:817
+msgid "Open download directory"
+msgstr "فتح دليل التنزيلات"
+
+#: ../ui/software_center.py:818
+msgid "Clear up cached packages"
+msgstr "تنظيف الحزم المؤقته"
 
 #: ../ui/software_center.py:819
 msgid "View new features"
 msgstr "عرض الخصائص الجديدة"
 
-#: ../ui/category_info.py:64
-msgid "Viewer"
-msgstr "العارض"
+#: ../ui/software_center.py:820
+msgid "Preferences"
+msgstr "التفضيلات"
 
-#: ../ui/category_info.py:91
-msgid "Virtualization"
-msgstr "المحاكاة الإفتراضية"
+#: ../ui/software_center.py:821
+msgid "Quit"
+msgstr "خروج"
 
-#: ../ui/detail_page.py:396
-msgid "Visit Homepage"
-msgstr "زيارة الصفحة الرئيسية"
-
-#: ../ui/preference.py:552
-msgid "Waiting"
-msgstr ""
-
-#: ../ui/install_page.py:748 ../ui/upgrade_page.py:1495
-#: ../ui/upgrade_page.py:1614
-msgid "Waiting for download"
-msgstr "في إنتظار التنزيل"
-
-#: ../ui/install_page.py:778
-msgid "Waiting for installation"
-msgstr "في إنتظار التثبيت"
-
-#: ../ui/uninstall_page.py:515 ../ui/uninstall_page.py:598
-msgid "Waiting for uninstall"
-msgstr "في انتظار الغاء التثبيت"
-
-#: ../ui/upgrade_page.py:1637
-msgid "Waiting for upgrade"
-msgstr "في إنتظار الترقية"
-
-#: ../ui/upgrade_page.py:440
-msgid "Warning"
-msgstr "تحذير"
-
-#: ../ui/category_info.py:84
-msgid "Web development"
-msgstr "تطوير الشبكة"
-
-#: ../ui/category_info.py:92
-msgid "Window manager"
-msgstr "مدير النوافذ"
-
-#: ../ui/widgets.py:84
-msgid "Yesterday"
-msgstr "أمس"
-
-#: ../ui/software_center.py:198
-msgid "You have already scored.  ;)"
-msgstr ""
-
-#: ../ui/software_center.py:1123
+#: ../ui/software_center.py:1123 ../ui/software_center.py:1128
 #, python-format
 msgid "You have cleared up %s packages and saved %s of space."
-msgstr ""
+msgstr "لقد مسحت حزم %s و حررت %s مساحة ."
 
-#: ../ui/software_center.py:1125
+#: ../ui/software_center.py:1125 ../ui/software_center.py:1130
 msgid "Your system cache is empty."
-msgstr ""
+msgstr "التخزين المؤقت للنظام الخاص بك فارغ."
 
-#: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
-#: ../ui/upgrade_page.py:447
-#, fuzzy
-msgid "refresh package lists"
-msgstr "تحديث قائمة التطبيقات"
+#: ../ui/item_render.py:44
+msgid "No reminder"
+msgstr "بلا تذكير"
 
-#: ../ui/upgrade_page.py:484 ../ui/upgrade_page.py:510
-msgid "send error report"
-msgstr "ترسل تقرير عن المشكلة"
+#: ../ui/preference.py:438 ../ui/preference.py:445
+msgid "Version:"
+msgstr "الإصدار :"
 
-#~ msgid "Failed to analyze dependencies."
-#~ msgstr "فشل في تحليل التبعيات."
+#: ../ui/preference.py:452 ../ui/preference.py:459
+msgid ""
+"Deepin Store is a commonly used software center on Linux. We selected more than 2,600 excellent applications with many functions of installation and uninstalling, software repository and popular recommendations, which supports 1-click quick installation, multi-threaded download and clearing of cached packages. It provides topics for software introduction and shares good applications.\n"
+"\n"
+"Deepin Store is a free software licensed under GNU GPLv3."
+msgstr "مستودعDeepin يستخدم في مدير برامج لينكس. انها تسمح لك باختيار  أكثر من 2600 تطبيق، لديه وحدة تثبيت / إلغاء التثبيت سهلة ومريحة، فضلا عن التطبيقات SEO الموصى بها. وهو يدعم تحميل ويوفر تنظيفالحزم. أيضا معلومات عن كل البرامج المتاحة. \\ N \\ n  مخزن Deepin هو تطبيق حرة مرخص له بموجب GNU GPv3"
 
-#~ msgid "Updating..."
-#~ msgstr "يتم التحديث..."
+#: ../ui/preference.py:477 ../ui/preference.py:484
+msgid "On uninstalling the software"
+msgstr "إلغاء تثبيت البرنامج"
+
+#: ../ui/preference.py:480 ../ui/preference.py:487
+msgid "Delete configuration files"
+msgstr "حذف تشكيلة الملفات"
+
+#: ../ui/preference.py:494 ../ui/preference.py:501
+msgid "Download settings"
+msgstr "إعدادات التنزيل"
+
+#: ../ui/preference.py:500 ../ui/preference.py:507
+msgid "Maximum number of download tasks: "
+msgstr "الحد الأقصى لعدد تحميل المهام:"
+
+#: ../ui/preference.py:510 ../ui/preference.py:517
+msgid "Download directory: "
+msgstr "دليل التنزيل : "
+
+#: ../ui/preference.py:516 ../ui/preference.py:523
+msgid "Change"
+msgstr "تغيير"
+
+#: ../ui/preference.py:551 ../ui/preference.py:558
+msgid "Select the best mirror"
+msgstr "حدد افضل مزود"
+
+#: ../ui/preference.py:552 ../ui/preference.py:559
+msgid "Waiting"
+msgstr "انتظار"
+
+#: ../ui/preference.py:553 ../ui/preference.py:560
+msgid "Successfully"
+msgstr "بنجاح"
+
+#: ../ui/preference.py:571 ../ui/preference.py:578
+msgid "Upgrade automatically"
+msgstr "ترقية تلقائية"
+
+#: ../ui/preference.py:575 ../ui/preference.py:582
+msgid "Time interval: "
+msgstr "مدة الوقت : "
+
+#: ../ui/preference.py:578 ../ui/preference.py:585
+msgid " hour"
+msgstr "ساعة"
+
+#: ../ui/preference.py:642 ../ui/preference.py:643
+msgid "Select mirror"
+msgstr "أختار مرآة"
+
+#: ../ui/preference.py:705
+msgid "Select Directory"
+msgstr "أختر دليل"
+
+#: ../ui/preference.py:751 ../ui/dialog_widgets.py:65
+msgid "Speed testing will finish only after one minute, please wait."
+msgstr "سرعة الاختبار سوف تنتهي بعد دقيقة واحدة ، يرجى الانتظار."
+
+#: ../ui/preference.py:776 ../ui/dialog_widgets.py:90
+#, python-format
+msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
+msgstr "اكتمال الاختبار، ومصدر المزود الأسرع هو \"%s\"، شغل الآن؟"
+
+#: ../ui/preference.py:829 ../ui/preference.py:735
+msgid "General"
+msgstr "عام"
+
+#: ../ui/preference.py:830 ../ui/preference.py:736
+msgid "Mirrors"
+msgstr "المرايا"
+
+#: ../ui/preference.py:831 ../ui/preference.py:737
+msgid "About"
+msgstr "عن"
+
+#: ../ui/search_page.py:110
+#, python-format
+msgid "%s applications searched"
+msgstr "%sتطبيقات المفتش عنها"
+
+#: ../ui/home_page.py:762
+msgid "HotApps"
+msgstr "تطبيقات جاهزة"

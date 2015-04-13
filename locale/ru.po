@@ -7,14 +7,14 @@
 # Анатолий Валерианович <ffox909@mail.ru>, 2014
 # jvjey <justVolodya@gmail.com>, 2014
 # Serge Kukharski, 2014
-# Анатолий Валерианович <ffox909@mail.ru>, 2014
+# Анатолий Валерианович <ffox909@mail.ru>, 2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-29 13:45+0800\n"
-"PO-Revision-Date: 2014-12-29 06:50+0000\n"
-"Last-Translator: deepin_transifex <xiabin@linuxdeepin.com>\n"
+"PO-Revision-Date: 2015-03-24 04:51+0000\n"
+"Last-Translator: Анатолий Валерианович <ffox909@mail.ru>\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/deepin-store/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -988,4 +988,4 @@ msgstr "найдено приложение %s"
 
 #: ../ui/home_page.py:762
 msgid "HotApps"
-msgstr "Лучшие приложения"
+msgstr "Новинки"

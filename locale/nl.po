@@ -3,7 +3,8 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Heimen Stoffels <motionshot@vivaldi.net>, 2014
+# Heimen Stoffels <vistausss@outlook.com>, 2014
+# Heimen Stoffels <vistausss@outlook.com>, 2015
 # Anduxor <itachiandu@gmail.com>, 2014
 # jasper580 <jasperweyne@gmail.com>, 2014
 # Stefan van den Brink <stefan.vandenbrink@gmail.com>, 2015
@@ -12,8 +13,8 @@ msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-29 13:45+0800\n"
-"PO-Revision-Date: 2015-01-06 21:00+0000\n"
-"Last-Translator: Stefan van den Brink <stefan.vandenbrink@gmail.com>\n"
+"PO-Revision-Date: 2015-03-23 10:24+0000\n"
+"Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/projects/p/deepin-store/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -112,20 +113,20 @@ msgstr "Upgrade"
 msgid ""
 "There are %s packages needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
-msgstr "Er zijn %s pakketten op uw systeem aanwezig die geupgradet moeten worden; start alstublieft Deepin Winkel om te upgraden!"
+msgstr "Er zijn %s pakketten aanwezig op uw systeem die moeten worden bijgewerkt. Start alstublieft Deepin Softwarecentrum om ze bij te werken!"
 
 #: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
 #: ../ui/software_center.py:733 ../ui/preference.py:433
 #: ../ui/preference.py:440 ../ui/dsc-daemon.py:321 ../ui/dsc-daemon.py:325
 msgid "Deepin Store"
-msgstr "Deepin winkel"
+msgstr "Deepin Softwarecentrum"
 
 #: ../ui/dsc-daemon.py:288 ../ui/dsc-daemon.py:323
 #, python-format
 msgid ""
 "There is %s package needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
-msgstr "Er dient %s pakket te worden geüpgraded op uw systeem, gelieve de Deepin Store te gebruiken om te upgraden."
+msgstr "Het pakket %s moet worden bijgewerkt. Start alstublieft Deepin Softwarecentrum om hem bij te werken."
 
 #: ../ui/install_page.py:146
 #, python-format
@@ -901,7 +902,7 @@ msgid ""
 "Deepin Store is a commonly used software center on Linux. We selected more than 2,600 excellent applications with many functions of installation and uninstalling, software repository and popular recommendations, which supports 1-click quick installation, multi-threaded download and clearing of cached packages. It provides topics for software introduction and shares good applications.\n"
 "\n"
 "Deepin Store is a free software licensed under GNU GPLv3."
-msgstr "Deepin Store is een veelgebruikt softwarecentrum op Linux. Wij selecteerden meer dan 2,600 uitstekende applicaties met veel functies voor installeren en deïnstalleren, software repository en populaire aanbevelingen, die een snelle installatie met 1 klik, multi-threaded downloaden en wissen van gecachete pakketten ondersteunt. Het heeft onderwerpen voor software introductie en deelt goede applicaties.\n\nDeepin Store is een gratis software onder de GNU GPLv3 licentie."
+msgstr "Deepin Softwarecentrum is een veelgebruikt softwarecentrum op Linux. Wij hebben meer dan 2600 uitstekende applicaties met veel functies geselecteerd voor u om te installeren en deïnstalleren uit onze pakketbron en populaire aanbevelingen. Deze zijn allemaal met één klik te installeren. Meerdere downloads tegelijkertijd wordt ondersteund, evenals het wissen van gecachete pakketten. Het bevat onderwerpen voor introductie van software en bevat goede applicaties.\n\nDeepin Softwarencetrum is gratis software, gelicenseerd onder de GNU GPLv3-licentie."
 
 #: ../ui/preference.py:477 ../ui/preference.py:484
 msgid "On uninstalling the software"
