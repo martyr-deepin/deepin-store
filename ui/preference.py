@@ -727,15 +727,15 @@ class DscPreferenceDialog(PreferenceDialog):
         self.waiting_dialog = WaitingDialog()
         self.waiting_dialog.set_transient_for(self)
 
+        preference_items = []
         self.general_box = GeneralBox()
-        self.mirrors_box = MirrorsBox()
+        preference_items.append((_("General"), self.general_box))
+        if len(all_mirrors) > 0:
+            self.mirrors_box = MirrorsBox()
+            preference_items.append((_("Mirrors"), self.mirrors_box))
         self.about_box = AboutBox()
-
-        self.set_preference_items([
-            (_("General"), self.general_box),
-            (_("Mirrors"), self.mirrors_box),
-            (_("About"), self.about_box),
-            ])
+        preference_items.append((_("About"), self.about_box))
+        self.set_preference_items(preference_items)
 
         global_event.register_event("toggle-waiting-dialog", self.handle_toggle_waiting_dialog)
         global_event.register_event("mirror-backend-changed", self.handle_after_mirror_changed)

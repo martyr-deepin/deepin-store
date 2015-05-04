@@ -30,6 +30,7 @@ ACTION_INSTALL = 1
 ACTION_UNINSTALL = 2
 ACTION_UPGRADE = 3
 
+DOWNLOAD_STATUS_OK = 0
 DOWNLOAD_STATUS_NOTNEED = 1
 DOWNLOAD_STATUS_ERROR = 2
 
@@ -54,21 +55,15 @@ SYS_PKG_WHITE_LIST = [
 "pulseaudio",
 "xserver-xorg",
 "compiz",
-"deepin-session",
-"deepin-ui",
 "lightdm",
-"gnome-session",
-"deepin-xsession-settings",
-"deepin-desktop-environment-common",
-"deepin-desktop-environment-dock",
-"deepin-desktop-environment-launcher",
-"deepin-desktop-environment-desktop",
-"deepin-desktop-environment-lightdm-greeter",
-"deepin-desktop-environment-lock",
-"gnome-settings-daemon",
-"deepin-xsession-settings",
-"deepin-system-tray",
-"deepin-notifications",
-"deepin-system-settings",
 "deepin-icon-theme",
+"startdde",
+"dde-workspace",
+"dde-control-center",
+"dde-dock-applets",
+"dde-daemon",
+"deepin-ui",
+"deepin-software-center-data",
+"deepin-software-center",
+"deepin-menu",
 ]

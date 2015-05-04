@@ -24,7 +24,12 @@ import os
 import errno
 import hashlib
 import apt_pkg
-from constant import DOWNLOAD_STATUS_NOTNEED, DOWNLOAD_STATUS_ERROR, ACTION_UPGRADE, SYS_PKG_WHITE_LIST
+from constant import (
+        DOWNLOAD_STATUS_OK,
+        DOWNLOAD_STATUS_NOTNEED,
+        DOWNLOAD_STATUS_ERROR,
+        ACTION_UPGRADE,
+        SYS_PKG_WHITE_LIST)
 from events import global_event
 
 def check_deleting_system_pkg(all_change_pkgs):
@@ -106,12 +111,7 @@ def get_upgrade_download_info_with_new_policy(cache, pkg_names):
 
 def get_pkg_download_info(cache, pkg_name):
     dependence = get_pkg_dependence(cache, pkg_name)
-    if dependence == []:
-        return [DOWNLOAD_STATUS_NOTNEED, None]
-    elif dependence == -1:
-        return [DOWNLOAD_STATUS_ERROR, None]
-    else:
-        return check_pkg_download_info(dependence)
+    return check_pkg_download_info(dependence)
 
 def get_pkg_dependence(cache, pkg_name):
     try:
@@ -157,31 +157,29 @@ def check_pkg_download_info(pkgs):
         pkgs = [pkg for pkg in pkgs if not pkg.marked_delete and not pkg_file_has_exist(pkg)]
 
         if len(pkgs) == 0:
-            return (DOWNLOAD_STATUS_NOTNEED, None)
+            #return (DOWNLOAD_STATUS_NOTNEED, None)
+            return {"status": DOWNLOAD_STATUS_NOTNEED}
         else:
             try:
-                urls = []
-                hash_infos = []
-                pkg_sizes = []
-                names = []
-
+                info = []
                 for pkg in pkgs:
                     version = pkg.candidate
                     md5value = version.md5 if version.md5 else ""
                     pkg_uris = version.uris
                     pkg_size = int(version.size)
 
-                    urls.append(pkg_uris[0])
-                    hash_infos.append(md5value)
-                    pkg_sizes.append(pkg_size)
-                    names.append(pkg.name)
-
-                return (names, urls, hash_infos, pkg_sizes)
+                    info.append({
+                        "url": pkg_uris[0],
+                        "hash": md5value,
+                        "size": pkg_size,
+                        "name": pkg.name
+                    })
+                return {"status": DOWNLOAD_STATUS_OK, "info": info}
             except Exception, e:
                 print "get_pkg_download_info error: %s" % (e)
-                return (DOWNLOAD_STATUS_ERROR, e)
+                return {"status": DOWNLOAD_STATUS_ERROR, "error": e}
     else:
-        return (DOWNLOAD_STATUS_NOTNEED, None)
+        return {"status": DOWNLOAD_STATUS_NOTNEED}
 
 def get_cache_archive_dir():
     return apt_pkg.config.find_dir("Dir::Cache::Archives")

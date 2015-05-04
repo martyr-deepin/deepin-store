@@ -25,7 +25,6 @@ from skin import app_theme
 from nls import _
 
 import glib
-import subprocess
 from data import data_exit
 import gtk
 import gobject
@@ -35,7 +34,6 @@ import time
 import json
 import sys
 import traceback
-import logging
 
 from dtk.ui.theme import DynamicPixbuf
 from dtk.ui.menu import Menu
@@ -66,15 +64,20 @@ from upgrade_page import UpgradePage
 from data_manager import DataManager
 from events import global_event
 from start_desktop_window import StartDesktopWindow
-from utils import handle_dbus_reply, handle_dbus_error, bit_to_human_str, get_software_download_dir
+from utils import (
+        handle_dbus_reply,
+        handle_dbus_error,
+        bit_to_human_str,
+        get_software_download_dir,
+        )
 import utils
 from tooltip import ToolTip
 from server_action import SendVote, SendDownloadCount, SendUninstallCount, SendErrorLog
 from preference import DscPreferenceDialog
-from logger import Logger
 from paned_box import PanedBox
 from widgets import BottomTipBar
 from star_buffer import StarView, DscStarBuffer
+from mirror_test import all_mirrors
 from constant import (
             DSC_SERVICE_NAME, DSC_SERVICE_PATH,
             DSC_FRONTEND_NAME, DSC_FRONTEND_PATH,
@@ -82,6 +85,8 @@ from constant import (
             CONFIG_DIR, ONE_DAY_SECONDS,
             LANGUAGE,
         )
+import logging
+global_logger = logging.getLogger("dstore.ui.software_center")
 
 tool_tip = ToolTip()
 global tooltip_timeout_id
@@ -130,7 +135,7 @@ def start_pkg(alias_name, desktop_infos, (offset_x, offset_y, popup_x, popup_y),
             desktop_infos[0].launch()
             global_event.emit("show-message", _("%s: request for starting applications sent") % alias_name, 5000)
         except:
-            logging.error("Launch error: %s" % desktop_infos[0])
+            global_logger.error("Launch error: %s" % desktop_infos[0])
     else:
         (screen, px, py, modifier_type) = window.get_display().get_pointer()
         StartDesktopWindow().start(alias_name, desktop_infos, (px - offset_x + popup_x, py - offset_y + popup_y))
@@ -292,7 +297,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
 
             elif signal_type == 'pkgs-not-in-cache':
                 (not_in_cache, action_type) = action_content
-                utils.write_log("pkgs-not-in-cache:%s, action_type:%s" % (not_in_cache, action_type))
+                global_logger.error("pkgs-not-in-cache:%s, action_type:%s" % (not_in_cache, action_type))
                 if action_type == ACTION_INSTALL:
                     pass
                 elif action_type == ACTION_UPGRADE:
@@ -300,23 +305,21 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
 
             elif signal_type == 'pkgs-mark-failed':
                 (pkg_list, action_type) = action_content
-                utils.write_log("pkgs-mark-failed:%s, action_type:%s" % (pkg_list, action_type))
+                global_logger.error("pkgs-mark-failed:%s, action_type:%s" % (pkg_list, action_type))
                 if action_type == ACTION_INSTALL:
                     pass
                 elif action_type == ACTION_UPGRADE:
                     upgrade_page.upgrading_view.show_error("pkgs_mark_failed", pkg_list)
 
-            elif signal_type == 'marked-delete-system-pkgs':
-                (pkgs, action_type) = action_content
-                utils.write_log("marked-delete-system-pkgs:%s, action_type:%s" % (pkgs, action_type))
-                if action_type == ACTION_INSTALL:
-                    pass
-                elif action_type == ACTION_UPGRADE:
+            elif signal_type == 'remove-pkgs-in-white-list':
+                if action_type == ACTION_UPGRADE:
+                    (pkgs, action_type) = action_content
+                    global_logger.error("marked-delete-system-pkgs:%s, action_type:%s" % (pkgs, action_type))
                     upgrade_page.upgrading_view.show_error("marked_delete_system_pkgs", json.loads(pkgs))
 
             elif signal_type == 'pkgs-parse-download-error':
                 (error, action_type) = action_content
-                utils.write_log("pkgs-parse-download-error:%s, action_type:%s" % (error, action_type))
+                global_logger.error("pkgs-parse-download-error:%s, action_type:%s" % (error, action_type))
                 if action_type == ACTION_INSTALL:
                     pass
                 elif action_type == ACTION_UPGRADE:
@@ -353,7 +356,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
 
             elif signal_type == "download-failed":
                 (pkg_name, action_type, error) = action_content
-                utils.write_log("download-failed:%s, action_type:%s" % (error, action_type))
+                global_logger.error("download-failed:%s, action_type:%s" % (error, action_type))
                 if action_type == ACTION_INSTALL:
                     install_page.download_failed(pkg_name)
                 elif action_type == ACTION_UPGRADE:
@@ -406,7 +409,7 @@ def message_handler(messages, bus_interface, upgrade_page, uninstall_page, insta
                 # FIXME: change failed action dealing
                 (pkg_name, action_type, pkg_info_list, errormsg) = action_content
                 pkg_list = [str(info[0]) for info in pkg_info_list]
-                utils.write_log("action-failed:%s, action_type:%s, pkg_list: %s" % (errormsg, action_type, pkg_list))
+                global_logger.error("action-failed:%s, action_type:%s, pkg_list: %s" % (errormsg, action_type, pkg_list))
                 if action_type == ACTION_UNINSTALL:
                     uninstall_page.action_finish(pkg_name, pkg_info_list)
                 elif action_type == ACTION_UPGRADE:
@@ -659,7 +662,7 @@ def action_finish_handle_dbus_error(pkg_info_list):
 
 debug_flag = False
 
-class DeepinSoftwareCenter(dbus.service.Object, Logger):
+class DeepinSoftwareCenter(dbus.service.Object):
     '''
     class docs
     '''
@@ -671,7 +674,6 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         init docs
         '''
         dbus.service.Object.__init__(self, session_bus, DSC_FRONTEND_PATH)
-        Logger.__init__(self)
 
         self.simulate = "--simulate" in arguments
 
@@ -716,8 +718,12 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         except:
             print "Unknow page:", key
 
+    @dbus.service.method(DSC_FRONTEND_NAME, in_signature="s", out_signature="")
+    def show_detail(self, pkg_name):
+        global_event.emit("switch-to-detail-page", pkg_name)
+
     def init_ui(self):
-        self.loginfo("Init ui")
+        global_logger.info("Init ui")
         # Init application.
         self.application = Application(
             resizable=False,
@@ -871,9 +877,12 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
     def ready_show(self):
         self.preference_dialog = DscPreferenceDialog()
         if utils.is_first_started():
-            utils.set_first_started()
             self.in_wizard_showing = True
-            self.show_test_mirror()
+            if len(all_mirrors) > 0:
+                self.show_test_mirror(callback=self.wizard_callback)
+            else:
+                self.show_wizard_win(callback=self.wizard_callback)
+            utils.set_first_started()
             self.init_ui()
         else:
             self.init_ui()
@@ -882,7 +891,8 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         #self.paned_box.bottom_window.set_composited(True)
 
     def show_test_mirror(self, callback=None):
-        self.preference_dialog.waiting_dialog.hide_callback = self.wizard_callback
+        if callback:
+            self.preference_dialog.waiting_dialog.hide_callback = callback
         mirrors_box = self.preference_dialog.mirrors_box
         mirrors_box.select_best_mirror(mirrors_box.select_best_mirror_button)
 
@@ -924,7 +934,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
         self.set_software_download_dir()
         self.inhibit_obj = InhibitObject()
 
-        self.loginfo("Init data manager")
+        global_logger.info("Init data manager")
 
         # Init data manager.
         self.data_manager = DataManager(self.bus_interface, debug_flag)
@@ -951,7 +961,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
 
         log("Init pages.")
 
-        self.loginfo("Init pages")
+        global_logger.info("Init pages")
         self.upgrade_page = UpgradePage(self.bus_interface, self.data_manager, self.preference_dialog)
         self.uninstall_page = UninstallPage(self.bus_interface, self.data_manager)
         self.install_page = InstallPage(self.bus_interface, self.data_manager)
@@ -1048,13 +1058,13 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
 
     def init_download_manager_handler(self):
         self.dbus_request_status()
-        self.loginfo("Init download manager")
+        global_logger.info("Init download manager")
 
     def dbus_request_status(self):
         self.bus_interface.request_status(
-                reply_handler=lambda reply: request_status_reply_hander(reply, self.install_page, self.upgrade_page, self.uninstall_page),
-                error_handler=lambda e:handle_dbus_error("request_status", e),
-                )
+            reply_handler=lambda reply: request_status_reply_hander(reply, self.install_page, self.upgrade_page, self.uninstall_page),
+            error_handler=lambda e:handle_dbus_error("request_status", e),
+            )
 
     def set_software_download_dir(self):
         self.bus_interface.set_download_dir(
@@ -1110,7 +1120,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
                 error_handler=lambda e:handle_dbus_error("start_update_list", e),)
 
     def upgrade_pkgs(self, pkg_names):
-        self.bus_interface.upgrade_pkgs_with_new_policy(
+        self.bus_interface.DistUpgrade(
                 pkg_names,
                 reply_handler=lambda :handle_dbus_reply("upgrade_pkgs"),
                 error_handler=lambda e:handle_dbus_error("upgrade_pkgs", e))
@@ -1141,7 +1151,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
 
         # Remove id from config file.
         data_exit()
-        self.loginfo('Data id removed')
+        global_logger.info('Data id removed')
 
     @dbus.service.method(DSC_FRONTEND_NAME, in_signature="", out_signature="")
     def request_exit(self):
@@ -1150,7 +1160,7 @@ class DeepinSoftwareCenter(dbus.service.Object, Logger):
                 reply_handler=lambda :handle_dbus_reply("request_quit"),
                 error_handler=lambda e:handle_dbus_error("request_quit", e))
         data_exit()
-        self.loginfo('Data id removed')
+        global_logger.info('Data id removed')
 
     @dbus.service.method(DSC_FRONTEND_NAME, in_signature="as", out_signature="")
     def install_pkgs(self, pkg_names):

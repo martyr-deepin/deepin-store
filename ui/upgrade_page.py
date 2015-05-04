@@ -40,10 +40,10 @@ from dtk.ui.theme import DynamicPixbuf, DynamicColor
 from dtk.ui.progressbar import ProgressBuffer, ProgressBar
 from dtk.ui.cycle_strip import CycleStrip
 import dtk.ui.tooltip as Tooltip
-from deepin_utils.core import split_with
 from deepin_utils.net import is_network_connected
 from deepin_utils.file import read_file, format_file_size
 
+import logging
 import utils
 from nls import _
 import widgets
@@ -62,7 +62,6 @@ from item_render import (render_pkg_info, STAR_SIZE, get_star_level, ITEM_PADDIN
         ITEM_NOTIFY_AGAIN_STRING, ITEM_NOTIFY_AGAIN_WIDTH, ITEM_NOTIFY_AGAIN_HEIGHT,
     )
 from utils import handle_dbus_error, handle_dbus_reply
-from logger import Logger
 
 class UpgradingBar(gtk.HBox):
     '''
@@ -343,7 +342,7 @@ class UpgradingBox(gtk.VBox):
         bottom_info_box.attach(self.recent_upgrade_time, 1, 2, 1, 2, xoptions=gtk.FILL, xpadding=0, ypadding=4)
 
         software_mirror_label = utils.create_right_align_label(_("Mirror Receiving: "))
-        if self.preference_dialog.mirrors_box.current_mirror_item:
+        if hasattr(self.preference_dialog, "mirrors_box") and self.preference_dialog.mirrors_box.current_mirror_item:
             self.software_mirror = utils.create_left_align_label(
                 self.preference_dialog.mirrors_box.current_mirror_item.mirror.name)
         else:
@@ -534,7 +533,7 @@ class UploadErrorLabelBox(gtk.VBox):
         self.show_uploading()
         global_event.emit("upload-error-log")
 
-class UpgradePage(gtk.VBox, Logger):
+class UpgradePage(gtk.VBox):
     '''
     class docs
     '''
@@ -545,7 +544,6 @@ class UpgradePage(gtk.VBox, Logger):
         '''
         # Init.
         gtk.VBox.__init__(self)
-        Logger.__init__(self)
         self.bus_interface = bus_interface
         self.data_manager = data_manager
 
@@ -630,13 +628,7 @@ class UpgradePage(gtk.VBox, Logger):
         global_event.emit("hide-window")
 
     def click_upgrade_check_button(self):
-        global_event.emit("set-cursor", gtk.gdk.WATCH)
-
-        self.bus_interface.get_upgrade_download_size(
-                                        self.get_current_selected_pkgs(),
-                                        reply_handler=self.update_download_size_info,
-                                        error_handler=lambda e: handle_dbus_error("get_upgrade_download_size -> %s" % e),
-                                        )
+        pass
 
     def get_current_selected_pkgs(self):
         select_pkg_names = []
@@ -648,32 +640,16 @@ class UpgradePage(gtk.VBox, Logger):
         #self.upgrade_bar.select_button.update_status(map(lambda item:
             #item.check_button_buffer.active, self.upgrade_treeview.visible_items))
 
-    def update_download_size_info(self, info):
-        size, change_pkg_names = info
-        size = int(size)
-        change_pkg_names = json.loads(change_pkg_names)
-
-        # TODO: add and remove action is different
-        #for item in self.upgrade_treeview.visible_items:
-            #if item.pkg_name in change_pkg_names:
-                #item.check_button_buffer.active = True
-        #self.upgrade_treeview.queue_draw()
-
+    def update_download_size_info(self, size, number):
         if size == -1:
-            self.upgrade_bar.message_label.set_text(_("This problem occurs due to corrupted local apt dependence relationship."))
+            self.upgrade_bar.message_label.set_text(
+                _("This problem occurs due to corrupted local apt dependence "
+                  "relationship."))
             self.upgrade_bar.upgrade_selected_button.set_sensitive(False)
         else:
-            select_pkg_names = self.get_current_selected_pkgs()
             self.upgrade_bar.message_label.set_text(
-                _("%s package(s) are available for upgrade, %s will be downloaded.") %
-                (len(select_pkg_names), utils.bit_to_human_str(size)))
-
-            #if select_pkg_names:
-                #self.upgrade_bar.upgrade_selected_button.set_sensitive(True)
-                #self.upgrade_bar.upgrade_selected_button.set_state(gtk.STATE_NORMAL)
-            #else:
-                #self.upgrade_bar.upgrade_selected_button.set_sensitive(False)
-
+                _("%s package(s) are available for upgrade, %s will be "
+                  "downloaded.") % (number, utils.bit_to_human_str(size)))
         global_event.emit("set-cursor", None)
 
     def click_notify_check_button(self):
@@ -690,8 +666,9 @@ class UpgradePage(gtk.VBox, Logger):
         if len(treeview.visible_items) == 0:
             global_event.emit("show-newest-view")
         else:
-            self.upgrade_bar.set_upgrade_info(len(treeview.visible_items), self.no_notify_pkg_num)
-            self.click_upgrade_check_button()
+            pass
+            #self.upgrade_bar.set_upgrade_info(len(treeview.visible_items), self.no_notify_pkg_num)
+            #self.click_upgrade_check_button()
 
     def monitor_no_notify_view(self, treeview):
         if len(treeview.visible_items) == 0:
@@ -822,7 +799,7 @@ class UpgradePage(gtk.VBox, Logger):
                 self.no_notify_treeview.delete_items([item])
                 break
 
-        self.upgrade_treeview.add_items([UpgradeItem(pkg_name, self.pkg_info_dict[pkg_name], self.data_manager)])
+        self.upgrade_treeview.add_items([UpgradeItem(dict(name=pkg_name, version=self.pkg_info_dict[pkg_name]), self.data_manager)])
 
     def show_no_notify_page(self):
         self.in_no_notify_page = True
@@ -861,7 +838,8 @@ class UpgradePage(gtk.VBox, Logger):
                     break
 
             if pkg_item == None:
-                pkg_item = UpgradeItem(pkg_name, self.bus_interface.request_pkgs_install_version([pkg_name])[0], self.data_manager)
+                pass
+                #pkg_item = UpgradeItem(pkg_name, self.bus_interface.request_pkgs_install_version([pkg_name])[0], self.data_manager)
 
             if download_status == "wait":
                 pkg_item.download_wait()
@@ -886,7 +864,8 @@ class UpgradePage(gtk.VBox, Logger):
                     break
 
             if pkg_item == None:
-                pkg_item = UpgradeItem(pkg_name, self.bus_interface.request_pkgs_install_version([pkg_name])[0], self.data_manager)
+                #pkg_item = UpgradeItem(pkg_name, self.bus_interface.request_pkgs_install_version([pkg_name])[0], self.data_manager)
+                pass
 
             if action_status == "wait":
                 pkg_item.download_finish()
@@ -1026,7 +1005,7 @@ class UpgradePage(gtk.VBox, Logger):
 
     def handle_upgrade_page_status(self, reply, success):
         if not success:
-            self.logerror("invoke dbus method %s with error: %s" % ("RequestUpgradeStatus", reply))
+            logging.error("invoke dbus method %s with error: %s" % ("RequestUpgradeStatus", reply))
             return
 
         status, pkg_infos = reply
@@ -1038,36 +1017,33 @@ class UpgradePage(gtk.VBox, Logger):
             return
 
         self.upgrade_treeview.clear()
+        pkg_infos = json.loads(str(pkg_infos))
         if len(pkg_infos) > 0:
             if self.update_list_pixbuf:
                 del self.update_list_pixbuf
                 self.update_list_pixbuf = None
 
-            no_notify_config = self.read_no_notify_config()
-
             exists_upgrade_pkg_names = map(lambda item: item.pkg_name, self.upgrade_treeview.visible_items)
-            exists_no_notify_pkg_names = map(lambda item: item.pkg_name, self.no_notify_treeview.visible_items)
 
             upgrade_items = []
-            no_notify_items = []
+            download_size = 0
+            download_number = 0
             for pkg_info in pkg_infos:
-                (pkg_name, pkg_version) = json.loads(pkg_info)
+                if pkg_info["status"] != "delete" and \
+                        pkg_info["status"] != "keep" and \
+                        not pkg_info["downloaded"]:
+                    download_size += pkg_info["size"]
+                    download_number += 1
+                pkg_name = pkg_info["name"]
+                pkg_version = pkg_info["version"]
                 self.pkg_info_dict[pkg_name] = pkg_version
 
-                if pkg_name in no_notify_config:
-                    if pkg_name not in exists_no_notify_pkg_names:
-                        self.no_notify_pkg_num += 1
-                        no_notify_items.append(NoNotifyItem(pkg_name, pkg_version, self.data_manager))
-                else:
-                    if pkg_name not in exists_upgrade_pkg_names:
-                        self.upgrade_pkg_num += 1
-                        upgrade_items.append(UpgradeItem(pkg_name, pkg_version, self.data_manager))
+                if pkg_name not in exists_upgrade_pkg_names:
+                    self.upgrade_pkg_num += 1
+                    upgrade_items.append(UpgradeItem(pkg_info, self.data_manager))
 
-
-            self.no_notify_treeview.add_items(no_notify_items)
+            self.update_download_size_info(download_size, download_number)
             self.upgrade_treeview.add_items(upgrade_items)
-
-            #self.upgrade_bar.set_upgrade_info(len(self.upgrade_treeview.visible_items), self.no_notify_pkg_num)
 
             if len(self.upgrade_treeview.visible_items) == 0:
                 global_event.emit("show-newest-view")
@@ -1083,9 +1059,6 @@ class UpgradePage(gtk.VBox, Logger):
         else:
             self.upgrade_treeview.clear()
             global_event.emit("show-newest-view")
-
-        #global_event.emit("show-upgrading-view")
-        #global_event.emit("show-newest-view")
 
     def download_ready(self, pkg_name):
         self.upgrading_view.upgrading_progress_detail.set_text(_("Dependencies analyzing"))
@@ -1134,6 +1107,15 @@ class UpgradePage(gtk.VBox, Logger):
 
 gobject.type_register(UpgradePage)
 
+status_l18n = {
+    "upgrade": _("Upgrade"),
+    "delete": _("Remove"),
+    "keep": _("Keep"),
+    "downgrade": _("Downgrade"),
+    "install": _("Install"),
+    "reinstall": _("Reinstall"),
+    }
+
 class UpgradeItem(TreeItem):
     '''
     class docs
@@ -1150,13 +1132,17 @@ class UpgradeItem(TreeItem):
 
     STATUS_PADDING_X = 15
 
-    def __init__(self, pkg_name, pkg_version, data_manager):
+    def __init__(self, pkg_info, data_manager):
         '''
         init docs
         '''
         TreeItem.__init__(self)
-        self.pkg_name = pkg_name
-        self.pkg_version = pkg_version
+        self.pkg_candidate_status = ""
+        _status = pkg_info.get("status")
+        if _status:
+            self.pkg_candidate_status = status_l18n.get(_status) or ""
+        self.pkg_name = pkg_info.get("name")
+        self.pkg_version = pkg_info.get("version")
         self.data_manager = data_manager
         self.icon_pixbuf = None
 
@@ -1165,7 +1151,7 @@ class UpgradeItem(TreeItem):
         self.short_desc = info[2]
         star = 5.0
         self.star_level = get_star_level(star)
-        self.star_buffer = DscStarBuffer(pkg_name)
+        self.star_buffer = DscStarBuffer(self.pkg_name)
 
         self.grade_star = 0
 
@@ -1209,14 +1195,15 @@ class UpgradeItem(TreeItem):
             cr.fill()
 
         if self.status == self.STATUS_NORMAL:
-            if self.notify_button_hover:
-                text_color = "#00AAFF"
-            else:
-                text_color = "#000000"
+            text_color = "#000000"
+            #if self.notify_button_hover:
+                #text_color = "#00AAFF"
+            #else:
+                #text_color = "#000000"
 
             draw_text(
                 cr,
-                ITEM_NO_NOTIFY_STRING,
+                self.pkg_candidate_status,
                 rect.x + rect.width - ITEM_NO_NOTIFY_AREA_WIDTH,
                 rect.y + (ITEM_HEIGHT - ITEM_NO_NOTIFY_HEIGHT) / 2,
                 ITEM_NO_NOTIFY_WIDTH,
@@ -1419,22 +1406,23 @@ class UpgradeItem(TreeItem):
                 global_event.emit("set-cursor", None)
         elif column == 2:
             if self.status == self.STATUS_NORMAL:
-                if self.is_in_no_notify_area(column, offset_x, offset_y):
-                    if not self.notify_button_hover:
-                        self.notify_button_hover = True
+                pass
+                #if self.is_in_no_notify_area(column, offset_x, offset_y):
+                    #if not self.notify_button_hover:
+                        #self.notify_button_hover = True
 
-                        if self.redraw_request_callback:
-                            self.redraw_request_callback(self)
+                        #if self.redraw_request_callback:
+                            #self.redraw_request_callback(self)
 
-                        global_event.emit("set-cursor", gtk.gdk.HAND2)
-                else:
-                    if self.notify_button_hover:
-                        self.notify_button_hover = False
+                        #global_event.emit("set-cursor", gtk.gdk.HAND2)
+                #else:
+                    #if self.notify_button_hover:
+                        #self.notify_button_hover = False
 
-                        if self.redraw_request_callback:
-                            self.redraw_request_callback(self)
+                        #if self.redraw_request_callback:
+                            #self.redraw_request_callback(self)
 
-                        global_event.emit("set-cursor", None)
+                        #global_event.emit("set-cursor", None)
         elif column == 3:
             if self.status == self.STATUS_NORMAL:
                 if self.is_in_button_area(column, offset_x, offset_y):
@@ -1486,8 +1474,9 @@ class UpgradeItem(TreeItem):
                 global_event.emit("switch-to-detail-page", self.pkg_name)
         elif column == 2:
             if self.status == self.STATUS_NORMAL:
-                if self.is_in_no_notify_area(column, offset_x, offset_y):
-                    global_event.emit("no-notify-pkg", self.pkg_name)
+                pass
+                #if self.is_in_no_notify_area(column, offset_x, offset_y):
+                    #global_event.emit("no-notify-pkg", self.pkg_name)
         elif column == 3:
             if self.status == self.STATUS_NORMAL:
                 if self.is_in_button_area(column, offset_x, offset_y):
@@ -1528,22 +1517,23 @@ class UpgradeItem(TreeItem):
                 self.redraw_request_callback(self)
         elif column == 2:
             if self.status == self.STATUS_NORMAL:
-                if self.is_in_no_notify_area(column, offset_x, offset_y):
-                    if not self.notify_button_hover:
-                        self.notify_button_hover = True
+                pass
+                #if self.is_in_no_notify_area(column, offset_x, offset_y):
+                    #if not self.notify_button_hover:
+                        #self.notify_button_hover = True
 
-                        if self.redraw_request_callback:
-                            self.redraw_request_callback(self)
+                        #if self.redraw_request_callback:
+                            #self.redraw_request_callback(self)
 
-                        global_event.emit("set-cursor", gtk.gdk.HAND2)
-                else:
-                    if self.notify_button_hover:
-                        self.notify_button_hover = False
+                        #global_event.emit("set-cursor", gtk.gdk.HAND2)
+                #else:
+                    #if self.notify_button_hover:
+                        #self.notify_button_hover = False
 
-                        if self.redraw_request_callback:
-                            self.redraw_request_callback(self)
+                        #if self.redraw_request_callback:
+                            #self.redraw_request_callback(self)
 
-                        global_event.emit("set-cursor", None)
+                        #global_event.emit("set-cursor", None)
 
     def single_click(self, column, offset_x, offset_y):
         pass
@@ -1577,12 +1567,13 @@ class UpgradeItem(TreeItem):
                                 pixbuf.get_height())))
 
     def is_in_no_notify_area(self, column, offset_x, offset_y):
-        return (column == 2
-                and is_in_rect((offset_x, offset_y),
-                               (0,
-                                (ITEM_HEIGHT - ITEM_NO_NOTIFY_HEIGHT) / 2,
-                                ITEM_NO_NOTIFY_WIDTH,
-                                ITEM_NO_NOTIFY_HEIGHT)))
+        return False
+        #return (column == 2
+                #and is_in_rect((offset_x, offset_y),
+                               #(0,
+                                #(ITEM_HEIGHT - ITEM_NO_NOTIFY_HEIGHT) / 2,
+                                #ITEM_NO_NOTIFY_WIDTH,
+                                #ITEM_NO_NOTIFY_HEIGHT)))
 
     def is_in_name_area(self, column, offset_x, offset_y):
         (name_width, name_height) = get_content_size(self.alias_name, NAME_SIZE)

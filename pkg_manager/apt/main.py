@@ -36,64 +36,63 @@ import apt.progress.base as apb
 import aptsources.distro
 import functools
 
-import logging
-logging.basicConfig(format='[%(levelname)s][%(name)s] %(message)s', level=logging.INFO)
-logger = logging.getLogger("pkg_manager.apt.main")
-
 from deepin_utils.file import read_file, write_file
 
 from download_manager import DownloadManager
 from parse_pkg import (
-        get_pkg_download_info,
-        get_pkg_dependence_file_path,
-        get_pkg_own_size,
-        get_cache_archive_dir,
-        )
+    get_pkg_download_info,
+    get_pkg_dependence_file_path,
+    get_pkg_own_size,
+    get_cache_archive_dir,
+    )
 import parse_pkg
 from constant import (
-        DSC_SERVICE_NAME,
-        DSC_SERVICE_PATH,
-        ACTION_INSTALL,
-        ACTION_UPGRADE,
-        ACTION_UNINSTALL,
-        DOWNLOAD_STATUS_NOTNEED,
-        DOWNLOAD_STATUS_ERROR,
-        PKG_SIZE_OWN,
-        PKG_SIZE_DOWNLOAD,
-        PKG_SIZE_ERROR,
-        )
+    DSC_SERVICE_NAME,
+    DSC_SERVICE_PATH,
+    ACTION_INSTALL,
+    ACTION_UPGRADE,
+    ACTION_UNINSTALL,
+    DOWNLOAD_STATUS_NOTNEED,
+    DOWNLOAD_STATUS_ERROR,
+    PKG_SIZE_OWN,
+    PKG_SIZE_DOWNLOAD,
+    PKG_SIZE_ERROR,
+    SYS_PKG_WHITE_LIST,
+    )
 from apt_cache import AptCache
 from action import AptActionPool
 from events import global_event
-from utils import log
 import utils
+from utils import logger
 import db_build
 
 DATA_DIR = os.path.join(get_parent_dir(__file__, 3), "data")
 SOURCE_LIST = '/etc/apt/sources.list'
 
 ubuntu_source_content_template = [
-"deb %s %s main restricted universe multiverse",
-"deb %s %s-security main restricted universe multiverse",
-"deb %s %s-updates main restricted universe multiverse",
-"# deb %s %s-proposed main restricted universe multiverse",
-"# deb %s %s-backports main restricted universe multiverse",
-"deb-src %s %s main restricted universe multiverse",
-"deb-src %s %s-security main restricted universe multiverse",
-"deb-src %s %s-updates main restricted universe multiverse",
-"# deb-src %s %s-proposed main restricted universe multiverse",
-"# deb-src %s %s-backports main restricted universe multiverse",
+    "deb %s %s main restricted universe multiverse",
+    "deb %s %s-security main restricted universe multiverse",
+    "deb %s %s-updates main restricted universe multiverse",
+    "# deb %s %s-proposed main restricted universe multiverse",
+    "# deb %s %s-backports main restricted universe multiverse",
+    "deb-src %s %s main restricted universe multiverse",
+    "deb-src %s %s-security main restricted universe multiverse",
+    "deb-src %s %s-updates main restricted universe multiverse",
+    "# deb-src %s %s-proposed main restricted universe multiverse",
+    "# deb-src %s %s-backports main restricted universe multiverse",
 ]
 
 deepin_source_content_template = [
-"deb %s %s main universe non-free",
-"deb-src %s %s main universe non-free",
-"#deb %s %s-updates main universe non-free",
-"#deb-src %s %s-updates main universe non-free",
+    "deb %s %s main universe non-free",
+    "deb-src %s %s main universe non-free",
+    "#deb %s %s-updates main universe non-free",
+    "#deb-src %s %s-updates main universe non-free",
 ]
 
+
 def get_source_list_contents(ubuntu_repo_url, deepin_repo_url):
-    head = '# This file was created by deepin software center, please do not modify manually!'
+    head = '# This file was created by deepin software center, '
+    'please do not modify manually!'
     codename = aptsources.distro.get_distro().codename
 
     s = []
@@ -116,6 +115,7 @@ def get_source_list_contents(ubuntu_repo_url, deepin_repo_url):
         s.append(line)
 
     return "\n".join(s)
+
 
 class ExitManager(td.Thread):
     '''
@@ -152,28 +152,29 @@ class ExitManager(td.Thread):
         signal = self.signal.get()
         if signal == "check":
             if self.is_download_action_running():
-                print "Download action still runing, exit later"
+                logger.info("Download action still runing, exit later")
                 self.loop()
             elif self.is_update_list_running():
-                print "Update list still runing, exit later"
+                logger.info("Update list still runing, exit later")
                 self.loop()
             elif self.is_apt_action_running():
-                print "Apt action still running, exit later"
+                logger.info("Apt action still running, exit later")
                 self.loop()
             else:
                 if self.have_exit_request():
-                    print "Exit"
+                    logger.info("backend service exit")
                     self.mainloop.quit()
                     utils.set_running_lock(False)
                 else:
                     self.loop()
+
 
 class ThreadMethod(td.Thread):
     '''
     func: a method name
     args: arguments tuple
     '''
-    def __init__(self, func, args, daemon=False):
+    def __init__(self, func, args=(), daemon=True):
         td.Thread.__init__(self)
         self.func = func
         self.args = args
@@ -183,6 +184,7 @@ class ThreadMethod(td.Thread):
     def run(self):
         self.func(*self.args)
 
+
 class PackageManager(dbus.service.Object):
     '''
     docs
@@ -191,9 +193,9 @@ class PackageManager(dbus.service.Object):
     def invoked_log(func):
         @functools.wraps(func)
         def wrapper(*args, **kw):
-            info = "dbus method invoked: %s, arguments: %s" % (func.__name__, str(args[1:]))
-            print info
-            log(info)
+            info = "dbus method invoked: %s, arguments: %s" % (
+                func.__name__, str(args[1:]))
+            logger.debug(info)
             return func(*args, **kw)
         return wrapper
 
@@ -214,7 +216,8 @@ class PackageManager(dbus.service.Object):
         self.apt_action_pool = AptActionPool(self.pkg_cache)
         self.apt_action_pool.start()
 
-        global_event.register_event('parse-download-error', self.send_parse_download_error)
+        global_event.register_event(
+            'parse-download-error', self.send_parse_download_error)
 
         global_event.register_event("action-start", self.action_start)
         global_event.register_event("action-update", self.action_update)
@@ -227,10 +230,14 @@ class PackageManager(dbus.service.Object):
         global_event.register_event("download-stop", self.download_stop)
         global_event.register_event("download-error", self.download_failed)
 
-        global_event.register_event("update-list-start", self.update_list_start)
-        global_event.register_event("update-list-finish", self.update_list_finish)
-        global_event.register_event("update-list-failed", self.update_list_failed)
-        global_event.register_event("update-list-update", self.update_list_update)
+        global_event.register_event(
+            "update-list-start", self.update_list_start)
+        global_event.register_event(
+            "update-list-finish", self.update_list_finish)
+        global_event.register_event(
+            "update-list-failed", self.update_list_failed)
+        global_event.register_event(
+            "update-list-update", self.update_list_update)
 
         self.packages_status = {}
 
@@ -252,7 +259,8 @@ class PackageManager(dbus.service.Object):
             self.is_upgrading = True
 
     def download_update(self, pkg_name, action_type, data):
-        self.update_signal([("download-update", (pkg_name, action_type, data))])
+        self.update_signal([("download-update", (
+            pkg_name, action_type, data))])
         if action_type == ACTION_UPGRADE:
             self.is_upgrading = True
 
@@ -302,13 +310,16 @@ class PackageManager(dbus.service.Object):
         pkg_name, action_type, pkg_info_list = signal_content
         if action_type == ACTION_INSTALL:
             for pkg_info in pkg_info_list:
-                self.pkg_cache.set_pkg_status(pkg_name, self.pkg_cache.PKG_STATUS_INSTALLED)
+                self.pkg_cache.set_pkg_status(
+                    pkg_name, self.pkg_cache.PKG_STATUS_INSTALLED)
         elif action_type == ACTION_UPGRADE:
             for pkg_info in pkg_info_list:
-                self.pkg_cache.set_pkg_status(pkg_name, self.pkg_cache.PKG_STATUS_UPGRADED)
+                self.pkg_cache.set_pkg_status(
+                    pkg_name, self.pkg_cache.PKG_STATUS_UPGRADED)
         elif action_type == ACTION_UNINSTALL:
             for pkg_info in pkg_info_list:
-                self.pkg_cache.set_pkg_status(pkg_name, self.pkg_cache.PKG_STATUS_UNINSTALLED)
+                self.pkg_cache.set_pkg_status(
+                    pkg_name, self.pkg_cache.PKG_STATUS_UNINSTALLED)
 
         self.update_signal([("action-finish", signal_content)])
         self.exit_manager.check()
@@ -331,7 +342,8 @@ class PackageManager(dbus.service.Object):
         return len(self.download_manager.download_task_info) > 0
 
     def is_apt_action_running(self):
-        return len(self.apt_action_pool.active_mission_list) + len(self.apt_action_pool.wait_mission_list) > 0
+        return len(self.apt_action_pool.active_mission_list) + len(
+            self.apt_action_pool.wait_mission_list) > 0
 
     def have_exit_request(self):
         return self.exit_flag
@@ -356,13 +368,14 @@ class PackageManager(dbus.service.Object):
         self.exit_manager.check()
 
     def update_list_update(self, percent, status_message, speed_str):
-        self.update_signal([("update-list-update", (percent, status_message, speed_str))])
+        self.update_signal([(
+            "update-list-update", (percent, status_message, speed_str))])
 
     def handle_dbus_reply(self, *reply):
-        log("%s (reply): %s" % (self.module_dbus_name, str(reply)))
+        logger.info("%s (reply): %s" % (self.module_dbus_name, str(reply)))
 
     def handle_dbus_error(self, *error):
-        log("%s (error): %s" % (self.module_dbus_name, str(error)))
+        logger.info("%s (error): %s" % (self.module_dbus_name, str(error)))
 
     def send_parse_download_error(self, pkg_name, action_type):
         self.update_signal([("parse-download-error", (pkg_name, action_type))])
@@ -378,42 +391,60 @@ class PackageManager(dbus.service.Object):
         else:
             return None
 
-    def add_upgrade_download_with_new_policy(self, pkg_names, action_type):
+    def dist_upgrade(self):
+        action_type = ACTION_UPGRADE
         action_id = '%s_%s' % (self.get_unique_id(), action_type)
-        self.update_signal([("ready-download-start", (action_id, action_type))])
+        self.update_signal([(
+            "ready-download-start", (action_id, action_type))])
 
-        real_pkg_dict, not_in_cache = parse_pkg.get_real_pkg_dict(self.pkg_cache, pkg_names)
-        if not_in_cache:
-            self.update_signal([("pkgs-not-in-cache", (json.dumps(not_in_cache), action_type))])
+        dist_upgrade_changes = self.pkg_cache.get_dist_upgrade_changes()
+        # detect and prevent the system components from being uninstalled
+        pkg_in_white_list = []
+        download_pkgs = []
+        self.all_upgrade_pkg_names = []
+        for pkg in dist_upgrade_changes["delete"]:
+            name = pkg.name
+            if name in SYS_PKG_WHITE_LIST:
+                pkg_in_white_list.append(name)
+        if len(pkg_in_white_list) > 0:
+            self.update_signal([(
+                "remove-pkgs-in-white-list",
+                (json.dumps(pkg_in_white_list), action_type))])
+            logger.error("found remove system packages: %s" %
+                json.dumps(pkg_in_white_list))
         else:
-            (all_change_pkgs, mark_failed_pkg_dict, marked_delete_sys_pkgs
-                    ) = parse_pkg.get_changes_pkgs(self.pkg_cache, real_pkg_dict)
+            for status in dist_upgrade_changes:
+                for pkg in dist_upgrade_changes[status]:
+                    self.all_upgrade_pkg_names.append(pkg.name)
+                    if status == "delete" or status == "keep":
+                        continue
+                    if not parse_pkg.pkg_file_has_exist(pkg):
+                        download_pkgs.append(pkg)
 
-            if mark_failed_pkg_dict:
-                self.update_signal([("pkgs-mark-failed", (json.dumps(mark_failed_pkg_dict.keys()), action_type))])
-
-            elif marked_delete_sys_pkgs:
-                self.update_signal([("marked-delete-system-pkgs", (json.dumps(marked_delete_sys_pkgs), action_type))])
+            self.update_signal([("ready-download-finish", (action_id, action_type))])
+            if len(download_pkgs) == 0:
+                global_event.emit("download-finish", action_id, action_type,
+                        self.all_upgrade_pkg_names)
             else:
-                self.update_signal([("ready-download-finish", (action_id, action_type))])
-                download_pkg_infos = parse_pkg.check_pkg_download_info(all_change_pkgs)
-                if download_pkg_infos[0] == DOWNLOAD_STATUS_ERROR:
-                    self.update_signal([("pkgs-parse-download-error", (str(download_pkg_infos[1]), action_type))])
-                elif download_pkg_infos[0] == DOWNLOAD_STATUS_NOTNEED:
-                    self.start_upgrade(pkg_names, action_id)
-                else:
-                    (names, download_urls, download_hash_infos, pkg_sizes) = download_pkg_infos
-                    self.all_upgrade_pkg_names = all_change_pkgs
-                    self.download_manager.add_download(
-                                            action_id,
-                                            action_type,
-                                            download_urls,
-                                            download_sizes=pkg_sizes,
-                                            download_md5s=download_hash_infos,
-                                            all_task_names=pkg_names,
-                                            all_change_pkgs=all_change_pkgs,
-                                            file_save_dir=self.download_dir
-                                            )
+                names = []
+                download_urls = []
+                download_hash_infos = []
+                pkg_sizes = []
+                for pkg in download_pkgs:
+                    names.append(pkg.name)
+                    download_urls.append(pkg.candidate.uri)
+                    download_hash_infos.append(pkg.candidate.md5)
+                    pkg_sizes.append(pkg.candidate.size)
+                self.download_manager.add_download(
+                    action_id,
+                    action_type,
+                    download_urls,
+                    download_sizes=pkg_sizes,
+                    download_md5s=download_hash_infos,
+                    all_task_names=names,
+                    all_change_pkgs=self.all_upgrade_pkg_names,
+                    file_save_dir=self.download_dir
+                    )
 
     def add_download(self, pkg_name, action_type, simulate=False):
         installed = self.get_pkg_installed(pkg_name)
@@ -424,15 +455,22 @@ class PackageManager(dbus.service.Object):
             self.update_signal([("pkg-not-in-cache", (pkg_name, action_type))])
             return
         pkg_infos = get_pkg_download_info(self.pkg_cache, pkg_name)
+        status = pkg_infos["status"]
         self.update_signal([("ready-download-finish", (pkg_name, action_type))])
-        if pkg_infos[0] == DOWNLOAD_STATUS_NOTNEED:
+        if status == DOWNLOAD_STATUS_NOTNEED:
             self.download_finish(pkg_name, action_type, [pkg_name,])
-            print "Don't need download"
-        elif pkg_infos[0] == DOWNLOAD_STATUS_ERROR:
+        elif status == DOWNLOAD_STATUS_ERROR:
             self.update_signal([("parse-download-error", (pkg_name, action_type))])
-            print "Download error"
         else:
-            (names, download_urls, download_hash_infos, pkg_sizes) = pkg_infos
+            names = []
+            download_urls = []
+            download_hash_infos = []
+            pkg_sizes = []
+            for info in pkg_infos["info"]:
+                names.append(info["name"])
+                download_urls.append(info["url"])
+                download_hash_infos.append(info["hash"])
+                pkg_sizes.append(info["size"])
 
             self.download_manager.add_download(
                                         pkg_name,
@@ -471,16 +509,16 @@ class PackageManager(dbus.service.Object):
     @dbus.service.method(DSC_SERVICE_NAME, in_signature='', out_signature='as')
     def read_no_notify_config(self, no_notify_config_path):
         if os.path.exists(no_notify_config_path):
-           no_notify_config_str = read_file(no_notify_config_path)
-           try:
-               no_notify_config = eval(no_notify_config_str)
+            no_notify_config_str = read_file(no_notify_config_path)
+            try:
+                no_notify_config = eval(no_notify_config_str)
 
-               if type(no_notify_config).__name__ != "list":
-                   no_notify_config = []
-           except Exception:
-               no_notify_config = []
+                if type(no_notify_config).__name__ != "list":
+                    no_notify_config = []
+            except Exception:
+                no_notify_config = []
 
-           return no_notify_config
+            return no_notify_config
         else:
             return []
 
@@ -504,7 +542,9 @@ class PackageManager(dbus.service.Object):
         no_notify_config = self.read_no_notify_config(path)
 
         if pkg_name in no_notify_config:
-            write_file(path, str(filter(lambda config_pkg_name: config_pkg_name != pkg_name, no_notify_config)))
+            write_file(path, str(filter(
+                lambda config_pkg_name: config_pkg_name != pkg_name,
+                no_notify_config)))
 
     @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="i", out_signature="")
@@ -518,45 +558,23 @@ class PackageManager(dbus.service.Object):
         self.download_dir = local_dir
 
     @invoked_log
-    @dbus.service.method(DSC_SERVICE_NAME, in_signature="s", out_signature="ai")
+    @dbus.service.method(
+        DSC_SERVICE_NAME, in_signature="s", out_signature="ai")
     def get_download_size(self, pkg_name):
         total_size = 0
         pkg_infos = get_pkg_download_info(self.pkg_cache, pkg_name)
-        if pkg_infos[0] == DOWNLOAD_STATUS_NOTNEED:
+        status = pkg_infos["status"]
+        if status == DOWNLOAD_STATUS_NOTNEED:
             total_size = get_pkg_own_size(self.pkg_cache, pkg_name)
             size_flag = PKG_SIZE_OWN
-        elif pkg_infos[0] == DOWNLOAD_STATUS_ERROR:
+        elif status == DOWNLOAD_STATUS_ERROR:
             total_size = -1
             size_flag = PKG_SIZE_ERROR
         else:
-            (names, download_urls, download_hash_infos, pkg_sizes) = pkg_infos
-            for size in pkg_sizes:
-                total_size += size
+            for info in pkg_infos["info"]:
+                total_size += info["size"]
             size_flag = PKG_SIZE_DOWNLOAD
         return [size_flag, total_size]
-
-    @invoked_log
-    @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="as")
-    def get_upgrade_download_size(self, pkg_names):
-        real_pkg_dict, not_in_cache = parse_pkg.get_real_pkg_dict(self.pkg_cache, pkg_names)
-        if not_in_cache:
-            return ["-1", json.dumps([])]
-        else:
-            (all_change_pkgs, mark_failed_pkg_dict, marked_delete_sys_pkgs
-                    ) = parse_pkg.get_changes_pkgs(self.pkg_cache, real_pkg_dict)
-
-            download_pkg_infos = parse_pkg.check_pkg_download_info(all_change_pkgs)
-            change_pkg_names = [pkg.name for pkg in all_change_pkgs]
-            if download_pkg_infos[0] == DOWNLOAD_STATUS_ERROR:
-                return ["-1", json.dumps([])]
-            elif download_pkg_infos[0] == DOWNLOAD_STATUS_NOTNEED:
-                return ["0", json.dumps(change_pkg_names)]
-            else:
-                (names, download_urls, download_hash_infos, pkg_sizes) = download_pkg_infos
-                total_size = 0
-                for size in pkg_sizes:
-                    total_size += size
-                return [str(total_size), json.dumps(change_pkg_names)]
 
     @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="ai")
@@ -589,7 +607,8 @@ class PackageManager(dbus.service.Object):
             for root, folder, files in os.walk(cache_archive_dir):
                 for file_name in files:
                     path = os.path.join(root, file_name)
-                    if path.endswith(".deb") and (path not in remain_pkgs_paths):
+                    if path.endswith(".deb") and (
+                            path not in remain_pkgs_paths):
                         packageNum += 1
                         cleanSize += os.path.getsize(path)
                         remove_file(path)
@@ -618,34 +637,37 @@ class PackageManager(dbus.service.Object):
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")
     def change_source_list(self, repo_urls):
         ubuntu_repo_url, deepin_repo_url = repo_urls
-        new_source_list_content = get_source_list_contents(ubuntu_repo_url, deepin_repo_url)
+        new_source_list_content = get_source_list_contents(
+            ubuntu_repo_url, deepin_repo_url)
         os.system('cp %s %s.save' % (SOURCE_LIST, SOURCE_LIST))
         with open(SOURCE_LIST, 'w') as fp:
             fp.write(new_source_list_content)
 
     @invoked_log
-    @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="(sas)")
-    # def request_upgrade_pkgs(self):  // old api name
+    @dbus.service.method(
+        DSC_SERVICE_NAME, in_signature="", out_signature="(ss)")
     def RequestUpgradeStatus(self):
-        """
-        Get upgrade status
-
-        @return: Return (status_code, [json.dumps(pkg_name, pkg_version)]),
-        status code is in below constants:
-            - normal: no dpkg action, just return packages that need to upgrade;
-            - upgrading: in upgrading packages;
-            - cache-updating: in updating apt cache;
-        """
         if self.in_update_list:
-            return ("cache-updating", [])
+            return ("cache-updating", json.dumps([]))
         elif self.is_upgrading:
-            return ("upgrading", [])
+            return ("upgrading", json.dumps([]))
         else:
-            cache_upgrade_pkgs = self.pkg_cache.get_upgrade_pkgs()
-            return ("normal", cache_upgrade_pkgs)
+            dist_upgrade_changes = self.pkg_cache.get_dist_upgrade_changes()
+            return_infos = []
+            for status in dist_upgrade_changes:
+                for pkg in dist_upgrade_changes[status]:
+                    return_infos.append(dict(
+                        status=status,
+                        name=pkg.name,
+                        version=pkg.candidate.version,
+                        size=pkg.candidate.size,
+                        downloaded=parse_pkg.pkg_file_has_exist(pkg)
+                        ))
+            return ("normal", json.dumps(return_infos))
 
     @invoked_log
-    @dbus.service.method(DSC_SERVICE_NAME, in_signature="a(si)", out_signature="")
+    @dbus.service.method(
+        DSC_SERVICE_NAME, in_signature="a(si)", out_signature="")
     def RemoveWaitMissions(self, pkg_infos):
         self.apt_action_pool.remove_wait_missions(pkg_infos)
 
@@ -655,7 +677,8 @@ class PackageManager(dbus.service.Object):
         return json.dumps(self.pkg_cache.get_uninstall_pkgs())
 
     @invoked_log
-    @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="as")
+    @dbus.service.method(
+        DSC_SERVICE_NAME, in_signature="as", out_signature="as")
     def request_pkgs_install_version(self, pkg_names):
         pkg_versions = []
         for pkg_name in pkg_names:
@@ -744,9 +767,9 @@ class PackageManager(dbus.service.Object):
                 self.update_signal([("pkg-not-in-cache", pkg_name)])
 
     @invoked_log
-    @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")
-    def upgrade_pkgs_with_new_policy(self, pkg_names):
-        ThreadMethod(self.add_upgrade_download_with_new_policy, (pkg_names, ACTION_UPGRADE)).start()
+    @dbus.service.method(DSC_SERVICE_NAME, in_signature="", out_signature="")
+    def DistUpgrade(self):
+        ThreadMethod(self.dist_upgrade).start()
 
     @invoked_log
     @dbus.service.method(DSC_SERVICE_NAME, in_signature="as", out_signature="")
@@ -857,7 +880,7 @@ class PackageManager(dbus.service.Object):
         # The signal is emitted when this method exits
         # You can have code here if you wish
         info = str(message)
-        log("dbus signal emit: %s" % info)
+        logger.debug("dbus signal emit: %s" % info)
 
 if __name__ == "__main__":
     # dpkg will failed if not set TERM and PATH environment variable.
@@ -878,7 +901,7 @@ if __name__ == "__main__":
 
     # Auth with root permission.
     if not utils.auth_with_policykit("com.linuxdeepin.softwarecenter.action"):
-        log("Auth failed")
+        logger.error("Auth failed")
 
     # Remove lock file if it exist.
     if os.path.exists("/var/lib/apt/lists/lock"):
@@ -887,12 +910,9 @@ if __name__ == "__main__":
     # Init dbus.
     system_bus = dbus.SystemBus()
     if system_bus.name_has_owner(DSC_SERVICE_NAME):
-        print "backend is runing:", DSC_SERVICE_NAME
+        logger.warn("another backend is running: %s" % DSC_SERVICE_NAME)
     else:
         bus_name = dbus.service.BusName(DSC_SERVICE_NAME, system_bus)
-
-        # Init package manager.
         PackageManager(system_bus, mainloop)
-
-        # Run.
+        logger.info("backend service started")
         mainloop.run()

@@ -38,11 +38,12 @@ import json
 from data import DATA_ID
 from server_action import FetchAlbumData, FetchImageFromUpyun
 from dtk.ui.threads import post_gui
-from utils import handle_dbus_error, global_logger
 from widgets import LoadingBox, NetworkConnectFailed
 from nls import _
 
 from operator import attrgetter
+import logging
+global_logger = logging.getLogger("dstore.ui.album_page")
 
 ALBUM_PICTURE_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID, "home", "album_picture", LANGUAGE)
 if not os.path.exists(ALBUM_PICTURE_DIR):
@@ -435,8 +436,8 @@ class AlbumDetailItem(TreeItem):
                 pass
             self.emit_redraw_request()
         else:
-            global_logger.logerror("%s: get_pkg_installed handle_dbus_error" % self.pkg_name)
-            global_logger.logerror(status)
+            global_logger.error("%s: get_pkg_installed handle_dbus_error" % self.pkg_name)
+            global_logger.error(status)
 
     def render_pkg_picture(self, cr, rect):
         if self.pixbuf == None:
