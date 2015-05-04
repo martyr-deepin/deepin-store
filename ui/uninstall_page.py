@@ -233,15 +233,15 @@ class UninstallPage(gtk.VBox):
 
     def add_uninstall_items(self, data, success):
         if not success:
-            global_logger.logerror("request_uninstall_pkgs failed: %s" % data)
+            global_logger.error("request_uninstall_pkgs failed: %s" % data)
             return
         pkg_infos = str(data)
 
         try:
             uninstall_pkg_infos = json.loads(pkg_infos)
         except Exception, e:
-            global_logger.logerror("Parse uninstall package information failed: %s" % pkg_infos)
-            global_logger.logerror("Error: %s" % str(e))
+            global_logger.error("Parse uninstall package information failed: %s" % pkg_infos)
+            global_logger.error("Error: %s" % str(e))
             uninstall_pkg_infos = []
 
         ThreadMethod(self.filter_uninstall_pkg_infos, (uninstall_pkg_infos, )).start()

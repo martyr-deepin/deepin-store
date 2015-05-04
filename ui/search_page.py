@@ -72,6 +72,7 @@ class SearchPage(gtk.VBox):
         self.content_box = gtk.VBox()
 
         self.treeview = TreeView(enable_drag_drop=False, expand_column=0)
+        global_event.register_event("delete-search-page-items", self.treeview.delete_items)
 
         self.cute_message_image = gtk.VBox()
         self.cute_message_pixbuf = utils.get_common_locale_image_pixbuf("info", "noresult.png")
@@ -208,15 +209,18 @@ class SearchItem(TreeItem):
     def handle_pkg_status(self, status, success):
         if success:
             self.install_status= str(status)
-            try:
-                self.desktops = json.loads(self.install_status)
-                self.desktops = self.data_manager.get_pkg_desktop_info(self.desktops)
-            except:
-                pass
-            self.emit_redraw_request()
+            if self.install_status == "unknown":
+                global_event.emit("delete-search-page-items", [self])
+            else:
+                try:
+                    self.desktops = json.loads(self.install_status)
+                    self.desktops = self.data_manager.get_pkg_desktop_info(self.desktops)
+                except:
+                    pass
+                self.emit_redraw_request()
         else:
-            utils.global_logger.logerror("%s: get_pkg_installed handle_dbus_error" % self.pkg_name)
-            utils.global_logger.logerror(status)
+            utils.global_logger.error("%s: get_pkg_installed handle_dbus_error" % self.pkg_name)
+            utils.global_logger.error(status)
 
     def render_info(self, cr, rect):
         if self.row_index % 2 == 1:

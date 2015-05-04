@@ -40,10 +40,10 @@ from dtk.ui.theme import DynamicPixbuf, DynamicColor
 from dtk.ui.progressbar import ProgressBuffer, ProgressBar
 from dtk.ui.cycle_strip import CycleStrip
 import dtk.ui.tooltip as Tooltip
-from deepin_utils.core import split_with
 from deepin_utils.net import is_network_connected
 from deepin_utils.file import read_file, format_file_size
 
+import logging
 import utils
 from nls import _
 import widgets
@@ -62,7 +62,6 @@ from item_render import (render_pkg_info, STAR_SIZE, get_star_level, ITEM_PADDIN
         ITEM_NOTIFY_AGAIN_STRING, ITEM_NOTIFY_AGAIN_WIDTH, ITEM_NOTIFY_AGAIN_HEIGHT,
     )
 from utils import handle_dbus_error, handle_dbus_reply
-from logger import Logger
 
 class UpgradingBar(gtk.HBox):
     '''
@@ -534,7 +533,7 @@ class UploadErrorLabelBox(gtk.VBox):
         self.show_uploading()
         global_event.emit("upload-error-log")
 
-class UpgradePage(gtk.VBox, Logger):
+class UpgradePage(gtk.VBox):
     '''
     class docs
     '''
@@ -545,7 +544,6 @@ class UpgradePage(gtk.VBox, Logger):
         '''
         # Init.
         gtk.VBox.__init__(self)
-        Logger.__init__(self)
         self.bus_interface = bus_interface
         self.data_manager = data_manager
 
@@ -1007,7 +1005,7 @@ class UpgradePage(gtk.VBox, Logger):
 
     def handle_upgrade_page_status(self, reply, success):
         if not success:
-            self.logerror("invoke dbus method %s with error: %s" % ("RequestUpgradeStatus", reply))
+            logging.error("invoke dbus method %s with error: %s" % ("RequestUpgradeStatus", reply))
             return
 
         status, pkg_infos = reply
@@ -1025,13 +1023,9 @@ class UpgradePage(gtk.VBox, Logger):
                 del self.update_list_pixbuf
                 self.update_list_pixbuf = None
 
-            no_notify_config = self.read_no_notify_config()
-
             exists_upgrade_pkg_names = map(lambda item: item.pkg_name, self.upgrade_treeview.visible_items)
-            exists_no_notify_pkg_names = map(lambda item: item.pkg_name, self.no_notify_treeview.visible_items)
 
             upgrade_items = []
-            no_notify_items = []
             download_size = 0
             download_number = 0
             for pkg_info in pkg_infos:
@@ -1044,20 +1038,12 @@ class UpgradePage(gtk.VBox, Logger):
                 pkg_version = pkg_info["version"]
                 self.pkg_info_dict[pkg_name] = pkg_version
 
-                if pkg_name in no_notify_config:
-                    if pkg_name not in exists_no_notify_pkg_names:
-                        self.no_notify_pkg_num += 1
-                        no_notify_items.append(NoNotifyItem(pkg_name, pkg_version, self.data_manager))
-                else:
-                    if pkg_name not in exists_upgrade_pkg_names:
-                        self.upgrade_pkg_num += 1
-                        upgrade_items.append(UpgradeItem(pkg_info, self.data_manager))
+                if pkg_name not in exists_upgrade_pkg_names:
+                    self.upgrade_pkg_num += 1
+                    upgrade_items.append(UpgradeItem(pkg_info, self.data_manager))
 
             self.update_download_size_info(download_size, download_number)
-            self.no_notify_treeview.add_items(no_notify_items)
             self.upgrade_treeview.add_items(upgrade_items)
-
-            #self.upgrade_bar.set_upgrade_info(len(self.upgrade_treeview.visible_items), self.no_notify_pkg_num)
 
             if len(self.upgrade_treeview.visible_items) == 0:
                 global_event.emit("show-newest-view")
@@ -1073,9 +1059,6 @@ class UpgradePage(gtk.VBox, Logger):
         else:
             self.upgrade_treeview.clear()
             global_event.emit("show-newest-view")
-
-        #global_event.emit("show-upgrading-view")
-        #global_event.emit("show-newest-view")
 
     def download_ready(self, pkg_name):
         self.upgrading_view.upgrading_progress_detail.set_text(_("Dependencies analyzing"))
@@ -1124,6 +1107,15 @@ class UpgradePage(gtk.VBox, Logger):
 
 gobject.type_register(UpgradePage)
 
+status_l18n = {
+    "upgrade": _("Upgrade"),
+    "delete": _("Remove"),
+    "keep": _("Keep"),
+    "downgrade": _("Downgrade"),
+    "install": _("Install"),
+    "reinstall": _("Reinstall"),
+    }
+
 class UpgradeItem(TreeItem):
     '''
     class docs
@@ -1145,7 +1137,10 @@ class UpgradeItem(TreeItem):
         init docs
         '''
         TreeItem.__init__(self)
-        self.pkg_candidate_status = pkg_info.get("status") or ""
+        self.pkg_candidate_status = ""
+        _status = pkg_info.get("status")
+        if _status:
+            self.pkg_candidate_status = status_l18n.get(_status) or ""
         self.pkg_name = pkg_info.get("name")
         self.pkg_version = pkg_info.get("version")
         self.data_manager = data_manager

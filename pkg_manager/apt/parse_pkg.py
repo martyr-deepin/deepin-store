@@ -111,12 +111,7 @@ def get_upgrade_download_info_with_new_policy(cache, pkg_names):
 
 def get_pkg_download_info(cache, pkg_name):
     dependence = get_pkg_dependence(cache, pkg_name)
-    if dependence == []:
-        return [DOWNLOAD_STATUS_NOTNEED, None]
-    elif dependence == -1:
-        return [DOWNLOAD_STATUS_ERROR, None]
-    else:
-        return check_pkg_download_info(dependence)
+    return check_pkg_download_info(dependence)
 
 def get_pkg_dependence(cache, pkg_name):
     try:

@@ -5,14 +5,15 @@
 # Translators:
 # gogo <trebelnik2@gmail.com>, 2014
 # Ivica  Kolić <ikoli@yahoo.com>, 2014
+# Ljubo Šimić <aske777@gmail.com>, 2015
 # gogo <trebelnik2@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-29 13:45+0800\n"
-"PO-Revision-Date: 2014-12-29 06:13+0000\n"
-"Last-Translator: deepin_transifex <xiabin@linuxdeepin.com>\n"
+"PO-Revision-Date: 2015-03-24 00:21+0000\n"
+"Last-Translator: Ljubo Šimić <aske777@gmail.com>\n"
 "Language-Team: Croatian (http://www.transifex.com/projects/p/deepin-store/language/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -483,7 +484,7 @@ msgstr "Slagalice"
 
 #: ../ui/category_info.py:55
 msgid "Role-playing games"
-msgstr ""
+msgstr "Role-playing igare"
 
 #: ../ui/category_info.py:56
 msgid "Sports games"
@@ -986,4 +987,4 @@ msgstr "%s aplikacija pretraženo"
 
 #: ../ui/home_page.py:762
 msgid "HotApps"
-msgstr ""
+msgstr "Vruće Aplikacije"

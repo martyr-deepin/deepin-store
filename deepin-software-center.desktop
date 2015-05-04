@@ -4,7 +4,7 @@ Comment=A general Linux software manager
 Comment[zh_CN]=Linux 通用软件管理器
 Comment[zh_TW]=Linux 的通用軟體管理器
 Encoding=UTF-8
-Exec=deepin-software-center %f
+Exec=deepin-software-center %U
 Icon=deepin-software-center
 Name=Deepin Store
 Name[zh_CN]=深度商店
@@ -14,6 +14,8 @@ Terminal=false
 Type=Application
 X-Ayatana-Desktop-Shortcuts=ShowUpgrade;ShowUninstall
 X-MultipleArgs=false
+MimeType=x-scheme-handler/apt
+
 
 [ShowUninstall Shortcut Group]
 Exec=/usr/bin/deepin-software-center --page=uninstall
