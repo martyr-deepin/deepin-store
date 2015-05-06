@@ -30,7 +30,11 @@ from constant import SERVER_ADDRESS, POST_TIMEOUT
 from events import global_event
 import traceback
 from deepin_utils.file import create_directory, touch_file
+from deepin_utils.hash import md5_file
 import utils
+import logging
+
+from constant import local_mirrors_json
 
 DEBUG = False
 
@@ -46,6 +50,31 @@ status_modes = {
         'publish' : '3',
         'archive' : '4',
         }
+
+class FetchMirrors(td.Thread):
+    def __init__(self):
+        td.Thread.__init__(self)
+        self.mirrors_json_url = UPYUN_SERVER_ADDRESS + "mirrors.json"
+        self.mirrors_json_md5_url = UPYUN_SERVER_ADDRESS + "mirrors_json_md5.txt"
+
+    def run(self):
+        need_download = True
+        if os.path.exists(local_mirrors_json):
+            try:
+                remote_md5 = urllib2.urlopen(self.mirrors_json_md5_url).read().strip()
+                local_md5 = md5_file(local_mirrors_json)
+                need_download = remote_md5 != local_md5
+            except Exception, e:
+                logging.warn("fetch mirrors.json md5 error:")
+                logging.warn(str(e))
+
+        if need_download:
+            try:
+                urllib.urlretrieve(self.mirrors_json_url, local_mirrors_json)
+                logging.info("fetch mirrors.json finished")
+            except Exception, e:
+                logging.warn("fetch mirrors.json error:")
+                logging.warn(str(e))
 
 class FetchAlbumData(td.Thread):
 

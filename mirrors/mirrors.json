@@ -1,0 +1,514 @@
+[
+    {
+        "category": "zh_CN",
+        "name[zh_TW]": "官方穩定檔案庫(中國大陸)",
+        "ubuntu_url": "http://packages.linuxdeepin.com/ubuntu",
+        "name[zh_CN]": "官方稳定源(中国大陆)",
+        "name[zh_HK]": "官方穩定檔案庫(中國大陸)",
+        "deepin_url": "http://packages.linuxdeepin.com/deepin",
+        "name[en_US]": "Offical Stable(Chinese mainland)"
+    },
+    {
+        "category": "zh_CN",
+        "name[zh_TW]": "阿里雲",
+        "ubuntu_url": "http://mirrors.aliyun.com/ubuntu",
+        "name[zh_CN]": "阿里云",
+        "name[zh_HK]": "阿里雲",
+        "deepin_url": "http://mirrors.aliyun.com/deepin",
+        "name[en_US]": "Aliyun.com"
+    },
+    {
+        "category": "zh_CN",
+        "name[zh_TW]": "中國科學技術大學",
+        "ubuntu_url": "http://mirrors.ustc.edu.cn/ubuntu",
+        "name[zh_CN]": "中国科学技术大学",
+        "name[zh_HK]": "中國科學技術大學",
+        "deepin_url": "http://mirrors.ustc.edu.cn/deepin",
+        "name[en_US]": "University of Science and Technology"
+    },
+    {
+        "category": "zh_CN",
+        "name[zh_TW]": "搜狐",
+        "ubuntu_url": "http://mirrors.sohu.com/ubuntu",
+        "name[zh_CN]": "搜狐",
+        "name[zh_HK]": "搜狐",
+        "deepin_url": "http://mirrors.sohu.com/deepin/",
+        "name[en_US]": "Sohu.com"
+    },
+    {
+        "category": "zh_CN",
+        "name[zh_TW]": "廈門大學",
+        "ubuntu_url": "http://mirrors.xmu.edu.cn/ubuntu/archive",
+        "name[zh_CN]": "厦门大学",
+        "name[zh_HK]": "廈門大學",
+        "deepin_url": "http://mirrors.xmu.edu.cn/deepin/deepin",
+        "name[en_US]": "Xiamen University"
+    },
+    {
+        "category": "zh_CN",
+        "name[zh_TW]": "北京交通大學",
+        "ubuntu_url": "http://mirror.bjtu.edu.cn/ubuntu",
+        "name[zh_CN]": "北京交通大学",
+        "name[zh_HK]": "北京交通大學",
+        "deepin_url": "http://mirror.bjtu.edu.cn/deepin",
+        "name[en_US]": "Beijing Jiaotong University"
+    },
+    {
+        "category": "zh_CN",
+        "ubuntu_url": "http://ftp.nankai.edu.cn/ubuntu/",
+        "name[zh_CN]": "南开大学",
+        "deepin_url": "http://ftp.nankai.edu.cn/deepin/",
+        "name[en_US]": "Nankai University"
+    },
+    {
+        "category": "zh_CN",
+        "name[zh_TW]": "北京理工大學",
+        "ubuntu_url": "http://mirror.bit.edu.cn/ubuntu",
+        "name[zh_CN]": "北京理工大学",
+        "name[zh_HK]": "北京理工大學",
+        "deepin_url": "http://mirror.bit.edu.cn/deepin",
+        "name[en_US]": "Beijing Institute of Technology"
+    },
+    {
+        "category": "zh_CN",
+        "name[zh_TW]": "蘭州大學",
+        "ubuntu_url": "http://mirror.lzu.edu.cn/ubuntu",
+        "name[zh_CN]": "兰州大学",
+        "name[zh_HK]": "蘭州大學",
+        "deepin_url": "http://mirror.lzu.edu.cn/deepin",
+        "name[en_US]": "Lanzhou University"
+    },
+    {
+        "category": "zh_CN",
+        "name[zh_TW]": "中山大學",
+        "ubuntu_url": "http://mirrors.163.com/ubuntu",
+        "name[zh_CN]": "中山大学",
+        "name[zh_HK]": "中山大學",
+        "deepin_url": "http://mirror.sysu.edu.cn/deepin",
+        "name[en_US]": "Sun Yat-sen University"
+    },
+    {
+        "category": "zh_CN",
+        "name[zh_TW]": "清華大學",
+        "ubuntu_url": "http://mirrors.tuna.tsinghua.edu.cn/ubuntu",
+        "name[zh_CN]": "清华大学",
+        "name[zh_HK]": "清華大學",
+        "deepin_url": "http://mirrors.tuna.tsinghua.edu.cn/deepin",
+        "name[en_US]": "Tsinghua University"
+    },
+    {
+        "category": "zh_CN",
+        "name[zh_TW]": "重慶大學",
+        "ubuntu_url": "http://mirrors.cqu.edu.cn/ubuntu/",
+        "name[zh_CN]": "重庆大学",
+        "deepin_url": "http://mirrors.cqu.edu.cn/Deepin/",
+        "name[en_US]": "ChongQing University"
+    },
+    {
+        "category": "zh_CN",
+        "name[zh_TW]": "江蘇開放大學",
+        "ubuntu_url": "http://mirrors.jstvu.edu.cn/ubuntu",
+        "name[zh_CN]": "江苏开放大学",
+        "name[zh_HK]": "江蘇開放大學",
+        "deepin_url": "http://mirrors.jstvu.edu.cn/deepin",
+        "name[en_US]": "Jiangsu Open University"
+    },
+    {
+        "category": "zh_CN",
+        "name[zh_TW]": "華中科技大學",
+        "ubuntu_url": "http://mirrors.hust.edu.cn/ubuntu",
+        "name[zh_CN]": "华中科技大学",
+        "name[zh_HK]": "華中科技大學",
+        "deepin_url": "http://mirrors.hust.edu.cn/deepin",
+        "name[en_US]": "Huazhong University of Science and Technology"
+    },
+    {
+        "category": "zh_CN",
+        "name[zh_TW]": "天津大學",
+        "ubuntu_url": "http://mirror.zyrj.org/ubuntu/",
+        "name[zh_CN]": "天津大学",
+        "name[zh_HK]": "天津大學",
+        "deepin_url": "http://mirror.zyrj.org/deepin/",
+        "name[en_US]": "Tianjin University"
+    },
+    {
+        "category": "zh_CN",
+        "name[zh_TW]": "首都線上鏡象站",
+        "ubuntu_url": "http://mirrors.yun-idc.com/ubuntu/",
+        "name[zh_CN]": "首都在线镜像站",
+        "name[zh_HK]": "首都線上鏡像站",
+        "deepin_url": "http://mirrors.yun-idc.com/deepin/",
+        "name[en_US]": "Capital Online Data Service LTD."
+    },
+    {
+        "category": "zh_CN",
+        "name[zh_TW]": "系統實驗室",
+        "ubuntu_url": "http://mirrors.skyshe.com/ubuntu",
+        "name[zh_CN]": "系统实验室",
+        "name[zh_HK]": "系統實驗室",
+        "deepin_url": "http://mirrors.skyshe.com/deepin",
+        "name[en_US]": "Skyshe.cn"
+    },
+    {
+        "category": "zh_CN",
+        "name[zh_TW]": "哈爾濱工業大學",
+        "ubuntu_url": "http://run.hit.edu.cn/ubuntu",
+        "name[zh_CN]": "哈尔滨工业大学",
+        "name[zh_HK]": "哈爾濱工業大學",
+        "deepin_url": "http://run.hit.edu.cn/deepin",
+        "name[en_US]": "Harbin Institute of Technology"
+    },
+    {
+        "category": "zh_CN",
+        "name[zh_TW]": "凝聚網絡安全工作室",
+        "ubuntu_url": "http://ubuntu.cnssuestc.org/ubuntu/",
+        "name[zh_CN]": "凝聚网络安全工作室",
+        "name[zh_HK]": "凝聚網絡安全工作室",
+        "deepin_url": "http://mirrors.cnssuestc.org/deepin/",
+        "name[en_US]": "Cohesion Network Security Studio"
+    },
+    {
+        "category": "zh_CN",
+        "name[zh_TW]": "上海交通大學",
+        "ubuntu_url": "http://ftp.sjtu.edu.cn/ubuntu/",
+        "name[zh_CN]": "上海交通大学",
+        "name[zh_HK]": "上海交通大學",
+        "deepin_url": "http://ftp.sjtu.edu.cn/deepin/",
+        "name[en_US]": "Shanghai Jiao Tong University"
+    },
+    {
+        "category": "zh_CN",
+        "name[zh_TW]": "Linux的運維派",
+        "ubuntu_url": "http://mirrors.skyshe.cn/ubuntu",
+        "name[zh_CN]": "Linux运维派",
+        "name[zh_HK]": "Linux的運維派",
+        "deepin_url": "http://mirrors.skyshe.cn/deepin",
+        "name[en_US]": "Skyshe"
+    },
+    {
+        "category": "zh_CN",
+        "name[zh_TW]": "中國開源軟體推進聯盟",
+        "ubuntu_url": "http://mirrors.oss.org.cn/ubuntu",
+        "name[zh_CN]": "中国开源软件推进联盟",
+        "name[zh_HK]": "中國開源軟體推進聯盟",
+        "deepin_url": "http://mirrors.oss.org.cn/deepin",
+        "name[en_US]": "China OSS Promotion Union"
+    },
+    {
+        "category": "zh_TW",
+        "name[zh_TW]": "Ubuntu正體中文站",
+        "ubuntu_url": "http://ftp.ubuntu-tw.org/mirror/ubuntu/",
+        "name[zh_CN]": "Ubuntu正體中文站",
+        "name[zh_HK]": "Ubuntu正體中文站",
+        "deepin_url": "http://ftp.ubuntu-tw.org/mirror/deepin/",
+        "name[en_US]": "Ubuntu Taiwan"
+    },
+    {
+        "category": "zh_TW",
+        "name[zh_TW]": "自由軟體實驗室",
+        "ubuntu_url": "http://free.nchc.org.tw/ubuntu",
+        "name[zh_CN]": "自由软体实验室",
+        "name[zh_HK]": "自由軟體實驗室",
+        "deepin_url": "http://free.nchc.org.tw/deepin",
+        "name[en_US]": "Free Software Lab"
+    },
+    {
+        "category": "zh_TW",
+        "name[zh_TW]": "元智大學",
+        "ubuntu_url": "http://ftp.yzu.edu.tw/ubuntu/",
+        "name[zh_CN]": "元智大学",
+        "name[zh_HK]": "元智大學",
+        "deepin_url": "http://ftp.yzu.edu.tw/Linux/deepin/",
+        "name[en_US]": "Yuan Ze University"
+    },
+    {
+        "category": "en_US",
+        "name[zh_TW]": "MetroCast Cablevision",
+        "ubuntu_url": "http://mirror.metrocast.net/ubuntu",
+        "name[zh_CN]": "MetroCast Cablevision",
+        "name[zh_HK]": "MetroCast Cablevision",
+        "deepin_url": "http://mirror.metrocast.net/deepin",
+        "name[en_US]": "MetroCast Cablevision"
+    },
+    {
+        "category": "en_US",
+        "name[zh_TW]": "詹姆斯·麥迪遜大學",
+        "ubuntu_url": "http://mirror.jmu.edu/pub/ubuntu",
+        "name[zh_CN]": "詹姆斯·麦迪逊大学",
+        "name[zh_HK]": "詹姆斯·麥迪遜大學",
+        "deepin_url": "http://mirror.jmu.edu/pub/deepin",
+        "name[en_US]": "James Madison University"
+    },
+    {
+        "category": "en_US",
+        "name[zh_TW]": "Georgia Tech. Software Library",
+        "ubuntu_url": "http://www.gtlib.gatech.edu/pub/ubuntu/",
+        "name[zh_CN]": "Georgia Tech. Software Library",
+        "name[zh_HK]": "Georgia Tech. Software Library",
+        "deepin_url": "http://www.gtlib.gatech.edu/pub/deepin/",
+        "name[en_US]": "Georgia Tech. Software Library"
+    },
+    {
+        "category": "United States",
+        "name[zh_TW]": "Michigan Tech Linux Users' Group",
+        "ubuntu_url": "http://lug.mtu.edu/ubuntu/",
+        "name[zh_CN]": "Michigan Tech Linux Users' Group",
+        "name[zh_HK]": "Michigan Tech Linux Users' Group",
+        "deepin_url": "http://lug.mtu.edu/deepin/",
+        "name[en_US]": "Michigan Tech Linux Users' Group"
+    },
+    {
+        "category": "en_US",
+        "name[zh_TW]": "Nexcess",
+        "ubuntu_url": "http://mirror.nexcess.net/ubuntu/",
+        "name[zh_CN]": "Nexcess",
+        "name[zh_HK]": "Nexcess",
+        "deepin_url": "http://mirror.nexcess.net/deepin/",
+        "name[en_US]": "Nexcess"
+    },
+    {
+        "category": "en_US",
+        "name[zh_TW]": "Nexcess (ftp)",
+        "ubuntu_url": "ftp://mirror.nexcess.net/ubuntu/",
+        "name[zh_CN]": "Nexcess (ftp)",
+        "name[zh_HK]": "Nexcess (ftp)",
+        "deepin_url": "ftp://mirror.nexcess.net/deepin/",
+        "name[en_US]": "Nexcess (ftp)"
+    },
+    {
+        "category": "en_GB",
+        "name[zh_TW]": "Bytemark Hosting",
+        "ubuntu_url": "http://mirror.bytemark.co.uk/ubuntu/",
+        "name[zh_CN]": "Bytemark Hosting",
+        "name[zh_HK]": "Bytemark Hosting",
+        "deepin_url": "http://mirror.bytemark.co.uk/linuxdeepin/packages/",
+        "name[en_US]": "Bytemark Hosting"
+    },
+    {
+        "category": "en_GB",
+        "name[zh_TW]": "肯特大學",
+        "ubuntu_url": "http://www.mirrorservice.org/sites/archive.ubuntu.com/ubuntu/",
+        "name[zh_CN]": "肯特大学",
+        "name[zh_HK]": "肯特大學",
+        "deepin_url": "http://www.mirrorservice.org/sites/packages.linuxdeepin.com/deepin/",
+        "name[en_US]": "University of Kent UK Mirror Service"
+    },
+    {
+        "category": "de_DE",
+        "name[zh_TW]": "Friedrich-Alexander-Universität Erlangen-Nürnberg",
+        "ubuntu_url": "http://ftp.fau.de/ubuntu/",
+        "name[zh_CN]": "Friedrich-Alexander-Universität Erlangen-Nürnberg",
+        "name[zh_HK]": "Friedrich-Alexander-Universität Erlangen-Nürnberg",
+        "deepin_url": "http://ftp.fau.de/deepin/",
+        "name[en_US]": "Friedrich-Alexander-Universität Erlangen-Nürnberg"
+    },
+    {
+        "category": "de_DE",
+        "name[zh_TW]": "GWDG",
+        "ubuntu_url": "http://ftp5.gwdg.de/pub/linux/debian/ubuntu/",
+        "name[zh_CN]": "GWDG",
+        "name[zh_HK]": "GWDG",
+        "deepin_url": "http://ftp5.gwdg.de/pub/linux/linuxdeepin/packages/",
+        "name[en_US]": "GWDG"
+    },
+    {
+        "category": "it",
+        "name[zh_TW]": "GARR/CILEA",
+        "ubuntu_url": "http://ubuntu.mirror.garr.it/mirrors/ubuntu/",
+        "name[zh_CN]": "GARR/CILEA",
+        "name[zh_HK]": "GARR/CILEA",
+        "deepin_url": "http://deepin.mirror.garr.it/mirrors/deepin/",
+        "name[en_US]": "GARR MIRROR"
+    },
+    {
+        "category": "sk_SK",
+        "name[zh_TW]": "Rainside",
+        "ubuntu_url": "http://tux.rainside.sk/ubuntu",
+        "name[zh_CN]": "Rainside",
+        "name[zh_HK]": "Rainside",
+        "deepin_url": "http://tux.rainside.sk/deepin",
+        "name[en_US]": "Rainside"
+    },
+    {
+        "category": "pt_BR",
+        "name[zh_TW]": "巴拉那聯邦大學",
+        "ubuntu_url": "http://ubuntu.c3sl.ufpr.br/ubuntu/",
+        "name[zh_CN]": "巴拉那联邦大学",
+        "name[zh_HK]": "巴拉那聯邦大學",
+        "deepin_url": "http://linuxdeepin.c3sl.ufpr.br/",
+        "name[en_US]": "Federal University of Paraná"
+    },
+    {
+        "category": "pt_BR",
+        "name[zh_TW]": "University of Sao Paulo",
+        "ubuntu_url": "http://sft.if.usp.br/ubuntu/",
+        "name[zh_CN]": "University of Sao Paulo",
+        "name[zh_HK]": "University of Sao Paulo",
+        "deepin_url": "http://sft.if.usp.br/deepin/",
+        "name[en_US]": "University of Sao Paulo"
+    },
+    {
+        "category": "pt_BR",
+        "name[zh_TW]": "坎皮納斯大學安全與密碼學實驗室",
+        "ubuntu_url": "http://www.las.ic.unicamp.br/pub/ubuntu/",
+        "name[zh_CN]": "坎皮纳斯大学安全与密码学实验室",
+        "deepin_url": "http://www.las.ic.unicamp.br/pub/deepin/",
+        "name[en_US]": "LAS-IC-Unicamp"
+    },
+    {
+        "category": "id_ID",
+        "name[zh_TW]": "Datautama-Net-ID",
+        "ubuntu_url": "http://kartolo.sby.datautama.net.id/ubuntu/",
+        "name[zh_CN]": "Datautama-Net-ID",
+        "name[zh_HK]": "Datautama-Net-ID",
+        "deepin_url": "http://kartolo.sby.datautama.net.id/deepin/",
+        "name[en_US]": "PT. Data Utama Dinamika"
+    },
+    {
+        "category": "en_ZA",
+        "name[zh_TW]": "Web Africa",
+        "ubuntu_url": "http://ftp.wa.co.za/ubuntu/",
+        "name[zh_CN]": "Web Africa",
+        "name[zh_HK]": "Web Africa",
+        "deepin_url": "http://ftp.wa.co.za/pub/deepin/",
+        "name[en_US]": "Web Africa"
+    },
+    {
+        "category": "South Africa",
+        "name[zh_TW]": "Telkom SAIX",
+        "ubuntu_url": "http://www.ftp.saix.net/linux/distributions/ubuntu/ubuntu-archive/",
+        "name[zh_CN]": "Telkom SAIX",
+        "name[zh_HK]": "Telkom SAIX",
+        "deepin_url": "http://www.ftp.saix.net/linux/distributions/linux-deepin/deepin/",
+        "name[en_US]": "Telkom SAIX"
+    },
+    {
+        "category": "uk_UA",
+        "name[zh_TW]": "Kiev Linux Users Group",
+        "ubuntu_url": "http://ftp.osdn.org.ua/ubuntu/",
+        "name[zh_CN]": "Kiev Linux Users Group",
+        "name[zh_HK]": "Kiev Linux Users Group",
+        "deepin_url": "http://ftp.osdn.org.ua/mirrors/deepin/packages/",
+        "name[en_US]": "Kiev Linux Users Group"
+    },
+    {
+        "category": "ru",
+        "name[zh_TW]": "Yandex Linux mirror",
+        "ubuntu_url": "http://mirror.yandex.ru/ubuntu/",
+        "name[zh_CN]": "Yandex Linux mirror",
+        "name[zh_HK]": "Yandex Linux mirror",
+        "deepin_url": "http://mirror.yandex.ru/mirrors/deepin/packages/",
+        "name[en_US]": "Yandex Linux mirror"
+    },
+    {
+        "category": "pl_PL",
+        "name[zh_TW]": "Piotrkosoft.net",
+        "ubuntu_url": "http://piotrkosoft.net/pub/mirrors/ubuntu/",
+        "name[zh_CN]": "Piotrkosoft.net",
+        "name[zh_HK]": "Piotrkosoft.net",
+        "deepin_url": "http://piotrkosoft.net/pub/mirrors/deepin/",
+        "name[en_US]": "Piotrkosoft.net"
+    },
+    {
+        "category": "de_AT",
+        "name[zh_TW]": "UPC Telekabel Wien GmbH",
+        "ubuntu_url": "http://ubuntu.inode.at/ubuntu/",
+        "name[zh_CN]": "UPC Telekabel Wien GmbH",
+        "name[zh_HK]": "UPC Telekabel Wien GmbH",
+        "deepin_url": "http://mirror.inode.at/data/deepin/",
+        "name[en_US]": "UPC Telekabel Wien GmbH"
+    },
+    {
+        "category": "be",
+        "name[zh_TW]": "Belnet",
+        "ubuntu_url": "http://ftp.belnet.be/ubuntu.com/",
+        "name[zh_CN]": "Belnet",
+        "name[zh_HK]": "Belnet",
+        "deepin_url": "http://ftp.belnet.be/deepin/",
+        "name[en_US]": "Belnet"
+    },
+    {
+        "category": "Japan",
+        "name[zh_TW]": "Tsukuba WIDE Public Mirror service",
+        "ubuntu_url": "http://ftp.tsukuba.wide.ad.jp/Linux/ubuntu/",
+        "name[zh_CN]": "Tsukuba WIDE Public Mirror service",
+        "name[zh_HK]": "Tsukuba WIDE Public Mirror service",
+        "deepin_url": "http://ftp.tsukuba.wide.ad.jp/Linux/deepin/",
+        "name[en_US]": "Tsukuba WIDE Public Mirror service"
+    },
+    {
+        "category": "bg_BG",
+        "name[zh_TW]": "IPACCT",
+        "ubuntu_url": "http://ubuntu.ipacct.com/ubuntu/",
+        "name[zh_CN]": "IPACCT",
+        "name[zh_HK]": "IPACCT",
+        "deepin_url": "http://deepin.ipacct.com/deepin/",
+        "name[en_US]": "IPACCT"
+    },
+    {
+        "category": "nl_BE",
+        "name[zh_TW]": "NLUUG",
+        "ubuntu_url": "http://ftp.nluug.nl/os/Linux/distr/ubuntu/",
+        "name[zh_CN]": "NLUUG",
+        "name[zh_HK]": "NLUUG",
+        "deepin_url": "http://ftp.nluug.nl/os/Linux/distr/deepin/",
+        "name[en_US]": "NLUUG"
+    },
+    {
+        "category": "es_CO",
+        "name[zh_TW]": "EDATEL ISP",
+        "ubuntu_url": "http://mirror.edatel.net.co/ubuntu/",
+        "name[zh_CN]": "EDATEL ISP",
+        "name[zh_HK]": "EDATEL ISP",
+        "deepin_url": "http://mirror.edatel.net.co/deepin/",
+        "name[en_US]": "EDATEL ISP"
+    },
+    {
+        "category": "nl_BE",
+        "name[zh_TW]": "Studenten Net Twente",
+        "ubuntu_url": "http://ftp.snt.utwente.nl/pub/os/linux/ubuntu/",
+        "name[zh_CN]": "Studenten Net Twente",
+        "name[zh_HK]": "Studenten Net Twente",
+        "deepin_url": "http://ftp.snt.utwente.nl/pub/os/linux/deepin",
+        "name[en_US]": "Studenten Net Twente"
+    },
+    {
+        "category": "fil",
+        "name[zh_TW]": "DOST-ASTI",
+        "ubuntu_url": "http://mirror.pregi.net/pub/Linux/ubuntu/",
+        "name[zh_CN]": "DOST-ASTI",
+        "name[zh_HK]": "DOST-ASTI",
+        "deepin_url": "http://mirror.pregi.net/pub/Linux/deepin/",
+        "name[en_US]": "DOST-ASTI"
+    },
+    {
+        "category": "Sweden",
+        "name[zh_TW]": "Academic Computer Club, Umeå University",
+        "ubuntu_url": "http://ftp.acc.umu.se/ubuntu/",
+        "name[zh_CN]": "Academic Computer Club, Umeå University",
+        "name[zh_HK]": "Academic Computer Club, Umeå University",
+        "deepin_url": "http://ftp.acc.umu.se/mirror/linuxdeepin/packages/",
+        "name[en_US]": "Academic Computer Club, Umeå University"
+    },
+    {
+        "category": "Sweden",
+        "name[zh_TW]": "Portlane",
+        "ubuntu_url": "http://ftp.acc.umu.se/ubuntu/",
+        "name[zh_CN]": "Portlane",
+        "name[zh_HK]": "Portlane",
+        "deepin_url": "http://ftp.portlane.com/pub/os/linux/deepin/",
+        "name[en_US]": "Portlane"
+    },
+    {
+        "category": "tr",
+        "deepin_url": "http://mirror.dgn.net.tr/deepin/",
+        "ubuntu_url": "http://ubuntu.gnu.gen.tr/ubuntu/",
+        "name[en_US]": "DGN Technologies Information Publishing Corparation"
+    },
+    {
+        "category": "lv",
+        "deepin_url": "http://deepin.koyanet.lv/packages/",
+        "ubuntu_url": "http://ubuntu.koyanet.lv/ubuntu/",
+        "name[en_US]": "koyanet.lv"
+    }
+]
