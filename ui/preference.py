@@ -693,8 +693,6 @@ class MirrorsBox(BaseBox):
                 item.radio_button.active = True
                 self.current_mirror_item = item
             items.append(item)
-
-        items.sort(key=lambda item:item.mirror.priority)
         return items
 
     def mirror_clicked_callback(self, item):

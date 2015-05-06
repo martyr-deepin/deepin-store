@@ -78,3 +78,5 @@ dsc_root_dir = os.path.realpath(get_parent_dir(__file__, 2))
 
 SHUT_DOWN_DIALOG_PATH = '/usr/share/deepin-system-settings/modules/power/src/tray_shutdown_plugin.py'
 DDE_SHUTDOWN_PATH = '/usr/bin/dde-shutdown'
+
+local_mirrors_json = os.path.expanduser("~/.config/deepin-software-center/mirrors.json")

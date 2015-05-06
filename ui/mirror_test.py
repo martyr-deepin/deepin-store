@@ -31,14 +31,17 @@ from urlparse import urlparse
 import traceback
 import hashlib
 import logging
+import json
 
 from deepin_utils.file import get_parent_dir
 from deepin_utils.config import Config
 
-from constant import LANGUAGE
+from constant import LANGUAGE, local_mirrors_json
+from server_action import FetchMirrors
+FetchMirrors().start()
 
 root_dir = get_parent_dir(__file__, 2)
-mirrors_dir = os.path.join(root_dir, 'mirrors')
+system_mirrors_json = os.path.join(root_dir, 'mirrors', "mirrors.json")
 
 codename = aptsources.distro.get_distro().codename
 
@@ -57,32 +60,26 @@ def is_mirror_disabled():
         return True # not deepin os, disable mirror change
 
 class Mirror(object):
-    def __init__(self, ini_file):
-        self.config = Config(ini_file)
-        self.config.load()
-        deepin_url = self.get_repo_urls()[1]
-        _url_parse = urlparse(deepin_url)
-        self._hostname = _url_parse.scheme + "://" + _url_parse.netloc
-        self._priority = float(self.config.get("mirror", "priority")) if self.config.has_option("mirror", "priority") else 100
+    def __init__(self, info_dict):
+        self.config = info_dict
+        self.ubuntu_url = self.remove_slash(self.config.get('ubuntu_url'))
+        self.deepin_url = self.remove_slash(self.config.get('deepin_url'))
 
     @property
     def hostname(self):
-        return self._hostname
+        _url_parse = urlparse(self.deepin_url)
+        _hostname = _url_parse.scheme + "://" + _url_parse.netloc
+        return _hostname
 
     @property
     def name(self):
-        if self.config.has_option('mirror', 'name[%s]' % LANGUAGE):
-            return self.config.get('mirror', 'name[%s]' % LANGUAGE)
-        else:
-            return self.config.get('mirror', 'name[%s]' % 'en_US')
-
-    @property
-    def priority(self):
-        return self._priority
+        name_lang = self.config.get("name[%s]" % LANGUAGE)
+        name_en_us = self.config.get("name[en_US]")
+        name = self.config.get("name")
+        return name_lang or name_en_us or name
 
     def get_repo_urls(self):
-        return (self.remove_slash(self.config.get('mirror', 'ubuntu_url')),
-                self.remove_slash(self.config.get('mirror', 'deepin_url')))
+        return (self.ubuntu_url, self.deepin_url)
 
     @staticmethod
     def remove_slash(s):
@@ -181,13 +178,14 @@ class MirrorTest(object):
 
 def get_mirrors():
     mirrors = []
-    if not os.path.exists(mirrors_dir) or is_mirror_disabled():
-        return mirrors
-    for f in os.listdir(mirrors_dir):
-        if f.endswith(".ini"):
-            ini_file = os.path.join(mirrors_dir, f)
-            m = Mirror(ini_file)
-            mirrors.append(m)
+    if not is_mirror_disabled():
+        json_path = local_mirrors_json
+        if not os.path.exists(json_path):
+            json_path = system_mirrors_json
+        with open(json_path) as fp:
+            ms = json.load(fp, encoding="utf-8")
+            for m in ms:
+                mirrors.append(Mirror(m))
     return mirrors
 
 all_mirrors = get_mirrors()
