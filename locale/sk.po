@@ -5,15 +5,16 @@
 # Translators:
 # ballmet <emkohencel@gmail.com>, 2014
 # Microtus <hrabosmartin@gmail.com>, 2014
+# Marek Bujko <marek.bujko@gmail.com>, 2015
 # fasier <matus.ravas@outlook.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-29 13:45+0800\n"
-"PO-Revision-Date: 2015-03-23 10:24+0000\n"
-"Last-Translator: Microtus <hrabosmartin@gmail.com>\n"
-"Language-Team: Slovak (http://www.transifex.com/projects/p/deepin-store/language/sk/)\n"
+"PO-Revision-Date: 2015-06-20 12:57+0000\n"
+"Last-Translator: Marek Bujko <marek.bujko@gmail.com>\n"
+"Language-Team: Slovak (http://www.transifex.com/linuxdeepin/deepin-store/language/sk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -104,7 +105,7 @@ msgstr "Prosím počkajte, kým sa vykoná aktualizácia systému... Nevypínajt
 #: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
 #: ../ui/software_center.py:790 ../ui/dsc-daemon.py:248
 msgid "Upgrade"
-msgstr "Povýšiť"
+msgstr "Aktualizovať"
 
 #: ../ui/dsc-daemon.py:284 ../ui/dsc-daemon.py:319
 #, python-format
@@ -347,11 +348,11 @@ msgstr "Aktualizácia ukončená"
 
 #: ../ui/upgrade_page.py:1637
 msgid "Waiting for upgrade"
-msgstr "Čaká sa na povýšenie"
+msgstr "Čaká sa na aktualizáciu"
 
 #: ../ui/upgrade_page.py:1656 ../ui/upgrade_page.py:1663
 msgid "Upgrading"
-msgstr "Povyšovanie"
+msgstr "Aktualizovanie"
 
 #: ../ui/download_rank_page.py:61
 msgid "Top 25 weekly"

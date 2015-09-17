@@ -7,20 +7,21 @@
 # Анатолий Валерианович <ffox909@mail.ru>, 2014
 # jvjey <justVolodya@gmail.com>, 2014
 # Serge Kukharski, 2014
+# Vasilii Rusu <basil_russu@hotmail.com>, 2015
 # Анатолий Валерианович <ffox909@mail.ru>, 2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-29 13:45+0800\n"
-"PO-Revision-Date: 2015-03-24 04:51+0000\n"
-"Last-Translator: Анатолий Валерианович <ffox909@mail.ru>\n"
-"Language-Team: Russian (http://www.transifex.com/projects/p/deepin-store/language/ru/)\n"
+"PO-Revision-Date: 2015-06-26 20:13+0000\n"
+"Last-Translator: Vasilii Rusu <basil_russu@hotmail.com>\n"
+"Language-Team: Russian (http://www.transifex.com/linuxdeepin/deepin-store/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #: ../ui/detail_page.py:179
 msgid "Popular recommendations"
@@ -101,7 +102,7 @@ msgstr "%s: отправлен запрос для запуска приложе
 msgid ""
 "Please wait a moment while system upgrade is being performed... Do not turn "
 "off your computer."
-msgstr "Подождите несколько секунд, пока выполняется обновление системы... Не выключайте компьютер."
+msgstr "Подождите несколько секунд, пока выполняется обновление системы... Не отключайте компьютер от сети."
 
 #: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
 #: ../ui/software_center.py:790 ../ui/dsc-daemon.py:248
@@ -113,20 +114,20 @@ msgstr "Обновить"
 msgid ""
 "There are %s packages needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
-msgstr "%s пакетов приложений нуждаются в обновление, пожалуйста используйте менеджер обновлений"
+msgstr "%s пакетов приложений нуждаются в обновлении пожалуйста используйте менеджер обновлений"
 
 #: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
 #: ../ui/software_center.py:733 ../ui/preference.py:433
 #: ../ui/preference.py:440 ../ui/dsc-daemon.py:321 ../ui/dsc-daemon.py:325
 msgid "Deepin Store"
-msgstr "Deepin Store"
+msgstr "Магазин Deepin"
 
 #: ../ui/dsc-daemon.py:288 ../ui/dsc-daemon.py:323
 #, python-format
 msgid ""
 "There is %s package needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
-msgstr "Пакет %s необходим для обновления Вашей системы, используйте Deepin Store для обновления."
+msgstr "Пакет %s необходим для обновления Вашей системы, воспользуйтесь Магазином Deepin для обновления."
 
 #: ../ui/install_page.py:146
 #, python-format
@@ -190,7 +191,7 @@ msgstr "Время последнего обновления системы:"
 #: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
 #, python-format
 msgid "No reminder to upgrade (%s)"
-msgstr "Не напоминать об обновлении (%s)"
+msgstr "Отключить напоминание об обновлении (%s)"
 
 #: ../ui/upgrade_page.py:182
 msgid "Upgrade applications selected"
@@ -199,7 +200,7 @@ msgstr "Обновить выделенные приложения"
 #: ../ui/upgrade_page.py:204
 #, python-format
 msgid "%s applications are available for upgrade"
-msgstr "%s приложения готовые к обновлению"
+msgstr "%s приложений готовых к обновлению"
 
 #: ../ui/upgrade_page.py:238 ../ui/item_render.py:46
 msgid "Remind again"
@@ -216,7 +217,7 @@ msgstr "Выключить компьютер после обновления"
 
 #: ../ui/upgrade_page.py:304
 msgid "This function is invalid without Deepin System Settings installed."
-msgstr "Эта функция недоступна без  установки Deepin System Settings."
+msgstr "Эта функция недоступна без установленных системных настроек Deepin ."
 
 #: ../ui/upgrade_page.py:306
 msgid "Deepin Desktop Environment is not installed, this function is invalid!"
@@ -224,7 +225,7 @@ msgstr "Окружение Рабочего стола Deepin не устано�
 
 #: ../ui/upgrade_page.py:308
 msgid "The system is not Deepin, this function is invalid."
-msgstr "Это не система Deepin, функция не работает!"
+msgstr "Это  система не является Deepin, данная функция недоступна."
 
 #: ../ui/upgrade_page.py:328
 msgid "Downloading upgrade packages"
@@ -232,7 +233,7 @@ msgstr "Загрузка пакетов обновления"
 
 #: ../ui/upgrade_page.py:335
 msgid "Last time of refreshed package lists: "
-msgstr "Последний раз список пакетов обновлялся:"
+msgstr "Список обновленных последний раз пакетов:"
 
 #: ../ui/upgrade_page.py:345
 msgid "Mirror Receiving: "
@@ -259,11 +260,11 @@ msgstr "обновить списки пакетов"
 #: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
 #: ../ui/upgrade_page.py:448
 msgid " and try again."
-msgstr "и попробуйте еще раз"
+msgstr " попробуйте еще раз"
 
 #: ../ui/upgrade_page.py:419 ../ui/upgrade_page.py:1120
 msgid "Failed to install upgrade packages"
-msgstr "Неудачная установка пакетов обновления"
+msgstr "Неудалось установить пакеты обновления"
 
 #: ../ui/upgrade_page.py:421
 msgid ""
@@ -282,7 +283,7 @@ msgstr "Обновление требует удалить важные комп
 
 #: ../ui/upgrade_page.py:483
 msgid "If the prompt occurs again, you could "
-msgstr "Если приглашение повторится, вы могли бы"
+msgstr "Если подсказка повторится, вы могли бы"
 
 #: ../ui/upgrade_page.py:484 ../ui/upgrade_page.py:510
 msgid "send error report"
@@ -294,15 +295,15 @@ msgstr "."
 
 #: ../ui/upgrade_page.py:498
 msgid "Uploading error log"
-msgstr "Отправка лога ошибки"
+msgstr "Отправка журнала ошибок"
 
 #: ../ui/upgrade_page.py:503
 msgid "The error was successfully reported and will be handled soon."
-msgstr "Сообщение об ошибке отправлено и будет обработано в ближайшее время."
+msgstr "Отчет об ошибке отправлен  и будет обработан в ближайшее время."
 
 #: ../ui/upgrade_page.py:509
 msgid "Failed to send the error report. You could try again."
-msgstr "Не удалось отправить сообщение об ошибке. Вы можете попробовать еще раз."
+msgstr "Не удалось отправить отчет об ошибке. Попробуйте еще раз."
 
 #: ../ui/upgrade_page.py:663
 msgid ""
@@ -320,7 +321,7 @@ msgstr "Завершён анализ зависимостей."
 
 #: ../ui/upgrade_page.py:1097
 msgid "Download has started"
-msgstr "Загрузка началась"
+msgstr "Начало загрузки"
 
 #: ../ui/upgrade_page.py:1103
 #, python-format
@@ -337,11 +338,11 @@ msgstr "Загрузка остановлена."
 
 #: ../ui/upgrade_page.py:1124
 msgid "Installing upgrade packages"
-msgstr "Установка пакетов обновления"
+msgstr "Установка пакетов обновлений"
 
 #: ../ui/upgrade_page.py:1125
 msgid "Upgrading..."
-msgstr "Обновление..."
+msgstr "Идет обновление..."
 
 #: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
 msgid "Upgrade completed"
@@ -417,7 +418,7 @@ msgstr "Работа с мультимедиа"
 
 #: ../ui/category_info.py:38
 msgid "Disc burner"
-msgstr "Прожиг дисков"
+msgstr "Прожигание  дисков"
 
 #: ../ui/category_info.py:39
 msgid "MIDI"
@@ -429,7 +430,7 @@ msgstr "Микшер"
 
 #: ../ui/category_info.py:41
 msgid "Player"
-msgstr "Плеер"
+msgstr "Проигрыватель"
 
 #: ../ui/category_info.py:42
 msgid "Recorder"
@@ -521,7 +522,7 @@ msgstr "Векторная графика"
 
 #: ../ui/category_info.py:64
 msgid "Viewer"
-msgstr "Просмотр"
+msgstr "Просмотрщик"
 
 #: ../ui/category_info.py:65
 msgid "Productivity"
@@ -561,7 +562,7 @@ msgstr "Издательство"
 
 #: ../ui/category_info.py:74
 msgid "Science Education"
-msgstr "Образование, наука"
+msgstr "Образование и наука"
 
 #: ../ui/category_info.py:75
 msgid "Languages"
@@ -786,7 +787,7 @@ msgstr "Оценка успешна. Спасибо за участие."
 
 #: ../ui/software_center.py:220
 msgid "Rating failed. Please check your network connection!"
-msgstr "Рейтинг НЕ обновлен! Проверьте своё сетевое соединение!"
+msgstr "Ошибка обновления рейтинга.  Проверьте сетевое соединение!"
 
 #: ../ui/software_center.py:385
 #, python-format
@@ -813,7 +814,7 @@ msgstr "Установка"
 
 #: ../ui/software_center.py:438
 msgid "Generating package list database..."
-msgstr "Создание локальной базы данных пакетов…"
+msgstr "Генерирование базы данных  списков пакетов…"
 
 #: ../ui/software_center.py:446
 msgid "Package lists refreshed completely."
@@ -821,17 +822,17 @@ msgstr "Список пакетов полностью обновлён"
 
 #: ../ui/software_center.py:458
 msgid "Failed to refresh package lists."
-msgstr "Ошибка обновления списка приложений!"
+msgstr "Ошибка обновления списков пакетов!"
 
 #: ../ui/software_center.py:459
 msgid "Try again"
-msgstr "Попробуйте еще раз"
+msgstr "Попробуйте снова"
 
 #: ../ui/software_center.py:469
 #, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted."
-msgstr "Произошла проблема при анализе зависимостей для %s. Установка прервана!"
+msgstr "Произошла проблема при анализе зависимостей для %s. Установка прервана."
 
 #: ../ui/software_center.py:472
 #, python-format
@@ -841,7 +842,7 @@ msgstr "Произошла проблема при анализе зависим
 #: ../ui/software_center.py:477
 #, python-format
 msgid "The requested package \"%s\" was not found in the package list."
-msgstr "Запрашиваемый пакет «%s» отсутствует в списке приложений!"
+msgstr "Запрашиваемый пакет «%s» отсутствует в списке пакетов."
 
 #: ../ui/software_center.py:478
 msgid "Refresh package lists again and try again."
@@ -870,11 +871,11 @@ msgstr "Очистить кэширование пакетов"
 
 #: ../ui/software_center.py:819
 msgid "View new features"
-msgstr "Просмотр нововведений"
+msgstr "Просмотр новых возможностей"
 
 #: ../ui/software_center.py:820
 msgid "Preferences"
-msgstr "Параметры"
+msgstr "Предпочтения"
 
 #: ../ui/software_center.py:821
 msgid "Quit"
@@ -891,7 +892,7 @@ msgstr "Ваш системный кэш пуст"
 
 #: ../ui/item_render.py:44
 msgid "No reminder"
-msgstr "Не напоминать"
+msgstr "Отключить напоминание"
 
 #: ../ui/preference.py:438 ../ui/preference.py:445
 msgid "Version:"
@@ -902,7 +903,7 @@ msgid ""
 "Deepin Store is a commonly used software center on Linux. We selected more than 2,600 excellent applications with many functions of installation and uninstalling, software repository and popular recommendations, which supports 1-click quick installation, multi-threaded download and clearing of cached packages. It provides topics for software introduction and shares good applications.\n"
 "\n"
 "Deepin Store is a free software licensed under GNU GPLv3."
-msgstr "Deepin Store это популярный центр программного обеспечения Linux. Мы выбрали свыше 2.600 наилучших приложений, поддерживая множество функций: установка-удаление,  собственный репозиторий, популярные рекомендации, установка в 1-клик, многопоточная загрузка и очистка от кэшируемых пакетов. Поддерживаются рейтинги программ и акции хороших приложений.\n\nDeepin Store это свободное программное обеспечение под лицензией GNU GPLv3."
+msgstr "Магазин Deepin это популярный центр программного обеспечения Linux. Мы выбрали свыше 2.600 наилучших приложений, с множеством функций: установка-удаление,  собственный репозиторий, популярные рекомендации, установка в 1-клик, многопоточная загрузка и очистка от кэшируемых пакетов. Поддерживаются рейтинги программ и акции хороших приложений.\n\nМагазин Deepin это свободное программное обеспечение под лицензией GNU GPLv3."
 
 #: ../ui/preference.py:477 ../ui/preference.py:484
 msgid "On uninstalling the software"
@@ -930,7 +931,7 @@ msgstr "Изменить"
 
 #: ../ui/preference.py:551 ../ui/preference.py:558
 msgid "Select the best mirror"
-msgstr "Выбрать лучшее зеркало"
+msgstr "Выбрать наилучшее зеркало"
 
 #: ../ui/preference.py:552 ../ui/preference.py:559
 msgid "Waiting"
@@ -962,12 +963,12 @@ msgstr "Выбор каталога"
 
 #: ../ui/preference.py:751 ../ui/dialog_widgets.py:65
 msgid "Speed testing will finish only after one minute, please wait."
-msgstr "Тестирование скорости завершится только через минуту, подождите."
+msgstr "Тестирование скорости завершится через одну минуту, подождите."
 
 #: ../ui/preference.py:776 ../ui/dialog_widgets.py:90
 #, python-format
 msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
-msgstr "Тест завершен, самое быстрое источник это зеркало \"%s\", переключиться сейчас?"
+msgstr "Тест завершен, самый быстрый источник это зеркало \"%s\", переключиться сейчас?"
 
 #: ../ui/preference.py:829 ../ui/preference.py:735
 msgid "General"
@@ -979,13 +980,13 @@ msgstr "Зеркала"
 
 #: ../ui/preference.py:831 ../ui/preference.py:737
 msgid "About"
-msgstr "О программе"
+msgstr "О программе "
 
 #: ../ui/search_page.py:110
 #, python-format
 msgid "%s applications searched"
-msgstr "найдено приложение %s"
+msgstr "поиск приложений %s"
 
 #: ../ui/home_page.py:762
 msgid "HotApps"
-msgstr "Новинки"
+msgstr "Популярные приложения"
