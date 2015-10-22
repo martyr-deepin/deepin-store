@@ -4,15 +4,15 @@
 # 
 # Translators:
 # cricri8o <inactive+cricri8o@transifex.com>, 2014
-# Vasilii Rusu <basil_russu@hotmail.com>, 2014
+# Vasilii Rusu <basil_russu@hotmail.com>, 2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Deepin Store\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-29 13:45+0800\n"
-"PO-Revision-Date: 2015-03-23 10:24+0000\n"
-"Last-Translator: deepin_transifex <xiabin@linuxdeepin.com>\n"
-"Language-Team: Romanian (http://www.transifex.com/projects/p/deepin-store/language/ro/)\n"
+"PO-Revision-Date: 2015-07-01 17:57+0000\n"
+"Last-Translator: Vasilii Rusu <basil_russu@hotmail.com>\n"
+"Language-Team: Romanian (http://www.transifex.com/linuxdeepin/deepin-store/language/ro/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -51,13 +51,13 @@ msgstr "Mărimea: calulare..."
 
 #: ../ui/detail_page.py:399
 msgid "Visit Homepage"
-msgstr "Vizitare Pagina Start"
+msgstr "Vizitare Pagina principală"
 
 #: ../ui/detail_page.py:444 ../ui/download_rank_page.py:369
 #: ../ui/home_page.py:1086 ../ui/album_page.py:483 ../ui/search_page.py:274
 #: ../ui/album_page.py:486 ../ui/home_page.py:1087
 msgid "Not found"
-msgstr "Nu-i găsit"
+msgstr "Nu s-a găsit"
 
 #: ../ui/detail_page.py:450
 msgid "Successfully installed"
@@ -87,18 +87,18 @@ msgstr "Dezinstalare"
 
 #: ../ui/uninstall_page.py:619
 msgid "Uninstallation completed"
-msgstr "Dezinstalare: finisată"
+msgstr "Dezinstalare  finisată"
 
 #: ../ui/start_desktop_window.py:227 ../ui/software_center.py:131
 #, python-format
 msgid "%s: request for starting applications sent"
-msgstr "%s: cereri trimise pentru pornirea aplicațiilor"
+msgstr "%s: solicitările  pentru pornirea aplicațiilor a fost trimise"
 
 #: ../ui/inhibit.py:54
 msgid ""
 "Please wait a moment while system upgrade is being performed... Do not turn "
 "off your computer."
-msgstr "Vă rugăm să aşteptaţi un moment până când procesul de actualizare a sistemului se va finisa... Nu deconectaţi computerul dvs."
+msgstr "Vă rugăm să aşteptaţi un pic până când procesul de actualizare a sistemului se va finisa... Nu deconectaţi computerul dvs."
 
 #: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
 #: ../ui/software_center.py:790 ../ui/dsc-daemon.py:248
@@ -123,7 +123,7 @@ msgstr "Magazinul Deepin"
 msgid ""
 "There is %s package needed to upgrade in your system, please use Deepin "
 "Store to upgrade."
-msgstr "Este necesar ca pachetul %s să fie actualizat în sistemul dvs, pentru aceasta utilizaţi Magazinul Deepin."
+msgstr "Este necesar ca pachetul %s să fie actualizat în sistemul dvs. Pentru aceasta folosiţi -vă de Magazinul Deepin."
 
 #: ../ui/install_page.py:146
 #, python-format
@@ -196,7 +196,7 @@ msgstr "Aplicaţiile pentru actualizare selectate"
 #: ../ui/upgrade_page.py:204
 #, python-format
 msgid "%s applications are available for upgrade"
-msgstr "%s aplicaţii sunt disponibile pentru a fi actualizate"
+msgstr "%s aplicaţii sunt gata pentru a fi actualizate"
 
 #: ../ui/upgrade_page.py:238 ../ui/item_render.py:46
 msgid "Remind again"
@@ -205,7 +205,7 @@ msgstr "Memento repetat"
 #: ../ui/upgrade_page.py:272
 #, python-format
 msgid "%s applications are not being watched"
-msgstr "%s aplicaţi nu sunt  supravegheate"
+msgstr "%s aplicaţii nu sunt  supravegheate"
 
 #: ../ui/upgrade_page.py:289
 msgid "Shut down the computer after upgraded"
@@ -221,7 +221,7 @@ msgstr "Aceasta funcţie nu este valabilă, Interfaţa Spaţiului de Lucru Deepi
 
 #: ../ui/upgrade_page.py:308
 msgid "The system is not Deepin, this function is invalid."
-msgstr "Funcţie nu este valabilă, sistemul nu este Deepin."
+msgstr "Funcţie nu este valabilă, sistemul de operare nu este Deepin."
 
 #: ../ui/upgrade_page.py:328
 msgid "Downloading upgrade packages"
@@ -275,15 +275,15 @@ msgstr "Atenționare"
 msgid ""
 "The upgrade requires to uninstall crucial components due to corrupted local "
 "dependencies or incorrect package dependencies on server."
-msgstr "Actualizarea impune dezinstalarea unor componente cruciale din cauza unor dependențe locale corupte sau a unor pachete de dependențe incorecte din server."
+msgstr "Actualizare necesită dezinstalarea unor componente importante, din cauza dependenţelor locale corupte sau a unor pachete de dependenţe incorecte de pe server."
 
 #: ../ui/upgrade_page.py:483
 msgid "If the prompt occurs again, you could "
-msgstr "Dacă mesajul apare din nou, poți"
+msgstr "Dacă mesajul apare din nou, puteţi"
 
 #: ../ui/upgrade_page.py:484 ../ui/upgrade_page.py:510
 msgid "send error report"
-msgstr "Transmite raportul cu erori"
+msgstr "Transmite raportul despre erori"
 
 #: ../ui/upgrade_page.py:485
 msgid "."
@@ -291,20 +291,20 @@ msgstr "."
 
 #: ../ui/upgrade_page.py:498
 msgid "Uploading error log"
-msgstr "Transmiterea jurnalului cu erori"
+msgstr "Încărcarea jurnalului cu erori"
 
 #: ../ui/upgrade_page.py:503
 msgid "The error was successfully reported and will be handled soon."
-msgstr "Eroarea a fost raportată cu succes şi va fi remediată în curând."
+msgstr "Raportarea despre eroare efectuată cu succes şi va fi remediată în curând."
 
 #: ../ui/upgrade_page.py:509
 msgid "Failed to send the error report. You could try again."
-msgstr "Transmiterea raportului cu erori eşuată. Încercaţi încă o dată."
+msgstr "Transmiterea raportului despre erori eşuată. Încercaţi încă o dată."
 
 #: ../ui/upgrade_page.py:663
 msgid ""
 "This problem occurs due to corrupted local apt dependence relationship."
-msgstr "Această problemă apare din cauza disfuncționalității locale a relației de dependență potrivite."
+msgstr "Această problemă apare din cauza relației de dependență  corupte a aplicaţiilor locale."
 
 #: ../ui/upgrade_page.py:668
 #, python-format
@@ -334,7 +334,7 @@ msgstr "Descărcarea a fost stopată."
 
 #: ../ui/upgrade_page.py:1124
 msgid "Installing upgrade packages"
-msgstr "Instalează pachetele cu actualizări"
+msgstr "Instalarea pachetelelor cu actualizări"
 
 #: ../ui/upgrade_page.py:1125
 msgid "Upgrading..."
@@ -362,7 +362,7 @@ msgstr "25 cele mai bune ale lunii"
 
 #: ../ui/download_rank_page.py:61
 msgid "Top 25 totally"
-msgstr "25 cele mai bune pe parcurs"
+msgstr "25 cele mai bune "
 
 #: ../ui/category_info.py:26
 msgid "Internet"
@@ -374,7 +374,7 @@ msgstr "Browser-ul"
 
 #: ../ui/category_info.py:28
 msgid "Instant messaging"
-msgstr "Mesagerie instant"
+msgstr "Mesagerie instantanee"
 
 #: ../ui/category_info.py:29
 msgid "Email"
@@ -406,7 +406,7 @@ msgstr "Multimedia"
 
 #: ../ui/category_info.py:36
 msgid "Audiovideo"
-msgstr "Audiovideo"
+msgstr "Audio-video"
 
 #: ../ui/category_info.py:37
 msgid "Media Editing"
@@ -518,7 +518,7 @@ msgstr "Grafică vectorială"
 
 #: ../ui/category_info.py:64
 msgid "Viewer"
-msgstr "Afişor"
+msgstr "Vizualizator"
 
 #: ../ui/category_info.py:65
 msgid "Productivity"
@@ -767,7 +767,7 @@ msgstr "Hit"
 #: ../ui/software_center.py:127
 #, python-format
 msgid "%s haven't any desktop file"
-msgstr "%s nu au niciun fişier de pe desktop"
+msgstr "%s nu au niciun fişier desktop"
 
 #: ../ui/software_center.py:194
 msgid "Sending rating..."
@@ -775,15 +775,15 @@ msgstr "Trimite evaluare..."
 
 #: ../ui/software_center.py:198
 msgid "You have already scored.  ;)"
-msgstr "Ai înscris deja. ;)"
+msgstr "Ai evaluat deja. ;)"
 
 #: ../ui/software_center.py:204
 msgid "Rated successfully. Thanks for your involvement."
-msgstr "Evaluat cu succes. Îți mulțumesc pentru implicare."
+msgstr "Evaluat cu succes. Muşţumim pentru participare."
 
 #: ../ui/software_center.py:220
 msgid "Rating failed. Please check your network connection!"
-msgstr "Evaluarea a eşuat. Verifică te rog conexiunea la rețea!"
+msgstr "Evaluarea eşuată. Verificaţi vă rog conexiunea la rețea!"
 
 #: ../ui/software_center.py:385
 #, python-format
@@ -810,15 +810,15 @@ msgstr "Instalare "
 
 #: ../ui/software_center.py:438
 msgid "Generating package list database..."
-msgstr "Generează baza de date listă pachete..."
+msgstr "Generare baza de date  a listelor de pachete..."
 
 #: ../ui/software_center.py:446
 msgid "Package lists refreshed completely."
-msgstr "Listele cu pachete au fost reîmprospătate complet."
+msgstr "Listele de pachete au fost  reînnoite integral."
 
 #: ../ui/software_center.py:458
 msgid "Failed to refresh package lists."
-msgstr "Reîmprospătarea listelor cu pachete a eşuat."
+msgstr "Reînnoirea  listelor cu pachete a eşuat."
 
 #: ../ui/software_center.py:459
 msgid "Try again"
@@ -828,21 +828,21 @@ msgstr "Incercați din nou"
 #, python-format
 msgid ""
 "Problem occurred when analyzing dependencies for %s. Installation aborted."
-msgstr "Problema a apărut la analiza dependențelor pentru %s. Instalarea a fost anulată."
+msgstr " A apărut problema în timpul analizei dependențelor pentru %s. Instalarea a fost anulată."
 
 #: ../ui/software_center.py:472
 #, python-format
 msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
-msgstr "Problema a apărut la analiza dependențelor pentru %s. Actualizarea a fost anulată."
+msgstr "A apărut problema în timpul analizei dependențelor pentru %s. Actualizarea a fost anulată."
 
 #: ../ui/software_center.py:477
 #, python-format
 msgid "The requested package \"%s\" was not found in the package list."
-msgstr "Pachetul ”%s” cerut nu a fost găsit in lista pachetelor."
+msgstr "Pachetul necesar ”%s” nu a fost găsit in lista pachetelor."
 
 #: ../ui/software_center.py:478
 msgid "Refresh package lists again and try again."
-msgstr "Reîmprospătează listele de pachete şi încearcă din nou."
+msgstr "Reînnoiţi  lista pachetelor şi încercaţi  din nou."
 
 #: ../ui/software_center.py:770
 msgid "Join us"
@@ -855,7 +855,7 @@ msgstr "Instalare"
 #: ../ui/software_center.py:816 ../ui/preference.py:568
 #: ../ui/preference.py:575
 msgid "Refresh package lists"
-msgstr "Reîmprospătează listele de pachete"
+msgstr "Reînnoiţi listele pachetelor"
 
 #: ../ui/software_center.py:817
 msgid "Open download directory"
@@ -863,11 +863,11 @@ msgstr "Deschidere director descărcare"
 
 #: ../ui/software_center.py:818
 msgid "Clear up cached packages"
-msgstr "Curățare pachete cache-uite"
+msgstr "Curățare pachete cache"
 
 #: ../ui/software_center.py:819
 msgid "View new features"
-msgstr "Vizualizare caracteristici noi"
+msgstr "Vizualizare caracteristicilor noi"
 
 #: ../ui/software_center.py:820
 msgid "Preferences"
@@ -880,15 +880,15 @@ msgstr "Ieși"
 #: ../ui/software_center.py:1123 ../ui/software_center.py:1128
 #, python-format
 msgid "You have cleared up %s packages and saved %s of space."
-msgstr "Ai şters până la %s pachete şi ai eliberat %s din spațiu."
+msgstr "Aţi şters %s pachete şi aţi eliberat %s spațiu."
 
 #: ../ui/software_center.py:1125 ../ui/software_center.py:1130
 msgid "Your system cache is empty."
-msgstr "Memoria cache a sistemului este goală."
+msgstr "Memoria cache a sistemului este liberă."
 
 #: ../ui/item_render.py:44
 msgid "No reminder"
-msgstr "Niciun memento"
+msgstr "Nici un memento"
 
 #: ../ui/preference.py:438 ../ui/preference.py:445
 msgid "Version:"
@@ -899,7 +899,7 @@ msgid ""
 "Deepin Store is a commonly used software center on Linux. We selected more than 2,600 excellent applications with many functions of installation and uninstalling, software repository and popular recommendations, which supports 1-click quick installation, multi-threaded download and clearing of cached packages. It provides topics for software introduction and shares good applications.\n"
 "\n"
 "Deepin Store is a free software licensed under GNU GPLv3."
-msgstr "Magazinul Deepin este un centru software utilizat în mod obişnuit pe Linux. Am selectat peste 2600 de aplicații excelente cu multe funcții de instalare şi dezinstalare,  depozit de software şi recomandări populare, care suportă instalarea rapidă cu 1 clic, descărcarea multi fir de execuție şi ştergerea pachetelor stocate în memoria cache. Furnizează discuții pentru introducerea în software şi oferă aplicații utile.\n\nMagazinul Deepin este un software gratuit sub licența GNU GPLv3."
+msgstr "Magazinul Deepin este un depozit de aplicaţii pentru Linux. Am selectat aici  peste 2600 de aplicații excelente cu multe funcții de instalare şi dezinstalare şi  recomandări populare. Cuprinde mai multe aplicaţii utile de diferite genuri.\n\nMagazinul Deepin este o aplicaţie gratuită sub licența GNU GPLv3."
 
 #: ../ui/preference.py:477 ../ui/preference.py:484
 msgid "On uninstalling the software"
@@ -907,7 +907,7 @@ msgstr "La dezinstalarea software-ului"
 
 #: ../ui/preference.py:480 ../ui/preference.py:487
 msgid "Delete configuration files"
-msgstr "Șterge fișiere configurare"
+msgstr "Ștergere fișiere de  configurare"
 
 #: ../ui/preference.py:494 ../ui/preference.py:501
 msgid "Download settings"
@@ -927,11 +927,11 @@ msgstr "Schimbă"
 
 #: ../ui/preference.py:551 ../ui/preference.py:558
 msgid "Select the best mirror"
-msgstr "Selectează cel mai bun ecran"
+msgstr "Alegeţi cea mai potrivită oglindă"
 
 #: ../ui/preference.py:552 ../ui/preference.py:559
 msgid "Waiting"
-msgstr "În aşteptare"
+msgstr " Aşteptare"
 
 #: ../ui/preference.py:553 ../ui/preference.py:560
 msgid "Successfully"
@@ -939,7 +939,7 @@ msgstr "Cu succes"
 
 #: ../ui/preference.py:571 ../ui/preference.py:578
 msgid "Upgrade automatically"
-msgstr "Actualizează automat"
+msgstr "Actualizare automată"
 
 #: ../ui/preference.py:575 ../ui/preference.py:582
 msgid "Time interval: "
@@ -951,7 +951,7 @@ msgstr "oră"
 
 #: ../ui/preference.py:642 ../ui/preference.py:643
 msgid "Select mirror"
-msgstr "Selectează ecran"
+msgstr "Selectează oglindă"
 
 #: ../ui/preference.py:705
 msgid "Select Directory"
@@ -959,12 +959,12 @@ msgstr "Selectează Director"
 
 #: ../ui/preference.py:751 ../ui/dialog_widgets.py:65
 msgid "Speed testing will finish only after one minute, please wait."
-msgstr "Testul de viteză se va finaliza după doar un minut, te rog aşteaptă."
+msgstr "Testul de viteză se va încheia  într-un minut, așteptați."
 
 #: ../ui/preference.py:776 ../ui/dialog_widgets.py:90
 #, python-format
 msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
-msgstr "Test finalizat, cea mai rapidă sursă de ferestre este \"%s\", schimbă acum?"
+msgstr "Testarea s-a încheiat, cea mai rapidă ”oglindă” este \"%s\", doriți să vă conectați?"
 
 #: ../ui/preference.py:829 ../ui/preference.py:735
 msgid "General"
@@ -972,7 +972,7 @@ msgstr "General"
 
 #: ../ui/preference.py:830 ../ui/preference.py:736
 msgid "Mirrors"
-msgstr "Ecrane"
+msgstr "Oglinzi"
 
 #: ../ui/preference.py:831 ../ui/preference.py:737
 msgid "About"
@@ -985,4 +985,4 @@ msgstr "%s aplicații căutate"
 
 #: ../ui/home_page.py:762
 msgid "HotApps"
-msgstr "Aplicații tari"
+msgstr "Aplicații populare"
