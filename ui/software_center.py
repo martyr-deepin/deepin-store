@@ -877,17 +877,10 @@ class DeepinSoftwareCenter(dbus.service.Object):
     def ready_show(self):
         self.preference_dialog = DscPreferenceDialog()
         if utils.is_first_started():
-            self.in_wizard_showing = True
-            if len(all_mirrors) > 0:
-                self.show_test_mirror(callback=self.wizard_callback)
-            else:
-                self.show_wizard_win(callback=self.wizard_callback)
             utils.set_first_started()
-            self.init_ui()
-        else:
-            self.init_ui()
-            if not self.init_hide:
-                self.application.window.show_all()
+        self.init_ui()
+        if not self.init_hide:
+            self.application.window.show_all()
         #self.paned_box.bottom_window.set_composited(True)
 
     def show_test_mirror(self, callback=None):

@@ -1,6 +1,0 @@
-#!/bin/sh
-set -e
-
-[ -e /etc/xdg/autostart/deepin-software-center-autostart.desktop ] && rm -f /etc/xdg/autostart/deepin-software-center-autostart.desktop || true
-[ -e /etc/apt/apt.conf.d/90dstore-desktop ] && rm -f /etc/apt/apt.conf.d/90dstore-desktop || true
-/usr/lib/deepin-store/deepin-store-backend -s || true

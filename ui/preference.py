@@ -728,9 +728,9 @@ class DscPreferenceDialog(PreferenceDialog):
         preference_items = []
         self.general_box = GeneralBox()
         preference_items.append((_("General"), self.general_box))
-        if len(all_mirrors) > 0:
-            self.mirrors_box = MirrorsBox()
-            preference_items.append((_("Mirrors"), self.mirrors_box))
+        #if len(all_mirrors) > 0:
+            #self.mirrors_box = MirrorsBox()
+            #preference_items.append((_("Mirrors"), self.mirrors_box))
         self.about_box = AboutBox()
         preference_items.append((_("About"), self.about_box))
         self.set_preference_items(preference_items)
