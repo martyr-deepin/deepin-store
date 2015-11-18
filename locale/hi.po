@@ -1,0 +1,987 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# AnandVivek, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Deepin Store\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-12-29 13:45+0800\n"
+"PO-Revision-Date: 2015-08-21 08:29+0000\n"
+"Last-Translator: AnandVivek\n"
+"Language-Team: Hindi (http://www.transifex.com/linuxdeepin/deepin-store/language/hi/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../ui/detail_page.py:179
+msgid "Popular recommendations"
+msgstr "प्रसिद्ध सुझाव"
+
+#: ../ui/detail_page.py:240 ../ui/detail_page.py:494
+msgid "Loading comments..."
+msgstr "टिप्पणी भर रही..."
+
+#: ../ui/detail_page.py:358
+#, python-format
+msgid "Download: %s"
+msgstr "डाउनलोड: %s"
+
+#: ../ui/detail_page.py:389
+msgid "Category: "
+msgstr "श्रेणी:"
+
+#: ../ui/detail_page.py:393
+#, python-format
+msgid "Version: %s"
+msgstr "संस्करण: %s"
+
+#: ../ui/detail_page.py:394
+msgid "Download: 0"
+msgstr "डाउनलोड: 0"
+
+#: ../ui/detail_page.py:395
+msgid "Size: calculating..."
+msgstr "आकार: गिन रहा..."
+
+#: ../ui/detail_page.py:399
+msgid "Visit Homepage"
+msgstr "मुख्यपृष्ठ देखें"
+
+#: ../ui/detail_page.py:444 ../ui/download_rank_page.py:369
+#: ../ui/home_page.py:1086 ../ui/album_page.py:483 ../ui/search_page.py:274
+#: ../ui/album_page.py:486 ../ui/home_page.py:1087
+msgid "Not found"
+msgstr "नहीं मिला"
+
+#: ../ui/detail_page.py:450
+msgid "Successfully installed"
+msgstr "सफलतापूर्वक स्थापित"
+
+#: ../ui/detail_page.py:473
+#, python-format
+msgid "Size: %s"
+msgstr "आकार: %s"
+
+#: ../ui/detail_page.py:611
+msgid "Powered by UpYun.com"
+msgstr "UpYun.com द्वारा संचालित"
+
+#: ../ui/uninstall_page.py:175
+#, python-format
+msgid "%s applications can be uninstalled"
+msgstr "%s अनुप्रयोग को अस्थापित किया जा सकता है"
+
+#: ../ui/uninstall_page.py:515 ../ui/uninstall_page.py:598
+msgid "Waiting for uninstall"
+msgstr "अस्थापन हेतु प्रतीक्षा करने"
+
+#: ../ui/uninstall_page.py:605 ../ui/uninstall_page.py:612
+msgid "Uninstalling"
+msgstr "अस्थापित हो रहा"
+
+#: ../ui/uninstall_page.py:619
+msgid "Uninstallation completed"
+msgstr "अस्थापन पूर्ण"
+
+#: ../ui/start_desktop_window.py:227 ../ui/software_center.py:131
+#, python-format
+msgid "%s: request for starting applications sent"
+msgstr "%s: अनुप्रयोग शुरू करने का अनुरोध भेजा गया"
+
+#: ../ui/inhibit.py:54
+msgid ""
+"Please wait a moment while system upgrade is being performed... Do not turn "
+"off your computer."
+msgstr "प्रणाली के नवीनीकरण होते तक कृपया प्रतीक्षा करें... कम्प्युटर बंद न करें।"
+
+#: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
+#: ../ui/software_center.py:790 ../ui/dsc-daemon.py:248
+msgid "Upgrade"
+msgstr "नवीनीकरण"
+
+#: ../ui/dsc-daemon.py:284 ../ui/dsc-daemon.py:319
+#, python-format
+msgid ""
+"There are %s packages needed to upgrade in your system, please use Deepin "
+"Store to upgrade."
+msgstr "इसमें %s पैक को अपने प्रणाली में डीपइन से उन्नत करें।"
+
+#: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
+#: ../ui/software_center.py:733 ../ui/preference.py:433
+#: ../ui/preference.py:440 ../ui/dsc-daemon.py:321 ../ui/dsc-daemon.py:325
+msgid "Deepin Store"
+msgstr "डीपइन भंडार"
+
+#: ../ui/dsc-daemon.py:288 ../ui/dsc-daemon.py:323
+#, python-format
+msgid ""
+"There is %s package needed to upgrade in your system, please use Deepin "
+"Store to upgrade."
+msgstr "इसमें %s पैक को उन्नत करने की आवश्यकता है, अपने प्रणाली में डीपइन से उन्नत करें।"
+
+#: ../ui/install_page.py:146
+#, python-format
+msgid "%s applications are being installed"
+msgstr "%s अनुप्रयोग स्थापित हो गए।"
+
+#: ../ui/install_page.py:313 ../ui/install_page.py:744
+#: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
+msgid "Dependencies analyzing"
+msgstr "निर्भरता विश्लेषण"
+
+#: ../ui/install_page.py:511 ../ui/install_page.py:516
+#: ../ui/download_rank_page.py:374 ../ui/home_page.py:1091 ../ui/utils.py:360
+#: ../ui/album_page.py:488 ../ui/search_page.py:279 ../ui/album_page.py:491
+#: ../ui/utils.py:368 ../ui/home_page.py:1092
+msgid "Installed"
+msgstr "स्थापित"
+
+#: ../ui/install_page.py:665 ../ui/install_page.py:676
+msgid "Download was interrupted"
+msgstr "डाउनलोड में रुकावट आई"
+
+#: ../ui/install_page.py:689
+msgid "Installation was interrupted"
+msgstr "स्थापित में रुकावट आई"
+
+#: ../ui/install_page.py:751 ../ui/upgrade_page.py:1495
+#: ../ui/upgrade_page.py:1614
+msgid "Waiting for download"
+msgstr "डाउनलोड के लिए प्रतीक्षा करें"
+
+#: ../ui/install_page.py:758 ../ui/upgrade_page.py:1621
+msgid "Downloading"
+msgstr "डाउनलोड हो रहा"
+
+#: ../ui/install_page.py:765
+msgid "Download failed"
+msgstr "डाउनलोड विफल"
+
+#: ../ui/install_page.py:781
+msgid "Waiting for installation"
+msgstr "स्थापना हेतु प्रतीक्षा करें"
+
+#: ../ui/install_page.py:791 ../ui/upgrade_page.py:1647
+msgid "Dependencies analysis failed"
+msgstr "निर्भरता विश्लेषण विफल"
+
+#: ../ui/install_page.py:800 ../ui/install_page.py:807
+msgid "Installing"
+msgstr "स्थापित हो रहा"
+
+#: ../ui/install_page.py:816
+msgid "Installation completed"
+msgstr "स्थापना पूर्ण"
+
+#: ../ui/upgrade_page.py:78 ../ui/upgrade_page.py:107
+#: ../ui/upgrade_page.py:340
+msgid "Last system upgraded time: "
+msgstr "प्रणाली का अंतिम नवीनीकरण समय:"
+
+#: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
+#, python-format
+msgid "No reminder to upgrade (%s)"
+msgstr "नवीनीकरण हेतु कोई स्मरण नई (%s)"
+
+#: ../ui/upgrade_page.py:182
+msgid "Upgrade applications selected"
+msgstr "नवीनीकरण हेतु अनुप्रयोग चुना गया"
+
+#: ../ui/upgrade_page.py:204
+#, python-format
+msgid "%s applications are available for upgrade"
+msgstr "%s अनुप्रयोग नवीनीकरण हेतु उपलब्ध है"
+
+#: ../ui/upgrade_page.py:238 ../ui/item_render.py:46
+msgid "Remind again"
+msgstr "दुबारा याद दिलाएँ"
+
+#: ../ui/upgrade_page.py:272
+#, python-format
+msgid "%s applications are not being watched"
+msgstr "%s अनुप्रयोगों को अब तक नहीं देखा गया"
+
+#: ../ui/upgrade_page.py:289
+msgid "Shut down the computer after upgraded"
+msgstr "नवीनीकरण के पश्चात कम्प्युटर बंद कर दें"
+
+#: ../ui/upgrade_page.py:304
+msgid "This function is invalid without Deepin System Settings installed."
+msgstr "डीपइन प्रणाली के सेटिंग को बिना स्थापित किए यह कार्य नहीं करेगा।"
+
+#: ../ui/upgrade_page.py:306
+msgid "Deepin Desktop Environment is not installed, this function is invalid!"
+msgstr "डीपइन डेस्कटॉप पर्यावरण स्थापित नहीं हुआ, यह कार्य अमान्य है!"
+
+#: ../ui/upgrade_page.py:308
+msgid "The system is not Deepin, this function is invalid."
+msgstr "यह प्रणाली डीपइन नहीं है, कार्य सही नहीं है।"
+
+#: ../ui/upgrade_page.py:328
+msgid "Downloading upgrade packages"
+msgstr "उन्नत पैक को डाउनलोड कर रहा"
+
+#: ../ui/upgrade_page.py:335
+msgid "Last time of refreshed package lists: "
+msgstr "आखिरी समय में ताजा हुए पैक सूची:"
+
+#: ../ui/upgrade_page.py:345
+msgid "Mirror Receiving: "
+msgstr "दर्पण प्राप्त करना:"
+
+#: ../ui/upgrade_page.py:399
+msgid "Failed to download upgrade packages"
+msgstr "उन्नत पैक डाउनलोड करने में विफल"
+
+#: ../ui/upgrade_page.py:401
+msgid "The requested package does not exist on server."
+msgstr "निवेदित पैक सर्वर में नहीं है।"
+
+#: ../ui/upgrade_page.py:402 ../ui/upgrade_page.py:423
+#: ../ui/upgrade_page.py:446
+msgid "Suggest to "
+msgstr "सुझाव"
+
+#: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
+#: ../ui/upgrade_page.py:447
+msgid "refresh package lists"
+msgstr "पैक सूची को ताजा करें"
+
+#: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
+#: ../ui/upgrade_page.py:448
+msgid " and try again."
+msgstr "और पुनः प्रयास करें।"
+
+#: ../ui/upgrade_page.py:419 ../ui/upgrade_page.py:1120
+msgid "Failed to install upgrade packages"
+msgstr "उन्नत पैक स्थापित करने में विफल"
+
+#: ../ui/upgrade_page.py:421
+msgid ""
+"This problem occurs due to corrupted local apt dependency relationship."
+msgstr "स्थानीय कारणों से यह परेशानी उपन्न हुई।"
+
+#: ../ui/upgrade_page.py:440
+msgid "Warning"
+msgstr "चेतावनी"
+
+#: ../ui/upgrade_page.py:442
+msgid ""
+"The upgrade requires to uninstall crucial components due to corrupted local "
+"dependencies or incorrect package dependencies on server."
+msgstr "यह उन्नत क्रिया के लिए कुछ अनुभागों को अस्थापित करना होगा।"
+
+#: ../ui/upgrade_page.py:483
+msgid "If the prompt occurs again, you could "
+msgstr "यदि शीघ्र ही ऐसा होता है, तो आप करें"
+
+#: ../ui/upgrade_page.py:484 ../ui/upgrade_page.py:510
+msgid "send error report"
+msgstr "त्रुटि विवरण भेजें"
+
+#: ../ui/upgrade_page.py:485
+msgid "."
+msgstr "।"
+
+#: ../ui/upgrade_page.py:498
+msgid "Uploading error log"
+msgstr "डालने में त्रुटि की जानकारी"
+
+#: ../ui/upgrade_page.py:503
+msgid "The error was successfully reported and will be handled soon."
+msgstr "त्रुटि सफलतापूर्वक बता दी गई है और जल्द ही इसे देख लिया जाएगा।"
+
+#: ../ui/upgrade_page.py:509
+msgid "Failed to send the error report. You could try again."
+msgstr "त्रुटि परिणाम को भेजने में विफल हुए। कृपया बाद में प्रयास करें।"
+
+#: ../ui/upgrade_page.py:663
+msgid ""
+"This problem occurs due to corrupted local apt dependence relationship."
+msgstr "स्थानीय कारणों से यह परेशानी उपन्न हुई।"
+
+#: ../ui/upgrade_page.py:668
+#, python-format
+msgid "%s package(s) are available for upgrade, %s will be downloaded."
+msgstr "%s पैक(कॉ) उन्नत करने हेतु उपलब्ध है, %s डाउनलोड हो गया।"
+
+#: ../ui/upgrade_page.py:1094
+msgid "Finished analyzing dependencies."
+msgstr "निर्भरता का विश्लेषण की समाप्ती"
+
+#: ../ui/upgrade_page.py:1097
+msgid "Download has started"
+msgstr "डाउनलोड शुरू हुआ"
+
+#: ../ui/upgrade_page.py:1103
+#, python-format
+msgid "Completed: %s/%s (%s/%s) Download Rate: %s/s"
+msgstr "पूर्ण: %s/%s (%s/%s) डाउनलोड दर: %s/s"
+
+#: ../ui/upgrade_page.py:1113
+msgid "Download finished."
+msgstr "डाउनलोड समाप्त हुआ।"
+
+#: ../ui/upgrade_page.py:1117
+msgid "Download stopped."
+msgstr "डाउनलोड रुक गया।"
+
+#: ../ui/upgrade_page.py:1124
+msgid "Installing upgrade packages"
+msgstr "उन्नत पैक स्थापित"
+
+#: ../ui/upgrade_page.py:1125
+msgid "Upgrading..."
+msgstr "नवीनीकरण..."
+
+#: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
+msgid "Upgrade completed"
+msgstr "नवीनीकरण पूर्ण"
+
+#: ../ui/upgrade_page.py:1637
+msgid "Waiting for upgrade"
+msgstr "नवीनीकरण के लिए प्रतीक्षा"
+
+#: ../ui/upgrade_page.py:1656 ../ui/upgrade_page.py:1663
+msgid "Upgrading"
+msgstr "नवीनीकरण"
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 weekly"
+msgstr "शीर्ष 25 साप्ताहिक"
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 monthly"
+msgstr "शीर्ष 25 मासिक"
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 totally"
+msgstr "शीर्ष 25 कुल"
+
+#: ../ui/category_info.py:26
+msgid "Internet"
+msgstr "अंतरजाल"
+
+#: ../ui/category_info.py:27
+msgid "Browser"
+msgstr "विचरक"
+
+#: ../ui/category_info.py:28
+msgid "Instant messaging"
+msgstr "तात्कालिक संदेश"
+
+#: ../ui/category_info.py:29
+msgid "Email"
+msgstr "ईमेल"
+
+#: ../ui/category_info.py:30
+msgid "File transfer"
+msgstr "फ़ाइल स्थानांतरण"
+
+#: ../ui/category_info.py:31
+msgid "News"
+msgstr "समाचार"
+
+#: ../ui/category_info.py:32
+msgid "Remote access"
+msgstr "रिमोट पहुँच"
+
+#: ../ui/category_info.py:33
+msgid "Security"
+msgstr "सुरक्षा"
+
+#: ../ui/category_info.py:34
+msgid "Miscellaneous"
+msgstr "विविध"
+
+#: ../ui/category_info.py:35
+msgid "Multimedia"
+msgstr "मल्टीमीडिया"
+
+#: ../ui/category_info.py:36
+msgid "Audiovideo"
+msgstr "ध्वनिवीडियो"
+
+#: ../ui/category_info.py:37
+msgid "Media Editing"
+msgstr "मीडिया सम्पादन"
+
+#: ../ui/category_info.py:38
+msgid "Disc burner"
+msgstr "डिस्क बर्नर"
+
+#: ../ui/category_info.py:39
+msgid "MIDI"
+msgstr "एमआईडीआई"
+
+#: ../ui/category_info.py:40
+msgid "Mixer"
+msgstr "मिश्रक"
+
+#: ../ui/category_info.py:41
+msgid "Player"
+msgstr "चालक"
+
+#: ../ui/category_info.py:42
+msgid "Recorder"
+msgstr "रिकॉर्डर"
+
+#: ../ui/category_info.py:43
+msgid "Sequencer"
+msgstr "अनुक्रम्रक"
+
+#: ../ui/category_info.py:44
+msgid "Tuner"
+msgstr "ट्यूनर"
+
+#: ../ui/category_info.py:45
+msgid "Games"
+msgstr "खेल"
+
+#: ../ui/category_info.py:46
+msgid "Action games"
+msgstr "प्रतिक्रियात्मक खेल"
+
+#: ../ui/category_info.py:47
+msgid "Advernture games"
+msgstr "रोमांचक खेल"
+
+#: ../ui/category_info.py:48
+msgid "Arcade games"
+msgstr "तोरणपथ खेल"
+
+#: ../ui/category_info.py:49
+msgid "Board games"
+msgstr "पटल खेल"
+
+#: ../ui/category_info.py:50
+msgid "Card games"
+msgstr "कार्ड खेल"
+
+#: ../ui/category_info.py:51
+msgid "Emulator"
+msgstr "एम्यूलेटर"
+
+#: ../ui/category_info.py:52
+msgid "Kids games"
+msgstr "बच्चों के खेल"
+
+#: ../ui/category_info.py:53
+msgid "Logic games"
+msgstr "तार्किक खेल"
+
+#: ../ui/category_info.py:54
+msgid "Puzzle games"
+msgstr "पहेली वाले खेल"
+
+#: ../ui/category_info.py:55
+msgid "Role-playing games"
+msgstr "किरदार वाले खेल"
+
+#: ../ui/category_info.py:56
+msgid "Sports games"
+msgstr "वास्तविक खेल से जुड़े खेल"
+
+#: ../ui/category_info.py:57
+msgid "Strategy games"
+msgstr "रणनीति वाले खेल"
+
+#: ../ui/category_info.py:58
+msgid "Graphics"
+msgstr "ग्राफिक्स"
+
+#: ../ui/category_info.py:59
+msgid "2D graphics"
+msgstr "2 विमीय खेल"
+
+#: ../ui/category_info.py:60
+msgid "3D graphics"
+msgstr "3 विमीय खेल"
+
+#: ../ui/category_info.py:61
+msgid "Image processing"
+msgstr "छवि प्रसंस्करण"
+
+#: ../ui/category_info.py:62
+msgid "Photography"
+msgstr "चित्रकारी"
+
+#: ../ui/category_info.py:63
+msgid "Vector graphics"
+msgstr "वेक्टर ग्राफिक्स"
+
+#: ../ui/category_info.py:64
+msgid "Viewer"
+msgstr "दर्शक"
+
+#: ../ui/category_info.py:65
+msgid "Productivity"
+msgstr "उत्पादकता"
+
+#: ../ui/category_info.py:66
+msgid "Office"
+msgstr "कार्यालय"
+
+#: ../ui/category_info.py:67
+msgid "Scanning printing"
+msgstr "स्कैन मुद्रण"
+
+#: ../ui/category_info.py:68
+msgid "Industry"
+msgstr "उद्योग"
+
+#: ../ui/category_info.py:69
+msgid "Engineering"
+msgstr "अभियांत्रिकी"
+
+#: ../ui/category_info.py:70
+msgid "Finance"
+msgstr "वित्त"
+
+#: ../ui/category_info.py:71
+msgid "Ham radio"
+msgstr "हम रेडियो"
+
+#: ../ui/category_info.py:72
+msgid "Medical"
+msgstr "चिकित्सा"
+
+#: ../ui/category_info.py:73
+msgid "Publishing"
+msgstr "प्रकाशन"
+
+#: ../ui/category_info.py:74
+msgid "Science Education"
+msgstr "विज्ञान की शिक्षा"
+
+#: ../ui/category_info.py:75
+msgid "Languages"
+msgstr "भाषाएँ"
+
+#: ../ui/category_info.py:76
+msgid "Religion"
+msgstr "स्थान"
+
+#: ../ui/category_info.py:77
+msgid "Science"
+msgstr "विज्ञान"
+
+#: ../ui/category_info.py:78
+msgid "Development"
+msgstr "विकास"
+
+#: ../ui/category_info.py:79
+msgid "Database"
+msgstr "डाटाबेस"
+
+#: ../ui/category_info.py:80
+msgid "Debugging"
+msgstr "डिबगिंग"
+
+#: ../ui/category_info.py:81
+msgid "IDE"
+msgstr "आईडीई"
+
+#: ../ui/category_info.py:82
+msgid "Software development"
+msgstr "सॉफ्टवेयर निर्माण"
+
+#: ../ui/category_info.py:83
+msgid "Version control"
+msgstr "संस्करण नियंत्रण"
+
+#: ../ui/category_info.py:84
+msgid "Web development"
+msgstr "जाल निर्माण"
+
+#: ../ui/category_info.py:85
+msgid "System"
+msgstr "प्रणाली"
+
+#: ../ui/category_info.py:86
+msgid "Desktop environment"
+msgstr "डेस्कटॉप पर्यावरण"
+
+#: ../ui/category_info.py:87
+msgid "Monitor"
+msgstr "मॉनिटर"
+
+#: ../ui/category_info.py:88
+msgid "Network"
+msgstr "संचार"
+
+#: ../ui/category_info.py:89
+msgid "Package manager"
+msgstr "पैक प्रबन्धक"
+
+#: ../ui/category_info.py:90
+msgid "Settings"
+msgstr "व्यवस्था"
+
+#: ../ui/category_info.py:91
+msgid "Virtualization"
+msgstr "आभासिकरण"
+
+#: ../ui/category_info.py:92
+msgid "Window manager"
+msgstr "विंडो प्रबन्धक"
+
+#: ../ui/category_info.py:93
+msgid "Utilities"
+msgstr "उपयोगिताएँ"
+
+#: ../ui/category_info.py:94
+msgid "Accessories"
+msgstr "सहायक उपकरण"
+
+#: ../ui/category_info.py:95
+msgid "Archiving"
+msgstr "संग्रह"
+
+#: ../ui/category_info.py:96
+msgid "Emulation"
+msgstr "यंत्रानुकरण"
+
+#: ../ui/category_info.py:97
+msgid "File manager"
+msgstr "फ़ाइल प्रबन्धक"
+
+#: ../ui/category_info.py:98
+msgid "Screensaver"
+msgstr "स्क्रीन सजावट"
+
+#: ../ui/category_info.py:99
+msgid "Terminal emulator"
+msgstr "टर्मिनल एमुलेटर"
+
+#: ../ui/category_info.py:100
+msgid "Text editor"
+msgstr "पाठ्य संपादक"
+
+#: ../ui/home_page.py:484
+#, python-format
+msgid "%s: %s applications"
+msgstr "%s: %s अनुप्रयोग"
+
+#: ../ui/home_page.py:666
+#, python-format
+msgid "%s > %s : %s applications"
+msgstr "%s > %s : %s अनुप्रयोग"
+
+#: ../ui/home_page.py:722 ../ui/software_center.py:789
+msgid "Home"
+msgstr "घर"
+
+#: ../ui/home_page.py:762
+msgid "Recommendations"
+msgstr "सुझावित"
+
+#: ../ui/home_page.py:762
+msgid "Topics"
+msgstr "विषय"
+
+#: ../ui/home_page.py:762
+msgid "Download rank"
+msgstr "डाउनलोड पायदान"
+
+#: ../ui/widgets.py:66
+msgid "Just now"
+msgstr "अभी"
+
+#: ../ui/widgets.py:71
+msgid "One minute ago"
+msgstr "एक मिनट पहले"
+
+#: ../ui/widgets.py:73
+#, python-format
+msgid "%s minutes ago"
+msgstr "%s मिनट पहले"
+
+#: ../ui/widgets.py:78
+msgid "One hour ago"
+msgstr "एक घंटा पहले"
+
+#: ../ui/widgets.py:80
+#, python-format
+msgid "%s hours ago"
+msgstr "%s घण्टा पहले"
+
+#: ../ui/widgets.py:84
+msgid "Yesterday"
+msgstr "कल"
+
+#: ../ui/widgets.py:295 ../ui/widgets.py:369
+msgid "Click to refresh"
+msgstr "ताज़ा करने हेतु दबाएँ"
+
+#: ../ui/widgets.py:462 ../ui/preference.py:782 ../ui/dialog_widgets.py:96
+msgid "OK"
+msgstr "ठीक"
+
+#: ../ui/widgets.py:463 ../ui/preference.py:784 ../ui/dialog_widgets.py:98
+msgid "Cancel"
+msgstr "रद्द करो"
+
+#: ../ui/utils.py:355 ../ui/utils.py:363
+msgid "Running"
+msgstr "चल रहा"
+
+#: ../ui/utils.py:356 ../ui/utils.py:364
+msgid "Preparing"
+msgstr "तैयारी"
+
+#: ../ui/utils.py:357 ../ui/utils.py:365
+msgid "Unpacking"
+msgstr "निकालना"
+
+#: ../ui/utils.py:358 ../ui/utils.py:366
+msgid "Preparing to configure"
+msgstr "विन्यास की तैयारी"
+
+#: ../ui/utils.py:359 ../ui/utils.py:367
+msgid "Configuring"
+msgstr "विन्यास"
+
+#: ../ui/utils.py:370 ../ui/utils.py:378
+msgid "Err"
+msgstr "त्रुटि"
+
+#: ../ui/utils.py:371 ../ui/utils.py:379
+msgid "Ign"
+msgstr "अनदेखा"
+
+#: ../ui/utils.py:372 ../ui/utils.py:380
+msgid "Get"
+msgstr "लें"
+
+#: ../ui/utils.py:373 ../ui/utils.py:381
+msgid "Hit"
+msgstr "दबाएँ"
+
+#: ../ui/software_center.py:127
+#, python-format
+msgid "%s haven't any desktop file"
+msgstr "%s कोई डेस्कटॉप फ़ाइल नहीं है।"
+
+#: ../ui/software_center.py:194
+msgid "Sending rating..."
+msgstr "मूल्यांकन भेजा जा रहा है।"
+
+#: ../ui/software_center.py:198
+msgid "You have already scored.  ;)"
+msgstr "आपने पहले ही आकलन कर दिया ;)"
+
+#: ../ui/software_center.py:204
+msgid "Rated successfully. Thanks for your involvement."
+msgstr "मूल्यांकन सफल हुआ। शामिल होने के लिए धन्यवाद।"
+
+#: ../ui/software_center.py:220
+msgid "Rating failed. Please check your network connection!"
+msgstr "मूल्यांकन विफल हुआ। इंटरनेट की जाँच करे।"
+
+#: ../ui/software_center.py:385
+#, python-format
+msgid "Uninstall %s Successfully."
+msgstr "स्थापना रद्द %s सफल रहा।"
+
+#: ../ui/software_center.py:385 ../ui/software_center.py:791
+msgid "Uninstall"
+msgstr "स्थापना रद्द करें"
+
+#: ../ui/software_center.py:391
+#, python-format
+msgid "%s packages upgrade successfully."
+msgstr "%s पैक सफलतापूर्वक उन्नत हुआ।"
+
+#: ../ui/software_center.py:394
+#, python-format
+msgid "Install %s Successfully."
+msgstr "स्थापना %s सफल रहा।"
+
+#: ../ui/software_center.py:394
+msgid "Install"
+msgstr "स्थापन"
+
+#: ../ui/software_center.py:438
+msgid "Generating package list database..."
+msgstr "पैक सूची का डाटा बना रहा..."
+
+#: ../ui/software_center.py:446
+msgid "Package lists refreshed completely."
+msgstr "पैक सूची को पूरी तरह ताजा किया।"
+
+#: ../ui/software_center.py:458
+msgid "Failed to refresh package lists."
+msgstr "पैक सूची को ताजा करने में विफल।"
+
+#: ../ui/software_center.py:459
+msgid "Try again"
+msgstr "पुनः प्रयास करें"
+
+#: ../ui/software_center.py:469
+#, python-format
+msgid ""
+"Problem occurred when analyzing dependencies for %s. Installation aborted."
+msgstr "विश्लेषण निर्भरता के दौरान %s हेतु परेशानी आई। स्थापना रोका गया।"
+
+#: ../ui/software_center.py:472
+#, python-format
+msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
+msgstr "विश्लेषण निर्भरता के दौरान %s हेतु परेशानी आई। उन्नत होने से रोका।"
+
+#: ../ui/software_center.py:477
+#, python-format
+msgid "The requested package \"%s\" was not found in the package list."
+msgstr "निवेदित पैक %s पैक की सूची में नहीं मिला।"
+
+#: ../ui/software_center.py:478
+msgid "Refresh package lists again and try again."
+msgstr "पैक सूची को ताजा करें और पुनः प्रयास करें।"
+
+#: ../ui/software_center.py:770
+msgid "Join us"
+msgstr "जुड़ें"
+
+#: ../ui/software_center.py:792
+msgid "Installation"
+msgstr "स्थापना"
+
+#: ../ui/software_center.py:816 ../ui/preference.py:568
+#: ../ui/preference.py:575
+msgid "Refresh package lists"
+msgstr "पैक की सूची ताजा करें"
+
+#: ../ui/software_center.py:817
+msgid "Open download directory"
+msgstr "डाउनलोड निर्देशिका खोलें"
+
+#: ../ui/software_center.py:818
+msgid "Clear up cached packages"
+msgstr "केश पैक को खाली करें"
+
+#: ../ui/software_center.py:819
+msgid "View new features"
+msgstr "नए विशेषता देखें"
+
+#: ../ui/software_center.py:820
+msgid "Preferences"
+msgstr "पसंद"
+
+#: ../ui/software_center.py:821
+msgid "Quit"
+msgstr "बंद करो"
+
+#: ../ui/software_center.py:1123 ../ui/software_center.py:1128
+#, python-format
+msgid "You have cleared up %s packages and saved %s of space."
+msgstr "आपने %s पैक को साफ कर %s स्थान बचा लिया है।"
+
+#: ../ui/software_center.py:1125 ../ui/software_center.py:1130
+msgid "Your system cache is empty."
+msgstr "आपके खेल का केश खाली है।"
+
+#: ../ui/item_render.py:44
+msgid "No reminder"
+msgstr "कोई अनुस्मारक"
+
+#: ../ui/preference.py:438 ../ui/preference.py:445
+msgid "Version:"
+msgstr "संस्करण:"
+
+#: ../ui/preference.py:452 ../ui/preference.py:459
+msgid ""
+"Deepin Store is a commonly used software center on Linux. We selected more than 2,600 excellent applications with many functions of installation and uninstalling, software repository and popular recommendations, which supports 1-click quick installation, multi-threaded download and clearing of cached packages. It provides topics for software introduction and shares good applications.\n"
+"\n"
+"Deepin Store is a free software licensed under GNU GPLv3."
+msgstr "डीपइन स्टोर एक समान्यतः लिनक्स में उपयोग किया जाने वाला एक अनुप्रयोग है। हमने 2,600 श्रेष्ठ अनुप्रयोग को चुना है। जो अनेक कार्य के साथ ही आसानी से स्थापित और अस्थापित होते हैं। यह 1-क्लिक में स्थापित, केश सफाई आदि करते हैं। \n\nडीपइन एक निःशुल्क सॉफ्टवेयर है जो जीएनयू जीपीएलवी3 का अधिकार देता है।"
+
+#: ../ui/preference.py:477 ../ui/preference.py:484
+msgid "On uninstalling the software"
+msgstr "सॉफ्टवेयर को अस्थापित करते समय"
+
+#: ../ui/preference.py:480 ../ui/preference.py:487
+msgid "Delete configuration files"
+msgstr "विन्यास फाइलों को नष्ट करें"
+
+#: ../ui/preference.py:494 ../ui/preference.py:501
+msgid "Download settings"
+msgstr "डाउनलोड सेटिंग"
+
+#: ../ui/preference.py:500 ../ui/preference.py:507
+msgid "Maximum number of download tasks: "
+msgstr "डाउनलोड कार्य की अधिकतम सीमा:"
+
+#: ../ui/preference.py:510 ../ui/preference.py:517
+msgid "Download directory: "
+msgstr "डाउनलोड निर्देशिका"
+
+#: ../ui/preference.py:516 ../ui/preference.py:523
+msgid "Change"
+msgstr "बदलाव"
+
+#: ../ui/preference.py:551 ../ui/preference.py:558
+msgid "Select the best mirror"
+msgstr "श्रेष्ठ दर्पण चुने"
+
+#: ../ui/preference.py:552 ../ui/preference.py:559
+msgid "Waiting"
+msgstr "प्रतीक्षा"
+
+#: ../ui/preference.py:553 ../ui/preference.py:560
+msgid "Successfully"
+msgstr "सफलतापूर्वक"
+
+#: ../ui/preference.py:571 ../ui/preference.py:578
+msgid "Upgrade automatically"
+msgstr "सफलतापूर्वक नवीनीकृत"
+
+#: ../ui/preference.py:575 ../ui/preference.py:582
+msgid "Time interval: "
+msgstr "समय अन्तराल:"
+
+#: ../ui/preference.py:578 ../ui/preference.py:585
+msgid " hour"
+msgstr "घंटा"
+
+#: ../ui/preference.py:642 ../ui/preference.py:643
+msgid "Select mirror"
+msgstr "दर्पण चुने"
+
+#: ../ui/preference.py:705
+msgid "Select Directory"
+msgstr "निर्देशिका चुने"
+
+#: ../ui/preference.py:751 ../ui/dialog_widgets.py:65
+msgid "Speed testing will finish only after one minute, please wait."
+msgstr "गति की जाँच अभी एक मिनट में समाप्त हो रहा है, प्रतीक्षा करें।"
+
+#: ../ui/preference.py:776 ../ui/dialog_widgets.py:90
+#, python-format
+msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
+msgstr "जाँच पूर्ण हुआ, गतिशील दर्पण स्त्रोत \"%s\" है, अभी बदलें?"
+
+#: ../ui/preference.py:829 ../ui/preference.py:735
+msgid "General"
+msgstr "सामान्य"
+
+#: ../ui/preference.py:830 ../ui/preference.py:736
+msgid "Mirrors"
+msgstr "दर्पण"
+
+#: ../ui/preference.py:831 ../ui/preference.py:737
+msgid "About"
+msgstr "बारे में"
+
+#: ../ui/search_page.py:110
+#, python-format
+msgid "%s applications searched"
+msgstr "%s अनुप्रयोग खोजा गया"
+
+#: ../ui/home_page.py:762
+msgid "HotApps"
+msgstr "हॉटअप्प्स"

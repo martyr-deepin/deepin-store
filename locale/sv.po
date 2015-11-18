@@ -1,0 +1,987 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Tobias Ahlström <tobias.ahlstrom@gmail.com>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Deepin Store\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-12-29 13:45+0800\n"
+"PO-Revision-Date: 2015-07-24 06:22+0000\n"
+"Last-Translator: szd_liufei <liufei@linuxdeepin.com>\n"
+"Language-Team: Swedish (http://www.transifex.com/linuxdeepin/deepin-store/language/sv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../ui/detail_page.py:179
+msgid "Popular recommendations"
+msgstr "Populära rekommendationer"
+
+#: ../ui/detail_page.py:240 ../ui/detail_page.py:494
+msgid "Loading comments..."
+msgstr "Laddar kommentarer..."
+
+#: ../ui/detail_page.py:358
+#, python-format
+msgid "Download: %s"
+msgstr "Laddar ner: %s"
+
+#: ../ui/detail_page.py:389
+msgid "Category: "
+msgstr "Kategori:"
+
+#: ../ui/detail_page.py:393
+#, python-format
+msgid "Version: %s"
+msgstr "Version: %s"
+
+#: ../ui/detail_page.py:394
+msgid "Download: 0"
+msgstr "Laddar ner: 0"
+
+#: ../ui/detail_page.py:395
+msgid "Size: calculating..."
+msgstr "Storlek: beräknar..."
+
+#: ../ui/detail_page.py:399
+msgid "Visit Homepage"
+msgstr "Besök Hemsida"
+
+#: ../ui/detail_page.py:444 ../ui/download_rank_page.py:369
+#: ../ui/home_page.py:1086 ../ui/album_page.py:483 ../ui/search_page.py:274
+#: ../ui/album_page.py:486 ../ui/home_page.py:1087
+msgid "Not found"
+msgstr "Hittas inte"
+
+#: ../ui/detail_page.py:450
+msgid "Successfully installed"
+msgstr "Installation lyckades"
+
+#: ../ui/detail_page.py:473
+#, python-format
+msgid "Size: %s"
+msgstr "Storlek: %s"
+
+#: ../ui/detail_page.py:611
+msgid "Powered by UpYun.com"
+msgstr "Drivs av UpYun.com"
+
+#: ../ui/uninstall_page.py:175
+#, python-format
+msgid "%s applications can be uninstalled"
+msgstr "%s program kan avinstalleras"
+
+#: ../ui/uninstall_page.py:515 ../ui/uninstall_page.py:598
+msgid "Waiting for uninstall"
+msgstr "Väntar på avinstallation"
+
+#: ../ui/uninstall_page.py:605 ../ui/uninstall_page.py:612
+msgid "Uninstalling"
+msgstr "Avinstallerar"
+
+#: ../ui/uninstall_page.py:619
+msgid "Uninstallation completed"
+msgstr "Avinstallation slutförd"
+
+#: ../ui/start_desktop_window.py:227 ../ui/software_center.py:131
+#, python-format
+msgid "%s: request for starting applications sent"
+msgstr "%s: begäran om att starta programhämtning"
+
+#: ../ui/inhibit.py:54
+msgid ""
+"Please wait a moment while system upgrade is being performed... Do not turn "
+"off your computer."
+msgstr "Var god vänta en stund medan systemuppdatering genomförs... Stäng inte av din dator."
+
+#: ../ui/dsc-daemon.py:222 ../ui/software_center.py:391
+#: ../ui/software_center.py:790 ../ui/dsc-daemon.py:248
+msgid "Upgrade"
+msgstr "Uppdatera"
+
+#: ../ui/dsc-daemon.py:284 ../ui/dsc-daemon.py:319
+#, python-format
+msgid ""
+"There are %s packages needed to upgrade in your system, please use Deepin "
+"Store to upgrade."
+msgstr "Det finns %s paket som behöver uppdateras i ditt system, var god besök Deepin Affär för att uppdatera."
+
+#: ../ui/dsc-daemon.py:286 ../ui/dsc-daemon.py:290
+#: ../ui/software_center.py:733 ../ui/preference.py:433
+#: ../ui/preference.py:440 ../ui/dsc-daemon.py:321 ../ui/dsc-daemon.py:325
+msgid "Deepin Store"
+msgstr "Deepin Affär"
+
+#: ../ui/dsc-daemon.py:288 ../ui/dsc-daemon.py:323
+#, python-format
+msgid ""
+"There is %s package needed to upgrade in your system, please use Deepin "
+"Store to upgrade."
+msgstr "Det finns %s paket som behöver uppdateras i ditt system, var god besök Deepin Affär för att uppdatera."
+
+#: ../ui/install_page.py:146
+#, python-format
+msgid "%s applications are being installed"
+msgstr "%s program installeras"
+
+#: ../ui/install_page.py:313 ../ui/install_page.py:744
+#: ../ui/upgrade_page.py:1091 ../ui/upgrade_page.py:1607
+msgid "Dependencies analyzing"
+msgstr "Beroenden analyseras"
+
+#: ../ui/install_page.py:511 ../ui/install_page.py:516
+#: ../ui/download_rank_page.py:374 ../ui/home_page.py:1091 ../ui/utils.py:360
+#: ../ui/album_page.py:488 ../ui/search_page.py:279 ../ui/album_page.py:491
+#: ../ui/utils.py:368 ../ui/home_page.py:1092
+msgid "Installed"
+msgstr "Installerad"
+
+#: ../ui/install_page.py:665 ../ui/install_page.py:676
+msgid "Download was interrupted"
+msgstr "Nedladdning blev avbruten"
+
+#: ../ui/install_page.py:689
+msgid "Installation was interrupted"
+msgstr "Installation blev avbruten"
+
+#: ../ui/install_page.py:751 ../ui/upgrade_page.py:1495
+#: ../ui/upgrade_page.py:1614
+msgid "Waiting for download"
+msgstr "Väntar på nedladdning"
+
+#: ../ui/install_page.py:758 ../ui/upgrade_page.py:1621
+msgid "Downloading"
+msgstr "Laddar ner"
+
+#: ../ui/install_page.py:765
+msgid "Download failed"
+msgstr "Nedladdning misslyckad"
+
+#: ../ui/install_page.py:781
+msgid "Waiting for installation"
+msgstr "Väntar på installation"
+
+#: ../ui/install_page.py:791 ../ui/upgrade_page.py:1647
+msgid "Dependencies analysis failed"
+msgstr "Beroendeanalys misslyckades"
+
+#: ../ui/install_page.py:800 ../ui/install_page.py:807
+msgid "Installing"
+msgstr "Installerar"
+
+#: ../ui/install_page.py:816
+msgid "Installation completed"
+msgstr "Installation slutförd"
+
+#: ../ui/upgrade_page.py:78 ../ui/upgrade_page.py:107
+#: ../ui/upgrade_page.py:340
+msgid "Last system upgraded time: "
+msgstr "Senaste tid för systemuppdatering:"
+
+#: ../ui/upgrade_page.py:136 ../ui/upgrade_page.py:208
+#, python-format
+msgid "No reminder to upgrade (%s)"
+msgstr "Ingen påminnelse för att uppdatera (%s)"
+
+#: ../ui/upgrade_page.py:182
+msgid "Upgrade applications selected"
+msgstr "Uppdatera markerade program"
+
+#: ../ui/upgrade_page.py:204
+#, python-format
+msgid "%s applications are available for upgrade"
+msgstr "%s program är tillgängliga för uppdatering."
+
+#: ../ui/upgrade_page.py:238 ../ui/item_render.py:46
+msgid "Remind again"
+msgstr "Påminn igen"
+
+#: ../ui/upgrade_page.py:272
+#, python-format
+msgid "%s applications are not being watched"
+msgstr "%s program bevakas inte"
+
+#: ../ui/upgrade_page.py:289
+msgid "Shut down the computer after upgraded"
+msgstr "Stäng av datorn efter uppdatering"
+
+#: ../ui/upgrade_page.py:304
+msgid "This function is invalid without Deepin System Settings installed."
+msgstr "Den här funktionen är ogiltig om Deepin Systeminställningar inte är installerad."
+
+#: ../ui/upgrade_page.py:306
+msgid "Deepin Desktop Environment is not installed, this function is invalid!"
+msgstr "Deepin Desktop Environment är inte installerad, den här funktionen är ogiltig!"
+
+#: ../ui/upgrade_page.py:308
+msgid "The system is not Deepin, this function is invalid."
+msgstr "Systemet är inte Deepin, funktionen är ogiltig."
+
+#: ../ui/upgrade_page.py:328
+msgid "Downloading upgrade packages"
+msgstr "Laddar ner uppdateringspaket"
+
+#: ../ui/upgrade_page.py:335
+msgid "Last time of refreshed package lists: "
+msgstr "Tid för senaste uppdatering av paketlista:"
+
+#: ../ui/upgrade_page.py:345
+msgid "Mirror Receiving: "
+msgstr "Speglar Mottags:"
+
+#: ../ui/upgrade_page.py:399
+msgid "Failed to download upgrade packages"
+msgstr "Misslyckades med att ladda ner uppdateringspaket"
+
+#: ../ui/upgrade_page.py:401
+msgid "The requested package does not exist on server."
+msgstr "Det begärda paketet existerar inte på servern."
+
+#: ../ui/upgrade_page.py:402 ../ui/upgrade_page.py:423
+#: ../ui/upgrade_page.py:446
+msgid "Suggest to "
+msgstr "Föreslå för"
+
+#: ../ui/upgrade_page.py:403 ../ui/upgrade_page.py:424
+#: ../ui/upgrade_page.py:447
+msgid "refresh package lists"
+msgstr "ladda om paketlista"
+
+#: ../ui/upgrade_page.py:404 ../ui/upgrade_page.py:425
+#: ../ui/upgrade_page.py:448
+msgid " and try again."
+msgstr "och försök igen."
+
+#: ../ui/upgrade_page.py:419 ../ui/upgrade_page.py:1120
+msgid "Failed to install upgrade packages"
+msgstr "Misslyckades med att installera uppdateringspaket"
+
+#: ../ui/upgrade_page.py:421
+msgid ""
+"This problem occurs due to corrupted local apt dependency relationship."
+msgstr "Problemet uppstod på grund av lokalt korrupta apt beroendeförhållande. "
+
+#: ../ui/upgrade_page.py:440
+msgid "Warning"
+msgstr "Varning"
+
+#: ../ui/upgrade_page.py:442
+msgid ""
+"The upgrade requires to uninstall crucial components due to corrupted local "
+"dependencies or incorrect package dependencies on server."
+msgstr "Uppdateringen behöver avinstallera viktiga komponenter på grund av korrupta lokala beroenden eller felaktiga paketberoenden på servern."
+
+#: ../ui/upgrade_page.py:483
+msgid "If the prompt occurs again, you could "
+msgstr "Om meddelandet kommer igen, kan du"
+
+#: ../ui/upgrade_page.py:484 ../ui/upgrade_page.py:510
+msgid "send error report"
+msgstr "skicka felrapport"
+
+#: ../ui/upgrade_page.py:485
+msgid "."
+msgstr "."
+
+#: ../ui/upgrade_page.py:498
+msgid "Uploading error log"
+msgstr "Laddar upp fellogg"
+
+#: ../ui/upgrade_page.py:503
+msgid "The error was successfully reported and will be handled soon."
+msgstr "Felet har rapporterats och kommer hanteras snart."
+
+#: ../ui/upgrade_page.py:509
+msgid "Failed to send the error report. You could try again."
+msgstr "Misslyckades med att skicka felrapporten. Du kan försöka igen."
+
+#: ../ui/upgrade_page.py:663
+msgid ""
+"This problem occurs due to corrupted local apt dependence relationship."
+msgstr "Problemet uppstod på grund av lokalt korrupt apt beroendeförhållande. "
+
+#: ../ui/upgrade_page.py:668
+#, python-format
+msgid "%s package(s) are available for upgrade, %s will be downloaded."
+msgstr "%s paket är tillgängligt för uppdatering, %s kommer laddas ner."
+
+#: ../ui/upgrade_page.py:1094
+msgid "Finished analyzing dependencies."
+msgstr "Slutförde analys av beroenden."
+
+#: ../ui/upgrade_page.py:1097
+msgid "Download has started"
+msgstr "Nedladdning har startat"
+
+#: ../ui/upgrade_page.py:1103
+#, python-format
+msgid "Completed: %s/%s (%s/%s) Download Rate: %s/s"
+msgstr "Slutförde: %s/%s (%s/%s) Nedladdningshastighet: %s/s"
+
+#: ../ui/upgrade_page.py:1113
+msgid "Download finished."
+msgstr "Nedladdning slutförd."
+
+#: ../ui/upgrade_page.py:1117
+msgid "Download stopped."
+msgstr "Nedladdning stoppad."
+
+#: ../ui/upgrade_page.py:1124
+msgid "Installing upgrade packages"
+msgstr "Installerar uppdateringspaket"
+
+#: ../ui/upgrade_page.py:1125
+msgid "Upgrading..."
+msgstr "Uppdaterar..."
+
+#: ../ui/upgrade_page.py:1132 ../ui/upgrade_page.py:1672
+msgid "Upgrade completed"
+msgstr "Uppdatering slutförd"
+
+#: ../ui/upgrade_page.py:1637
+msgid "Waiting for upgrade"
+msgstr "Väntar på uppdatering"
+
+#: ../ui/upgrade_page.py:1656 ../ui/upgrade_page.py:1663
+msgid "Upgrading"
+msgstr "Uppdaterar"
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 weekly"
+msgstr "Topp 25 vecka"
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 monthly"
+msgstr "Topp 25 månad"
+
+#: ../ui/download_rank_page.py:61
+msgid "Top 25 totally"
+msgstr "Topp 25 totalt"
+
+#: ../ui/category_info.py:26
+msgid "Internet"
+msgstr "Internet"
+
+#: ../ui/category_info.py:27
+msgid "Browser"
+msgstr "Webbläsare"
+
+#: ../ui/category_info.py:28
+msgid "Instant messaging"
+msgstr "Snabbmeddelande"
+
+#: ../ui/category_info.py:29
+msgid "Email"
+msgstr "E-post"
+
+#: ../ui/category_info.py:30
+msgid "File transfer"
+msgstr "Filöverföring"
+
+#: ../ui/category_info.py:31
+msgid "News"
+msgstr "Nyheter"
+
+#: ../ui/category_info.py:32
+msgid "Remote access"
+msgstr "Fjärråtkomst"
+
+#: ../ui/category_info.py:33
+msgid "Security"
+msgstr "Säkerhet"
+
+#: ../ui/category_info.py:34
+msgid "Miscellaneous"
+msgstr "Blandat"
+
+#: ../ui/category_info.py:35
+msgid "Multimedia"
+msgstr "Multimedia"
+
+#: ../ui/category_info.py:36
+msgid "Audiovideo"
+msgstr "Ljud och bild"
+
+#: ../ui/category_info.py:37
+msgid "Media Editing"
+msgstr "Mediaredigering"
+
+#: ../ui/category_info.py:38
+msgid "Disc burner"
+msgstr "Skivbrännare"
+
+#: ../ui/category_info.py:39
+msgid "MIDI"
+msgstr "MIDI"
+
+#: ../ui/category_info.py:40
+msgid "Mixer"
+msgstr "Mixer"
+
+#: ../ui/category_info.py:41
+msgid "Player"
+msgstr "Spelare"
+
+#: ../ui/category_info.py:42
+msgid "Recorder"
+msgstr "Inspelning"
+
+#: ../ui/category_info.py:43
+msgid "Sequencer"
+msgstr "Sequencer"
+
+#: ../ui/category_info.py:44
+msgid "Tuner"
+msgstr "Tuner"
+
+#: ../ui/category_info.py:45
+msgid "Games"
+msgstr "Spel"
+
+#: ../ui/category_info.py:46
+msgid "Action games"
+msgstr "Actionspel"
+
+#: ../ui/category_info.py:47
+msgid "Advernture games"
+msgstr "Äventyrsspel"
+
+#: ../ui/category_info.py:48
+msgid "Arcade games"
+msgstr "Arkadspel"
+
+#: ../ui/category_info.py:49
+msgid "Board games"
+msgstr "Brädspel"
+
+#: ../ui/category_info.py:50
+msgid "Card games"
+msgstr "Kortspel"
+
+#: ../ui/category_info.py:51
+msgid "Emulator"
+msgstr "Emulator"
+
+#: ../ui/category_info.py:52
+msgid "Kids games"
+msgstr "Barnspel"
+
+#: ../ui/category_info.py:53
+msgid "Logic games"
+msgstr "Logikspel"
+
+#: ../ui/category_info.py:54
+msgid "Puzzle games"
+msgstr "Pusselspel"
+
+#: ../ui/category_info.py:55
+msgid "Role-playing games"
+msgstr "Rollspel"
+
+#: ../ui/category_info.py:56
+msgid "Sports games"
+msgstr "Sportspel"
+
+#: ../ui/category_info.py:57
+msgid "Strategy games"
+msgstr "Strategispel"
+
+#: ../ui/category_info.py:58
+msgid "Graphics"
+msgstr "Grafik"
+
+#: ../ui/category_info.py:59
+msgid "2D graphics"
+msgstr "2D grafik"
+
+#: ../ui/category_info.py:60
+msgid "3D graphics"
+msgstr "3D grafik"
+
+#: ../ui/category_info.py:61
+msgid "Image processing"
+msgstr "Bildbehandling"
+
+#: ../ui/category_info.py:62
+msgid "Photography"
+msgstr "Fotografering"
+
+#: ../ui/category_info.py:63
+msgid "Vector graphics"
+msgstr "Vektorgrafik"
+
+#: ../ui/category_info.py:64
+msgid "Viewer"
+msgstr "Bildvisare"
+
+#: ../ui/category_info.py:65
+msgid "Productivity"
+msgstr "Produktivitet"
+
+#: ../ui/category_info.py:66
+msgid "Office"
+msgstr "Kontor"
+
+#: ../ui/category_info.py:67
+msgid "Scanning printing"
+msgstr "Scanner och skrivare"
+
+#: ../ui/category_info.py:68
+msgid "Industry"
+msgstr "Industri"
+
+#: ../ui/category_info.py:69
+msgid "Engineering"
+msgstr "Ingenjör"
+
+#: ../ui/category_info.py:70
+msgid "Finance"
+msgstr "Finans"
+
+#: ../ui/category_info.py:71
+msgid "Ham radio"
+msgstr "Amatörradio"
+
+#: ../ui/category_info.py:72
+msgid "Medical"
+msgstr "Medicin"
+
+#: ../ui/category_info.py:73
+msgid "Publishing"
+msgstr "Publicering"
+
+#: ../ui/category_info.py:74
+msgid "Science Education"
+msgstr "Naturvetenskap"
+
+#: ../ui/category_info.py:75
+msgid "Languages"
+msgstr "Språk"
+
+#: ../ui/category_info.py:76
+msgid "Religion"
+msgstr "Religion"
+
+#: ../ui/category_info.py:77
+msgid "Science"
+msgstr "Vetenskap"
+
+#: ../ui/category_info.py:78
+msgid "Development"
+msgstr "Utveckling"
+
+#: ../ui/category_info.py:79
+msgid "Database"
+msgstr "Databas"
+
+#: ../ui/category_info.py:80
+msgid "Debugging"
+msgstr "Felsökning"
+
+#: ../ui/category_info.py:81
+msgid "IDE"
+msgstr "IDE"
+
+#: ../ui/category_info.py:82
+msgid "Software development"
+msgstr "Programutveckling"
+
+#: ../ui/category_info.py:83
+msgid "Version control"
+msgstr "Versionskontroll"
+
+#: ../ui/category_info.py:84
+msgid "Web development"
+msgstr "Webbutveckling"
+
+#: ../ui/category_info.py:85
+msgid "System"
+msgstr "Systemverktyg"
+
+#: ../ui/category_info.py:86
+msgid "Desktop environment"
+msgstr "Skrivbordsmiljö"
+
+#: ../ui/category_info.py:87
+msgid "Monitor"
+msgstr "Övervaka"
+
+#: ../ui/category_info.py:88
+msgid "Network"
+msgstr "Nätverk"
+
+#: ../ui/category_info.py:89
+msgid "Package manager"
+msgstr "Pakethanterare"
+
+#: ../ui/category_info.py:90
+msgid "Settings"
+msgstr "Inställningar"
+
+#: ../ui/category_info.py:91
+msgid "Virtualization"
+msgstr "Virtualisering"
+
+#: ../ui/category_info.py:92
+msgid "Window manager"
+msgstr "Fönsterhanterare"
+
+#: ../ui/category_info.py:93
+msgid "Utilities"
+msgstr "Verktyg"
+
+#: ../ui/category_info.py:94
+msgid "Accessories"
+msgstr "Tillbehör"
+
+#: ../ui/category_info.py:95
+msgid "Archiving"
+msgstr "Arkivering"
+
+#: ../ui/category_info.py:96
+msgid "Emulation"
+msgstr "Emulering"
+
+#: ../ui/category_info.py:97
+msgid "File manager"
+msgstr "Filhanterare"
+
+#: ../ui/category_info.py:98
+msgid "Screensaver"
+msgstr "Skärmsläckare"
+
+#: ../ui/category_info.py:99
+msgid "Terminal emulator"
+msgstr "Terminalemulator"
+
+#: ../ui/category_info.py:100
+msgid "Text editor"
+msgstr "Textredigering"
+
+#: ../ui/home_page.py:484
+#, python-format
+msgid "%s: %s applications"
+msgstr "%s: %s program"
+
+#: ../ui/home_page.py:666
+#, python-format
+msgid "%s > %s : %s applications"
+msgstr "%s > %s : %s program"
+
+#: ../ui/home_page.py:722 ../ui/software_center.py:789
+msgid "Home"
+msgstr "Hem"
+
+#: ../ui/home_page.py:762
+msgid "Recommendations"
+msgstr "Rekommendationer"
+
+#: ../ui/home_page.py:762
+msgid "Topics"
+msgstr "Ämnen"
+
+#: ../ui/home_page.py:762
+msgid "Download rank"
+msgstr "Nedladdningstopplista"
+
+#: ../ui/widgets.py:66
+msgid "Just now"
+msgstr "Just nu"
+
+#: ../ui/widgets.py:71
+msgid "One minute ago"
+msgstr "En minut sedan"
+
+#: ../ui/widgets.py:73
+#, python-format
+msgid "%s minutes ago"
+msgstr "%s minuter sedan"
+
+#: ../ui/widgets.py:78
+msgid "One hour ago"
+msgstr "En timme sedan"
+
+#: ../ui/widgets.py:80
+#, python-format
+msgid "%s hours ago"
+msgstr "%s timmar sedan"
+
+#: ../ui/widgets.py:84
+msgid "Yesterday"
+msgstr "Igår"
+
+#: ../ui/widgets.py:295 ../ui/widgets.py:369
+msgid "Click to refresh"
+msgstr "Klicka för att ladda om"
+
+#: ../ui/widgets.py:462 ../ui/preference.py:782 ../ui/dialog_widgets.py:96
+msgid "OK"
+msgstr "Okej"
+
+#: ../ui/widgets.py:463 ../ui/preference.py:784 ../ui/dialog_widgets.py:98
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: ../ui/utils.py:355 ../ui/utils.py:363
+msgid "Running"
+msgstr "Körs"
+
+#: ../ui/utils.py:356 ../ui/utils.py:364
+msgid "Preparing"
+msgstr "Förbereder"
+
+#: ../ui/utils.py:357 ../ui/utils.py:365
+msgid "Unpacking"
+msgstr "Packar upp"
+
+#: ../ui/utils.py:358 ../ui/utils.py:366
+msgid "Preparing to configure"
+msgstr "Förbereder konfigurering"
+
+#: ../ui/utils.py:359 ../ui/utils.py:367
+msgid "Configuring"
+msgstr "Konfigurerar"
+
+#: ../ui/utils.py:370 ../ui/utils.py:378
+msgid "Err"
+msgstr "Err"
+
+#: ../ui/utils.py:371 ../ui/utils.py:379
+msgid "Ign"
+msgstr "Ign"
+
+#: ../ui/utils.py:372 ../ui/utils.py:380
+msgid "Get"
+msgstr "Get"
+
+#: ../ui/utils.py:373 ../ui/utils.py:381
+msgid "Hit"
+msgstr "Hit"
+
+#: ../ui/software_center.py:127
+#, python-format
+msgid "%s haven't any desktop file"
+msgstr "%s har inte någon skrivbordsfil"
+
+#: ../ui/software_center.py:194
+msgid "Sending rating..."
+msgstr "Skickar betyg..."
+
+#: ../ui/software_center.py:198
+msgid "You have already scored.  ;)"
+msgstr "Du har redan gått i mål. :)"
+
+#: ../ui/software_center.py:204
+msgid "Rated successfully. Thanks for your involvement."
+msgstr "Betygsättning lyckades. Tack för ditt engagemang."
+
+#: ../ui/software_center.py:220
+msgid "Rating failed. Please check your network connection!"
+msgstr "Betygsättning misslyckades. Var god kontrollera din nätverksanslutning!"
+
+#: ../ui/software_center.py:385
+#, python-format
+msgid "Uninstall %s Successfully."
+msgstr "Avinstallerade %s framgångsrikt."
+
+#: ../ui/software_center.py:385 ../ui/software_center.py:791
+msgid "Uninstall"
+msgstr "Avinstallera"
+
+#: ../ui/software_center.py:391
+#, python-format
+msgid "%s packages upgrade successfully."
+msgstr "%s paket uppdaterades framgångsrikt."
+
+#: ../ui/software_center.py:394
+#, python-format
+msgid "Install %s Successfully."
+msgstr "Installerade %s framgångsrikt."
+
+#: ../ui/software_center.py:394
+msgid "Install"
+msgstr "Installera"
+
+#: ../ui/software_center.py:438
+msgid "Generating package list database..."
+msgstr "Genererar databas för paketlista..."
+
+#: ../ui/software_center.py:446
+msgid "Package lists refreshed completely."
+msgstr "Paketlista uppdaterades."
+
+#: ../ui/software_center.py:458
+msgid "Failed to refresh package lists."
+msgstr "Misslyckades med att uppdatera paketlista"
+
+#: ../ui/software_center.py:459
+msgid "Try again"
+msgstr "Försök igen"
+
+#: ../ui/software_center.py:469
+#, python-format
+msgid ""
+"Problem occurred when analyzing dependencies for %s. Installation aborted."
+msgstr "Problem uppstod vid analys av beroenden för %s.\nInstallation avbruten."
+
+#: ../ui/software_center.py:472
+#, python-format
+msgid "Problem occurred when analyzing dependencies for %s. Upgrade aborted."
+msgstr "Problem uppstod vid analys av beroenden för %s.\nUppdatering avbruten."
+
+#: ../ui/software_center.py:477
+#, python-format
+msgid "The requested package \"%s\" was not found in the package list."
+msgstr "Det begärda paketet %s hittades inte i paketlistan."
+
+#: ../ui/software_center.py:478
+msgid "Refresh package lists again and try again."
+msgstr "Uppdatera paketlistan och försök igen."
+
+#: ../ui/software_center.py:770
+msgid "Join us"
+msgstr "Anslut dig till oss"
+
+#: ../ui/software_center.py:792
+msgid "Installation"
+msgstr "Installation"
+
+#: ../ui/software_center.py:816 ../ui/preference.py:568
+#: ../ui/preference.py:575
+msgid "Refresh package lists"
+msgstr "Uppdatera paketlista"
+
+#: ../ui/software_center.py:817
+msgid "Open download directory"
+msgstr "Öppna nedladdningsmapp"
+
+#: ../ui/software_center.py:818
+msgid "Clear up cached packages"
+msgstr "Städa upp cachade paket"
+
+#: ../ui/software_center.py:819
+msgid "View new features"
+msgstr "Visa nya funktioner"
+
+#: ../ui/software_center.py:820
+msgid "Preferences"
+msgstr "Inställningar"
+
+#: ../ui/software_center.py:821
+msgid "Quit"
+msgstr "Stäng"
+
+#: ../ui/software_center.py:1123 ../ui/software_center.py:1128
+#, python-format
+msgid "You have cleared up %s packages and saved %s of space."
+msgstr "Du har rensat ut %s paket och sparat %s utrymme."
+
+#: ../ui/software_center.py:1125 ../ui/software_center.py:1130
+msgid "Your system cache is empty."
+msgstr "Din systemcache är tom."
+
+#: ../ui/item_render.py:44
+msgid "No reminder"
+msgstr "Ingen påminnelse"
+
+#: ../ui/preference.py:438 ../ui/preference.py:445
+msgid "Version:"
+msgstr "Version:"
+
+#: ../ui/preference.py:452 ../ui/preference.py:459
+msgid ""
+"Deepin Store is a commonly used software center on Linux. We selected more than 2,600 excellent applications with many functions of installation and uninstalling, software repository and popular recommendations, which supports 1-click quick installation, multi-threaded download and clearing of cached packages. It provides topics for software introduction and shares good applications.\n"
+"\n"
+"Deepin Store is a free software licensed under GNU GPLv3."
+msgstr "Deepin Affär är en enkel programcentral för Linux. Vi har valt ut mer än 2600 utmärkta program. Programcentralen har många funktioner, installation och avinstallation, programförråd och populära rekommendationer som stöder 1-klicksinstallation, flertrådade nedladdningar och utrensning av cachade paket. Den introducerar och delar bra program.\nDeepin Affär är fri programvara licensierad enligt GNU GPLv3."
+
+#: ../ui/preference.py:477 ../ui/preference.py:484
+msgid "On uninstalling the software"
+msgstr "Vid avinstallation av programmet"
+
+#: ../ui/preference.py:480 ../ui/preference.py:487
+msgid "Delete configuration files"
+msgstr "Radera konfigureringsfiler"
+
+#: ../ui/preference.py:494 ../ui/preference.py:501
+msgid "Download settings"
+msgstr "Ladda ner inställningar"
+
+#: ../ui/preference.py:500 ../ui/preference.py:507
+msgid "Maximum number of download tasks: "
+msgstr "Maximalt antal nedladdningsuppgifter:"
+
+#: ../ui/preference.py:510 ../ui/preference.py:517
+msgid "Download directory: "
+msgstr "Nedladdningsmapp:"
+
+#: ../ui/preference.py:516 ../ui/preference.py:523
+msgid "Change"
+msgstr "Byt"
+
+#: ../ui/preference.py:551 ../ui/preference.py:558
+msgid "Select the best mirror"
+msgstr "Välj den bästa spegeln"
+
+#: ../ui/preference.py:552 ../ui/preference.py:559
+msgid "Waiting"
+msgstr "Väntar"
+
+#: ../ui/preference.py:553 ../ui/preference.py:560
+msgid "Successfully"
+msgstr "Framgångsrikt"
+
+#: ../ui/preference.py:571 ../ui/preference.py:578
+msgid "Upgrade automatically"
+msgstr "Uppdatera automatiskt"
+
+#: ../ui/preference.py:575 ../ui/preference.py:582
+msgid "Time interval: "
+msgstr "Tidsintervall:"
+
+#: ../ui/preference.py:578 ../ui/preference.py:585
+msgid " hour"
+msgstr "timme"
+
+#: ../ui/preference.py:642 ../ui/preference.py:643
+msgid "Select mirror"
+msgstr "Välj spegel"
+
+#: ../ui/preference.py:705
+msgid "Select Directory"
+msgstr "Välj mapp"
+
+#: ../ui/preference.py:751 ../ui/dialog_widgets.py:65
+msgid "Speed testing will finish only after one minute, please wait."
+msgstr "Hastighetstest kommer avslutat om endast 1 minut, var god vänta."
+
+#: ../ui/preference.py:776 ../ui/dialog_widgets.py:90
+#, python-format
+msgid "Test is completed, the fastest mirror source is \"%s\", switch now?"
+msgstr "Test är slutfört, den snabbaste spegelkällan är \"%s\", byt nu?"
+
+#: ../ui/preference.py:829 ../ui/preference.py:735
+msgid "General"
+msgstr "Allmänt"
+
+#: ../ui/preference.py:830 ../ui/preference.py:736
+msgid "Mirrors"
+msgstr "Speglar"
+
+#: ../ui/preference.py:831 ../ui/preference.py:737
+msgid "About"
+msgstr "Om"
+
+#: ../ui/search_page.py:110
+#, python-format
+msgid "%s applications searched"
+msgstr "%s program sökta"
+
+#: ../ui/home_page.py:762
+msgid "HotApps"
+msgstr "Populära Program"
