@@ -28,6 +28,7 @@ import gobject
 import json
 import subprocess
 import lsb_release
+import time
 
 from skin import app_theme
 
@@ -42,6 +43,7 @@ from dtk.ui.cycle_strip import CycleStrip
 import dtk.ui.tooltip as Tooltip
 from deepin_utils.net import is_network_connected
 from deepin_utils.file import read_file, format_file_size
+from dtk.ui.threads import post_gui
 
 import logging
 import utils
@@ -1018,14 +1020,27 @@ class UpgradePage(gtk.VBox):
 
         self.upgrade_treeview.clear()
         pkg_infos = json.loads(str(pkg_infos))
+
+        exists_upgrade_pkg_names = map(lambda item: item.pkg_name, self.upgrade_treeview.visible_items)
+        if len(exists_upgrade_pkg_names) + len(pkg_infos) != 0:
+            if len(self.get_children()) == 0 or self.get_children()[0] != self.upgrade_treeview:
+                container_remove_all(self)
+                container_remove_all(self.cycle_strip)
+
+                self.cycle_strip.add(self.upgrade_bar)
+
+                self.pack_start(self.cycle_strip, False, False)
+                self.pack_start(self.upgrade_treeview, True, True)
+        else:
+            self.upgrade_treeview.clear()
+            global_event.emit("show-newest-view")
+
         if len(pkg_infos) > 0:
             if self.update_list_pixbuf:
                 del self.update_list_pixbuf
                 self.update_list_pixbuf = None
 
-            exists_upgrade_pkg_names = map(lambda item: item.pkg_name, self.upgrade_treeview.visible_items)
 
-            upgrade_items = []
             download_size = 0
             download_number = 0
             for pkg_info in pkg_infos:
@@ -1034,31 +1049,16 @@ class UpgradePage(gtk.VBox):
                         not pkg_info["downloaded"]:
                     download_size += pkg_info["size"]
                     download_number += 1
+                    self.update_download_size_info(download_size, download_number)
+
                 pkg_name = pkg_info["name"]
                 pkg_version = pkg_info["version"]
                 self.pkg_info_dict[pkg_name] = pkg_version
-
                 if pkg_name not in exists_upgrade_pkg_names:
                     self.upgrade_pkg_num += 1
-                    upgrade_items.append(UpgradeItem(pkg_info, self.data_manager))
+                    self.upgrade_treeview.add_items([UpgradeItem(pkg_info, self.data_manager)])
 
-            self.update_download_size_info(download_size, download_number)
-            self.upgrade_treeview.add_items(upgrade_items)
-
-            if len(self.upgrade_treeview.visible_items) == 0:
-                global_event.emit("show-newest-view")
-            else:
-                if len(self.get_children()) == 0 or self.get_children()[0] != self.upgrade_treeview:
-                    container_remove_all(self)
-                    container_remove_all(self.cycle_strip)
-
-                    self.cycle_strip.add(self.upgrade_bar)
-
-                    self.pack_start(self.cycle_strip, False, False)
-                    self.pack_start(self.upgrade_treeview, True, True)
-        else:
-            self.upgrade_treeview.clear()
-            global_event.emit("show-newest-view")
+        utils.FetchItemPkgInfoThread(self.upgrade_treeview.visible_items)
 
     def download_ready(self, pkg_name):
         self.upgrading_view.upgrading_progress_detail.set_text(_("Dependencies analyzing"))
@@ -1146,7 +1146,7 @@ class UpgradeItem(TreeItem):
         self.data_manager = data_manager
         self.icon_pixbuf = None
 
-        info = data_manager.get_item_pkg_info(self.pkg_name)
+        info=["", "", "", ""]
         self.alias_name = info[1]
         self.short_desc = info[2]
         star = 5.0
@@ -1168,6 +1168,13 @@ class UpgradeItem(TreeItem):
             ITEM_CHECKBUTTON_PADDING_X,
             ITEM_CHECKBUTTON_PADDING_Y)
         self.notify_button_hover = False
+
+    @post_gui
+    def update_item_desc(self, info):
+        self.alias_name = info[1]
+        self.short_desc = info[2]
+        if self.redraw_request_callback:
+            self.redraw_request_callback(self)
 
     def render_check_button(self, cr, rect):
         if self.row_index % 2 == 1:

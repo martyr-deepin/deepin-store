@@ -27,29 +27,110 @@ import gio
 import sys
 import sqlite3
 import xappy
-from collections import OrderedDict
 from deepin_utils.file import get_parent_dir
-import threading as td
+
+import time
+from Queue import Queue
+from threading import Thread
 
 from data import DATA_ID
 from constant import LANGUAGE
 from category import CATEGORY_TYPE_DICT
-
-import peewee
-from db_models.software import Software
-from db_models.software import Language as SoftwareLanguage
 
 UPDATE_DATA_DIR = os.path.join(get_parent_dir(__file__, 2), "data", "update", DATA_ID)
 CACHE_SOFT_DB_PATH = os.path.join(get_parent_dir(__file__, 2), "data", "cache_soft.db")
 
 DATA_SUPPORT_LANGUAGE = ['en_US', 'zh_CN', 'zh_TW']
 
+class SqliteMultithread(Thread):
+    """
+    Wrap sqlite connection in a way that allows concurrent requests from multiple threads.
+
+    This is done by internally queueing the requests and processing them sequentially
+    in a separate thread (in the same order they arrived).
+
+    """
+    def __init__(self, filename, autocommit=False, journal_mode="OFF"):
+        super(SqliteMultithread, self).__init__()
+        self.filename = filename
+        self.autocommit = autocommit
+        self.journal_mode = journal_mode
+        self.reqs = Queue() # use request queue of unlimited size
+        self.setDaemon(True) # python2.5-compatible
+        self.start()
+
+    def run(self):
+        if self.autocommit:
+            conn = sqlite3.connect(self.filename, isolation_level=None, check_same_thread=False)
+        else:
+            conn = sqlite3.connect(self.filename, check_same_thread=False)
+        conn.execute('PRAGMA journal_mode = %s' % self.journal_mode)
+        conn.text_factory = str
+        cursor = conn.cursor()
+        cursor.execute('PRAGMA synchronous=OFF')
+        while True:
+            req, arg, res = self.reqs.get()
+            if req == '--close--':
+                break
+            elif req == '--commit--':
+                conn.commit()
+            else:
+                cursor.execute(req, arg)
+                if res:
+                    for rec in cursor:
+                        res.put(rec)
+                    res.put('--no more--')
+                if self.autocommit:
+                    conn.commit()
+        conn.close()
+
+    def execute(self, req, arg=None, res=None):
+        """
+        `execute` calls are non-blocking: just queue up the request and return immediately.
+
+        """
+        self.reqs.put((req, arg or tuple(), res))
+
+    def executemany(self, req, items):
+        for item in items:
+            self.execute(req, item)
+
+    def select(self, req, arg=None):
+        """
+        Unlike sqlite's native select, this select doesn't handle iteration efficiently.
+
+        The result of `select` starts filling up with values as soon as the
+        request is dequeued, and although you can iterate over the result normally
+        (`for res in self.select(): ...`), the entire result will be in memory.
+
+        """
+        res = Queue() # results of the select will appear as items in this queue
+        self.execute(req, arg, res)
+        while True:
+            rec = res.get()
+            if rec == '--no more--':
+                break
+            yield rec
+
+    def select_one(self, req, arg=None):
+        """Return only the first row of the SELECT, or None if there are no matching rows."""
+        try:
+            return iter(self.select(req, arg)).next()
+        except StopIteration:
+            return None
+
+    def commit(self):
+        self.execute('--commit--')
+
+    def close(self):
+        self.execute('--close--')
+
 def db_path_exists(path):
     if not os.path.exists(path):
         print "Database not exist:", path
         sys.exit(1)
 
-class DataManager(td.Thread):
+class DataManager(object):
     def __init__(self, bus_interface, debug_flag=False):
         '''
         init docs
@@ -59,38 +140,26 @@ class DataManager(td.Thread):
 
         self.language = LANGUAGE if LANGUAGE in DATA_SUPPORT_LANGUAGE else 'en_US'
 
-        software_db_path = os.path.join(UPDATE_DATA_DIR, "software", "software.db")
-        software_db = peewee.SqliteDatabase(software_db_path, check_same_thread=False)
-        Software._meta.database = software_db
-        SoftwareLanguage._meta.database = software_db
-        self.default_lang_obj = SoftwareLanguage.select().where(SoftwareLanguage.language_code=="en_US").get()
-        self.current_lang_obj = SoftwareLanguage.select().where(SoftwareLanguage.language_code==self.language).get()
-
-        self.init_cache_soft_db()
+        software_db_path = os.path.join(UPDATE_DATA_DIR, "software", self.language, "software.db")
+        db_path_exists(software_db_path)
+        self.software_db_cursor = SqliteMultithread(software_db_path)
 
         desktop_db_path = os.path.join(UPDATE_DATA_DIR, "desktop", "desktop2014.db")
         db_path_exists(desktop_db_path)
-        self.desktop_db_connect = sqlite3.connect(desktop_db_path, check_same_thread = False)
-        self.desktop_db_cursor = self.desktop_db_connect.cursor()
+        self.desktop_db_cursor = SqliteMultithread(desktop_db_path)
 
         category_db_path = os.path.join(UPDATE_DATA_DIR, "category", "category.db")
         db_path_exists(category_db_path)
-        self.category_db_connect = sqlite3.connect(category_db_path, check_same_thread = False)
-        self.category_db_cursor = self.category_db_connect.cursor()
+        self.category_db_cursor = SqliteMultithread(category_db_path)
 
         self.icon_data_dir = os.path.join(UPDATE_DATA_DIR, "icon")
 
         self.category_dict = {}
         self.category_name_dict = {}
 
-        #self.build_category_dict()
-
-    def get_software_obj(self, pkg_name):
-        try:
-            soft = Software.select().where(Software.pkg_name == pkg_name, Software.language == self.current_lang_obj).get()
-        except:
-            soft = None
-        return soft
+    def get_software_info(self, pkg_name):
+        req = "SELECT pkg_name, alias_name, short_desc, long_desc FROM software WHERE pkg_name=?"
+        return self.software_db_cursor.select_one(req, (pkg_name,))
 
     def init_cache_soft_db(self):
         if self.is_cache_soft_db_exists() and not hasattr(self, 'cache_soft_db_cursor'):
@@ -112,23 +181,16 @@ class DataManager(td.Thread):
 
     def get_pkgs_match_input(self, input_string):
         # Select package name match input string.
-
+        req = "SELECT pkg_name FROM software WHERE pkg_name LIKE ?"
         input_string = input_string.lower()
-        pkg_names = []
-        argv = [
-            "SELECT pkg_name FROM software WHERE pkg_name LIKE ?",
-            ("%" + unicode(input_string) + "%",)
-            ]
+        search_key = "%" + unicode(input_string) + "%"
 
-        cache_info = self.get_info_from_cache_soft_db(argv)
+        cache_info = self.get_info_from_cache_soft_db([req, (search_key, )])
         if cache_info:
-            for (pkg_name, ) in cache_info:
-                pkg_names.append(pkg_name)
+            pkg_names = map(lambda s: s[0], cache_info)
         else:
-            search_key = "*%s*" % input_string
-            software_list = Software.select().where(Software.pkg_name % search_key, Software.language==self.default_lang_obj)
-            for soft in software_list:
-                pkg_names.append(soft.pkg_name)
+            res = self.software_db_cursor.select(req, (search_key, ))
+            pkg_names = map(lambda s: s[0], res)
 
         # Sort package name.
         pkg_names = sorted(
@@ -157,16 +219,6 @@ class DataManager(td.Thread):
     def get_pkg_icon_path(self, pkg_name):
         pass
 
-    def get_search_pkgs_info(self, pkg_names):
-        pkg_infos = []
-        for (index, pkg_name) in enumerate(pkg_names):
-            self.desktop_db_cursor.execute(
-                "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])
-            desktop_infos = self.desktop_db_cursor.fetchall()
-            pkg_infos.append([pkg_name, desktop_infos])
-
-        return pkg_infos
-
     def get_pkg_desktop_info(self, desktops):
         app_infos = []
         all_app_infos = gio.app_info_get_all()
@@ -179,16 +231,15 @@ class DataManager(td.Thread):
         return app_infos
 
     def get_pkg_installed(self, pkg_name, callback):
-        self.desktop_db_cursor.execute("SELECT start_pkg_names FROM package WHERE pkg_name=?", (pkg_name,))
-        start_pkg_names = self.desktop_db_cursor.fetchone()
-        if start_pkg_names:
+        req = "SELECT start_pkg_names FROM package WHERE pkg_name=?"
+        start_pkg_names = self.desktop_db_cursor.select_one(req, (pkg_name,))
+        if start_pkg_names != None:
             start_pkg_names = start_pkg_names[0]
         else:
             start_pkg_names = ""
         self.bus_interface.get_pkg_start_status(pkg_name, start_pkg_names,
                 reply_handler=lambda r: callback(r, True),
-                error_handler=lambda e: callback(e, False)
-                )
+                error_handler=lambda e: callback(e, False))
 
     def get_pkg_detail_info(self, pkg_name):
         result = {
@@ -201,17 +252,16 @@ class DataManager(td.Thread):
                 }
 
         # get category, recommend_pkgs
-        self.desktop_db_cursor.execute(
-            "SELECT first_category_name, second_category_name FROM package WHERE pkg_name=?", [pkg_name])
-        category_names = self.desktop_db_cursor.fetchone()
+        req = "SELECT first_category_name, second_category_name FROM package WHERE pkg_name=?"
+        category_names = self.desktop_db_cursor.select_one(req, (pkg_name,))
         if category_names and category_names[0] and category_names[1]:
             result['category'] = category_names
 
         # get long_desc, version, homepage, alias_name
-        soft = self.get_software_obj(pkg_name)
+        soft = self.get_software_info(pkg_name)
         if soft:
-            result["long_desc"] = soft.long_desc
-            result["alias_name"] = soft.alias_name
+            result["alias_name"] = soft[1]
+            result["long_desc"] = soft[3]
 
         cache_info = self.get_cache_info(pkg_name)
         if cache_info:
@@ -232,7 +282,7 @@ class DataManager(td.Thread):
         return cache_info
 
     def get_pkg_search_info(self, pkg_name):
-        result = self.get_software_obj(pkg_name)
+        result = self.get_software_info(pkg_name)
 
         if result == None:
             cache_info = self.get_info_from_cache_soft_db([
@@ -245,17 +295,11 @@ class DataManager(td.Thread):
                 return (pkg_name, "FIXME", "FIXME", 5.0)
         else:
             #(alias_name, short_desc, long_desc) = result
-            return (result.alias_name, result.short_desc, result.long_desc, 5.0)
+            return (result[1], result[2], result[3], 5.0)
 
     def get_item_pkg_info(self, pkg_name):
-        result = self.get_software_obj(pkg_name)
-        if result:
-            info = [result.pkg_name, result.alias_name, result.short_desc, result.long_desc]
-        else:
-            info = None
-
-
-        if info != None and info[2] != "":
+        info = self.get_software_info(pkg_name)
+        if info and info[2] != "":
             return info
         else:
             r = self.get_info_from_cache_soft_db(["SELECT short_desc, long_desc FROM software WHERE pkg_name=?", (pkg_name, )])
@@ -271,28 +315,21 @@ class DataManager(td.Thread):
         return infos
 
     def is_pkg_have_desktop_file(self, pkg_name):
-        self.desktop_db_cursor.execute(
-            "SELECT id FROM package WHERE pkg_name=?", [pkg_name])
-        r = self.desktop_db_cursor.fetchone()
-        if r:
+        req = "SELECT id FROM package WHERE pkg_name=?"
+        res = self.desktop_db_cursor.select_one(req, (pkg_name,))
+        if res:
             return True
         else:
             if pkg_name.endswith(":i386"):
                 pkg_name = pkg_name[:-5]
-                self.desktop_db_cursor.execute(
-                    "SELECT id FROM package WHERE pkg_name=?", [pkg_name])
-                return self.desktop_db_cursor.fetchone()
+                return bool(self.desktop_db_cursor.select_one(req, (pkg_name,)))
             else:
                 return False
 
     def get_display_flag(self, pkg_name):
-        self.desktop_db_cursor.execute(
-            "SELECT display_flag, first_category_name FROM package WHERE pkg_name=?", (pkg_name, ))
-        r = self.desktop_db_cursor.fetchone()
-        if r:
-            return r[0] and r[1]
-        else:
-            return False
+        req = "SELECT display_flag, first_category_name FROM package WHERE pkg_name=?"
+        res = self.desktop_db_cursor.select_one(req, (pkg_name,))
+        return bool(res) and bool(res[0]) and bool(res[1])
 
     def is_pkg_display_in_uninstall_page(self, pkg_name):
         if self.get_display_flag(pkg_name):
@@ -309,22 +346,6 @@ class DataManager(td.Thread):
             "SELECT album_id, album_name, album_summary FROM album ORDER BY album_id")
         return self.album_db_cursor.fetchall()
 
-    def get_download_rank_info(self, pkg_names):
-        infos = []
-
-        for pkg_name in pkg_names:
-            info =self.get_software_obj(pkg_name)
-
-            if info:
-                alias_name = info.alias_name
-                self.desktop_db_cursor.execute(
-                    "SELECT desktop_path, icon_name, display_name FROM desktop WHERE pkg_name=?", [pkg_name])
-                desktop_infos = self.desktop_db_cursor.fetchall()
-
-                infos.append([pkg_name, alias_name, 5.0, desktop_infos])
-
-        return infos
-
     def get_recommend_info(self):
         pkgs = []
         with open(self.recommend_db_path) as fp:
@@ -339,29 +360,6 @@ class DataManager(td.Thread):
                 pkgs.append(line.strip())
         return pkgs
 
-    def build_category_dict(self):
-        # Build OrderedDict of first category.
-        self.category_db_cursor.execute(
-            "SELECT DISTINCT first_category_name FROM category_name ORDER BY first_category_index")
-        self.category_dict = OrderedDict(map(lambda names: (names[0], []), self.category_db_cursor.fetchall()))
-
-        # Build list of second category.
-        self.category_db_cursor.execute(
-            "SELECT DISTINCT first_category_name, second_category_name FROM category_name ORDER BY second_category_index")
-        for (first_category, second_category) in self.category_db_cursor.fetchall():
-            self.category_dict[first_category] = self.category_dict[first_category] + [(second_category, OrderedDict())]
-
-        # Bulid OrderedDict of second category.
-        for (first_category, second_category_list) in self.category_dict.items():
-            self.category_dict[first_category] = OrderedDict(second_category_list)
-
-        # Fill data into category dict.
-        self.category_name_dict = OrderedDict()
-        self.category_db_cursor.execute(
-            "SELECT first_category_index, second_category_index, first_category_name, second_category_name FROM category_name")
-        for (first_category_index, second_category_index, first_category, second_category) in self.category_db_cursor.fetchall():
-            self.category_name_dict[(first_category_index, second_category_index)] = (first_category, second_category)
-
     def get_first_category(self):
         return CATEGORY_TYPE_DICT.keys()
 
@@ -369,16 +367,14 @@ class DataManager(td.Thread):
         return CATEGORY_TYPE_DICT.get(first_category_name).keys()
 
     def get_first_category_packages(self, first_category_name):
-        self.desktop_db_cursor.execute(
-            "SELECT pkg_name FROM package WHERE first_category_name=? ORDER BY pkg_name", (first_category_name,))
-        r = self.desktop_db_cursor.fetchall()
-        return map(lambda s: s[0], r)
+        req = "SELECT pkg_name FROM package WHERE first_category_name=? ORDER BY pkg_name"
+        res = self.desktop_db_cursor.select(req, (first_category_name,))
+        return map(lambda s: s[0], res)
 
     def get_second_category_packages(self, second_category_name):
-        self.desktop_db_cursor.execute(
-            "SELECT pkg_name FROM package WHERE second_category_name=? ORDER BY pkg_name", (second_category_name,))
-        r = self.desktop_db_cursor.fetchall()
-        return map(lambda s: s[0], r)
+        req = "SELECT pkg_name FROM package WHERE second_category_name=? ORDER BY pkg_name"
+        res = self.desktop_db_cursor.select(req, (second_category_name,))
+        return map(lambda s: s[0], res)
 
     def search_query(self, keywords):
         '''
@@ -414,3 +410,6 @@ if __name__ == "__main__":
     bus_interface = dbus.Interface(bus_object, DSC_SERVICE_NAME)
 
     data_manager = DataManager(bus_interface)
+    start = time.time()
+    print data_manager.get_item_pkg_info("evince")
+    print time.time() - start

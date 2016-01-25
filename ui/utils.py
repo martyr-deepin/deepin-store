@@ -416,5 +416,17 @@ class ThreadMethod(td.Thread):
     def run(self):
         self.func(*self.args)
 
+class FetchItemPkgInfoThread(td.Thread):
+    def __init__(self, items):
+        td.Thread.__init__(self)
+        self.items = items
+        self.daemon = True
+        self.start()
+
+    def run(self):
+        for item in self.items:
+            info = item.data_manager.get_item_pkg_info(item.pkg_name)
+            item.update_item_desc(info)
+
 if __name__ == '__main__':
     print get_current_mirror_hostname()
